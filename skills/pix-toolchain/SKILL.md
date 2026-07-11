@@ -1,0 +1,68 @@
+---
+name: rule-toolchain
+description: >
+  Index of all toolchain skills: build tools (Vite, Parcel), linters (Biome, ESLint),
+  package management (pnpm), monorepo orchestration (Turborepo), Git hooks (Husky),
+  TypeScript configuration, and project base configs.
+tags:
+  - "toolchain"
+  - "build"
+  - "vite"
+  - "parcel"
+  - "biome"
+  - "eslint"
+  - "pnpm"
+  - "turborepo"
+  - "typescript"
+  - "husky"
+  - "index"
+frameworks: [all]
+---
+
+# rule-toolchain — Toolchain Skills Index
+
+## Build Tools
+
+| Skill | Tool | Best For |
+|-------|------|----------|
+| [rule-toolchain-vite](../rule-toolchain-vite/SKILL.md) | Vite | Modern frontend (default choice, Vite 8 + Rolldown) |
+| [rule-toolchain-parcel](../rule-toolchain-parcel/SKILL.md) | Parcel | Zero-config bundler, rapid prototyping |
+
+## Linting & Formatting
+
+| Skill | Tool | Best For |
+|-------|------|----------|
+| [rule-toolchain-biome](../rule-toolchain-biome/SKILL.md) | Biome | Fast, unified linter+formatter (Rust, recommended) |
+| [rule-toolchain-eslint](../rule-toolchain-eslint/SKILL.md) | ESLint | Legacy projects needing full plugin ecosystem |
+
+## Package Management & Monorepo
+
+| Skill | Tool | Best For |
+|-------|------|----------|
+| [rule-toolchain-pnpm](../rule-toolchain-pnpm/SKILL.md) | pnpm | Package management, workspace, monorepo |
+| [rule-toolchain-turborepo](../rule-toolchain-turborepo/SKILL.md) | Turborepo | Monorepo orchestration, parallel builds, caching |
+
+## Configuration & Hooks
+
+| Skill | Tool | Best For |
+|-------|------|----------|
+| [rule-toolchain-typescript](../rule-toolchain-typescript/SKILL.md) | TypeScript | tsconfig, strict mode, path aliases |
+| [rule-toolchain-project](../rule-toolchain-project/SKILL.md) | Project Config | .gitignore, .editorconfig, .nvmrc, .env |
+| [rule-toolchain-husky](../rule-toolchain-husky/SKILL.md) | Husky | Git hooks, lint-staged, commitlint |
+
+## Quick Selection Guide
+
+```
+Need a build tool?                      → rule-toolchain-vite (default) or rule-toolchain-parcel
+Need linting + formatting?              → rule-toolchain-biome (new) or rule-toolchain-eslint (legacy)
+Need a package manager?                 → rule-toolchain-pnpm
+Need monorepo orchestration?            → rule-toolchain-turborepo
+Need TypeScript config?                 → rule-toolchain-typescript
+Need base project files?                → rule-toolchain-project
+Need Git hooks?                         → rule-toolchain-husky
+```
+
+## See also
+
+- [rule-devops-testing](../rule-devops-testing/SKILL.md) — Test configuration
+- [rule](../rule/SKILL.md) — Central skill index
