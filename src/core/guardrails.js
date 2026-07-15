@@ -12,6 +12,9 @@ import {
   FRAMEWORK_GUARDRAILS,
   SCAFFOLD_GUARDRAILS,
   ARCHITECT_GUARDRAILS,
+  BACKEND_GUARDRAILS,
+  DATABASE_GUARDRAILS,
+  DEVOPS_GUARDRAILS,
 } from "./guardrail-defs.js";
 
 // ─── Framework aliases ───
@@ -85,7 +88,20 @@ export function getGuardrails(skillName, mode) {
   const scaffold = skillName === "rule-styleguide" && mode === "scaffold" ? SCAFFOLD_GUARDRAILS : [];
   const architect = skillName === "rule-architect" ? ARCHITECT_GUARDRAILS : [];
   const plugin = PLUGIN_GUARDRAILS.get(skillName) || [];
-  return [...SHARED_GUARDRAILS, ...frameworkSpecific, ...scaffold, ...architect, ...plugin];
+
+  // Backend guardrails for backend/api skills
+  const isBackend = /^rule-(?:backend|backend-)/.test(skillName);
+  const backend = isBackend ? BACKEND_GUARDRAILS : [];
+
+  // Database guardrails for data/database skills
+  const isDatabase = /^rule-data(?:-|$)/.test(skillName) || /^rule-data-/.test(skillName);
+  const database = isDatabase ? DATABASE_GUARDRAILS : [];
+
+  // DevOps guardrails for devops skills
+  const isDevops = /^rule-devops(?:-|$)/.test(skillName);
+  const devops = isDevops ? DEVOPS_GUARDRAILS : [];
+
+  return [...SHARED_GUARDRAILS, ...frameworkSpecific, ...scaffold, ...architect, ...backend, ...database, ...devops, ...plugin];
 }
 
 export function checkCode(skillName, code, context = {}) {
@@ -156,6 +172,21 @@ export function getGuardrailsReport(skillName, mode) {
   if (skillName === "rule-architect") {
     lines.push(`## Architecture & Documentation (${ARCHITECT_GUARDRAILS.length} checks)`, "");
     for (const g of ARCHITECT_GUARDRAILS) lines.push(`- [ ] **${g.id}**: ${g.label}`, `  ${g.description}`, "");
+  }
+
+  if (/^rule-(?:backend|backend-)/.test(skillName)) {
+    lines.push(`## Backend Security & API (${BACKEND_GUARDRAILS.length} checks)`, "");
+    for (const g of BACKEND_GUARDRAILS) lines.push(`- [ ] **${g.id}**: ${g.label}`, `  ${g.description}`, "");
+  }
+
+  if (/^rule-data(?:-|$)/.test(skillName)) {
+    lines.push(`## Database Safety (${DATABASE_GUARDRAILS.length} checks)`, "");
+    for (const g of DATABASE_GUARDRAILS) lines.push(`- [ ] **${g.id}**: ${g.label}`, `  ${g.description}`, "");
+  }
+
+  if (/^rule-devops(?:-|$)/.test(skillName)) {
+    lines.push(`## DevOps & Security (${DEVOPS_GUARDRAILS.length} checks)`, "");
+    for (const g of DEVOPS_GUARDRAILS) lines.push(`- [ ] **${g.id}**: ${g.label}`, `  ${g.description}`, "");
   }
 
   lines.push("## How to use", "", "1. Generate code following rule galaxy principles.", "2. Run `pix_<skill> check` on the generated code.", "3. Fix any FAIL results.", "4. Re-check until all pass (allPass: true).", "");
