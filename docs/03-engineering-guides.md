@@ -194,7 +194,7 @@ Benchmarks run on:
 | `pix_component` (multi-file) | 2ms | 4ms | Same as single-file + filename joins |
 | `pix_check` (guardrails) | 5ms | 12ms | Regex-based, no network calls |
 | `pix_detect` | 2ms | 5ms | Reads package.json + fs.existsSync |
-| `pix_react` (full skill) | 1ms | 2ms | Read from LRU cache |
+| `pix_frontend_react` (full skill) | 1ms | 2ms | Read from LRU cache |
 | `pix_scaffold` | 1ms | 3ms | Section extraction from cached SKILL.md |
 
 **All tools respond in under 15ms at P95.** No LLM call needed.
@@ -423,7 +423,6 @@ No equivalent exists in rule-styleguide (which focuses on vanilla HTML/CSS/JS).
 
 | Ported skill | Status |
 |---------------|--------|
-| `rule-mcp-agents` | ✅ Complete |
 | `rule-backend-api-design` | ✅ Complete |
 | `rule-backend-security` | ✅ Complete |
 | `rule-coverage-gates` | ✅ Complete |
@@ -490,7 +489,6 @@ skills/rule-scaffolding
   │     ├── → skills/rule-devops-testing
   │     ├── → skills/rule-devops-gitlab-ci
   │     └── → rules/accessibility, rules/i18n
-  ├── → skills/rule-mcp-agents
   └── → skills/rule-platform-expo
         ├── → skills/rule-platform-expo
         └── → rules/expo
