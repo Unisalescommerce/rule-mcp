@@ -1,9 +1,7 @@
 ---
 name: rule
-description: >
-  Central dispatcher for every rule skill and MCP tool. Use first when
-  the task is ambiguous, multi-domain, or needs routing across skills, tools,
-  resources, guardrails, templates, ADRs, fixes, or handoff workflows.
+description: >-
+  Use when routing any coding request to the correct rule skill. Acts as the central dispatcher for all skill and tool selection.
 tags:
   - index
   - dispatcher
