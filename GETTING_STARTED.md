@@ -62,7 +62,7 @@ To integrate with an agent via `mcp.json`:
 ```json
 {
   "mcpServers": {
-    "pix_galaxy_mcp": {
+    "rule-mcp": {
       "command": "pnpx",
       "args": ["-y", "rule-mcp", "serve"],
       "directTools": true,
@@ -178,7 +178,7 @@ For agents that support MCP, add this to their `mcp.json`:
 ```json
 {
   "mcpServers": {
-    "pix_galaxy_mcp": {
+    "rule-mcp": {
       "command": "rule-mcp",
       "args": ["serve"],
       "directTools": true,
@@ -192,7 +192,7 @@ For agents that support MCP, add this to their `mcp.json`:
 ```json
 {
   "mcpServers": {
-    "pix_galaxy_mcp": {
+    "rule-mcp": {
       "command": "/absolute/path/to/node",
       "args": ["/absolute/path/to/rule-mcp/bin/rule-mcp.js", "serve"],
       "directTools": true,
@@ -216,7 +216,7 @@ It writes an entry equivalent to:
 ```json
 {
   "servers": {
-    "pix_galaxy_mcp": {
+    "rule-mcp": {
       "type": "http",
       "url": "http://127.0.0.1:37999/sse",
       "headers": { "Authorization": "Bearer <local-token>" },
@@ -231,7 +231,7 @@ It writes an entry equivalent to:
 ```json
 {
   "mcpServers": {
-    "pix_galaxy_mcp": {
+    "rule-mcp": {
       "command": "rule-mcp",
       "args": ["serve"],
       "directTools": true,

@@ -1056,7 +1056,7 @@ rule-mcp daemon logs
 ### Claude (Claude Code / Claude Desktop)
 
 **Issue**: Tool not found by Claude.
-- **Fix**: Ensure `~/.claude.json` has the `pix_galaxy_mcp` entry.
+- **Fix**: Ensure `~/.claude.json` has the `rule-mcp` entry.
   ```bash
   rule-mcp install --agent claude
   ```
@@ -1064,7 +1064,7 @@ rule-mcp daemon logs
   ```json
   {
     "mcpServers": {
-      "pix_galaxy_mcp": {
+      "rule-mcp": {
         "command": "/path/to/node",
         "args": ["/path/to/bin/rule-mcp.js", "serve"]
       }
@@ -1097,7 +1097,7 @@ rule-mcp daemon logs
   ```json
   {
     "servers": {
-      "pix_galaxy_mcp": {
+      "rule-mcp": {
         "type": "stdio",
         "command": "/path/to/node",
         "args": ["/path/to/bin/rule-mcp.js", "serve"]
