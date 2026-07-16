@@ -1,7 +1,7 @@
 ---
 name: rule-styleguide-javascript
-description: >
-  JavaScript conventions: naming, functions, classes, async patterns, DOM manipulation, custom elements, static initialization, imports, and module structure.
+description: >-
+  Use when writing JavaScript or TypeScript following rule conventions. Covers naming, functions, classes, async patterns, DOM manipulation, and custom elements.
 tags:
   - "javascript"
   - "ecmascript"

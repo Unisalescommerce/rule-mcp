@@ -1,10 +1,7 @@
 ---
 name: rule-frontend-react
-description: |
-  React best practices aligned with rule-styleguide and rule-frontend-vanilla-reactive.
-  Zero CSS classes (element + data-part selectors only), zero inline styles,
-  semantic HTML mandatory, barrel file tree, no CSS-in-JS or Tailwind.
-  Adapted for React 18+ functional components with hooks.
+description: >-
+  Use when building React 18+ functional components. Follows rule principles: zero CSS classes, semantic HTML, barrel file tree, data-part selectors.
 tags:
   - "frontend"
   - "react"

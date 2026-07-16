@@ -1,9 +1,7 @@
 ---
 name: rule-frontend-vue
-description: |
-  Vue 3 best practices aligned with rule-styleguide and rule-frontend-vanilla-reactive.
-  Zero CSS classes (element + data-part selectors only), zero inline styles,
-  semantic HTML mandatory, barrel file tree. Composition API focused.
+description: >-
+  Use when building Vue 3 Composition API components. Follows rule principles: zero CSS classes, semantic HTML, barrel file tree, data-part selectors.
 tags:
   - "frontend"
   - "vue"

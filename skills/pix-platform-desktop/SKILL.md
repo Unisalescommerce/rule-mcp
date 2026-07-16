@@ -1,14 +1,7 @@
 ---
 name: rule-platform-desktop
-description: |
-  Desktop application development with rule principles.
-  Project type umbrella for desktop apps.
-  Primary framework: Electron (cross-platform, Chromium + Node.js).
-  Future frameworks: Tauri (Rust + webview), Neutralinojs (native OS APIs).
-  Covers main/preload/IPC architecture, native APIs, window management,
-  packaging, auto-update, and framework-specific patterns.
-  Use with a UI framework skill (rule-frontend-react, rule-frontend-vue, rule-frontend-vanilla-reactive).
-  Zero CSS classes, semantic HTML, barrel file tree.
+description: >-
+  Use when building desktop applications with Electron. Covers main/preload/IPC, native APIs, window management, packaging, and auto-update.
 tags:
   - "platform"
   - "desktop"

@@ -1,11 +1,7 @@
 ---
 name: rule-frontend-meta-next
-description: |
-  Next.js application development with rule principles.
-  Covers App Router, Server Components, SSR/SSG/ISR,
-  API routes, middleware, image optimization, and Vercel deployment.
-  Use with rule-frontend-react as the UI foundation.
-  Zero CSS classes, semantic HTML, barrel file tree.
+description: >-
+  Use when building Next.js applications. Covers App Router, Server Components, SSR/SSG/ISR, API routes, middleware, and Vercel deployment.
 tags:
   - "frontend"
   - "meta"

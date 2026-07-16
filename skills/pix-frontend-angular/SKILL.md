@@ -1,9 +1,7 @@
 ---
 name: rule-frontend-angular
-description: |
-  Angular best practices aligned with rule-styleguide and rule-frontend-vanilla-reactive.
-  Zero CSS classes (element + data-part selectors only), zero inline styles,
-  semantic HTML mandatory, barrel file tree. Standalone components, no NgModules.
+description: >-
+  Use when building Angular standalone components. Follows rule principles: zero CSS classes, semantic HTML, barrel file tree, data-part selectors.
 tags:
   - "frontend"
   - "angular"

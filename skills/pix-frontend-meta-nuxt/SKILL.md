@@ -1,11 +1,7 @@
 ---
 name: rule-frontend-meta-nuxt
-description: |
-  Nuxt.js application development with rule principles.
-  Covers file-based routing, SSR/SSG, server routes,
-  auto-imports, modules ecosystem, Nitro engine, and deployment.
-  Use with rule-frontend-vue as the UI foundation.
-  Zero CSS classes, semantic HTML, barrel file tree.
+description: >-
+  Use when building Nuxt.js applications. Covers file-based routing, SSR/SSG, server routes, auto-imports, Nitro engine, and modules ecosystem.
 tags:
   - "frontend"
   - "meta"

@@ -1,9 +1,7 @@
 ---
 name: rule-frontend-solidjs
-description: |
-  SolidJS best practices aligned with rule-styleguide and rule-frontend-vanilla-reactive.
-  Zero CSS classes (element + data-part selectors only), zero inline styles,
-  semantic HTML mandatory, barrel file tree. Fine-grained reactivity with Signals.
+description: >-
+  Use when building SolidJS applications with fine-grained reactivity. Follows rule principles: zero CSS classes, semantic HTML, Signals, barrel file tree.
 tags:
   - "frontend"
   - "solidjs"

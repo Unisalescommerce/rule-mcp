@@ -1,9 +1,7 @@
 ---
 name: rule-process-documentation
-description: >
-  Set up and maintain Mintlify documentation for rule repositories.
-  Use when creating the docs/ directory, configuring mint.json,
-  writing page templates, or running docs locally.
+description: >-
+  Use when setting up Mintlify documentation for rule repositories. Covers docs/ directory, mint.json config, page templates, and local preview.
 tags:
   - "process"
   - "documentation"

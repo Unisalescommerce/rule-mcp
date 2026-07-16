@@ -1,9 +1,7 @@
 ---
 name: rule-architect
-description: >
-  Enterprise architecture wizard for the full rule skill and MCP tool ecosystem.
-  Use when starting a project, restructuring architecture, generating .context,
-  mapping decisions to skills/tools, or onboarding any LLM to a repository.
+description: >-
+  Use when starting a new project, restructuring architecture, or generating .context/ files for LLM onboarding. Covers project scaffolding, ADR decisions, and skill mapping.
 tags:
   - architecture
   - scaffolding
@@ -16,6 +14,14 @@ frameworks: [all]
 ---
 
 # rule-architect — Architecture command center
+
+`rule-architect` is the **engine** in a 3-skill architecture:
+
+| Skill | Role | Reads |
+|-------|------|-------|
+| **rule-architect** (this) | Engine: wizard-spec.json, templates, generator, validators | — |
+| [rule-architect-web](../rule-architect-web/SKILL.md) | Shell: browser interview via vanilla JS | wizard-spec.json from rule-architect |
+| [rule-architect-cli](../rule-architect-cli/SKILL.md) | Shell: terminal interview via opentui | wizard-spec.json from rule-architect |
 
 `rule-architect` turns product intent into an implementation-ready architecture package. It must account for every available rule skill and deterministic MCP tool, then emit `.context/` docs that any LLM can follow without hidden assumptions.
 
@@ -77,128 +83,130 @@ Intent
   └─ Cross-domain routing   → rule + this skill
 ```
 
-## Complete skill coverage
+## Complete skill coverage — Architecture choice mapping per category
 
 Use this table to ensure the architecture package references all relevant skills.
-### AI
+### AI / Agent platform
 
 | Skill | Use in architecture when |
 |-------|--------------------------|
-| [rule-platform-agent](../rule-platform-agent/SKILL.md) | Specialized rule skill. |
+| [rule-platform-agent](../rule-platform-agent/SKILL.md) | Scaffolding an AI coding agent project with custom tools, env config, testing, and containerization.
 
 ### Backend
 
 | Skill | Use in architecture when |
 |-------|--------------------------|
-| [rule-backend](../rule-backend/SKILL.md) | Specialized rule skill. |
-| [rule-backend-api-design](../rule-backend-api-design/SKILL.md) | Specialized rule skill. |
-| [rule-backend-express](../rule-backend-express/SKILL.md) | Specialized rule skill. |
-| [rule-backend-fastify](../rule-backend-fastify/SKILL.md) | Specialized rule skill. |
-| [rule-backend-hono](../rule-backend-hono/SKILL.md) | Specialized rule skill. |
-| [rule-backend-nestjs](../rule-backend-nestjs/SKILL.md) | Specialized rule skill. |
-| [rule-backend-node](../rule-backend-node/SKILL.md) | Specialized rule skill. |
-| [rule-backend-security](../rule-backend-security/SKILL.md) | Specialized rule skill. |
+| [rule-backend](../rule-backend/SKILL.md) | Umbrella routing for any backend project. Read first before using framework-specific skills. |
+| [rule-backend-api-design](../rule-backend-api-design/SKILL.md) | Designing REST endpoints, HTTP methods, versioning, request/response contracts, pagination, filtering, sorting, and OpenAPI docs. |
+| [rule-backend-express](../rule-backend-express/SKILL.md) | API server built with Express.js 5+ (middleware, routing, error handling, security headers). |
+| [rule-backend-fastify](../rule-backend-fastify/SKILL.md) | API server built with Fastify 5+ (schema validation, serialization, plugins, high throughput). |
+| [rule-backend-hono](../rule-backend-hono/SKILL.md) | Edge-compatible API built with Hono 4+ (multi-runtime: Node, Cloudflare Workers, Bun, Deno). |
+| [rule-backend-nestjs](../rule-backend-nestjs/SKILL.md) | Modular enterprise API with NestJS 10+ (decorators, DI, guards, interceptors, GraphQL, microservices). |
+| [rule-backend-node](../rule-backend-node/SKILL.md) | Scaffolding a new Node.js + TypeScript backend repository with baseline config, tests, Docker, and CI. |
+| [rule-backend-security](../rule-backend-security/SKILL.md) | Hardening backend security: env vars, secrets, Docker security, HTTP headers, rate limiting, CORS, input validation. |
 
-### Data
-
-| Skill | Use in architecture when |
-|-------|--------------------------|
-| [rule-data](../rule-data/SKILL.md) | Specialized rule skill. |
-| [rule-data-mongodb](../rule-data-mongodb/SKILL.md) | Specialized rule skill. |
-| [rule-data-mysql](../rule-data-mysql/SKILL.md) | Specialized rule skill. |
-| [rule-data-postgresql](../rule-data-postgresql/SKILL.md) | Specialized rule skill. |
-| [rule-data-sql](../rule-data-sql/SKILL.md) | Specialized rule skill. |
-
-### DevOps
+### Data / Persistence
 
 | Skill | Use in architecture when |
 |-------|--------------------------|
-| [rule-devops](../rule-devops/SKILL.md) | Specialized rule skill. |
-| [rule-devops-docker](../rule-devops-docker/SKILL.md) | Specialized rule skill. |
-| [rule-devops-gitlab-ci](../rule-devops-gitlab-ci/SKILL.md) | Specialized rule skill. |
-| [rule-devops-testing](../rule-devops-testing/SKILL.md) | Specialized rule skill. |
-| [rule-devops-version](../rule-devops-version/SKILL.md) | Specialized rule skill. |
+| [rule-data](../rule-data/SKILL.md) | Umbrella routing for data-layer decisions. Read first for database-agnostic guidance. |
+| [rule-data-postgresql](../rule-data-postgresql/SKILL.md) | Relational backend with PostgreSQL 16+ (indexing, partitioning, replication, JSONB, full-text search). |
+| [rule-data-mysql](../rule-data-mysql/SKILL.md) | Relational backend with MySQL 8+ / MariaDB 11+ (InnoDB tuning, replication, query optimization). |
+| [rule-data-mongodb](../rule-data-mongodb/SKILL.md) | Document database with MongoDB 7+ (schema design, aggregation pipeline, indexing, sharding). |
+| [rule-data-sql](../rule-data-sql/SKILL.md) | SQL best practices, table design, index optimization, transactions — database-agnostic reference. |
+| [rule-data-sqlite](../rule-data-sqlite/SKILL.md) | SQLite 3.x embedded database: WAL/journal modes, FTS5 full-text search, JSON functions, local-first/offline patterns. |
+| [rule-data-duckdb](../rule-data-duckdb/SKILL.md) | DuckDB 1.x embedded OLAP: columnar storage, Parquet/CSV/JSON import, PIVOT/UNNEST/QUALIFY, window functions. |
+| [rule-data-indexed-db](../rule-data-indexed-db/SKILL.md) | IndexedDB / File System Access: browser persistence, object stores, indexes, cursors, offline sync, schema migration. |
 
-### Dispatcher
-
-| Skill | Use in architecture when |
-|-------|--------------------------|
-| [rule](../rule/SKILL.md) | Specialized rule skill. |
-
-### Frontend
+### DevOps / Engineering
 
 | Skill | Use in architecture when |
 |-------|--------------------------|
-| [rule-frontend](../rule-frontend/SKILL.md) | Specialized rule skill. |
-| [rule-frontend-angular](../rule-frontend-angular/SKILL.md) | Specialized rule skill. |
-| [rule-frontend-astro](../rule-frontend-astro/SKILL.md) | Specialized rule skill. |
-| [rule-frontend-meta-next](../rule-frontend-meta-next/SKILL.md) | Specialized rule skill. |
-| [rule-frontend-meta-nuxt](../rule-frontend-meta-nuxt/SKILL.md) | Specialized rule skill. |
-| [rule-frontend-meta-remix](../rule-frontend-meta-remix/SKILL.md) | Specialized rule skill. |
-| [rule-frontend-react](../rule-frontend-react/SKILL.md) | Specialized rule skill. |
-| [rule-frontend-solidjs](../rule-frontend-solidjs/SKILL.md) | Specialized rule skill. |
-| [rule-frontend-svelte](../rule-frontend-svelte/SKILL.md) | Specialized rule skill. |
-| [rule-frontend-vanilla-reactive](../rule-frontend-vanilla-reactive/SKILL.md) | Specialized rule skill. |
-| [rule-frontend-vue](../rule-frontend-vue/SKILL.md) | Specialized rule skill. |
+| [rule-devops](../rule-devops/SKILL.md) | Umbrella routing for DevOps decisions. Read first before using specialized sub-skills. |
+| [rule-devops-docker](../rule-devops-docker/SKILL.md) | Containerizing with Docker: Dockerfile, docker-compose, .dockerignore, multi-stage builds, nginx config. |
+| [rule-devops-gitlab-ci](../rule-devops-gitlab-ci/SKILL.md) | CI/CD with GitLab CI: pipeline caching, coverage reporting, Docker build/push, deploy stages. |
+| [rule-devops-testing](../rule-devops-testing/SKILL.md) | Test infrastructure with Vitest: unit, integration, config, mocks, coverage thresholds (60/50/60/60). |
+| [rule-devops-version](../rule-devops-version/SKILL.md) | Automatic version increment on every commit using Husky pre-commit hooks. |
 
-### Platform
+### Dispatcher (core router)
 
 | Skill | Use in architecture when |
 |-------|--------------------------|
-| [rule-platform](../rule-platform/SKILL.md) | Specialized rule skill. |
-| [rule-platform-desktop](../rule-platform-desktop/SKILL.md) | Specialized rule skill. |
-| [rule-platform-expo](../rule-platform-expo/SKILL.md) | Specialized rule skill. |
-| [rule-platform-library](../rule-platform-library/SKILL.md) | Specialized rule skill. |
-| [rule-platform-web](../rule-platform-web/SKILL.md) | Specialized rule skill. |
+| [rule](../rule/SKILL.md) | First tool to call for any ambiguous prompt. Routes to the correct skill or tool set. |
 
-### Process
+### Frontend / UI Frameworks
 
 | Skill | Use in architecture when |
 |-------|--------------------------|
-| [rule-process](../rule-process/SKILL.md) | Specialized rule skill. |
-| [rule-process-adr](../rule-process-adr/SKILL.md) | Specialized rule skill. |
-| [rule-process-bmad](../rule-process-bmad/SKILL.md) | Specialized rule skill. |
-| [rule-process-documentation](../rule-process-documentation/SKILL.md) | Specialized rule skill. |
-| [rule-process-feature-workflow](../rule-process-feature-workflow/SKILL.md) | Specialized rule skill. |
-| [rule-process-handoff](../rule-process-handoff/SKILL.md) | Specialized rule skill. |
+| [rule-frontend](../rule-frontend/SKILL.md) | Umbrella routing for frontend framework decisions. Read first before framework-specific skills. |
+| [rule-frontend-react](../rule-frontend-react/SKILL.md) | React 18+ SPA or component library with hooks, Context API, zero CSS classes. |
+| [rule-frontend-vue](../rule-frontend-vue/SKILL.md) | Vue 3 SPA with Composition API, SFC, ref/reactive, scoped styles. |
+| [rule-frontend-angular](../rule-frontend-angular/SKILL.md) | Enterprise Angular app with standalone components, signals, @Component, styleUrl. |
+| [rule-frontend-svelte](../rule-frontend-svelte/SKILL.md) | Svelte 5 app with Runes ($state, $derived, $effect), SvelteKit for SSR/SSG. |
+| [rule-frontend-solidjs](../rule-frontend-solidjs/SKILL.md) | SolidJS app with fine-grained reactivity, createSignal/createMemo, fastest runtime. |
+| [rule-frontend-vanilla-reactive](../rule-frontend-vanilla-reactive/SKILL.md) | Zero-framework reactive app: Proxy Store, Signals, html`` tagged templates, Custom Elements. |
+| [rule-frontend-astro](../rule-frontend-astro/SKILL.md) | Content-first static site or multi-framework islands with Astro. |
+| [rule-frontend-meta-next](../rule-frontend-meta-next/SKILL.md) | Full-stack React with Next.js App Router, SSR/SSG/ISR, API routes, middleware. |
+| [rule-frontend-meta-nuxt](../rule-frontend-meta-nuxt/SKILL.md) | Full-stack Vue with Nuxt.js file-based routing, SSR/SSG, server routes, Nitro engine. |
+| [rule-frontend-meta-remix](../rule-frontend-meta-remix/SKILL.md) | Full-stack React with Remix nested routing, loaders/actions, progressive enhancement. |
 
-### Styleguide
-
-| Skill | Use in architecture when |
-|-------|--------------------------|
-| [rule-styleguide](../rule-styleguide/SKILL.md) | Specialized rule skill. |
-| [rule-styleguide-a11y](../rule-styleguide-a11y/SKILL.md) | Specialized rule skill. |
-| [rule-styleguide-css](../rule-styleguide-css/SKILL.md) | Specialized rule skill. |
-| [rule-styleguide-html](../rule-styleguide-html/SKILL.md) | Specialized rule skill. |
-| [rule-styleguide-javascript](../rule-styleguide-javascript/SKILL.md) | Specialized rule skill. |
-| [rule-styleguide-json](../rule-styleguide-json/SKILL.md) | Specialized rule skill. |
-| [rule-styleguide-markdown](../rule-styleguide-markdown/SKILL.md) | Specialized rule skill. |
-| [rule-styleguide-naming](../rule-styleguide-naming/SKILL.md) | Specialized rule skill. |
-| [rule-styleguide-patterns](../rule-styleguide-patterns/SKILL.md) | Specialized rule skill. |
-| [rule-styleguide-validation](../rule-styleguide-validation/SKILL.md) | Specialized rule skill. |
-
-### Toolchain
+### Platform / Project Type
 
 | Skill | Use in architecture when |
 |-------|--------------------------|
-| [rule-toolchain](../rule-toolchain/SKILL.md) | Specialized rule skill. |
-| [rule-toolchain-biome](../rule-toolchain-biome/SKILL.md) | Specialized rule skill. |
-| [rule-toolchain-eslint](../rule-toolchain-eslint/SKILL.md) | Specialized rule skill. |
-| [rule-toolchain-husky](../rule-toolchain-husky/SKILL.md) | Specialized rule skill. |
-| [rule-toolchain-parcel](../rule-toolchain-parcel/SKILL.md) | Specialized rule skill. |
-| [rule-toolchain-pnpm](../rule-toolchain-pnpm/SKILL.md) | Specialized rule skill. |
-| [rule-toolchain-project](../rule-toolchain-project/SKILL.md) | Specialized rule skill. |
-| [rule-toolchain-turborepo](../rule-toolchain-turborepo/SKILL.md) | Specialized rule skill. |
-| [rule-toolchain-typescript](../rule-toolchain-typescript/SKILL.md) | Specialized rule skill. |
-| [rule-toolchain-vite](../rule-toolchain-vite/SKILL.md) | Specialized rule skill. |
-### UI
+| [rule-platform](../rule-platform/SKILL.md) | Umbrella routing for platform/project-type decisions. Read first before specialized skills. |
+| [rule-platform-web](../rule-platform-web/SKILL.md) | Browser-based web app: bundling, routing, progressive enhancement, performance budgets, static hosting. |
+| [rule-platform-desktop](../rule-platform-desktop/SKILL.md) | Desktop app: Electron (Chromium + Node.js, contextBridge IPC, auto-update) or Tauri (Rust + system webview). |
+| [rule-platform-expo](../rule-platform-expo/SKILL.md) | Mobile app: Expo/React Native with EAS Build, EAS Secrets, OTA updates, Expo Router. |
+| [rule-platform-library](../rule-platform-library/SKILL.md) | Reusable npm package: dual CJS/ESM, TypeScript exports, semantic versioning, changelog. |
 
-Design and route visible interface work while preserving rule implementation constraints.
+### Process / Methodology
 
-| Skill | Tool | Frameworks | Use when |
-|-------|------|------------|----------|
-| [rule-ui](../rule-ui/SKILL.md) | `pix_ui` | all | Umbrella skill for all user-interface work in the rule ecosystem. Use when a task affects visual UI, component composition... |
-| [rule-ui-design-system](../rule-ui-design-system/SKILL.md) | `pix_ui_design_system` | all | Distinctive production-grade UI design direction for rule projects. Use when designing pages, components, dashboards... |
+| Skill | Use in architecture when |
+|-------|--------------------------|
+| [rule-process](../rule-process/SKILL.md) | Umbrella routing for process decisions. Read first before specialized skills. |
+| [rule-process-adr](../rule-process-adr/SKILL.md) | Recording architecture decisions: auto-numbered Nygard ADRs in docs/adr/ with index. |
+| [rule-process-bmad](../rule-process-bmad/SKILL.md) | Full 4-phase delivery: Analysis, Planning, Solutioning, Implementation — choose Quick Flow, BMAD, or Enterprise. |
+| [rule-process-documentation](../rule-process-documentation/SKILL.md) | Setting up Mintlify documentation portal: mint.json, page templates, local preview, deploy. |
+| [rule-process-feature-workflow](../rule-process-feature-workflow/SKILL.md) | End-to-end feature procedure: branch creation through merge request with TDD and guardrails. |
+| [rule-process-handoff](../rule-process-handoff/SKILL.md) | LLM session handoff: compressed summary from ADR logs and project context for cross-chat continuity. |
+
+### Styleguide / Frontend Conventions
+
+| Skill | Use in architecture when |
+|-------|--------------------------|
+| [rule-styleguide](../rule-styleguide/SKILL.md) | Umbrella styleguide: read first for HTML, CSS, JS, a11y, naming, and validation conventions. |
+| [rule-styleguide-html](../rule-styleguide-html/SKILL.md) | Semantic HTML: document structure, elements, attributes, landmarks, form semantics. |
+| [rule-styleguide-css](../rule-styleguide-css/SKILL.md) | CSS architecture: selector strategy (data-part, element), naming, custom properties, cascade layers. |
+| [rule-styleguide-javascript](../rule-styleguide-javascript/SKILL.md) | JS conventions: naming, functions, classes, async patterns, Custom Elements, imports, barrel pattern. |
+| [rule-styleguide-a11y](../rule-styleguide-a11y/SKILL.md) | Accessibility: WCAG 2.2 AA, semantic HTML, ARIA, keyboard nav, color contrast, Playwright + axe-core. |
+| [rule-styleguide-naming](../rule-styleguide-naming/SKILL.md) | Naming conventions: PascalCase, camelCase, UPPER_SNAKE_CASE, underscore prefix, barrel pattern, directory layout. |
+| [rule-styleguide-patterns](../rule-styleguide-patterns/SKILL.md) | Quick-reference cheat sheet for naming, property ordering, file tree, and common patterns. |
+| [rule-styleguide-json](../rule-styleguide-json/SKILL.md) | JSON structure conventions: property naming, date formats, numeric precision, API response consistency. |
+| [rule-styleguide-markdown](../rule-styleguide-markdown/SKILL.md) | Markdown documentation style: structure, headings, lists, code blocks, tables, links. |
+| [rule-styleguide-validation](../rule-styleguide-validation/SKILL.md) | Business validation patterns: email, phone, VAT, tax IDs, postal codes, national IDs — EU/UK/US/global. |
+
+### Toolchain / Build & Config
+
+| Skill | Use in architecture when |
+|-------|--------------------------|
+| [rule-toolchain](../rule-toolchain/SKILL.md) | Umbrella routing for build tool and toolchain decisions. Read first before specialized skills. |
+| [rule-toolchain-vite](../rule-toolchain-vite/SKILL.md) | Vite build tool: vite.config.ts, vitest.config.ts, env vars, build optimization, production deploy. |
+| [rule-toolchain-parcel](../rule-toolchain-parcel/SKILL.md) | Parcel 2+ zero-config bundler: entry points, transpilation, code splitting, image optimization. |
+| [rule-toolchain-typescript](../rule-toolchain-typescript/SKILL.md) | TypeScript config: tsconfig management, strict mode, path aliases, declaration files, build strategies. |
+| [rule-toolchain-biome](../rule-toolchain-biome/SKILL.md) | Biome linter + formatter: zero-config, migration from ESLint + Prettier, rule customization, CI. |
+| [rule-toolchain-eslint](../rule-toolchain-eslint/SKILL.md) | ESLint 9+ flat config: TypeScript/React/Node rules, plugin integration, custom rules. |
+| [rule-toolchain-pnpm](../rule-toolchain-pnpm/SKILL.md) | pnpm package manager: workspaces, dependency resolution, caching, CI optimization, monorepo patterns. |
+| [rule-toolchain-turborepo](../rule-toolchain-turborepo/SKILL.md) | Turborepo monorepo: pipeline config, caching, remote caching, task dependency graphs. |
+| [rule-toolchain-husky](../rule-toolchain-husky/SKILL.md) | Git hooks: Husky + lint-staged + commitlint, pre-commit/pre-push validation, CI-friendly. |
+| [rule-toolchain-project](../rule-toolchain-project/SKILL.md) | Project config baseline: .gitignore, .editorconfig, .nvmrc, .env.example, README, LICENSE. |
+
+### UI / Design System
+
+| Skill | Use in architecture when |
+|-------|--------------------------|
+| [rule-ui](../rule-ui/SKILL.md) | Umbrella for all user-interface work: component composition, interaction design, accessibility routing. |
+| [rule-ui-design-system](../rule-ui-design-system/SKILL.md) | Distinctive production-grade UI design direction: memorable pages/components while obeying rule styleguides. |
 
 ## Generated `.context/` output
 
@@ -208,7 +216,7 @@ The context interview must generate these industry-standard outputs from `assets
 - `ROADMAP.md` — milestone tracker
 - `project-context.md` — compact AI working context
 - `analysis/functional-analysis.md` and `analysis/implementation-roadmap.md` — product analysis and execution order
-- `specs/00-sdd.md` through `specs/10-rule-routing.md` — SDD, product, domain, rules, architecture, quality, ADRs, deployment, security, and rule routing
+- `specs/00-sdd.md` through `specs/12-rule-routing.md` — SDD, product, domain, rules, architecture, quality, ADRs, deployment, security, devops, process/delivery, and rule routing
 - `schemas/ruleset.schema.json` — validation contract for reusable domain rules
 - `qa/checklist.md` — manual QA and a11y/resilience checks
 - concrete support docs such as `constraints.concrete.md` and `use-cases.concrete.md`

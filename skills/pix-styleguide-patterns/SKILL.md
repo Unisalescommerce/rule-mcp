@@ -1,7 +1,7 @@
 ---
 name: rule-styleguide-patterns
-description: >
-  Quick reference cheat sheet for naming conventions, property ordering, file tree structure, and common patterns. Condensed reference for daily use.
+description: >-
+  Use as a quick reference for rule naming and property conventions. Covers condensed cheat sheet for naming, property ordering, and file tree structure.
 tags:
   - "patterns"
   - "reference"

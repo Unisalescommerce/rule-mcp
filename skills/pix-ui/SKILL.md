@@ -1,10 +1,7 @@
 ---
 name: rule-ui
-description: >
-  Umbrella skill for all user-interface work in the rule ecosystem. Use when
-  a task affects visual UI, component composition, interaction design, design
-  systems, accessibility, or frontend implementation routing. Delegates to
-  rule-ui-design-system, rule-frontend, and rule-styleguide.
+description: >-
+  Use when designing or implementing user interfaces to route to the correct UI skill. Covers design systems, component patterns, accessibility, and styling tactics.
 tags:
   - ui
   - frontend
