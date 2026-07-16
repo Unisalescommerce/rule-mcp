@@ -123,8 +123,7 @@ Target: **32 skills** after 4 merges, plus 1 new skill (`rule-process-adr`), wit
 | # | Skill | Lines | Verdict | Action |
 |---|-------|-------|---------|--------|
 | 1 | rule-mcp | ~190 | ✅ | Keep — ai router |
-| 2 | rule-mcp-agents | ~130 | ✅ | Keep — AI Agents scaffold |
-| 3 | rule-architect | ~320 | ✅ | Keep — architecture wizard |
+| 2 | rule-architect | ~320 | ✅ | Keep — architecture wizard |
 | 4 | rule-backend | ~180 | ✅ | Keep — backend rules |
 | 5 | rule-backend-api-design | ~150 | ✅ | Keep — API design |
 | 6 | rule-backend-node | ~130 | ✅ | Keep — Backend scaffold |
@@ -244,7 +243,6 @@ The context interview is currently a 16-step wizard. Proposed improvements:
 ```
 rule-*
 ├── rule             # Skill router
-├── rule-mcp-agents
 ├── rule-architect          # Architecture + scaffolding router
 ├── rule-backend            # Backend patterns
 ├── rule-backend-api-design # API design + OpenAPI

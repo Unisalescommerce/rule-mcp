@@ -23,7 +23,7 @@ The skill moves from `rule-scaffold-backend-node` to `rule-backend-node`, placin
 
 ### 2. Merge `scaffold-ai-agents` → `ai-agents`
 
-The AI agents scaffold was an orchestrator that delegated to backend + frontend scaffolders. Its monorepo setup content is absorbed into `rule-mcp-agents`, which was renamed from `rule-mcp-agent-core`.
+The AI agents scaffold was an orchestrator that delegated to backend + frontend scaffolders. Its monorepo setup content is absorbed into the agents skill.
 
 ### 3. Merge `scaffold-expo` → `platform-expo`
 

@@ -20,7 +20,7 @@ Adopt a prefix-based thematic taxonomy with the following categories:
 | Prefix | Category | Skills |
 |--------|----------|--------|
 | `rule-` (no prefix) | Core tools | ai, backend, check, component, detect, fix, scaffold, search, styleguides |
-| `rule-mcp-*` | AI | agent-core |
+
 | `rule-backend-*` | Backend | api-design, security |
 | `rule-devops-*` | DevOps | docker, gitlab-ci, testing, version |
 | `rule-frontend-*` | UI frameworks | angular, astro, forms, react, solidjs, svelte, vanilla-reactive, vue |
@@ -78,7 +78,6 @@ Added `rule-database-*`:
 
 - `rule-meta-*` → `rule-frontend-meta-*` (3 skills)
 - `rule-scaffold-backend-node` → `rule-backend-node` + merged content
-- `rule-mcp-agent-core` → `rule-mcp-agents` + merged scaffold-ai-agents content
 - `rule-scaffold-expo` → merged into `rule-platform-expo`
 - `rule-scaffold-frontend-react-vite` split:
   - Vite config → `rule-toolchain-vite` (new)
@@ -91,7 +90,6 @@ Added `rule-database-*`:
 | Prefix | Count | Skills |
 |--------|-------|--------|
 | `rule-` (core) | 9 | ai, backend, check, component, detect, fix, scaffold, search, styleguides |
-| `rule-mcp-*` | 1 | agents |
 | `rule-backend-*` | 7 | api-design, express, fastify, hono, nestjs, node, security |
 | `rule-database-*` | 4 | mongodb, mysql, postgresql, sql |
 | `rule-devops-*` | 4 | docker, gitlab-ci, testing, version |
@@ -99,4 +97,4 @@ Added `rule-database-*`:
 | `rule-platform-*` | 4 | desktop, expo, library, web |
 | `rule-process-*` | 6 | adr, architect, bmad, documentation, feature-workflow, handoff |
 | `rule-toolchain-*` | 1 | vite |
-| **Total** | **47** | |
+| **Total** | **46** | |
