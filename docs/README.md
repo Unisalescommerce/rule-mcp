@@ -16,6 +16,10 @@ This directory is intentionally consolidated into a small handbook. Historical f
 - [ADR index](./adr/README.md)
 - [Decision summary](./adr/DECISIONS.md)
 
+## Reports
+
+- [Mega review — claude-* compliance & rule router reliability](./reports/claude-compliance-mega-review.md) — full protocol-level audit of every tool/skill/resource/prompt, with reproducible evidence on whether the `rule` router and skill triggers are actually invoked by the model.
+
 ## Content preservation manifest
 
 | Original source | Consolidated target | Lines | SHA-256 |
