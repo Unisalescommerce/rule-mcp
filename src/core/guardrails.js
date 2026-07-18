@@ -57,7 +57,7 @@ const SKILL_FRAMEWORK_MAP = {
   "rule-styleguide-naming": "vanilla",
   "rule-styleguide-patterns": "vanilla",
   "rule-styleguide-validation": "vanilla",
-  "rule-frontend-vanilla-reactive": "vanilla",
+  "rule-frontend-vanilla-reactive": "vanilla-reactive",
   "rule": "vanilla",
   "rule-architect": "architect",
 };
