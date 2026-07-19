@@ -1,6 +1,6 @@
 # rule-vanilla-reactive — Template Engine Capabilities
 
-> Reference: `skills/rule-frontend-vanilla-reactive/examples/src/core/`
+> Reference: `skills/rule-frontend-vanilla-reactive/core/`
 > Living document — update as the engine evolves.
 
 ---
