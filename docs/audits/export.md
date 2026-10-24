@@ -1,21 +1,20 @@
 # export audit
 
-- **Role**: export v1
-- **Focus**: session distill / decision-cache
+- **Role**: export / session distill / decision-cache
 - **Date**: 2026-10-21
 - **Branch target**: `feat/export` (from `main`)
 - **Related**: `feat/decision-models` (consumer of decision-cache, WS-5 / DM-07)
 
 ## Scope
 
-Design-only audit for `/rule-mcp-export`, `/rule-mcp-export cleanup`, `/rule-mcp-keep`, and
-the restored `/rule-mcp-adr` (ADR + keep). No implementation in this pass.
+Design-only audit for `/rule-export`, `/rule-export cleanup`, `/rule-keep`, and
+the restored `/rule-adr` (ADR + keep). No implementation in this pass.
 
 ## What exists today
 
 ### Agent transcripts (usage only)
 
-`src/core/agents/transcripts/_registry.js`, `AGENT_TRANSCRIPTS`:
+`src/core/agents/transcripts/_registry.js` — `AGENT_TRANSCRIPTS`:
 
 | Agent                           | Usage read | Session roots (project-scoped)                                                               |
 | ------------------------------- | ---------- | -------------------------------------------------------------------------------------------- |
@@ -37,51 +36,51 @@ session list/map, nor delete APIs.
   the event log unless `keep: true`
 - Flight already pulls agent usage into the envelope (usage suites for
   pi/claude/codex/opencode)
-- `/rule-stats` -> `rule_tool_stats` (KPI: calls, cache hits, tokens, latency)
-- `/rule-usage` -> sidecar when no transcript
+- `/rule-stats` → `rule_tool_stats` (KPI: calls, cache hits, tokens, latency)
+- `/rule-usage` → sidecar when no transcript
 
 ### Caches
 
 - **Tool-cache**: `src/core/cache/tool-cache/` (+ CLI `src/cli/cache/`)
-- **BM25 cache**, catalog cache, separate concerns
+- **BM25 cache**, catalog cache — separate concerns
 - **Decision-cache**: absent on `main`. Planned on `feat/decision-models` as
   DM-07 deterministic cache (model id + questions + state + shortlist digest)
 
 ### Commands / ADR surface
 
-- `/rule-mcp-adr` **removed** from MCP prompt registry (handoff 13): duplicated
+- `/rule-adr` **removed** from MCP prompt registry (handoff 13): duplicated
   `rule-process-adr` / `rule_tool_process_adr`
 - `rule_tool_process_adr` remains the ADR engine
-- No `/rule-mcp-export`, `/rule-mcp-keep`
+- No `/rule-export`, `/rule-keep`
 
 ### Installer agent set
 
 Wizard/installers cover many hosts; transcript **usage** coverage is the four
 above. Installed-manifest at
-`~/.local/share/rule/installed.md` is the install truth; export v1
+`~/.local/share/rule-mcp/installed.md` is the install truth; export v1
 still gates on transcript capability, not merely "MCP installed".
 
 ## Gaps (for the plan)
 
-1. No session map (list -> sort -> id/mtime/path) per agent
+1. No session map (list → sort → id/mtime/path) per agent
 2. No merge path that **idempotently** folds transcript-derived telemetry into
    the MCP store before/while flight emit
 3. No decision-candidate mining or interview UX
 4. No decision-cache store owned by export
 5. No session hard-delete / keep-N / protect-current
-6. `/rule-mcp-adr` restore needs a product ADR (why it returns, how it differs from
-   bare `rule_tool_process_adr`: it carries `/rule-mcp-keep`)
-7. `exportFlight` drain semantics vs "export may run often", re-export must
-   not double-count; cleanup of **agent** sessions != drain of MCP events
+6. `/rule-adr` restore needs a product ADR (why it returns, how it differs from
+   bare `rule_tool_process_adr`: it carries `/rule-keep`)
+7. `exportFlight` drain semantics vs "export may run often" — re-export must
+   not double-count; cleanup of **agent** sessions ≠ drain of MCP events
 
 ## Locked product decisions (interview)
 
 | #                 | Decision                                                          |
 | ----------------- | ----------------------------------------------------------------- |
-| Pipeline          | scan -> merge telemetry -> emit `.flight` -> optional cleanup     |
+| Pipeline          | scan → merge telemetry → emit `.flight` → optional cleanup        |
 | Cache             | new decision-cache (export-owned) + tool-cache promote where safe |
 | Agents v1         | pi/claude/codex/opencode only; others deferred with reason        |
 | Cleanup           | hard delete after confirm; keep newest N **∪** current session    |
 | Dubious decisions | heuristic triage + interview now; hook short-circuit waits for DM |
-| Env               | `RULE_MCP_EXPORT_KEEP_SESSIONS` default `5`                       |
+| Env               | `RULE_MCP_EXPORT_KEEP_SESSIONS` default `5`                 |
 | Base              | `main`                                                            |
