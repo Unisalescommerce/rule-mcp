@@ -1,7 +1,7 @@
 # 149: Choose one SDD framework per repository instead of peer methodology skills
 
 - **Date**: 2026-10-21
-- **Status**: superseded by [150](150-open-a-rule-mcp-method-area-with-one-skill-per-methodology-framework.md)
+- **Status**: superseded by [151](151-open-a-rule-mcp-method-area-with-one-skill-per-methodology-framework.md)
 - **Tags**: skills, process, bmad, methodology, guardrails
 - **Author**: Emiliano Pisu <pisuemiliano.1980@gmail.com>
 

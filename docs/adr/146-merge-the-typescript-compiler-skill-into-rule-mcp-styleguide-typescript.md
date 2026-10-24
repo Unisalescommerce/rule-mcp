@@ -1,4 +1,4 @@
-# 141: Merge the TypeScript compiler skill into rule-styleguide-typescript
+# 146: Merge the TypeScript compiler skill into rule-styleguide-typescript
 
 - **Date**: 2026-10-17
 - **Status**: accepted

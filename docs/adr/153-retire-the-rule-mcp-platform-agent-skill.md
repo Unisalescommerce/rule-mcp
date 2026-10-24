@@ -1,4 +1,4 @@
-# 151: Retire the rule-platform-agent skill
+# 153: Retire the rule-platform-agent skill
 
 - **Date**: 2026-10-21
 - **Status**: accepted

@@ -1,4 +1,4 @@
-# 139: Add a shared frontend guardrail family for XSS, lists and workers
+# 140: Add a shared frontend guardrail family for XSS, lists and workers
 
 - **Date**: 2026-10-17
 - **Status**: proposed

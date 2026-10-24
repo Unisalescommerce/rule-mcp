@@ -1,4 +1,4 @@
-# 153: Orchestrate the plan catalog with a staged dependency graph
+# 175: Orchestrate the plan catalog with a staged dependency graph
 
 - **Date**: 2026-10-21
 - **Status**: accepted

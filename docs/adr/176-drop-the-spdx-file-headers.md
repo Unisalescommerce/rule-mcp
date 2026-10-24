@@ -1,4 +1,4 @@
-# 175: Drop the SPDX file headers
+# 176: Drop the SPDX file headers
 
 - **Date**: 2026-10-24
 - **Status**: accepted

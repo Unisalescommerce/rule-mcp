@@ -1,4 +1,4 @@
-# 138: Extend the data guardrail family with shared and per-engine rules
+# 139: Extend the data guardrail family with shared and per-engine rules
 
 - **Date**: 2026-10-17
 - **Status**: proposed

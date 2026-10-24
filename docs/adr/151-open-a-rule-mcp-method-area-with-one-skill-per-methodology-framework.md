@@ -1,4 +1,4 @@
-# 150: Open a rule-mcp-method area with one skill per methodology framework
+# 151: Open a rule-mcp-method area with one skill per methodology framework
 
 - **Date**: 2026-10-21
 - **Status**: accepted

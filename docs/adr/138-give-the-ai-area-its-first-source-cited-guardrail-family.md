@@ -1,4 +1,4 @@
-# 137: Give the AI area its first source-cited guardrail family
+# 138: Give the AI area its first source-cited guardrail family
 
 - **Date**: 2026-10-17
 - **Status**: proposed

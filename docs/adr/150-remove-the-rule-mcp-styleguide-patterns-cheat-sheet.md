@@ -1,4 +1,4 @@
-# 146: Remove the rule-styleguide-patterns cheat sheet
+# 150: Remove the rule-styleguide-patterns cheat sheet
 
 - **Date**: 2026-10-18
 - **Status**: accepted
