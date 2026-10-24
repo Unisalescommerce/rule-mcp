@@ -10,10 +10,13 @@ export const HOOK_HOSTS = {
   gemini: { mechanism: "native", events: ["BeforeTool", "AfterTool"], reason: "Documented hooks with a JSON schema" },
   opencode: { mechanism: "plugin", events: ["tool.execute.before", "tool.execute.after"], reason: "In-process TS plugin in .opencode/plugins" },
   pi: { mechanism: "extension", events: ["tool_call", "tool_result"], reason: "Extension module calling pi.on in hooks/pre" },
-  codex: { mechanism: "none", events: [], reason: "No user-facing hook mechanism" },
-  copilot: { mechanism: "none", events: [], reason: "No documented hook mechanism" },
+  codex: { mechanism: "native", events: [], reason: "Lifecycle hooks documented; event names to confirm" },
+  copilot: { mechanism: "none", events: [], reason: "Custom agents and instructions only, no tool hooks" },
+  qwen: { mechanism: "extension", events: [], reason: "Commands, skills and extensions; no tool hook documented" },
+  goose: { mechanism: "extension", events: [], reason: "MCP extensions; no tool hook documented" },
+  aider: { mechanism: "none", events: [], reason: "No hooks or plugin system documented" },
   zed: { mechanism: "none", events: [], reason: "Lifecycle hooks are still a proposal, not shipped" },
-  kiro: { mechanism: "ide-events", events: [], reason: "Agent Hooks map IDE events to actions, not tool calls" },
+  kiro: { mechanism: "native", events: ["preToolUse", "postToolUse", "agentSpawn", "userPromptSubmit", "stop"], reason: "Agent hooks in the agent configuration" },
 };
 
 /**
