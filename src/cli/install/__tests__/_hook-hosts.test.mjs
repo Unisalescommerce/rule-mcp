@@ -3,18 +3,22 @@ import { test } from "node:test";
 
 import { hookSupport } from "../_hook-hosts.js";
 
-test("the three documented hosts expose their events", () => {
-  for (const agent of ["claude", "cursor", "gemini"]) {
+test("each documented host names its mechanism and events", () => {
+  for (const [agent, mechanism] of [
+    ["claude", "native"],
+    ["cursor", "native"],
+    ["gemini", "native"],
+    ["opencode", "plugin"],
+    ["pi", "extension"],
+  ]) {
     const support = hookSupport(agent);
-    assert.equal(support.supported, true, agent);
+    assert.equal(support.mechanism, mechanism, agent);
     assert.ok(support.events.length > 0, agent);
   }
 });
 
-test("codex, copilot and an unknown host stay disabled with a reason", () => {
+test("codex, copilot and an unknown host have no mechanism", () => {
   for (const agent of ["codex", "copilot", "nope"]) {
-    const support = hookSupport(agent);
-    assert.equal(support.supported, false, agent);
-    assert.ok(support.reason.length > 0, agent);
+    assert.equal(hookSupport(agent).mechanism, "none", agent);
   }
 });
