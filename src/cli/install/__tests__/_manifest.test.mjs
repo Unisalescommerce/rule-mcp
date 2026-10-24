@@ -14,13 +14,17 @@ test("an empty manifest is readable before any install", () => {
 });
 
 test("recordInstall merges agents and keeps the last mode", () => {
-  recordInstall({ agent: "claude" });
+  recordInstall({ agent: "claude", profile: "standard", dimensions: { server: true, rules: true }, surface: "full", commands: "all" });
   recordInstall({ agent: "codex", mode: "daemon" });
 
   const manifest = readManifest();
 
   assert.deepEqual(manifest.agents, ["claude", "codex"]);
   assert.equal(manifest.mode, "daemon");
+  assert.equal(manifest.profile, "standard");
+  assert.deepEqual(manifest.dimensions, { server: true, rules: true });
+  assert.equal(manifest.surface, "full");
+  assert.equal(manifest.commands, "all");
   assert.ok(manifest.installedAt);
   assert.ok(manifestPath().endsWith("install.json"));
 });

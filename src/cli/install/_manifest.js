@@ -17,7 +17,7 @@ export function manifestPath() {
  * @returns {{ version: number, installedAt: string|null, mode: string|null, agents: string[], dimensions: object }}
  */
 export function readManifest() {
-  const empty = { version: 1, installedAt: null, mode: null, agents: [], dimensions: {} };
+  const empty = { version: 1, installedAt: null, profile: null, mode: null, agents: [], dimensions: {}, surface: null, commands: null };
 
   try {
     const parsed = JSON.parse(readFileSync(manifestPath(), "utf8"));
@@ -34,7 +34,7 @@ export function readManifest() {
  * @param {{ agent?: string, mode?: string, dimensions?: object, dryRun?: boolean }} entry
  * @returns {object} the manifest as written
  */
-export function recordInstall({ agent, mode, dimensions, dryRun = false } = {}) {
+export function recordInstall({ agent, mode, profile, dimensions, surface, commands, dryRun = false } = {}) {
   const manifest = readManifest();
   const agents = new Set(manifest.agents);
 
@@ -46,6 +46,9 @@ export function recordInstall({ agent, mode, dimensions, dryRun = false } = {}) 
     ...manifest,
     installedAt: new Date().toISOString(),
     mode: mode ?? manifest.mode,
+    profile: profile ?? manifest.profile,
+    surface: surface ?? manifest.surface,
+    commands: commands ?? manifest.commands,
     agents: [...agents].sort(),
     dimensions: dimensions ? { ...manifest.dimensions, ...dimensions } : manifest.dimensions,
   };
