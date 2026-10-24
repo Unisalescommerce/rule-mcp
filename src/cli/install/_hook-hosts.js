@@ -12,6 +12,8 @@ export const HOOK_HOSTS = {
   pi: { mechanism: "extension", events: ["tool_call", "tool_result"], reason: "Extension module calling pi.on in hooks/pre" },
   codex: { mechanism: "none", events: [], reason: "No user-facing hook mechanism" },
   copilot: { mechanism: "none", events: [], reason: "No documented hook mechanism" },
+  zed: { mechanism: "none", events: [], reason: "Lifecycle hooks are still a proposal, not shipped" },
+  kiro: { mechanism: "ide-events", events: [], reason: "Agent Hooks map IDE events to actions, not tool calls" },
 };
 
 /**
