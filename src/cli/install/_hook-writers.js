@@ -8,9 +8,10 @@
  */
 export function opencodePlugin(command) {
   return [
+    'import { execFileSync } from "node:child_process";',
     "export const RuleMcpHooks = async () => ({",
-    `  "tool.execute.before": async (input) => { await Bun.$` + "`" + `${${JSON.stringify(command)}} ${input.tool}` + "`" + `; },`,
-    `  "tool.execute.after": async (input) => { await Bun.$` + "`" + `${${JSON.stringify(command)}} ${input.tool}` + "`" + `; },`,
+    `  "tool.execute.before": async (input) => { execFileSync(${JSON.stringify(command)}, ["hook", input.tool]); },`,
+    `  "tool.execute.after": async (input) => { execFileSync(${JSON.stringify(command)}, ["hook", input.tool]); },`,
     "});",
     "",
   ].join("\n");
@@ -25,8 +26,8 @@ export function opencodePlugin(command) {
 export function piExtension(command) {
   return [
     "export default function ruleMcpHooks(pi) {",
-    `  pi.on("tool_call", async (event) => { await pi.exec(${JSON.stringify(command)}, [event.toolName]); });`,
-    `  pi.on("tool_result", async (event) => { await pi.exec(${JSON.stringify(command)}, [event.toolName]); });`,
+    `  pi.on("tool_call", async (event) => { await pi.exec(${JSON.stringify(command)}, ["hook", event.toolName]); });`,
+    `  pi.on("tool_result", async (event) => { await pi.exec(${JSON.stringify(command)}, ["hook", event.toolName]); });`,
     "}",
     "",
   ].join("\n");
