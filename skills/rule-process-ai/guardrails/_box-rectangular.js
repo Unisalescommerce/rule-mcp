@@ -13,7 +13,7 @@ export const fpBoxRectangular = {
       detail: ragged
         .slice(0, 10)
         .map((entry) => (entry.reason === "box never closes" ? `line ${entry.line}: box never closes` : `line ${entry.line}: ${entry.width} columns, expected ${entry.expected}`)),
-      suggestion: "Pad the short lines out to the widest line of the same box, or run rule_tool_compress.",
+      suggestion: "Pad the short lines out to the widest line of the same box, or run pix_compress.",
     };
   },
 };

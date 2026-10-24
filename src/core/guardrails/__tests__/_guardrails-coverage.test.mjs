@@ -1,9 +1,11 @@
+
+
 /**
  * @module test/guardrails-coverage.test
  *
  * Verifies guardrails are ALWAYS involved and enforce the core skill rules:
  *   - the baseline applies to every skill (frontend, backend, data, devops).
- *   - the shipped component templates carry the core rule-mcp principles - no CSS
+ *   - the shipped component templates carry the core rule principles - no CSS
  *     classes, no inline styles - across frameworks.
  *   - the JS/TS idiom guardrails fire on stale patterns and pass on the modern
  *     idioms the styleguide mandates.

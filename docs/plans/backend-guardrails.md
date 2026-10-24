@@ -63,22 +63,22 @@ Sources fetched and used (each accepted rule cites one or more):
 
 ## Decisions from the interview
 
-| Question         | Decision                                                                |
-| ---------------- | ----------------------------------------------------------------------- |
+| Question         | Decision                                                               |
+| ---------------- | ---------------------------------------------------------------------- |
 | Target skills    | All nine. Shared rules in `rule-backend`, the rest in their topic skill |
-| Scope            | High-signal selection (6-10)                                            |
-| Fixes to the six | Extend the patterns to the framework equivalents                        |
-| Auth rules       | All five candidates                                                     |
-| Input rules      | All six candidates                                                      |
-| Runtime rules    | All five candidates                                                     |
-| GraphQL rules    | All five candidates                                                     |
-| Framework rules  | All four candidates                                                     |
-| Trigger policy   | Content heuristic on server/API files plus framework-scoped patterns    |
-| Severity         | Advisory until corpus precision is proven, then blocking                |
-| Corpus and tests | Fixtures, framework fixtures, unit tests, inheritance test              |
-| Artifacts        | Frontmatter, census, ADR, changelog, per-rule source                    |
-| Phasing          | Plan only now; implementation in a dedicated session                    |
-| Sources          | Every new rule cites its source                                         |
+| Scope            | High-signal selection (6-10)                                           |
+| Fixes to the six | Extend the patterns to the framework equivalents                       |
+| Auth rules       | All five candidates                                                    |
+| Input rules      | All six candidates                                                     |
+| Runtime rules    | All five candidates                                                    |
+| GraphQL rules    | All five candidates                                                    |
+| Framework rules  | All four candidates                                                    |
+| Trigger policy   | Content heuristic on server/API files plus framework-scoped patterns   |
+| Severity         | Advisory until corpus precision is proven, then blocking               |
+| Corpus and tests | Fixtures, framework fixtures, unit tests, inheritance test             |
+| Artifacts        | Frontmatter, census, ADR, changelog, per-rule source                   |
+| Phasing          | Plan only now; implementation in a dedicated session                   |
+| Sources          | Every new rule cites its source                                        |
 
 ### Open item 1: 25 rules against a 6-10 budget
 
@@ -172,14 +172,14 @@ and the devops plan stays about telemetry stores.
 
 ### Runtime, owned by rule-backend-node (see open item 2)
 
-| Rule id                   | Rejects                                        | Tier | Source               |
-| ------------------------- | ---------------------------------------------- | ---- | -------------------- |
+| Rule id                   | Rejects                                        | Tier | Source              |
+| ------------------------- | ---------------------------------------------- | ---- | ------------------- |
 | `worker-pool-per-request` | `new Worker(` created inside a request handler | B    | rule-backend-workers |
 
 ### Framework skills
 
-| Rule id                  | Skill                | Rejects                                                | Tier | Source                  |
-| ------------------------ | -------------------- | ------------------------------------------------------ | ---- | ----------------------- |
+| Rule id                  | Skill               | Rejects                                                | Tier | Source                  |
+| ------------------------ | ------------------- | ------------------------------------------------------ | ---- | ----------------------- |
 | `express-error-handler`  | rule-backend-express | app with no four-argument error middleware             | A    | Express security        |
 | `fastify-route-schema`   | rule-backend-fastify | route without a validation/serialization schema        | B    | Fastify recommendations |
 | `hono-secure-headers`    | rule-backend-hono    | app with no `secureHeaders()`                          | A    | Hono secure headers     |
@@ -266,7 +266,7 @@ Shared files: none: absorbed into the leaf plans named above
 
 - [ ] Promote Tier A rules to blocking once the corpus reports 100% precision
       and recall per rule.
-- [ ] Regenerate `docs/15-guardrails.md` with `pnpm census` and commit.
+- [ ] Regenerate `docs/14-guardrails.md` with `pnpm census` and commit.
 - [ ] Run the full project gates listed below.
 - [ ] Add the changelog entry and a scoped conventional commit.
 
@@ -274,15 +274,15 @@ Shared files: none: absorbed into the leaf plans named above
 
 Classes and evidence: section 14 of `docs/plans/plan-of-plans.md`.
 
-| Step                                            | Class      | Model                   | Why                            |
-| ----------------------------------------------- | ---------- | ----------------------- | ------------------------------ |
-| Phase 0 - Decisions and scaffolding             | `T1-plan`  | `gemini-4-argon` (high) | planning and prose that argues |
-| Phase 1 - Fix the six existing rules            | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
-| Phase 2 - Shared security rules in rule-backend | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
-| Phase 3 - Runtime rules                         | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
-| Phase 4 - GraphQL rules in rule-backend-graphql | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
-| Phase 5 - Framework rules                       | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
-| Phase 6 - Promotion and documentation           | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
+| Step | Class | Model | Why |
+| ---- | ----- | ----- | --- |
+| Phase 0 - Decisions and scaffolding | `T1-plan` | `gemini-4-argon` (high) | planning and prose that argues |
+| Phase 1 - Fix the six existing rules | `T3-rules` | `kimi-k2.7-code` | small deterministic code |
+| Phase 2 - Shared security rules in rule-backend | `T3-rules` | `kimi-k2.7-code` | small deterministic code |
+| Phase 3 - Runtime rules | `T3-rules` | `kimi-k2.7-code` | small deterministic code |
+| Phase 4 - GraphQL rules in rule-backend-graphql | `T3-rules` | `kimi-k2.7-code` | small deterministic code |
+| Phase 5 - Framework rules | `T3-rules` | `kimi-k2.7-code` | small deterministic code |
+| Phase 6 - Promotion and documentation | `T3-rules` | `kimi-k2.7-code` | small deterministic code |
 
 Plan default: `T3-rules` - `kimi-k2.7-code`. Fallback: `step-5-preview` for authoring, `glm-5.3-flash` for bulk edits.
 
@@ -302,5 +302,5 @@ the promotion list.
 ## See also
 
 - `docs/plans/devops-guardrails.md` - the sibling plan for the devops area
-- `docs/15-guardrails.md` - the generated guardrail census
-- `docs/08-engineering-guides.md` - the guardrail workflow and quality gates
+- `docs/14-guardrails.md` - the generated guardrail census
+- `docs/07-engineering-guides.md` - the guardrail workflow and quality gates

@@ -1,3 +1,5 @@
+
+
 /**
  * getGuardrailsReport: the ruleset a skill will actually be checked against.
  *
@@ -52,8 +54,8 @@ test("a skill with no inheritance claims none", () => {
 });
 
 test("an unknown skill still reports the rules that apply to everything", () => {
-  const report = getGuardrailsReport("rule-mcp-not-a-real-skill");
+  const report = getGuardrailsReport("rule-not-a-real-skill");
 
-  assert.match(report, /^# Guardrails: rule-mcp-not-a-real-skill/);
+  assert.match(report, /^# Guardrails: rule-not-a-real-skill/);
   assert.match(report, /Total: \d+ testable assertions/, "the baseline still answers");
 });

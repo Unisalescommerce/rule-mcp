@@ -1,3 +1,5 @@
+
+
 /** @module core/guardrails/engine/registry - which rule families apply to which skill */
 
 import { SCAFFOLD_GUARDRAILS } from "../_scaffold.js";
@@ -84,7 +86,7 @@ export const SKILL_FRAMEWORK_MAP = {
   "rule-styleguide-a11y": "vanilla",
   "rule-styleguide-naming": "vanilla",
   "rule-data-validation": "vanilla",
-  "rule-mcp": "vanilla",
+  rule: "vanilla",
 };
 
 // ─── Plugin guardrails registry ───

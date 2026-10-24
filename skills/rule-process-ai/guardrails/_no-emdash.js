@@ -11,7 +11,7 @@ export const fpNoEmdash = {
       pass: dashes.length === 0,
       failCount: dashes.length,
       detail: [...new Set(dashes)],
-      suggestion: "Replace an em dash with a comma and an en dash with a hyphen, or run rule_tool_compress.",
+      suggestion: "Replace an em dash with a comma and an en dash with a hyphen, or run pix_compress.",
     };
   },
 };

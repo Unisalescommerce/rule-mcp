@@ -11,7 +11,7 @@ export const fpNoTypographicChars = {
       pass: typographic.length === 0,
       failCount: typographic.length,
       detail: [...new Set(typographic)],
-      suggestion: "Use straight quotes (\" and ') and ... instead, or run rule_tool_compress.",
+      suggestion: "Use straight quotes (\" and ') and ... instead, or run pix_compress.",
     };
   },
 };

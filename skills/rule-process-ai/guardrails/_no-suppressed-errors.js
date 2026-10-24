@@ -1,3 +1,5 @@
+
+
 /** Guardrail `no-suppressed-errors`: No suppressed type, lint, or runtime errors */
 export const noSuppressedErrors = {
   id: "ai-no-suppressed-errors",

@@ -19,12 +19,12 @@ Audited in this session (read-only):
 - `skills/rule-devops-deploy-preview/SKILL.md` (no guardrails directory)
 - `src/core/guardrails/engine/_registry.js` (`getGuardrails`, baseline skills, inheritance)
 - `src/core/guardrails/_scaffold.js` (file-presence scaffold checks)
-- `tests/fixtures/guardrail-corpus.mjs` and `docs/08-engineering-guides.md` (100% precision/recall gate)
+- `tests/fixtures/guardrail-corpus.mjs` and `docs/07-engineering-guides.md` (100% precision/recall gate)
 
 Current state: 4 rules only.
 
-| Rule                 | Skill              | Trigger                |
-| -------------------- | ------------------ | ---------------------- |
+| Rule                 | Skill             | Trigger                |
+| -------------------- | ----------------- | ---------------------- |
 | `env-gitignore`      | rule-devops        | file name `.gitignore` |
 | `secret-detection`   | rule-devops        | any code               |
 | `docker-healthcheck` | rule-devops-docker | Dockerfile or compose  |
@@ -87,13 +87,13 @@ demote any Tier A rule to Tier B.
 
 ## Where each rule lives
 
-| Rule family   | Owning skill               | Why                                                               |
-| ------------- | -------------------------- | ----------------------------------------------------------------- |
+| Rule family   | Owning skill              | Why                                                              |
+| ------------- | ------------------------- | ---------------------------------------------------------------- |
 | CI/CD         | rule-devops                | No `rule-devops-ci` skill exists, and all devops children inherit |
-| Docker        | rule-devops-docker         | Topic owner                                                       |
-| Testing       | rule-devops-testing        | Topic owner, gains its first `guardrails/` directory              |
-| Observability | rule-devops-observability  | Topic owner, gains its first `guardrails/` directory              |
-| Preview       | rule-devops-deploy-preview | Topic owner, gains its first `guardrails/` directory              |
+| Docker        | rule-devops-docker         | Topic owner                                                      |
+| Testing       | rule-devops-testing        | Topic owner, gains its first `guardrails/` directory             |
+| Observability | rule-devops-observability  | Topic owner, gains its first `guardrails/` directory             |
+| Preview       | rule-devops-deploy-preview | Topic owner, gains its first `guardrails/` directory             |
 
 Reorganization: `env-gitignore` and `secret-detection` stay in `rule-devops`;
 they are already shared. `docker-healthcheck` and `docker-non-root` stay in
@@ -241,7 +241,7 @@ Shared files: none: absorbed into the leaf plans named above
 - [ ] Add the CI scripts for the runtime claims (health probe, teardown check).
 - [ ] Promote Tier A rules to blocking once the corpus reports 100% precision
       and recall per rule.
-- [ ] Regenerate `docs/15-guardrails.md` with `pnpm census` and commit.
+- [ ] Regenerate `docs/14-guardrails.md` with `pnpm census` and commit.
 - [ ] Run the full project gates listed below.
 - [ ] Add the changelog entry and a scoped conventional commit.
 
@@ -249,15 +249,15 @@ Shared files: none: absorbed into the leaf plans named above
 
 Classes and evidence: section 14 of `docs/plans/plan-of-plans.md`.
 
-| Step                                                       | Class      | Model                   | Why                            |
-| ---------------------------------------------------------- | ---------- | ----------------------- | ------------------------------ |
-| Phase 0 - Decisions and scaffolding                        | `T1-plan`  | `gemini-4-argon` (high) | planning and prose that argues |
+| Step                                                      | Class      | Model                   | Why                            |
+| --------------------------------------------------------- | ---------- | ----------------------- | ------------------------------ |
+| Phase 0 - Decisions and scaffolding                       | `T1-plan`  | `gemini-4-argon` (high) | planning and prose that argues |
 | Phase 1 - CI/CD rules in rule-devops                       | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
 | Phase 2 - Docker rules in rule-devops-docker               | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
 | Phase 3 - Testing rules in rule-devops-testing             | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
 | Phase 4 - Observability rules in rule-devops-observability | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
 | Phase 5 - Preview rules in rule-devops-deploy-preview      | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
-| Phase 6 - Runtime scripts, promotion and documentation     | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
+| Phase 6 - Runtime scripts, promotion and documentation    | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
 
 Plan default: `T3-rules` - `kimi-k2.7-code`. Fallback: `step-5-preview` for authoring, `glm-5.3-flash` for bulk edits.
 
@@ -278,6 +278,6 @@ the promotion list.
 
 ## See also
 
-- `docs/15-guardrails.md` - the generated guardrail census
-- `docs/08-engineering-guides.md` - the guardrail workflow and quality gates
+- `docs/14-guardrails.md` - the generated guardrail census
+- `docs/07-engineering-guides.md` - the guardrail workflow and quality gates
 - `docs/plans/execution-plan.md` - the unrelated OSS stewardship plan
