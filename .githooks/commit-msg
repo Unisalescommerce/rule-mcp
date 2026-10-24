@@ -1,13 +1,28 @@
 #!/bin/sh
-# rule-mcp:commit-lint - reject a commit or push that is not type(scope): subject.
-dir="$(dirname "$0")"
-backup="$dir/commit-msg.rule-mcp-backup"
+# rule-mcp: enforce type(scope): subject.
+#
+# One gate, two implementations: the installed binary when it is on PATH, the
+# repository validator otherwise. The rule lives in src/core/commit, so the
+# hook, pre-push and CI cannot drift apart.
+#
+#   format:   type(scope): subject
+#   example:  feat(skills): add rule-mcp naming
+#   rejected: docs: port documentation
+#
+# Install: pnpm hooks:install
+set -e
+cd "$(git rev-parse --show-toplevel)" || exit 1
+
+msg_file="$1"
+first="$(sed -n '1p' "$msg_file" 2>/dev/null)"
+
+# System-generated messages (merge / revert) cannot carry a scope.
+case "$first" in
+  "Merge "*|"Revert "*) exit 0 ;;
+esac
+
 if command -v rule-mcp >/dev/null 2>&1; then
-  rule-mcp commit-lint --msg-file "$1" || exit 1
-else
-  echo "rule-mcp:commit-lint: rule-mcp is not on PATH; commit validation skipped" >&2
+  exec rule-mcp commit-lint --msg-file "$msg_file"
 fi
-if [ -x "$backup" ]; then
-  exec "$backup" "$@"
-fi
-exit 0
+
+exec node scripts/build/commit-types/index.mjs --msg-file "$msg_file"
