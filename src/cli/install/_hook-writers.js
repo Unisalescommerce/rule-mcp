@@ -32,3 +32,15 @@ export function piExtension(command) {
     "",
   ].join("\n");
 }
+
+/**
+ * The `hooks` object Gemini CLI reads from settings.json.
+ *
+ * @param {string} command
+ * @returns {object}
+ */
+export function geminiHooks(command) {
+  const group = [{ matcher: ".*", hooks: [{ type: "command", command }] }];
+
+  return { BeforeTool: group, AfterTool: group };
+}
