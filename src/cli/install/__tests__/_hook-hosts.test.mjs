@@ -15,10 +15,12 @@ test("each documented host names its mechanism and events", () => {
     assert.equal(support.mechanism, mechanism, agent);
     assert.ok(support.events.length > 0, agent);
   }
+
+  assert.equal(hookSupport("codex").mechanism, "native");
 });
 
-test("codex, copilot and an unknown host have no mechanism", () => {
-  for (const agent of ["codex", "copilot", "nope"]) {
+test("copilot and an unknown host have no mechanism", () => {
+  for (const agent of ["copilot", "nope"]) {
     assert.equal(hookSupport(agent).mechanism, "none", agent);
   }
 });
