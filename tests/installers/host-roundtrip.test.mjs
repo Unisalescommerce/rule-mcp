@@ -37,10 +37,12 @@ const LEFTOVERS = {};
 /** A backup is the writer's promise, not an uninstall failure. */
 const BACKUP = /\.bak$/u;
 
-const CHILD = `
-import { allAgents } from "./src/cli/installers/index.js";
-import { installAgent, uninstallAgent } from "./src/cli/install/index.js";
-import { hostRecord } from "./src/cli/installers/hosts/index.js";
+// The child imports by absolute path: it runs with `cwd: ROOT`, and a relative
+// specifier there is indistinguishable from a stale one to the import test.
+const CHILD = (root) => `
+import { allAgents } from ${JSON.stringify(join(root, "src/cli/installers/index.js"))};
+import { installAgent, uninstallAgent } from ${JSON.stringify(join(root, "src/cli/install/index.js"))};
+import { hostRecord } from ${JSON.stringify(join(root, "src/cli/installers/hosts/index.js"))};
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -70,7 +72,7 @@ const run = () => {
   const home = mkdtempSync(join(tmpdir(), "rule-mcp-roundtrip-"));
 
   try {
-    const output = execFileSync(process.execPath, ["--import", ALIAS_HOOK, "--input-type=module", "--eval", CHILD], {
+    const output = execFileSync(process.execPath, ["--import", ALIAS_HOOK, "--input-type=module", "--eval", CHILD(ROOT)], {
       cwd: ROOT,
       env: { ...process.env, HOME: home },
       encoding: "utf8",

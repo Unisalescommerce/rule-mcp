@@ -27,6 +27,7 @@ import { execFileSync } from "node:child_process";
 import { mkdirSync } from "node:fs";
 import { installGitGovernance } from "../core/commit/index.js";
 import { detectReleaseTooling, renderInitExtras, unpinnedDependencies } from "../core/release/index.js";
+import { hostLevels } from "./install/_manifest.js";
 import { reasonOf } from "../core/tokensave/_client.js";
 import { probeFilesystem } from "../core/tokensave/_probe.js";
 import { findProjectRoot, getProjectPaths } from "./paths/index.js";
@@ -141,6 +142,15 @@ export function renderInit(result) {
     for (const action of actions) {
       lines.push(`              ${action}`);
     }
+  }
+
+  // Only when this machine has an install to describe: a project with no recorded
+  // host gets no line about hosts, and the level is the same value `doctor`
+  // prints because both read it from one function.
+  const hosts = hostLevels();
+
+  if (Object.keys(hosts).length > 0) {
+    lines.push(`Hosts:        ${Object.entries(hosts).map(([id, level]) => `${id} ${level ?? "level not recorded"}`).join(", ")}`);
   }
 
   if (result.release || result.dependencies) {

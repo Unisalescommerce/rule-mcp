@@ -145,6 +145,20 @@ export function forgetHost({ agent, dryRun = false } = {}) {
   return { agents: next.agents, removed };
 }
 
+/**
+ * The level each recorded host was installed at, or null for one recorded before
+ * the manifest carried a level.
+ *
+ * One function, because `/rule-init` and `doctor` both report it: two readers
+ * computing the same fact from the same file is how a report starts disagreeing
+ * with itself.
+ *
+ * @returns {Record<string, string|null>}
+ */
+export function hostLevels() {
+  return Object.fromEntries(Object.entries(readManifest().hosts ?? {}).map(([id, host]) => [id, host.level ?? null]));
+}
+
 /** Whether a manifest exists on this machine. */
 export function hasManifest() {
   return existsSync(manifestPath());

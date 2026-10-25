@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { listTools } from "../../tools/router/index.js";
 import { getRuntimePaths } from "../paths/index.js";
-import { readManifest } from "../install/_manifest.js";
+import { hostLevels } from "../install/_manifest.js";
 import { detectInstalledAgents } from "../install/index.js";
 import { checkDaemonService } from "../daemon/index.js";
 import { getTokenStats } from "../../core/telemetry/_token-stats.js";
@@ -92,7 +92,7 @@ export async function runDoctor(telemetry = false) {
     agentsTotal: detected.length,
     // What the install recorded per host. A v1 manifest answers null, and the
     // report says so instead of pretending the depth is zero.
-    levels: Object.fromEntries(Object.entries(readManifest().hosts ?? {}).map(([id, host]) => [id, host.level ?? null])),
+    levels: hostLevels(),
 
     // IDE configs
     ides: ideConfigs,
