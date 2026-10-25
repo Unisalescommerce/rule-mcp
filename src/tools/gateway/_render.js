@@ -21,7 +21,7 @@ export function renderGatewayReply(core, arguments_, fileSet, lines, stripped = 
     sections: core.matchedSections,
     next_tools: core.routeNextTools,
   };
-  const primarySkill = effectiveRoute?.startsWith("rule-mcp-") ? effectiveRoute : null;
+  const primarySkill = effectiveRoute?.startsWith("rule-") ? effectiveRoute : null;
   const checkResult = core.checkResult;
   const truncated = core.evidence.length > 8000 ? core.evidence.slice(0, 8000) + "\n\n... (truncated, use rule_tool_* tool for full content)" : core.evidence;
 

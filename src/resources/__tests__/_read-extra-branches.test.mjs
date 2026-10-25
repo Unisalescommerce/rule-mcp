@@ -54,8 +54,8 @@ test("a project skill is a plugin row, with its own description or the documente
 });
 
 test("an empty override of the routing skill serves an empty body", async () => {
-  mkdirSync(join(project, ".rule-mcp", "skills", "rule-mcp"), { recursive: true });
-  writeFileSync(join(project, ".rule-mcp", "skills", "rule-mcp", "SKILL.md"), "");
+  mkdirSync(join(project, ".rule-mcp", "skills", "rule"), { recursive: true });
+  writeFileSync(join(project, ".rule-mcp", "skills", "rule", "SKILL.md"), "");
   clearSkillResolution();
 
   const result = await serveResource("rule://ai");

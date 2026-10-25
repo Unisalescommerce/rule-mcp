@@ -77,9 +77,13 @@ test("a GPG-signed test tag passes verification and an unsigned annotated tag fa
 
   assert.ok(existsSync(keyFile), ".github/release-signing-key.asc must exist before testing tag verification");
 
-  const repoDir = mkdtempSync(join(tmpdir(), "rule-mcp-release-tag-repo-"));
-  const signHome = mkdtempSync(join(tmpdir(), "rule-mcp-release-gpg-sign-"));
-  const verifyHome = mkdtempSync(join(tmpdir(), "rule-mcp-release-gpg-verify-"));
+  // Short prefixes on purpose: gpg-agent puts its socket inside GNUPGHOME, and a
+  // macOS Unix socket path is capped at 104 characters. The descriptive names this
+  // used before put the socket at 101-104 and the agent failed to start with
+  // "can't connect to the gpg-agent", which read as a broken release gate.
+  const repoDir = mkdtempSync(join(tmpdir(), "rmcp-tag-"));
+  const signHome = mkdtempSync(join(tmpdir(), "rmcp-sign-"));
+  const verifyHome = mkdtempSync(join(tmpdir(), "rmcp-verify-"));
   const run = (cmd, args, home) => execFileSync(cmd, args, { cwd: repoDir, env: home ? { ...process.env, GNUPGHOME: home } : process.env, encoding: "utf8", stdio: "pipe" });
 
   try {
@@ -103,6 +107,15 @@ test("a GPG-signed test tag passes verification and an unsigned annotated tag fa
     assert.throws(() => run("git", ["verify-tag", "v0.1.1-unsigned"], verifyHome));
     run("git", ["verify-tag", "v0.1.1-signed"], verifyHome);
   } finally {
+    // Leave no agent behind for a home directory this test is about to delete.
+    for (const home of [signHome, verifyHome]) {
+      try {
+        execFileSync("gpgconf", ["--kill", "gpg-agent"], { env: { ...process.env, GNUPGHOME: home }, stdio: "ignore" });
+      } catch {
+        // No agent, nothing to kill.
+      }
+    }
+
     rmSync(repoDir, { recursive: true, force: true });
     rmSync(signHome, { recursive: true, force: true });
     rmSync(verifyHome, { recursive: true, force: true });

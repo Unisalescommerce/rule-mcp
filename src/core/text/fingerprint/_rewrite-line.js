@@ -9,8 +9,8 @@ import { EM_DASH_ALONE, EM_DASH_CLAUSE, EM_DASH_LIST, ISE_RE, OGUE_RE, OUR_RE, R
 export { looksLikeJson } from "../_classify.js";
 
 /**
- * Give `target` the capitalisation of `source`: ALL CAPS stays all caps, an
- * initial capital stays capitalised, anything else is left lowercase.
+ * Give `target` the capitalization of `source`: ALL CAPS stays all caps, an
+ * initial capital stays capitalized, anything else is left lowercase.
  *
  * @param {string} source - the word as written
  * @param {string} target - the American form, lowercase

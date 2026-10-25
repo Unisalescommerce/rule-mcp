@@ -77,7 +77,7 @@ export async function registerGatewayTool() {
         // guardrail corpus is deterministic. This is what lets one skill edit
         // invalidate exactly these entries (cache-invalidation).
         const deps = {};
-        const primarySkill = core.effectiveRoute?.startsWith("rule-mcp-") ? core.effectiveRoute : null;
+        const primarySkill = core.effectiveRoute?.startsWith("rule-") ? core.effectiveRoute : null;
 
         if (primarySkill) {
           const digest = skillDigest(primarySkill);

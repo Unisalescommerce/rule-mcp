@@ -4,6 +4,10 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { getSkillsDirs as getSkillsDirectories } from "../cli/paths/index.js";
 import { readSkill } from "../tools/router/index.js";
+import { projectBody } from "./_read-project.js";
+
+/** One JSON body, the shape half of this module's answers share. */
+const json = (uri, value) => ({ contents: [{ uri, mimeType: "application/json", text: JSON.stringify(value, null, 2) }] });
 
 /**
  * Serve a resource by its URI, before compression.
@@ -22,7 +26,9 @@ export async function serveResource(uri) {
     for (const base of [embeddedSkills]) {
       try {
         for (const entry of readdirSync(base, { withFileTypes: true })) {
-          if (!(entry.isDirectory() && entry.name.startsWith("rule-mcp"))) {
+          // The catalog prefix is `rule-` (ADR 169); the URI pattern below
+          // accepts both spellings so an old link still resolves.
+          if (!(entry.isDirectory() && entry.name.startsWith("rule-"))) {
             continue;
           }
 
@@ -39,7 +45,7 @@ export async function serveResource(uri) {
       }
     }
 
-    return { contents: [{ uri, mimeType: "application/json", text: JSON.stringify(directories, null, 2) }] };
+    return json(uri, directories);
   }
 
   // ── Templates catalog ──────────────────────────────────────────
@@ -114,21 +120,13 @@ export async function serveResource(uri) {
 
   // ── rule://project - analyze project and suggest tools ──────────
   if (uri === "rule://project") {
-    const { detectProject, getFrameworkSuggestion } = await import("../core/detector/index.js");
-    const profile = detectProject(process.cwd());
-    const { skillName, toolName } = getFrameworkSuggestion(profile.framework);
-    const result = {
-      ...profile,
-      suggested_skills: [skillName],
-      suggested_tools: [toolName, "rule_tool_check", "rule_tool_styleguide"],
-      message: `Detected ${profile.framework} project "${profile.projectName}". Use ${toolName} for rule-mcp-compliant code generation.`,
-    };
-
-    return { contents: [{ uri, mimeType: "application/json", text: JSON.stringify(result, null, 2) }] };
+    return json(uri, await projectBody());
   }
 
   // ── Dynamic: rule://<skill-name> or rule://<skill-name>/<part> ──
-  const m = uri?.match(/^rulemcp:\/\/(rule-mcp(?:-[a-z0-9]+)*)(?:\/(\w+))?$/);
+  // Both protocol spellings are accepted: `rulemcp://` is the alias a released
+  // client may still send.
+  const m = uri?.match(/^(?:rulemcp|rule):\/\/(rule-(?:mcp-)?(?:[a-z0-9]+-)*[a-z0-9]+)(?:\/(\w+))?$/u);
 
   if (m) {
     const [, skillName, section] = m;

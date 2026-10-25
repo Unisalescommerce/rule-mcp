@@ -72,7 +72,7 @@ export async function computeGatewayCore(arguments_, fileSet) {
   const isBackendFramework = framework && BACKEND_FRAMEWORKS.has(framework);
   const isFrontendRoute = route.route?.startsWith("rule-frontend") || route.route?.startsWith("rule-platform");
   const effectiveRoute = isBackendFramework && isFrontendRoute ? DOMAIN_OVERRIDE[framework] || `rule-backend-${framework}` : route.route;
-  const primarySkill = effectiveRoute?.startsWith("rule-mcp-") ? effectiveRoute : null;
+  const primarySkill = effectiveRoute?.startsWith("rule-") ? effectiveRoute : null;
 
   // ── Step 2: Load primary skill evidence ──
   let evidence = "";

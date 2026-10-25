@@ -45,7 +45,7 @@ function expectedEntry(name) {
 function skillDirectories() {
   return new Set(
     readdirSync(join(root, "skills"), { withFileTypes: true })
-      .filter((entry) => entry.isDirectory() && entry.name.startsWith("rule-mcp-"))
+      .filter((entry) => entry.isDirectory() && entry.name.startsWith("rule-"))
       .map((entry) => entry.name),
   );
 }

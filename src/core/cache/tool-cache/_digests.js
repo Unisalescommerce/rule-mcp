@@ -27,7 +27,7 @@ export function skillDigest(name) {
       const { embeddedSkills } = getSkillsDirectories();
 
       for (const entry of readdirSync(embeddedSkills, { withFileTypes: true })) {
-        if (!entry.isDirectory() || !entry.name.startsWith("rule-mcp-")) {
+        if (!entry.isDirectory() || !entry.name.startsWith("rule-")) {
           continue;
         }
 

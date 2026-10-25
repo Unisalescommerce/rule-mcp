@@ -11,7 +11,7 @@ test("the deterministic core is cached under its own key", async () => {
 
   const stored = cacheGet(cacheKey(GATEWAY_CORE_TOOL, gatewayCoreArguments(ARGUMENTS)));
   assert.ok(stored, "the gateway core is not in the cache");
-  assert.ok(stored.effectiveRoute?.startsWith("rule-mcp-"), "the cached core carries the route");
+  assert.ok(stored.effectiveRoute?.startsWith("rule-"), "the cached core carries the route");
   assert.ok(stored.evidence?.length > 0, "the cached core carries the evidence");
   assert.equal(stored.checkResult.allPass, true, "the cached core carries the guardrail verdict");
 });

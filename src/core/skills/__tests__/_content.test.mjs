@@ -7,7 +7,7 @@ import { skillDoc, skillFile } from "./_docs.fixture.mjs";
 
 console.log("rule-mcp skill documentation test: required content");
 
-const dispatcherSkill = skillDoc("rule-mcp");
+const dispatcherSkill = skillDoc("rule");
 for (const requiredSkill of ["rule-backend-graphql", "rule-devops-observability", "rule-process-code-review"]) {
   assert.ok(dispatcherSkill.includes(`../${requiredSkill}/SKILL.md`), `rule-mcp must link ${requiredSkill}`);
 }

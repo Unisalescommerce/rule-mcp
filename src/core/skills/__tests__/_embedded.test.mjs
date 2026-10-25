@@ -56,7 +56,7 @@ test("every tool traces back to a rule-mcp-* directory in ./skills", () => {
 });
 
 test("every skill the registry reports starts with rule-mcp-", () => {
-  const foreign = surface.skills.filter((name) => !name.startsWith("rule-mcp-"));
+  const foreign = surface.skills.filter((name) => !name.startsWith("rule-"));
   assert.deepEqual(foreign, [], "a foreign skill name would mint a foreign rule_tool_* tool");
 });
 

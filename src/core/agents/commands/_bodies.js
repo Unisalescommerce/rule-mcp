@@ -1,6 +1,7 @@
 /** @module core/agents/commands/bodies - the router, check and area command bodies */
 
 import { CHECK_INTENT_KEYWORDS_LIST } from "./_check-intent.js";
+import { toolNameForSkill } from "../../../tools/skill/_skill-tool.js";
 
 /**
  * Shared guardrail-only steps once check intent is detected.
@@ -70,7 +71,9 @@ export function areaBody(description, { skill, members = [] } = {}) {
       ? [
           `Leaf skills/tools in this area (call those the request names; several when needed): ${members
             .map((name) => {
-              const tool = `rule_tool_${name.slice("rule-mcp-".length).replaceAll("-", "_")}`;
+              // The same rule the runtime mints tools by: strip `rule-`,
+              // then hyphens become underscores.
+              const tool = toolNameForSkill(name);
 
               return `\`${name}\` / \`${tool}\``;
             })

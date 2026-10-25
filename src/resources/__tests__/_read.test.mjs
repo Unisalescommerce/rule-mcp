@@ -45,7 +45,7 @@ test("rule://skills indexes the bundled skills with their sizes", async () => {
   assert.ok(skills.length > 0, "the bundled skills are found");
 
   for (const skill of skills) {
-    assert.match(skill.name, /^rule-mcp/, `every entry is a rule-mcp skill: ${skill.name}`);
+    assert.match(skill.name, /^rule-/, `every entry is a catalog skill: ${skill.name}`);
     assert.ok(skill.path.endsWith("SKILL.md"), `${skill.name}: the path points at its SKILL.md`);
     assert.ok(skill.length > 0, `${skill.name}: an empty skill would be a packaging bug`);
   }

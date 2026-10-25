@@ -16,7 +16,7 @@ import { REGISTERED_BY_CODE } from "../../core/skills/_skill-tools.js";
 const bin = fileURLToPath(new URL("../../../bin/rule-mcp.js", import.meta.url));
 
 const embeddedSkillCount = readdirSync(new URL("../../../skills", import.meta.url).pathname, { withFileTypes: true }).filter(
-  (e) => e.isDirectory() && e.name.startsWith("rule-mcp-"),
+  (e) => e.isDirectory() && e.name.startsWith("rule-"),
 ).length;
 
 /** Core/action tools that are not minted 1:1 from an exposing skill. */

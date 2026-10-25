@@ -75,7 +75,7 @@ export function detectReleaseTooling(projectDir) {
   };
 }
 
-/** The name a reader recognises for the fields whose key is not one. */
+/** The name a reader recognizes for the fields whose key is not one. */
 const LABELS = {
   pyproject: "pyproject.toml",
   pythonBuildSystem: "[build-system]",
