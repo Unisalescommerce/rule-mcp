@@ -8,6 +8,7 @@ them by `handoff doctor`, so editing it by hand is work the next run throws away
 
 | #                                                                  | Title                                                                     | Date       | Branch                    |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------------- | ---------- | ------------------------- |
+| [29](29-release-skills-and-workflow-reader.md)                     | Three release skills, one workflow reader, and the host-integration plan  | 2026-10-25 | rel/v0.1.0                |
 | [28](28-opentui-codex-hooks-and-command-targets.md)                | OpenTUI installer, Codex hooks, and command targets                       | 2026-10-25 | rel/v0.1.0                |
 | [27](27-plans-retirement-index-of-all-plans.md)                    | Plans retirement - index of all plans                                     | 2026-10-24 | feat/evolution            |
 | [26](26-main-and-[removed]-commit-split.md)                              | Main and [removed] commit split                                                 | 2026-10-12 | feat/[removed]                  |
