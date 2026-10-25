@@ -47,7 +47,7 @@ test("a Python project reports its own tooling, not npm's absence", () => {
   assert.deepEqual(
     releaseToolingLabels(tooling).sort(),
     ["pyproject.toml", "releaseWorkflow", "[build-system]", "uv.lock"].sort(),
-    "the labels name the files a reader recognises",
+    "the labels name the files a reader recognizes",
   );
   rmSync(root, { recursive: true, force: true });
 });
