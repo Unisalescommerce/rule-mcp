@@ -7,7 +7,7 @@ a tool, a skill, a prompt, a role, a command or a guardrail;
 `tests/docs/census-generated.test.mjs` compares this file against the live
 registry, so a stale copy fails the build instead of misleading a reader.
 
-## Action tools (102)
+## Action tools (104)
 
 The tools that do something rather than serve a skill. Every one is
 deterministic: none of them calls a model, so the same arguments return the
@@ -84,11 +84,13 @@ same result behind any client.
 | [`rule_tool_process`](#ruletoolprocess)                                  | rule-process skill.                                                                                                                                                                                                                                                                                                                           |
 | [`rule_tool_process_ai`](#ruletoolprocessai)                             | rule-process-ai skill.                                                                                                                                                                                                                                                                                                                        |
 | [`rule_tool_process_bmad`](#ruletoolprocessbmad)                         | rule-process-bmad skill.                                                                                                                                                                                                                                                                                                                      |
+| [`rule_tool_process_cargo_release`](#ruletoolprocesscargorelease)        | rule-process-cargo-release skill.                                                                                                                                                                                                                                                                                                             |
 | [`rule_tool_process_changelog`](#ruletoolprocesschangelog)               | rule-process-changelog skill.                                                                                                                                                                                                                                                                                                                 |
 | [`rule_tool_process_code_review`](#ruletoolprocesscodereview)            | rule-process-code-review skill.                                                                                                                                                                                                                                                                                                               |
 | [`rule_tool_process_npm_release`](#ruletoolprocessnpmrelease)            | rule-process-npm-release skill.                                                                                                                                                                                                                                                                                                               |
 | [`rule_tool_process_readme`](#ruletoolprocessreadme)                     | rule-process-readme skill.                                                                                                                                                                                                                                                                                                                    |
 | [`rule_tool_process_tdd`](#ruletoolprocesstdd)                           | rule-process-tdd skill.                                                                                                                                                                                                                                                                                                                       |
+| [`rule_tool_process_uv_release`](#ruletoolprocessuvrelease)              | rule-process-uv-release skill.                                                                                                                                                                                                                                                                                                                |
 | [`rule_tool_styleguide`](#ruletoolstyleguide)                            | rule-styleguide skill.                                                                                                                                                                                                                                                                                                                        |
 | [`rule_tool_styleguide_a11y`](#ruletoolstyleguidea11y)                   | rule-styleguide-a11y skill.                                                                                                                                                                                                                                                                                                                   |
 | [`rule_tool_styleguide_baseline`](#ruletoolstyleguidebaseline)           | rule-styleguide-baseline skill.                                                                                                                                                                                                                                                                                                               |
@@ -1133,6 +1135,22 @@ rule-process-bmad skill. Modes: full (rules), guardrails (testable assertions), 
 | `isComponent`         | boolean                                                              | no       | -        |                                                           |
 | `allowedDependencies` | array of string                                                      | no       | -        |                                                           |
 
+### rule_tool_process_cargo_release
+
+rule-process-cargo-release skill. Modes: full (rules), guardrails (testable assertions), check (validate code), search (find in content).
+
+| Parameter             | Type                                                                 | Required | Default  | Description                                               |
+| --------------------- | -------------------------------------------------------------------- | -------- | -------- | --------------------------------------------------------- |
+| `query`               | string                                                               | no       | -        | Search query (mode=search/tldr)                           |
+| `mode`                | `full` \| `summary` \| `search` \| `guardrails` \| `check` \| `tldr` | no       | `"full"` | Tool mode: full, summary, tldr, search, guardrails, check |
+| `code`                | string                                                               | no       | -        | Code to check (mode=check)                                |
+| `framework`           | string                                                               | no       | -        | Framework hint                                            |
+| `file`                | string                                                               | no       | -        | Scaffold file                                             |
+| `target`              | string                                                               | no       | -        | Target dir                                                |
+| `fileName`            | string                                                               | no       | -        | File name                                                 |
+| `isComponent`         | boolean                                                              | no       | -        |                                                           |
+| `allowedDependencies` | array of string                                                      | no       | -        |                                                           |
+
 ### rule_tool_process_changelog
 
 rule-process-changelog skill. Modes: full (rules), guardrails (testable assertions), check (validate code), search (find in content).
@@ -1200,6 +1218,22 @@ rule-process-readme skill. Modes: full (rules), guardrails (testable assertions)
 ### rule_tool_process_tdd
 
 rule-process-tdd skill. Modes: full (rules), guardrails (testable assertions), check (validate code), search (find in content).
+
+| Parameter             | Type                                                                 | Required | Default  | Description                                               |
+| --------------------- | -------------------------------------------------------------------- | -------- | -------- | --------------------------------------------------------- |
+| `query`               | string                                                               | no       | -        | Search query (mode=search/tldr)                           |
+| `mode`                | `full` \| `summary` \| `search` \| `guardrails` \| `check` \| `tldr` | no       | `"full"` | Tool mode: full, summary, tldr, search, guardrails, check |
+| `code`                | string                                                               | no       | -        | Code to check (mode=check)                                |
+| `framework`           | string                                                               | no       | -        | Framework hint                                            |
+| `file`                | string                                                               | no       | -        | Scaffold file                                             |
+| `target`              | string                                                               | no       | -        | Target dir                                                |
+| `fileName`            | string                                                               | no       | -        | File name                                                 |
+| `isComponent`         | boolean                                                              | no       | -        |                                                           |
+| `allowedDependencies` | array of string                                                      | no       | -        |                                                           |
+
+### rule_tool_process_uv_release
+
+rule-process-uv-release skill. Modes: full (rules), guardrails (testable assertions), check (validate code), search (find in content).
 
 | Parameter             | Type                                                                 | Required | Default  | Description                                               |
 | --------------------- | -------------------------------------------------------------------- | -------- | -------- | --------------------------------------------------------- |

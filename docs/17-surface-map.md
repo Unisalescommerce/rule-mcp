@@ -7,7 +7,7 @@ a tool, a skill, a prompt, a role, a command or a guardrail;
 `tests/docs/census-generated.test.mjs` compares this file against the live
 registry, so a stale copy fails the build instead of misleading a reader.
 
-## Command / Tool / Skill map (133)
+## Command / Tool / Skill map (135)
 
 One row per slash command, then every catalog skill that has no slash of its
 own (ADR 117: leaf skills are reached through area hubs or the router), then
@@ -117,11 +117,13 @@ Regenerate with `pnpm census`.
 | -                           | `rule_tool_process`                  | -                 | rule-process skill.                                                                                                                                                           |
 | -                           | `rule_tool_process_ai`               | -                 | rule-process-ai skill.                                                                                                                                                        |
 | -                           | `rule_tool_process_bmad`             | -                 | rule-process-bmad skill.                                                                                                                                                      |
+| -                           | `rule_tool_process_cargo_release`    | -                 | rule-process-cargo-release skill.                                                                                                                                             |
 | -                           | `rule_tool_process_changelog`        | -                 | rule-process-changelog skill.                                                                                                                                                 |
 | -                           | `rule_tool_process_code_review`      | -                 | rule-process-code-review skill.                                                                                                                                               |
 | -                           | `rule_tool_process_npm_release`      | -                 | rule-process-npm-release skill.                                                                                                                                               |
 | -                           | `rule_tool_process_readme`           | -                 | rule-process-readme skill.                                                                                                                                                    |
 | -                           | `rule_tool_process_tdd`              | -                 | rule-process-tdd skill.                                                                                                                                                       |
+| -                           | `rule_tool_process_uv_release`       | -                 | rule-process-uv-release skill.                                                                                                                                                |
 | -                           | `rule_tool_styleguide`               | -                 | rule-styleguide skill.                                                                                                                                                        |
 | -                           | `rule_tool_styleguide_a11y`          | -                 | rule-styleguide-a11y skill.                                                                                                                                                   |
 | -                           | `rule_tool_styleguide_baseline`      | -                 | rule-styleguide-baseline skill.                                                                                                                                               |

@@ -66,10 +66,10 @@ Live counts and the Command - Tool - Skill table: [Surface map](./17-surface-map
 
 | Surface                   | Count | Defined in                                    |
 | ------------------------- | ----- | --------------------------------------------- |
-| MCP tools                 | 102   | `src/tools/*` via `src/tools/router/index.js` |
-| - action tools            | 102   | one per module, registered explicitly         |
+| MCP tools                 | 104   | `src/tools/*` via `src/tools/router/index.js` |
+| - action tools            | 104   | one per module, registered explicitly         |
 | - skill tools             | 0     | one per catalog skill, generated              |
-| MCP resources             | 170   | `src/resources/index.js`                      |
+| MCP resources             | 174   | `src/resources/index.js`                      |
 | MCP prompts               | 38    | `src/prompts/index.js`                        |
 | - reusable                | 19    | workflow and area prompts                     |
 | - persona                 | 19    | 19 active roles, one command each             |

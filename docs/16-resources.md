@@ -7,7 +7,7 @@ a tool, a skill, a prompt, a role, a command or a guardrail;
 `tests/docs/census-generated.test.mjs` compares this file against the live
 registry, so a stale copy fails the build instead of misleading a reader.
 
-## MCP resources (170)
+## MCP resources (174)
 
 A resource is read with `resources/read`, and every one is JSON or markdown
 a client can cache: no call runs a model, and none of them writes.
@@ -124,6 +124,8 @@ a client can cache: no call runs a model, and none of them writes.
 | `rule://rule-process-ai/summary`               | rule-process-ai skill summary (first 30 lines)               | `text/markdown`    |
 | `rule://rule-process-bmad`                     | rule-process-bmad skill full content                         | `text/markdown`    |
 | `rule://rule-process-bmad/summary`             | rule-process-bmad skill summary (first 30 lines)             | `text/markdown`    |
+| `rule://rule-process-cargo-release`            | rule-process-cargo-release skill full content                | `text/markdown`    |
+| `rule://rule-process-cargo-release/summary`    | rule-process-cargo-release skill summary (first 30 lines)    | `text/markdown`    |
 | `rule://rule-process-changelog`                | rule-process-changelog skill full content                    | `text/markdown`    |
 | `rule://rule-process-changelog/summary`        | rule-process-changelog skill summary (first 30 lines)        | `text/markdown`    |
 | `rule://rule-process-code-review`              | rule-process-code-review skill full content                  | `text/markdown`    |
@@ -134,6 +136,8 @@ a client can cache: no call runs a model, and none of them writes.
 | `rule://rule-process-readme/summary`           | rule-process-readme skill summary (first 30 lines)           | `text/markdown`    |
 | `rule://rule-process-tdd`                      | rule-process-tdd skill full content                          | `text/markdown`    |
 | `rule://rule-process-tdd/summary`              | rule-process-tdd skill summary (first 30 lines)              | `text/markdown`    |
+| `rule://rule-process-uv-release`               | rule-process-uv-release skill full content                   | `text/markdown`    |
+| `rule://rule-process-uv-release/summary`       | rule-process-uv-release skill summary (first 30 lines)       | `text/markdown`    |
 | `rule://rule-styleguide`                       | rule-styleguide skill full content                           | `text/markdown`    |
 | `rule://rule-styleguide/summary`               | rule-styleguide skill summary (first 30 lines)               | `text/markdown`    |
 | `rule://rule-styleguide-a11y`                  | rule-styleguide-a11y skill full content                      | `text/markdown`    |
