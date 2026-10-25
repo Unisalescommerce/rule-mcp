@@ -60,16 +60,27 @@ function installCommand(opts) {
   applyMinimalEnv(surface ? undefined : opts.minimal);
   applySurfaceEnv(surface);
 
-  const result = installAgent({
-    agent: opts.agent,
-    force: opts.force,
-    dryRun: opts.dryRun,
-    global: opts.global,
-    mode: opts.mode,
-    entrypoint,
-    hooks: level.hooks,
-    level: opts.level ?? null,
-  });
+  let result;
+
+  try {
+    result = installAgent({
+      agent: opts.agent,
+      force: opts.force,
+      dryRun: opts.dryRun,
+      global: opts.global,
+      mode: opts.mode,
+      entrypoint,
+      hooks: level.hooks,
+      level: opts.level ?? null,
+    });
+  } catch (error) {
+    // A refusal is an answer, not a crash: the reader gets the sentence the
+    // installer wrote - which names the reason - and a stack trace helps nobody.
+    process.stderr.write(`${error.message}\n`);
+    process.exitCode = 1;
+
+    return;
+  }
   if (opts.json) {
     printJson(result);
   } else {

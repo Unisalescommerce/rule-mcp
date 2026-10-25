@@ -43,6 +43,7 @@ export const HOST_ALIASES = { windsurf: "devin" };
  * @property {boolean} installer whether `_catalog.js` names it today
  * @property {string} [conflict] a claim this tree makes elsewhere
  * @property {string} [resolution] what was decided about it, and when
+ * @property {string} [coveredBy] the installer row that owns its config
  */
 
 /** @type {HostEvidence[]} */
@@ -326,9 +327,12 @@ export const HOST_EVIDENCE = [
     label: "Cursor CLI",
     kind: "cli",
     status: "confirmed",
-    note: "The terminal `agent` has native slash commands and reads different files from the Cursor IDE, so it is its own row",
-    sources: ["https://prod.cursor.com/docs/cli/reference/slash-commands"],
+    note: "The terminal `agent` has native slash commands of its own, but it reads the same MCP file as the editor",
+    sources: ["https://prod.cursor.com/docs/cli/reference/slash-commands", "https://cursor.com/docs/cli/mcp"],
     installer: false,
+    coveredBy: "cursor",
+    resolution:
+      "Resolved 2026-10-25: the CLI documentation says MCP in the CLI uses the same configuration as the editor, so one install covers both surfaces and this row is a coverage note rather than a target. The plan's claim that the two read different files was about command files, not the server.",
   },
   {
     id: "goose",
@@ -351,6 +355,23 @@ export function evidenceOf(id) {
 /** The rows with no installer behind them, so the gap is a list and not an absence. */
 export function hostsWithoutInstaller() {
   return HOST_EVIDENCE.filter((row) => !row.installer);
+}
+
+/**
+ * The products the study measured that no install can target, each with why.
+ *
+ * `coveredBy` is not a gap: another row writes the same file, so the product
+ * works the moment that host is installed. The rest have no documented MCP
+ * config file at all, which is a finding rather than an omission.
+ */
+export function nonInstallable() {
+  return HOST_EVIDENCE.filter((row) => !row.installer).map((row) => ({
+    id: row.id,
+    label: row.label,
+    status: row.status,
+    coveredBy: row.coveredBy ?? null,
+    reason: row.coveredBy ? `the same config file as ${row.coveredBy}, so that install covers it` : "no documented MCP config file was found, so there is nothing to write",
+  }));
 }
 
 /** The rows that carried a contradiction and now say how it was closed. */

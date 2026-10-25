@@ -19,6 +19,7 @@ import { allAgents, deprecatedAgents } from "../installers/index.js";
 import { detectInstalledAgents } from "../install/index.js";
 import { GLYPHS } from "./_theme.js";
 import { hostRecord } from "../installers/hosts/index.js";
+import { nonInstallable } from "../installers/hosts/_evidence.data.js";
 
 /** One line naming how deep this host can be integrated, and what that adds. */
 const ceilingLine = (id) => {
@@ -63,6 +64,40 @@ export function agentCatalog() {
 }
 
 /**
+ * The products the study measured that this install cannot target.
+ *
+ * They are what the table row means: `aider` was measured and has no documented
+ * MCP config file, so it is a finding, not an omission. One row for the group
+ * says that; a disabled checkbox per product would suggest a choice that does not
+ * exist.
+ */
+const measuredSection = () => {
+  const measured = nonInstallable();
+
+  if (measured.length === 0) {
+    return [];
+  }
+
+  const gaps = measured.filter((row) => !row.coveredBy);
+  const covered = measured.filter((row) => row.coveredBy);
+  const lines = [`${gaps.length} measured: ${gaps.map((row) => row.id).join(", ")}`, "no documented MCP config file was found for these, so there is nothing to write"];
+
+  if (covered.length > 0) {
+    lines.push(...covered.map((row) => `${row.id} works through ${row.coveredBy}, same config file`));
+  }
+
+  return [
+    { section: true, label: "Measured, no config file", id: "section:measured" },
+    {
+      id: "measured:none",
+      label: lines[0],
+      note: `${gaps.length} products`,
+      detail: lines,
+    },
+  ];
+};
+
+/**
  * Build the rows and the sets that should start ticked.
  *
  * @returns {{ items: object[], detected: string[], configured: string[] }}
@@ -89,6 +124,7 @@ export function agentRows() {
     ...catalog.slice(0, IDE_START).map((entry) => toRow(entry)),
     { section: true, label: "IDEs", id: "section:ides" },
     ...catalog.slice(IDE_START).map((entry) => toRow(entry)),
+    ...measuredSection(),
   ];
 
   return { items, detected, configured };

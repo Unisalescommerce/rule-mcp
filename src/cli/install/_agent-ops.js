@@ -6,6 +6,7 @@ export * from "../installers/index.js";
 import { deprecatedAgents } from "../installers/index.js";
 import { installHookFile, removeHookFile } from "./_hook-files.js";
 import { forgetHost, writeInstalledManifest } from "./_manifest.js";
+import { nonInstallable } from "../installers/hosts/_evidence.data.js";
 
 /**
  * Whether an agent can be reached in a mode, before anything is written.
@@ -57,7 +58,13 @@ export const installAgent = ({ agent, entrypoint, dryRun = false, force = false,
   const surfacedWarnings = () => (warnings.length > 0 ? warnings : undefined);
 
   if (!installers[target] && target !== "all") {
-    throw new Error(`Unsupported agent: "${agent}". Supported agents: ${allAgents.join(", ")}`);
+    // A product the study measured is a different answer from a typo: one has no
+    // documented config file to write, the other is not a product at all.
+    const measured = nonInstallable().find((row) => row.id === target);
+
+    throw new Error(
+      measured ? `"${agent}" cannot be installed: ${measured.reason}. Nothing was written.` : `Unsupported agent: "${agent}". Supported agents: ${allAgents.join(", ")}`,
+    );
   }
 
   const result = {};
