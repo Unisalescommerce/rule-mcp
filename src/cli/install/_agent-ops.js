@@ -5,7 +5,7 @@ import { allAgents, normalizeInstallMode, remoteModeAgents, installers, uninstal
 export * from "../installers/index.js";
 import { deprecatedAgents } from "../installers/index.js";
 import { installHookFile, removeHookFile } from "./_hook-files.js";
-import { writeInstalledManifest } from "./_manifest.js";
+import { forgetHost, writeInstalledManifest } from "./_manifest.js";
 
 /**
  * Whether an agent can be reached in a mode, before anything is written.
@@ -43,7 +43,7 @@ export function checkRemoteSupport(name, normalizedMode, force = false) {
  * @param {{ agent: string, entrypoint: string, dryRun?: boolean, force?: boolean, global?: boolean, mode?: "stdio"|"daemon"|"sse"|"docker", hooks?: boolean }} opts
  * @returns {{ ok: boolean, dryRun: boolean, global: boolean, installed: object, manifest?: string }}
  */
-export const installAgent = ({ agent, entrypoint, dryRun = false, force = false, global = false, mode = "stdio", hooks = false, _env = {} }) => {
+export const installAgent = ({ agent, entrypoint, dryRun = false, force = false, global = false, mode = "stdio", hooks = false, level = null, _env = {} }) => {
   const normalizedMode = normalizeInstallMode(mode);
   // Legacy names redirect to their successor (windsurf -> devin): the
   // catalog no longer offers them, but naming one still works and warns.
@@ -97,7 +97,7 @@ export const installAgent = ({ agent, entrypoint, dryRun = false, force = false,
   const ok = Object.values(result).every((entry) => !entry?.error);
 
   if (!dryRun) {
-    const manifestPath = writeInstalledManifest(selected, entrypoint, global, normalizedMode);
+    const manifestPath = writeInstalledManifest(selected, entrypoint, global, normalizedMode, level);
 
     return {
       ok,
@@ -143,6 +143,10 @@ export const uninstallAgent = ({ agent, dryRun = false }) => {
 
     try {
       result[name] = uninstallers[name]({ dryRun });
+      // The manifest is what an uninstall reads, so an uninstall has to empty it:
+      // a host left recorded after its files are gone is a doctor reporting a
+      // host nobody installed.
+      forgetHost({ agent: name, dryRun });
       const file = removeHookFile({ agent: name, dryRun });
 
       if (file) {

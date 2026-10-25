@@ -24,22 +24,15 @@ import test from "node:test";
 const ALIAS_HOOK = fileURLToPath(new URL("../../scripts/alias-hook.mjs", import.meta.url));
 const ROOT = fileURLToPath(new URL("../..", import.meta.url));
 
-/** Surfaces an uninstall leaves behind, and the phase that owes the fix. */
-const LEFTOVERS = {
-  // Phase 3: `installDevin` writes a skill directory per command and
-  // `uninstallDevin` removes the config only.
-  "~/.config/devin/skills/": "phase 3",
-  // Phase 3: the cursor installer appends a rules block to `~/.cursorrules` and
-  // the uninstaller has never removed it.
-  "~/.cursorrules": "phase 3",
-  // Phase 3: the human-readable manifest beside the JSON one, written by every
-  // install and read by the doctor.
-  "~/.local/share/rule-mcp/installed.md": "phase 3",
-  // Phase 3: the JSON manifest. `forgetInstall` deletes it once no host is
-  // recorded, but an uninstall does not call it, so the file outlives the hosts
-  // it describes.
-  "~/.rule-mcp/config/install.json": "phase 3",
-};
+/**
+ * Surfaces an uninstall leaves behind, and the phase that would owe the fix.
+ *
+ * Empty, and it stays that way: every entry that lived here - Devin's skill
+ * directory, Cursor's `~/.cursorrules`, the two install manifests - is now
+ * removed by the uninstaller that wrote it. The loop below still runs, so the
+ * next surface somebody forgets has to be written down rather than tolerated.
+ */
+const LEFTOVERS = {};
 
 /** A backup is the writer's promise, not an uninstall failure. */
 const BACKUP = /\.bak$/u;
@@ -99,7 +92,7 @@ test("every catalog host installs, and the roundtrip starts from an empty home",
   assert.ok(left.length > 0, "the child reported no leftovers, which means it reported nothing");
 });
 
-test("an uninstall leaves only the surfaces this plan already owes", () => {
+test("an uninstall leaves nothing behind", () => {
   assert.deepEqual(
     withoutBackups.filter((file) => !documented(file)),
     [],

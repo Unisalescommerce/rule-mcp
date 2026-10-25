@@ -1,12 +1,14 @@
 /** @module cli/installers/uninstall - the editor uninstallers and the registry */
 
-import { existsSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, rmSync } from "node:fs";
+import { dirname, join } from "node:path";
 import { HOME, IS_MACOS, IS_WINDOWS, readText, removeFile, writeText } from "./_paths.js";
 import { removeJsonServer, removeVscodeServer } from "./_writers-json.js";
 import { HOST_FILES, hostFile, hostPaths } from "./_hosts.data.js";
 import { removeHostServer } from "./_host-formats.js";
-import { devinConfigPath, emacsInitFile, nvimMcpFile, vscodeGlobalDir } from "./_agents-ide.js";
+import { hostRecord } from "./hosts/index.js";
+import { renderAgentCommandFiles } from "../../core/agents/commands/index.js";
+import { emacsInitFile, nvimMcpFile } from "./_agents-ide.js";
 import { uninstallClaude, uninstallCodex, uninstallCursor, uninstallCopilot, uninstallGemini, uninstallPi } from "./_uninstall-clis.js";
 import { uninstallOpencode } from "./_agents-opencode.js";
 export * from "./_uninstall-clis.js";
@@ -38,7 +40,7 @@ const uninstallVscode = ({ dryRun }) => {
   results.push(removeFromExistingFile(projectFile));
 
   // Global (main VS Code)
-  const globalFile = join(vscodeGlobalDir(), "mcp.json");
+  const globalFile = hostRecord("vscode").server.file;
   results.push(removeFromExistingFile(globalFile));
 
   // VS Code Insiders global
@@ -55,20 +57,37 @@ const uninstallVscode = ({ dryRun }) => {
     results.push(removeFromExistingFile(join(ossDir, "mcp.json")));
   }
 
-  // Cursor global
-  results.push(removeFromExistingFile(join(HOME, ".cursor", "mcp.json")));
-
   return results.filter(Boolean);
 };
 
+/**
+ * Devin's installer writes one skill directory per command under
+ * `~/.config/devin/skills`, so the uninstall has to remove them: the config
+ * alone left seventeen files behind that nothing reads again.
+ */
 const uninstallDevin = ({ dryRun }) => {
-  const file = devinConfigPath();
+  const file = hostRecord("devin").server.file;
+  const base = dirname(file);
+  const skills = join(base, "skills");
+  const results = [writeText({ file, content: removeJsonServer(readText(file)), dryRun })];
 
-  return [writeText({ file, content: removeJsonServer(readText(file)), dryRun })];
+  for (const { filename } of renderAgentCommandFiles("devin")) {
+    const entry = join(skills, filename.split("/", 1)[0]);
+
+    if (existsSync(entry) && !dryRun) {
+      rmSync(entry, { recursive: true, force: true });
+    }
+
+    if (existsSync(entry) || dryRun) {
+      results.push(entry);
+    }
+  }
+
+  return results;
 };
 
 const uninstallJetbrains = ({ dryRun }) => {
-  const file = join(process.cwd(), ".idea", "mcp.json");
+  const file = hostRecord("jetbrains").server.file;
 
   return [writeText({ file, content: removeJsonServer(readText(file)), dryRun })];
 };

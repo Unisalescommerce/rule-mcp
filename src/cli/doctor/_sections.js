@@ -1,5 +1,6 @@
 /** Render the doctor report sections for the terminal. */
 import { banner, color, section } from "../index.js";
+import { hostRecord } from "../installers/hosts/index.js";
 import { WRAPPER_SCRIPT_PATH } from "../daemon/index.js";
 
 /** Icon for a boolean status. */
@@ -57,6 +58,29 @@ export function toolsSection(report) {
   ];
 }
 
+/**
+ * How deep a configured host is wired, and the one rung it is missing next.
+ *
+ * The ceiling is what the host can reach; the level is what this machine has.
+ * The report names the next rung it could install, because "L2 of L3" is a fact
+ * a reader cannot act on, and "L2 of L3, next L3 (the hooks)" is.
+ */
+const depthLine = (id, installed) => {
+  const record = hostRecord(id);
+
+  if (!record) {
+    return "";
+  }
+
+  if (!installed) {
+    return color(`  ceiling ${record.ceiling}, depth not recorded (installed before the manifest knew)`, "dim");
+  }
+
+  const next = ["L1", "L2", "L3", "L4"].find((rung) => Number(rung.slice(1)) > Number(String(installed).slice(1)) && record.levels[rung].supported);
+
+  return color(`  ${installed} of ${record.ceiling}${next ? `, next ${next}` : ""}`, "dim");
+};
+
 /** The Agents section: configured rows, an overflow note, and a missing-agents note. */
 export function agentsSection(report) {
   const configuredAgents = (report.agents || []).filter((agent) => agent.configured);
@@ -64,7 +88,9 @@ export function agentsSection(report) {
   const lines = [section("Agents", "🤖"), `Configured:  ${color(report.agentsConfigured, "green")}/${report.agentsTotal}`];
 
   for (const agent of configuredAgents.slice(0, 12)) {
-    lines.push(`  ${agentIcon(agent)} ${color(agent.name.padEnd(12), agent.validated === false ? "yellow" : "bold")} ${color(truncate(agent.configFile || "", 90), "dim")}`);
+    lines.push(
+      `  ${agentIcon(agent)} ${color(agent.name.padEnd(12), agent.validated === false ? "yellow" : "bold")} ${color(truncate(agent.configFile || "", 90), "dim")}${depthLine(agent.name, report.levels?.[agent.name])}`,
+    );
   }
 
   if (configuredAgents.length > 12) {

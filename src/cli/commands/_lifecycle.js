@@ -68,6 +68,7 @@ function installCommand(opts) {
     mode: opts.mode,
     entrypoint,
     hooks: level.hooks,
+    level: opts.level ?? null,
   });
   if (opts.json) {
     printJson(result);
