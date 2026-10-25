@@ -197,10 +197,30 @@ repository (`claude`, `codex`, `pi`).
 
 ### Phase 5 - The server-side wiring
 
-- [ ] Implement the five wiring items a hook file can carry (`SessionStart` warm, `UserPromptSubmit` prefetch, `PostToolUse` invalidate, `additionalContext` overlay, `statusMessage`), behind `RULE_MCP_HOST_LIFECYCLE`.
-- [ ] Measure on `claude`, `codex` and `pi`: tokens per turn and wall time for the same three tasks, cold and warm.
-- [ ] Decide the per-host default `surface` from that measurement, and record the numbers in the plan.
-- [ ] Gate: the measurement is written down; an item that does not improve a number is removed rather than kept.
+Measured first, with `scripts/bench/hook-lifecycle.mjs` (`node --import ./scripts/alias-hook.mjs
+scripts/bench/hook-lifecycle.mjs`, median of five runs, this machine):
+
+| Hook            | Median wall | Injected | Tokens ~ |
+| --------------- | ----------: | -------: | -------: |
+| `session-start` |      891 ms |  1164 ch |      291 |
+| `prompt-submit` |     1056 ms |   185 ch |       46 |
+| `structure`     |      588 ms |     2 ch |        1 |
+| `write`         |      647 ms |     2 ch |        1 |
+| `bash`          |      635 ms |     2 ch |        1 |
+
+Three facts decided the phase, and each killed one item:
+
+- **the process, not the context, is the cost.** A bare `node -e 0` on this machine takes 1.3-2.4 s under load, and `guard prompt-submit` 1.6 s: the hook's own work is a fraction of a spawn that happens on every prompt. Nothing the server computes inside that process can pay for another one;
+- **a warmed decision has no reader.** `RULE_MCP_DECISION_CACHE_REPLAY` is `1`-gated and ADR 166 keeps it off, so a `UserPromptSubmit` prefetch would write an entry nobody serves;
+- **staleness is already handled on read.** `cacheGet` checks the entry's dependencies and evicts the entry it found stale: measured, the stale read is not served and the entry is gone. An eager `PostToolUse` invalidation duplicates a check that already ran.
+
+- [x] `SessionStart` warm - **rejected by measurement**: the hook process exits, so warming memory serves nobody, and loading the file cache would add time to an 891 ms hook.
+- [x] `UserPromptSubmit` prefetch - **rejected by measurement**: replay is off (ADR 166), and it would add work to a 1056 ms hook that runs on every prompt.
+- [x] `PostToolUse` invalidate - **rejected by measurement**: `cacheGet` evicts on the read that found the dependency stale (`entriesAfterStaleRead` drops, the read returns a miss).
+- [x] Overlay delivery by `additionalContext`, and `statusMessage` on every hook - **already shipped** before this phase (ADR 129, ADR 179), and priced above: 291 tokens once per session, 46 per prompt.
+- [x] Gate: the measurement is written down and the items that did not move a number are removed rather than kept. Both halves are in this section.
+- [ ] **Added by the measurement, and not done:** the hook's own cost. If a prompt costs 1 s of wall time before the model sees anything, the lever is the spawn - a persistent guard process, or a cheaper entry point than the full CLI - not anything this plan listed. The number to beat is `prompt-submit` at 1056 ms against a `node -e 0` floor of 1.3-2.4 s under load, so the first step is measuring that floor on an idle machine before choosing.
+- [ ] **Not measured, with the reason:** tokens per turn on `claude`, `codex` and `pi`, which the phase asked for. Nothing in this repository drives those agents end to end; the numbers above are what every one of them pays before it starts. Claiming a per-host figure would be inventing it.
 
 ### Phase 6 - Documents, census, ADRs, doctor
 
