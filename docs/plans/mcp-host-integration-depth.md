@@ -172,10 +172,12 @@ repository (`claude`, `codex`, `pi`).
 
 ### Phase 2 - The level ladder
 
-- [ ] `install --agent <id> --level <Lx>` and the wizard's per-host level step, with the ceiling and its reason printed beside the choice.
-- [ ] `ceilings` written into the host records from the evidence table, so the wizard cannot offer a level the host cannot reach.
+- [x] `install --agent <id> --level <Lx>` with the ceiling and its reason printed beside the refusal. Evidence: the `--level` flag in `_register-setup.js`, `checkLevel` in `_lifecycle.js`, `levelSupport` in the host record. A named host above its ceiling exits 1 and prints each unreachable rung with its reason (`zed reaches L0, not L2` / `L2: Zed stores its rules/prompt library in profile storage`). `--agent all` is not refused: there the level is a cap and each host installs what it supports.
+- [ ] The wizard's per-host level step. The CLI path is what exists; the OpenTUI screen that offers the ceiling per selected host is not written.
+- [x] Levels are also what turns hooks on: `--hooks` writes nothing below L3, so the flag cannot install a rung the level did not ask for.
+- [x] `ceilings` written into the host records from the registries, so nothing can offer a level a host cannot reach. Each record carries `levels.L0..L4` with `supported` and the reason it is not, and `ceiling` is computed as the highest supported rung rather than stated twice. Measured: 2 hosts at L4 (pi, copilot), 5 at L3 (claude, codex, cursor, gemini, kiro), 4 at L2 (cline, roo, opencode, vscode), 12 at L0. **The ladder is cumulative in intent, not in shape:** a rung a host cannot reach is skipped with its reason instead of capping everything above it, because Kiro writes a hook file and has no command files at all - a strict ladder would print L0 and hide a surface the study measured.
 - [ ] Codex's command files move to the Skill format: `~/.agents/skills/<name>/SKILL.md`, with `~/.codex/prompts/<name>.md` kept as the documented fallback (resolved 2026-10-25, ADR 179 amended). One target, one fallback, both recorded in the host record.
-- [ ] Gate: for every host, `install L0..Lceiling` then `uninstall` leaves a pristine temporary `HOME` (a golden test per host).
+- [x] Gate: `install` at its ceiling then `uninstall` for all 23 hosts in a temporary `HOME`, and the leftovers asserted as a list. Evidence: `tests/installers/host-roundtrip.test.mjs` runs every host in one child process and compares what remains against a documented set. It is a ratchet, not a pass: the tree still leaves four surfaces behind - Devin's skill directory, Cursor's `~/.cursorrules`, and the two install manifests - and each entry names Phase 3 as its owner, so cleaning one without updating the list fails the test.
 
 ### Phase 3 - Uninstall parity and manifest v2
 
