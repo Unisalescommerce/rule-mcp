@@ -19,6 +19,11 @@ import { join } from "node:path";
  * @property {boolean} versionScript a `version` package script exists
  * @property {boolean} releaseWorkflow a `.github/workflows/release*.yml` exists
  * @property {boolean} packageVersioning package.json declares a version
+ * @property {boolean} pyproject a pyproject.toml exists
+ * @property {boolean} pythonBuildSystem pyproject.toml declares [build-system]
+ * @property {boolean} uvLock a uv.lock exists
+ * @property {boolean} cargoManifest a Cargo.toml exists
+ * @property {boolean} cargoLock a Cargo.lock exists
  */
 
 /**
@@ -37,6 +42,16 @@ export function detectReleaseTooling(projectDir) {
     // verdict, one with no package-manager release tooling.
   }
 
+  // A Python project answers the same question with different files, and the
+  // honest report is the same shape: what is there, without installing anything.
+  let pyproject = "";
+
+  try {
+    pyproject = readFileSync(join(projectDir, "pyproject.toml"), "utf8");
+  } catch {
+    // No pyproject.toml is a fact too: the Python fields stay false.
+  }
+
   const scripts = manifest?.scripts ?? {};
   let workflows;
 
@@ -52,8 +67,22 @@ export function detectReleaseTooling(projectDir) {
     versionScript: Boolean(scripts.version),
     releaseWorkflow: workflows.some((name) => /^release.*\.ya?ml$/u.test(name)),
     packageVersioning: typeof manifest?.version === "string",
+    pyproject: pyproject !== "",
+    pythonBuildSystem: /^\[build-system\]/mu.test(pyproject),
+    uvLock: existsSync(join(projectDir, "uv.lock")),
+    cargoManifest: existsSync(join(projectDir, "Cargo.toml")),
+    cargoLock: existsSync(join(projectDir, "Cargo.lock")),
   };
 }
+
+/** The name a reader recognises for the fields whose key is not one. */
+const LABELS = {
+  pyproject: "pyproject.toml",
+  pythonBuildSystem: "[build-system]",
+  uvLock: "uv.lock",
+  cargoManifest: "Cargo.toml",
+  cargoLock: "Cargo.lock",
+};
 
 /**
  * The tooling that was found, as labels, for a one-line report.
@@ -64,5 +93,5 @@ export function detectReleaseTooling(projectDir) {
 export function releaseToolingLabels(tooling) {
   return Object.entries(tooling)
     .filter(([, present]) => present)
-    .map(([name]) => name);
+    .map(([name]) => LABELS[name] ?? name);
 }
