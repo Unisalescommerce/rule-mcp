@@ -64,8 +64,8 @@ check(
   "T3.1 the reason carries the column checklist",
   /who writes it/.test(migration.hookSpecificOutput.permissionDecisionReason) && /who reads it/.test(migration.hookSpecificOutput.permissionDecisionReason),
 );
-check("T3.2 an unrelated command passes silently", decide("ls -la").hookSpecificOutput.permissionDecision === "allow");
-check("T3.3 a clean commit passes silently", decide("git commit -m x", "bash", () => []).hookSpecificOutput.permissionDecision === "allow");
+check("T3.2 an unrelated command passes silently", decide("ls -la").hookSpecificOutput?.permissionDecision === undefined);
+check("T3.3 a clean commit passes silently", decide("git commit -m x", "bash", () => []).hookSpecificOutput?.permissionDecision === undefined);
 const dirty = decide("git commit -m x", "bash", () => [{ file: "prisma/x.sql", failures: ["ai-no-speculative-audit-table"] }]);
 check(
   "T3.4 a failing commit asks, and names the file and the rule",
@@ -73,7 +73,7 @@ check(
     dirty.hookSpecificOutput.permissionDecisionReason.includes("prisma/x.sql") &&
     dirty.hookSpecificOutput.permissionDecisionReason.includes("ai-no-speculative-audit-table"),
 );
-check("T3.5 an empty command is never blocked", decide("").hookSpecificOutput.permissionDecision === "allow");
+check("T3.5 an empty command is never blocked", decide("").hookSpecificOutput?.permissionDecision === undefined);
 
 // ── T4: file -> skill mapping for the staged check ──
 check("T4 sql and prisma map to the data skill", skillForPath("prisma/migrations/x/migration.sql") === "rule-data-sql" && skillForPath("prisma/schema.prisma") === "rule-data-sql");
@@ -111,9 +111,9 @@ const run = (command) =>
     }),
   );
 check("T6 the CLI asks on a migration", run("npx prisma migrate deploy").hookSpecificOutput.permissionDecision === "ask");
-check("T6.1 the CLI allows an unrelated command", run("ls").hookSpecificOutput.permissionDecision === "allow");
+check("T6.1 the CLI allows an unrelated command", run("ls").hookSpecificOutput?.permissionDecision === undefined);
 const malformed = execFileSync(process.execPath, [BIN, "guard", "bash"], { input: "not json", encoding: "utf8" });
-check("T6.2 a malformed payload never blocks", JSON.parse(malformed).hookSpecificOutput.permissionDecision === "allow");
+check("T6.2 a malformed payload never blocks", JSON.parse(malformed).hookSpecificOutput?.permissionDecision === undefined);
 
 console.log(`\nResults: ${pass} passed, ${fail} failed`);
 setTimeout(() => process.exit(fail > 0 ? 1 : 0), 100);

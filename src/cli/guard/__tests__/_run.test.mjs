@@ -60,18 +60,18 @@ test("a TTY payload never blocks waiting for input", async () => {
   assert.ok(writes.join("").length > 0, "the session starts without a keystroke");
 });
 
-test("malformed payloads fail open with ALLOW", async () => {
+test("malformed payloads fail open with silent JSON", async () => {
   const writes = [];
   await runGuard("bash", { stdin: fakeStream("not json at all"), write: (t) => writes.push(t) });
   const answer = JSON.parse(writes.join(""));
-  assert.equal(answer.hookSpecificOutput.permissionDecision, "allow", "malformed payloads fail open");
+  assert.equal(answer.hookSpecificOutput?.permissionDecision, undefined, "malformed payloads fail open without permissionDecision");
 });
 
 test("a valid payload is decided", async () => {
   const writes = [];
   await runGuard("bash", { stdin: fakeStream(JSON.stringify({ tool_input: { command: "ls -la" } })), write: (t) => writes.push(t) });
   const answer = JSON.parse(writes.join(""));
-  assert.ok(answer.hookSpecificOutput, "the decision is rendered");
+  assert.equal(answer.hookSpecificOutput?.permissionDecision, undefined, "ordinary allow is silent");
 });
 
 test("a session-start payload is read when stdin is a pipe", async () => {
@@ -94,5 +94,18 @@ test("the kind defaults to bash", async () => {
   const writes = [];
   await runGuard(undefined, { stdin: fakeStream(JSON.stringify({ tool_input: { command: "ls" } })), write: (t) => writes.push(t) });
 
-  assert.ok(JSON.parse(writes.join("")).hookSpecificOutput, "an unnamed kind is decided as a bash command");
+  assert.equal(JSON.parse(writes.join("")).hookSpecificOutput?.permissionDecision, undefined, "an unnamed kind is decided as a bash command");
+});
+
+test("Codex ask is encoded as decision:block", async () => {
+  const writes = [];
+  await runGuard("bash", {
+    stdin: fakeStream(JSON.stringify({ turn_id: "t1", tool_input: { command: "pnpm prisma migrate deploy" } })),
+    write: (t) => writes.push(t),
+  });
+  const answer = JSON.parse(writes.join(""));
+
+  assert.equal(answer.decision, "block");
+  assert.match(answer.reason, /schema change/i);
+  assert.equal(answer.hookSpecificOutput?.permissionDecision, undefined);
 });

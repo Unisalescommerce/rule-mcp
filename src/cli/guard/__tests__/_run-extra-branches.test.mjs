@@ -1,5 +1,8 @@
 /** Extra branch coverage for runGuard: nullish tool_input/command and fail-open catches. */
 import assert from "node:assert/strict";
+import { mkdtempSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { test } from "node:test";
 
 import { runGuard } from "../_run.js";
@@ -35,13 +38,18 @@ function fakeStream(text = "") {
 
 test("structure defaults a missing tool_input to an empty object", async () => {
   const writes = [];
+  const cwd = mkdtempSync(join(tmpdir(), "rule-mcp-structure-null-"));
 
-  await runGuard("structure", {
-    stdin: fakeStream(JSON.stringify({ tool_input: null, cwd: process.cwd() })),
-    write: (text) => writes.push(text),
-  });
+  try {
+    await runGuard("structure", {
+      stdin: fakeStream(JSON.stringify({ tool_input: null, cwd })),
+      write: (text) => writes.push(text),
+    });
 
-  assert.equal(JSON.parse(writes.join("")).hookSpecificOutput.permissionDecision, "allow");
+    assert.equal(JSON.parse(writes.join("")).hookSpecificOutput?.permissionDecision, undefined);
+  } finally {
+    rmSync(cwd, { recursive: true, force: true });
+  }
 });
 
 test("bash defaults a missing command to an empty string", async () => {
@@ -52,7 +60,7 @@ test("bash defaults a missing command to an empty string", async () => {
     write: (text) => writes.push(text),
   });
 
-  assert.equal(JSON.parse(writes.join("")).hookSpecificOutput.permissionDecision, "allow");
+  assert.equal(JSON.parse(writes.join("")).hookSpecificOutput?.permissionDecision, undefined);
 });
 
 test("bash fails open when the decision write throws once", async () => {
@@ -73,5 +81,5 @@ test("bash fails open when the decision write throws once", async () => {
   });
 
   assert.equal(calls, 2);
-  assert.equal(JSON.parse(writes.join("")).hookSpecificOutput.permissionDecision, "allow");
+  assert.equal(JSON.parse(writes.join("")).hookSpecificOutput?.permissionDecision, undefined);
 });

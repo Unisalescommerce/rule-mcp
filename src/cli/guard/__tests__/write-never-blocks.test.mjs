@@ -87,5 +87,5 @@ test("a PreToolUse settings file from before ADR 129 still cannot block", () => 
   );
 
   assert.equal(stops(answer), false);
-  assert.equal(answer.hookSpecificOutput?.permissionDecision, "allow");
+  assert.equal(answer.hookSpecificOutput?.permissionDecision, undefined, "silent pass-through, never permissionDecision:allow");
 });

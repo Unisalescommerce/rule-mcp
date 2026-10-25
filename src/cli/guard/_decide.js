@@ -3,8 +3,8 @@
 import { extname } from "node:path";
 import { isCommitCommand, isMigrationCommand } from "../../core/agents/_hooks.js";
 
-/** Silent pass-through: the hook says nothing and the tool call proceeds. */
-export const ALLOW = { hookSpecificOutput: { hookEventName: "PreToolUse", permissionDecision: "allow" } };
+/** Silent pass-through: empty JSON (Codex rejects bare permissionDecision:allow). */
+export const ALLOW = {};
 
 /** @param {string} reason @returns {object} */
 export const ask = (reason) => ({

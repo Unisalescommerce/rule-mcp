@@ -1,10 +1,16 @@
 /** @module cli/guard/run - stdin payload handling and the guard entrypoint */
 
 import { ALLOW, decide } from "./_decide.js";
+import { encodeHookAnswer } from "./_encode.js";
 import { inject } from "./_inject.js";
 import { stagedFailures } from "./_staged.js";
 import { decideStructure } from "./_structure.js";
 import { startTask } from "./_task.js";
+
+/** Write one encoded answer; never throw out of the hook process. */
+const reply = (write, answer, payload) => {
+  write(JSON.stringify(encodeHookAnswer(answer, payload)));
+};
 
 /** @param {NodeJS.ReadStream} stream @returns {Promise<string>} */
 export function readStdin(stream) {
@@ -73,7 +79,7 @@ export async function runGuard(kind = "bash", io = {}) {
   try {
     payload = JSON.parse(await readStdin(stdin));
   } catch {
-    write(JSON.stringify(ALLOW));
+    reply(write, ALLOW, {});
 
     return;
   }
@@ -87,7 +93,7 @@ export async function runGuard(kind = "bash", io = {}) {
       answer = ALLOW;
     }
 
-    write(JSON.stringify(answer));
+    reply(write, answer, payload);
 
     return;
   }
@@ -103,8 +109,8 @@ export async function runGuard(kind = "bash", io = {}) {
   const command = payload?.tool_input?.command ?? "";
 
   try {
-    write(JSON.stringify(decide(command, kind, stagedFailures)));
+    reply(write, decide(command, kind, stagedFailures), payload);
   } catch {
-    write(JSON.stringify(ALLOW));
+    reply(write, ALLOW, payload);
   }
 }

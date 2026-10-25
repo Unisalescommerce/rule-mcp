@@ -5,11 +5,16 @@
  * of the permission system (ADR 129).
  */
 
-/** Silent pass-through: the hook says nothing and the tool call proceeds. */
-export const ALLOW = { hookSpecificOutput: { hookEventName: "PreToolUse", permissionDecision: "allow" } };
-
-/** Nothing to say: a valid hook answer that neither decides nor injects. */
+/**
+ * Silent pass-through: empty JSON, no permissionDecision.
+ *
+ * Codex PreToolUse rejects bare `permissionDecision:allow` (must pair with
+ * `updatedInput` or omit the field). Claude and Cursor treat `{}` as continue.
+ */
 export const SILENT = {};
+
+/** @deprecated use SILENT - kept as an alias so call sites stay readable */
+export const ALLOW = SILENT;
 
 /** @param {string} reason @returns {object} */
 export const deny = (reason) => ({
@@ -49,9 +54,19 @@ export function neverBlocks(answer = {}) {
 
   const specific = rest.hookSpecificOutput;
 
-  if (!specific?.permissionDecision) {
+  if (!specific) {
     return rest;
   }
 
-  return { ...rest, hookSpecificOutput: { ...specific, permissionDecision: "allow", permissionDecisionReason: "" } };
+  // Drop the decision fields entirely. Setting permissionDecision:allow breaks
+  // Codex PreToolUse; an empty/advice-only object is the universal pass-through.
+  const { permissionDecision: _decision, permissionDecisionReason: _reason, ...safe } = specific;
+
+  if (Object.keys(safe).length === 0) {
+    const { hookSpecificOutput: _drop, ...without } = rest;
+
+    return without;
+  }
+
+  return { ...rest, hookSpecificOutput: safe };
 }

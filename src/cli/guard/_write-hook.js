@@ -8,6 +8,7 @@
  * @see module:cli/guard/_structure - the question this answers
  */
 
+import { encodeHookAnswer } from "./_encode.js";
 import { noteWriteLanded } from "./_structure.js";
 import { ALLOW, SILENT, advise, neverBlocks } from "./_verdict.js";
 
@@ -37,5 +38,5 @@ export async function runWriteHook(payload, write) {
   // decides nothing, and `neverBlocks` makes that true by construction.
   const answer = payload?.hook_event_name === "PreToolUse" ? ALLOW : report.advice ? advise(report.advice) : SILENT;
 
-  write(JSON.stringify(neverBlocks(answer)));
+  write(JSON.stringify(encodeHookAnswer(neverBlocks(answer), payload)));
 }
