@@ -8,7 +8,8 @@ import { join } from "node:path";
 import { HOME, IS_WINDOWS, readText, writeText, serverName } from "./_paths.js";
 import { commandConfig } from "./_env.js";
 import { upsertJsonServer, upsertVscode } from "./_writers-json.js";
-import { appendInstruction } from "./_writers-text.js";
+import { HOST_FILES, hostFile } from "./_hosts.data.js";
+import { upsertHostServer } from "./_host-formats.js";
 import { renderAgentCommandFiles } from "../../core/agents/commands/index.js";
 
 const vscodeGlobalDir = () => {
@@ -57,9 +58,14 @@ const installJetbrains = ({ entrypoint, dryRun, global }) => {
   ];
 };
 
+/** Where Neovim reads a user-level MCP file. */
+const nvimMcpFile = () => join(IS_WINDOWS ? join(HOME, "AppData", "Local", "nvim") : join(HOME, ".config", "nvim"), "mcp.json");
+
+/** Where Emacs keeps the init file an MCP client reads. */
+const emacsInitFile = () => join(IS_WINDOWS ? join(HOME, "AppData", "Roaming", ".emacs.d") : join(HOME, ".emacs.d"), "init.el");
+
 const installNeovim = ({ entrypoint, dryRun, global }) => {
-  const nvimDir = IS_WINDOWS ? join(HOME, "AppData", "Local", "nvim") : join(HOME, ".config", "nvim");
-  const file = join(nvimDir, "mcp.json");
+  const file = nvimMcpFile();
 
   return [
     writeText({
@@ -72,8 +78,7 @@ const installNeovim = ({ entrypoint, dryRun, global }) => {
 
 const installEmacs = ({ entrypoint, dryRun, global }) => {
   // Emacs uses init.el or early-init.el
-  const emacsDir = IS_WINDOWS ? join(HOME, "AppData", "Roaming", ".emacs.d") : join(HOME, ".emacs.d");
-  const initFile = join(emacsDir, "init.el");
+  const initFile = emacsInitFile();
   const config = commandConfig(entrypoint, { global, agentName: "emacs" });
   const isPi = false; // Emacs is never pi.dev
   const emacsMarker = ";; rule-mcp";
@@ -88,26 +93,25 @@ const installEmacs = ({ entrypoint, dryRun, global }) => {
   ];
 };
 
-const createGenericInstaller = (name, opts = {}) => {
-  const configPath = opts.configPath || join(HOME, ".config", name, "mcp.json");
-  const instructionsPath = opts.instructionsPath || join(HOME, ".config", name, "instructions.md");
+/**
+ * The installer for a host that keeps its servers in a documented file with a
+ * documented dialect. The path and the format come from `_hosts.data.js`, so
+ * this function knows neither: it reads the file, hands it to the writer and
+ * writes what comes back.
+ *
+ * No instructions file: earlier releases wrote `~/.config/<name>/instructions.md`
+ * for every generic host, a path no host documents. A rules block that lands in
+ * a file nothing reads is worse than no rules block, because the install report
+ * says it worked.
+ */
+const createGenericInstaller =
+  (name) =>
+  ({ entrypoint, dryRun, global }) => {
+    const file = hostFile(name);
+    const content = upsertHostServer(HOST_FILES[name].format, readText(file), commandConfig(entrypoint, { global, agentName: name }));
 
-  return ({ entrypoint, dryRun, global }) => {
-    const results = [
-      writeText({
-        file: configPath,
-        content: upsertJsonServer(readText(configPath), commandConfig(entrypoint, { global, agentName: name })),
-        dryRun,
-      }),
-    ];
-    // Also write instruction file for agents that support it
-    if (opts.instructionsPath !== false) {
-      results.push(writeText({ file: instructionsPath, content: appendInstruction(""), dryRun }));
-    }
-
-    return results;
+    return [writeText({ file, content, dryRun })];
   };
-};
 
 const installDevin = ({ entrypoint, dryRun, global }) => {
   const results = [
@@ -128,4 +132,4 @@ const installDevin = ({ entrypoint, dryRun, global }) => {
   return results;
 };
 
-export { vscodeGlobalDir, devinConfigPath, installVscode, installJetbrains, installNeovim, installEmacs, createGenericInstaller, installDevin };
+export { vscodeGlobalDir, devinConfigPath, nvimMcpFile, emacsInitFile, installVscode, installJetbrains, installNeovim, installEmacs, createGenericInstaller, installDevin };

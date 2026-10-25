@@ -32,7 +32,7 @@ const installers = {
   kimi: createGenericInstaller("kimi"),
   vibe: createGenericInstaller("vibe"),
   grok: createGenericInstaller("grok"),
-  droid: createGenericInstaller("droid", { configPath: join(HOME, ".config", "factory", "mcp.json") }),
+  droid: createGenericInstaller("droid"),
   kiro: createGenericInstaller("kiro"),
   qwen: createGenericInstaller("qwen"),
   // Devin reads ~/.config/devin/mcp_config.json (%APPDATA%\devin on Windows)

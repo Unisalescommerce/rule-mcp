@@ -3,6 +3,8 @@
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { serverName, allAgents, HOME, vscodeGlobalDir } from "../installers/index.js";
+import { GENERIC_HOSTS, hostPaths } from "../installers/_hosts.data.js";
+import { emacsInitFile, nvimMcpFile } from "../installers/_agents-ide.js";
 
 export * from "../installers/index.js";
 
@@ -25,30 +27,22 @@ export function detectInstalledAgents() {
     { name: "jetbrains", path: join(process.cwd(), ".idea", "mcp.json"), key: serverName },
   ];
 
-  // Generic ~/.config/<name>/mcp.json agents
-  const genericAgents = ["cline", "roo", "zed", "antigravity", "kilo", "kimi", "vibe", "grok", "droid", "kiro", "qwen", "neovim", "emacs"];
+  return [
+    ...checks,
+    // Devin reads mcp_config.json, not the generic mcp.json.
+    { name: "devin", paths: [join(HOME, ".config", "devin", "mcp_config.json")], key: serverName },
+    // Neovim and Emacs keep their own file, written by their own installers.
+    { name: "neovim", paths: [nvimMcpFile()], key: serverName },
+    { name: "emacs", paths: [emacsInitFile()], key: serverName },
+    // The generic hosts keep one row each, in the file they read today first and
+    // the one an earlier release wrote second: an install that has not been
+    // migrated is still found, and the row says which file answered.
+    ...GENERIC_HOSTS.map((name) => ({ name, paths: hostPaths(name), key: serverName })),
+  ].map(({ name, path, paths, key }) => {
+    const candidates = paths ?? [path];
+    const found = candidates.find((file) => existsSync(file) && readFileSync(file, "utf8").includes(key ?? serverName));
 
-  // Devin reads mcp_config.json, not the generic mcp.json.
-  checks.push({ name: "devin", path: join(HOME, ".config", "devin", "mcp_config.json"), key: serverName });
-
-  for (const name of genericAgents) {
-    const agentPath = name === "droid" ? join(HOME, ".config", "factory", "mcp.json") : join(HOME, ".config", name, "mcp.json");
-    checks.push({ name, path: agentPath, key: serverName });
-  }
-
-  return checks.map(({ name, path, key }) => {
-    if (!existsSync(path)) {
-      return { name, configured: false, configFile: null };
-    }
-
-    try {
-      const content = readFileSync(path, "utf8");
-      const configured = key ? content.includes(key) : content.includes(serverName);
-
-      return { name, configured, configFile: path };
-    } catch {
-      return { name, configured: false, configFile: path };
-    }
+    return { name, configured: Boolean(found), configFile: found ?? (existsSync(candidates[0]) ? candidates[0] : null) };
   });
 }
 

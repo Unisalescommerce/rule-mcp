@@ -4,7 +4,9 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { HOME, IS_MACOS, IS_WINDOWS, readText, removeFile, writeText } from "./_paths.js";
 import { removeJsonServer, removeVscodeServer } from "./_writers-json.js";
-import { vscodeGlobalDir, devinConfigPath } from "./_agents-ide.js";
+import { HOST_FILES, hostFile, hostPaths } from "./_hosts.data.js";
+import { removeHostServer } from "./_host-formats.js";
+import { devinConfigPath, emacsInitFile, nvimMcpFile, vscodeGlobalDir } from "./_agents-ide.js";
 import { uninstallClaude, uninstallCodex, uninstallCursor, uninstallCopilot, uninstallGemini, uninstallPi } from "./_uninstall-clis.js";
 import { uninstallOpencode } from "./_agents-opencode.js";
 export * from "./_uninstall-clis.js";
@@ -71,13 +73,55 @@ const uninstallJetbrains = ({ dryRun }) => {
   return [writeText({ file, content: removeJsonServer(readText(file)), dryRun })];
 };
 
+/**
+ * Remove a generic host's entry from every file it may live in: the one it reads
+ * today, in that host's own dialect, then the path an earlier release wrote.
+ * A legacy file was always `mcpServers` JSON, so its dialect is not the host's.
+ */
 const uninstallGeneric =
   (name) =>
   ({ dryRun }) => {
-    const file = join(HOME, ".config", name, "mcp.json");
+    const current = hostFile(name);
+    const results = [];
 
-    return [writeText({ file, content: removeJsonServer(readText(file)), dryRun })];
+    for (const file of hostPaths(name)) {
+      if (!existsSync(file)) {
+        continue;
+      }
+
+      const content = removeHostServer(file === current ? HOST_FILES[name].format : "mcpServers", readText(file));
+
+      if (content === null) {
+        results.push(file);
+        continue;
+      }
+
+      if (content.trim() === "") {
+        if (!dryRun) {
+          removeFile(file);
+        }
+
+        results.push(file);
+        continue;
+      }
+
+      results.push(writeText({ file, content, dryRun }));
+    }
+
+    return results;
   };
+
+/** Neovim's file is JSON in the same shape the generic writer used. */
+const uninstallNeovim = ({ dryRun }) => [writeText({ file: nvimMcpFile(), content: removeJsonServer(readText(nvimMcpFile())), dryRun })];
+
+/** Emacs holds an elisp block, so its removal is a block strip, not a JSON delete. */
+const uninstallEmacs = ({ dryRun }) => {
+  const file = emacsInitFile();
+  const current = readText(file);
+  const without = current.replace(/\n*;; rule-mcp\n\(setq mcp-servers[\s\S]*?\)\)\)\)\n/u, "\n");
+
+  return [writeText({ file, content: without, dryRun })];
+};
 
 const uninstallers = {
   claude: uninstallClaude,
@@ -101,8 +145,8 @@ const uninstallers = {
   droid: uninstallGeneric("droid"),
   kiro: uninstallGeneric("kiro"),
   qwen: uninstallGeneric("qwen"),
-  neovim: uninstallGeneric("neovim"),
-  emacs: uninstallGeneric("emacs"),
+  neovim: uninstallNeovim,
+  emacs: uninstallEmacs,
 };
 
-export { uninstallVscode, uninstallDevin, uninstallJetbrains, uninstallGeneric, uninstallers };
+export { uninstallVscode, uninstallDevin, uninstallJetbrains, uninstallNeovim, uninstallEmacs, uninstallGeneric, uninstallers };

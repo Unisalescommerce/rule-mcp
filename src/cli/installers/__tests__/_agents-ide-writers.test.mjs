@@ -25,16 +25,13 @@ test("installEmacs appends its block once and leaves an existing block alone", (
   assert.equal(readFileSync(initFile, "utf8"), written, "a second install does not duplicate the block");
 });
 
-test("a generic installer writes config plus instructions, or config alone", () => {
-  const withDocs = createGenericInstaller("fake-agent");
-  const results = withDocs({ entrypoint: ENTRY, dryRun: false, global: false });
-  assert.equal(results.length, 2, "config and instructions are both written");
-  assert.ok(existsSync(join(home, ".config", "fake-agent", "mcp.json")), "the config lands in .config");
-  assert.ok(existsSync(join(home, ".config", "fake-agent", "instructions.md")), "the instruction file lands beside it");
+test("a generic installer writes the documented file and nothing beside it", () => {
+  const results = createGenericInstaller("cline")({ entrypoint: ENTRY, dryRun: false, global: false });
 
-  const configOnly = createGenericInstaller("bare-agent", { instructionsPath: false });
-  const bare = configOnly({ entrypoint: ENTRY, dryRun: false, global: false });
-  assert.equal(bare.length, 1, "instructionsPath false writes the config alone");
+  assert.equal(results.length, 1, "one file per host");
+  assert.ok(existsSync(join(home, ".cline", "data", "settings", "cline_mcp_settings.json")), "the documented path, not .config/<name>/mcp.json");
+  assert.equal(existsSync(join(home, ".config", "cline")), false, "no instructions file where no host documents one");
+  assert.doesNotMatch(readFileSync(join(home, ".cline", "data", "settings", "cline_mcp_settings.json"), "utf8"), /instructions\.md/u, "and nothing points at one");
 });
 
 test("installDevin writes the config and one file per slash command", () => {
