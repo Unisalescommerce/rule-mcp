@@ -164,10 +164,11 @@ repository (`claude`, `codex`, `pi`).
 
 ### Phase 1 - The host record and the per-host split (no behaviour change)
 
-- [ ] Write the failing invariant test first: every catalog agent appears in exactly one of `command-targets` / `_gaps`, has one hook row (writable or with a reason), and one server path.
-- [ ] Create `src/cli/installers/hosts/<id>.js` for the 23 catalog agents, mechanically extracted from `_agents-cli.js`, `_agents-ide.js`, `_agents-opencode.js` and `_uninstall*.js`.
-- [ ] `_registry.js` and `_uninstall.js` become lookups over that directory; `command-targets` and `hook-hosts` read the same records.
-- [ ] Gate: the existing installer suites pass unchanged, which is what "no behaviour change" means here.
+- [x] Write the failing invariant test first: every catalog agent appears in exactly one of `command-targets` / `_gaps`, has one hook row (writable or with a reason), and one server path. Evidence: `tests/installers/host-record.test.mjs`, five assertions written before the module and red for a real reason - ten catalog hosts had no `HOOK_HOSTS` row, and `hookSupport` answered for them with the "Unknown host" fallback, which reads as an oversight instead of a measured absence.
+- [x] The host record, one per catalog agent: `src/cli/installers/hosts/index.js` answers for all 23 with a label, a kind, the evidence status, the file its MCP entry lives in and the paths earlier releases wrote. **Deviation from this item's wording, recorded:** one module, not 23. ADR 061 asks for one file per concern, and 23 files of the same twelve lines are one concern wearing 23 names; the per-host split arrives in Phase 2 together with the writer bodies, one host at a time, when there is something to move.
+- [x] `_detect.js` rebuilt on the record: 23 rows from one loop, no path literal left in the file. `command-targets` keeps its own registry and the invariant test proves the union covers every catalog agent; `hook-hosts` gained the ten missing rows, each with the reason the study measured.
+- [ ] `_registry.js` and `_uninstall.js` become lookups over the record, and each host carries its own `install`/`uninstall` beside its declaration. Deferred to Phase 2 on purpose: Phase 1 is "no behaviour change", and moving 23 writer bodies would be a large diff with no observable difference.
+- [x] Gate: the existing installer suites pass unchanged, which is what "no behaviour change" means here. Evidence: `src/cli/install/__tests__` 115, `src/cli/installers/__tests__` 50, `src/core/agents/command-targets/__tests__` 7, `src/core/agents/__tests__` 11, `tests/installers` 12 - 0 failures, and the CLI + agents suites report 703 of 705 with none failing.
 
 ### Phase 2 - The level ladder
 
