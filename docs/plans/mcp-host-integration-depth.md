@@ -1,6 +1,6 @@
 # mcp-host-integration-depth - per-host install/uninstall, integration levels, and the server-side wiring
 
-Status: `planned`
+Status: `in-progress`
 Notes:`planned`. Outside the skills graph: this plan covers the installer, the host registries and
 the server↔host wiring, not skills, so it is not a node in `docs/plans/skills/skills-plan.md`.
 It is the sibling of `installer-scope-adr-policy-features.md` and depends on it for the host
@@ -159,8 +159,8 @@ repository (`claude`, `codex`, `pi`).
 - [x] Give every one of the 31 spike products a `status` from the closed vocabulary already used there (`confirmed`, `partial`, `needs-test`, `ambiguous`, `migration`, `plugin-dependent`, `research`), with its source URL. Evidence: `src/cli/installers/hosts/_evidence.data.js`, 31 rows behind `tests/installers/host-evidence.test.mjs`. **Measured distribution**: 14 `confirmed` (the 13 the study frontmattered plus Codex, whose summary carries no frontmatter), 3 `partial` (Copilot, Kimi, Kilo), 2 `needs-test` (Kiro, Devin), 2 `ambiguous` (Grok, Vibe), 2 `plugin-dependent` (Emacs, Neovim), 1 `migration` (Antigravity), 7 `research`. By surface: 16 CLI, 9 IDE, 4 hybrid, 2 cloud.
 - [x] Decide where the rows live, because Phase 1 consumes them and the port plan owns the path table: a data module beside the host modules, not a third table and not a table in this plan. `installer: false` marks the eight products with no `_catalog.js` row today, and `conflict` carries the two claims this tree makes elsewhere so item 2 has one place to resolve them.
 - [x] Resolve the two contradictions the measurements found: Roo Code (spike `confirmed` vs the shut-down extension) and the Codex prompt directory (ADR 179 vs the Skill-first upstream). Resolved 2026-10-25 from the sources, not from either claim: **Roo Code** - the documentation is live and documents `.roo/commands/` and `~/.roo/commands/` with `description`, `argument-hint` and `mode`, so the row stays `confirmed` and `_hook-hosts.js` now says what was measured (no tool hook documented) instead of a shutdown that did not happen; **Codex** - the Skills documentation lists `$HOME/.agents/skills` as the user scope, so the primary target becomes `~/.agents/skills/<name>/SKILL.md` with `~/.codex/prompts/*.md` kept as a documented fallback. ADR 179 amended for both; the target change is Phase 2 work.
-- [ ] Add the eight missing products (`aider`, `amp`, `continue`, `cursor-cli`, `goose`, `junie`, `openhands`, `trae`) as `research` rows with no installer behind them, so the gap is visible instead of implied.
-- [ ] Gate: every catalog agent has exactly one evidence row; no row says `confirmed` without a source.
+- [x] Add the eight missing products (`aider`, `amp`, `continue`, `cursor-cli`, `goose`, `junie`, `openhands`, `trae`) as `research` rows with no installer behind them, so the gap is visible instead of implied. Landed with the first item because one table is the cheaper shape: the eight rows exist with `installer: false`, and the test asserts that exact list rather than a count.
+- [x] Gate: every catalog agent has exactly one evidence row; no row says `confirmed` without a source. Both halves are assertions in `tests/installers/host-evidence.test.mjs` (`7/7`): the 23 catalog agents map one-to-one onto rows, and `unbackedClaims()` is empty by construction because a `confirmed` row cites an https page.
 
 ### Phase 1 - The host record and the per-host split (no behaviour change)
 
