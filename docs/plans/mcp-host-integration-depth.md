@@ -156,7 +156,8 @@ repository (`claude`, `codex`, `pi`).
 
 ### Phase 0 - Refresh the evidence, one row per host
 
-- [ ] Give every one of the 31 spike products a `status` from the closed vocabulary already used there (`confirmed`, `partial`, `needs-test`, `ambiguous`, `migration`, `plugin-dependent`, `research`), with its source URL.
+- [x] Give every one of the 31 spike products a `status` from the closed vocabulary already used there (`confirmed`, `partial`, `needs-test`, `ambiguous`, `migration`, `plugin-dependent`, `research`), with its source URL. Evidence: `src/cli/installers/hosts/_evidence.data.js`, 31 rows behind `tests/installers/host-evidence.test.mjs`. **Measured distribution**: 14 `confirmed` (the 13 the study frontmattered plus Codex, whose summary carries no frontmatter), 3 `partial` (Copilot, Kimi, Kilo), 2 `needs-test` (Kiro, Devin), 2 `ambiguous` (Grok, Vibe), 2 `plugin-dependent` (Emacs, Neovim), 1 `migration` (Antigravity), 7 `research`. By surface: 16 CLI, 9 IDE, 4 hybrid, 2 cloud.
+- [x] Decide where the rows live, because Phase 1 consumes them and the port plan owns the path table: a data module beside the host modules, not a third table and not a table in this plan. `installer: false` marks the eight products with no `_catalog.js` row today, and `conflict` carries the two claims this tree makes elsewhere so item 2 has one place to resolve them.
 - [ ] Resolve the two contradictions the measurements found: Roo Code (spike `confirmed` vs the shut-down extension) and the Codex prompt directory (ADR 179 vs the Skill-first upstream).
 - [ ] Add the eight missing products (`aider`, `amp`, `continue`, `cursor-cli`, `goose`, `junie`, `openhands`, `trae`) as `research` rows with no installer behind them, so the gap is visible instead of implied.
 - [ ] Gate: every catalog agent has exactly one evidence row; no row says `confirmed` without a source.
