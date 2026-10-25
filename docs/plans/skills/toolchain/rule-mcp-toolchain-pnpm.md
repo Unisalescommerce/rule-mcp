@@ -170,6 +170,15 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 
 - [ ] Implement `pkg-allow-builds`, `pkg-minimum-release-age` and
       `pkg-catalog-range` with fixtures and a unit test each.
+- [ ] **Handed from the release plans (2026-10-25):** the cooldown the three release skills
+      ask for has no owner of its own - `rule-process-npm-release`, `rule-process-uv-release`
+      and `rule-process-cargo-release` each point here instead of checking it themselves. The
+      rule is `pkg-minimum-release-age`: a project with a lockfile sets the cooldown for the
+      manager it uses (`.npmrc` `min-release-age`, pnpm `minimumReleaseAge` in seconds, yarn
+      `npmMinimalAgeGate`, bun `minimumReleaseAge` in `bunfig.toml`) and the value is at least
+      the documented floor. The Python and Rust spellings (`exclude-newer` / `UV_EXCLUDE_NEWER`,
+      and whatever cargo adopts) stay unowned until an area skill claims them; this plan records
+      the hand-off so they are not forgotten mid-implementation.
 - [ ] Ship the workspace, npmrc, CI, Docker and upgrade templates.
 - [ ] Promote the Tier A rule after the corpus gate reports 100%.
 - [ ] Write the ADR for the supply-chain policy, since it changes what an

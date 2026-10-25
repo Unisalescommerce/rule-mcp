@@ -297,7 +297,7 @@ Absorbed or outside the graph: listed for completeness, not executed as a node.
 
 Depends on: -
 
-Feeds: -
+Feeds: `mcp-host-integration-depth` (HARD, on the host path table this plan writes)
 
 Shared files: none: outside the skills graph
 

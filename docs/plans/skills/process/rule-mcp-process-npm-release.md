@@ -1,6 +1,6 @@
 # rule-process-npm-release - best-practice implementation plan
 
-Status: `planned`
+Status: `done`
 Notes:`planned` Notes: plan only. Each skill waits for the owner before implementation. Output convention: one plan per skill at `docs/plans/skills/<area>/<skill>.md`. Index: `docs/plans/skills/README.md`. Order: `docs/plans/skills/DEPENDENCIES.md`, after `rule-process-ai`.
 
 Area: process. Order: reverse alphabetical, twenty-ninth skill.
@@ -63,7 +63,19 @@ that finds no claim without a home.
 
 ## Workstream B - The workflow helper
 
-`skills/rule-process-npm-release/guardrails/_workflow.js`, one module shared by three rules:
+`src/core/guardrails/workflow/`, one reader shared by the three release skills (npm, uv,
+cargo) and by the rules of all three. The owner decided on 2026-10-25 that a shared reader
+beats a copy per skill, because two of the three skills would otherwise carry the same 130
+lines of indentation logic. The folder follows ADR 061 (one concern per file, 150-line cap):
+`_lines.js` reads entries, nested maps, `- ` lists and block scalars, `index.js` builds the
+workflow and exports both.
+
+The original plan put the file at `skills/rule-process-npm-release/guardrails/_workflow.js`.
+It moves to the engine barrel because a rule imports nothing anyway (ADR 089): the file is
+reachable through `context.helpers` when the first rule needs it, and the seam is already
+in the right place.
+
+What it does, and what it refuses:
 
 - split a workflow file into jobs by top-level keys under `jobs:`;
 - split a job into steps, each with its own `with:`, `run:` and `uses:` lines;
@@ -141,30 +153,31 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 
 ### Phase 1 - The helper
 
-- [ ] Write the `_workflow.js` fixture set first: four indentation shapes, a multi-line `run`, permissions at both levels.
-- [ ] Implement the helper and keep it free of rule-specific logic.
-- [ ] Gate: the helper suite green, and no rule file imports anything else new.
+- [x] Write the fixture set first: two-space and four-space indentation, a multi-line `run`, permissions at both levels, a bare `-` item, and the three shapes the reader refuses.
+- [x] Implement the helper and keep it free of rule-specific logic. Evidence: `src/core/guardrails/workflow/_lines.js` (134 lines) and `index.js` (100), exported from `src/core/guardrails/index.js`; no rule id, no regex for a command, no policy.
+- [x] Gate: the helper suite green (`src/core/guardrails/__tests__/_workflow.test.mjs`, 9/9), and no rule file imports anything else new.
+- [x] Note: the plan asked for "four indentation shapes"; the fourth resolved as _refused_ rather than read - a tab-indented file, an anchor on `jobs:` and a merge key all answer `null`, so a rule passes on a file the reader cannot follow instead of misreading it.
 
 ### Phase 2 - The blocking rules
 
-- [ ] `release-no-npm-token` with its good and bad fixtures, including the token name in a comment.
-- [ ] `release-stage-publish`, including the chained `run:` and the string case.
-- [ ] `release-actions-pinned`, including the local action that legitimately has no SHA.
-- [ ] `release-id-token-isolated`, including the workflow-level `id-token`.
-- [ ] Gate: the four rules green on the corpus, and `rule_tool_check` on this repository stays clean.
+- [x] `release-no-npm-token` with its good and bad fixtures, including the token name in a comment. Evidence: `skills/rule-process-npm-release/guardrails/_no-token.js`; the rule reads env lines and `run:` blocks from the parsed workflow, so a commented token never reaches it.
+- [x] `release-stage-publish`, including the chained `run:` and the string case. Evidence: `_stage-publish.js`; the staged form is removed before the plain form is looked for, and a non-workflow file (a test asserting the command) is skipped by the file gate.
+- [x] `release-actions-pinned`, including the local action that legitimately has no SHA. Evidence: `_actions-pinned.js`; `./` and `docker://` refs are exempt, a 40-hex SHA without a version comment is reported separately from an unpinned tag.
+- [x] `release-id-token-isolated`, including the workflow-level `id-token`. Evidence: `_id-token-isolated.js`; workflow-level `id-token`, two holders, and a holder that installs, runs a setup action or asks for a cache are all reported.
+- [x] Gate: the four rules green on the corpus, and `rule_tool_check` on this repository stays clean. Evidence: `_accuracy.test.mjs` 4/4 and `_coverage.test.mjs` 1/1; all five workflows under `.github/workflows/` report none of the four rules (the two `js-*` findings on `release.yml` are pre-existing and belong to another family - see Open notes).
 
 ### Phase 3 - The advisory rules and the cut
 
-- [ ] The four advisory rules, each with its exception fixture.
-- [ ] Cut the body to about 150 lines and move the template and the settings into `references/`.
-- [ ] Gate: a diff review that finds every removed claim with a destination, and the rule table replacing the final checklist.
-- [ ] Regenerate `docs/15-guardrails.md` with `pnpm census` and update the frontmatter `guardrails:` list.
+- [x] The four advisory rules, each with its exception fixture. Evidence: `_tag-trigger.js`, `_ignore-scripts.js`, `_no-persist-credentials.js`, `_least-privilege.js`; nine fixtures in the corpus, precision and recall 1.00 on all eight rules.
+- [x] Cut the body to about 150 lines and move the template and the settings into `references/`. Measured: 321 lines before, **164** after, with `references/publish-workflow.md` (the two workflow files, zizmor, the cooldown, the `postinstall` policy, the monorepo section) and `references/manual-settings.md` (both website checklists). The target was 150; what remains above it is the strict sequence, the two exception sections (first publish, monorepo pointer) and the rule table, each of which is a decision the model has to read before acting.
+- [x] Gate: a diff review that finds every removed claim with a destination, and the rule table replacing the final checklist. Evidence: the eight-item checklist became the eight-row rule table plus the two items no rule can see (the Trusted Publisher set in a browser, the token deleted and revoked); the template, the settings, the cooldown and the `postinstall` policy each moved to a named section of the two reference files.
+- [x] Regenerate `docs/15-guardrails.md` with `pnpm census` and update the frontmatter `guardrails:` list. Evidence: `pnpm census` reports the census current (its guardrail section counts the engine's own families only - see Open notes), and the frontmatter now lists eight rules, matching what `guardrails/index.js` exports.
 
 ### Phase 4 - Verification
 
-- [ ] Run the gates below.
-- [ ] Run the eight rules against this repository's own `.github/workflows/` and fix what they report, since a rule the author's own repository fails is a rule nobody will trust.
-- [ ] Hand the cooldown requirement to the `rule-toolchain-pnpm` plan.
+- [x] Run the gates below. Evidence 2026-10-25: `_accuracy` 4/4, `_coverage` 1/1, `_workflow` 10/10, `_false-positives` 9/9, `tests/docs/action-pins` 1/1, `src/core/skills/__tests__/_corpus` 1/1, `pnpm census` current. `_enforcement` fails identically at HEAD (checked with a stash), so it is not this plan's regression.
+- [x] Run the eight rules against this repository's own `.github/workflows/` and fix what they report, since a rule the author's own repository fails is a rule nobody will trust. Result: all five workflows clean. The first run was not: the advisory rules fired on `ci.yml`, `pages.yml`, `scorecard.yml` and `check-workflows.yml`, which publish nothing - a real false-positive class, fixed by scoping every advisory rule to a workflow that runs an npm publish, with a CI-workflow fixture per rule so the scope cannot silently regress.
+- [x] Hand the cooldown requirement to the `rule-toolchain-pnpm` plan. Done 2026-10-25: recorded under its Phase 2 as `pkg-minimum-release-age`, naming the four managers and the two spellings still unowned (uv `exclude-newer`, cargo).
 
 ## Model assignment
 
@@ -196,5 +209,14 @@ pnpm lint
 
 - The interview chose the structural eight, and the cooldown then left the family for `rule-toolchain-pnpm`. Eight minus one left seven, so the eighth slot went to `release-least-privilege`, which the same helper answers for free. That is an addition to the agreed set, recorded here rather than made silently.
 - The YAML helper is the only structural risk in this plan. A workflow written with tabs, or with a `jobs:` key nested under an anchor, is out of scope: the helper reports nothing and the rule passes. That failure mode is chosen deliberately, because a rule that blocks a legitimate workflow on a parser limitation is worse than one that misses it.
+- **The census does not count skill-owned rules.** `pnpm census` reports 9 distinct guardrails
+  (the `scaffold` and `semantic` families) while this tree carries four rules per skill across
+  the catalog, so `docs/15-guardrails.md` under-reports what `rule_tool_check` can run. Measured
+  on 2026-10-25 while regenerating it for this plan; not fixed here, because the generator is a
+  report and changing what it counts is its own decision.
+- **The JavaScript rules run on YAML.** `checkCode("rule-process-npm-release", ...)` over
+  `.github/workflows/release.yml` reports `js-if-braces` and `js-no-inline-blocks`, which are
+  pre-existing findings of another family and a hint that the family gate is a file extension
+  rather than a file type. Recorded, outside this plan's four rules.
 - A rule cannot see npmjs.com or github.com, so the settings checklist stays prose. The plan keeps it in `references/` rather than deleting it, because it is the half of the job the user performs.
 - Monorepos are read as one workflow plus N packages: the rules check the workflow once, and the per-package settings remain a checklist item, since nothing in the repository names a Trusted Publisher.

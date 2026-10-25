@@ -18,21 +18,27 @@ Decisions recorded: ADR 153 (this model), ADR 154 (the plan format contract).
 Measured on 2026-10-21 on this branch: **94 files** under `docs/plans` before this
 file existed, 95 after, 96 after the Stage 1 fold added `decision-models.md`.
 
-| Kind                                                                                                               | Count | In the graph                                                                  |
-| ------------------------------------------------------------------------------------------------------------------ | ----- | ----------------------------------------------------------------------------- |
-| Skill plans (`docs/plans/skills/<area>/<skill>.md`)                                                                | 82    | yes, one node each                                                            |
-| Cross-skill plan (`docs/plans/skills/toolchain/bundler-family.md`)                                                 | 1     | yes: a shared contract for Vite, Rspack and Parcel, owned by `rule-toolchain` |
-| Area plans (`docs/plans/*-guardrails.md`, `oss.md`, `execution-plan.md`, `installer-scope-adr-policy-features.md`) | 9     | **no**: absorbed, see section 9                                               |
-| Decision-models plan (`docs/plans/decision-models.md`)                                                             | 1     | **no**: outside the skills graph, see `DEPENDENCIES.md`                       |
-| `docs/plans/skills/README.md`                                                                                      | 1     | no: it is the index table                                                     |
-| `docs/plans/skills/DEPENDENCIES.md`                                                                                | 1     | no: superseded by section 5, kept as history                                  |
-| `docs/plans/skills/skills-plan.md`                                                                                 | 1     | no: this file orchestrates, it is not work                                    |
+| Kind                                                                                                                                                | Count | In the graph                                                                  |
+| --------------------------------------------------------------------------------------------------------------------------------------------------- | ----- | ----------------------------------------------------------------------------- |
+| Skill plans (`docs/plans/skills/<area>/<skill>.md`)                                                                                                 | 84    | yes, one node each                                                            |
+| Cross-skill plan (`docs/plans/skills/toolchain/bundler-family.md`)                                                                                  | 1     | yes: a shared contract for Vite, Rspack and Parcel, owned by `rule-toolchain` |
+| Area plans (`docs/plans/*-guardrails.md`, `oss.md`, `execution-plan.md`, `installer-scope-adr-policy-features.md`, `mcp-host-integration-depth.md`) | 10    | **no**: absorbed or tracked on their own, see section 9                       |
+| Decision-models plan (`docs/plans/decision-models.md`)                                                                                              | 1     | **no**: outside the skills graph, see `DEPENDENCIES.md`                       |
+| `docs/plans/skills/README.md`                                                                                                                       | 1     | no: it is the index table                                                     |
+| `docs/plans/skills/DEPENDENCIES.md`                                                                                                                 | 1     | no: superseded by section 5, kept as history                                  |
+| `docs/plans/skills/skills-plan.md`                                                                                                                  | 1     | no: this file orchestrates, it is not work                                    |
 
 **Graph nodes: 83.** Measured baseline for the retrofit: every plan file already
 has `- [ ]` checkboxes except two of the nine area plans; **no plan carries a
 status marker**; **no plan has a `## Dependency graph` section** (39 mention
 dependencies in prose, 4 have a heading named for them); 35 plans have at least
 one closed step and none is `done`.
+
+The counts above are the 2026-10-21 baseline. Measured again on 2026-10-25 the
+catalog carries **two more skill plans** (`rule-process-cargo-release`, #88, and
+`rule-process-uv-release`, #89) and a tenth plan outside the graph
+(`mcp-host-integration-depth.md`); the stage table in section 5 and the progress
+table in section 9 are the current count, this paragraph is the history.
 
 ## 2 - Vocabulary
 
@@ -102,7 +108,7 @@ other marker form. The test normalizes `[X]` rather than rejecting it.
 
 Stages are ordered; inside a stage, nodes are parallel unless a `HARD` edge says
 otherwise. Every node appears in exactly one table, so the counts can be summed
-instead of asserted: **85 nodes**. A `CONTRACT` edge names a phase and is exempt
+instead of asserted: **87 nodes**. A `CONTRACT` edge names a phase and is exempt
 from the stage rule, because what closes first is the phase, not the plan (ADR 154).
 
 ### Stage 0a - Foundations: the prose and scope rules
@@ -137,10 +143,12 @@ from the stage rule, because what closes first is the phase, not the plan (ADR 1
 | Node                            | Kind | Exits                                           |
 | ------------------------------- | ---- | ----------------------------------------------- |
 | `rule-process-bmad`             | leaf | the area router, and produces `rule-mcp-method` |
+| `rule-process-cargo-release`    | leaf | router of the area                              |
 | `rule-process-changelog`        | leaf | router of the area                              |
 | `rule-process-code-review`      | leaf | router of the area                              |
 | `rule-process-npm-release`      | leaf | router of the area                              |
 | `rule-process-readme`           | leaf | router of the area                              |
+| `rule-process-uv-release`       | leaf | router of the area                              |
 | `rule-styleguide-a11y`          | leaf | router of the area                              |
 | `rule-styleguide-baseline`      | leaf | router of the area                              |
 | `rule-styleguide-comments`      | leaf | router of the area                              |
@@ -331,10 +339,12 @@ file, so a stale row fails rather than misleads.
 | `rule-toolchain-vite`           | leaf   | in-progress | 4/19  | 1     |
 | `rule-ui-design-system`         | leaf   | in-progress | 4/21  | 1     |
 | `rule-process-bmad`             | leaf   | in-progress | 4/37  | 2     |
+| `rule-process-cargo-release`    | leaf   | done        | 19/19 | 2     |
 | `rule-process-changelog`        | leaf   | in-progress | 3/18  | 2     |
 | `rule-process-code-review`      | leaf   | in-progress | 3/16  | 2     |
-| `rule-process-npm-release`      | leaf   | in-progress | 4/19  | 2     |
+| `rule-process-npm-release`      | leaf   | done        | 20/20 | 2     |
 | `rule-process-readme`           | leaf   | in-progress | 5/17  | 2     |
+| `rule-process-uv-release`       | leaf   | done        | 20/20 | 2     |
 | `rule-styleguide-a11y`          | leaf   | in-progress | 4/18  | 2     |
 | `rule-styleguide-baseline`      | leaf   | in-progress | 9/15  | 2     |
 | `rule-styleguide-comments`      | leaf   | in-progress | 8/15  | 2     |
@@ -419,15 +429,16 @@ at a time. Each file carries `Status: superseded` and names its owner.
 | `frontend-guardrails` | the 7 frontend leaves, one rule set each                |
 | `meta-guardrails`     | the 4 meta leaves                                       |
 
-The other three are **outside the skills graph**, not absorbed: they plan
-repository policy and the installer, not skills, and they are tracked on their
-own. They carry `Status: planned` with a line saying so.
+The other four are **outside the skills graph**, not absorbed: they plan
+repository policy, the installer and the host integration, not skills, and they
+are tracked on their own. They carry `Status: planned` with a line saying so.
 
 | Plan                                  | Subject                                                                         |
 | ------------------------------------- | ------------------------------------------------------------------------------- |
 | `oss`                                 | open-source stewardship: roles, review findings, release duties                 |
 | `execution-plan`                      | the steward execution list, including the policies waiting on an owner decision |
 | `installer-scope-adr-policy-features` | the port of ADR policy, project installs, features and host paths               |
+| `mcp-host-integration-depth`          | per-host integration levels, install/uninstall split, server-side wiring        |
 
 ## 10 - Per-plan retrofit contract (ADR 154)
 
@@ -511,6 +522,18 @@ One test, `tests/plans/skills-plan.test.mjs`, parses `docs/plans` and this file:
   planned-only skill, and it is why tdd sits in stage 4 rather than stage 2.
 - **The progress table duplicates what the files say.** Deliberate and bounded:
   one number per node, recomputed by the test, so it fails rather than misleads.
+- **Two assertions of `tests/plans/skills-plan.test.mjs` are red in this tree**
+  (measured 2026-10-25, `rel/v0.1.0`): the plan files are named
+  `rule-mcp-<skill>.md`, so the node id the test derives is `rule-mcp-<skill>`,
+  while every stage table lists `<skill>`. Seven of the nine assertions pass; the
+  two that fail are "the stage tables list every node exactly once" and "a
+  CONTRACT edge names a phase the target plan has". Nothing in this plan fixes
+  it: it is one sweep over the graph lines or one over the file names, and the
+  owner picks which. The nodes added on 2026-10-25 follow the stage-table
+  convention so the sweep stays mechanical.
+- **The tail of this file is duplicated.** Sections 6-13 and the model
+  assignment appear twice with identical text; the stage tables in section 5 do
+  not, which is why the graph tests still parse. Recorded, not repaired.
 - **Nine files are outside the node count.** Six are superseded into the leaf
   plans that implement them; three (`oss`, `execution-plan`,
   `installer-scope-adr-policy-features`) plan repository policy and the installer
@@ -607,10 +630,12 @@ file, so a stale row fails rather than misleads.
 | `rule-toolchain-vite`           | leaf   | in-progress | 4/19  | 1     |
 | `rule-ui-design-system`         | leaf   | in-progress | 4/21  | 1     |
 | `rule-process-bmad`             | leaf   | in-progress | 4/37  | 2     |
+| `rule-process-cargo-release`    | leaf   | done        | 19/19 | 2     |
 | `rule-process-changelog`        | leaf   | in-progress | 3/18  | 2     |
 | `rule-process-code-review`      | leaf   | in-progress | 3/16  | 2     |
-| `rule-process-npm-release`      | leaf   | in-progress | 4/19  | 2     |
+| `rule-process-npm-release`      | leaf   | done        | 20/20 | 2     |
 | `rule-process-readme`           | leaf   | in-progress | 5/17  | 2     |
+| `rule-process-uv-release`       | leaf   | done        | 20/20 | 2     |
 | `rule-styleguide-a11y`          | leaf   | in-progress | 4/18  | 2     |
 | `rule-styleguide-baseline`      | leaf   | in-progress | 9/15  | 2     |
 | `rule-styleguide-comments`      | leaf   | in-progress | 8/15  | 2     |
@@ -695,15 +720,16 @@ at a time. Each file carries `Status: superseded` and names its owner.
 | `frontend-guardrails` | the 7 frontend leaves, one rule set each                |
 | `meta-guardrails`     | the 4 meta leaves                                       |
 
-The other three are **outside the skills graph**, not absorbed: they plan
-repository policy and the installer, not skills, and they are tracked on their
-own. They carry `Status: planned` with a line saying so.
+The other four are **outside the skills graph**, not absorbed: they plan
+repository policy, the installer and the host integration, not skills, and they
+are tracked on their own. They carry `Status: planned` with a line saying so.
 
 | Plan                                  | Subject                                                                         |
 | ------------------------------------- | ------------------------------------------------------------------------------- |
 | `oss`                                 | open-source stewardship: roles, review findings, release duties                 |
 | `execution-plan`                      | the steward execution list, including the policies waiting on an owner decision |
 | `installer-scope-adr-policy-features` | the port of ADR policy, project installs, features and host paths               |
+| `mcp-host-integration-depth`          | per-host integration levels, install/uninstall split, server-side wiring        |
 
 ## 10 - Per-plan retrofit contract (ADR 154)
 
@@ -787,6 +813,18 @@ One test, `tests/plans/skills-plan.test.mjs`, parses `docs/plans` and this file:
   planned-only skill, and it is why tdd sits in stage 4 rather than stage 2.
 - **The progress table duplicates what the files say.** Deliberate and bounded:
   one number per node, recomputed by the test, so it fails rather than misleads.
+- **Two assertions of `tests/plans/skills-plan.test.mjs` are red in this tree**
+  (measured 2026-10-25, `rel/v0.1.0`): the plan files are named
+  `rule-mcp-<skill>.md`, so the node id the test derives is `rule-mcp-<skill>`,
+  while every stage table lists `<skill>`. Seven of the nine assertions pass; the
+  two that fail are "the stage tables list every node exactly once" and "a
+  CONTRACT edge names a phase the target plan has". Nothing in this plan fixes
+  it: it is one sweep over the graph lines or one over the file names, and the
+  owner picks which. The nodes added on 2026-10-25 follow the stage-table
+  convention so the sweep stays mechanical.
+- **The tail of this file is duplicated.** Sections 6-13 and the model
+  assignment appear twice with identical text; the stage tables in section 5 do
+  not, which is why the graph tests still parse. Recorded, not repaired.
 - **Nine files are outside the node count.** Six are superseded into the leaf
   plans that implement them; three (`oss`, `execution-plan`,
   `installer-scope-adr-policy-features`) plan repository policy and the installer

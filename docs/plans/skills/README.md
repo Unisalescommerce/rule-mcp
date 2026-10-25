@@ -8,9 +8,12 @@ Run order and the four real dependencies: [`DEPENDENCIES.md`](DEPENDENCIES.md).
 Live ordering authority, stages, gates and per-plan progress:
 [`skills-plan.md`](skills-plan.md).
 
-Total: 81 skills in the catalog, each with a plan, plus three planned skills that
-do not exist yet: `rule-platform-mobile` (85), `rule-toolchain-electron` (86) and
-`rule-toolchain-tauri` (87). Numbers 40, 49 and 54 are
+Total: 81 skills in the catalog, each with a plan, plus five planned skills that
+do not exist yet: `rule-platform-mobile` (85), `rule-toolchain-electron` (86),
+`rule-toolchain-tauri` (87), `rule-process-cargo-release` (88) and
+`rule-process-uv-release` (89) - the two release skills that answer the same
+question as `rule-process-npm-release` for Rust and for Python managed with
+`uv`. Numbers 40, 49 and 54 are
 retired: those skills were removed from the catalog and their plans are gone.
 New rows append and existing numbers stay put, so the `#NN` references in the
 plans keep pointing at the same skill.
@@ -101,3 +104,5 @@ plans keep pointing at the same skill.
 | 85  | `rule-platform-mobile`          | platform   | `docs/plans/skills/platform/rule-platform-mobile.md`            | planned |
 | 86  | `rule-toolchain-electron`       | toolchain  | `docs/plans/skills/toolchain/rule-toolchain-electron.md`        | planned |
 | 87  | `rule-toolchain-tauri`          | toolchain  | `docs/plans/skills/toolchain/rule-toolchain-tauri.md`           | planned |
+| 88  | `rule-process-cargo-release`    | process    | `docs/plans/skills/process/rule-mcp-process-cargo-release.md`   | planned |
+| 89  | `rule-process-uv-release`       | process    | `docs/plans/skills/process/rule-mcp-process-uv-release.md`      | planned |
