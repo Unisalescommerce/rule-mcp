@@ -34,9 +34,14 @@ that supports selection and clipboard.
   dimension that was installed, asks for confirmation per dimension and excludes
   the doctor. `--purge` removes the runtime home; `--keep-config` keeps the
   configuration.
-- **Hooks** are implemented for the hosts that document a mechanism: Claude
-  Code, Cursor and Gemini CLI. Codex CLI and Copilot CLI have no user-facing
-  hook, so the row is disabled with that reason.
+- **Hooks** are written for the hosts whose documentation names both the file
+  and the events: Claude Code (`settings.json`), Cursor (`hooks.json`), Codex
+  CLI (`hooks.json`, trusted once with `/hooks`), Gemini CLI (`settings.json`)
+  and Kiro (`.kiro/hooks/*.json`). OpenCode, Pi, Cline and Kilo document
+  in-process plugin or extension hooks instead of a hook file; the registry
+  records that mechanism but leaves the row unwritable until the installer has
+  a target. Copilot, Aider, Zed and the shut-down Roo extension have no tool
+  hook, so the row is disabled with the reason.
 - **The TUI moves from Ink to OpenTUI**, which provides mouse selection,
   clipboard and notifications. OpenTUI needs Node 26.4+ with
   `--experimental-ffi`, so `.nvmrc` is `stable` and `engines.node` is
