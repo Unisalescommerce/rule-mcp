@@ -24,6 +24,7 @@ function installCommand(opts) {
     global: opts.global,
     mode: opts.mode,
     entrypoint,
+    hooks: opts.hooks === true,
   });
   if (opts.json) {
     printJson(result);

@@ -24,7 +24,6 @@ const MODE_HELP = "stdio (default), daemon (SSE), docker, or skills (no MCP serv
 const WIZARD_ONLY = {
   rules: "--rules",
   commands: "--commands",
-  hooks: "--hooks",
   skills: "--skills",
   service: "--service",
   doctor: "--doctor",
@@ -73,7 +72,7 @@ export function registerInstallCommand(program) {
     .option("--no-rules", "skip agent instruction files")
     .option("--commands", "write agent slash commands")
     .option("--no-commands", "skip agent slash commands")
-    .option("--hooks", "install guard hooks (Claude)")
+    .option("--hooks", "install guard hooks for the selected agents that document them")
     .option("--no-hooks", "skip guard hooks")
     .option("--skills", "install the bundled rule-mcp-* skills")
     .option("--no-skills", "skip the bundled skills")
@@ -116,6 +115,7 @@ export function registerInstallCommand(program) {
         force: options.force,
         dryRun: options.dryRun,
         json: options.json,
+        hooks: options.hooks === true,
         minimal: options.minimal,
         surface: options.surface,
       });

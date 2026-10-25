@@ -35,7 +35,11 @@ test("a negation is honored by a path that does none of it", () => {
 });
 
 test("every plan step is covered, not just the selection", () => {
-  const { flags } = said({ rules: true, commands: true, hooks: true, skills: true, service: true, doctor: true });
+  const { flags } = said({ rules: true, commands: true, skills: true, service: true, doctor: true });
 
-  assert.deepEqual(flags, ["--rules", "--commands", "--hooks", "--skills", "--service", "--doctor"]);
+  assert.deepEqual(flags, ["--rules", "--commands", "--skills", "--service", "--doctor"]);
+});
+
+test("hooks are no longer plan-only: the narrow install writes them", () => {
+  assert.deepEqual(said({ hooks: true }).flags, []);
 });
