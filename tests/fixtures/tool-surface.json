@@ -1,5 +1,5 @@
 {
-  "count": 102,
+  "count": 104,
   "tools": [
     "rule_tool",
     "rule_tool_ai",
@@ -65,11 +65,13 @@
     "rule_tool_process_adr",
     "rule_tool_process_ai",
     "rule_tool_process_bmad",
+    "rule_tool_process_cargo_release",
     "rule_tool_process_changelog",
     "rule_tool_process_code_review",
     "rule_tool_process_npm_release",
     "rule_tool_process_readme",
     "rule_tool_process_tdd",
+    "rule_tool_process_uv_release",
     "rule_tool_review",
     "rule_tool_search",
     "rule_tool_stats",
