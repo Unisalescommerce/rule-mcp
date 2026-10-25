@@ -40,7 +40,7 @@ export const HOOK_HOSTS = {
   qwen: { mechanism: "extension", writable: false, events: [], reason: "Commands, skills and extensions; no tool hook documented" },
   goose: { mechanism: "extension", writable: false, events: [], reason: "MCP extensions; no tool hook documented" },
   aider: { mechanism: "none", writable: false, events: [], reason: "No hooks or plugin system documented" },
-  roo: { mechanism: "none", writable: false, events: [], reason: "The Roo Code extension was shut down in May 2026" },
+  roo: { mechanism: "none", writable: false, events: [], reason: "No tool hook documented: the extension exposes slash commands as prompt files in .roo/commands" },
   zed: { mechanism: "none", writable: false, events: [], reason: "Lifecycle hooks are still a proposal, not shipped" },
   kiro: {
     mechanism: "native",

@@ -42,6 +42,7 @@ export const HOST_ALIASES = { windsurf: "devin" };
  * @property {string[]} sources the pages the status rests on
  * @property {boolean} installer whether `_catalog.js` names it today
  * @property {string} [conflict] a claim this tree makes elsewhere
+ * @property {string} [resolution] what was decided about it, and when
  */
 
 /** @type {HostEvidence[]} */
@@ -65,6 +66,8 @@ export const HOST_EVIDENCE = [
     sources: ["https://developers.openai.com/codex/skills", "https://developers.openai.com/codex/cli/slash-commands"],
     installer: true,
     conflict: "ADR 179 writes `~/.codex/prompts/*.md` as a command target; the study records that upstream moved to Skills",
+    resolution:
+      "Resolved 2026-10-25: the primary target becomes `~/.agents/skills/<name>/SKILL.md`, the user scope the Skills documentation lists, and `~/.codex/prompts/*.md` stays as a documented fallback that still loads as `/prompts:<name>`. ADR 179 amended; the target change is Phase 2 work.",
   },
   {
     id: "copilot",
@@ -194,6 +197,8 @@ export const HOST_EVIDENCE = [
     sources: ["https://roocodeinc.github.io/Roo-Code/features/slash-commands/"],
     installer: true,
     conflict: "`_hook-hosts.js` records the Roo Code extension as shut down in May 2026, which contradicts a `confirmed` row",
+    resolution:
+      "Resolved 2026-10-25: the documentation is live and describes `.roo/commands/` and `~/.roo/commands/` with `description`, `argument-hint` and `mode` frontmatter, so the row stays `confirmed` and the shutdown claim was corrected in `_hook-hosts.js` to what this tree actually measured - no tool hook documented.",
   },
   {
     id: "vscode",
@@ -346,6 +351,11 @@ export function evidenceOf(id) {
 /** The rows with no installer behind them, so the gap is a list and not an absence. */
 export function hostsWithoutInstaller() {
   return HOST_EVIDENCE.filter((row) => !row.installer);
+}
+
+/** The rows that carried a contradiction and now say how it was closed. */
+export function resolvedConflicts() {
+  return HOST_EVIDENCE.filter((row) => row.conflict && row.resolution);
 }
 
 /** The rows that claim a documented mechanism without a page behind it. */

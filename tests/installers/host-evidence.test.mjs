@@ -10,10 +10,19 @@
  * starts lying.
  */
 import { strict as assert } from "node:assert";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import { allAgents } from "../../src/cli/installers/index.js";
-import { EVIDENCE_STATUSES, HOST_ALIASES, HOST_EVIDENCE, evidenceOf, hostsWithoutInstaller, unbackedClaims } from "../../src/cli/installers/hosts/_evidence.data.js";
+import {
+  EVIDENCE_STATUSES,
+  HOST_ALIASES,
+  HOST_EVIDENCE,
+  evidenceOf,
+  hostsWithoutInstaller,
+  resolvedConflicts,
+  unbackedClaims,
+} from "../../src/cli/installers/hosts/_evidence.data.js";
 
 const KINDS = new Set(["cli", "ide", "hybrid", "cloud"]);
 const ids = HOST_EVIDENCE.map((row) => row.id);
@@ -61,10 +70,29 @@ test("a deprecated name resolves to the row that owns it", () => {
   assert.equal(evidenceOf("no-such-host"), null, "an unknown name answers null instead of a guess");
 });
 
-test("the contradictions this tree carries are recorded where they can be resolved", () => {
+test("the contradictions were resolved, not only recorded", () => {
   const conflicts = HOST_EVIDENCE.filter((row) => row.conflict)
     .map((row) => row.id)
     .sort();
 
-  assert.deepEqual(conflicts, ["codex", "roo"], "Phase 0's second item resolves exactly these two");
+  assert.deepEqual(conflicts, ["codex", "roo"], "Phase 0's second item names exactly these two");
+  assert.deepEqual(
+    resolvedConflicts()
+      .map((row) => row.id)
+      .sort(),
+    ["codex", "roo"],
+    "a conflict without a resolution is an open question wearing a table row",
+  );
+});
+
+test("the Roo Code row rests on a live page, and the tree no longer says otherwise", () => {
+  const roo = evidenceOf("roo");
+  const hooks = readFileSync(new URL("../../src/cli/install/_hook-hosts.js", import.meta.url), "utf8");
+
+  assert.equal(roo.status, "confirmed", "the documentation documents the command files");
+  assert.ok(
+    roo.sources.some((url) => url.startsWith("https://roocodeinc.github.io")),
+    "and the row cites it",
+  );
+  assert.doesNotMatch(hooks, /shut down in May 2026/u, "the retired claim is gone from the hook table");
 });
