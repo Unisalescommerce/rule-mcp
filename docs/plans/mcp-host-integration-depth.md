@@ -227,7 +227,7 @@ repository (`claude`, `codex`, `pi`).
 The host path table is the port plan's work, not this plan's, so the split in Phase 1 waits for
 it rather than inventing a second table. Nothing in the skills graph depends on this plan.
 
-Depends on: `installer-scope-adr-policy-features` (HARD)
+Depends on: `installer-scope-adr-policy-features` (HARD, its step 3 satisfied 2026-10-25: `_hosts.data.js` and `_host-formats.js` exist, so Phase 1 has the table it divides the 23 modules over)
 
 Feeds: nothing in the skills graph; `/rule-init`, `doctor` and `docs/04-operations.md` read its tables
 

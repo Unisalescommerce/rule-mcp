@@ -94,6 +94,14 @@ One table, read by install, uninstall and detection, so the three cannot disagre
    still be found and removed.
 4. Commit: `fix(setup): write generic hosts to their documented config paths`.
 
+**Done 2026-10-25** (from the host plan, which needed this table before Phase 1):
+
+- `src/cli/installers/_hosts.data.js` - one row per generic host: the documented file, the dialect, the paths earlier releases wrote, and the evidence status the 2026-10-25 study gave the product. Paths resolve at call time, so a test with a temporary `HOME` sees them.
+- `src/cli/installers/_host-formats.js` - `upsertHostServer` / `removeHostServer` per dialect: `mcpServers`, Zed's `context_servers`, opencode's own schema, `[[mcp_servers]]` with a `name` key (Vibe), `[mcp_servers.<name>]` (Grok). A file the writer cannot parse answers `null` and the caller refuses it instead of overwriting.
+- install, uninstall and detection all read the table. The paths this replaced were wrong for six hosts: `antigravity` (`~/.gemini/config/mcp_config.json`), `droid` (`~/.factory/mcp.json`, and the old uninstaller read a different path again), `kimi` (`~/.kimi-code/mcp.json`), `cline` (`~/.cline/data/settings/cline_mcp_settings.json`), `kilo` (opencode's schema) and `zed` (`context_servers`). Neovim and Emacs got their own uninstallers, because they had been reading a `mcp.json` nothing ever wrote.
+- No instructions file for a generic host any more: `~/.config/<name>/instructions.md` was a path no host documents.
+- Evidence: `src/cli/install/__tests__/_hosts-paths.test.mjs` (7 assertions, table-driven over the 12 hosts), `src/cli/` 648/650 green, and an end-to-end run that installs six hosts, detects all six, and removes each entry including the two legacy droid files.
+
 ### Step 4 - ADR policy
 
 1. `src/core/docs/adr-policy/` (or `src/core/adr-policy/` to match this tree):
