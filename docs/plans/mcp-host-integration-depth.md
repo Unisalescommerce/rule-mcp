@@ -181,10 +181,11 @@ repository (`claude`, `codex`, `pi`).
 
 ### Phase 3 - Uninstall parity and manifest v2
 
-- [ ] Manifest v2 (`hosts.<id>.written[]`), with a one-time migration from v1 that re-detects once and reports it.
-- [ ] Fix the six asymmetries in section 2, each with a test that fails before the fix.
-- [ ] `doctor` reports the achieved level per host and the one item missing for the next level.
-- [ ] Gate: no uninstaller contains a path literal; every path comes from the host record.
+- [x] Manifest v2: a `hosts` map with the level each host was installed at, alongside `agents` for compatibility. A v1 file is read as v2 with `level: null` - which the doctor prints as "installed before the manifest knew" instead of pretending the depth is zero - and the next write upgrades the file. Evidence: `src/cli/install/_manifest.js`, `report.levels` in the doctor.
+- [x] Fix the asymmetries, each with a test that failed before the fix. **Devin** removed its config and left seventeen `skills/**/SKILL.md` files; **Cursor** never removed the rules block it appended to `~/.cursorrules`; **both manifests** outlived the hosts they described, because an uninstall never called `forgetInstall`. All three are gone, and the roundtrip ratchet that named them is now empty.
+- [x] `doctor` reports the depth per host: `L2 of L3, next L3` for a host installed at a level, `ceiling L3, depth not recorded` for one installed before the manifest knew. Evidence: `depthLine` in `src/cli/doctor/_sections.js`, measured on a fresh install at `--level L2`.
+- [x] Gate: no uninstaller contains a hand-built user-level path to a server config; every one asks the host record. Evidence: `tests/installers/host-uninstall-paths.test.mjs`, written before the refactor and red on eight literals. Two exemptions are documented there with their owners instead of being silently allowed - a variant directory (`Code - Insiders`, `Code - OSS`) and a project-scope path, which belongs to step 8 of the port plan.
+- [ ] **Deferred with the reason:** `written[]` in the manifest. The plan wanted the uninstall to read the files a host wrote; with the uninstall now deriving from one host record, the only thing a written set would add is project-scope installs - which step 8 of `installer-scope-adr-policy-features` has not written yet. A field no reader consumes is the decoration this repository's own rules call out.
 
 ### Phase 4 - The eight missing products
 
