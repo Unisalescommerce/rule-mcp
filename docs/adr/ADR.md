@@ -8,6 +8,7 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md)                                        | Retire the cross-branch plan graph and orchestrate from rel/v0.1.0                                        | 2026-10-25 | accepted   | plans, orchestration, governance, release                                           |
 | [180](180-codex-pretooluse-silent-allow-and-ask-as-block.md)                                                            | Codex PreToolUse silent allow and ask as block                                                            | 2026-10-25 | accepted   | hooks, codex, guard                                                                 |
 | [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md)                                                  | Codex named hooks and Codex/Copilot command file targets                                                  | 2026-10-25 | accepted   | installer, hooks, commands, codex, copilot                                          |
 | [178](178-surface-is-the-only-tier-picker-slash-commands-follow-it.md)                                                  | Surface is the only tier picker; slash commands follow it                                                 | 2026-10-25 | accepted   | installer, tui, governance                                                          |
@@ -196,6 +197,7 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md)                                        | Retire the cross-branch layer and make plan-of-plans the level-0 orchestrator of one branch.                                                                                                                                    | The graph is executable from the branch the work is on: section 7 ends with the node to execute next, and no stage asks for a branch that does not exist.                                                                       |
 | [180](180-codex-pretooluse-silent-allow-and-ask-as-block.md)                                                            | Make ALLOW a silent {} for every host.                                                                                                                                                                                          | Positive: Codex PreToolUse no longer fails on every allow; migrations and structural confirms still stop the tool via decision:block.                                                                                           |
 | [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md)                                                  | Write statusMessage on every Codex command handler in codexHooks.                                                                                                                                                               | Positive: /hooks shows rule-mcp titles after reinstall+trust; install sync drops /prompts:rule* for Codex and /rule* skills for Copilot CLI. Negative: Codex custom prompts remain deprecated upstream, so invocations stay...  |
 | [178](178-surface-is-the-only-tier-picker-slash-commands-follow-it.md)                                                  | Drop the Commands step from the install rail.                                                                                                                                                                                   | The rail is Preflight, Profile, Agents, Transport, Surface, Review, Install, Done.                                                                                                                                              |
@@ -510,6 +512,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### governance
 
+- [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md) Retire the cross-branch plan graph and orchestrate from rel/v0.1.0
 - [178](178-surface-is-the-only-tier-picker-slash-commands-follow-it.md) Surface is the only tier picker; slash commands follow it
 - [177](177-rework-the-installer-around-one-profile-a-manifest-and-opentui.md) Rework the installer around one profile, a manifest and OpenTUI
 - [176](176-drop-the-spdx-file-headers.md) Drop the SPDX file headers
@@ -585,6 +588,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### release
 
+- [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md) Retire the cross-branch plan graph and orchestrate from rel/v0.1.0
 - [170](170-retire-the-plan-of-plans-into-an-adr-and-a-handoff.md) Retire the plan-of-plans into an ADR and a handoff
 - [169](169-rename-the-server-to-rulemcp.md) Rename the server to RuleMCP
 - [135](135-codify-stage-0-oss-governance-signing-support-and-licensing-policies.md) Codify Stage 0 OSS governance, signing, support, and licensing policies
@@ -772,6 +776,17 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
 - [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
 
+### plans
+
+- [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md) Retire the cross-branch plan graph and orchestrate from rel/v0.1.0
+- [175](175-orchestrate-the-plan-catalog-with-a-staged-dependency-graph.md) Orchestrate the plan catalog with a staged dependency graph
+- [172](172-retire-closed-plans-into-adrs-and-one-handoff.md) Retire closed plans into ADRs and one handoff
+- [171](171-retire-the-plan-graph-audit-reference-into-an-adr-and-a-handoff.md) Retire the plan-graph audit reference into an ADR and a handoff
+- [170](170-retire-the-plan-of-plans-into-an-adr-and-a-handoff.md) Retire the plan-of-plans into an ADR and a handoff
+- [154](154-every-plan-carries-a-status-line-a-dependency-graph-and-checkbox-steps.md) Every plan carries a status line, a dependency graph and checkbox steps
+- [060](060-plans-carry-nested-sub-steps-and-an-exhaustiveness-mandate.md) Plans carry nested sub-steps and an exhaustiveness mandate
+- [059](059-persona-plans-are-checklists-with-marks-that-survive-the-sync.md) Persona plans are checklists with marks that survive the sync
+
 ### quality-gate
 
 - [155](155-extend-the-devops-guardrail-family-with-file-scoped-source-cited-rules.md) Extend the devops guardrail family with file-scoped, source-cited rules
@@ -782,16 +797,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [137](137-add-a-source-cited-backend-guardrail-family-and-fix-the-six-existing-rules.md) Add a source-cited backend guardrail family and fix the six existing rules
 - [136](136-extend-the-devops-guardrail-family-with-file-scoped-source-cited-rules.md) Extend the devops guardrail family with file-scoped, source-cited rules
 - [112](112-extend-the-file-size-cap-to-the-shipped-skill-trees.md) Extend the file-size cap to the shipped skill trees
-
-### plans
-
-- [175](175-orchestrate-the-plan-catalog-with-a-staged-dependency-graph.md) Orchestrate the plan catalog with a staged dependency graph
-- [172](172-retire-closed-plans-into-adrs-and-one-handoff.md) Retire closed plans into ADRs and one handoff
-- [171](171-retire-the-plan-graph-audit-reference-into-an-adr-and-a-handoff.md) Retire the plan-graph audit reference into an ADR and a handoff
-- [170](170-retire-the-plan-of-plans-into-an-adr-and-a-handoff.md) Retire the plan-of-plans into an ADR and a handoff
-- [154](154-every-plan-carries-a-status-line-a-dependency-graph-and-checkbox-steps.md) Every plan carries a status line, a dependency graph and checkbox steps
-- [060](060-plans-carry-nested-sub-steps-and-an-exhaustiveness-mandate.md) Plans carry nested sub-steps and an exhaustiveness mandate
-- [059](059-persona-plans-are-checklists-with-marks-that-survive-the-sync.md) Persona plans are checklists with marks that survive the sync
 
 ### styleguide
 
@@ -1027,6 +1032,12 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [012](012-database-skills.md) Database Skills
 - [010](010-backend-framework-skills.md) backend framework skills
 - [005](005-backend-framework-skills.md) Backend Framework Skills
+
+### orchestration
+
+- [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md) Retire the cross-branch plan graph and orchestrate from rel/v0.1.0
+- [175](175-orchestrate-the-plan-catalog-with-a-staged-dependency-graph.md) Orchestrate the plan catalog with a staged dependency graph
+- [170](170-retire-the-plan-of-plans-into-an-adr-and-a-handoff.md) Retire the plan-of-plans into an ADR and a handoff
 
 ### quality
 

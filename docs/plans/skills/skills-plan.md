@@ -7,11 +7,13 @@ Where it lives: `docs/plans/skills/skills-plan.md`, inside the skills catalog it
 orchestrates, so the structure used to plan the skills is the structure used to
 plan their execution.
 
-Scope: **this branch only** (`feat/guardrails`). Other branches
-(`feat/export`, `feat/nyx`, `develop`) are out of scope and named here only so
-nobody looks for their plans in this graph.
+Scope: **every plan in this tree**, which since 2026-10-25 is one branch
+(`rel/v0.1.0`). The `feat/*` branches this file was written on are remote
+history and their content is here (ADR 181); a plan that lands later lands here
+too, and this file is its ordering authority.
 
-Decisions recorded: ADR 153 (this model), ADR 154 (the plan format contract).
+Decisions recorded: ADR 153 (this model), ADR 154 (the plan format contract),
+ADR 181 (one branch, and this file as the level-1 orchestrator of it).
 
 ## 1 - The universe
 

@@ -1,25 +1,30 @@
-# plan-of-plans - cross-branch orchestration
+# plan-of-plans - level-0 orchestration on `rel/v0.1.0`
 
-Status: `in-progress`. This is the level-0 orchestrator: it decides which branch to
-work in, which plan to implement next, and in what order the branches merge into
-`feat/evolution`. It does not plan a skill, and it never touches `main`.
+Status: `in-progress`. This is the level-0 orchestrator of the work that lives in this branch: it names the plans, the order they can run in, and the node to execute next. It plans no skill, and it never touches `main`.
 
-Format: the contract of ADR 154 (status line, `## Dependency graph`, checkboxes)
-applied to this file. ADR 153 and 154 live on `feat/guardrails` and are not on
-`feat/evolution` yet; this file follows them in advance, and the merge in stage 5
-brings them here.
+Format: the contract of ADR 154 (status line, `## Dependency graph`, checkbox steps), in its **four-line in-branch form**. The six-line cross-branch variant is gone with the branches: `Branch:` and `Path:` had one possible value each, and a field nobody can get wrong is a field that documents nothing (ADR 181).
 
-Topology (2026-10-21): **`feat/evolution` is the only destination.** Every feature
-branch merges into it, every commit of every stage lands there, and `main` is out
-of scope for this work: the owner opens the merge request when the catalog is
-ready. No stage touches `main`, and nothing here waits on it.
+Topology (2026-10-25): **`rel/v0.1.0` is where the work is.** Every commit of every stage lands here. `main` is out of scope - the release line diverged from it, and the owner opens the merge request when the catalog is ready. The five `feat/*` branches this file was written around are remote history, and their content is already in this tree (section 1).
 
-Scope: the **four feature branches plus `feat/evolution`**. Two things are out of
-scope: `main` (the owner opens the merge request, no stage reads or writes it) and
-`origin/develop`, which carries `architect.md`, `backlog.md` and `github.md` for
-the `rule-mcp-architect` track.
+## 1 - The branches that were, and the one that is
 
-## 1 - Branch inventory (measured 2026-10-21)
+Measured on 2026-10-25, from `rel/v0.1.0`:
+
+| Ref                           | Local  | Reachable from HEAD | What it is today                                                                                  |
+| ----------------------------- | ------ | ------------------- | ------------------------------------------------------------------------------------------------- |
+| `rel/v0.1.0`                  | yes    | -                   | the only working branch                                                                           |
+| `main`                        | yes    | **no** (870)        | out of scope: the release line diverged; the owner opens the merge request                        |
+| `feat/evolution`              | **no** | -                   | the graph's destination. It does not exist, locally or as a remote, so no stage can merge into it |
+| `origin/feat/guardrails`      | no     | no (150)            | its content is here: 87 plan nodes, ADR 151-154, `skills-plan.md`                                 |
+| `origin/feat/decision-models` | no     | no (932)            | folded into `ge` in stage 1; no unique content left                                               |
+| `origin/feat/export`          | no     | **yes**             | content here: `docs/plans/export.md`                                                              |
+| `origin/feat/nyx`             | no     | no (875)            | content here: `docs/plans/2026-10-01-scripts-mcp-layout.md`                                       |
+
+The counts are not a backlog. A branch that diverged before the release line has commits HEAD does not reach, which is not the same as work missing from the tree - and the tree is what decides: the plans, the ADRs, the skills and the evidence the graph was written to merge are all here.
+
+### The 2026-10-21 measurement, kept as the record
+
+This is what motivated stages 1-5, not what anyone executes today:
 
 | Branch                             | Commits ahead of the common base | Plan files |       Unique plan paths | Contended with `ge` |
 | ---------------------------------- | -------------------------------: | ---------: | ----------------------: | ------------------: |
@@ -29,474 +34,210 @@ the `rule-mcp-architect` track.
 | `feat/export` (`ex`)               |                                8 |          3 |                       1 |             3 files |
 | `feat/nyx` (`nyx`)                 |                                9 |          3 |                       1 |              1 file |
 
-Totals: **150 plan-file instances, 102 unique plan paths** across the five
-branches. `ge` carries every plan this work needs; `evolution` carries this file
-and its reference; `dm`, `ex` and `nyx` add one plan each. The branches share the
-same base, so the first merge needs no rebase.
+Totals: 150 plan-file instances, 102 unique plan paths. After stage 1 (2026-10-22): `ge` carried 98 files under `docs/plans` and `dm` carried none, because 44 of 44 shared plans diverged and `ge`'s versions superseded all of them.
 
-After Stage 1 (2026-10-22): `ge` carries **98 files** under `docs/plans`
-(96 plans plus the two indexes) and `dm` carries **none**. The fold moved the
-one unique plan and the decision-models evidence to `ge`, so the table above
-stays as the measurement that motivated the stage, not as the current count.
-
-Reference for this plan: [`plan-of-plans-reference.md`](plan-of-plans-reference.md)
-
-- the audit that asked whether the graph allows a linear implementation, with its
-  findings and their resolution.
-
-### What the measurement says about `dm`
-
-The 2026-10-21 measurement said `feat/decision-models` was **`ge` minus one
-commit**. The fold measured it again on 2026-10-22 and found a larger, older
-branch:
-
-- **44 of 44** shared plan files diverged, not 3. `ge` carries the ADR 154
-  status lines and `## Dependency graph` sections and the ADR 152 removals;
-  `dm` still says `Status: plan only` and still names the retired
-  `rule-frontend-custom-element` and `rule-frontend-vanilla-reactive` skills. No
-  `dm` line survives the comparison, so `ge`'s versions supersede all of them.
-- `dm` carries **33** skill plans and **11** shared orchestrator/index
-  documents, 45 plan paths in all with `decision-models.md`; not 32.
-- It has **four** commits not in `ge`, not one: three are rebased twins of
-  commits `ge` already has (`eba6861c`/`32e2ea08`, `775270f8`/`c9d24fc1`,
-  `4564ea95`/`e0389952`) and `b27c088a` is the `dm` half of the split `ge`
-  recorded as `7afaf605`.
-- It also owns the audit, the review and the probe harness, which `7afaf605`
-  had moved off `ge`. Those moved back with the plan.
-
-So `dm` was not a parallel branch, but it was not `ge` minus one commit either:
-it was an earlier state of the catalogue plus a track `ge` had split away. The
-fold retires it as a plan owner and keeps `ge` as the only catalogue.
+Reference for the retired layer: [`plan-of-plans-reference.md`](plan-of-plans-reference.md) - the audit that asked whether the graph allowed a linear implementation, with its findings and their resolution. `Status: done`, kept as history.
 
 ## 2 - What this file is not
 
-`feat/guardrails` already carries a level-1 orchestrator,
-`docs/plans/skills/skills-plan.md`: 83 nodes, stages 0-10, edge taxonomy, ten
-precedence policies, human gates, and ADR 153/154 behind it. This file **delegates
-to it**: for anything inside `ge`, the answer is in that file, not here.
+`docs/plans/skills/skills-plan.md` is the level-1 orchestrator of the catalog: 87 nodes, stages 0-10, edge taxonomy, ten precedence policies, human gates, ADR 153/154 behind it. This file **delegates to it** for anything that is a skill plan, and does not restate its order.
 
-The hierarchy is the decision, and it has one rule: **every branch that carries
-more than one plan gets its own level-1 orchestrator, or this file says why not.**
+The hierarchy has one rule: **every group of more than one plan gets an orchestrator, and this file names it or says why not.**
 
-| Branch           | Level-1 orchestrator                                                     | State                                             |
-| ---------------- | ------------------------------------------------------------------------ | ------------------------------------------------- |
-| `ge`             | `docs/plans/skills/skills-plan.md`                                       | exists, 83 nodes                                  |
-| `dm`             | none, and it does not need one                                           | folded into `ge` in stage 1                       |
-| `ex`             | `docs/plans/export.md` gains a dependency section                        | retrofitted (stage 2)                             |
-| `nyx`            | `docs/plans/2026-10-01-scripts-mcp-layout.md` gains a dependency section | retrofitted (stage 2)                             |
-| `feat/evolution` | this file                                                                | plus the per-branch orchestrators it delegates to |
+| Group                                                     | Orchestrator                        | State                                                                   |
+| --------------------------------------------------------- | ----------------------------------- | ----------------------------------------------------------------------- |
+| the skills catalog (84 leaves, 10 routers, 1 cross-skill) | `docs/plans/skills/skills-plan.md`  | in progress: 3 nodes done (`rule-process-npm/uv/cargo-release`)         |
+| installer and host integration (2 plans)                  | this file, stage 9                  | `installer-scope-adr-policy-features` then `mcp-host-integration-depth` |
+| repository policy, OSS and release duties                 | retired into ADR 135 and handoff 27 | closed                                                                  |
+| single-document tracks                                    | their own `## Dependency graph`     | `export.md`, `2026-10-01-scripts-mcp-layout.md`, `decision-models.md`   |
 
-## 3 - Nodes, two levels
+## 3 - Nodes: one level
 
-**Level 1 - branches.** Five nodes: `feat/evolution` (the destination), `ge`,
-`dm`, `ex`, `nyx`. They carry the merge order and the rebase work.
+**87 skill nodes** (counted by `tests/plans/skills-plan.test.mjs`) plus **five documents tracked on their own**, which are not nodes and are named in the table above: `export.md`, `2026-10-01-scripts-mcp-layout.md`, `decision-models.md`, `installer-scope-adr-policy-features.md`, `mcp-host-integration-depth.md`. Six area plans are `superseded` into their leaf plans and are not nodes either.
 
-**Level 2 - plans.** 98 nodes, one per unique plan path, each owned by exactly one
-branch. A path that appears on two branches is one node with an owner and, when
-the contents differ, a `DIVERGENCE` edge.
-
-Every level-2 node carries these parseable lines in its own plan:
+Every node carries four parseable lines in its own plan:
 
 ```
 Status: planned
-Branch: feat/guardrails
-Path: docs/plans/skills/data/rule-data-sql.md
-Depends on: rule-process#2 (CONTRACT), rule-data-sql (HARD)
-Feeds: rule-data (HARD)
+Depends on: rule-process-ai (HARD), rule-mcp-process-npm-release#1 (CONTRACT)
+Feeds: rule-process (HARD)
 Shared files: tests/fixtures/guardrail-corpus.mjs
 ```
 
-That is **six lines**, and ADR 154 currently specifies four. The review's finding
-F5 records the divergence: ADR 154 is amended to this set rather than a third
-format being invented. `Branch:` and `Path:` are what make a node findable from
-`feat/evolution`, so they cannot be derived from the file location as long as the
-file is not on `feat/evolution`.
+A `CONTRACT` edge names the exporting phase (`id#2`), which is why a contract may point at a plan in the same stage: the phase closes first, not the plan.
 
-## 4 - Edge taxonomy
+## 4 - Edges
 
-Four kinds inherited from ADR 153, four new ones for the cross-branch layer:
+Four kinds, all of them within this branch:
 
-| Kind         | Meaning                                                                        | Executor rule                          |
-| ------------ | ------------------------------------------------------------------------------ | -------------------------------------- |
-| `HARD`       | B cannot start before A is closed                                              | block                                  |
-| `ORDER`      | B can start, but after A avoids churn                                          | warn                                   |
-| `CONFLICT`   | A and B edit the same shared file, same branch                                 | serialize                              |
-| `CONTRACT`   | A exports a surface B consumes, named by phase                                 | block on that phase                    |
-| `MERGE`      | Branch A must enter `feat/evolution` before B                                  | block the merge, not the work          |
-| `REBASE`     | A and B touch the same path on different branches; one rebases after the other | order the rebase                       |
-| `DIVERGENCE` | The same plan path exists on two branches with different content               | reconcile before either is implemented |
-| `SUPERSEDES` | A replaces B; B is not executed                                                | retire B                               |
+| Kind       | Meaning                                        | Executor rule       |
+| ---------- | ---------------------------------------------- | ------------------- |
+| `HARD`     | B cannot start before A is closed              | block               |
+| `ORDER`    | B can start, but after A avoids churn          | warn                |
+| `CONFLICT` | A and B edit the same shared file              | serialize           |
+| `CONTRACT` | A exports a surface B consumes, named by phase | block on that phase |
 
-## 5 - The level-1 graph
+Four more existed for the cross-branch layer and are retired with it (ADR 181): `MERGE` (a branch had to enter `feat/evolution`), `REBASE` (two branches touched one path), `DIVERGENCE` (one path, two contents), `SUPERSEDES` (a plan replaced another across branches). They are kept here so a document that cites them still reads; nothing uses them now.
+
+## 5 - The graph
 
 ```
-dm --FOLD--> ge          (commit skipped: 7afaf605 records the split; 45 plans removed, 1 kept)
-ex --MERGE--> feat/evolution    (3 contended files with ge)
-nyx --MERGE--> feat/evolution   (1 contended file with ge)
-ge --MERGE--> feat/evolution    (last: 413 changed files, carries the removals)
-feat/evolution                (the destination: every merge above lands here)
+main ................................ out of scope (the owner's merge request)
+rel/v0.1.0
+├── skills-plan.md ................. the catalog, 87 nodes, 3 done
+│   ├── stages 0a, 0b .............. the prose rules, the ADR record format
+│   ├── stages 1-6 ................. 84 leaves plus 10 routers, per skills-plan
+│   └── stage 10 ................... the area routers
+├── installer-scope-adr-policy-features  (tracked on its own, planned)
+│   └── --HARD--> mcp-host-integration-depth  (Phase 1 and later; Phase 0 does not wait)
+├── export.md, 2026-10-01-scripts-mcp-layout.md, decision-models.md  (independent)
+└── this file ...................... the order between the groups above
 ```
 
-Edges, spelled out:
+Edges spelled out:
 
-| From                                         | To                          | Kind         | Why                                                                                                                |
-| -------------------------------------------- | --------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------ |
-| `dm`                                         | `ge`                        | `SUPERSEDES` | 44 of 44 shared plans superseded, 1 unique plan, 4 commits (3 rebased twins, 1 split mirror)                       |
-| `dm` -> `decision-models.md`                 | `ge`                        | `MERGE`      | the one plan that survives the fold, and it moves with the commit                                                  |
-| `ex`                                         | `feat/evolution`            | `MERGE`      | independent content (7 files), 3 shared generated files                                                            |
-| `nyx`                                        | `feat/evolution`            | `MERGE`      | independent content (19 files), 1 shared generated file                                                            |
-| `ge`                                         | `feat/evolution`            | `MERGE`      | largest diff, carries ADR 151/152 removals                                                                         |
-| `ex`, `nyx`                                  | `ge`                        | `REBASE`     | both touch `docs/handoff/HANDOFF.md`; `ex` also touches `docs/02-architecture.md` and `tests/fixtures/census.json` |
-| `dm`'s 44 shared plan files                  | `ge`'s versions             | `DIVERGENCE` | all 44 superseded: ADR 154 format and ADR 152 removals; no dm-only content                                         |
-| `ex`, `nyx`'s `docs/plans/execution-plan.md` | Stage 0 of `feat/evolution` | `SUPERSEDES` | retired: its three phases are section 7 of this file, which closed them                                            |
-| `ex`, `nyx`'s `docs/plans/oss.md`            | Stage 0 of `feat/evolution` | `SUPERSEDES` | retired: OSS-01 to OSS-08 are closed in section 7 of this file                                                     |
+| From                                  | To                           | Kind    | Why                                                                                                                  |
+| ------------------------------------- | ---------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------- |
+| `installer-scope-adr-policy-features` | `mcp-host-integration-depth` | `HARD`  | the port plan writes the host path table the host records consume; Phase 1 divides 23 modules over it                |
+| `skills-plan.md`'s catalog            | `mcp-host-integration-depth` | `ORDER` | the catalog is the surface the installer exposes; a host level installed against a moving catalog is re-tested twice |
+| `skills-plan.md`'s catalog            | this file                    | `ORDER` | three release nodes are done; the rest order themselves inside their own orchestrator                                |
 
-The merge order is **derived, not chosen**: `ge` is last because it carries the
-most files and the two removals; `dm` is first because it is the cheapest fold;
-`ex` and `nyx` are in between and independent of each other.
+## 6 - Protocol: how the agent picks the next node
 
-## 6 - Protocol: how the agent moves between branches
-
-The per-plan steps stay **inside each plan** (it is the plan that knows its
-phases). This file owns only the choice of node and the movement between branches:
-
-1. Read section 7 for the current stage and pick the first node whose edges are
-   closed.
-2. `git switch <Branch:>` from the node's graph line. Never implement a node on a
-   branch that does not own it.
+1. Read section 7 and take the first node whose edges are closed. If it is a skill plan, the order is inside `skills-plan.md`, not here.
+2. Work on `rel/v0.1.0`. There is nowhere to switch to, and a node is never implemented on a branch that does not hold it.
 3. Work the node's own phases, in order, closing its checkboxes as they complete.
 4. Run the node's gates plus the shared ones in section 9.
-5. Commit on that branch, in the format the branch already uses.
-6. `git switch feat/evolution` and update the node's row here, then take the next node.
-7. At the end of a stage, return to `feat/evolution`, run the contended-file checks from
-   section 8, and only then merge.
+5. Commit on `rel/v0.1.0`, `type(scope): subject`, docs in their own commit, never push.
+6. Update the node's row here (or in `skills-plan.md` when the node is a skill) before taking the next one.
 
-A node that cannot be finished on its branch is marked `blocked` with the edge
-that blocks it, never moved to another branch.
+A node that cannot be finished is marked `blocked` with the edge that blocks it, never moved to another group.
 
 ## 7 - Stages
 
-### Stage 0 - Project policy decisions (prerequisite to everything else)
+### Stage 0 - Project policy decisions (prerequisite to everything else) - done 2026-10-22
 
-These steps were `docs/plans/execution-plan.md` and `docs/plans/oss.md`, which
-this branch no longer carries. They move here because nothing in this graph can
-be finished while five public commitments are undecided. `main` is out of scope:
-the work happens on `feat/evolution` and the owner handles the merge request.
+The five public commitments are decided in ADR 135: signed release tags with the Ed25519 key at `.github/release-signing-key.asc`; the `0.1.x` line supported until `1.0.0`; BDFL recusal and GitHub Trust & Safety as the escalation channel; GitHub Sponsors with an annual aggregate and no donor identities; `inbound = outbound MIT` with the DCO as provenance certification only.
 
-The dependency is not a formality. Six of the eight findings wait on the owner's
-decisions, and the eighth is a README link sweep that waits on nothing.
+The eight OSS findings closed with them: OSS-01 unsigned tags (a `git verify-tag` gate in `release.yml`), OSS-02 the support table (aligned with `package.json` and `server.json`), OSS-03 the appeal route (independent contact and confidential channel), OSS-04 response targets (2 and 7 business days), OSS-05 local lint and census on a clean tree, OSS-06 the funding cadence, OSS-07 the DCO wording, OSS-08 README policy links. Each has its own test in `tests/docs/` and `tests/release/`.
 
-**The five decisions (owner):**
+- [x] All five decisions recorded (ADR 135), and every OSS finding closed with a test.
 
-- [x] Signing: is every release tag signed, with which key, and where is the key
-      documented? (`v0.1.0` has no signature: `git tag -v v0.1.0` exits 1) -
-      decided (ADR 135): dedicated Ed25519 GPG key
-      (`37D68446F3ADCF1C8C37C07A15571530D4B63084`), public key committed at
-      `.github/release-signing-key.asc` and documented in `CONTRIBUTING.md` and
-      `SECURITY.md`; `v0.1.0` stays unchanged.
-- [x] Supported version line: which released pre-1.0 series receives security
-      fixes? (`SECURITY.md` names 1.0.x while the package and tag are 0.1.0) -
-      decided (ADR 135): active `0.1.x` minor line supported, `< 0.1.0`
-      unsupported until `1.0.0` ships.
-- [x] Conduct escalation: who is the independent contact when the BDFL is the
-      subject, and through which confidential channel? - decided (ADR 135):
-      mandatory BDFL recusal once a co-maintainer is listed in
-      `MAINTAINERS.md`, and direct confidential escalation via GitHub Trust &
-      Safety (`https://github.com/contact/report-abuse`) while bus factor is
-      one.
-- [x] Funding disclosure: is sponsorship active, and what may be published as an
-      aggregate without exposing donors? - decided (ADR 135): GitHub Sponsors
-      (`pixu1980` in `.github/FUNDING.yml`) active with zero funds received to
-      date, and an annual aggregate summary in `GOVERNANCE.md` without exposing
-      donor identities.
-- [x] Inbound license: is the policy inbound=outbound MIT, with the DCO as
-      provenance certification only? - decided (ADR 135): `inbound = outbound
-MIT` with the DCO `Signed-off-by` trailer certifying provenance only and
-      no CLA.
+### Stage 1 - Fold `dm` - done 2026-10-22
 
-**OSS-01 (high) - the release workflow accepts unsigned annotated tags:**
+- [x] 45 plan paths deleted from `dm`, `decision-models.md` moved to `ge`, the audit/review/probe harness moved with it.
+- [x] `feat/decision-models` retired as a plan owner: it carries no plan file.
 
-- [x] 1.1 Confirm the signed-tag and key-management policy; do not rewrite the
-      existing release tag (`v0.1.0` left intact; GPG key committed at
-      `.github/release-signing-key.asc`).
-- [x] 1.2 Add and test a cryptographic signature verification gate in
-      `.github/workflows/release.yml`, distinguishing annotated from verified
-      (`git verify-tag` after `git cat-file -t`, covered in
-      `tests/release/workflow.test.mjs`).
-- [x] 1.3 On a new signed test tag, assert the gate passes and that an unsigned
-      annotated tag fails before release creation (verified on `v0.1.0-sigtest`
-      vs `v0.1.0-unsigned` and in `tests/release/workflow.test.mjs`).
+### Stage 2 - Retrofit `ex` and `nyx` - done 2026-10-22
 
-**OSS-02 (medium) - the security support table disagrees with the release:**
+- [x] `export.md` and `2026-10-01-scripts-mcp-layout.md` gained the graph lines and their own `## Dependency graph`.
+- [x] Both are present on this branch, which is what the retrofit was waiting for.
 
-- [x] 2.1 Confirm which version line receives security fixes (`0.1.x`).
-- [x] 2.2 Align `SECURITY.md` with the policy and with `package.json` and
-      `server.json`; check the release tag (`v0.1.0`).
-- [x] 2.3 Validate that the advisory and README links resolve to the updated
-      support policy (`tests/docs/security-policy.test.mjs`,
-      `tests/docs/link-integrity.test.mjs`).
+### Stages 3, 4, 5 - The merges into `feat/evolution` - retired 2026-10-25
 
-**OSS-03 (medium) - the code of conduct appeal routes back to the BDFL:**
-
-- [x] 3.1 Nominate a willing independent contact and agree a confidential
-      escalation channel; never publish a person's address without consent
-      (bus-factor-1 recusal policy plus `https://github.com/contact/report-abuse`).
-- [x] 3.2 Update `CODE_OF_CONDUCT.md` and `GOVERNANCE.md` with reporting,
-      recusal, appeal and response handling when the BDFL is involved.
-- [x] 3.3 Test that every public link reaches a working private reporting
-      channel without exposing reporter identity
-      (`tests/docs/security-policy.test.mjs`).
-
-**OSS-04 (low) - response targets disagree between documents:**
-
-- [x] 4.1 Confirm which triage and review targets are sustainable (2 business
-      days for issue triage, 7 business days for PR review).
-- [x] 4.2 Align `CONTRIBUTING.md` and `MAINTAINERS.md`, and say business or
-      calendar days (`2 business days` and `7 business days`).
-- [x] 4.3 Check the issue templates and contributor links reference the policy
-      (`tests/docs/security-policy.test.mjs`).
-
-**OSS-05 (medium) - local lint and generated-document checks fail on a dirty tree:**
-
-- [x] 5.1 Run `pnpm lint` and `pnpm census:check` on a clean checkout before
-      attributing anything to another branch (confirmed 22 ESLint errors across
-      13 files and stale `tests/fixtures/census.json`).
-- [x] 5.2 For confirmed failures, fix only the failing files and regenerate the
-      named census outputs with `pnpm census`.
-- [x] 5.3 Re-run `pnpm test:all`, `pnpm lint` and `pnpm census:check` and record
-      the results (`pnpm lint` exits 0 with 0 errors and 36 warnings;
-      `pnpm census:check` exits 0; `README.md` tool count aligned to 110;
-      `tests/release/workflow.test.mjs`, `tests/docs/security-policy.test.mjs`,
-      `tests/docs/dco.test.mjs`, `tests/docs/link-integrity.test.mjs` and
-      `tests/docs/docs-accuracy.test.mjs` all pass).
-
-**OSS-06 (low) - funding promises transparency with no cadence:**
-
-- [x] 6.1 Confirm whether sponsorship is active and what may be disclosed
-      (GitHub Sponsors `pixu1980` active, annual aggregate summary).
-- [x] 6.2 If donations are accepted, document the reporting location and period
-      in `GOVERNANCE.md`, keeping sponsor preferences out of the roadmap.
-- [x] 6.3 Verify `.github/FUNDING.yml` points at the approved channel without
-      claiming unverified balances (`tests/docs/security-policy.test.mjs`).
-
-**OSS-07 (medium) - the contribution guide calls the DCO a license:**
-
-- [x] 7.1 Confirm the intended inbound=outbound MIT policy; obtain legal review
-      if it is uncertain (`inbound = outbound MIT` confirmed).
-- [x] 7.2 Correct `CONTRIBUTING.md` so provenance certification and licensing
-      are separate, without introducing a CLA.
-- [x] 7.3 Recheck `LICENSE`, `REUSE.toml`, the installed commit-msg hook and the
-      DCO CI gate for consistent language and behavior
-      (`tests/docs/dco.test.mjs`).
-
-**OSS-08 (low) - the README entry page links no policy:**
-
-- [x] 8.1 Add concise links to `CONTRIBUTING.md`, `GOVERNANCE.md`,
-      `CODE_OF_CONDUCT.md`, `MAINTAINERS.md` and `SECURITY.md`.
-- [x] 8.2 Check every link locally and keep the handbook links intact
-      (`tests/docs/link-integrity.test.mjs`).
-
-**Closing the stage:**
-
-- [x] Refresh the records with the evidence and the statuses. On this branch
-      that means section 9 of this file and the evidence inside each closed
-      step; the three documents that used to hold it are not on this branch.
-- [x] `GOVERNANCE.md` names where the branch-protection setting is recorded
-      (owner action 16.5) without pointing at a file this branch does not carry.
-
-Gate: **human**, on all five decisions (confirmed 2026-10-22, ADR 135). Nothing
-in stages 1-7 starts before it, and the four merge stages are now unblocked on
-policy.
-
-### Stage 1 - Fold `dm` (1 node, mechanical, done 2026-10-22)
-
-- [x] Skip the cherry-pick of `b27c088a`: it is the `dm` half of the split
-      `ge` recorded as `7afaf605`, and applying it would repoint this branch's
-      merge-only session record at the retired branch. Deviation recorded below.
-- [x] Delete the 45 plan paths from `dm`: 33 skill plans and 11 shared
-      orchestrator/index documents superseded by `ge` (44 of 44 diverged, not
-      3), plus `decision-models.md`, which moved.
-- [x] Move `docs/plans/decision-models.md` to `ge` as `planned`, with the
-      ADR 154 status line, a `Notes` line naming `feat/guardrails`, and the
-      three graph lines.
-- [x] Move the audit, the review and the probe harness to `ge`, so the track
-      survives the retirement whole; `ge`'s catalogue now names it as local.
-- [x] Retire `feat/decision-models` as a plan owner: it carries no plan file.
-- [x] Verify: `ge` carries 96 unique plan paths (98 files with the two
-      indexes); `dm` carries none.
-
-Gate: human, because it deletes 45 files (confirmed 2026-10-22).
-
-Stage 1 gate record (2026-10-22):
-
-- `ge` `a747508a` `chore(decision-models): fold the track into feat/guardrails`.
-- `dm` `2ec1db4e` `docs(plans): retire the copies the fold supersedes`.
-- `node --test tests/plans/skills-plan.test.mjs` on `ge`: 9/9 pass.
-- Deviation: `b27c088a` was cherry-picked first and aborted. It conflicts on
-  the session record `7afaf605` renamed, and resolving it would undo the split.
-  The split is already recorded on both sides, so skipping it loses nothing.
-
-### Stage 2 - Retrofit `ex` and `nyx` (2 plans, done 2026-10-22)
-
-- [x] `export.md` gains `Branch:`, `Path:`, `Depends on:`, `Feeds:`,
-      `Shared files:` and its own `## Dependency graph`.
-- [x] `2026-10-01-scripts-mcp-layout.md` gains the same.
-- [x] The two retired plans are recorded as superseded by Stage 0 here, and no
-      stage reads a file from another branch.
-- [x] Every plan listed in section 2 exists on its declared branch, and the
-      `Branch:`/`Path:` pair matches the tree.
-
-Gate: the test of section 10 goes green for these four plans.
-
-Stage 2 gate record (2026-10-22):
-
-- `ex` `c63636da` and `nyx` `9ecc49ab`: `docs(plans): give the branch plans the
-cross-branch node`.
-- `feat/evolution` `bfbbb59c`: `test(plans): assert the cross-branch node from
-the git tree`.
-- `node --import ./scripts/alias-hook.mjs --test tests/plans/plan-of-plans.test.mjs`:
-  `7/7` pass.
-- Section 9 suites: `src/tools/router/__tests__/*.test.mjs` `32/32`; the four
-  corpus suites `14/14` in a detached worktree at this commit. In this checkout
-  `_routing-corpus` parses the `⚠️ Base branch advanced` banner as its first
-  content item, the residual section 13 already records.
-- The four plans: `docs/plans/export.md` on `feat/export`,
-  `docs/plans/2026-10-01-scripts-mcp-layout.md` on `feat/nyx`, and the retired
-  `docs/plans/execution-plan.md` and `docs/plans/oss.md` on both.
-- Deviation: `2026-10-01-scripts-mcp-layout.md` had a numbered execution order
-  and no checkbox; ADR 154 requires a checkbox step, so its ten items became
-  `- [ ]` boxes.
-- `feat/guardrails` keeps its copies of `execution-plan.md` and `oss.md` as
-  `planned`: the retirement is effective through section 5, and Stage 5 resolves
-  those two paths there.
-- Section 2 also corrects `dm`'s fold from stage 2 to stage 1, which is where it
-  happened.
-
-### Stage 3 - Merge `ex` into `feat/evolution`
-
-- [ ] Rebase `ex` onto `feat/evolution`; resolve `docs/handoff/HANDOFF.md`,
-      `docs/02-architecture.md` and `tests/fixtures/census.json` by
-      **regenerating** the last two, never by hand-editing.
-- [ ] Human gate: any change to `census.json` and the generated docs.
-
-### Stage 4 - Merge `nyx` into `feat/evolution`
-
-- [ ] Rebase onto `feat/evolution`; resolve `HANDOFF.md` by regeneration.
-- [ ] Human gate: `nyx` carries real code (`feat(nyx)` commits), not documents.
-
-### Stage 5 - Merge `ge` into `feat/evolution` (last)
-
-- [ ] Rebase onto `feat/evolution` after stages 3 and 4, so the catalog's generated files
-      are regenerated once, at the end.
-- [ ] Human gate: ADR 151 and 152 are one-way in review terms.
-- [ ] After the merge, `feat/evolution` carries the plans, `skills-plan.md`,
-      ADR 153/154 and the 81-skill catalog.
+- [x] Recorded as retired rather than done: `feat/evolution` does not exist, and the content these three stages would have merged is already in this tree (section 1).
+- [x] Nothing is rebased and nothing is merged. The remote `feat/*` refs are left untouched; deleting them is a repository decision, not this plan's.
 
 ### Stage 6 - Hand over to the owner
 
-- [ ] Only after stages 0-5: the catalog is complete on `feat/evolution`.
-- [ ] The owner opens the merge request. This plan does not touch `main`, does
-      not rebase onto it, and does not merge into it: `feat/evolution` is the
-      destination, and the merge request is the owner's step.
+- [ ] The owner opens the merge request to `main`. No stage reads or writes `main`, and this file does not rebase onto it: the release line diverged 870 commits ago, which makes the merge a review question, not a cherry-pick.
 
 ### Stage 7 - Bring the format to every plan
 
-- [x] The contract exists (ADR 154, on `ge`).
-- [ ] Every one of the 98 plan paths carries the status line, the graph section and
-      checkboxes, applied **branch by branch** as each branch is worked.
-- [ ] `dm`'s retired copies are gone, so they are not retrofitted at all.
+- [x] The contract exists (ADR 154) and every one of the 87 nodes carries the status line, the graph section and checkboxes.
+- [ ] Two assertions of `tests/plans/skills-plan.test.mjs` are red for one reason: plan files are named `rule-mcp-<skill>.md` while the stage tables list `<skill>`, so the test's node id never matches. One sweep fixes it - either rename the files or widen the id in the test - and the choice is the owner's.
 
-## 8 - Contended files across branches
+### Stage 8 - The catalog's remaining leaves
 
-This is **the** list: `skills-plan.md` names five of these and must point here
-instead of keeping its own copy (review finding F6).
+- [ ] Delegated: open `docs/plans/skills/skills-plan.md`, take the first node whose edges are closed in the current stage. Three nodes are done (npm, uv and cargo release, all 20/20 or 19/19); the rest carry their own phases and gates.
 
-| File                                                                                      | Branches                | Resolution                                                         |
-| ----------------------------------------------------------------------------------------- | ----------------------- | ------------------------------------------------------------------ |
-| `docs/handoff/HANDOFF.md`                                                                 | `ge`, `ex`, `nyx`       | regenerate the index, never merge by hand                          |
-| `tests/fixtures/census.json`                                                              | `ge`, `ex`              | `pnpm census`, once, at each merge                                 |
-| `docs/02-architecture.md`                                                                 | `ge`, `ex`              | regenerated by census                                              |
-| `docs/08-skills.md`, `docs/09-tools.md`, `docs/15-resources.md`, `docs/16-surface-map.md` | `ge`, `ex`              | regenerated by census                                              |
-| `docs/adr/ADR.md` + ADR numbering                                                         | `ge`, `dm`, `ex`, `nyx` | one allocator: numbers taken at merge time, collisions re-numbered |
-| `docs/0*.md` (other generated docs)                                                       | `ge`, `dm`              | `dm` folds into `ge`, so the conflict disappears with the branch   |
-| `skills/rule-mcp/SKILL.md`                                                                | `ge` only               | no cross-branch conflict, heavy intra-branch conflict              |
-| `tests/fixtures/guardrail-corpus.mjs`                                                     | `ge` only               | append-only, one plan at a time                                    |
+### Stage 9 - The installer track (next)
+
+- [ ] `installer-scope-adr-policy-features.md`: the port of ADR policy, project-scope installs, features, host paths and the wizard. Its step 3 (`_hosts.data.js`, one table read by install, uninstall and detection) is what the host plan's Phase 1 consumes.
+- [ ] `mcp-host-integration-depth.md` Phase 0: 31 evidence rows with a status and a source, the Roo Code and Codex-prompt contradictions resolved, the eight products with no installer row registered. **This is the next node: it is unblocked today**, because only Phase 1 and later wait on the port plan.
+- [ ] Then Phase 1 of the host plan, once the port plan's host table exists.
+
+## 8 - Shared files inside this branch
+
+Everything here is one branch, so these are the files two plans may not edit at the same time:
+
+| File                                                                                                                              | Who touches it                            | Resolution                                                                                 |
+| --------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `tests/fixtures/guardrail-corpus.mjs`                                                                                             | every plan that adds a rule               | append-only, one plan at a time                                                            |
+| `tests/fixtures/census.json`                                                                                                      | any plan whose change reaches the surface | `pnpm census`, never by hand                                                               |
+| `docs/02-architecture.md`, `docs/09-skills.md`, `docs/10-tools.md`, `docs/16-resources.md`, `docs/17-surface-map.md`, `README.md` | the same                                  | regenerated by census; `README.md` by hand, checked by `tests/docs/docs-accuracy.test.mjs` |
+| `docs/adr/ADR.md` and ADR numbering                                                                                               | every plan that writes an ADR             | one allocator: `rule_tool_process_adr`, numbers taken on landing                           |
+| `docs/handoff/HANDOFF.md`                                                                                                         | every session that writes a handoff       | regenerate the index, never edit it                                                        |
+| `skills/rule-process/SKILL.md`                                                                                                    | every plan that adds a process skill      | one row per skill, one plan at a time                                                      |
 
 ## 9 - Gates
 
-Automatic, on every node: the corpus and router-coverage suites, `census:check`,
-lint and typecheck.
-
-Stage 0 gate record (2026-10-22, ADR 135):
-
-- `pnpm lint`: exit `0` (`0 errors, 36 warnings`, under `--max-warnings 50`).
-- `pnpm census:check`: exit `0` (`the census is current` after regenerating `tests/fixtures/census.json`).
-- `node --import ./scripts/alias-hook.mjs --test tests/release/workflow.test.mjs tests/docs/security-policy.test.mjs tests/docs/dco.test.mjs tests/docs/link-integrity.test.mjs tests/docs/docs-accuracy.test.mjs`: `25/25` pass.
-- `pnpm test:all`: exit `1`. Neutralizing the machine's global `core.hooksPath`
-  (a temporary `GIT_CONFIG_GLOBAL` carrying only `user.*`) takes the 119 `✖`
-  down to the pre-existing failures outside Stage 0: the sync-banner
-  `content[0]` shift in four suites (section 13), and
-  `tests/docs/file-size-budget.test.mjs` naming
-  `src/core/__tests__/_prompt-directive.test.mjs` (152) and
-  `src/core/self-update/_run.js` (202). Two further failures were stale
-  assertions, corrected in `test(drift)`: the core-tool constant in
-  `_minimal-tools` (23 -> 24) and the spacing in `_install-skills`.
+Automatic on every node: the corpus and router suites, `census:check`, lint, and the node's own verification section.
 
 Human, and only there:
 
-| Gate                               | Where                                                                | Why                        |
-| ---------------------------------- | -------------------------------------------------------------------- | -------------------------- |
-| Every merge into `feat/evolution`  | stages 3, 4, 5                                                       | nothing lands unreviewed   |
-| Contended files                    | any PR touching the five files in section 8                          | a mistake there multiplies |
-| Destructive plans                  | `ge`'s ADR 151/152 removals, and the `dm` fold that deletes 45 files | one-way in review terms    |
-| Any commit that changes this graph | this file                                                            | the graph is the contract  |
+| Gate                               | Where                                       | Why                                                    |
+| ---------------------------------- | ------------------------------------------- | ------------------------------------------------------ |
+| Anything that touches `main`       | nowhere in this plan                        | the owner opens the merge request                      |
+| Generated documents                | any change to `census.json` or `docs/0*.md` | a hand-edited generated file is a lie the test catches |
+| Destructive plans                  | ADR 151/152 removals, the `dm` fold (done)  | one-way in review terms                                |
+| Any commit that changes this graph | this file                                   | the graph is the contract                              |
 
 ## 10 - Verification
 
-`tests/plans/plan-of-plans.test.mjs`, reading the branches with
-`git show <branch>:<path>`:
+The cross-branch test (`tests/plans/plan-of-plans.test.mjs`) lived on the retired destination branch and does not exist here. What verifies this file now:
 
-- [x] Every level-2 node's `Branch:` and `Path:` resolve on that branch.
-- [x] Every plan path claimed by two branches has a `DIVERGENCE` or
-      `SUPERSEDES` entry in section 5.
-- [x] Every plan file in scope has a status line, a `## Dependency graph` section
-      and at least one checkbox.
-- [x] The level-1 graph is acyclic.
-- [x] The merge order in section 5 is consistent with the `MERGE` edges: a branch
-      never appears before a branch it depends on.
-- [x] A plan marked `done` has no open checkbox.
-
-Green on 2026-10-22 for `ex` and `nyx` (`7/7`). The `feat/guardrails` catalogue
-keeps `tests/plans/skills-plan.test.mjs` (`9/9`), which reads the four-line
-in-branch form; Stage 7 widens this file branch by branch.
+- `tests/plans/skills-plan.test.mjs` over the 87 nodes: 7 of 9 assertions green, the two red ones are Stage 7's single finding.
+- `pnpm census:check` for the generated documents, `tests/docs/docs-accuracy.test.mjs` for the README counts.
+- The stage tables and this file's section 7 agree on which group owns which plan; a change to one without the other is the one drift no test catches, so it is the gate above.
 
 ## Dependency graph
 
-Depends on: nothing. This is the level-0 node: it waits only on the decisions
-already recorded (ADR 153, ADR 154) and on the branch states measured above.
-Feeds: every level-2 node, and the owner's merge request after stage 5.
-Shared files: `docs/plans/plan-of-plans.md` only. The contended files in section 8
-belong to the merged branches, not to this plan.
+Depends on: nothing. This is the level-0 node: it waits only on the decisions already recorded (ADR 154 for the format, ADR 181 for the retirement of the cross-branch layer, ADR 153 for the catalog's edge model) and on the branch state measured in section 1.
+
+Feeds: every node in the tree, `skills-plan.md`'s stage 8 delegation, and the installer track in stage 9.
+
+Shared files: `docs/plans/plan-of-plans.md` only. The generated documents in section 8 belong to the nodes that touch them, not to this file.
 
 ## 12 - Open notes and risks
 
-- **The divergent plans are not cheap, and the fold must not skip them.** All 44
-  shared files differ, because `ge` carries the ADR 154 format and the ADR 152
-  removals. Stage 1 takes `ge`'s version as authoritative, because `ge` is where
-  those plans were rewritten.
-- **`dm` looks like a branch and is not one.** 44 superseded copies and four
-  commits that are three rebased twins plus one split mirror mean any merge from
-  it is a rebase disguised as a merge. The fold is the cheap path, and it removes
-  45 files a reader would otherwise maintain twice.
-- **`ge` last is deliberate.** It changes 413 files, removes two skills and
-  rewrites the counts. Merging it first would force `ex` and `nyx` to rebase onto
-  a catalog that moved under them.
-- **The level-1 orchestrator exists for one branch out of four.** `ex` and `nyx`
-  get a dependency section because their plans are single documents; a full
-  `skills-plan.md` for a 3-file branch would be ceremony. The rule stays in
-  section 2 so a fifth branch cannot arrive silently without one.
-- **`develop` is out of scope and stays that way** until the architect track is
-  brought into this repository's plans.
+- **The historical stages stay in the file.** Stages 0-2 are records with their commit and test evidence, and stages 3-5 say "retired" in their own headings so a reader cannot mistake them for work. Deleting them would lose the only evidence that the fold happened and why.
+- **The two red assertions are one finding, not two.** A plan file is named `rule-mcp-process-adr.md` while the stage table lists `rule-process-adr`, so the test's node id matches nothing. Any new node inherits the mismatch until the sweep in Stage 7.
+- **`main` diverged 870 commits ago.** This is why nothing here rebases onto it: the merge is the owner's review, and the release line is the tree the catalog was built in.
+- **The remote `feat/*` branches still exist.** They are 150, 932 and 875 commits away from HEAD and carry no content this tree lacks. Deleting them is a repository decision and is deliberately not taken here.
+- **Two merge commits remain in the range** (`e9d29e8e`, `df6ba117`). `rule_tool_git action=linearize force=true` is the proposal; it needs the owner's confirmation and is not part of any stage.
+- **The census under-reports guardrails.** It counts 9 distinct rules while the tree carries roughly 100 skill-owned ones, because it reads the engine's own families. Recorded by the three release plans, not fixed here.
+
+## 13 - Fixes the review requires before the first node
+
+From `docs/reviews/plan-graph.md`. All of them were resolved on the branch that
+became this tree (`3553780c` test, `6cda42ea` fix) and are kept as the record of
+what the retrofit required. Nothing here is open.
+
+- [x] F1 - every plan carries a `## Dependency graph` section: 92 files
+      retrofitted, checked by `tests/plans/skills-plan.test.mjs`.
+- [x] F2 - the same-stage edge is gone: stages split into `0a/0b`, `3a/3b`,
+      `7a/7b`, and a `CONTRACT` edge is exempt because a phase closes first.
+- [x] F3 - `rule-toolchain-electron` and `rule-toolchain-tauri` have their own
+      plans (index #86, #87) as Stage 4 nodes.
+- [x] F4 - one id per node: `rule-process-bmad`, with `Produces: rule-method`.
+- [x] F5 - ADR 154 amended in place: four lines inside a branch, six in a
+      cross-branch document.
+- [x] F8 - the five-value status line on all 95 plan files, original wording on
+      the `Notes:` line.
+- [x] F9 - `installer-scope-adr-policy-features.md` has its step; the three
+      non-skill plans stay in scope of the checkbox assertion.
+- [x] Stage lists - a table per stage, 85 nodes, counts summed by the test
+      instead of asserted.
+- [x] F6 - one contended-file list (section 8), referenced by `skills-plan.md`.
+- [x] F7 - the unique path count is 99, not 98.
+
+One finding came out of the fix work and is not resolved: the sync guard prepends
+a `⚠️ Base branch ... advanced` banner as the first content item, and six tests
+read `content[0]` or `content[1]`. They pass in a detached worktree and fail in
+a checkout whose base advanced. It needs a decision - change the banner position
+and its contract test, or give every affected test a shared reader - and it is
+not part of this graph.
 
 ## 14 - Task classes and model assignment
 
@@ -544,50 +285,20 @@ The classes are about the work, not the file: the same `T4-tests` step in a
 frontend plan and a data plan gets the same model, because the work is the same
 and the evidence does not distinguish them.
 
-## 13 - Fixes the review requires before the first node
-
-From `docs/reviews/plan-graph.md`. **All of them are resolved on
-`feat/guardrails`** (`3553780c` test, `6cda42ea` fix), where the plans
-live on this branch; this list is kept so the state is readable without opening
-the other branches.
-
-- [x] F1 - every plan carries a `## Dependency graph` section: 92 files
-      retrofitted, checked by `tests/plans/skills-plan.test.mjs`.
-- [x] F2 - the same-stage edge is gone: stages split into `0a/0b`, `3a/3b`,
-      `7a/7b`, and a `CONTRACT` edge is exempt because a phase closes first.
-- [x] F3 - `rule-toolchain-electron` and `rule-toolchain-tauri` have their own
-      plans (index #86, #87) as Stage 4 nodes.
-- [x] F4 - one id per node: `rule-process-bmad`, with `Produces: rule-method`.
-- [x] F5 - ADR 154 amended in place: four lines inside a branch, six in a
-      cross-branch document.
-- [x] F8 - the five-value status line on all 95 plan files, original wording on
-      the `Notes:` line.
-- [x] F9 - `installer-scope-adr-policy-features.md` has its step; the three
-      non-skill plans stay in scope of the checkbox assertion.
-- [x] Stage lists - a table per stage, 85 nodes, counts summed by the test
-      instead of asserted.
-- [x] F6 - one contended-file list (section 8), referenced by `skills-plan.md`.
-- [x] F7 - the unique path count is 99, not 98.
-
-One finding came out of the fix work and is not resolved: the sync guard prepends
-a `⚠️ Base branch ... advanced` banner as the first content item, and six tests
-read `content[0]` or `content[1]`. They pass in a detached worktree and fail in
-a checkout whose base advanced. It needs a decision - change the banner position
-and its contract test, or give every affected test a shared reader - and it is
-not part of this graph.
-
 ## 15 - Model assignment
 
-| Step in this plan                            | Class       | Model                    | Why                                                                                 |
-| -------------------------------------------- | ----------- | ------------------------ | ----------------------------------------------------------------------------------- |
-| Stage 0 - policy decisions                   | `T1-plan`   | `gemini-4-argon` (high)  | five public commitments argued from evidence; needs long context and careful prose  |
-| Stage 0 - OSS-01/02/07 code and config edits | `T3-rules`  | `kimi-k2.7-code`         | workflow gates, SECURITY.md tables, DCO wording: small precise edits                |
-| Stage 1 - fold `dm`                          | `T2-git`    | `grok-4.7` (xhigh)       | skip a cherry-pick, move a track, delete 45 files, retire a branch: git judgment    |
-| Stage 2 - retrofit `ex` and `nyx`            | `T5-bulk`   | `minimax-m3.1-flash`     | the same section added to a handful of files                                        |
-| Stages 3-5 - merges and rebases              | `T2-git`    | `grok-4.7` (xhigh)       | conflict resolution on generated files; the risk is a wrong merge, not a wrong line |
-| Stage 6 - hand over to the owner             | `T1-plan`   | `gemini-4-argon` (high)  | a status summary the owner reads before opening the merge request                   |
-| Stage 7 - format across every plan           | `T5-bulk`   | `minimax-m3.1-flash`     | mechanical, 95 files, checked by the test                                           |
-| Section 14 - keep the evidence current       | `T6-review` | `muse-wonder-full` (max) | re-reading three leaderboards and re-deriving the mapping                           |
+| Step in this plan                            | Class       | Model                    | Why                                                                                |
+| -------------------------------------------- | ----------- | ------------------------ | ---------------------------------------------------------------------------------- |
+| Stage 0 - policy decisions                   | `T1-plan`   | `gemini-4-argon` (high)  | five public commitments argued from evidence; needs long context and careful prose |
+| Stage 0 - OSS-01/02/07 code and config edits | `T3-rules`  | `kimi-k2.7-code`         | workflow gates, SECURITY.md tables, DCO wording: small precise edits               |
+| Stage 1 - fold `dm`                          | `T2-git`    | `grok-4.7` (xhigh)       | skip a cherry-pick, move a track, delete 45 files, retire a branch: git judgment   |
+| Stage 2 - retrofit `ex` and `nyx`            | `T5-bulk`   | `minimax-m3.1-flash`     | the same section added to a handful of files                                       |
+| Stages 3-5 - merges and rebases (retired)    | `T2-git`    | `grok-4.7` (xhigh)       | kept as the record of what the stages would have cost; ADR 181 retired them        |
+| Stage 6 - hand over to the owner             | `T1-plan`   | `gemini-4-argon` (high)  | a status summary the owner reads before opening the merge request                  |
+| Stage 7 - format across every plan           | `T5-bulk`   | `minimax-m3.1-flash`     | mechanical, 87 files, checked by the test                                          |
+| Stage 8 - the catalog's remaining leaves     | per node    | see each plan            | delegated to `skills-plan.md`, which orders them                                   |
+| Stage 9 - the installer track                | `T1-plan`   | `gemini-4-argon` (high)  | 31 host evidence rows and the level ladder argued from sources                     |
+| Section 14 - keep the evidence current       | `T6-review` | `muse-wonder-full` (max) | re-reading three leaderboards and re-deriving the mapping                          |
 
 Fallback: if `muse-wonder-full` is unreachable, `glm-5.3` (max) is the next
 highest allowed index at 45, and it is on the Arena open-model trend list.
@@ -604,12 +315,12 @@ measurement and they stay as they were; the plans below were written later, on
 | `skills/process/rule-mcp-process-uv-release.md`    | the release skill for a Python package managed with `uv` and PyPI Trusted Publishing      | `skills/skills-plan.md`, stage 2, node #89                     |
 | `mcp-host-integration-depth.md`                    | per-host integration levels `L0..L4`, the install/uninstall split, the server↔host wiring | itself, outside the skills graph, section 9 of the skills plan |
 
-Why they are not stages here: the first two are skill nodes and the skills plan
-already owns stage ordering for those; the third is installer and host work,
-which this file has never ordered (it orders branches). What this register buys
-is the one thing the graph cannot answer on its own - _"is there a plan I have
-not seen?"_ - without turning a level-0 orchestrator into a list of every
-document in the tree.
+Why the first two are not stages here: they are skill nodes, and the skills plan
+owns their ordering. The third has since become Stage 9 of this file, which is
+what ADR 181 changed - this file used to order branches, and it now orders the
+groups that no other orchestrator covers. The register stays as the dated
+answer to _"is there a plan I have not seen?"_ until a plan exists that neither
+section 2 nor this table names.
 
 Two things the 2026-10-25 session measured that the earlier stages do not know
 about, and that the plans above own:
