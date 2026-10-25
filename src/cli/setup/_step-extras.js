@@ -27,7 +27,7 @@ import { hookSupport } from "../install/_hook-hosts.js";
  */
 export function extraItems({ mode, agents = [], ruleFiles = [] }) {
   const forAgents = agents.length > 0 ? agents.join(", ") : "no agent selected";
-  const hookable = agents.filter((agent) => hookSupport(agent).mechanism !== "none" && hookSupport(agent).events.length > 0);
+  const hookable = agents.filter((agent) => hookSupport(agent).writable);
 
   return [
     {

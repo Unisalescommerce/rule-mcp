@@ -21,10 +21,12 @@ test("each documented host names its mechanism and events", () => {
 
 test("every native host names the file it writes, and the others do not", () => {
   for (const agent of ["claude", "cursor", "gemini", "codex", "kiro"]) {
+    assert.equal(hookSupport(agent).writable, true, agent);
     assert.ok(hookSupport(agent).file, agent);
   }
 
-  for (const agent of ["opencode", "pi", "copilot"]) {
+  for (const agent of ["opencode", "pi", "cline", "kilo", "copilot"]) {
+    assert.equal(hookSupport(agent).writable, false, agent);
     assert.equal(hookSupport(agent).file, undefined, agent);
   }
 });

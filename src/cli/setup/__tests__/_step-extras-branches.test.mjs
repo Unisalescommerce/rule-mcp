@@ -39,8 +39,8 @@ test("a Cursor or Codex selection unlocks the hooks row too", () => {
   assert.match(hooks.detail.join("\n"), /cursor, codex/u);
 });
 
-test("an agent without a hook mechanism leaves the row disabled", () => {
-  const hooks = extraItems({ mode: "stdio", agents: ["copilot"] }).find((item) => item.id === "hooks");
+test("an agent whose plugin has no installer target leaves the row disabled", () => {
+  const hooks = extraItems({ mode: "stdio", agents: ["copilot", "kilo", "cline"] }).find((item) => item.id === "hooks");
 
   assert.equal(hooks.disabled, true);
 });
