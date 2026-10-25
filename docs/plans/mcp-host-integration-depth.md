@@ -1,7 +1,7 @@
 # mcp-host-integration-depth - per-host install/uninstall, integration levels, and the server-side wiring
 
 Status: `in-progress`
-Notes:`planned`. Outside the skills graph: this plan covers the installer, the host registries and
+Notes:`in-progress` 33 of 37. Six phases closed; the four open items are three deferrals with their reasons recorded (`_registry`/`_uninstall` as lookups, the manifest's `written[]`, the per-host token measurement) and one item the measurement produced (the hook's own process cost, 1056 ms per prompt against a 1.3-2.4 s spawn floor). Outside the skills graph: this plan covers the installer, the host registries and
 the server↔host wiring, not skills, so it is not a node in `docs/plans/skills/skills-plan.md`.
 It is the sibling of `installer-scope-adr-policy-features.md` and depends on it for the host
 path table.
@@ -224,10 +224,10 @@ Three facts decided the phase, and each killed one item:
 
 ### Phase 6 - Documents, census, ADRs, doctor
 
-- [ ] `docs/04-operations.md`: the level table, the per-host ceiling table, the `install --level` flags.
-- [ ] `docs/13-cli.md` and the generated docs regenerated with `pnpm census`.
-- [ ] Four ADRs (section 8), each recorded with `rule_tool_process_adr` at the moment the boundary changes.
-- [ ] Gate: `/rule-init` and `doctor` report the same level for the same host.
+- [x] `docs/04-operations.md`: the level table, the per-host ceiling table and the `install --level` flag, in a new "Integration levels" section. The ceiling table is guarded by `tests/docs/integration-levels.test.mjs`, which recomputes every cell from `hostRecord()` and fails on drift - the census reads the tool surface, not the host records, so nothing else would have caught a stale cell.
+- [x] `docs/13-cli.md` and the generated documents regenerated with `pnpm census` (`--level` landed with Phase 2; this run picked up the ADR count and the surface).
+- [x] Four ADRs recorded with `rule_tool_process_adr`: **182** one host record, **183** the level as the second install axis, **184** the manifest's level per host, **185** lifecycle wiring only where a measurement moves. Each names what was measured, what was rejected and why.
+- [x] Gate: `/rule-init` and `doctor` report the same level for the same host. Both call `hostLevels()` in `src/cli/install/_manifest.js`, and `tests/installers/host-level-report.test.mjs` runs both against one temporary home: `Hosts: claude L2` from init, `{"claude":"L2"}` from the doctor. A machine with no manifest gets no host line at all.
 
 ## 8 - The ADRs this plan owes
 
