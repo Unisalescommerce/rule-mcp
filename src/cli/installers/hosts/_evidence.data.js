@@ -29,7 +29,7 @@
 /** The status vocabulary, narrowest first. */
 export const EVIDENCE_STATUSES = ["confirmed", "partial", "needs-test", "ambiguous", "migration", "plugin-dependent", "research"];
 
-/** A product name that used to mean another product. */
+/** A product name that resolves to the row owning its config. */
 export const HOST_ALIASES = { windsurf: "devin" };
 
 /**

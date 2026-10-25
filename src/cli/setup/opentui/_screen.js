@@ -18,6 +18,7 @@
 
 import { pkg } from "../../paths/index.js";
 import { COLORS, GLYPHS } from "../_theme.js";
+import { barText, colorOf } from "./_screen-paint.js";
 import { BACK, CANCEL } from "./_answers.js";
 import { copyToClipboard, toast } from "./_clipboard.js";
 import { detailLines, enabledIds, initialCursor, markOf, moveCursor, selectableIndexes, windowFor } from "./_list.js";
@@ -35,26 +36,6 @@ import { detailLines, enabledIds, initialCursor, markOf, moveCursor, selectableI
  */
 export function rendererOptions() {
   return { screenMode: "alternate-screen", exitOnCtrlC: false, useMouse: true, targetFps: 30 };
-}
-
-/** Semantic tone to palette. `text` means "the terminal's default". */
-const TONE = {
-  accent: COLORS.accent,
-  accentSoft: COLORS.accentSoft,
-  info: COLORS.info,
-  ok: COLORS.ok,
-  warn: COLORS.warn,
-  fail: COLORS.fail,
-  muted: COLORS.muted,
-};
-
-const colorOf = (tone) => TONE[tone];
-
-/** The bar `done/total` at a fixed width. */
-function barText(done, total, width = 18) {
-  const filled = total === 0 ? 0 : Math.round((done / total) * width);
-
-  return `${GLYPHS.barFull.repeat(filled)}${GLYPHS.barEmpty.repeat(Math.max(0, width - filled))} ${done}/${total}`;
 }
 
 /**
@@ -99,6 +80,7 @@ export async function openScreen({ title, subtitle = "", steps = [] }) {
 
   headerLeft.add(text("rule-mcp", { fg: COLORS.accent, attributes: bold }));
   headerLeft.add(text(`  ${GLYPHS.dot}  ${title}`, { fg: COLORS.info }));
+
   if (subtitle) {
     headerLeft.add(text(`  ${subtitle}`, { fg: COLORS.muted }));
   }
@@ -136,7 +118,7 @@ export async function openScreen({ title, subtitle = "", steps = [] }) {
     activeStep = index;
     clear(rail);
 
-    steps.forEach((step, position) => {
+    for (const [position, step] of steps.entries()) {
       if (position > 0) {
         rail.add(text("  ", { fg: COLORS.muted }));
       }
@@ -146,7 +128,7 @@ export async function openScreen({ title, subtitle = "", steps = [] }) {
       const tone = state === "active" ? COLORS.info : state === "done" ? COLORS.ok : COLORS.muted;
 
       rail.add(text(`${marker} ${step}`, { fg: tone, ...(state === "active" ? { attributes: bold } : {}) }));
-    });
+    }
   };
 
   /** Detach the current screen and resolve it with one answer. */
@@ -197,11 +179,13 @@ export async function openScreen({ title, subtitle = "", steps = [] }) {
       listRow.add(detail);
 
       host.add(text(heading, { fg: COLORS.accentSoft, attributes: bold }));
+
       for (const line of help) {
         host.add(text(line, { fg: COLORS.muted }));
       }
 
       host.add(listRow);
+
       if (note) {
         host.add(text(note, { fg: COLORS.muted }));
       }
@@ -251,6 +235,7 @@ export async function openScreen({ title, subtitle = "", steps = [] }) {
         const current = items[cursor];
 
         detail.add(text(current?.label ?? "", { fg: COLORS.accentSoft, attributes: bold, wrapMode: "word" }));
+
         for (const line of detailLines(current?.detail)) {
           detail.add(text(line, { fg: COLORS.muted, wrapMode: "word" }));
         }

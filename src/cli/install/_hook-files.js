@@ -11,20 +11,15 @@ import { codexHooks, cursorHooks, geminiHooks, kiroHooks } from "./_hook-writers
 
 /** The file a native host reads its hooks from, or null when it loads code. */
 export function hookFile(agent) {
-  switch (agent) {
-    case "claude":
-      return join(HOME, ".claude", "settings.json");
-    case "codex":
-      return join(HOME, ".codex", "hooks.json");
-    case "cursor":
-      return join(HOME, ".cursor", "hooks.json");
-    case "gemini":
-      return join(HOME, ".gemini", "settings.json");
-    case "kiro":
-      return join(HOME, ".kiro", "hooks", "rule-mcp.json");
-    default:
-      return null;
-  }
+  const files = {
+    claude: join(HOME, ".claude", "settings.json"),
+    codex: join(HOME, ".codex", "hooks.json"),
+    cursor: join(HOME, ".cursor", "hooks.json"),
+    gemini: join(HOME, ".gemini", "settings.json"),
+    kiro: join(HOME, ".kiro", "hooks", "rule-mcp.json"),
+  };
+
+  return files[agent] ?? null;
 }
 
 /**
@@ -97,23 +92,19 @@ function stripEvents(current = {}, ours = isNested) {
  * @returns {object|null}
  */
 export function mergeHookDocument(agent, current, launcher) {
-  switch (agent) {
-    case "claude":
-      return withHooks(current, launcher);
-    case "codex":
-      return { ...current, hooks: mergeEvents(current?.hooks, codexHooks(launcher).hooks) };
-    case "gemini":
-      return { ...current, hooks: mergeEvents(current?.hooks, geminiHooks(launcher)) };
-    case "cursor":
-      return { ...current, version: 1, hooks: mergeEvents(current?.hooks, cursorHooks(launcher).hooks, isFlat) };
-    case "kiro": {
+  const merge = {
+    claude: () => withHooks(current, launcher),
+    codex: () => ({ ...current, hooks: mergeEvents(current?.hooks, codexHooks(launcher).hooks) }),
+    gemini: () => ({ ...current, hooks: mergeEvents(current?.hooks, geminiHooks(launcher)) }),
+    cursor: () => ({ ...current, version: 1, hooks: mergeEvents(current?.hooks, cursorHooks(launcher).hooks, isFlat) }),
+    kiro: () => {
       const others = (current?.hooks ?? []).filter((entry) => !isNamed(entry));
 
       return { ...current, version: "v1", hooks: [...others, ...kiroHooks(launcher).hooks] };
-    }
-    default:
-      return null;
-  }
+    },
+  };
+
+  return merge[agent]?.() ?? null;
 }
 
 /**

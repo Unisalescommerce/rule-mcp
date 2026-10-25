@@ -130,7 +130,7 @@ export function geminiHooks(launcher) {
  * @returns {{ matcher?: string, hooks: Array<{ type: string, command: string, statusMessage: string }> }}
  */
 /**
- * Codex command line: tag the process so ask→block encoding works even when
+ * Codex command line: tag the process so ask->block encoding works even when
  * stdin is empty or unparseable (no `turn_id` to detect the host).
  *
  * @param {{ command: string, args?: string[] }|string} launcher
@@ -193,8 +193,8 @@ export function opencodePlugin(launcher) {
     "  spawnSync(GUARD[0], [...GUARD.slice(1), kind], { input: JSON.stringify(payload ?? {}) });",
     "",
     "export const RuleMcpHooks = async () => ({",
-    '  "tool.execute.before": async (input) => { run(WRITE.has(String(input?.tool ?? "").toLowerCase()) ? "structure" : "bash", input); },',
-    '  "tool.execute.after": async (input) => { run("write", input); },',
+    '  "tool.execute.before": async (input) => run(WRITE.has(String(input?.tool ?? "").toLowerCase()) ? "structure" : "bash", input),',
+    '  "tool.execute.after": async (input) => run("write", input),',
     "});",
     "",
   ].join("\n");

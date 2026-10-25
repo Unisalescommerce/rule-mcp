@@ -6,6 +6,9 @@ import { dirname } from "node:path";
 import { join } from "node:path";
 
 import { getRuntimePaths } from "../paths/index.js";
+import { readmePath } from "./_manifest-hosts.js";
+
+export * from "./_manifest-hosts.js";
 
 /** The manifest schema this tree writes. A v1 file is read as v2, never rewritten on read. */
 export const MANIFEST_VERSION = 2;
@@ -117,46 +120,6 @@ export function forgetInstall({ agent, dryRun = false } = {}) {
   writeFileSync(manifestPath(), `${JSON.stringify(next, null, 2)}\n`);
 
   return next;
-}
-
-/** The path of the human-readable manifest written beside the JSON one. */
-export function readmePath() {
-  return join(process.env.XDG_DATA_HOME ?? join(homedir(), ".local", "share"), "rule-mcp", "installed.md");
-}
-
-/**
- * Forget one host, and delete both manifests once nothing is left to describe.
- *
- * An uninstall that leaves the manifests behind leaves a doctor reporting hosts
- * that no longer exist, which is the report a user reads right after removing
- * them. Both files go together: they are two views of one fact.
- *
- * @param {{ agent?: string, dryRun?: boolean }} entry
- * @returns {{ agents: string[], removed: boolean }}
- */
-export function forgetHost({ agent, dryRun = false } = {}) {
-  const next = forgetInstall({ agent, dryRun });
-  const removed = next.agents.length === 0;
-
-  if (removed && !dryRun) {
-    rmSync(readmePath(), { force: true });
-  }
-
-  return { agents: next.agents, removed };
-}
-
-/**
- * The level each recorded host was installed at, or null for one recorded before
- * the manifest carried a level.
- *
- * One function, because `/rule-init` and `doctor` both report it: two readers
- * computing the same fact from the same file is how a report starts disagreeing
- * with itself.
- *
- * @returns {Record<string, string|null>}
- */
-export function hostLevels() {
-  return Object.fromEntries(Object.entries(readManifest().hosts ?? {}).map(([id, host]) => [id, host.level ?? null]));
 }
 
 /** Whether a manifest exists on this machine. */

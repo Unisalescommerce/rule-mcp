@@ -165,7 +165,7 @@ test("a blocked preflight quits without planning anything", async () => {
   assert.match(screen.confirms[0].lines.map((line) => line.text).join("\n"), /Fix the failures/u);
 });
 
-test("cancelling at any step writes nothing", async () => {
+test("canceling at any step writes nothing", async () => {
   reset();
   const screen = fakeScreen(["next", CANCEL]);
 

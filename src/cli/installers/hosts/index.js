@@ -10,9 +10,9 @@
  * answers for all 23, and `tests/installers/host-record.test.mjs` fails when the
  * four registries disagree about one.
  *
- * What lives here is the declaration, not the behaviour. `install` and
+ * What lives here is the declaration, not the behavior. `install` and
  * `uninstall` stay in `_registry.js` and `_uninstall.js` for now: Phase 1 of
- * `docs/plans/mcp-host-integration-depth.md` is "no behaviour change", and
+ * `docs/plans/mcp-host-integration-depth.md` is "no behavior change", and
  * rewriting 23 writer bodies to move them would be a large diff with no
  * observable difference. Their bodies move in Phase 2, one host at a time, as
  * each one is touched. The same reason means one module per host is deferred:
@@ -28,56 +28,10 @@ import { join } from "node:path";
 
 import { HOME, serverName } from "../_paths.js";
 import { devinConfigPath, emacsInitFile, nvimMcpFile, vscodeGlobalDir } from "../_agents-ide.js";
-import { AGENTS_WITHOUT_COMMAND_SURFACE, COMMAND_TARGETS } from "../../../core/agents/command-targets/index.js";
-import { hookSupport } from "../../install/_hook-hosts.js";
+import { ceilingOf, levelsOf } from "./_levels.js";
 import { GENERIC_HOSTS, hostFile, hostPaths } from "../_hosts.data.js";
 
 import { evidenceOf } from "./_evidence.data.js";
-
-/** Where an install writes the instruction block, for the hosts that have one. */
-const RULES = {
-  claude: () => join(HOME, ".claude", "CLAUDE.md"),
-  codex: () => join(HOME, ".codex", "AGENTS.md"),
-  cursor: () => join(HOME, ".cursorrules"),
-  gemini: () => join(HOME, ".gemini", "GEMINI.md"),
-  copilot: () => join(HOME, ".copilot", "agents", "rule-mcp.agent.md"),
-};
-
-/** The hosts that document a handler of their own, which is what L4 needs. */
-const EXTENSIONS = {
-  pi: { status: "documented", reason: "`pi.registerCommand` runs a handler with no model in the loop" },
-  copilot: { status: "experimental", reason: "JavaScript Extensions register real slash commands, still behind an experimental flag" },
-};
-
-const commandAgents = new Set(COMMAND_TARGETS.map((target) => target.agent));
-
-/**
- * The rungs a host can reach, with the reason for each one it cannot.
- *
- * The ladder is cumulative in intent, not in shape: a host installs every rung
- * it supports up to the level asked for, and a rung it does not support is
- * skipped with its reason instead of blocking the ones above it. Kiro is the
- * case that makes this necessary - it writes a hook file and has no command
- * files at all, so a strict ladder would cap it at L0 and hide a surface the
- * study measured.
- */
-function levelsOf(id) {
-  const hook = hookSupport(id);
-  const extension = EXTENSIONS[id];
-
-  return {
-    L0: { supported: true, reason: "the MCP entry, which every host reads" },
-    L1: RULES[id] ? { supported: true, path: RULES[id]() } : { supported: false, reason: "no instructions file is documented for this host" },
-    L2: commandAgents.has(id) ? { supported: true } : { supported: false, reason: AGENTS_WITHOUT_COMMAND_SURFACE[id] ?? "no command-file surface was measured" },
-    L3: hook.writable ? { supported: true, file: hook.file } : { supported: false, reason: hook.reason ?? "no hook mechanism" },
-    L4: extension ? { supported: true, ...extension } : { supported: false, reason: "no handler API is documented" },
-  };
-}
-
-/** The highest rung a host supports. */
-function ceilingOf(levels) {
-  return ["L4", "L3", "L2", "L1"].find((rung) => levels[rung].supported) ?? "L0";
-}
 
 /** The hosts whose config is not a table row: each has its own installer. */
 const DEDICATED = {

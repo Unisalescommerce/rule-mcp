@@ -4,11 +4,8 @@
  * Where each generic host reads its MCP configuration, and in which dialect.
  *
  * One table, read by install, uninstall and detection, so the three cannot
- * disagree about a path. They disagreed before this existed: `antigravity` was
- * written to `~/.config/antigravity/mcp.json` and read from there, while the
- * host documents `~/.gemini/config/mcp_config.json`; `droid` was written to
- * `~/.config/factory/mcp.json` and removed from `~/.config/droid/mcp.json`, so
- * an uninstall left the entry behind.
+ * disagree about a path. Three surfaces deriving a path independently is how an
+ * install writes one file and an uninstall removes an entry from another.
  *
  * `format` is the dialect, not the vendor:
  *
@@ -116,8 +113,8 @@ export function legacyFile(id) {
 }
 
 /**
- * Every path a host may hold an entry in: where it is written now, then where it
- * used to be.
+ * Every path a host may hold an entry in: the documented file first, then the
+ * legacy ones.
  *
  * @param {string} id
  * @returns {string[]}
