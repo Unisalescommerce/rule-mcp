@@ -150,7 +150,11 @@ export function renderInit(result) {
   const hosts = hostLevels();
 
   if (Object.keys(hosts).length > 0) {
-    lines.push(`Hosts:        ${Object.entries(hosts).map(([id, level]) => `${id} ${level ?? "level not recorded"}`).join(", ")}`);
+    lines.push(
+      `Hosts:        ${Object.entries(hosts)
+        .map(([id, level]) => `${id} ${level ?? "level not recorded"}`)
+        .join(", ")}`,
+    );
   }
 
   if (result.release || result.dependencies) {
