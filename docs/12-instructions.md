@@ -19,7 +19,7 @@ which agents are installed and where their homes are.
 | Target                 | Agent      | Format     | Scope   | Prefixes MCP prompts |
 | ---------------------- | ---------- | ---------- | ------- | -------------------- |
 | Claude Code            | `claude`   | `args`     | global  | yes                  |
-| Codex CLI              | `codex`    | `args`     | global  | no                   |
+| Codex CLI              | `codex`    | `devin`    | global  | no                   |
 | GitHub Copilot CLI     | `copilot`  | `devin`    | global  | no                   |
 | VS Code (Copilot Chat) | `vscode`   | `prompt`   | global  | yes                  |
 | Pi                     | `pi`       | `args`     | global  | no                   |

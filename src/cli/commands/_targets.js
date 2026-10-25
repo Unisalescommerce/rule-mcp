@@ -8,7 +8,9 @@ import { resolveCommandTargets } from "../../core/agents/command-targets/index.j
 import { syncCommandTargets } from "./_targets-sync.js";
 /** Resolve the command targets for these options, detected-only by default. */
 export function resolvedTargets(opts) {
-  return resolveCommandTargets(opts.agent ? { agent: opts.agent } : { detectedOnly: true });
+  const filter = opts.agent ? { agent: opts.agent } : { detectedOnly: true };
+
+  return resolveCommandTargets({ ...filter, includeLegacy: Boolean(opts.includeLegacy) });
 }
 
 /**

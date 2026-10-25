@@ -5,7 +5,7 @@
       "file": "01-getting-started.md",
       "kind": "block",
       "marker": "agent-targets",
-      "sha256": "f498803f6ac3fb200da75f1ca1bc2c489817576ec4005f63bb7d9145f45d676c"
+      "sha256": "2a8f74dcccf69a9d4884ee7a4e4c13097d48feda427ae375288a363b81d3a706"
     },
     {
       "file": "02-architecture.md",
@@ -43,7 +43,7 @@
     {
       "file": "12-instructions.md",
       "kind": "document",
-      "sha256": "a7fb54ca606c555fc0812d2ae5b9598bf419af29363f46dc096184b9095a912c"
+      "sha256": "07aa77f1407924e65e1960586250a8fac58d109d00be6e3c43e8a32ffe7b36ad"
     },
     {
       "file": "13-cli.md",

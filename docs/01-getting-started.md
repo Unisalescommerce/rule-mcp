@@ -64,7 +64,7 @@ prompts through the server.
 | `--agent`     | Command files                   | Transport             | Notes                                                                                                                     |
 | ------------- | ------------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------- |
 | `claude`      | yes: args (global)              | stdio                 |                                                                                                                           |
-| `codex`       | yes: args (global)              | stdio                 |                                                                                                                           |
+| `codex`       | yes: devin (global)             | stdio                 |                                                                                                                           |
 | `cursor`      | yes: args (project)             | stdio                 |                                                                                                                           |
 | `copilot`     | yes: devin (global)             | stdio                 |                                                                                                                           |
 | `gemini`      | yes: gemini (global)            | stdio                 |                                                                                                                           |

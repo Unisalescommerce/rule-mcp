@@ -69,7 +69,9 @@ function stalePersonaFiles(dir, entries) {
  * @param {{ agent?: string, remove?: boolean, dryRun?: boolean, json?: boolean, only?: string[] }} opts
  */
 export function syncCommandTargets(opts) {
-  const targets = resolvedTargets(opts);
+  // A removal also sweeps the directories an earlier release wrote to; a write
+  // only touches the current one.
+  const targets = resolvedTargets({ ...opts, includeLegacy: Boolean(opts.remove) });
 
   if (targets.length === 0) {
     print("agent-commands: no agent command directories found on this machine");
@@ -84,6 +86,11 @@ export function syncCommandTargets(opts) {
 
     if (!opts.dryRun && !opts.remove) {
       mkdirSync(dir, { recursive: true });
+    }
+
+    // A legacy directory is removal-only: nothing is written there.
+    if (opts.remove && !opts.dryRun && !existsSync(dir)) {
+      continue;
     }
 
     // Remove sweeps the whole `rule-mcp` namespace in the target dir, so names that

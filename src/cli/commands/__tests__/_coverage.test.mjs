@@ -92,15 +92,20 @@ test("Claude and Pi keep their existing bare-command dirs", () => {
   assert.ok(piOverride.includes(join("/custom/pi", "prompts")), "PI_CODING_AGENT_DIR wins");
 });
 
-test("Codex writes custom prompts under ~/.codex/prompts", () => {
-  const targets = resolveCommandTargets({ agent: "codex", ...ctx() });
+test("Codex writes Skills under ~/.agents/skills and sweeps the old prompt directory", () => {
+  const written = resolveCommandTargets({ agent: "codex", ...ctx() });
 
-  assert.equal(targets.length, 1);
-  assert.equal(targets[0].format, "args");
+  assert.equal(written.length, 1, "one directory is written");
+  assert.equal(written[0].format, "devin", "a skill is a directory holding SKILL.md");
+  assert.equal(written[0].dir, join("/home/u", ".agents", "skills"), "the user scope the Skills documentation lists");
+  assert.equal(written[0].legacy, false, "and it is the current target");
+
+  const removed = resolveCommandTargets({ agent: "codex", includeLegacy: true, ...ctx() });
+
   assert.deepEqual(
-    targets.map((t) => t.dir),
+    removed.filter((t) => t.legacy).map((t) => t.dir),
     [join("/home/u", ".codex", "prompts")],
-    "Codex custom prompts are /prompts:<name> from ~/.codex/prompts/*.md",
+    "the custom prompts an earlier release wrote are still swept",
   );
 });
 

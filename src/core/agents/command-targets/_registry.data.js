@@ -24,15 +24,20 @@ export const COMMAND_TARGETS = [
     dirs: (ctx) => [join(ctx.home, ".claude", "commands")],
   },
   {
-    // Codex custom prompts are deprecated upstream in favour of skills, but
-    // ~/.codex/prompts/*.md still loads as /prompts:<name> in CLI and IDE.
+    // Codex reads Skills: `$HOME/.agents/skills` is the user scope the Skills
+    // documentation lists, and a skill is a directory holding `SKILL.md` with a
+    // name and a description. Custom prompts in `~/.codex/prompts` still load as
+    // `/prompts:<name>` and were the target until 2026-10-25 (ADR 179, amended):
+    // they are no longer written, and the sync removes them so an install that
+    // has not been migrated does not show every command twice.
     agent: "codex",
     label: "Codex CLI",
-    format: "args",
+    format: "devin",
     scope: "global",
     namespacedPrompts: false,
-    detect: (ctx) => ctx.exists(join(ctx.home, ".codex")),
-    dirs: (ctx) => [join(ctx.home, ".codex", "prompts")],
+    detect: (ctx) => ctx.exists(join(ctx.home, ".codex")) || ctx.exists(join(ctx.home, ".agents")),
+    dirs: (ctx) => [join(ctx.home, ".agents", "skills")],
+    legacy: [{ format: "args", dirs: (ctx) => [join(ctx.home, ".codex", "prompts")] }],
   },
   {
     // Copilot CLI personal skills: ~/.copilot/skills/<name>/SKILL.md, invoked

@@ -47,6 +47,8 @@ const requestedAgents = (agent) => {
  *   comma-separated list or an array); their gates are skipped, because an
  *   explicit install targets the agent even if nothing is detected yet
  * @param {boolean} [options.detectedOnly] - only agents present on this machine
+ * @param {boolean} [options.includeLegacy] - also resolve the directories an
+ *   earlier release wrote to, with `legacy: true`, so a removal can reach them
  * @param {string} [options.home] @param {string} [options.cwd]
  * @param {string} [options.platform] @param {object} [options.env]
  * @param {(path: string) => boolean} [options.exists]
@@ -72,7 +74,18 @@ export function resolveCommandTargets(options = {}) {
     }
 
     for (const dir of target.dirs(ctx)) {
-      resolved.push({ agent: target.agent, label: target.label, format: target.format, scope: target.scope, dir });
+      resolved.push({ agent: target.agent, label: target.label, format: target.format, scope: target.scope, dir, legacy: false });
+    }
+
+    // A legacy target is only ever swept: writing there again would put every
+    // command in two menus, which is the duplication the clean-command set
+    // exists to end.
+    if (options.includeLegacy) {
+      for (const old of target.legacy ?? []) {
+        for (const dir of old.dirs(ctx)) {
+          resolved.push({ agent: target.agent, label: target.label, format: old.format, scope: target.scope, dir, legacy: true });
+        }
+      }
     }
   }
 
