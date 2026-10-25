@@ -1,5 +1,3 @@
-
-
 /**
  * @module core/guardrails/helpers
  *
@@ -21,6 +19,7 @@ import { countedVerdict, isTypeScriptFile, passResult, tsSkipResult } from "../.
 import { extractRealCSS, looksLikeStylesheet, looksLikeStyling, maskLiterals, unjustifiedGrids } from "./_util.js";
 import { INSTALLED_GROUPS, isPinned, manifestOf, stripLiterals } from "./quality/index.js";
 import { findRaggedBoxes } from "../text/ascii-box/index.js";
+import { parseWorkflow } from "./workflow/index.js";
 import { scanCodeForForeign, scanDocumentForForeign, scanPathForForeign } from "../text/en-english/index.js";
 import { findFingerprints } from "../text/fingerprint/index.js";
 
@@ -47,6 +46,9 @@ export const GUARDRAIL_HELPERS = Object.freeze({
   INSTALLED_GROUPS,
   isPinned,
   manifestOf,
+
+  // Workflows: jobs and steps, for the release rules.
+  parseWorkflow,
 
   // Prose: the scanners the prose rules are built on.
   findFingerprints,
