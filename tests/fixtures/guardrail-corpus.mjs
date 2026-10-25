@@ -32,6 +32,9 @@ const PG = "rule-data-postgresql";
 const DOCKER = "rule-devops-docker";
 const STYLEGUIDE = "rule-styleguide";
 const PNPM = "rule-toolchain-pnpm";
+const RELEASE = "rule-process-npm-release";
+const UV = "rule-process-uv-release";
+const CARGO = "rule-process-cargo-release";
 
 /** @type {Array<{rule: string, skill: string, label: "good"|"bad", fileName?: string, isComponent?: boolean, mode?: string, why: string, code: string}>} */
 export const CORPUS = [
@@ -1402,5 +1405,529 @@ export const CORPUS = [
     fileName: "0003_audit.sql",
     why: "the same table, with the write that justifies it",
     code: `create table audit_logs (\n  id bigserial primary key,\n  actor_id bigint not null,\n  action text not null,\n  created_at timestamptz not null default now()\n);\n\ninsert into audit_logs (actor_id, action) values ($1, $2);\n`,
+  },
+
+  // ── The npm release ──
+  {
+    rule: "release-no-npm-token",
+    skill: RELEASE,
+    label: "bad",
+    fileName: ".github/workflows/release.yml",
+    why: "a token in the publish step is the credential Trusted Publishing exists to remove",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: npm stage publish\n        env:\n          NODE_AUTH_TOKEN: \${{ secrets.NPM_TOKEN }}\n`,
+  },
+  {
+    rule: "release-no-npm-token",
+    skill: RELEASE,
+    label: "good",
+    fileName: ".github/workflows/release.yml",
+    why: "the workflow asks for its own short-lived token instead of holding one",
+    code: `on:\n  push:\n    tags: ['v*']\npermissions:\n  contents: read\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2\n        with:\n          persist-credentials: false\n      - run: npm ci --ignore-scripts\n      - run: npm run build\n  publish:\n    needs: build\n    runs-on: ubuntu-latest\n    permissions:\n      contents: read\n      id-token: write\n    steps:\n      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2\n        with:\n          persist-credentials: false\n      - run: npm stage publish --ignore-scripts`,
+  },
+  {
+    rule: "release-no-npm-token",
+    skill: RELEASE,
+    label: "good",
+    fileName: ".github/workflows/release.yml",
+    why: "the token is named in a comment, which is documentation and not a credential",
+    code: `on: push\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      # NPM_TOKEN was deleted when the Trusted Publisher was added\n      - run: npm stage publish\n`,
+  },
+  {
+    rule: "release-stage-publish",
+    skill: RELEASE,
+    label: "bad",
+    fileName: ".github/workflows/release.yml",
+    why: "npm publish makes the version exist before anyone can look at it",
+    code: `on: push\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: npm publish --provenance\n`,
+  },
+  {
+    rule: "release-stage-publish",
+    skill: RELEASE,
+    label: "good",
+    fileName: ".github/workflows/release.yml",
+    why: "the staged form, and the plain form only as part of it",
+    code: `on: push\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: npm stage publish\n`,
+  },
+  {
+    rule: "release-stage-publish",
+    skill: RELEASE,
+    label: "good",
+    fileName: "release.test.mjs",
+    why: "a test that asserts the forbidden command is not a workflow",
+    code: `test("the release workflow never publishes directly", () => {\n  assert.doesNotMatch(source, /npm publish/);\n});\n`,
+  },
+  {
+    rule: "release-stage-publish",
+    skill: RELEASE,
+    label: "bad",
+    fileName: ".github/workflows/release.yml",
+    why: "chained behind a build, the plain publish is still the plain publish",
+    code: `on: push\njobs:\n  publish:\n    steps:\n      - run: |\n          npm run build\n          npm publish\n`,
+  },
+  {
+    rule: "release-actions-pinned",
+    skill: RELEASE,
+    label: "bad",
+    fileName: ".github/workflows/release.yml",
+    why: "a tag is a pointer its owner can move without a diff here",
+    code: `on: push\njobs:\n  publish:\n    steps:\n      - uses: actions/checkout@v4\n`,
+  },
+  {
+    rule: "release-actions-pinned",
+    skill: RELEASE,
+    label: "good",
+    fileName: ".github/workflows/release.yml",
+    why: "a full SHA with the version beside it, and a local action that has no upstream",
+    code: `on: push\njobs:\n  publish:\n    permissions:\n      contents: read\n      id-token: write\n    steps:\n      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2\n      - run: npm stage publish --ignore-scripts\n      - uses: ./.github/actions/build\n`,
+  },
+  {
+    rule: "release-id-token-isolated",
+    skill: RELEASE,
+    label: "bad",
+    fileName: ".github/workflows/release.yml",
+    why: "the job that can mint a publish token also runs every install script in the tree",
+    code: `on: push\njobs:\n  publish:\n    permissions:\n      id-token: write\n    steps:\n      - uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0\n        with:\n          cache: npm\n      - run: npm ci\n      - run: npm stage publish\n`,
+  },
+  {
+    rule: "release-id-token-isolated",
+    skill: RELEASE,
+    label: "good",
+    fileName: ".github/workflows/release.yml",
+    why: "the permission sits on the one job that publishes, and the install job does not have it",
+    code: `on:\n  push:\n    tags: ['v*']\npermissions:\n  contents: read\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2\n        with:\n          persist-credentials: false\n      - run: npm ci --ignore-scripts\n      - run: npm run build\n  publish:\n    needs: build\n    runs-on: ubuntu-latest\n    permissions:\n      contents: read\n      id-token: write\n    steps:\n      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2\n        with:\n          persist-credentials: false\n      - run: npm stage publish --ignore-scripts`,
+  },
+  {
+    rule: "release-tag-trigger",
+    skill: RELEASE,
+    label: "bad",
+    fileName: ".github/workflows/release.yml",
+    why: "a workflow that runs on every push publishes whatever the branch happens to hold",
+    code: `on:\n  push:\n    branches: [main]\njobs:\n  publish:\n    steps:\n      - run: npm stage publish --ignore-scripts`,
+  },
+
+  {
+    rule: "release-tag-trigger",
+    skill: RELEASE,
+    label: "good",
+    fileName: ".github/workflows/release.yml",
+    why: "the tag is the human decision that says this commit is the version",
+    code: `on:\n  push:\n    tags: ['v*']\npermissions:\n  contents: read\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2\n        with:\n          persist-credentials: false\n      - run: npm ci --ignore-scripts\n      - run: npm run build\n  publish:\n    needs: build\n    runs-on: ubuntu-latest\n    permissions:\n      contents: read\n      id-token: write\n    steps:\n      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2\n        with:\n          persist-credentials: false\n      - run: npm stage publish --ignore-scripts`,
+  },
+
+  {
+    rule: "release-ignore-scripts",
+    skill: RELEASE,
+    label: "bad",
+    fileName: ".github/workflows/release.yml",
+    why: "a dependency install script runs on the machine that is about to publish",
+    code: `on: push\njobs:\n  publish:\n    permissions:\n      contents: read\n      id-token: write\n    steps:\n      - run: npm ci\n      - run: npm stage publish`,
+  },
+
+  {
+    rule: "release-ignore-scripts",
+    skill: RELEASE,
+    label: "good",
+    fileName: ".github/workflows/release.yml",
+    why: "the flag turns a compromised postinstall into a failed install",
+    code: `on:\n  push:\n    tags: ['v*']\npermissions:\n  contents: read\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2\n        with:\n          persist-credentials: false\n      - run: npm ci --ignore-scripts\n      - run: npm run build\n  publish:\n    needs: build\n    runs-on: ubuntu-latest\n    permissions:\n      contents: read\n      id-token: write\n    steps:\n      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2\n        with:\n          persist-credentials: false\n      - run: npm stage publish --ignore-scripts`,
+  },
+
+  {
+    rule: "release-no-persist-credentials",
+    skill: RELEASE,
+    label: "bad",
+    fileName: ".github/workflows/release.yml",
+    why: "the checkout leaves the job token in .git/config, and the publish step can push",
+    code: `on: push\njobs:\n  publish:\n    permissions:\n      contents: read\n      id-token: write\n    steps:\n      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2\n      - run: npm stage publish --ignore-scripts`,
+  },
+
+  {
+    rule: "release-no-persist-credentials",
+    skill: RELEASE,
+    label: "good",
+    fileName: ".github/workflows/release.yml",
+    why: "the release job reads the repository; it has no reason to hold a credential",
+    code: `on:\n  push:\n    tags: ['v*']\npermissions:\n  contents: read\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2\n        with:\n          persist-credentials: false\n      - run: npm ci --ignore-scripts\n      - run: npm run build\n  publish:\n    needs: build\n    runs-on: ubuntu-latest\n    permissions:\n      contents: read\n      id-token: write\n    steps:\n      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2\n        with:\n          persist-credentials: false\n      - run: npm stage publish --ignore-scripts`,
+  },
+
+  {
+    rule: "release-least-privilege",
+    skill: RELEASE,
+    label: "bad",
+    fileName: ".github/workflows/release.yml",
+    why: "contents: write on a release job is the ability to move the tag it was triggered by",
+    code: `on: push\npermissions:\n  contents: write\njobs:\n  publish:\n    steps:\n      - run: npm stage publish --ignore-scripts`,
+  },
+
+  {
+    rule: "release-least-privilege",
+    skill: RELEASE,
+    label: "good",
+    fileName: ".github/workflows/release.yml",
+    why: "one read permission on the workflow, one write permission on the job that needs it",
+    code: `on:\n  push:\n    tags: ['v*']\npermissions:\n  contents: read\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2\n        with:\n          persist-credentials: false\n      - run: npm ci --ignore-scripts\n      - run: npm run build\n  publish:\n    needs: build\n    runs-on: ubuntu-latest\n    permissions:\n      contents: read\n      id-token: write\n    steps:\n      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2\n        with:\n          persist-credentials: false\n      - run: npm stage publish --ignore-scripts`,
+  },
+  {
+    rule: "release-tag-trigger",
+    skill: RELEASE,
+    label: "good",
+    fileName: ".github/workflows/ci.yml",
+    why: "a CI workflow publishes nothing, so a branch trigger is not a release trigger",
+    code: `on:\n  push:\n    branches: [main]\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - run: pnpm install --frozen-lockfile\n      - run: pnpm test`,
+  },
+  {
+    rule: "release-ignore-scripts",
+    skill: RELEASE,
+    label: "good",
+    fileName: ".github/workflows/ci.yml",
+    why: "a test job installs with scripts on purpose; the release rules do not speak about it",
+    code: `on:\n  push:\n    branches: [main]\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - run: pnpm install --frozen-lockfile\n      - run: pnpm test`,
+  },
+  {
+    rule: "release-no-pypi-token",
+    skill: UV,
+    label: "bad",
+    fileName: ".github/workflows/publish.yaml",
+    why: "a token the workflow holds is the credential Trusted Publishing removes",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: uv publish\n        env:\n          UV_PUBLISH_TOKEN: \${{ secrets.PYPI_TOKEN }}`,
+  },
+
+  {
+    rule: "release-no-pypi-token",
+    skill: UV,
+    label: "bad",
+    fileName: ".github/workflows/publish.yaml",
+    why: "the token on the command line leaks into the process list and the logs",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: uv publish --token pypi-abc123`,
+  },
+
+  {
+    rule: "release-no-pypi-token",
+    skill: UV,
+    label: "good",
+    fileName: ".github/workflows/publish.yaml",
+    why: "uv exchanges the OIDC identity and revokes the short-lived token afterwards",
+    code: `on:\n  push:\n    tags: ['v*']\npermissions:\n  contents: read\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: astral-sh/setup-uv@0000000000000000000000000000000000000000 # v6\n      - run: uv build --no-sources\n  publish:\n    runs-on: ubuntu-latest\n    environment: release\n    permissions:\n      contents: read\n      id-token: write\n    steps:\n      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n        with:\n          persist-credentials: false\n      - run: uv publish`,
+  },
+
+  {
+    rule: "release-no-pypi-token",
+    skill: UV,
+    label: "good",
+    fileName: ".github/workflows/publish.yaml",
+    why: "the old variable is named in a comment, which is documentation, not a credential",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      # UV_PUBLISH_TOKEN was deleted when the publisher was added\n      - run: uv publish`,
+  },
+
+  {
+    rule: "release-build-no-sources",
+    skill: UV,
+    label: "bad",
+    fileName: ".github/workflows/publish.yaml",
+    why: "a tool.uv.sources substitution is baked into the metadata consumers will read",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - run: uv build\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: uv publish`,
+  },
+
+  {
+    rule: "release-build-no-sources",
+    skill: UV,
+    label: "good",
+    fileName: ".github/workflows/publish.yaml",
+    why: "the documented publish recommendation builds the package every other tool builds",
+    code: `on:\n  push:\n    tags: ['v*']\npermissions:\n  contents: read\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: astral-sh/setup-uv@0000000000000000000000000000000000000000 # v6\n      - run: uv build --no-sources\n  publish:\n    runs-on: ubuntu-latest\n    environment: release\n    permissions:\n      contents: read\n      id-token: write\n    steps:\n      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n        with:\n          persist-credentials: false\n      - run: uv publish`,
+  },
+
+  {
+    rule: "release-actions-pinned",
+    skill: UV,
+    label: "bad",
+    fileName: ".github/workflows/publish.yaml",
+    why: "a tag is a pointer its owner can move without a diff in this repository",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: astral-sh/setup-uv@v6\n      - run: uv publish`,
+  },
+
+  {
+    rule: "release-actions-pinned",
+    skill: UV,
+    label: "good",
+    fileName: ".github/workflows/publish.yaml",
+    why: "a full SHA with the version beside it",
+    code: `on:\n  push:\n    tags: ['v*']\npermissions:\n  contents: read\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: astral-sh/setup-uv@0000000000000000000000000000000000000000 # v6\n      - run: uv build --no-sources\n  publish:\n    runs-on: ubuntu-latest\n    environment: release\n    permissions:\n      contents: read\n      id-token: write\n    steps:\n      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n        with:\n          persist-credentials: false\n      - run: uv publish`,
+  },
+
+  {
+    rule: "release-id-token-isolated",
+    skill: UV,
+    label: "bad",
+    fileName: ".github/workflows/publish.yaml",
+    why: "the job that can mint a publish token also syncs every dependency in the tree",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    permissions:\n      id-token: write\n    steps:\n      - run: uv sync --locked\n      - run: uv publish`,
+  },
+
+  {
+    rule: "release-id-token-isolated",
+    skill: UV,
+    label: "good",
+    fileName: ".github/workflows/publish.yaml",
+    why: "the permission sits on the one job that publishes, and the build job does not have it",
+    code: `on:\n  push:\n    tags: ['v*']\npermissions:\n  contents: read\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: astral-sh/setup-uv@0000000000000000000000000000000000000000 # v6\n      - run: uv build --no-sources\n  publish:\n    runs-on: ubuntu-latest\n    environment: release\n    permissions:\n      contents: read\n      id-token: write\n    steps:\n      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n        with:\n          persist-credentials: false\n      - run: uv publish`,
+  },
+
+  {
+    rule: "release-no-pypi-token",
+    skill: UV,
+    label: "good",
+    fileName: ".github/workflows/ci.yml",
+    why: "a CI workflow publishes nothing, so the release rules do not speak about it",
+    code: `on:\n  push:\n    branches: [main]\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - run: uv sync --locked\n      - run: uv run --frozen pytest`,
+  },
+  {
+    rule: "release-sync-locked",
+    skill: UV,
+    label: "bad",
+    fileName: ".github/workflows/publish.yaml",
+    why: "a fresh resolution on the release machine ships versions no commit contains",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - run: uv sync\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: uv publish`,
+  },
+
+  {
+    rule: "release-sync-locked",
+    skill: UV,
+    label: "good",
+    fileName: ".github/workflows/publish.yaml",
+    why: "the committed lockfile is what the artifact is built from",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: uv sync --locked\n      - run: uv publish`,
+  },
+
+  {
+    rule: "release-version-not-in-workflow",
+    skill: UV,
+    label: "bad",
+    fileName: ".github/workflows/publish.yaml",
+    why: "a literal version in the workflow is a second source of truth beside the tag",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: uv version 1.2.3\n      - run: uv publish`,
+  },
+
+  {
+    rule: "release-version-not-in-workflow",
+    skill: UV,
+    label: "good",
+    fileName: ".github/workflows/publish.yaml",
+    why: "the version read from pyproject.toml is the only source",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: uv version\n      - run: uv publish`,
+  },
+
+  {
+    rule: "release-attestations",
+    skill: UV,
+    label: "bad",
+    fileName: ".github/workflows/publish.yaml",
+    why: "uv publish uploads attestations and creates none, so provenance is assumed and absent",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      # publishes with attestations\n      - run: uv publish`,
+  },
+
+  {
+    rule: "release-attestations",
+    skill: UV,
+    label: "good",
+    fileName: ".github/workflows/publish.yaml",
+    why: "the step that produces the attestation is the one that claims it",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: uv run pypi-attestations create dist/*.whl\n      - run: uv publish`,
+  },
+
+  {
+    rule: "release-least-privilege",
+    skill: UV,
+    label: "bad",
+    fileName: ".github/workflows/publish.yaml",
+    why: "contents: write on a release job can move the tag that triggered it",
+    code: `on:\n  push:\n    tags: ['v*']\npermissions:\n  contents: write\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: uv publish`,
+  },
+
+  {
+    rule: "release-least-privilege",
+    skill: UV,
+    label: "good",
+    fileName: ".github/workflows/publish.yaml",
+    why: "read on the workflow, one write permission on the job that needs it",
+    code: `on:\n  push:\n    tags: ['v*']\npermissions:\n  contents: read\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    permissions:\n      contents: read\n      id-token: write\n    steps:\n      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n        with:\n          persist-credentials: false\n      - run: uv publish`,
+  },
+  {
+    rule: "release-no-long-lived-token",
+    skill: CARGO,
+    label: "bad",
+    fileName: ".github/workflows/publish.yaml",
+    why: "a token from secrets survives the release and can publish any crate its owner owns",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: cargo publish --locked\n        env:\n          CARGO_REGISTRY_TOKEN: \${{ secrets.CRATES_TOKEN }}`,
+  },
+
+  {
+    rule: "release-no-long-lived-token",
+    skill: CARGO,
+    label: "good",
+    fileName: ".github/workflows/publish.yaml",
+    why: "the token is exchanged from the OIDC identity and revoked when the job ends",
+    code: `on:\n  push:\n    tags: ['v*']\npermissions:\n  contents: read\njobs:\n  verify:\n    runs-on: ubuntu-latest\n    steps:\n      - run: cargo publish --dry-run --locked\n  publish:\n    runs-on: ubuntu-latest\n    environment: release\n    permissions:\n      contents: read\n      id-token: write\n    steps:\n      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n        with:\n          persist-credentials: false\n      - id: auth\n        uses: rust-lang/crates-io-auth-action@1111111111111111111111111111111111111111 # v1\n      - run: cargo publish --locked\n        env:\n          CARGO_REGISTRY_TOKEN: \${{ steps.auth.outputs.token }}`,
+  },
+
+  {
+    rule: "release-no-long-lived-token",
+    skill: CARGO,
+    label: "good",
+    fileName: ".github/workflows/publish.yaml",
+    why: "a dry run is verification, not a release, so the rule does not speak about this workflow",
+    code: `on:\n  pull_request:\njobs:\n  verify:\n    runs-on: ubuntu-latest\n    steps:\n      - run: cargo publish --dry-run --locked`,
+  },
+
+  {
+    rule: "release-token-step-scoped",
+    skill: CARGO,
+    label: "bad",
+    fileName: ".github/workflows/publish.yaml",
+    why: "a token at job level is inherited by every step in the job, including the build",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    env:\n      CARGO_REGISTRY_TOKEN: \${{ steps.auth.outputs.token }}\n    steps:\n      - run: cargo publish --locked`,
+  },
+
+  {
+    rule: "release-token-step-scoped",
+    skill: CARGO,
+    label: "bad",
+    fileName: ".github/workflows/publish.yaml",
+    why: "a token at workflow level is inherited by every job",
+    code: `on:\n  push:\n    tags: ['v*']\nenv:\n  CARGO_REGISTRY_TOKEN: \${{ steps.auth.outputs.token }}\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: cargo publish --locked`,
+  },
+
+  {
+    rule: "release-token-step-scoped",
+    skill: CARGO,
+    label: "good",
+    fileName: ".github/workflows/publish.yaml",
+    why: "the token exists for the one command that needs it",
+    code: `on:\n  push:\n    tags: ['v*']\npermissions:\n  contents: read\njobs:\n  verify:\n    runs-on: ubuntu-latest\n    steps:\n      - run: cargo publish --dry-run --locked\n  publish:\n    runs-on: ubuntu-latest\n    environment: release\n    permissions:\n      contents: read\n      id-token: write\n    steps:\n      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n        with:\n          persist-credentials: false\n      - id: auth\n        uses: rust-lang/crates-io-auth-action@1111111111111111111111111111111111111111 # v1\n      - run: cargo publish --locked\n        env:\n          CARGO_REGISTRY_TOKEN: \${{ steps.auth.outputs.token }}`,
+  },
+
+  {
+    rule: "release-actions-pinned",
+    skill: CARGO,
+    label: "bad",
+    fileName: ".github/workflows/publish.yaml",
+    why: "a tag is a pointer its owner can move, and this action can mint publish tokens",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: rust-lang/crates-io-auth-action@v1\n      - run: cargo publish --locked`,
+  },
+
+  {
+    rule: "release-actions-pinned",
+    skill: CARGO,
+    label: "good",
+    fileName: ".github/workflows/publish.yaml",
+    why: "a full SHA with the version beside it",
+    code: `on:\n  push:\n    tags: ['v*']\npermissions:\n  contents: read\njobs:\n  verify:\n    runs-on: ubuntu-latest\n    steps:\n      - run: cargo publish --dry-run --locked\n  publish:\n    runs-on: ubuntu-latest\n    environment: release\n    permissions:\n      contents: read\n      id-token: write\n    steps:\n      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n        with:\n          persist-credentials: false\n      - id: auth\n        uses: rust-lang/crates-io-auth-action@1111111111111111111111111111111111111111 # v1\n      - run: cargo publish --locked\n        env:\n          CARGO_REGISTRY_TOKEN: \${{ steps.auth.outputs.token }}`,
+  },
+
+  {
+    rule: "release-id-token-isolated",
+    skill: CARGO,
+    label: "bad",
+    fileName: ".github/workflows/publish.yaml",
+    why: "the job that can mint a publish token also builds the workspace",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    permissions:\n      id-token: write\n    steps:\n      - uses: dtolnay/rust-toolchain@{'2'*40} # stable\n      - run: cargo build --locked\n      - run: cargo publish --locked`,
+  },
+
+  {
+    rule: "release-id-token-isolated",
+    skill: CARGO,
+    label: "good",
+    fileName: ".github/workflows/publish.yaml",
+    why: "the permission sits on the one job that publishes, and the verify job does not have it",
+    code: `on:\n  push:\n    tags: ['v*']\npermissions:\n  contents: read\njobs:\n  verify:\n    runs-on: ubuntu-latest\n    steps:\n      - run: cargo publish --dry-run --locked\n  publish:\n    runs-on: ubuntu-latest\n    environment: release\n    permissions:\n      contents: read\n      id-token: write\n    steps:\n      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n        with:\n          persist-credentials: false\n      - id: auth\n        uses: rust-lang/crates-io-auth-action@1111111111111111111111111111111111111111 # v1\n      - run: cargo publish --locked\n        env:\n          CARGO_REGISTRY_TOKEN: \${{ steps.auth.outputs.token }}`,
+  },
+
+  {
+    rule: "release-no-long-lived-token",
+    skill: CARGO,
+    label: "good",
+    fileName: ".gitlab-ci.yml",
+    why: "a GitLab pipeline is not a GitHub workflow, so the rules step over it instead of guessing",
+    code: `stages: [publish]\npublish:\n  stage: publish\n  environment: release\n  id_tokens:\n    CRATES_IO_ID_TOKEN:\n      aud: crates.io\n  script:\n    - CARGO_REGISTRY_TOKEN=$(bash exchange-token.sh) cargo publish --locked`,
+  },
+  {
+    rule: "release-dry-run-first",
+    skill: CARGO,
+    label: "bad",
+    fileName: ".github/workflows/publish.yaml",
+    why: "a publish is permanent, so the first look at the archive should not be after the upload",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: cargo publish --locked`,
+  },
+
+  {
+    rule: "release-dry-run-first",
+    skill: CARGO,
+    label: "good",
+    fileName: ".github/workflows/publish.yaml",
+    why: "the dry run builds and verifies the archive before the version exists",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  verify:\n    runs-on: ubuntu-latest\n    steps:\n      - run: cargo publish --dry-run --locked\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: cargo publish --locked`,
+  },
+
+  {
+    rule: "release-package-list",
+    skill: CARGO,
+    label: "bad",
+    fileName: ".github/workflows/publish.yaml",
+    why: "nobody reviewed what the .crate contains",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: cargo publish --locked`,
+  },
+
+  {
+    rule: "release-package-list",
+    skill: CARGO,
+    label: "good",
+    fileName: ".github/workflows/publish.yaml",
+    why: "the packed file list is the diff nobody reviews otherwise",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  verify:\n    runs-on: ubuntu-latest\n    steps:\n      - run: cargo package --list\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: cargo publish --locked`,
+  },
+
+  {
+    rule: "release-manifest-metadata",
+    skill: CARGO,
+    label: "bad",
+    fileName: "Cargo.toml",
+    why: "crates.io refuses the first publish without these fields, after the archive is built",
+    code: `[package]\nname = "hello"\nversion = "1.0.0"\nedition = "2021"\n`,
+  },
+
+  {
+    rule: "release-manifest-metadata",
+    skill: CARGO,
+    label: "good",
+    fileName: "Cargo.toml",
+    why: "every field the registry asks for is present, licence through readme",
+    code: `[package]\nname = "hello"\nversion = "1.0.0"\nedition = "2021"\nlicense = "MIT"\ndescription = "Says hello"\nrepository = "https://github.com/acme/hello"\nreadme = "README.md"\n`,
+  },
+
+  {
+    rule: "release-manifest-metadata",
+    skill: CARGO,
+    label: "good",
+    fileName: "Cargo.toml",
+    why: "the workspace supplies the metadata and the member inherits it",
+    code: `[package]\nname = "hello"\nversion.workspace = true\nlicense.workspace = true\ndescription.workspace = true\nrepository.workspace = true\nreadme.workspace = true\n`,
+  },
+
+  {
+    rule: "release-version-not-in-workflow",
+    skill: CARGO,
+    label: "bad",
+    fileName: ".github/workflows/publish.yaml",
+    why: "the pipeline rewrites the version beside a tag that already names one",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: cargo set-version 1.2.3\n      - run: cargo publish --locked`,
+  },
+
+  {
+    rule: "release-version-not-in-workflow",
+    skill: CARGO,
+    label: "good",
+    fileName: ".github/workflows/publish.yaml",
+    why: "the version comes from the manifest, bumped in the commit the tag points at",
+    code: `on:\n  push:\n    tags: ['v*']\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: cargo publish --locked`,
   },
 ];
