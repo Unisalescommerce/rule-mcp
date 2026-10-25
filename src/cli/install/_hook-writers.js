@@ -44,3 +44,15 @@ export function geminiHooks(command) {
 
   return { BeforeTool: group, AfterTool: group };
 }
+
+/**
+ * The Codex `hooks.json` object: one matcher group per tool event.
+ *
+ * @param {string} command
+ * @returns {object}
+ */
+export function codexHooks(command) {
+  const group = [{ matcher: "Bash|apply_patch|Edit|Write", hooks: [{ type: "command", command }] }];
+
+  return { PreToolUse: group, PostToolUse: group };
+}

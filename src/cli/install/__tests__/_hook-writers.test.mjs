@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { geminiHooks, opencodePlugin, piExtension } from "../_hook-writers.js";
+import { codexHooks, geminiHooks, opencodePlugin, piExtension } from "../_hook-writers.js";
 
 test("the OpenCode plugin uses the documented tool events", () => {
   const source = opencodePlugin("/bin/rule-mcp");
@@ -20,4 +20,11 @@ test("the Gemini payload uses BeforeTool and AfterTool with a command hook", () 
 
   assert.equal(hooks.BeforeTool[0].hooks[0].type, "command");
   assert.equal(hooks.AfterTool[0].hooks[0].command, "/bin/rule-mcp");
+});
+
+test("the Codex payload uses PreToolUse and PostToolUse matcher groups", () => {
+  const hooks = codexHooks("/bin/rule-mcp");
+
+  assert.equal(hooks.PreToolUse[0].hooks[0].type, "command");
+  assert.equal(hooks.PostToolUse[0].matcher, "Bash|apply_patch|Edit|Write");
 });
