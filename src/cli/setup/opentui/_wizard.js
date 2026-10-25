@@ -14,6 +14,7 @@
  */
 
 import { DIMENSIONS, resolveProfile } from "../../install/_profiles.js";
+import { depthItems } from "./_items.js";
 import { readManifest } from "../../install/_manifest.js";
 import { agentRows } from "../_agent-rows.js";
 import { selectionLabel } from "../_commands-items.js";
@@ -44,13 +45,13 @@ import {
 } from "./_items.js";
 
 /** The rail labels, in the order the wizard lights them. */
-export const INSTALL_STEPS = ["Preflight", "Profile", "Agents", "Transport", "Surface", "Review", "Install", "Done"];
+export const INSTALL_STEPS = ["Preflight", "Profile", "Agents", "Depth", "Transport", "Surface", "Review", "Install", "Done"];
 
 /** The uninstall rail, in the same order. */
 export const UNINSTALL_STEPS = ["Select", "Purge", "Review", "Remove", "Done"];
 
 /** Where each install step sits on that rail. */
-const INSTALL_RAIL = { preflight: 0, profile: 1, agents: 2, transport: 3, surface: 4, review: 5, install: 6, done: 7 };
+const INSTALL_RAIL = { preflight: 0, profile: 1, agents: 2, depth: 3, transport: 4, surface: 5, review: 6, install: 7, done: 8 };
 
 /** Where each uninstall step sits on that rail. */
 const UNINSTALL_RAIL = { select: 0, purge: 1, review: 2, remove: 3, done: 4 };
@@ -64,7 +65,7 @@ const UNINSTALL_RAIL = { select: 0, purge: 1, review: 2, remove: 3, done: 4 };
  * @returns {string[]}
  */
 export function installOrder() {
-  return ["preflight", "profile", "agents", "transport", "surface", "review"];
+  return ["preflight", "profile", "agents", "depth", "transport", "surface", "review"];
 }
 
 /**
@@ -88,7 +89,9 @@ const installPlan = ({ answers, context, force, minimal }) =>
     extras: {
       rules: answers.dimensions.includes("rules"),
       commands: answers.dimensions.includes("commands"),
-      hooks: answers.dimensions.includes("hooks"),
+      // A level below L3 does not ask for hooks, and the dimension list cannot
+      // put one back: the confirmation is the level, not the checkbox.
+      hooks: answers.dimensions.includes("hooks") && (answers.level === "auto" || answers.level === undefined || Number(answers.level.slice(1)) >= 3),
       doctor: answers.dimensions.includes("doctor"),
       // The platform service belongs to daemon mode and is automatic there.
       service: answers.mode === "daemon",
@@ -210,6 +213,28 @@ export async function runInstallWizard({ screen, defaults = {} }) {
         }
 
         answers.agents = picked;
+
+        return undefined;
+      }
+
+      case "depth": {
+        const level = await screen.ask({
+          title: "How deep should the integration go?",
+          help: [
+            "A level is a cap, not a promise: each host installs the rungs it supports up to it.",
+            "The ceiling beside every host on the previous screen is what it can reach.",
+          ],
+          items: depthItems(answers.agents),
+          mode: "radio",
+          initial: [answers.level ?? "auto"],
+          height: 6,
+        });
+
+        if (level === CANCEL || level === BACK) {
+          return level;
+        }
+
+        answers.level = level;
 
         return undefined;
       }

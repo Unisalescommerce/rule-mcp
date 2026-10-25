@@ -18,6 +18,7 @@ import { getSkillNames } from "../../../tools/router/index.js";
 import { hookSupport } from "../../install/_hook-hosts.js";
 import { DIMENSION_DETAIL, DIMENSIONS, PROFILES } from "../../install/_profiles.js";
 import { remoteModeAgents } from "../../installers/index.js";
+import { hostRecord } from "../../installers/hosts/index.js";
 import { statusStyle, GLYPHS } from "../_theme.js";
 
 /** The tone a task status maps onto. */
@@ -140,6 +141,45 @@ const MODE_ITEMS = [
  *
  * @param {string[]} [agents]
  */
+/** The integration levels, with what each one writes and what it costs. */
+const LEVEL_ITEMS = [
+  { id: "auto", label: "As deep as each host allows", note: "default" },
+  { id: "L0", label: "L0 - server only", note: "the MCP entry" },
+  { id: "L1", label: "L1 - server and rules", note: "+ the instruction block" },
+  { id: "L2", label: "L2 - server, rules, commands", note: "+ the /rule-* files" },
+  { id: "L3", label: "L3 - everything plus hooks", note: "+ the guard hooks" },
+  { id: "L4", label: "L4 - plus a native handler", note: "+ the extension" },
+];
+
+/**
+ * The depth choices, with the ceilings of the hosts the user just picked.
+ *
+ * The ceiling belongs on this screen because the choice is a cap, not a
+ * promise: picking L4 with Zed selected installs L0 there, and the row says so
+ * before the user commits to it.
+ */
+export function depthItems(agents = []) {
+  const ceilings = [...new Set(agents.map((agent) => hostRecord(agent)?.ceiling).filter(Boolean))].sort();
+
+  return LEVEL_ITEMS.map((item) => ({
+    ...item,
+    note: item.id === "auto" ? (ceilings.length > 0 ? `up to ${ceilings.at(-1)}` : "default") : item.note,
+    detail: [
+      item.id === "auto"
+        ? "Every selected host installs every rung it supports; the review lists what each one wrote."
+        : `Every selected host installs up to ${item.id}, skipping the rungs it does not support.`,
+      "",
+      ...(agents.length > 0
+        ? agents.map((agent) => {
+            const record = hostRecord(agent);
+
+            return `${agent}: up to ${record?.ceiling ?? "L0"}${record?.ceiling === "L0" ? " (server only)" : ""}`;
+          })
+        : ["No host selected yet."]),
+    ],
+  }));
+}
+
 export function modeItems(agents = []) {
   const unsupported = agents.filter((agent) => !remoteModeAgents.has(agent));
 

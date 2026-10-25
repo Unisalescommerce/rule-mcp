@@ -18,6 +18,22 @@
 import { allAgents, deprecatedAgents } from "../installers/index.js";
 import { detectInstalledAgents } from "../install/index.js";
 import { GLYPHS } from "./_theme.js";
+import { hostRecord } from "../installers/hosts/index.js";
+
+/** One line naming how deep this host can be integrated, and what that adds. */
+const ceilingLine = (id) => {
+  const record = hostRecord(id);
+
+  if (!record) {
+    return "integration: unknown";
+  }
+
+  const rungs = Object.entries(record.levels)
+    .filter(([, support]) => support.supported)
+    .map(([rung]) => rung);
+
+  return `integration: up to ${record.ceiling} (${rungs.join(", ")})`;
+};
 
 /** Where the catalog stops listing coding agents and starts listing IDEs. */
 const IDE_START = allAgents.indexOf("vscode");
@@ -62,8 +78,10 @@ export function agentRows() {
     note: entry.configured ? `${GLYPHS.ok} configured` : entry.present ? `${GLYPHS.radioOn} detected` : "",
     noteTone: entry.configured ? "ok" : entry.present ? "info" : undefined,
     // An array, never a bare string: the detail panel iterates lines, and a
-    // string would be drawn one character per row.
-    detail: [entry.configFile ?? "no config file on this machine yet"],
+    // string would be drawn one character per row. The second line is the
+    // integration ceiling, so the depth screen never offers a level this host
+    // cannot reach without the reader having seen why.
+    detail: [entry.configFile ?? "no config file on this machine yet", ceilingLine(entry.name)],
   });
 
   const items = [

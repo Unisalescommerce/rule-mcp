@@ -92,13 +92,13 @@ const reset = () => {
 
 test("a standard install asks every step and plans the whole profile", async () => {
   reset();
-  const screen = fakeScreen(["next", "standard", ["claude"], "stdio", "standard", "run", "close"]);
+  const screen = fakeScreen(["next", "standard", ["claude"], "auto", "stdio", "standard", "run", "close"]);
 
   const outcome = await runInstallWizard({ screen });
 
   assert.equal(outcome.dryRun, false);
   assert.deepEqual(globalThis.__wizardStub.plans.at(-1), ["runtime-home", "agent:claude", "rules", "commands", "skills", "cli", "manifest", "doctor"]);
-  assert.deepEqual(screen.steps, [0, 1, 2, 3, 4, 5, 6, 7], "the rail lights once per step, in order");
+  assert.deepEqual(screen.steps, [0, 1, 2, 3, 4, 5, 6, 7, 8], "the rail lights once per step, in order");
   assert.match(screen.confirms.at(-1).title, /Complete/u);
   assert.ok(
     screen.frames.some((frame) => frame.rows.length > 0),
@@ -147,7 +147,7 @@ test("a custom profile asks for its dimensions and uses them", async () => {
 
 test("the review can arm a dry run before the plan runs", async () => {
   reset();
-  const screen = fakeScreen(["next", "standard", ["claude"], "stdio", "standard", "dry", "run", "close"]);
+  const screen = fakeScreen(["next", "standard", ["claude"], "auto", "stdio", "standard", "dry", "run", "close"]);
 
   const outcome = await runInstallWizard({ screen });
 
@@ -205,9 +205,9 @@ test("an uninstall with nothing to remove says so and stops", async () => {
 });
 
 test("the rails and the orders are pure data", () => {
-  assert.deepEqual(INSTALL_STEPS, ["Preflight", "Profile", "Agents", "Transport", "Surface", "Review", "Install", "Done"]);
+  assert.deepEqual(INSTALL_STEPS, ["Preflight", "Profile", "Agents", "Depth", "Transport", "Surface", "Review", "Install", "Done"]);
   assert.deepEqual(UNINSTALL_STEPS, ["Select", "Purge", "Review", "Remove", "Done"]);
-  assert.deepEqual(installOrder(), ["preflight", "profile", "agents", "transport", "surface", "review"]);
+  assert.deepEqual(installOrder(), ["preflight", "profile", "agents", "depth", "transport", "surface", "review"]);
   assert.deepEqual(uninstallOrder({ hasPurge: true }), ["select", "purge", "review"]);
   assert.deepEqual(uninstallOrder(), ["select", "review"]);
 });
