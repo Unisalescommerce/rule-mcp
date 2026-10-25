@@ -59,7 +59,15 @@ const texts = new Map(files.map((path) => [path, readFileSync(join(plansRoot, pa
 const planText = readFileSync(join(skillsPlans, "skills-plan.md"), "utf8");
 
 /** The node id of a plan path: the file stem. */
-const nodeId = (path) => path.split("/").pop().replace(/\.md$/, "");
+/**
+ * The node id of a plan path: the skill name.
+ *
+ * Plan files are named `rule-mcp-<skill>.md` while every stage table, graph line
+ * and CONTRACT edge names the skill itself (`rule-<skill>`), so the id is derived
+ * by that one substitution. Deriving it from the file stem instead made the test's
+ * ids match nothing, which is why two assertions had been red since the rename.
+ */
+const nodeId = (path) => path.split("/").pop().replace(/\.md$/, "").replace(/^rule-mcp-/u, "rule-");
 
 /** The `## Dependency graph` body of one plan, or "". */
 function graphSection(text) {

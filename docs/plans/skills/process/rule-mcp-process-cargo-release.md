@@ -201,7 +201,7 @@ The leaf closes before the `rule-process` router, which cannot list a skill that
 exist. Two rule ids (`release-actions-pinned`, `release-id-token-isolated`) are shared with the
 npm node, and one module (`_workflow.js`) is imported from it.
 
-Depends on: `rule-process-ai` (HARD), `rule-mcp-process-npm-release#1` (CONTRACT)
+Depends on: `rule-process-ai` (HARD), `rule-process-npm-release#1` (CONTRACT)
 
 Feeds: `rule-process` (HARD, the area router gains one row)
 

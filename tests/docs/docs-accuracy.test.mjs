@@ -29,8 +29,11 @@ const actual = {};
   actual.skillDirs = readdirSync(new URL("../../skills", import.meta.url).pathname, { withFileTypes: true }).filter(
     (entry) => entry.isDirectory() && existsSync(join(skillsRoot, entry.name, "SKILL.md")),
   ).length;
+  // The catalog prefix is `rule-`, not `rule-mcp-`: the skill directories were
+  // renamed when the server became RuleMCP (ADR 169) and this counter was not, so
+  // it read 0 against a README that said 83.
   actual.catalog = readdirSync(new URL("../../skills", import.meta.url).pathname, { withFileTypes: true }).filter(
-    (entry) => entry.isDirectory() && entry.name.startsWith("rule-mcp-") && existsSync(join(skillsRoot, entry.name, "SKILL.md")),
+    (entry) => entry.isDirectory() && entry.name.startsWith("rule-") && existsSync(join(skillsRoot, entry.name, "SKILL.md")),
   ).length;
 }
 

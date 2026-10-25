@@ -73,7 +73,7 @@ test("the reminder carries it when CSS is on the table, and not otherwise", asyn
       content: [{ type: "text", text: "SELECT 1;" }],
     });
     const sqlText = sqlResult.content.map((c) => c.text).join("\n");
-    assert.match(sqlText, /## PIX WORKFLOW REMINDER/, "the database call did get a reminder");
+    assert.match(sqlText, /## RULE-MCP WORKFLOW REMINDER/, "the database call did get a reminder");
     assert.doesNotMatch(sqlText, new RegExp(escape(FLEX_FIRST)), "and it says nothing about layout");
   } finally {
     delete process.env.RULE_MCP_REMINDER_EVERY;
@@ -90,7 +90,7 @@ test("a CSS route carries it, a backend route does not", async () => {
     styling.content
       .map((c) => c.text)
       .join("\n")
-      .split("## PIX WORKFLOW REMINDER", 1)[0],
+      .split("## RULE-MCP WORKFLOW REMINDER", 1)[0],
   );
   assert.equal(routed.styling_contract?.layout, FLEX_FIRST);
 
@@ -99,7 +99,7 @@ test("a CSS route carries it, a backend route does not", async () => {
     backend.content
       .map((c) => c.text)
       .join("\n")
-      .split("## PIX WORKFLOW REMINDER", 1)[0],
+      .split("## RULE-MCP WORKFLOW REMINDER", 1)[0],
   );
   assert.equal(backendRoute.styling_contract, undefined, "a database route has no layout to contract about");
 });

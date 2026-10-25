@@ -157,7 +157,7 @@ const user = await $fetch("/api/user", {
 
 ```
 ┌───────────────────────────────────────────────────────────────────────────────────┐
-│  rule-meta-nuxt - Nuxt.js (Vue Meta-framework)                                │
+│  rule-meta-nuxt - Nuxt.js (Vue Meta-framework)                                    |
 │                                                                                   │
 │  Routing:   pages/ directory, dynamic [slug]                                      │
 │  SSR/SSG:   nuxt.config routeRules (SWR, prerender, SPA)                          │

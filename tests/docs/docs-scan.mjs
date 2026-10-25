@@ -18,7 +18,10 @@ await loadAllSkills();
 // surface a doc may name is only complete after the same bootstrap runs.
 await bootstrapCoreTools();
 const tools = new Set(listTools().map((x) => x.name));
-const archivalDirectories = new Set(["adr", "handoff", "plans", "reports"]);
+// Archives are scanned for nothing: they quote tool names as they were when they
+// were written. `spike` joined the list with the 2026-10-25 study, which names the
+// pre-rename `rule_init` on purpose.
+const archivalDirectories = new Set(["adr", "handoff", "plans", "reports", "spike"]);
 
 function scan(dir) {
   let stale = 0;

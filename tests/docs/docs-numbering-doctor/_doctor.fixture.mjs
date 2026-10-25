@@ -112,7 +112,7 @@ export function seedHandoffs() {
     "01-old-style.md",
     "# 01 - the oldest shape\n\n- **Date**: 2026-09-09\n- **Branch**: `perf/meta-surface` (step 7 only); steps 1-6 are on `main`\n- **Commit range**: `13d20b6c..949c25c9` (6 commits)\n",
   );
-  write("02-session-prefix.md", "# Session handoff 02 — the middle shape\n\n- Branch: `main`\n- Covers: `58652b7e..860cbbb6`\n- Date: 2026-09-10\n");
+  write("02-session-prefix.md", "# Session handoff 02, the middle shape\n\n- Branch: `main`\n- Covers: `58652b7e..860cbbb6`\n- Date: 2026-09-10\n");
   write("03-handoff-prefix.md", "# Handoff: the newest shape\n\n**Branch:** main\n**Commits covered:** `829c368..c754545` (42 commits)\n**Date:** 2026-09-11\n");
   git(["add", "-A"], root);
   git(["commit", "--quiet", "-m", "docs(handoff): the fixture"], root);

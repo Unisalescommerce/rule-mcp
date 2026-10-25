@@ -632,7 +632,7 @@ These only surface in the browser - session replay captures them, error logs don
 
 ```
 ┌───────────────────────────────────────────────────────────────────────┐
-│  rule-platform-auth - Authentication Strategy                     │
+│  rule-platform-auth - Authentication Strategy                         |
 │                                                                       │
 │  The two axes:                                                        │
 │   State:  Sessions (server)  vs  JWTs (client)                        │

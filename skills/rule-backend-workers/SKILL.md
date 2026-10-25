@@ -395,7 +395,7 @@ piscina
 
 ```
 ┌───────────────────────────────────────────────────────────────────────────┐
-│  rule-backend-workers - Node.js Concurrency & Workers                 │
+│  rule-backend-workers - Node.js Concurrency & Workers                     |
 │                                                                           │
 │  Event loop:  6 phases, microtasks drain between macrotasks               │
 │  libuv pool:  4 threads (default), max 1024, C-level only                 │

@@ -59,7 +59,7 @@ Every node carries four parseable lines in its own plan:
 
 ```
 Status: planned
-Depends on: rule-process-ai (HARD), rule-mcp-process-npm-release#1 (CONTRACT)
+Depends on: rule-process-ai (HARD), rule-process-npm-release#1 (CONTRACT)
 Feeds: rule-process (HARD)
 Shared files: tests/fixtures/guardrail-corpus.mjs
 ```

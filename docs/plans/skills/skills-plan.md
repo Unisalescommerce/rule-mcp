@@ -335,7 +335,7 @@ file, so a stale row fails rather than misleads.
 | `rule-toolchain-eslint`         | leaf   | in-progress | 4/19  | 1     |
 | `rule-toolchain-husky`          | leaf   | in-progress | 4/19  | 1     |
 | `rule-toolchain-parcel`         | leaf   | in-progress | 4/22  | 1     |
-| `rule-toolchain-pnpm`           | leaf   | in-progress | 4/20  | 1     |
+| `rule-toolchain-pnpm`           | leaf   | in-progress | 4/21  | 1     |
 | `rule-toolchain-rspack`         | leaf   | in-progress | 4/20  | 1     |
 | `rule-toolchain-turborepo`      | leaf   | in-progress | 4/19  | 1     |
 | `rule-toolchain-vite`           | leaf   | in-progress | 4/19  | 1     |
@@ -626,7 +626,7 @@ file, so a stale row fails rather than misleads.
 | `rule-toolchain-eslint`         | leaf   | in-progress | 4/19  | 1     |
 | `rule-toolchain-husky`          | leaf   | in-progress | 4/19  | 1     |
 | `rule-toolchain-parcel`         | leaf   | in-progress | 4/22  | 1     |
-| `rule-toolchain-pnpm`           | leaf   | in-progress | 4/20  | 1     |
+| `rule-toolchain-pnpm`           | leaf   | in-progress | 4/21  | 1     |
 | `rule-toolchain-rspack`         | leaf   | in-progress | 4/20  | 1     |
 | `rule-toolchain-turborepo`      | leaf   | in-progress | 4/19  | 1     |
 | `rule-toolchain-vite`           | leaf   | in-progress | 4/19  | 1     |

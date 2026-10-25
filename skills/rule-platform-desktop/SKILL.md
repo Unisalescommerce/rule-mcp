@@ -751,7 +751,7 @@ app.on("open-url", (event, url) => {
 
 ```
 ┌───────────────────────────────────────────────────────────────────────────┐
-│  rule-platform-desktop - Desktop Application Project Type             │
+│  rule-platform-desktop - Desktop Application Project Type                 |
 │                                                                           │
 │  Framework:  Electron (primary) / Tauri / Neutralinojs                    │
 │  UI layer:   Any rule-mcp-* framework skill                               │

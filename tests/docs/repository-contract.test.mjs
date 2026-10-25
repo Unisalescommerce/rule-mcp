@@ -83,7 +83,9 @@ for (const sub of forbidden ? sourceDirectories : []) {
 }
 
 // Root-level checks
-assert.ok(existsSync(join(root, "skills", "rule-mcp", "SKILL.md")), "router skill must be named rule-mcp");
+// The router is `skills/rule` since ADR 169 renamed the server: the skill name,
+// the package name and the repository name are three different strings on purpose.
+assert.ok(existsSync(join(root, "skills", "rule", "SKILL.md")), "router skill must be named rule");
 
 const promptTemplate = join(root, "prompts", "rule.md");
 assert.ok(existsSync(promptTemplate), "Pi prompt template must exist");

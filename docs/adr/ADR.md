@@ -8,6 +8,7 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [186](186-baseline-the-cli-file-size-debt-in-the-ratchet.md)                                                            | Baseline the CLI file-size debt in the ratchet                                                            | 2026-10-25 | accepted   | governance, file-size, cli                                                          |
 | [185](185-lifecycle-wiring-ships-only-where-a-measurement-moves.md)                                                     | Lifecycle wiring ships only where a measurement moves                                                     | 2026-10-25 | accepted   | hooks, performance, hooks-lifecycle                                                 |
 | [184](184-the-install-manifest-records-a-level-per-host.md)                                                             | The install manifest records a level per host                                                             | 2026-10-25 | accepted   | installer, manifest, hosts                                                          |
 | [183](183-integration-depth-is-the-second-install-axis-capped-by-a-measured-ceiling.md)                                 | Integration depth is the second install axis, capped by a measured ceiling                                | 2026-10-25 | accepted   | installer, hosts, tui                                                               |
@@ -201,6 +202,7 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [186](186-baseline-the-cli-file-size-debt-in-the-ratchet.md)                                                            | Record the 33 offenders in FILE_SIZE_RATCHET with the line count the cap measures, and document the adoption baseline here, which is the mechanism the data file's own header describes: an entry is added only as the...       | The budget test is green and stays honest: it now fails on growth and on a stale row instead of failing on the same 33 files forever.                                                                                           |
 | [185](185-lifecycle-wiring-ships-only-where-a-measurement-moves.md)                                                     | Measure first, with scripts/bench/hook-lifecycle.mjs, and drop what does not move.                                                                                                                                              | The measured cost is the process spawn, not the context: a bare node -e 0 takes 1.3-2.4 s under load here, so the hook's own work is a fraction of what every event pays.                                                       |
 | [184](184-the-install-manifest-records-a-level-per-host.md)                                                             | The manifest is v2: a hosts map carrying the level each host was installed at, beside agents[] for compatibility.                                                                                                               | doctor reports L2 of L3, next L3 for a host installed at a level, and the roundtrip leaves a temporary HOME with nothing but the writers' .bak backups.                                                                         |
 | [183](183-integration-depth-is-the-second-install-axis-capped-by-a-measured-ceiling.md)                                 | Every host carries levels L0..L4 - server, rules, commands, hooks, native handler - each rung supported or not with the reason, and a ceiling computed as the highest supported rung rather than stated twice. install...       | Measured ceilings: 2 hosts at L4 (pi, copilot), 5 at L3 (claude, codex, cursor, gemini, kiro), 4 at L2 (cline, roo, opencode, vscode), 12 at L0. Cost: two axes to explain, and a level that is one cap applied per host...     |
@@ -523,6 +525,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### governance
 
+- [186](186-baseline-the-cli-file-size-debt-in-the-ratchet.md) Baseline the CLI file-size debt in the ratchet
 - [182](182-one-host-record-answers-for-every-catalog-host.md) One host record answers for every catalog host
 - [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md) Retire the cross-branch plan graph and orchestrate from rel/v0.1.0
 - [178](178-surface-is-the-only-tier-picker-slash-commands-follow-it.md) Surface is the only tier picker; slash commands follow it
@@ -659,6 +662,20 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [158](158-replay-the-decision-cache-gate-only-behind-a-measured-threshold.md) Replay the decision-cache gate only behind a measured threshold
 - [157](157-shadow-the-decision-cache-gate-before-replaying.md) Shadow the decision-cache gate before replaying
 
+### cli
+
+- [186](186-baseline-the-cli-file-size-debt-in-the-ratchet.md) Baseline the CLI file-size debt in the ratchet
+- [108](108-the-handoff-family-gets-a-generated-index-and-the-root-handoff-summary-retires.md) The handoff family gets a generated index, and the root HANDOFF summary retires
+- [105](105-opencode-gets-a-dedicated-installer-writing-its-own-config-shape.md) opencode gets a dedicated installer writing its own config shape
+- [102](102-reinstall-is-one-shell-script-behind-three-entry-points.md) Reinstall is one shell script behind three entry points
+- [101](101-accept-a-comma-separated-agent-list-in-agent-commands.md) Accept a comma-separated agent list in agent-commands
+- [090](090-the-setup-wizard-is-the-installer-and-it-asks-which-commands-to-write.md) The setup wizard is the installer, and it asks which commands to write
+- [080](080-one-installer-a-node-wizard-with-shell-bootstraps.md) One installer, a Node wizard with shell bootstraps
+- [074](074-the-cli-entry-point-loads-no-command-handler-it-has-not-been-asked-for.md) The CLI entry point loads no command handler it has not been asked for
+- [061](061-one-global-shim-and-hermetic-pnpm-home-in-script-tests.md) One global shim, and hermetic PNPM_HOME in script tests
+- [046](046-installer-self-heals-global-shim-surfaces-failures-gates-tui-rendering.md) Installer self-heals its global shim, surfaces failures, and gates TUI rendering
+- [033](033-registry-driven-clean-slash-commands-for-every-agent-and-ide.md) Registry-driven clean slash commands for every agent and IDE
+
 ### git
 
 - [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
@@ -714,19 +731,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [055](055-restructure-the-command-surface-rule-mcp-router-rule-mcp-area-compression-implicit-rule-mcp-process.md) Restructure the command surface: /rule router, rule-area-*, compression implicit, rule-process-tdd skill
 - [054](054-split-review-personas-into-per-operation-commands-plan-audit-review.md) Split review personas into per-operation commands (plan/audit/review)
 - [052](052-pre-packaged-mcp-prompt-registry-26-prompts-strict-schemas-commit-scope-closer.md) Pre-packaged MCP prompt registry (26 prompts, strict schemas, commit-scope closer)
-
-### cli
-
-- [108](108-the-handoff-family-gets-a-generated-index-and-the-root-handoff-summary-retires.md) The handoff family gets a generated index, and the root HANDOFF summary retires
-- [105](105-opencode-gets-a-dedicated-installer-writing-its-own-config-shape.md) opencode gets a dedicated installer writing its own config shape
-- [102](102-reinstall-is-one-shell-script-behind-three-entry-points.md) Reinstall is one shell script behind three entry points
-- [101](101-accept-a-comma-separated-agent-list-in-agent-commands.md) Accept a comma-separated agent list in agent-commands
-- [090](090-the-setup-wizard-is-the-installer-and-it-asks-which-commands-to-write.md) The setup wizard is the installer, and it asks which commands to write
-- [080](080-one-installer-a-node-wizard-with-shell-bootstraps.md) One installer, a Node wizard with shell bootstraps
-- [074](074-the-cli-entry-point-loads-no-command-handler-it-has-not-been-asked-for.md) The CLI entry point loads no command handler it has not been asked for
-- [061](061-one-global-shim-and-hermetic-pnpm-home-in-script-tests.md) One global shim, and hermetic PNPM_HOME in script tests
-- [046](046-installer-self-heals-global-shim-surfaces-failures-gates-tui-rendering.md) Installer self-heals its global shim, surfaces failures, and gates TUI rendering
-- [033](033-registry-driven-clean-slash-commands-for-every-agent-and-ide.md) Registry-driven clean slash commands for every agent and IDE
 
 ### personas
 

@@ -177,7 +177,7 @@ DATABASE_URL=postgres://...                     ← Server only
 
 ```
 ┌───────────────────────────────────────────────────────────────────────────────────┐
-│  rule-meta-next - Next.js (React Meta-framework)                              │
+│  rule-meta-next - Next.js (React Meta-framework)                                  |
 │                                                                                   │
 │  Routing:   app/ directory, layout/page/loading/error                             │
 │  Data:      fetch with cache/no-store/revalidate                                  │

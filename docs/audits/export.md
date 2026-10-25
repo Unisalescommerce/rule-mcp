@@ -1,6 +1,7 @@
 # export audit
 
-- **Role**: export / session distill / decision-cache
+- **Role**: export v1
+- **Subject**: export, session distill and decision-cache
 - **Date**: 2026-10-21
 - **Branch target**: `feat/export` (from `main`)
 - **Related**: `feat/decision-models` (consumer of decision-cache, WS-5 / DM-07)
@@ -14,7 +15,7 @@ the restored `/rule-adr` (ADR + keep). No implementation in this pass.
 
 ### Agent transcripts (usage only)
 
-`src/core/agents/transcripts/_registry.js` — `AGENT_TRANSCRIPTS`:
+`src/core/agents/transcripts/_registry.js`, `AGENT_TRANSCRIPTS`:
 
 | Agent                           | Usage read | Session roots (project-scoped)                                                               |
 | ------------------------------- | ---------- | -------------------------------------------------------------------------------------------- |
@@ -36,13 +37,13 @@ session list/map, nor delete APIs.
   the event log unless `keep: true`
 - Flight already pulls agent usage into the envelope (usage suites for
   pi/claude/codex/opencode)
-- `/rule-stats` → `rule_tool_stats` (KPI: calls, cache hits, tokens, latency)
-- `/rule-usage` → sidecar when no transcript
+- `/rule-stats` -> `rule_tool_stats` (KPI: calls, cache hits, tokens, latency)
+- `/rule-usage` -> sidecar when no transcript
 
 ### Caches
 
 - **Tool-cache**: `src/core/cache/tool-cache/` (+ CLI `src/cli/cache/`)
-- **BM25 cache**, catalog cache — separate concerns
+- **BM25 cache**, catalog cache, separate concerns
 - **Decision-cache**: absent on `main`. Planned on `feat/decision-models` as
   DM-07 deterministic cache (model id + questions + state + shortlist digest)
 
@@ -62,7 +63,7 @@ still gates on transcript capability, not merely "MCP installed".
 
 ## Gaps (for the plan)
 
-1. No session map (list → sort → id/mtime/path) per agent
+1. No session map (list -> sort -> id/mtime/path) per agent
 2. No merge path that **idempotently** folds transcript-derived telemetry into
    the MCP store before/while flight emit
 3. No decision-candidate mining or interview UX
@@ -70,14 +71,14 @@ still gates on transcript capability, not merely "MCP installed".
 5. No session hard-delete / keep-N / protect-current
 6. `/rule-adr` restore needs a product ADR (why it returns, how it differs from
    bare `rule_tool_process_adr`: it carries `/rule-keep`)
-7. `exportFlight` drain semantics vs "export may run often" — re-export must
-   not double-count; cleanup of **agent** sessions ≠ drain of MCP events
+7. `exportFlight` drain semantics vs "export may run often", re-export must
+   not double-count; cleanup of **agent** sessions != drain of MCP events
 
 ## Locked product decisions (interview)
 
 | #                 | Decision                                                          |
 | ----------------- | ----------------------------------------------------------------- |
-| Pipeline          | scan → merge telemetry → emit `.flight` → optional cleanup        |
+| Pipeline          | scan -> merge telemetry -> emit `.flight` -> optional cleanup        |
 | Cache             | new decision-cache (export-owned) + tool-cache promote where safe |
 | Agents v1         | pi/claude/codex/opencode only; others deferred with reason        |
 | Cleanup           | hard delete after confirm; keep newest N **∪** current session    |

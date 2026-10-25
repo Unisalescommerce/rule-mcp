@@ -11,7 +11,7 @@
       "file": "02-architecture.md",
       "kind": "block",
       "marker": "surface-counts",
-      "sha256": "ef217d4026724638a9a2b679687197f89864793a029a1f2c2c9f93232e864164"
+      "sha256": "281341c15cdd261bdfe49f16c30e3e7a497e48539879678b7318c8712937f932"
     },
     {
       "file": "05-env-variables.md",
@@ -68,7 +68,7 @@
     {
       "file": "17-surface-map.md",
       "kind": "document",
-      "sha256": "27257229c65ee8a2658bd033188a2f99be44f1560e3090d17628a9c69697f550"
+      "sha256": "5a9111b576ad3b8d5607344f000757107f35e11e13db25c63146cf5e013f5be5"
     }
   ]
 }

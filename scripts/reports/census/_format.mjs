@@ -44,4 +44,15 @@ export const areaOf = (name) => {
 };
 
 /** The MCP tool a catalog skill directory mints: `rule-frontend-react` -> `rule_tool_frontend_react`. */
-export const toolOf = (name) => (name === "rule" ? "rule_tool" : `rule_tool_${name.slice("rule-mcp-".length).replaceAll("-", "_")}`);
+export const toolOf = (name) => {
+  if (name === "rule") {
+    return "rule_tool";
+  }
+  // The prefix is `rule-`, not `rule-mcp-`: the catalog was renamed (ADR 169) and
+  // this slice kept the old length, so `rule-platform` became `rule_tool_form` -
+  // `platform` cut at index 4. Both forms are accepted because a stale plan or doc
+  // may still name the old one.
+  const bare = name.replace(/^rule-mcp-/u, "rule-").slice("rule-".length);
+
+  return `rule_tool_${bare.replaceAll("-", "_")}`;
+};

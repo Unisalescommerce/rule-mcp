@@ -170,7 +170,7 @@ The leaf closes before the `rule-process` router, which cannot list a skill that
 exist. The YAML helper is exported by the npm node, so this plan consumes it instead of
 writing a second parser.
 
-Depends on: `rule-process-ai` (HARD), `rule-mcp-process-npm-release#1` (CONTRACT)
+Depends on: `rule-process-ai` (HARD), `rule-process-npm-release#1` (CONTRACT)
 
 Feeds: `rule-process` (HARD, the area router gains one row)
 

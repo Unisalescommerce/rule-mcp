@@ -1,6 +1,7 @@
 # export review
 
-- **Role**: architect review of export design
+- **Role**: export v1
+- **Subject**: architect review of the export design
 - **Date**: 2026-10-21
 - **Audit**: [export audit](../audits/export.md)
 
@@ -9,7 +10,7 @@
 | ID    | Severity | Status | Source            | Finding                                                                                                                                                      |
 | ----- | -------- | ------ | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | EX-01 | high     | open   | audit             | Cleanup deletes host agent session files. Must be confirm-gated, keep-set = newest N ∪ current, never silent, never touch unsupported agents                 |
-| EX-02 | high     | open   | audit             | "Current session" identity differs per agent (open JSONL, MCP session id, opencode sessionID, codex rollout path). Ambiguity ⇒ refuse delete of unclear rows |
+| EX-02 | high     | open   | audit             | "Current session" identity differs per agent (open JSONL, MCP session id, opencode sessionID, codex rollout path). Ambiguity => refuse delete of unclear rows |
 | EX-03 | high     | open   | audit             | Telemetry merge must be idempotent (content/window digests). Re-running `/rule-export` must not inflate `rule_tool_stats`                                      |
 | EX-04 | high     | open   | audit + DM-07     | Decision-cache schema is owned by export but consumed by decision-models. `schemaVersion` + fingerprint contract required before DM short-circuit            |
 | EX-05 | medium   | open   | handoff 13        | Restoring `/rule-adr` reopens a surface deliberately removed as duplicate; justify via ADR+keep coupling                                                      |

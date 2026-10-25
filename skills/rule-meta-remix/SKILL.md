@@ -200,7 +200,7 @@ export async function loader({ request }) {
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────┐
-│  rule-meta-remix - Remix / React Router (React Meta-framework)               │
+│  rule-meta-remix - Remix / React Router (React Meta-framework)                   |
 │                                                                                  │
 │  Routing:   app/routes/, nested with _layout.jsx                                 │
 │  Data:      loader() → useLoaderData()                                           │

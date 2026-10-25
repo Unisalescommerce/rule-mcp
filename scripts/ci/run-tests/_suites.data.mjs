@@ -27,7 +27,20 @@ export const SUITES = {
     exclude: ["skills/rule-frontend-workers/examples/src/tasks/_parse-csv.test.js"],
   },
   foundations: {
-    globs: ["tests/docs/**/*.test.mjs", "src/**/__tests__/*.test.mjs", "scripts/**/__tests__/*.test.mjs", "skills/**/__tests__/*.test.mjs"],
+    // `tests/` is not one directory: the docs, the installers, the plans and the
+    // release gates are four independent trees, and three of them had no glob, so
+    // their suites only ran when somebody typed the path by hand. `tests/e2e` is
+    // deliberately outside: it is a Playwright spec tree, not a `node --test` one.
+    globs: [
+      "tests/docs/**/*.test.mjs",
+      "tests/installers/**/*.test.mjs",
+      "tests/plans/**/*.test.mjs",
+      "tests/release/**/*.test.mjs",
+      "tests/ci/**/*.test.mjs",
+      "src/**/__tests__/*.test.mjs",
+      "scripts/**/__tests__/*.test.mjs",
+      "skills/**/__tests__/*.test.mjs",
+    ],
     include: ["skills"],
   },
   installer: {
