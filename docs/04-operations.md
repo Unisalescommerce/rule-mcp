@@ -14,6 +14,65 @@ never hand-edited; this document points at them instead of restating them.
 - Every `rule://` resource URI: [16-resources.md](./16-resources.md)
 - What each skill covers: [09-skills.md](./09-skills.md)
 
+## Integration levels
+
+An install has two axes. The **profile** says how much of the catalog is reachable
+(`minimal`, `standard`, `full`, `custom`); the **level** says how deeply one host is wired to
+it. `install --agent <id> --level <Lx>` sets the second, and a host above its ceiling is refused
+with the rung and the reason rather than installed halfway.
+
+| Level | Writes                                     | Depends on                                  |
+| ----- | ------------------------------------------ | ------------------------------------------- |
+| `L0`  | the MCP entry only                         | a config file the host documents            |
+| `L1`  | `L0` + the instruction block               | an instructions file the host documents     |
+| `L2`  | `L1` + the `/rule-*` command files         | a command directory the host documents      |
+| `L3`  | `L2` + the guard hooks                     | a hook file the host documents and we write |
+| `L4`  | `L3` + a native handler (extension/plugin) | a handler API the host documents            |
+
+The ladder is cumulative in intent, not in shape: a host installs every rung it supports up to
+the level asked for, and a rung it cannot reach is skipped with its reason. Kiro writes a hook
+file and has no command files, so a strict ladder would report `L0` and hide a measured surface.
+
+### Ceilings, per host
+
+`doctor` prints `L2 of L3, next L3` for a host installed at a level, and the ceiling alone for
+one installed before the manifest recorded it. This table is the same data the installer reads;
+`tests/docs/integration-levels.test.mjs` recomputes it from `hostRecord()` and fails on drift.
+
+<!-- levels:start -->
+
+| Host          | Ceiling | Rules | Commands | Hooks | Handler      |
+| ------------- | ------- | ----- | -------- | ----- | ------------ |
+| `claude`      | L3      | yes   | yes      | yes   | -            |
+| `codex`       | L3      | yes   | yes      | yes   | -            |
+| `copilot`     | L4      | yes   | yes      | -     | experimental |
+| `cursor`      | L3      | yes   | yes      | yes   | -            |
+| `gemini`      | L3      | yes   | yes      | yes   | -            |
+| `cline`       | L2      | -     | yes      | -     | -            |
+| `roo`         | L2      | -     | yes      | -     | -            |
+| `opencode`    | L2      | -     | yes      | -     | -            |
+| `vscode`      | L2      | -     | yes      | -     | -            |
+| `kiro`        | L3      | -     | -        | yes   | -            |
+| `droid`       | L0      | -     | -        | -     | -            |
+| `jetbrains`   | L0      | -     | -        | -     | -            |
+| `neovim`      | L0      | -     | -        | -     | -            |
+| `emacs`       | L0      | -     | -        | -     | -            |
+| `devin`       | L0      | -     | -        | -     | -            |
+| `pi`          | L4      | -     | yes      | -     | documented   |
+| `zed`         | L0      | -     | -        | -     | -            |
+| `antigravity` | L0      | -     | -        | -     | -            |
+| `kilo`        | L0      | -     | -        | -     | -            |
+| `kimi`        | L0      | -     | -        | -     | -            |
+| `vibe`        | L0      | -     | -        | -     | -            |
+| `grok`        | L0      | -     | -        | -     | -            |
+| `qwen`        | L0      | -     | -        | -     | -            |
+
+<!-- levels:end -->
+
+Seven products the study measured have no documented MCP config file at all - `aider`, `amp`,
+`continue`, `goose`, `junie`, `openhands`, `trae` - so `install --agent aider` writes nothing and
+says so. `cursor-cli` is covered by `cursor`: the CLI reads the editor's config file.
+
 ## Plugins
 
 ### Overview
