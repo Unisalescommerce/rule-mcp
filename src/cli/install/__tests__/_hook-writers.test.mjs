@@ -1,30 +1,74 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { codexHooks, geminiHooks, opencodePlugin, piExtension } from "../_hook-writers.js";
+const { codexHooks, cursorHooks, geminiHooks, guardCommand, kiroHooks, opencodePlugin, piExtension } = await import("../_hook-writers.js");
 
-test("the OpenCode plugin uses the documented tool events", () => {
-  const source = opencodePlugin("/bin/rule-mcp");
+const launcher = { command: "/bin/rule-mcp" };
+
+test("the guard line quotes a launcher path with spaces and carries the marker", () => {
+  const line = guardCommand({ command: "/opt/rule mcp/bin/rule-mcp" }, "bash");
+
+  assert.match(line, /^"\/opt\/rule mcp\/bin\/rule-mcp" guard bash {2}# rule-mcp-guard$/);
+});
+
+test("Cursor gets its camelCase events, flat hooks and tool matchers", () => {
+  const document = cursorHooks(launcher);
+
+  assert.equal(document.version, 1);
+  assert.deepEqual(Object.keys(document.hooks), ["preToolUse", "postToolUse", "sessionStart", "beforeSubmitPrompt"]);
+  assert.equal(document.hooks.preToolUse[0].matcher, "Shell");
+  assert.match(document.hooks.preToolUse[1].command, /guard structure/);
+  assert.match(document.hooks.postToolUse[0].command, /guard write/);
+  assert.equal(document.hooks.sessionStart[0].matcher, undefined);
+});
+
+test("Kiro gets standalone PascalCase hooks with command actions", () => {
+  const document = kiroHooks(launcher);
+  const triggers = document.hooks.map((hook) => hook.trigger);
+
+  assert.equal(document.version, "v1");
+  assert.deepEqual(triggers, ["PreToolUse", "PreToolUse", "PostToolUse", "SessionStart", "UserPromptSubmit"]);
+  assert.equal(document.hooks[0].matcher, "shell");
+  assert.equal(document.hooks[0].action.type, "command");
+  assert.match(document.hooks[0].action.command, /guard bash/);
+  assert.equal(
+    document.hooks.every((hook) => hook.enabled),
+    true,
+  );
+});
+
+test("Gemini keeps the BeforeTool and AfterTool matcher groups", () => {
+  const hooks = geminiHooks(launcher);
+
+  assert.equal(hooks.BeforeTool.length, 2);
+  assert.match(hooks.BeforeTool[0].hooks[0].command, /guard bash/);
+  assert.match(hooks.BeforeTool[1].hooks[0].command, /guard structure/);
+  assert.match(hooks.AfterTool[0].hooks[0].command, /guard write/);
+});
+
+test("Codex nests the events under hooks and matches its own tool names", () => {
+  const document = codexHooks(launcher);
+
+  assert.deepEqual(Object.keys(document), ["hooks"]);
+  assert.deepEqual(Object.keys(document.hooks), ["PreToolUse", "PostToolUse", "SessionStart", "UserPromptSubmit"]);
+  assert.equal(document.hooks.PreToolUse[0].matcher, "Bash");
+  assert.equal(document.hooks.PostToolUse[0].hooks[0].type, "command");
+});
+
+test("the OpenCode plugin calls the guard subcommands", () => {
+  const source = opencodePlugin(launcher);
+
   assert.match(source, /tool\.execute\.before/);
   assert.match(source, /tool\.execute\.after/);
+  assert.match(source, /"guard"/);
+  assert.match(source, /"structure"/);
 });
 
-test("the Pi extension uses tool_call and tool_result", () => {
-  const source = piExtension("/bin/rule-mcp");
+test("the Pi extension calls the guard subcommands", () => {
+  const source = piExtension(launcher);
+
   assert.match(source, /pi\.on\("tool_call"/);
   assert.match(source, /pi\.on\("tool_result"/);
-});
-
-test("the Gemini payload uses BeforeTool and AfterTool with a command hook", () => {
-  const hooks = geminiHooks("/bin/rule-mcp");
-
-  assert.equal(hooks.BeforeTool[0].hooks[0].type, "command");
-  assert.equal(hooks.AfterTool[0].hooks[0].command, "/bin/rule-mcp");
-});
-
-test("the Codex payload uses PreToolUse and PostToolUse matcher groups", () => {
-  const hooks = codexHooks("/bin/rule-mcp");
-
-  assert.equal(hooks.PreToolUse[0].hooks[0].type, "command");
-  assert.equal(hooks.PostToolUse[0].matcher, "Bash|apply_patch|Edit|Write");
+  assert.match(source, /"guard","bash"/);
+  assert.match(source, /"guard","write"/);
 });

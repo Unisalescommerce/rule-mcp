@@ -1,17 +1,148 @@
-/** @module cli/install/hook-writers - the plugin and extension sources */
+/** @module cli/install/hook-writers - one hook document per documented host */
+
+import { HOOK_MARKER } from "../../core/agents/_hook-commands.js";
+
+/** @param {{ command: string, args?: string[] }|string} launcher @returns {{ command: string, args?: string[] }} */
+const normalized = (launcher) => (typeof launcher === "string" ? { command: launcher } : launcher);
+
+/**
+ * The shell line a native host runs: the guard subcommand plus the marker that
+ * merge and uninstall look for.
+ *
+ * @param {{ command: string, args?: string[] }|string} launcher
+ * @param {string} subcommand
+ * @returns {string}
+ */
+export function guardCommand(launcher, subcommand) {
+  const { command, args = [] } = normalized(launcher);
+  const line = [command, ...args, "guard", subcommand].map((part) => (/\s/.test(part) ? JSON.stringify(part) : part)).join(" ");
+
+  return `${line}  # ${HOOK_MARKER}`;
+}
+
+/**
+ * Codex and Gemini group hooks the same way: a matcher, then the handlers that
+ * run when it matches.
+ *
+ * @param {{ command: string, args?: string[] }|string} launcher
+ * @param {string} subcommand
+ * @param {string} [matcher]
+ * @returns {{ matcher?: string, hooks: Array<{ type: string, command: string }> }}
+ */
+const grouped = (launcher, subcommand, matcher) => ({
+  ...(matcher ? { matcher } : {}),
+  hooks: [{ type: "command", command: guardCommand(launcher, subcommand) }],
+});
+
+/**
+ * Cursor reads `hooks.json` at the project (`.cursor/hooks.json`) or user
+ * (`~/.cursor/hooks.json`) level. Events are camelCase and each hook is a flat
+ * `{ command, matcher }`; the matcher filters by tool type (`Shell`, `Write`).
+ *
+ * @param {{ command: string, args?: string[] }|string} launcher
+ * @returns {object}
+ */
+export function cursorHooks(launcher) {
+  const hook = (subcommand, matcher) => ({ ...(matcher ? { matcher } : {}), command: guardCommand(launcher, subcommand) });
+
+  return {
+    version: 1,
+    hooks: {
+      preToolUse: [hook("bash", "Shell"), hook("structure", "Write")],
+      postToolUse: [hook("write", "Write")],
+      sessionStart: [hook("session-start")],
+      beforeSubmitPrompt: [hook("prompt-submit")],
+    },
+  };
+}
+
+/**
+ * Kiro stores standalone hooks in `.kiro/hooks/<id>.json` (workspace) or
+ * `~/.kiro/hooks/*.json` (CLI V3, every workspace). Triggers are PascalCase and
+ * a command action runs in the project root.
+ *
+ * @param {{ command: string, args?: string[] }|string} launcher
+ * @returns {object}
+ */
+export function kiroHooks(launcher) {
+  const hook = (name, trigger, subcommand, matcher) => ({
+    name,
+    trigger,
+    ...(matcher ? { matcher } : {}),
+    action: { type: "command", command: guardCommand(launcher, subcommand) },
+    timeout: 60,
+    enabled: true,
+  });
+
+  return {
+    version: "v1",
+    hooks: [
+      hook("rule-mcp-bash-guard", "PreToolUse", "bash", "shell"),
+      hook("rule-mcp-structure-guard", "PreToolUse", "structure", "write"),
+      hook("rule-mcp-write-report", "PostToolUse", "write", "write"),
+      hook("rule-mcp-session-start", "SessionStart", "session-start"),
+      hook("rule-mcp-prompt-submit", "UserPromptSubmit", "prompt-submit"),
+    ],
+  };
+}
+
+/**
+ * The Gemini CLI `hooks` object for settings.json. `BeforeTool` and `AfterTool`
+ * take matcher groups, each with command handlers.
+ *
+ * @param {{ command: string, args?: string[] }|string} launcher
+ * @returns {object}
+ */
+export function geminiHooks(launcher) {
+  return {
+    BeforeTool: [grouped(launcher, "bash", ".*"), grouped(launcher, "structure", ".*")],
+    AfterTool: [grouped(launcher, "write", ".*")],
+  };
+}
+
+/**
+ * The Codex `hooks.json` document. Codex nests events under `hooks`, and a
+ * non-managed hook only runs after the user trusts it with `/hooks`.
+ *
+ * @param {{ command: string, args?: string[] }|string} launcher
+ * @returns {object}
+ */
+export function codexHooks(launcher) {
+  return {
+    hooks: {
+      PreToolUse: [grouped(launcher, "bash", "Bash"), grouped(launcher, "structure", "apply_patch|Edit|Write")],
+      PostToolUse: [grouped(launcher, "write", "apply_patch|Edit|Write")],
+      SessionStart: [grouped(launcher, "session-start")],
+      UserPromptSubmit: [grouped(launcher, "prompt-submit")],
+    },
+  };
+}
 
 /**
  * An OpenCode plugin that runs the guard before and after a tool call.
  *
- * @param {string} command
+ * OpenCode plugins are in-process modules, not hook files, so the guard runs as
+ * a child process and its output is captured rather than mapped to a plugin
+ * decision: the return contract is host-specific and is not wired yet.
+ *
+ * @param {{ command: string, args?: string[] }|string} launcher
  * @returns {string}
  */
-export function opencodePlugin(command) {
+export function opencodePlugin(launcher) {
+  const { command, args = [] } = normalized(launcher);
+
   return [
-    'import { execFileSync } from "node:child_process";',
+    'import { spawnSync } from "node:child_process";',
+    "",
+    `const GUARD = ${JSON.stringify([command, ...args, "guard"])};`,
+    'const WRITE = new Set(["write", "edit", "multiedit", "apply_patch"]);',
+    "",
+    "const run = (kind, payload) =>",
+    "  spawnSync(GUARD[0], [...GUARD.slice(1), kind], { input: JSON.stringify(payload ?? {}) });",
+    "",
     "export const RuleMcpHooks = async () => ({",
-    `  "tool.execute.before": async (input) => { execFileSync(${JSON.stringify(command)}, ["hook", input.tool]); },`,
-    `  "tool.execute.after": async (input) => { execFileSync(${JSON.stringify(command)}, ["hook", input.tool]); },`,
+    '  "tool.execute.before": async (input) => { run(WRITE.has(String(input?.tool ?? "").toLowerCase()) ? "structure" : "bash", input); },',
+    '  "tool.execute.after": async (input) => { run("write", input); },',
     "});",
     "",
   ].join("\n");
@@ -20,39 +151,20 @@ export function opencodePlugin(command) {
 /**
  * A Pi extension that registers the two tool events.
  *
- * @param {string} command
+ * Like the OpenCode plugin, it invokes the guard as a child process; mapping the
+ * guard's answer to a Pi decision is left to the host contract.
+ *
+ * @param {{ command: string, args?: string[] }|string} launcher
  * @returns {string}
  */
-export function piExtension(command) {
+export function piExtension(launcher) {
+  const { command, args = [] } = normalized(launcher);
+
   return [
     "export default function ruleMcpHooks(pi) {",
-    `  pi.on("tool_call", async (event) => { await pi.exec(${JSON.stringify(command)}, ["hook", event.toolName]); });`,
-    `  pi.on("tool_result", async (event) => { await pi.exec(${JSON.stringify(command)}, ["hook", event.toolName]); });`,
+    `  pi.on("tool_call", async (event) => { await pi.exec(${JSON.stringify(command)}, ${JSON.stringify([...args, "guard", "bash"])}); });`,
+    `  pi.on("tool_result", async (event) => { await pi.exec(${JSON.stringify(command)}, ${JSON.stringify([...args, "guard", "write"])}); });`,
     "}",
     "",
   ].join("\n");
-}
-
-/**
- * The `hooks` object Gemini CLI reads from settings.json.
- *
- * @param {string} command
- * @returns {object}
- */
-export function geminiHooks(command) {
-  const group = [{ matcher: ".*", hooks: [{ type: "command", command }] }];
-
-  return { BeforeTool: group, AfterTool: group };
-}
-
-/**
- * The Codex `hooks.json` object: one matcher group per tool event.
- *
- * @param {string} command
- * @returns {object}
- */
-export function codexHooks(command) {
-  const group = [{ matcher: "Bash|apply_patch|Edit|Write", hooks: [{ type: "command", command }] }];
-
-  return { PreToolUse: group, PostToolUse: group };
 }

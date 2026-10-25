@@ -13,6 +13,7 @@ import { Box, Text, h } from "./_h.js";
 import { COLORS } from "./_theme.js";
 import { ListDetail } from "./_widget-list.js";
 import { useSelection } from "./_use-selection.js";
+import { hookSupport } from "../install/_hook-hosts.js";
 
 /**
  * Every optional step, with the paths it writes.
@@ -22,10 +23,11 @@ import { useSelection } from "./_use-selection.js";
  * which no install writes, and left out `~/.pi/agent/AGENTS.md`, which one
  * does.
  *
- * @param {{ mode: string, hasClaude: boolean, agents?: string[], ruleFiles?: string[] }} options
+ * @param {{ mode: string, agents?: string[], ruleFiles?: string[] }} options
  */
-export function extraItems({ mode, hasClaude, agents = [], ruleFiles = [] }) {
+export function extraItems({ mode, agents = [], ruleFiles = [] }) {
   const forAgents = agents.length > 0 ? agents.join(", ") : "no agent selected";
+  const hookable = agents.filter((agent) => hookSupport(agent).mechanism !== "none" && hookSupport(agent).events.length > 0);
 
   return [
     {
@@ -46,11 +48,12 @@ export function extraItems({ mode, hasClaude, agents = [], ruleFiles = [] }) {
     },
     {
       id: "hooks",
-      label: "Claude Code guard hooks",
-      detail: hasClaude
-        ? ["Writes the PreToolUse guards into", "~/.claude/settings.json - the two steps a", "prompt cannot enforce."]
-        : ["Claude Code is not selected - this step", "has nothing to write."],
-      disabled: !hasClaude,
+      label: "Guard hooks",
+      detail:
+        hookable.length > 0
+          ? ["Writes the PreToolUse/PostToolUse guards for:", hookable.join(", "), "", "Only the selected agents are touched; hosts", "without a documented mechanism are skipped."]
+          : ["No selected agent documents a hook", "mechanism - this step has nothing to write."],
+      disabled: hookable.length === 0,
     },
     {
       id: "skills",

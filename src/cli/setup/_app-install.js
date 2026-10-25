@@ -49,7 +49,6 @@ export function InstallApp({ defaults = {}, onFinish }) {
     () =>
       extraItems({
         mode,
-        hasClaude: selectedAgents.includes("claude"),
         agents: selectedAgents,
         ruleFiles: installableTargets(undefined, selectedAgents).map((target) => target.file),
       }),

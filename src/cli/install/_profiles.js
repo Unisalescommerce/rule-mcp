@@ -20,7 +20,7 @@ export const DIMENSION_DETAIL = {
   server: "Writes the rule-mcp entry in the agent MCP config. Without it the agent cannot see the server.",
   rules: "Writes the instruction blocks in CLAUDE.md, AGENTS.md, GEMINI.md or copilot-instructions.",
   commands: "Writes the /rule-* files into each agent command directory.",
-  hooks: "Installs PreToolUse/PostToolUse guards where the host documents them (Claude, Cursor, Gemini).",
+  hooks: "Installs the PreToolUse/PostToolUse guards in the selected hosts that document them (Claude, Cursor, Codex, Gemini, Kiro, OpenCode, Pi).",
   doctor: "Runs the health check for what was installed; it never blocks the install.",
 };
 

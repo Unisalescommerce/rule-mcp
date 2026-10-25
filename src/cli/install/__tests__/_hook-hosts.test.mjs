@@ -19,6 +19,16 @@ test("each documented host names its mechanism and events", () => {
   assert.equal(hookSupport("codex").mechanism, "native");
 });
 
+test("every native host names the file it writes, and the others do not", () => {
+  for (const agent of ["claude", "cursor", "gemini", "codex", "kiro"]) {
+    assert.ok(hookSupport(agent).file, agent);
+  }
+
+  for (const agent of ["opencode", "pi", "copilot"]) {
+    assert.equal(hookSupport(agent).file, undefined, agent);
+  }
+});
+
 test("copilot and an unknown host have no mechanism", () => {
   for (const agent of ["copilot", "nope"]) {
     assert.equal(hookSupport(agent).mechanism, "none", agent);
