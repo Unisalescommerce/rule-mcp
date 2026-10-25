@@ -2,13 +2,40 @@
 
 import { renderAgentCommandFiles } from "../../core/agents/commands/index.js";
 import { activeRoles, personaCommandName } from "../../core/review/roles/index.js";
-import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { print } from "./_shared.js";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
 import { resolvedTargets } from "./_targets.js";
 
 /** The suffixes a command file can carry. */
 const COMMAND_SUFFIX = /(\.prompt\.md|\.md|\.toml)$/;
+
+/**
+ * Whether an entry is a flat command file or a nested skill directory we own
+ * (`<name>/SKILL.md`, Devin and Copilot CLI).
+ *
+ * @param {string} dir
+ * @param {string} entry
+ * @returns {boolean}
+ */
+const isRuleCommandEntry = (dir, entry) => {
+  // Flat files are `rule.md` / `rule-*.md`; nested skills are `rule/` or `rule-*/`.
+  if (!(entry === "rule" || /^rule[-.]/.test(entry))) {
+    return false;
+  }
+
+  const path = resolve(dir, entry);
+
+  try {
+    if (statSync(path).isDirectory()) {
+      return existsSync(resolve(path, "SKILL.md"));
+    }
+  } catch {
+    return false;
+  }
+
+  return entry.endsWith(".md") || entry.endsWith(".toml") || entry.endsWith(".prompt.md");
+};
 
 /**
  * Persona command files that name no active role.
@@ -17,18 +44,21 @@ const COMMAND_SUFFIX = /(\.prompt\.md|\.md|\.toml)$/;
  * Anything under the persona prefix outside that set is a file no command
  * reaches, whatever shape it has (ADR 120, ADR 116).
  *
+ * @param {string} dir - target directory (used when entries are skill dirs)
  * @param {string[]} entries - directory entries
- * @returns {string[]} the files to remove
+ * @returns {string[]} the files or skill dirs to remove
  */
-function stalePersonaFiles(entries) {
+function stalePersonaFiles(dir, entries) {
   const current = new Set(activeRoles().map((role) => personaCommandName(role.id)));
 
   return entries.filter((entry) => {
-    if (!/\.(md|toml)$/.test(entry)) {
+    if (!isRuleCommandEntry(dir, entry)) {
       return false;
     }
 
-    return entry.replace(COMMAND_SUFFIX, "").startsWith("rule-persona-") && !current.has(entry.replace(COMMAND_SUFFIX, ""));
+    const name = entry.replace(COMMAND_SUFFIX, "");
+
+    return name.startsWith("rule-persona-") && !current.has(name);
   });
 }
 
@@ -71,15 +101,13 @@ export function syncCommandTargets(opts) {
         continue;
       }
 
-      const stale = readdirSync(dir)
-        .filter((entry) => /^rule[-.]/.test(entry))
-        .filter((entry) => entry.endsWith(".md") || entry.endsWith(".toml") || entry.endsWith(".prompt.md"));
+      const stale = readdirSync(dir).filter((entry) => isRuleCommandEntry(dir, entry));
 
       for (const entry of stale) {
         const file = resolve(dir, entry);
 
         if (!opts.dryRun) {
-          rmSync(file, { force: true });
+          rmSync(file, { force: true, recursive: true });
         }
       }
 
@@ -92,6 +120,7 @@ export function syncCommandTargets(opts) {
       const file = resolve(dir, filename);
 
       if (!opts.dryRun) {
+        mkdirSync(dirname(file), { recursive: true });
         writeFileSync(file, content);
       }
 
@@ -101,11 +130,11 @@ export function syncCommandTargets(opts) {
     // Purge persona files that name no current role (ADR 120), so a target
     // directory holds exactly the rendered set. A dry run has not created the
     // directory yet.
-    const stale = stalePersonaFiles(existsSync(dir) ? readdirSync(dir) : []);
+    const stale = stalePersonaFiles(dir, existsSync(dir) ? readdirSync(dir) : []);
 
     for (const entry of stale) {
       if (!opts.dryRun) {
-        rmSync(resolve(dir, entry), { force: true });
+        rmSync(resolve(dir, entry), { force: true, recursive: true });
       }
 
       files += 1;

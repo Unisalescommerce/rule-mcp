@@ -61,37 +61,37 @@ these names. A host listed with command files also gets the slash commands in
 its own format; the others receive the MCP configuration and reach the same
 prompts through the server.
 
-| `--agent`     | Command files                   | Transport             | Notes                                                                                                                                                                  |
-| ------------- | ------------------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `claude`      | yes: args (global)              | stdio                 |                                                                                                                                                                        |
-| `codex`       | no                              | stdio                 | Codex CLI exposes MCP prompts as slash commands itself; its custom-prompt directory is not verified against a published spec, so writing files there would be a guess. |
-| `cursor`      | yes: args (project)             | stdio                 |                                                                                                                                                                        |
-| `copilot`     | no                              | stdio                 | GitHub Copilot CLI gets a custom agent file (~/.copilot/agents); its prompt-file directory is not verified against a published spec.                                   |
-| `gemini`      | yes: gemini (global)            | stdio                 |                                                                                                                                                                        |
-| `cline`       | yes: workflow (global, project) | stdio                 |                                                                                                                                                                        |
-| `roo`         | yes: plain (global, project)    | stdio                 |                                                                                                                                                                        |
-| `zed`         | no                              | stdio                 | Zed stores its rules/prompt library in profile storage, not in discoverable per-command files.                                                                         |
-| `opencode`    | yes: args (global, project)     | stdio                 |                                                                                                                                                                        |
-| `antigravity` | no                              | stdio                 | No published custom-command file location; MCP prompts remain the entry point.                                                                                         |
-| `devin`       | no                              | stdio                 | Devin runs commands in its own workspace runtime, not from local slash-command files; MCP prompts remain the entry point.                                              |
-| `pi`          | yes: args (global)              | stdio, daemon, docker |                                                                                                                                                                        |
-| `kilo`        | no                              | stdio                 | Kilo CLI command directory is not verified against a published spec.                                                                                                   |
-| `kimi`        | no                              | stdio                 | Kimi CLI command directory is not verified against a published spec.                                                                                                   |
-| `vibe`        | no                              | stdio                 | Mistral Vibe command directory is not verified against a published spec.                                                                                               |
-| `grok`        | no                              | stdio                 | Grok Build command directory is not verified against a published spec.                                                                                                 |
-| `droid`       | no                              | stdio                 | Factory Droid command directory is not verified against a published spec.                                                                                              |
-| `kiro`        | no                              | stdio                 | AWS Kiro command directory is not verified against a published spec.                                                                                                   |
-| `qwen`        | no                              | stdio                 | Qwen Code command directory is not verified against a published spec.                                                                                                  |
-| `vscode`      | yes: prompt (global)            | stdio, daemon, docker |                                                                                                                                                                        |
-| `jetbrains`   | no                              | stdio                 | JetBrains AI Assistant has no user-authored slash-command files; MCP prompts are the only entry point.                                                                 |
-| `neovim`      | no                              | stdio                 | Editor-level MCP plugins expose prompts directly; there is no command-file convention to write to.                                                                     |
-| `emacs`       | no                              | stdio                 | mcp.el exposes prompts directly; there is no command-file convention to write to.                                                                                      |
+| `--agent`     | Command files                   | Transport             | Notes                                                                                                                     |
+| ------------- | ------------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `claude`      | yes: args (global)              | stdio                 |                                                                                                                           |
+| `codex`       | yes: args (global)              | stdio                 |                                                                                                                           |
+| `cursor`      | yes: args (project)             | stdio                 |                                                                                                                           |
+| `copilot`     | yes: devin (global)             | stdio                 |                                                                                                                           |
+| `gemini`      | yes: gemini (global)            | stdio                 |                                                                                                                           |
+| `cline`       | yes: workflow (global, project) | stdio                 |                                                                                                                           |
+| `roo`         | yes: plain (global, project)    | stdio                 |                                                                                                                           |
+| `zed`         | no                              | stdio                 | Zed stores its rules/prompt library in profile storage, not in discoverable per-command files.                            |
+| `opencode`    | yes: args (global, project)     | stdio                 |                                                                                                                           |
+| `antigravity` | no                              | stdio                 | No published custom-command file location; MCP prompts remain the entry point.                                            |
+| `devin`       | no                              | stdio                 | Devin runs commands in its own workspace runtime, not from local slash-command files; MCP prompts remain the entry point. |
+| `pi`          | yes: args (global)              | stdio, daemon, docker |                                                                                                                           |
+| `kilo`        | no                              | stdio                 | Kilo CLI command directory is not verified against a published spec.                                                      |
+| `kimi`        | no                              | stdio                 | Kimi CLI command directory is not verified against a published spec.                                                      |
+| `vibe`        | no                              | stdio                 | Mistral Vibe command directory is not verified against a published spec.                                                  |
+| `grok`        | no                              | stdio                 | Grok Build command directory is not verified against a published spec.                                                    |
+| `droid`       | no                              | stdio                 | Factory Droid command directory is not verified against a published spec.                                                 |
+| `kiro`        | no                              | stdio                 | AWS Kiro command directory is not verified against a published spec.                                                      |
+| `qwen`        | no                              | stdio                 | Qwen Code command directory is not verified against a published spec.                                                     |
+| `vscode`      | yes: prompt (global)            | stdio, daemon, docker |                                                                                                                           |
+| `jetbrains`   | no                              | stdio                 | JetBrains AI Assistant has no user-authored slash-command files; MCP prompts are the only entry point.                    |
+| `neovim`      | no                              | stdio                 | Editor-level MCP plugins expose prompts directly; there is no command-file convention to write to.                        |
+| `emacs`       | no                              | stdio                 | mcp.el exposes prompts directly; there is no command-file convention to write to.                                         |
 
 Command files are also registered under `windsurf`, which the installer no longer accepts as an agent name (a deprecated alias): installing the host under its current name writes no command files.
 
 Regenerate with `pnpm census`.
 
-Per-host formats and the command surface itself: [`12-instructions.md`](12-instructions.md). Slash-command targets: 13 across 9 hosts.
+Per-host formats and the command surface itself: [`12-instructions.md`](12-instructions.md). Slash-command targets: 15 across 11 hosts.
 
 <!-- census:end:agent-targets -->
 

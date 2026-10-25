@@ -147,3 +147,20 @@ test("a comma-separated agent list writes every named agent", () => {
   assert.ok(readdirSync(pi).includes("rule.md"), "pi receives the router too");
   assert.ok(readdirSync(pi).includes("rule-persona-security.md"), "and the rest of the clean set");
 });
+
+test("a nested skill target writes <name>/SKILL.md and remove sweeps those dirs", () => {
+  mkdirSync(join(home, ".copilot"), { recursive: true });
+  const skills = resolvedTargets({ agent: "copilot" })[0].dir;
+
+  out(() => syncCommandTargets({ agent: "copilot" }));
+
+  assert.ok(existsSync(join(skills, "rule", "SKILL.md")), "router skill lands as rule/SKILL.md");
+  assert.ok(existsSync(join(skills, "rule-persona-security", "SKILL.md")), "persona skills nest the same way");
+
+  writeFileSync(join(skills, "keep-me.md"), "foreign\n");
+  const text = out(() => syncCommandTargets({ agent: "copilot", remove: true }));
+
+  assert.match(text, /removed \d+ rule\* /);
+  assert.equal(existsSync(join(skills, "rule")), false, "skill directories are removed");
+  assert.deepEqual(readdirSync(skills), ["keep-me.md"], "non-rule entries stay");
+});

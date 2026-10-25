@@ -24,6 +24,29 @@ export const COMMAND_TARGETS = [
     dirs: (ctx) => [join(ctx.home, ".claude", "commands")],
   },
   {
+    // Codex custom prompts are deprecated upstream in favour of skills, but
+    // ~/.codex/prompts/*.md still loads as /prompts:<name> in CLI and IDE.
+    agent: "codex",
+    label: "Codex CLI",
+    format: "args",
+    scope: "global",
+    namespacedPrompts: false,
+    detect: (ctx) => ctx.exists(join(ctx.home, ".codex")),
+    dirs: (ctx) => [join(ctx.home, ".codex", "prompts")],
+  },
+  {
+    // Copilot CLI personal skills: ~/.copilot/skills/<name>/SKILL.md, invoked
+    // as /<name>. True host slash via the experimental extension SDK is out of
+    // scope for the file sync.
+    agent: "copilot",
+    label: "GitHub Copilot CLI",
+    format: "devin",
+    scope: "global",
+    namespacedPrompts: false,
+    detect: (ctx) => ctx.exists(join(ctx.home, ".copilot")),
+    dirs: (ctx) => [join(ctx.home, ".copilot", "skills")],
+  },
+  {
     agent: "vscode",
     label: "VS Code (Copilot Chat)",
     format: "prompt",
