@@ -8,6 +8,9 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [180](180-codex-pretooluse-silent-allow-and-ask-as-block.md)                                                            | Codex PreToolUse silent allow and ask as block                                                            | 2026-10-25 | accepted   | hooks, codex, guard                                                                 |
+| [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md)                                                  | Codex named hooks and Codex/Copilot command file targets                                                  | 2026-10-25 | accepted   | installer, hooks, commands, codex, copilot                                          |
+| [178](178-surface-is-the-only-tier-picker-slash-commands-follow-it.md)                                                  | Surface is the only tier picker; slash commands follow it                                                 | 2026-10-25 | accepted   | installer, tui, governance                                                          |
 | [177](177-rework-the-installer-around-one-profile-a-manifest-and-opentui.md)                                            | Rework the installer around one profile, a manifest and OpenTUI                                           | 2026-10-24 | accepted   | installer, tui, governance                                                          |
 | [176](176-drop-the-spdx-file-headers.md)                                                                                | Drop the SPDX file headers                                                                                | 2026-10-24 | accepted   | legal, governance, process                                                          |
 | [175](175-orchestrate-the-plan-catalog-with-a-staged-dependency-graph.md)                                               | Orchestrate the plan catalog with a staged dependency graph                                               | 2026-10-21 | accepted   | plans, orchestration, dependency-graph, process, governance                         |
@@ -193,6 +196,9 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [180](180-codex-pretooluse-silent-allow-and-ask-as-block.md)                                                            | Make ALLOW a silent {} for every host.                                                                                                                                                                                          | Positive: Codex PreToolUse no longer fails on every allow; migrations and structural confirms still stop the tool via decision:block.                                                                                           |
+| [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md)                                                  | Write statusMessage on every Codex command handler in codexHooks.                                                                                                                                                               | Positive: /hooks shows rule-mcp titles after reinstall+trust; install sync drops /prompts:rule* for Codex and /rule* skills for Copilot CLI. Negative: Codex custom prompts remain deprecated upstream, so invocations stay...  |
+| [178](178-surface-is-the-only-tier-picker-slash-commands-follow-it.md)                                                  | Drop the Commands step from the install rail.                                                                                                                                                                                   | The rail is Preflight, Profile, Agents, Transport, Surface, Review, Install, Done.                                                                                                                                              |
 | [177](177-rework-the-installer-around-one-profile-a-manifest-and-opentui.md)                                            | - **One profile** (`minimal`, `standard`, `full`, `custom`) chooses server,.                                                                                                                                                    | The installer has one vocabulary instead of two, the uninstall removes exactly.                                                                                                                                                 |
 | [176](176-drop-the-spdx-file-headers.md)                                                                                | Remove the two header lines from every tracked file, delete the header checker.                                                                                                                                                 | Files start with their first meaningful line and the size budget counts what a.                                                                                                                                                 |
 | [175](175-orchestrate-the-plan-catalog-with-a-staged-dependency-graph.md)                                               | One orchestrator at docs/plans/skills/skills-plan.md, inside the catalog it orders.                                                                                                                                             | The catalog gains one file that says what to do next, and every plan gains the three lines that make the answer checkable.                                                                                                      |
@@ -481,6 +487,8 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### installer
 
+- [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md) Codex named hooks and Codex/Copilot command file targets
+- [178](178-surface-is-the-only-tier-picker-slash-commands-follow-it.md) Surface is the only tier picker; slash commands follow it
 - [177](177-rework-the-installer-around-one-profile-a-manifest-and-opentui.md) Rework the installer around one profile, a manifest and OpenTUI
 - [121](121-the-install-reconciles-the-bundled-skills-when-the-step-is-not-selected.md) The install reconciles the bundled skills when the step is not selected
 - [105](105-opencode-gets-a-dedicated-installer-writing-its-own-config-shape.md) opencode gets a dedicated installer writing its own config shape
@@ -499,6 +507,26 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [041](041-lossless-installer-preserve-toolprefix-normalize-rule-blank-lines.md) Lossless installer: preserve toolPrefix and normalize rule blank lines
 - [039](039-fix-vscode-extension-and-derivatives-install-uninstall.md) Fix VS Code extension and derivatives install/uninstall
 - [028](028-clean-rule-mcp-commands-via-user-commands-prompt-suppression-not-a-plugin.md) Clean /rule-mcp-* commands via user commands + prompt suppression, not a plugin
+
+### governance
+
+- [178](178-surface-is-the-only-tier-picker-slash-commands-follow-it.md) Surface is the only tier picker; slash commands follow it
+- [177](177-rework-the-installer-around-one-profile-a-manifest-and-opentui.md) Rework the installer around one profile, a manifest and OpenTUI
+- [176](176-drop-the-spdx-file-headers.md) Drop the SPDX file headers
+- [175](175-orchestrate-the-plan-catalog-with-a-staged-dependency-graph.md) Orchestrate the plan catalog with a staged dependency graph
+- [174](174-retire-the-codeql-workflow-until-code-scanning-is-available.md) Retire the CodeQL workflow until code scanning is available
+- [173](173-drop-the-dco-sign-off-requirement.md) Drop the DCO sign-off requirement
+- [172](172-retire-closed-plans-into-adrs-and-one-handoff.md) Retire closed plans into ADRs and one handoff
+- [171](171-retire-the-plan-graph-audit-reference-into-an-adr-and-a-handoff.md) Retire the plan-graph audit reference into an ADR and a handoff
+- [170](170-retire-the-plan-of-plans-into-an-adr-and-a-handoff.md) Retire the plan-of-plans into an ADR and a handoff
+- [154](154-every-plan-carries-a-status-line-a-dependency-graph-and-checkbox-steps.md) Every plan carries a status line, a dependency graph and checkbox steps
+- [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
+- [135](135-codify-stage-0-oss-governance-signing-support-and-licensing-policies.md) Codify Stage 0 OSS governance, signing, support, and licensing policies
+- [098](098-develop-merges-into-main-by-area-and-stays-as-an-integration-branch.md) develop merges into main by area, and stays as an integration branch
+- [093](093-add-an-open-source-steward-persona-for-governance-contributors-and-donors.md) Add an Open Source Steward persona for governance, contributors and donors
+- [083](083-governance-is-an-explicit-bdfl-with-a-path-to-co-maintainers.md) Governance is an explicit BDFL with a path to co-maintainers
+- [079](079-add-the-oss-architect-review-persona.md) Add the OSS Architect review persona
+- [066](066-remove-externally-derived-skills-from-the-served-knowledge-base.md) Remove externally derived skills from the served knowledge base
 
 ### breaking
 
@@ -538,27 +566,9 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [071](071-the-census-generates-eight-numbered-documents-and-three-fenced-blocks-inside-the-chapters-a-person-writes.md) The census generates eight numbered documents and three fenced blocks inside the chapters a person writes
 - [048](048-v100-release-and-docs-accuracy-guard.md) v1.0.0 release and the docs-accuracy guard
 
-### governance
-
-- [177](177-rework-the-installer-around-one-profile-a-manifest-and-opentui.md) Rework the installer around one profile, a manifest and OpenTUI
-- [176](176-drop-the-spdx-file-headers.md) Drop the SPDX file headers
-- [175](175-orchestrate-the-plan-catalog-with-a-staged-dependency-graph.md) Orchestrate the plan catalog with a staged dependency graph
-- [174](174-retire-the-codeql-workflow-until-code-scanning-is-available.md) Retire the CodeQL workflow until code scanning is available
-- [173](173-drop-the-dco-sign-off-requirement.md) Drop the DCO sign-off requirement
-- [172](172-retire-closed-plans-into-adrs-and-one-handoff.md) Retire closed plans into ADRs and one handoff
-- [171](171-retire-the-plan-graph-audit-reference-into-an-adr-and-a-handoff.md) Retire the plan-graph audit reference into an ADR and a handoff
-- [170](170-retire-the-plan-of-plans-into-an-adr-and-a-handoff.md) Retire the plan-of-plans into an ADR and a handoff
-- [154](154-every-plan-carries-a-status-line-a-dependency-graph-and-checkbox-steps.md) Every plan carries a status line, a dependency graph and checkbox steps
-- [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
-- [135](135-codify-stage-0-oss-governance-signing-support-and-licensing-policies.md) Codify Stage 0 OSS governance, signing, support, and licensing policies
-- [098](098-develop-merges-into-main-by-area-and-stays-as-an-integration-branch.md) develop merges into main by area, and stays as an integration branch
-- [093](093-add-an-open-source-steward-persona-for-governance-contributors-and-donors.md) Add an Open Source Steward persona for governance, contributors and donors
-- [083](083-governance-is-an-explicit-bdfl-with-a-path-to-co-maintainers.md) Governance is an explicit BDFL with a path to co-maintainers
-- [079](079-add-the-oss-architect-review-persona.md) Add the OSS Architect review persona
-- [066](066-remove-externally-derived-skills-from-the-served-knowledge-base.md) Remove externally derived skills from the served knowledge base
-
 ### commands
 
+- [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md) Codex named hooks and Codex/Copilot command file targets
 - [122](122-the-fix-tool-and-command-apply-the-deterministic-guardrails-not-the-file-tree.md) The fix tool and command apply the deterministic guardrails, not the file tree
 - [121](121-the-install-reconciles-the-bundled-skills-when-the-step-is-not-selected.md) The install reconciles the bundled skills when the step is not selected
 - [120](120-fold-the-per-operation-persona-commands-into-one-per-role-with-the-depth-read-fr.md) Fold the per-operation persona commands into one per role, with the depth read from the request
@@ -887,12 +897,27 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [077](077-compress-every-server-model-list-surface-prompts-list-tools-list-resources-list.md) Compress every server->model list surface (prompts/list, tools/list, resources/list)
 - [075](075-meta-frameworks-get-their-own-namespace-and-a-narrow-dispatcher.md) Meta-frameworks get their own namespace and a narrow dispatcher
 
+### tui
+
+- [178](178-surface-is-the-only-tier-picker-slash-commands-follow-it.md) Surface is the only tier picker; slash commands follow it
+- [177](177-rework-the-installer-around-one-profile-a-manifest-and-opentui.md) Rework the installer around one profile, a manifest and OpenTUI
+- [080](080-one-installer-a-node-wizard-with-shell-bootstraps.md) One installer, a Node wizard with shell bootstraps
+- [070](070-installer-mode-step-replaces-the-agent-picker-instead-of-stacking-under-it.md) Installer mode step replaces the agent picker instead of stacking under it
+- [046](046-installer-self-heals-global-shim-surfaces-failures-gates-tui-rendering.md) Installer self-heals its global shim, surfaces failures, and gates TUI rendering
+
 ### backend
 
 - [137](137-add-a-source-cited-backend-guardrail-family-and-fix-the-six-existing-rules.md) Add a source-cited backend guardrail family and fix the six existing rules
 - [053](053-gateway-as-the-single-entrypoint-with-server-side-receipts-backend-data-devops-g.md) Gateway as the single entrypoint with server-side receipts; backend/data/devops guardrail families
 - [010](010-backend-framework-skills.md) backend framework skills
 - [005](005-backend-framework-skills.md) Backend Framework Skills
+
+### hooks
+
+- [180](180-codex-pretooluse-silent-allow-and-ask-as-block.md) Codex PreToolUse silent allow and ask as block
+- [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md) Codex named hooks and Codex/Copilot command file targets
+- [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
+- [129](129-a-file-is-reported-on-a-task-is-confirmed.md) A file is reported on, a task is confirmed
 
 ### infrastructure
 
@@ -935,13 +960,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [096](096-tokensave-is-the-primary-code-graph-javascript-is-the-fallback.md) TokenSave is the primary code graph, JavaScript is the fallback
 - [088](088-a-persona-topic-is-the-binding-scope-of-the-run.md) A persona topic is the binding scope of the run
 - [051](051-token-efficiency-pipeline.md) Token-efficiency pipeline (caveman aggressive + tokensave-aware decoration)
-
-### tui
-
-- [177](177-rework-the-installer-around-one-profile-a-manifest-and-opentui.md) Rework the installer around one profile, a manifest and OpenTUI
-- [080](080-one-installer-a-node-wizard-with-shell-bootstraps.md) One installer, a Node wizard with shell bootstraps
-- [070](070-installer-mode-step-replaces-the-agent-picker-instead-of-stacking-under-it.md) Installer mode step replaces the agent picker instead of stacking under it
-- [046](046-installer-self-heals-global-shim-surfaces-failures-gates-tui-rendering.md) Installer self-heals its global shim, surfaces failures, and gates TUI rendering
 
 ### versioning
 
