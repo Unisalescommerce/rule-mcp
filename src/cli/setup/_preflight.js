@@ -30,7 +30,7 @@ export function detectLocalRepo(root = process.cwd()) {
   }
 
   try {
-    return JSON.parse(readFileSync(manifest, "utf8")).name === "rule";
+    return JSON.parse(readFileSync(manifest, "utf8")).name === "rule-mcp";
   } catch {
     return false;
   }

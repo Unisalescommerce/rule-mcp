@@ -8,75 +8,35 @@
  * history is exactly as they left it afterwards. The consequence is that
  * everything drawn is gone on exit, which is why the caller prints a plain
  * summary once the screen is restored.
+ *
+ * The renderer is opened once for the whole run. Every step mounts into the
+ * same frame, so the rail, the title bar and the key bar never flicker, and a
+ * process that dies inside the alternate screen cannot happen without the
+ * `finally` below putting the cursor back.
  */
 
-import { render } from "ink";
+import { openScreen, rendererOptions } from "./opentui/_screen.js";
+import { INSTALL_STEPS, runInstallWizard, runUninstallWizard, UNINSTALL_STEPS } from "./opentui/_wizard.js";
 
-import { h } from "./_h.js";
-
-const ALT_ON = "\u001B[?1049h\u001B[H";
-const ALT_OFF = "\u001B[?1049l";
-const CURSOR_HIDE = "\u001B[?25l";
-const CURSOR_SHOW = "\u001B[?25h";
+export { rendererOptions };
 
 /**
- * The Ink options the wizard needs.
+ * Render one wizard full-screen and resolve with what it finished with.
  *
- * `interactive: true` overrides Ink's CI detection. That detection reads
- * `is-in-ci`, which trips on `CONTINUOUS_INTEGRATION` as well as `CI` - a
- * variable some VS Code and agent shells export without being a CI job - and
- * a non-interactive Ink disables synchronized output and cursor control. The
- * full-frame erase and redraw is then visible as flicker.
- *
- * `incrementalRendering` updates only the lines that changed instead of
- * repainting the whole frame, which removes what is left on a slow terminal.
- *
- * @returns {object}
+ * @param {{ direction?: "install"|"uninstall", defaults?: object }} options
+ * @returns {Promise<{ results: object[], dryRun: boolean }|null>} null when the user quit
  */
-export function wizardRenderOptions() {
-  return { exitOnCtrlC: false, patchConsole: true, interactive: true, incrementalRendering: true };
-}
-
-/**
- * Render one wizard component full-screen and resolve with what it finished
- * with.
- *
- * The screen is restored on every path, including a thrown render error and
- * a SIGINT, because a process that dies inside the alternate screen leaves
- * the terminal with no cursor.
- *
- * @param {Function} App
- * @param {object} props
- * @returns {Promise<{ results: object[], dryRun: boolean }>}
- */
-export async function mountWizard(App, props = {}) {
-  const { stdout } = process;
-  let outcome = { results: [], dryRun: false };
-
-  stdout.write(ALT_ON + CURSOR_HIDE);
-
-  const restore = () => stdout.write(CURSOR_SHOW + ALT_OFF);
-
-  process.once("SIGINT", restore);
-  process.once("SIGTERM", restore);
+export async function mountWizard({ direction = "install", defaults = {} } = {}) {
+  const uninstall = direction === "uninstall";
+  const screen = await openScreen({
+    title: uninstall ? "Uninstall" : "Setup",
+    subtitle: defaults.dryRun ? "dry run" : "",
+    steps: uninstall ? UNINSTALL_STEPS : INSTALL_STEPS,
+  });
 
   try {
-    const instance = render(
-      h(App, {
-        ...props,
-        onFinish: (result) => {
-          outcome = result;
-        },
-      }),
-      wizardRenderOptions(),
-    );
-
-    await instance.waitUntilExit();
+    return uninstall ? await runUninstallWizard({ screen, defaults }) : await runInstallWizard({ screen, defaults });
   } finally {
-    restore();
-    process.off("SIGINT", restore);
-    process.off("SIGTERM", restore);
+    screen.close();
   }
-
-  return outcome;
 }

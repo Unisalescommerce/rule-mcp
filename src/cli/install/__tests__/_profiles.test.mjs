@@ -23,3 +23,10 @@ test("custom starts empty and an unknown profile throws", () => {
   assert.deepEqual(PROFILES.custom.dimensions, []);
   assert.throws(() => resolveProfile("nope"), /Unknown profile/);
 });
+
+test("every profile names the surface it implies", () => {
+  assert.equal(PROFILES.minimal.surface, "minimal");
+  assert.equal(PROFILES.standard.surface, "standard");
+  assert.equal(PROFILES.full.surface, "full");
+  assert.equal(PROFILES.custom.surface, "full");
+});

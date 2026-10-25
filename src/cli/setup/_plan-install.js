@@ -9,15 +9,35 @@
  */
 
 import { agentInstallTask, runtimeHomeTask, shimTask } from "./_task-core.js";
-import { commandsTask, dockerTask, doctorTask, rulesTask, serviceTask, skillsTask } from "./_task-extras.js";
+import { commandsTask, dockerTask, doctorTask, manifestTask, rulesTask, serviceTask, skillsTask } from "./_task-extras.js";
 import { skillsRemovalTask } from "./_task-remove.js";
 import { cliVerifyTask } from "./_task-cli.js";
 
+/** The dimensions a flag-driven install wrote, when no profile answered. */
+const dimensionsOf = (extras, agents) => ({
+  server: agents.length > 0,
+  rules: Boolean(extras.rules),
+  commands: Boolean(extras.commands),
+  hooks: Boolean(extras.hooks),
+  doctor: Boolean(extras.doctor),
+});
+
 /**
- * @param {{ agents?: string[], mode?: string, extras?: object, force?: boolean, context?: object, selection?: object|null, minimal?: boolean, surface?: object|null }} answers
+ * @param {{ agents?: string[], mode?: string, extras?: object, force?: boolean, context?: object, selection?: object|null, minimal?: boolean, surface?: object|null, profile?: string|null, dimensions?: object|null }} answers
  * @returns {Array<{ id: string, title: string, detail: string, run: Function }>}
  */
-export function buildInstallPlan({ agents = [], mode = "stdio", extras = {}, force = false, context = {}, selection = null, minimal, surface } = {}) {
+export function buildInstallPlan({
+  agents = [],
+  mode = "stdio",
+  extras = {},
+  force = false,
+  context = {},
+  selection = null,
+  minimal,
+  surface,
+  profile = null,
+  dimensions = null,
+} = {}) {
   const plan = [runtimeHomeTask()];
 
   if (context.hasLocalBin) {
@@ -60,6 +80,20 @@ export function buildInstallPlan({ agents = [], mode = "stdio", extras = {}, for
   // The install proves its own launcher before it reports success: a shim on
   // PATH that does not answer is an install that failed, not a warning.
   plan.push(cliVerifyTask());
+
+  // The manifest is written before the health check, so the check can read what
+  // this run claims it installed instead of re-detecting it. It is written even
+  // when every optional step was declined: "this machine has the server entry"
+  // is exactly the fact the uninstall needs, and the dimensions say the rest.
+  plan.push(
+    manifestTask({
+      mode,
+      profile,
+      dimensions: dimensions ?? dimensionsOf(extras, agents),
+      surface,
+      commands: selection,
+    }),
+  );
 
   if (extras.doctor) {
     plan.push(doctorTask());

@@ -19,14 +19,45 @@ export const DEFAULT_EXTRAS = ["rules", "commands", "hooks", "doctor"];
 /**
  * The node the renderer needs, which is higher than the one the server needs.
  *
- * Ink 7 declares `engines: node >= 22`; the package floor is 20, and a node 20
- * install still has to work. It gets the plain runner - the same plan, printed
- * rather than drawn - so the floor costs a frame and not an install.
+ * OpenTUI's core is a native library that declares `engines.node >=26.4.0`;
+ * the package floor is 20, and a node 20 install still has to work. It gets
+ * the plain runner - the same plan, printed rather than drawn - so the floor
+ * costs a frame and not an install.
  */
-export const WIZARD_NODE_MIN = 22;
+export const WIZARD_NODE_MIN = "26.4.0";
 
-/** The major of a version string, `v24.1.0` or `24.1.0` alike. */
-export const majorOf = (version = process.version) => Number.parseInt(String(version).replace(/^v/, "").split(".", 1)[0], 10);
+/** A version as comparable numbers, `v26.4.0` and `26.4.0` alike. */
+export const versionParts = (version = process.version) =>
+  String(version)
+    .replace(/^v/u, "")
+    .split(".")
+    .map((part) => Number.parseInt(part, 10) || 0);
+
+/**
+ * Whether `version` reaches `floor`.
+ *
+ * The minor matters: node 26.0 exists and cannot load the renderer, so a
+ * major-only comparison would hand it a wizard that fails on mount.
+ *
+ * @param {string} version
+ * @param {string} floor
+ * @returns {boolean}
+ */
+export function atLeast(version, floor) {
+  const left = versionParts(version);
+  const right = versionParts(floor);
+
+  for (let index = 0; index < Math.max(left.length, right.length); index += 1) {
+    const a = left[index] ?? 0;
+    const b = right[index] ?? 0;
+
+    if (a !== b) {
+      return a > b;
+    }
+  }
+
+  return true;
+}
 
 /**
  * Whether this process can host a full-screen wizard.
@@ -38,7 +69,7 @@ export const majorOf = (version = process.version) => Number.parseInt(String(ver
  * @param {object} [env] @param {object} [stdin] @param {object} [stdout] @param {string} [version]
  */
 export function canRenderWizard(env = process.env, stdin = process.stdin, stdout = process.stdout, version = process.version) {
-  if (majorOf(version) < WIZARD_NODE_MIN) {
+  if (!atLeast(version, WIZARD_NODE_MIN)) {
     return false;
   }
 
@@ -47,7 +78,7 @@ export function canRenderWizard(env = process.env, stdin = process.stdin, stdout
 
 /** Why the wizard is not drawing, when the reason is the runtime. */
 export const wizardRuntimeNote = () =>
-  majorOf() < WIZARD_NODE_MIN ? `${process.version} cannot host the wizard (node ${WIZARD_NODE_MIN} or newer draws it) - running the same plan from the flags.` : "";
+  atLeast(process.version, WIZARD_NODE_MIN) ? "" : `${process.version} cannot host the wizard (node ${WIZARD_NODE_MIN} or newer draws it) - running the same plan from the flags.`;
 
 /**
  * Carry a `--minimal` / `--no-minimal` answer into the process environment.

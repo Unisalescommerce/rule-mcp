@@ -35,8 +35,20 @@ test("a dry run records nothing", () => {
   assert.equal(readManifest().agents.includes("cursor"), false);
 });
 
+test("the entrypoint and its scope are not install dimensions", () => {
+  recordInstall({ agent: "pi", entrypoint: "/usr/local/bin/rule-mcp", global: true, dimensions: { server: true } });
+
+  const manifest = readManifest();
+
+  assert.equal(manifest.entrypoint, "/usr/local/bin/rule-mcp");
+  assert.equal(manifest.global, true);
+  assert.deepEqual(manifest.dimensions, { server: true, rules: true }, "the earlier dimensions survive and no entrypoint key appears");
+  assert.equal("entrypoint" in manifest.dimensions, false);
+});
+
 test("forgetInstall removes one agent and deletes the file at zero", () => {
   forgetInstall({ agent: "claude" });
+  forgetInstall({ agent: "pi" });
   assert.deepEqual(readManifest().agents, ["codex"]);
 
   forgetInstall({ agent: "codex" });

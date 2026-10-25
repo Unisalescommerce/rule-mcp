@@ -48,11 +48,26 @@ export async function copyToClipboard(text) {
  */
 export async function toast(renderer, message, ms = 2000) {
   const { BoxRenderable, TextRenderable } = await import("@opentui/core");
-  const box = new BoxRenderable(renderer, { flexDirection: "row", padding: 1 });
+  const box = new BoxRenderable(renderer, {
+    position: "absolute",
+    bottom: 1,
+    right: 2,
+    flexDirection: "row",
+    paddingX: 1,
+    borderStyle: "rounded",
+    borderColor: "#8AE234",
+    zIndex: 10,
+  });
   const text = new TextRenderable(renderer, { content: message, fg: "#8AE234" });
 
   box.add(text);
   renderer.root.add(box);
   await new Promise((resolve) => setTimeout(resolve, ms));
-  renderer.root.remove(box);
+
+  // The wizard can be closed while the toast is still on screen; a remove on a
+  // destroyed root would throw inside a promise nobody awaits.
+  if (!renderer.isDestroyed) {
+    renderer.root.remove(box);
+    box.destroyRecursively();
+  }
 }

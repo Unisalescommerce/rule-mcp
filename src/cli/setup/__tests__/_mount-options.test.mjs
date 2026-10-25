@@ -1,18 +1,21 @@
 /**
- * The wizard's Ink options: interactive mode is forced and incremental
- * rendering is on, which is what stops the full-frame repaint from flickering
- * on a terminal Ink would otherwise call non-interactive.
+ * The renderer options the wizard asks OpenTUI for.
+ *
+ * The alternate screen is what keeps the user's scrollback intact, and the
+ * wizard owns Ctrl+C so quitting from a list cannot skip the teardown that
+ * restores the cursor. Both are asserted here because both are invisible
+ * until they are wrong.
  */
 import { strict as assert } from "node:assert";
 import { test } from "node:test";
 
-import { wizardRenderOptions } from "../_mount.js";
+import { rendererOptions } from "../_mount.js";
 
-test("the wizard forces interactive mode and incremental rendering", () => {
-  const options = wizardRenderOptions();
+test("the wizard owns the alternate screen and its own Ctrl+C", () => {
+  const options = rendererOptions();
 
-  assert.equal(options.interactive, true, "Ink's CI detection is overridden");
-  assert.equal(options.incrementalRendering, true, "only changed lines repaint");
-  assert.equal(options.exitOnCtrlC, false, "the app owns Ctrl+C");
-  assert.equal(options.patchConsole, true, "console output stays above the frame");
+  assert.equal(options.screenMode, "alternate-screen", "the frame owns the window, scrollback survives");
+  assert.equal(options.exitOnCtrlC, false, "the flow tears the renderer down itself");
+  assert.equal(options.useMouse, true, "selection and scroll work with a mouse");
+  assert.equal(options.targetFps, 30, "an installer does not need 60 frames a second");
 });

@@ -17,7 +17,7 @@
 
 import { allAgents, deprecatedAgents } from "../installers/index.js";
 import { detectInstalledAgents } from "../install/index.js";
-import { COLORS, GLYPHS } from "./_theme.js";
+import { GLYPHS } from "./_theme.js";
 
 /** Where the catalog stops listing coding agents and starts listing IDEs. */
 const IDE_START = allAgents.indexOf("vscode");
@@ -60,8 +60,10 @@ export function agentRows() {
     id: entry.name,
     label: entry.deprecated ? `${entry.name} (superseded by ${entry.deprecated})` : entry.name,
     note: entry.configured ? `${GLYPHS.ok} configured` : entry.present ? `${GLYPHS.radioOn} detected` : "",
-    noteColor: entry.configured ? COLORS.ok : COLORS.info,
-    detail: entry.configFile ?? "no config file on this machine yet",
+    noteTone: entry.configured ? "ok" : entry.present ? "info" : undefined,
+    // An array, never a bare string: the detail panel iterates lines, and a
+    // string would be drawn one character per row.
+    detail: [entry.configFile ?? "no config file on this machine yet"],
   });
 
   const items = [

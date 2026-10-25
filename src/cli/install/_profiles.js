@@ -3,16 +3,36 @@
 /** The dimensions an install can write. */
 export const DIMENSIONS = ["server", "rules", "commands", "hooks", "doctor"];
 
-/** Every profile, with the dimensions it turns on and what each one writes. */
+/**
+ * Every profile, with the dimensions it turns on and the tool surface it
+ * implies.
+ *
+ * The surface is part of the profile because the two answer one question: how
+ * much of the catalog this install makes reachable. `full` is the profile that
+ * exposes every skill tool, so a `full` profile that then defaulted to the hub
+ * surface would be a profile that lies about its own name. The Surface step
+ * still lets the user override it.
+ */
 export const PROFILES = {
-  minimal: { label: "Minimal", dimensions: ["server", "commands"], description: "The MCP entry and the slash commands: enough for the agent to answer." },
+  minimal: {
+    label: "Minimal",
+    dimensions: ["server", "commands"],
+    surface: "minimal",
+    description: "The MCP entry and the slash commands: enough for the agent to answer.",
+  },
   standard: {
     label: "Standard",
     dimensions: ["server", "rules", "commands", "hooks", "doctor"],
+    surface: "standard",
     description: "Everything: MCP entry, instruction rules, slash commands, guard hooks and the closing health check.",
   },
-  full: { label: "Full", dimensions: ["server", "rules", "commands", "hooks", "doctor"], description: "Standard plus the full tool surface: every skill tool is exposed." },
-  custom: { label: "Custom", dimensions: [], description: "Pick each dimension yourself; every row says what it writes." },
+  full: {
+    label: "Full",
+    dimensions: ["server", "rules", "commands", "hooks", "doctor"],
+    surface: "full",
+    description: "Standard plus the full tool surface: every skill tool is exposed.",
+  },
+  custom: { label: "Custom", dimensions: [], surface: "full", description: "Pick each dimension yourself; every row says what it writes." },
 };
 
 /** Human-readable detail for one dimension, shown beside its checkbox. */

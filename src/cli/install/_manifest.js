@@ -17,7 +17,7 @@ export function manifestPath() {
  * @returns {{ version: number, installedAt: string|null, mode: string|null, agents: string[], dimensions: object }}
  */
 export function readManifest() {
-  const empty = { version: 1, installedAt: null, profile: null, mode: null, agents: [], dimensions: {}, surface: null, commands: null };
+  const empty = { version: 1, installedAt: null, profile: null, mode: null, agents: [], dimensions: {}, surface: null, commands: null, entrypoint: null, global: null };
 
   try {
     const parsed = JSON.parse(readFileSync(manifestPath(), "utf8"));
@@ -31,10 +31,16 @@ export function readManifest() {
 /**
  * Merge one install into the manifest and write it.
  *
- * @param {{ agent?: string, mode?: string, dimensions?: object, dryRun?: boolean }} entry
+ * `dimensions` is the map the uninstall reads, so it carries install
+ * dimensions only (`server`, `rules`, `commands`, `hooks`, `doctor`).
+ * `entrypoint` and `global` describe how the entry was written and live beside
+ * it: putting them in the map made the uninstaller offer "entrypoint" as
+ * something to remove.
+ *
+ * @param {{ agent?: string, mode?: string, profile?: string, dimensions?: object, surface?: object|null, commands?: object|null, entrypoint?: string, global?: boolean, dryRun?: boolean }} entry
  * @returns {object} the manifest as written
  */
-export function recordInstall({ agent, mode, profile, dimensions, surface, commands, dryRun = false } = {}) {
+export function recordInstall({ agent, mode, profile, dimensions, surface, commands, entrypoint, global, dryRun = false } = {}) {
   const manifest = readManifest();
   const agents = new Set(manifest.agents);
 
@@ -49,6 +55,8 @@ export function recordInstall({ agent, mode, profile, dimensions, surface, comma
     profile: profile ?? manifest.profile,
     surface: surface ?? manifest.surface,
     commands: commands ?? manifest.commands,
+    entrypoint: entrypoint ?? manifest.entrypoint,
+    global: global ?? manifest.global,
     agents: [...agents].sort(),
     dimensions: dimensions ? { ...manifest.dimensions, ...dimensions } : manifest.dimensions,
   };
@@ -101,7 +109,7 @@ export function writeInstalledManifest(agents, entrypoint, global, mode) {
   const list = Array.isArray(agents) ? agents : [agents];
 
   for (const agent of list) {
-    recordInstall({ agent, mode, dimensions: { entrypoint, global } });
+    recordInstall({ agent, mode, entrypoint, global, dimensions: { server: true } });
   }
 
   // The human-readable manifest beside the JSON one: the test and the doctor

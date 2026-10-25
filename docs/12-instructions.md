@@ -19,6 +19,8 @@ which agents are installed and where their homes are.
 | Target                 | Agent      | Format     | Scope   | Prefixes MCP prompts |
 | ---------------------- | ---------- | ---------- | ------- | -------------------- |
 | Claude Code            | `claude`   | `args`     | global  | yes                  |
+| Codex CLI              | `codex`    | `args`     | global  | no                   |
+| GitHub Copilot CLI     | `copilot`  | `devin`    | global  | no                   |
 | VS Code (Copilot Chat) | `vscode`   | `prompt`   | global  | yes                  |
 | Pi                     | `pi`       | `args`     | global  | no                   |
 | Gemini CLI             | `gemini`   | `gemini`   | global  | no                   |
@@ -32,25 +34,23 @@ which agents are installed and where their homes are.
 | opencode               | `opencode` | `args`     | global  | no                   |
 | opencode project       | `opencode` | `args`     | project | no                   |
 
-15 more agents get the MCP config but no command files, each for a stated reason:
+13 more agents get the MCP config but no command files, each for a stated reason:
 
-| Agent         | Why not                                                                                                                                                                |
-| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `codex`       | Codex CLI exposes MCP prompts as slash commands itself; its custom-prompt directory is not verified against a published spec, so writing files there would be a guess. |
-| `copilot`     | GitHub Copilot CLI gets a custom agent file (~/.copilot/agents); its prompt-file directory is not verified against a published spec.                                   |
-| `zed`         | Zed stores its rules/prompt library in profile storage, not in discoverable per-command files.                                                                         |
-| `antigravity` | No published custom-command file location; MCP prompts remain the entry point.                                                                                         |
-| `kilo`        | Kilo CLI command directory is not verified against a published spec.                                                                                                   |
-| `kimi`        | Kimi CLI command directory is not verified against a published spec.                                                                                                   |
-| `vibe`        | Mistral Vibe command directory is not verified against a published spec.                                                                                               |
-| `grok`        | Grok Build command directory is not verified against a published spec.                                                                                                 |
-| `droid`       | Factory Droid command directory is not verified against a published spec.                                                                                              |
-| `kiro`        | AWS Kiro command directory is not verified against a published spec.                                                                                                   |
-| `qwen`        | Qwen Code command directory is not verified against a published spec.                                                                                                  |
-| `jetbrains`   | JetBrains AI Assistant has no user-authored slash-command files; MCP prompts are the only entry point.                                                                 |
-| `neovim`      | Editor-level MCP plugins expose prompts directly; there is no command-file convention to write to.                                                                     |
-| `emacs`       | mcp.el exposes prompts directly; there is no command-file convention to write to.                                                                                      |
-| `devin`       | Devin runs commands in its own workspace runtime, not from local slash-command files; MCP prompts remain the entry point.                                              |
+| Agent         | Why not                                                                                                                   |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `zed`         | Zed stores its rules/prompt library in profile storage, not in discoverable per-command files.                            |
+| `antigravity` | No published custom-command file location; MCP prompts remain the entry point.                                            |
+| `kilo`        | Kilo CLI command directory is not verified against a published spec.                                                      |
+| `kimi`        | Kimi CLI command directory is not verified against a published spec.                                                      |
+| `vibe`        | Mistral Vibe command directory is not verified against a published spec.                                                  |
+| `grok`        | Grok Build command directory is not verified against a published spec.                                                    |
+| `droid`       | Factory Droid command directory is not verified against a published spec.                                                 |
+| `kiro`        | AWS Kiro command directory is not verified against a published spec.                                                      |
+| `qwen`        | Qwen Code command directory is not verified against a published spec.                                                     |
+| `jetbrains`   | JetBrains AI Assistant has no user-authored slash-command files; MCP prompts are the only entry point.                    |
+| `neovim`      | Editor-level MCP plugins expose prompts directly; there is no command-file convention to write to.                        |
+| `emacs`       | mcp.el exposes prompts directly; there is no command-file convention to write to.                                         |
+| `devin`       | Devin runs commands in its own workspace runtime, not from local slash-command files; MCP prompts remain the entry point. |
 
 ### The kinds (41 commands)
 

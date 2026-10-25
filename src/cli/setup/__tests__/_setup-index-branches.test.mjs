@@ -2,7 +2,8 @@
  * Branch coverage for runSetup: blocked preflight, plain dry-run, uninstall,
  * settleExit on failures, wizard runtime notes, and the interactive mount path.
  *
- * The Ink apps are stubbed through registerHooks so a TTY is never required.
+ * The mount is stubbed through registerHooks so a TTY and a native renderer are
+ * never required.
  */
 import assert from "node:assert/strict";
 import { mkdirSync, mkdtempSync, rmSync } from "node:fs";
@@ -24,8 +25,6 @@ delete process.env.CI;
 
 const stubPlainUrl = pathToFileURL(join(import.meta.dirname, "_setup-plain.stub.mjs")).href;
 const stubMountUrl = pathToFileURL(join(import.meta.dirname, "_setup-mount.stub.mjs")).href;
-const stubAppInstallUrl = pathToFileURL(join(import.meta.dirname, "_setup-app-install.stub.mjs")).href;
-const stubAppUninstallUrl = pathToFileURL(join(import.meta.dirname, "_setup-app-uninstall.stub.mjs")).href;
 
 let plainMode = "ok";
 let mountCalls = 0;
@@ -40,14 +39,6 @@ registerHooks({
       return { url: stubMountUrl, shortCircuit: true };
     }
 
-    if (specifier === "./_app-install.js" && context.parentURL?.includes("/cli/setup/index.js")) {
-      return { url: stubAppInstallUrl, shortCircuit: true };
-    }
-
-    if (specifier === "./_app-uninstall.js" && context.parentURL?.includes("/cli/setup/index.js")) {
-      return { url: stubAppUninstallUrl, shortCircuit: true };
-    }
-
     return nextResolve(specifier, context);
   },
 });
@@ -56,6 +47,7 @@ registerHooks({
 Object.defineProperty(globalThis, "__ruleSetupBranches", {
   configurable: true,
   value: {
+    directions: [],
     get plainMode() {
       return plainMode;
     },
@@ -64,6 +56,9 @@ Object.defineProperty(globalThis, "__ruleSetupBranches", {
     },
     bumpMount() {
       mountCalls += 1;
+    },
+    recordDirection(direction) {
+      this.directions.push(direction);
     },
     get mountCalls() {
       return mountCalls;
@@ -138,7 +133,7 @@ test("interactive install mounts the wizard and settles failures", async () => {
   const descriptor = Object.getOwnPropertyDescriptor(process, "version");
 
   // Force canRenderWizard so interactive stays true even if stdin is a pipe.
-  Object.defineProperty(process, "version", { value: "v24.0.0", configurable: true, enumerable: true });
+  Object.defineProperty(process, "version", { value: "v26.4.0", configurable: true, enumerable: true });
   Object.defineProperty(process.stdin, "isTTY", { value: true, configurable: true });
   Object.defineProperty(process.stdout, "isTTY", { value: true, configurable: true });
   delete process.env.CI;
@@ -149,6 +144,7 @@ test("interactive install mounts the wizard and settles failures", async () => {
   try {
     await runSetup({ interactive: true, dryRun: true });
     assert.equal(mountCalls, before + 1);
+    assert.equal(globalThis.__ruleSetupBranches.directions.at(-1), "install");
     assert.equal(process.exitCode, 1);
   } finally {
     Object.defineProperty(process, "version", descriptor);
@@ -161,7 +157,7 @@ test("interactive uninstall mounts the uninstall wizard", async () => {
   const before = mountCalls;
   const descriptor = Object.getOwnPropertyDescriptor(process, "version");
 
-  Object.defineProperty(process, "version", { value: "v24.0.0", configurable: true, enumerable: true });
+  Object.defineProperty(process, "version", { value: "v26.4.0", configurable: true, enumerable: true });
   Object.defineProperty(process.stdin, "isTTY", { value: true, configurable: true });
   Object.defineProperty(process.stdout, "isTTY", { value: true, configurable: true });
   process.env.TERM = "xterm";
@@ -170,6 +166,7 @@ test("interactive uninstall mounts the uninstall wizard", async () => {
   try {
     await runSetup({ uninstall: true, interactive: true, dryRun: true });
     assert.equal(mountCalls, before + 1);
+    assert.equal(globalThis.__ruleSetupBranches.directions.at(-1), "uninstall");
   } finally {
     Object.defineProperty(process, "version", descriptor);
     process.exitCode = undefined;

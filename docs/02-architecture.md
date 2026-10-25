@@ -77,10 +77,10 @@ Live counts and the Command - Tool - Skill table: [Surface map](./17-surface-map
 | Review personas           | 19    | `src/core/review/roles/index.js`              |
 | Guardrail rules           | 9     | `src/core/guardrails/index.js`                |
 | Agent slash commands      | 41    | `src/core/agents/commands/index.js`           |
-| Agent/IDE command targets | 13    | `src/core/agents/command-targets/index.js`    |
+| Agent/IDE command targets | 15    | `src/core/agents/command-targets/index.js`    |
 | CLI commands              | 25    | `src/cli/_program.js`                         |
 | Hook events               | 4     | `src/core/agents/_hooks.js`                   |
-| Architecture decisions    | 177   | [`docs/adr/ADR.md`](adr/ADR.md)               |
+| Architecture decisions    | 180   | [`docs/adr/ADR.md`](adr/ADR.md)               |
 
 Regenerate with `pnpm census`. The inventories themselves are
 [`09-skills.md`](09-skills.md) through [`16-resources.md`](16-resources.md).

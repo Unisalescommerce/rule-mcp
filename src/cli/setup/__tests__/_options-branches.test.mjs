@@ -15,25 +15,27 @@ const pipe = { isTTY: false };
 
 test("a node older than the renderer cannot host the wizard", () => {
   assert.equal(canRenderWizard({}, tty, tty, "v20.9.0"), false, "the package floor is below the renderer's floor");
-  assert.equal(canRenderWizard({}, tty, tty, "v21.7.3"), false, "21 is still not 22");
+  assert.equal(canRenderWizard({}, tty, tty, "v21.7.3"), false, "21 is still not 26");
+  assert.equal(canRenderWizard({}, tty, tty, "v26.3.9"), false, "26.3 is below 26.4");
 });
 
 test("a clean TTY at the renderer's floor draws the wizard", () => {
-  assert.equal(canRenderWizard({}, tty, tty, "v22.0.0"), true);
-  assert.equal(canRenderWizard({}, tty, tty, "24.1.0"), true, "the v prefix is optional");
+  assert.equal(canRenderWizard({}, tty, tty, "v26.4.0"), true);
+  assert.equal(canRenderWizard({}, tty, tty, "27.0.0"), true, "the v prefix is optional");
+  assert.equal(canRenderWizard({}, tty, tty, "26.10.1"), true, "minor comparison is numeric, not lexical");
 });
 
 test("a pipe on either end declines the wizard", () => {
-  assert.equal(canRenderWizard({}, pipe, tty, "v24.0.0"), false, "stdin piped");
-  assert.equal(canRenderWizard({}, tty, pipe, "v24.0.0"), false, "stdout piped");
+  assert.equal(canRenderWizard({}, pipe, tty, "v26.4.0"), false, "stdin piped");
+  assert.equal(canRenderWizard({}, tty, pipe, "v26.4.0"), false, "stdout piped");
 });
 
 test("a CI job declines the wizard even on a TTY", () => {
-  assert.equal(canRenderWizard({ CI: "1" }, tty, tty, "v24.0.0"), false);
+  assert.equal(canRenderWizard({ CI: "1" }, tty, tty, "v26.4.0"), false);
 });
 
 test("a terminal that calls itself dumb declines the wizard", () => {
-  assert.equal(canRenderWizard({ TERM: "dumb" }, tty, tty, "v24.0.0"), false);
+  assert.equal(canRenderWizard({ TERM: "dumb" }, tty, tty, "v26.4.0"), false);
 });
 
 test("a named agent narrows the run to that agent", () => {

@@ -9,6 +9,7 @@
  */
 
 import { installDaemonService } from "../daemon/index.js";
+import { recordInstall } from "../install/_manifest.js";
 import { selectionArgs } from "../install/_selection-flags.js";
 import { selectionLabel } from "./_commands-items.js";
 import { dockerComposeUp } from "./_docker.js";
@@ -129,6 +130,32 @@ export const doctorTask = () => ({
       status: result.ok ? "ok" : "warn",
       summary: result.ok ? "passed" : "reported issues",
       lines: result.lines.slice(-8),
+    };
+  },
+});
+
+/**
+ * Record what this install wrote, so the uninstall reads it instead of
+ * re-detecting the machine.
+ *
+ * `dimensions` carries every key, `false` included: the manifest merges into
+ * what an earlier install left, so a dimension the user unticked has to be
+ * written as off rather than omitted, or the uninstall keeps offering it.
+ */
+export const manifestTask = ({ mode, profile = null, dimensions = {}, surface = null, commands = null }) => ({
+  id: "manifest",
+  title: "Install manifest",
+  detail: "~/.rule-mcp/config/install.json",
+  run: ({ dryRun }) => {
+    const written = recordInstall({ mode, profile, dimensions, surface, commands, dryRun });
+    const on = Object.entries(written.dimensions)
+      .filter(([, value]) => value === true)
+      .map(([dimension]) => dimension);
+
+    return {
+      status: "ok",
+      summary: `${dryRun ? "would record " : ""}profile ${written.profile ?? "custom"}`,
+      lines: on,
     };
   },
 });

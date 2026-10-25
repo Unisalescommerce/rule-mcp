@@ -132,7 +132,7 @@ rule-mcp install
 | `--no-rules`                 | -       | -                                            | skip agent instruction files                                                |
 | `--commands`                 | -       | -                                            | write agent slash commands                                                  |
 | `--no-commands`              | -       | -                                            | skip agent slash commands                                                   |
-| `--hooks`                    | -       | -                                            | install guard hooks (Claude)                                                |
+| `--hooks`                    | -       | -                                            | install guard hooks for the selected agents that document them              |
 | `--no-hooks`                 | -       | -                                            | skip guard hooks                                                            |
 | `--skills`                   | -       | -                                            | install the bundled rule-mcp-* skills                                       |
 | `--no-skills`                | -       | -                                            | skip the bundled skills                                                     |

@@ -9,9 +9,9 @@
  * The split inside this folder is deliberate. `_options`, `_plan-*`,
  * `_preflight`, `_scan` and `_run-plan` are pure or read-only and hold the
  * whole flow, which is why the installer can be tested without a terminal;
- * the `_app-*`, `_step-*` and `_widget-*` files are the only ones that know
- * Ink exists, and they are imported lazily so a `--help` or a piped install
- * never loads a renderer it will not draw with.
+ * `opentui/` is the only folder that knows a renderer exists, and it is
+ * imported lazily so a `--help` or a piped install never loads the native
+ * core it will not draw with.
  */
 
 import { installNextSteps, uninstallNextSteps } from "./_next-steps.js";
@@ -51,8 +51,14 @@ async function install(options) {
   }
 
   if (options.interactive) {
-    const [{ InstallApp }, { mountWizard }] = await Promise.all([import("./_app-install.js"), import("./_mount.js")]);
-    const outcome = await mountWizard(InstallApp, { defaults: options });
+    const { mountWizard } = await import("./_mount.js");
+    const outcome = await mountWizard({ direction: "install", defaults: options });
+
+    if (!outcome) {
+      process.stdout.write("Canceled - nothing was written.\n");
+
+      return;
+    }
 
     settleExit(
       printSummary({
@@ -93,8 +99,14 @@ async function install(options) {
 /** The uninstall direction, with or without a wizard. */
 async function uninstall(options) {
   if (options.interactive) {
-    const [{ UninstallApp }, { mountWizard }] = await Promise.all([import("./_app-uninstall.js"), import("./_mount.js")]);
-    const outcome = await mountWizard(UninstallApp, { defaults: options });
+    const { mountWizard } = await import("./_mount.js");
+    const outcome = await mountWizard({ direction: "uninstall", defaults: options });
+
+    if (!outcome) {
+      process.stdout.write("Canceled - nothing was removed.\n");
+
+      return;
+    }
 
     settleExit(
       printSummary({

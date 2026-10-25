@@ -19,8 +19,8 @@ const target = join(testHome, ".agents", "skills");
 console.log("global skills installer test");
 
 try {
-  mkdirSync(join(target, "rule-mcp"), { recursive: true });
-  writeFileSync(join(target, "rule-mcp", "stale.txt"), "remove me");
+  mkdirSync(join(target, "rule-ai"), { recursive: true });
+  writeFileSync(join(target, "rule-ai", "stale.txt"), "remove me");
   mkdirSync(join(target, "custom-skill"), { recursive: true });
   writeFileSync(join(target, "custom-skill", "SKILL.md"), "custom");
 
@@ -49,7 +49,7 @@ try {
     assert.ok(existsSync(join(target, skill, "SKILL.md")), `${skill} was not installed`);
   }
 
-  assert.ok(!existsSync(join(target, "rule-mcp", "stale.txt")), "existing bundled skill must be replaced cleanly");
+  assert.ok(!existsSync(join(target, "rule-ai", "stale.txt")), "existing bundled skill must be replaced cleanly");
   assert.ok(existsSync(join(target, "custom-skill", "SKILL.md")), "unrelated custom skills must be preserved");
   assert.ok(result.stdout.includes(`Installed ${sourceSkills.length} skills`), "installer must report the installed count");
   assert.ok(result.stdout.includes(target), "installer must report the global destination");

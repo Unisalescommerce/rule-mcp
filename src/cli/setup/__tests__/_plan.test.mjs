@@ -14,8 +14,8 @@ import { runPlan, tally } from "../_run-plan.js";
 
 const ids = (plan) => plan.map((task) => task.id);
 
-test("a minimal install plan is the runtime home, the skills reconcile and the cli check", () => {
-  assert.deepEqual(ids(buildInstallPlan({})), ["runtime-home", "skills", "cli"]);
+test("a minimal install plan is the runtime home, the skills reconcile, the cli check and the manifest", () => {
+  assert.deepEqual(ids(buildInstallPlan({})), ["runtime-home", "skills", "cli", "manifest"]);
 });
 
 test("building a plan touches no filesystem", () => {
@@ -29,7 +29,7 @@ test("building a plan touches no filesystem", () => {
 test("every selected agent gets its own row", () => {
   const plan = buildInstallPlan({ agents: ["claude", "cursor", "pi"] });
 
-  assert.deepEqual(ids(plan), ["runtime-home", "agent:claude", "agent:cursor", "agent:pi", "skills", "cli"]);
+  assert.deepEqual(ids(plan), ["runtime-home", "agent:claude", "agent:cursor", "agent:pi", "skills", "cli", "manifest"]);
 });
 
 test("the skills row installs when selected and reconciles when not", () => {
@@ -50,6 +50,18 @@ test("the health check is always the last step", () => {
   const plan = buildInstallPlan({ agents: ["claude"], mode: "daemon", extras: { rules: true, skills: true, service: true, doctor: true } });
 
   assert.equal(ids(plan).at(-1), "doctor");
+});
+
+test("the manifest records the profile and the dimensions the plan actually ran", async () => {
+  const plan = buildInstallPlan({ profile: "minimal", agents: ["claude"], extras: { commands: true } });
+  const task = plan.find((entry) => entry.id === "manifest");
+
+  assert.match(task.detail, /install\.json$/u, "the manifest path is on the review screen");
+
+  const result = await task.run({ dryRun: true });
+
+  assert.equal(result.summary, "would record profile minimal");
+  assert.deepEqual(result.lines, ["server", "commands"], "unticked dimensions are recorded as off, not omitted");
 });
 
 test("the uninstall plan removes agents first and the shim last", () => {

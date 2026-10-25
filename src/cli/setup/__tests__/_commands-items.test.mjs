@@ -67,7 +67,7 @@ test("an area with more than eight skills says how many it did not list", () => 
     big.detail.some((line) => /^and \d+ more$/.test(line)),
     `the overflow is named: ${JSON.stringify(big.detail)}`,
   );
-  assert.equal(big.detail.filter((line) => line.startsWith("rule-mcp-")).length, 8, "exactly eight are previewed");
+  assert.equal(big.detail.filter((line) => line.startsWith("rule-")).length, 8, "exactly eight are previewed");
 });
 
 test("skill rows are grouped under a heading per area", () => {

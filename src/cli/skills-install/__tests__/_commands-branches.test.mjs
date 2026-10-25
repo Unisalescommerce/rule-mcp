@@ -50,7 +50,7 @@ test("the list prints a table when --json is absent and the install dir does not
 
   assert.match(out, /rule-mcp skills/);
   assert.match(out, /Skill catalog/);
-  assert.match(out, /rule-mcp-/, "the catalog rows are listed");
+  assert.match(out, /rule-ai/, "the catalog rows are listed");
 });
 
 test("a batch run without --all reinstalls only the skills already present", async () => {
