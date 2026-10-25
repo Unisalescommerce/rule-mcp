@@ -189,9 +189,11 @@ repository (`claude`, `codex`, `pi`).
 
 ### Phase 4 - The eight missing products
 
-- [ ] Add a row per product behind `evidence.status`, install only where a documented file exists, and say "no documented config" where it does not.
-- [ ] `cursor-cli` is its own row, not an alias of the Cursor IDE, because the two read different files.
-- [ ] Gate: an install of a `research` row writes nothing and explains why; the wizard shows it disabled with the reason.
+- [x] A row per product behind `evidence.status`, with an explicit answer for each. Evidence: `nonInstallable()` in `src/cli/installers/hosts/_evidence.data.js`. **Two answers, not one:** seven have no documented MCP config file at all (`aider`, `amp`, `continue`, `goose`, `junie`, `openhands`, `trae`) and one is covered rather than missing.
+- [x] `cursor-cli` is its own row, and **the plan's claim about it was wrong**. The Cursor CLI documentation says _"MCP in the CLI uses the same configuration as the editor"_: one install covers both surfaces, so the row carries `coveredBy: "cursor"` and its `resolution` records the correction. What the study meant by "separate" was the command files, not the server config.
+- [x] `install --agent <measured product>` refuses with the finding: `"aider" cannot be installed: no documented MCP config file was found, so there is nothing to write. Nothing was written.` A name nobody measured keeps the old answer (`Unsupported agent: "aidr"`), because a typo and a measured absence are different facts. Both exit 1, and the catch in `_lifecycle.js` prints the sentence instead of a stack.
+- [x] Gate: an install of a `research` row writes nothing and explains why. Evidence: `tests/installers/host-non-installable.test.mjs` - the child process runs a real install and asserts the temporary home is still empty, byte for byte.
+- [x] The wizard names the gap instead of showing eight disabled checkboxes: a trailing `Measured, no config file` row lists the seven and says `cursor-cli works through cursor, same config file`. A disabled checkbox per product would suggest a choice that does not exist.
 
 ### Phase 5 - The server-side wiring
 
