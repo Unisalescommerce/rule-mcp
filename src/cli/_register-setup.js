@@ -72,6 +72,15 @@ export function registerInstallCommand(program) {
     .option("--no-rules", "skip agent instruction files")
     .option("--commands", "write agent slash commands")
     .option("--no-commands", "skip agent slash commands")
+    .addOption(
+      new Option("--level <name>", "integration depth for the selected host: L0 server, L1 rules, L2 commands, L3 hooks, L4 handler; the host ceiling is enforced").choices([
+        "L0",
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+      ]),
+    )
     .option("--hooks", "install guard hooks for the selected agents that document them")
     .option("--no-hooks", "skip guard hooks")
     .option("--skills", "install the bundled rule-mcp-* skills")
@@ -116,6 +125,7 @@ export function registerInstallCommand(program) {
         dryRun: options.dryRun,
         json: options.json,
         hooks: options.hooks === true,
+        level: options.level,
         minimal: options.minimal,
         surface: options.surface,
       });

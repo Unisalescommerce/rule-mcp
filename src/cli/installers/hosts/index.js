@@ -28,9 +28,56 @@ import { join } from "node:path";
 
 import { HOME, serverName } from "../_paths.js";
 import { devinConfigPath, emacsInitFile, nvimMcpFile, vscodeGlobalDir } from "../_agents-ide.js";
+import { AGENTS_WITHOUT_COMMAND_SURFACE, COMMAND_TARGETS } from "../../../core/agents/command-targets/index.js";
+import { hookSupport } from "../../install/_hook-hosts.js";
 import { GENERIC_HOSTS, hostFile, hostPaths } from "../_hosts.data.js";
 
 import { evidenceOf } from "./_evidence.data.js";
+
+/** Where an install writes the instruction block, for the hosts that have one. */
+const RULES = {
+  claude: () => join(HOME, ".claude", "CLAUDE.md"),
+  codex: () => join(HOME, ".codex", "AGENTS.md"),
+  cursor: () => join(HOME, ".cursorrules"),
+  gemini: () => join(HOME, ".gemini", "GEMINI.md"),
+  copilot: () => join(HOME, ".copilot", "agents", "rule-mcp.agent.md"),
+};
+
+/** The hosts that document a handler of their own, which is what L4 needs. */
+const EXTENSIONS = {
+  pi: { status: "documented", reason: "`pi.registerCommand` runs a handler with no model in the loop" },
+  copilot: { status: "experimental", reason: "JavaScript Extensions register real slash commands, still behind an experimental flag" },
+};
+
+const commandAgents = new Set(COMMAND_TARGETS.map((target) => target.agent));
+
+/**
+ * The rungs a host can reach, with the reason for each one it cannot.
+ *
+ * The ladder is cumulative in intent, not in shape: a host installs every rung
+ * it supports up to the level asked for, and a rung it does not support is
+ * skipped with its reason instead of blocking the ones above it. Kiro is the
+ * case that makes this necessary - it writes a hook file and has no command
+ * files at all, so a strict ladder would cap it at L0 and hide a surface the
+ * study measured.
+ */
+function levelsOf(id) {
+  const hook = hookSupport(id);
+  const extension = EXTENSIONS[id];
+
+  return {
+    L0: { supported: true, reason: "the MCP entry, which every host reads" },
+    L1: RULES[id] ? { supported: true, path: RULES[id]() } : { supported: false, reason: "no instructions file is documented for this host" },
+    L2: commandAgents.has(id) ? { supported: true } : { supported: false, reason: AGENTS_WITHOUT_COMMAND_SURFACE[id] ?? "no command-file surface was measured" },
+    L3: hook.writable ? { supported: true, file: hook.file } : { supported: false, reason: hook.reason ?? "no hook mechanism" },
+    L4: extension ? { supported: true, ...extension } : { supported: false, reason: "no handler API is documented" },
+  };
+}
+
+/** The highest rung a host supports. */
+function ceilingOf(levels) {
+  return ["L4", "L3", "L2", "L1"].find((rung) => levels[rung].supported) ?? "L0";
+}
 
 /** The hosts whose config is not a table row: each has its own installer. */
 const DEDICATED = {
@@ -57,7 +104,7 @@ const DEDICATED = {
  * The record for one host, or null when the catalog does not know it.
  *
  * @param {string} id
- * @returns {{ id: string, label: string, kind: string, evidence: string, server: { file: string }, legacy: string[], key: string }|null}
+ * @returns {{ id: string, label: string, kind: string, evidence: string, server: { file: string }, legacy: string[], key: string, levels: object, ceiling: string }|null}
  */
 export function hostRecord(id) {
   const evidence = evidenceOf(id);
@@ -66,21 +113,15 @@ export function hostRecord(id) {
     return null;
   }
 
+  const levels = levelsOf(id);
+  const identity = { id, label: evidence.label, kind: evidence.kind, evidence: evidence.status, key: serverName, levels, ceiling: ceilingOf(levels) };
   const dedicated = DEDICATED[id]?.();
 
   if (dedicated) {
-    return { id, label: evidence.label, kind: evidence.kind, evidence: evidence.status, key: serverName, legacy: [], ...dedicated };
+    return { ...identity, legacy: [], ...dedicated };
   }
 
-  return {
-    id,
-    label: evidence.label,
-    kind: evidence.kind,
-    evidence: evidence.status,
-    server: { file: hostFile(id) },
-    legacy: hostPaths(id).slice(1),
-    key: serverName,
-  };
+  return { ...identity, server: { file: hostFile(id) }, legacy: hostPaths(id).slice(1) };
 }
 
 /** Every host the catalog knows, in catalog order. */
@@ -99,6 +140,43 @@ export function serverPaths(id) {
   const record = hostRecord(id);
 
   return record ? [record.server.file, ...record.legacy] : [];
+}
+
+/**
+ * Whether a host can be installed at a level, and what it would be missing.
+ *
+ * The answer is a report, not a boolean: a caller that refuses says which rung
+ * the host cannot reach and why, because "L3 is unsupported" alone sends the
+ * reader to the source to find out what it was.
+ *
+ * @param {string} id
+ * @param {string} level one of L0..L4
+ * @returns {{ id: string, level: string, ceiling: string, allowed: boolean, missing: Array<{ rung: string, reason: string }> }|null}
+ */
+export function levelSupport(id, level) {
+  const record = hostRecord(id);
+
+  if (!record) {
+    return null;
+  }
+
+  const asked = Number(level.replace(/^L/u, ""));
+
+  if (Number.isNaN(asked) || asked < 0 || asked > 4) {
+    return null;
+  }
+
+  const missing = Object.entries(record.levels)
+    .filter(([rung, support]) => !support.supported && Number(rung.slice(1)) <= asked)
+    .map(([rung, support]) => ({ rung, reason: support.reason }));
+
+  return {
+    id,
+    level: `L${asked}`,
+    ceiling: record.ceiling,
+    allowed: asked <= Number(record.ceiling.slice(1)),
+    missing,
+  };
 }
 
 /** The label a report uses, or the id when the catalog does not know the host. */

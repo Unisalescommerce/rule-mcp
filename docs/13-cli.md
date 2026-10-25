@@ -25,7 +25,7 @@ the package version from anywhere. An error exits 1 and prints to stderr;
 | [`serve`](#rule-serve)                   | 4       | Start the MCP server (STDIO by default)                                                   |
 | [`up`](#rule-up)                         | 1       | Same as "serve --transport sse" (on-demand HTTP daemon)                                   |
 | [`daemon`](#rule-daemon)                 | 1       | Manage the MCP daemon (process and native platform services)                              |
-| [`install`](#rule-install)               | 26      | Install rule-mcp into an agent/IDE (edits mcp.json)                                       |
+| [`install`](#rule-install)               | 27      | Install rule-mcp into an agent/IDE (edits mcp.json)                                       |
 | [`uninstall`](#rule-uninstall)           | 7       | Remove rule-mcp from an agent/IDE                                                         |
 | [`setup`](#rule-setup)                   | 29      | Full-screen install/uninstall wizard (falls back to flags when piped)                     |
 | [`tools`](#rule-tools)                   | 1       | List or call MCP tools directly                                                           |
@@ -118,34 +118,35 @@ rule-mcp install
 
 **Options**
 
-| Flag                         | Default | Choices                                      | Description                                                                 |
-| ---------------------------- | ------- | -------------------------------------------- | --------------------------------------------------------------------------- |
-| `--agent <name>`             | all     | -                                            | target agent, or 'all' for every supported agent                            |
-| `--mode <name>`              | -       | `stdio`, `daemon`, `sse`, `docker`, `skills` | stdio (default), daemon (SSE), docker, or skills (no MCP server, ADR 089)   |
-| `--global`                   | -       | -                                            | use clean command path (requires global install)                            |
-| `--force`                    | -       | -                                            | override existing configuration                                             |
-| `--dry-run`                  | -       | -                                            | preview without writing                                                     |
-| `--json`                     | -       | -                                            | print machine-readable JSON instead of Terminal UI                          |
-| `--no-wizard`                | -       | -                                            | skip the full-screen wizard even on a terminal                              |
-| `--no-interactive`           | -       | -                                            | run the plan with defaults and no wizard                                    |
-| `--rules`                    | -       | -                                            | write agent instruction files                                               |
-| `--no-rules`                 | -       | -                                            | skip agent instruction files                                                |
-| `--commands`                 | -       | -                                            | write agent slash commands                                                  |
-| `--no-commands`              | -       | -                                            | skip agent slash commands                                                   |
-| `--hooks`                    | -       | -                                            | install guard hooks for the selected agents that document them              |
-| `--no-hooks`                 | -       | -                                            | skip guard hooks                                                            |
-| `--skills`                   | -       | -                                            | install the bundled rule-mcp-* skills                                       |
-| `--no-skills`                | -       | -                                            | skip the bundled skills                                                     |
-| `--minimal`                  | -       | -                                            | minimal server tool surface (--no-minimal for full)                         |
-| `--surface <spec>`           | -       | -                                            | server tool surface: minimal, standard, full, areas:<a,b> or skills:<s,...> |
-| `--service`                  | -       | -                                            | register the platform daemon service                                        |
-| `--no-service`               | -       | -                                            | skip the platform daemon service                                            |
-| `--doctor`                   | -       | -                                            | run the health check at the end                                             |
-| `--no-doctor`                | -       | -                                            | skip the health check                                                       |
-| `--commands-preset <name>`   | -       | `minimal`, `standard`, `full`                | which commands to write: minimal, standard or full                          |
-| `--commands-families <list>` | -       | -                                            | comma-separated: areas, personas, tasks                                     |
-| `--commands-areas <list>`    | -       | -                                            | comma-separated area names, e.g. frontend,data                              |
-| `--commands-skills <list>`   | -       | -                                            | comma-separated skill names                                                 |
+| Flag                         | Default | Choices                                      | Description                                                                                                                   |
+| ---------------------------- | ------- | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `--agent <name>`             | all     | -                                            | target agent, or 'all' for every supported agent                                                                              |
+| `--mode <name>`              | -       | `stdio`, `daemon`, `sse`, `docker`, `skills` | stdio (default), daemon (SSE), docker, or skills (no MCP server, ADR 089)                                                     |
+| `--global`                   | -       | -                                            | use clean command path (requires global install)                                                                              |
+| `--force`                    | -       | -                                            | override existing configuration                                                                                               |
+| `--dry-run`                  | -       | -                                            | preview without writing                                                                                                       |
+| `--json`                     | -       | -                                            | print machine-readable JSON instead of Terminal UI                                                                            |
+| `--no-wizard`                | -       | -                                            | skip the full-screen wizard even on a terminal                                                                                |
+| `--no-interactive`           | -       | -                                            | run the plan with defaults and no wizard                                                                                      |
+| `--rules`                    | -       | -                                            | write agent instruction files                                                                                                 |
+| `--no-rules`                 | -       | -                                            | skip agent instruction files                                                                                                  |
+| `--commands`                 | -       | -                                            | write agent slash commands                                                                                                    |
+| `--no-commands`              | -       | -                                            | skip agent slash commands                                                                                                     |
+| `--level <name>`             | -       | `L0`, `L1`, `L2`, `L3`, `L4`                 | integration depth for the selected host: L0 server, L1 rules, L2 commands, L3 hooks, L4 handler; the host ceiling is enforced |
+| `--hooks`                    | -       | -                                            | install guard hooks for the selected agents that document them                                                                |
+| `--no-hooks`                 | -       | -                                            | skip guard hooks                                                                                                              |
+| `--skills`                   | -       | -                                            | install the bundled rule-mcp-* skills                                                                                         |
+| `--no-skills`                | -       | -                                            | skip the bundled skills                                                                                                       |
+| `--minimal`                  | -       | -                                            | minimal server tool surface (--no-minimal for full)                                                                           |
+| `--surface <spec>`           | -       | -                                            | server tool surface: minimal, standard, full, areas:<a,b> or skills:<s,...>                                                   |
+| `--service`                  | -       | -                                            | register the platform daemon service                                                                                          |
+| `--no-service`               | -       | -                                            | skip the platform daemon service                                                                                              |
+| `--doctor`                   | -       | -                                            | run the health check at the end                                                                                               |
+| `--no-doctor`                | -       | -                                            | skip the health check                                                                                                         |
+| `--commands-preset <name>`   | -       | `minimal`, `standard`, `full`                | which commands to write: minimal, standard or full                                                                            |
+| `--commands-families <list>` | -       | -                                            | comma-separated: areas, personas, tasks                                                                                       |
+| `--commands-areas <list>`    | -       | -                                            | comma-separated area names, e.g. frontend,data                                                                                |
+| `--commands-skills <list>`   | -       | -                                            | comma-separated skill names                                                                                                   |
 
 ## rule-mcp uninstall
 

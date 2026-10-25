@@ -5,12 +5,55 @@ import { applySurfaceEnv, surfaceOf } from "../install/_surface-flags.js";
 import { applyMinimalEnv } from "../setup/_options.js";
 import { formatInstallResult, formatUninstallResult } from "../_tui-formats.js";
 import { installAgent } from "../install/index.js";
+import { levelSupport } from "../installers/hosts/index.js";
 import { uninstallFromAgent } from "../_uninstall.js";
 import { forgetInstall, readManifest, recordInstall } from "../install/_manifest.js";
 import { getRuntimePaths } from "../paths/index.js";
 import { rmSync } from "node:fs";
 import { join } from "node:path";
+/**
+ * The level a caller asked for, checked against every selected host's ceiling.
+ *
+ * `all` is not refused for asking for more than some hosts can do: the level is a
+ * cap, and a host that cannot reach it installs what it supports. A named host is
+ * refused, because there the caller asked a question with one answer.
+ *
+ * @param {{ agent: string, level?: string }} opts
+ * @returns {{ ok: boolean, refusals: Array<{ id: string, ceiling: string, missing: Array<{ rung: string, reason: string }> }>, hooks: boolean }}
+ */
+function checkLevel(opts) {
+  const harnessHooks = opts.hooks === true;
+
+  if (!opts.level) {
+    return { ok: true, refusals: [], hooks: harnessHooks };
+  }
+
+  const targets = opts.agent === "all" ? [] : [opts.agent];
+  const refusals = targets
+    .map((agent) => levelSupport(agent, opts.level))
+    .filter((support) => support && !support.allowed)
+    .map((support) => ({ id: support.id, ceiling: support.ceiling, missing: support.missing }));
+
+  return { ok: refusals.length === 0, refusals, hooks: harnessHooks && Number(String(opts.level).replace(/^L/u, "")) >= 3 };
+}
+
 function installCommand(opts) {
+  const level = checkLevel(opts);
+
+  if (!level.ok) {
+    for (const refusal of level.refusals) {
+      process.stderr.write(`install: ${refusal.id} reaches ${refusal.ceiling}, not ${opts.level}\n`);
+
+      for (const gap of refusal.missing) {
+        process.stderr.write(`  ${gap.rung}: ${gap.reason}\n`);
+      }
+    }
+
+    process.exitCode = 1;
+
+    return;
+  }
+
   // The narrow path owns no plan, but both answers still have to land: same
   // mirror the plan tasks use (see cli/installers/_env.js).
   const surface = typeof opts.surface === "string" ? surfaceOf({ surface: opts.surface }) : (opts.surface ?? null);
@@ -24,7 +67,7 @@ function installCommand(opts) {
     global: opts.global,
     mode: opts.mode,
     entrypoint,
-    hooks: opts.hooks === true,
+    hooks: level.hooks,
   });
   if (opts.json) {
     printJson(result);
