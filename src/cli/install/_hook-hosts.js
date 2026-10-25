@@ -49,6 +49,24 @@ export const HOOK_HOSTS = {
     events: ["PreToolUse", "PostToolUse", "SessionStart", "UserPromptSubmit", "Stop"],
     reason: "Standalone JSON files in .kiro/hooks",
   },
+  // The ten hosts below have no writable hook file. Each entry exists so the
+  // wizard can say why instead of falling back to "Unknown host", which reads
+  // as an oversight rather than a measured absence.
+  droid: { mechanism: "none", writable: false, events: [], reason: "Hooks are managed inside the CLI with `/hooks`; no user-writable hook file is documented" },
+  vscode: { mechanism: "none", writable: false, events: [], reason: "Copilot Chat sessions support lifecycle hooks, but no user-writable hook file is documented" },
+  antigravity: {
+    mechanism: "none",
+    writable: false,
+    events: [],
+    reason: "MCP and Skills only; the legacy workflow system was retired on 2026-10-19 and no hook file replaced it",
+  },
+  jetbrains: { mechanism: "none", writable: false, events: [], reason: "Prompt Library and MCP only; the chat surface exposes no hook file" },
+  neovim: { mechanism: "none", writable: false, events: [], reason: "No hook API is standard across the MCP plugins; the plugin owns whatever exists" },
+  emacs: { mechanism: "none", writable: false, events: [], reason: "No hook API is standard across the MCP clients; the client owns whatever exists" },
+  devin: { mechanism: "none", writable: false, events: [], reason: "Runs in its own workspace runtime; no local hook file is documented" },
+  kimi: { mechanism: "none", writable: false, events: [], reason: "Skills and MCP only; no hook is documented" },
+  vibe: { mechanism: "none", writable: false, events: [], reason: "Product identity unverified by the study, and no hook is documented" },
+  grok: { mechanism: "none", writable: false, events: [], reason: "Product identity unverified by the study, and no hook is documented" },
 };
 
 /**
