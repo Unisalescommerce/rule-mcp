@@ -8,6 +8,10 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [185](185-lifecycle-wiring-ships-only-where-a-measurement-moves.md)                                                     | Lifecycle wiring ships only where a measurement moves                                                     | 2026-10-25 | accepted   | hooks, performance, hooks-lifecycle                                                 |
+| [184](184-the-install-manifest-records-a-level-per-host.md)                                                             | The install manifest records a level per host                                                             | 2026-10-25 | accepted   | installer, manifest, hosts                                                          |
+| [183](183-integration-depth-is-the-second-install-axis-capped-by-a-measured-ceiling.md)                                 | Integration depth is the second install axis, capped by a measured ceiling                                | 2026-10-25 | accepted   | installer, hosts, tui                                                               |
+| [182](182-one-host-record-answers-for-every-catalog-host.md)                                                            | One host record answers for every catalog host                                                            | 2026-10-25 | accepted   | installer, hosts, governance                                                        |
 | [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md)                                        | Retire the cross-branch plan graph and orchestrate from rel/v0.1.0                                        | 2026-10-25 | accepted   | plans, orchestration, governance, release                                           |
 | [180](180-codex-pretooluse-silent-allow-and-ask-as-block.md)                                                            | Codex PreToolUse silent allow and ask as block                                                            | 2026-10-25 | accepted   | hooks, codex, guard                                                                 |
 | [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md)                                                  | Codex named hooks and Codex/Copilot command file targets                                                  | 2026-10-25 | accepted   | installer, hooks, commands, codex, copilot                                          |
@@ -197,6 +201,10 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [185](185-lifecycle-wiring-ships-only-where-a-measurement-moves.md)                                                     | Measure first, with scripts/bench/hook-lifecycle.mjs, and drop what does not move.                                                                                                                                              | The measured cost is the process spawn, not the context: a bare node -e 0 takes 1.3-2.4 s under load here, so the hook's own work is a fraction of what every event pays.                                                       |
+| [184](184-the-install-manifest-records-a-level-per-host.md)                                                             | The manifest is v2: a hosts map carrying the level each host was installed at, beside agents[] for compatibility.                                                                                                               | doctor reports L2 of L3, next L3 for a host installed at a level, and the roundtrip leaves a temporary HOME with nothing but the writers' .bak backups.                                                                         |
+| [183](183-integration-depth-is-the-second-install-axis-capped-by-a-measured-ceiling.md)                                 | Every host carries levels L0..L4 - server, rules, commands, hooks, native handler - each rung supported or not with the reason, and a ceiling computed as the highest supported rung rather than stated twice. install...       | Measured ceilings: 2 hosts at L4 (pi, copilot), 5 at L3 (claude, codex, cursor, gemini, kiro), 4 at L2 (cline, roo, opencode, vscode), 12 at L0. Cost: two axes to explain, and a level that is one cap applied per host...     |
+| [182](182-one-host-record-answers-for-every-catalog-host.md)                                                            | Every catalog host has one record, in src/cli/installers/hosts/index.js: label, kind, evidence status, the file its MCP entry lives in, the paths earlier releases wrote, per-rung levels and a computed ceiling. install,...   | One place to change, and a test that says when a host is half-known.                                                                                                                                                            |
 | [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md)                                        | Retire the cross-branch layer and make plan-of-plans the level-0 orchestrator of one branch.                                                                                                                                    | The graph is executable from the branch the work is on: section 7 ends with the node to execute next, and no stage asks for a branch that does not exist.                                                                       |
 | [180](180-codex-pretooluse-silent-allow-and-ask-as-block.md)                                                            | Make ALLOW a silent {} for every host.                                                                                                                                                                                          | Positive: Codex PreToolUse no longer fails on every allow; migrations and structural confirms still stop the tool via decision:block.                                                                                           |
 | [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md)                                                  | Write statusMessage on every Codex command handler in codexHooks.                                                                                                                                                               | Positive: /hooks shows rule-mcp titles after reinstall+trust; install sync drops /prompts:rule* for Codex and /rule* skills for Copilot CLI. Negative: Codex custom prompts remain deprecated upstream, so invocations stay...  |
@@ -415,6 +423,32 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [005](005-backend-framework-skills.md) Backend Framework Skills
 - [004](004-scaffold-consolidation.md) Scaffold Skill Consolidation
 
+### installer
+
+- [184](184-the-install-manifest-records-a-level-per-host.md) The install manifest records a level per host
+- [183](183-integration-depth-is-the-second-install-axis-capped-by-a-measured-ceiling.md) Integration depth is the second install axis, capped by a measured ceiling
+- [182](182-one-host-record-answers-for-every-catalog-host.md) One host record answers for every catalog host
+- [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md) Codex named hooks and Codex/Copilot command file targets
+- [178](178-surface-is-the-only-tier-picker-slash-commands-follow-it.md) Surface is the only tier picker; slash commands follow it
+- [177](177-rework-the-installer-around-one-profile-a-manifest-and-opentui.md) Rework the installer around one profile, a manifest and OpenTUI
+- [121](121-the-install-reconciles-the-bundled-skills-when-the-step-is-not-selected.md) The install reconciles the bundled skills when the step is not selected
+- [105](105-opencode-gets-a-dedicated-installer-writing-its-own-config-shape.md) opencode gets a dedicated installer writing its own config shape
+- [102](102-reinstall-is-one-shell-script-behind-three-entry-points.md) Reinstall is one shell script behind three entry points
+- [101](101-accept-a-comma-separated-agent-list-in-agent-commands.md) Accept a comma-separated agent list in agent-commands
+- [090](090-the-setup-wizard-is-the-installer-and-it-asks-which-commands-to-write.md) The setup wizard is the installer, and it asks which commands to write
+- [080](080-one-installer-a-node-wizard-with-shell-bootstraps.md) One installer, a Node wizard with shell bootstraps
+- [078](078-compress-agent-command-files-at-write-time.md) Compress agent command files at write time
+- [072](072-the-installer-asks-before-copying-bundled-skills-to-the-central-agents-directory.md) The installer asks before copying bundled skills to the central agents directory
+- [070](070-installer-mode-step-replaces-the-agent-picker-instead-of-stacking-under-it.md) Installer mode step replaces the agent picker instead of stacking under it
+- [061](061-one-global-shim-and-hermetic-pnpm-home-in-script-tests.md) One global shim, and hermetic PNPM_HOME in script tests
+- [056](056-drop-the-vs-code-extension-and-its-installers.md) Drop the VS Code extension and its installers
+- [055](055-restructure-the-command-surface-rule-mcp-router-rule-mcp-area-compression-implicit-rule-mcp-process.md) Restructure the command surface: /rule router, rule-area-*, compression implicit, rule-process-tdd skill
+- [049](049-split-hotspot-modules.md) Split the hotspot modules (guardrails + installer)
+- [046](046-installer-self-heals-global-shim-surfaces-failures-gates-tui-rendering.md) Installer self-heals its global shim, surfaces failures, and gates TUI rendering
+- [041](041-lossless-installer-preserve-toolprefix-normalize-rule-blank-lines.md) Lossless installer: preserve toolPrefix and normalize rule blank lines
+- [039](039-fix-vscode-extension-and-derivatives-install-uninstall.md) Fix VS Code extension and derivatives install/uninstall
+- [028](028-clean-rule-mcp-commands-via-user-commands-prompt-suppression-not-a-plugin.md) Clean /rule-mcp-* commands via user commands + prompt suppression, not a plugin
+
 ### guardrails
 
 - [155](155-extend-the-devops-guardrail-family-with-file-scoped-source-cited-rules.md) Extend the devops guardrail family with file-scoped, source-cited rules
@@ -487,31 +521,9 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [017](017-forms-per-framework-merger-and-distribution.md) forms per framework merger and distribution
 - [011](011-forms-per-framework.md) Forms per Framework - Merger & Distribution
 
-### installer
-
-- [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md) Codex named hooks and Codex/Copilot command file targets
-- [178](178-surface-is-the-only-tier-picker-slash-commands-follow-it.md) Surface is the only tier picker; slash commands follow it
-- [177](177-rework-the-installer-around-one-profile-a-manifest-and-opentui.md) Rework the installer around one profile, a manifest and OpenTUI
-- [121](121-the-install-reconciles-the-bundled-skills-when-the-step-is-not-selected.md) The install reconciles the bundled skills when the step is not selected
-- [105](105-opencode-gets-a-dedicated-installer-writing-its-own-config-shape.md) opencode gets a dedicated installer writing its own config shape
-- [102](102-reinstall-is-one-shell-script-behind-three-entry-points.md) Reinstall is one shell script behind three entry points
-- [101](101-accept-a-comma-separated-agent-list-in-agent-commands.md) Accept a comma-separated agent list in agent-commands
-- [090](090-the-setup-wizard-is-the-installer-and-it-asks-which-commands-to-write.md) The setup wizard is the installer, and it asks which commands to write
-- [080](080-one-installer-a-node-wizard-with-shell-bootstraps.md) One installer, a Node wizard with shell bootstraps
-- [078](078-compress-agent-command-files-at-write-time.md) Compress agent command files at write time
-- [072](072-the-installer-asks-before-copying-bundled-skills-to-the-central-agents-directory.md) The installer asks before copying bundled skills to the central agents directory
-- [070](070-installer-mode-step-replaces-the-agent-picker-instead-of-stacking-under-it.md) Installer mode step replaces the agent picker instead of stacking under it
-- [061](061-one-global-shim-and-hermetic-pnpm-home-in-script-tests.md) One global shim, and hermetic PNPM_HOME in script tests
-- [056](056-drop-the-vs-code-extension-and-its-installers.md) Drop the VS Code extension and its installers
-- [055](055-restructure-the-command-surface-rule-mcp-router-rule-mcp-area-compression-implicit-rule-mcp-process.md) Restructure the command surface: /rule router, rule-area-*, compression implicit, rule-process-tdd skill
-- [049](049-split-hotspot-modules.md) Split the hotspot modules (guardrails + installer)
-- [046](046-installer-self-heals-global-shim-surfaces-failures-gates-tui-rendering.md) Installer self-heals its global shim, surfaces failures, and gates TUI rendering
-- [041](041-lossless-installer-preserve-toolprefix-normalize-rule-blank-lines.md) Lossless installer: preserve toolPrefix and normalize rule blank lines
-- [039](039-fix-vscode-extension-and-derivatives-install-uninstall.md) Fix VS Code extension and derivatives install/uninstall
-- [028](028-clean-rule-mcp-commands-via-user-commands-prompt-suppression-not-a-plugin.md) Clean /rule-mcp-* commands via user commands + prompt suppression, not a plugin
-
 ### governance
 
+- [182](182-one-host-record-answers-for-every-catalog-host.md) One host record answers for every catalog host
 - [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md) Retire the cross-branch plan graph and orchestrate from rel/v0.1.0
 - [178](178-surface-is-the-only-tier-picker-slash-commands-follow-it.md) Surface is the only tier picker; slash commands follow it
 - [177](177-rework-the-installer-around-one-profile-a-manifest-and-opentui.md) Rework the installer around one profile, a manifest and OpenTUI
@@ -853,6 +865,15 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [021](021-skill-routing-eslint-flat-config-for-typescript-react-proje.md) Skill routing: ESLint flat config for TypeScript React project
 - [020](020-skill-routing-typescript-tsconfig-strict-mode-configuration.md) Skill routing: TypeScript tsconfig strict mode configuration
 
+### tui
+
+- [183](183-integration-depth-is-the-second-install-axis-capped-by-a-measured-ceiling.md) Integration depth is the second install axis, capped by a measured ceiling
+- [178](178-surface-is-the-only-tier-picker-slash-commands-follow-it.md) Surface is the only tier picker; slash commands follow it
+- [177](177-rework-the-installer-around-one-profile-a-manifest-and-opentui.md) Rework the installer around one profile, a manifest and OpenTUI
+- [080](080-one-installer-a-node-wizard-with-shell-bootstraps.md) One installer, a Node wizard with shell bootstraps
+- [070](070-installer-mode-step-replaces-the-agent-picker-instead-of-stacking-under-it.md) Installer mode step replaces the agent picker instead of stacking under it
+- [046](046-installer-self-heals-global-shim-surfaces-failures-gates-tui-rendering.md) Installer self-heals its global shim, surfaces failures, and gates TUI rendering
+
 ### workflow
 
 - [128](128-consolidate-the-feature-adrs-and-handoffs-into-one-commit-at-the-close-squash.md) Consolidate the feature ADRs and handoffs into one commit at the close squash
@@ -878,6 +899,14 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [017](017-forms-per-framework-merger-and-distribution.md) forms per framework merger and distribution
 - [011](011-forms-per-framework.md) Forms per Framework - Merger & Distribution
 
+### hooks
+
+- [185](185-lifecycle-wiring-ships-only-where-a-measurement-moves.md) Lifecycle wiring ships only where a measurement moves
+- [180](180-codex-pretooluse-silent-allow-and-ask-as-block.md) Codex PreToolUse silent allow and ask as block
+- [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md) Codex named hooks and Codex/Copilot command file targets
+- [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
+- [129](129-a-file-is-reported-on-a-task-is-confirmed.md) A file is reported on, a task is confirmed
+
 ### mcp
 
 - [124](124-make-the-tool-call-host-a-list-so-invocation-hosts-coexist.md) Make the tool-call host a list so invocation hosts coexist
@@ -902,27 +931,12 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [077](077-compress-every-server-model-list-surface-prompts-list-tools-list-resources-list.md) Compress every server->model list surface (prompts/list, tools/list, resources/list)
 - [075](075-meta-frameworks-get-their-own-namespace-and-a-narrow-dispatcher.md) Meta-frameworks get their own namespace and a narrow dispatcher
 
-### tui
-
-- [178](178-surface-is-the-only-tier-picker-slash-commands-follow-it.md) Surface is the only tier picker; slash commands follow it
-- [177](177-rework-the-installer-around-one-profile-a-manifest-and-opentui.md) Rework the installer around one profile, a manifest and OpenTUI
-- [080](080-one-installer-a-node-wizard-with-shell-bootstraps.md) One installer, a Node wizard with shell bootstraps
-- [070](070-installer-mode-step-replaces-the-agent-picker-instead-of-stacking-under-it.md) Installer mode step replaces the agent picker instead of stacking under it
-- [046](046-installer-self-heals-global-shim-surfaces-failures-gates-tui-rendering.md) Installer self-heals its global shim, surfaces failures, and gates TUI rendering
-
 ### backend
 
 - [137](137-add-a-source-cited-backend-guardrail-family-and-fix-the-six-existing-rules.md) Add a source-cited backend guardrail family and fix the six existing rules
 - [053](053-gateway-as-the-single-entrypoint-with-server-side-receipts-backend-data-devops-g.md) Gateway as the single entrypoint with server-side receipts; backend/data/devops guardrail families
 - [010](010-backend-framework-skills.md) backend framework skills
 - [005](005-backend-framework-skills.md) Backend Framework Skills
-
-### hooks
-
-- [180](180-codex-pretooluse-silent-allow-and-ask-as-block.md) Codex PreToolUse silent allow and ask as block
-- [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md) Codex named hooks and Codex/Copilot command file targets
-- [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
-- [129](129-a-file-is-reported-on-a-task-is-confirmed.md) A file is reported on, a task is confirmed
 
 ### infrastructure
 
@@ -1020,6 +1034,12 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [128](128-consolidate-the-feature-adrs-and-handoffs-into-one-commit-at-the-close-squash.md) Consolidate the feature ADRs and handoffs into one commit at the close squash
 - [126](126-close-a-feature-with-reset-soft-onto-the-merge-base-and-one-validated-commit.md) Close a feature with reset --soft onto the merge base and one validated commit
 - [125](125-normalize-history-on-the-merge-base-and-hold-every-rewrite-to-a-tree-invariant.md) Normalize history on the merge base and hold every rewrite to a tree invariant
+
+### hosts
+
+- [184](184-the-install-manifest-records-a-level-per-host.md) The install manifest records a level per host
+- [183](183-integration-depth-is-the-second-install-axis-capped-by-a-measured-ceiling.md) Integration depth is the second install axis, capped by a measured ceiling
+- [182](182-one-host-record-answers-for-every-catalog-host.md) One host record answers for every catalog host
 
 ### merge
 
