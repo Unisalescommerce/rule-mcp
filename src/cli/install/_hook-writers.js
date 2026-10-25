@@ -21,17 +21,38 @@ export function guardCommand(launcher, subcommand) {
 }
 
 /**
+ * Titles Codex `/hooks` shows for each handler.
+ *
+ * Codex paints `statusMessage` as the row title and falls back to
+ * "Unnamed hook" when it is missing (codex#51433).
+ */
+const CODEX_STATUS = {
+  bash: "rule-mcp: guard bash",
+  structure: "rule-mcp: guard structure",
+  write: "rule-mcp: guard write",
+  "session-start": "rule-mcp: session start",
+  "prompt-submit": "rule-mcp: prompt submit",
+};
+
+/**
  * Codex and Gemini group hooks the same way: a matcher, then the handlers that
  * run when it matches.
  *
  * @param {{ command: string, args?: string[] }|string} launcher
  * @param {string} subcommand
  * @param {string} [matcher]
- * @returns {{ matcher?: string, hooks: Array<{ type: string, command: string }> }}
+ * @param {{ statusMessage?: string }} [options]
+ * @returns {{ matcher?: string, hooks: Array<{ type: string, command: string, statusMessage?: string }> }}
  */
-const grouped = (launcher, subcommand, matcher) => ({
+const grouped = (launcher, subcommand, matcher, options = {}) => ({
   ...(matcher ? { matcher } : {}),
-  hooks: [{ type: "command", command: guardCommand(launcher, subcommand) }],
+  hooks: [
+    {
+      type: "command",
+      command: guardCommand(launcher, subcommand),
+      ...(options.statusMessage ? { statusMessage: options.statusMessage } : {}),
+    },
+  ],
 });
 
 /**
@@ -101,8 +122,39 @@ export function geminiHooks(launcher) {
 }
 
 /**
+ * One Codex matcher group with a titled command handler.
+ *
+ * @param {{ command: string, args?: string[] }|string} launcher
+ * @param {string} subcommand
+ * @param {string} [matcher]
+ * @returns {{ matcher?: string, hooks: Array<{ type: string, command: string, statusMessage: string }> }}
+ */
+/**
+ * Codex command line: tag the process so ask→block encoding works even when
+ * stdin is empty or unparseable (no `turn_id` to detect the host).
+ *
+ * @param {{ command: string, args?: string[] }|string} launcher
+ * @param {string} subcommand
+ * @returns {string}
+ */
+const codexGuardCommand = (launcher, subcommand) => `env RULE_MCP_HOOK_HOST=codex ${guardCommand(launcher, subcommand)}`;
+
+const codexGrouped = (launcher, subcommand, matcher) => ({
+  ...(matcher ? { matcher } : {}),
+  hooks: [
+    {
+      type: "command",
+      command: codexGuardCommand(launcher, subcommand),
+      statusMessage: CODEX_STATUS[subcommand] ?? `rule-mcp: ${subcommand}`,
+    },
+  ],
+});
+
+/**
  * The Codex `hooks.json` document. Codex nests events under `hooks`, and a
- * non-managed hook only runs after the user trusts it with `/hooks`.
+ * non-managed hook only runs after the user trusts it with `/hooks`. Each
+ * handler carries `statusMessage` so the browser shows a name instead of
+ * "Unnamed hook".
  *
  * @param {{ command: string, args?: string[] }|string} launcher
  * @returns {object}
@@ -110,10 +162,10 @@ export function geminiHooks(launcher) {
 export function codexHooks(launcher) {
   return {
     hooks: {
-      PreToolUse: [grouped(launcher, "bash", "Bash"), grouped(launcher, "structure", "apply_patch|Edit|Write")],
-      PostToolUse: [grouped(launcher, "write", "apply_patch|Edit|Write")],
-      SessionStart: [grouped(launcher, "session-start")],
-      UserPromptSubmit: [grouped(launcher, "prompt-submit")],
+      PreToolUse: [codexGrouped(launcher, "bash", "Bash"), codexGrouped(launcher, "structure", "apply_patch|Edit|Write")],
+      PostToolUse: [codexGrouped(launcher, "write", "apply_patch|Edit|Write")],
+      SessionStart: [codexGrouped(launcher, "session-start")],
+      UserPromptSubmit: [codexGrouped(launcher, "prompt-submit")],
     },
   };
 }

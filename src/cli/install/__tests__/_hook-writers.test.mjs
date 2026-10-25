@@ -53,6 +53,31 @@ test("Codex nests the events under hooks and matches its own tool names", () => 
   assert.deepEqual(Object.keys(document.hooks), ["PreToolUse", "PostToolUse", "SessionStart", "UserPromptSubmit"]);
   assert.equal(document.hooks.PreToolUse[0].matcher, "Bash");
   assert.equal(document.hooks.PostToolUse[0].hooks[0].type, "command");
+  assert.match(
+    document.hooks.PreToolUse[0].hooks[0].command,
+    /^env RULE_MCP_HOOK_HOST=codex \/bin\/rule-mcp guard bash/,
+    "Codex hooks tag the host so ask encodes without turn_id",
+  );
+});
+
+test("Codex handlers carry statusMessage so /hooks shows a name", () => {
+  const document = codexHooks(launcher);
+  const titles = Object.values(document.hooks)
+    .flat()
+    .flatMap((group) => group.hooks.map((hook) => hook.statusMessage));
+
+  assert.deepEqual(titles, [
+    "rule-mcp: guard bash",
+    "rule-mcp: guard structure",
+    "rule-mcp: guard write",
+    "rule-mcp: session start",
+    "rule-mcp: prompt submit",
+  ]);
+  assert.equal(
+    titles.every((title) => typeof title === "string" && title.trim().length > 0),
+    true,
+    "blank statusMessage falls back to Unnamed hook in the Codex browser",
+  );
 });
 
 test("the OpenCode plugin calls the guard subcommands", () => {
