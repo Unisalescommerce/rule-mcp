@@ -34,7 +34,7 @@ test("a generic installer writes the documented file and nothing beside it", () 
   assert.doesNotMatch(readFileSync(join(home, ".cline", "data", "settings", "cline_mcp_settings.json"), "utf8"), /instructions\.md/u, "and nothing points at one");
 });
 
-test("installDevin writes the config and one file per slash command", () => {
+test("installDevin writes the config and one file per skill", () => {
   const results = installDevin({ entrypoint: ENTRY, dryRun: false, global: false });
   assert.ok(existsSync(join(home, ".config", "devin", "mcp_config.json")), "the devin config lands");
   assert.ok(results.length > 1, "the slash-command files are written too");

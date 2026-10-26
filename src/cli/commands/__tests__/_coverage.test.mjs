@@ -96,7 +96,7 @@ test("Codex writes Skills under ~/.agents/skills and sweeps the old prompt direc
   const written = resolveCommandTargets({ agent: "codex", ...ctx() });
 
   assert.equal(written.length, 1, "one directory is written");
-  assert.equal(written[0].format, "devin", "a skill is a directory holding SKILL.md");
+  assert.equal(written[0].format, "skill", "a skill is a directory holding SKILL.md");
   assert.equal(written[0].dir, join("/home/u", ".agents", "skills"), "the user scope the Skills documentation lists");
   assert.equal(written[0].legacy, false, "and it is the current target");
 
@@ -113,11 +113,11 @@ test("Copilot CLI writes personal skills under ~/.copilot/skills", () => {
   const targets = resolveCommandTargets({ agent: "copilot", ...ctx() });
 
   assert.equal(targets.length, 1);
-  assert.equal(targets[0].format, "devin");
+  assert.equal(targets[0].format, "skill");
   assert.deepEqual(
     targets.map((t) => t.dir),
     [join("/home/u", ".copilot", "skills")],
-    "Copilot skills are <name>/SKILL.md and invoke as /<name>",
+    "Copilot skills are <name>/SKILL.md with a bare name, invoked as /<name>",
   );
 });
 

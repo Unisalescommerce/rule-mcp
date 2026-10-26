@@ -64,9 +64,9 @@ prompts through the server.
 | `--agent`     | Command files                   | Transport             | Notes                                                                                                                     |
 | ------------- | ------------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------- |
 | `claude`      | yes: args (global)              | stdio                 |                                                                                                                           |
-| `codex`       | yes: devin (global)             | stdio                 |                                                                                                                           |
+| `codex`       | yes: skill (global)             | stdio                 |                                                                                                                           |
 | `cursor`      | yes: args (project)             | stdio                 |                                                                                                                           |
-| `copilot`     | yes: devin (global)             | stdio                 |                                                                                                                           |
+| `copilot`     | yes: skill (global)             | stdio                 |                                                                                                                           |
 | `gemini`      | yes: gemini (global)            | stdio                 |                                                                                                                           |
 | `cline`       | yes: workflow (global, project) | stdio                 |                                                                                                                           |
 | `roo`         | yes: plain (global, project)    | stdio                 |                                                                                                                           |

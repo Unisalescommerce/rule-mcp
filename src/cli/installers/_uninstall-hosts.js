@@ -30,7 +30,7 @@ const uninstallDevin = ({ dryRun }) => {
   const skills = join(base, "skills");
   const results = [writeText({ file, content: removeJsonServer(readText(file)), dryRun })];
 
-  for (const { filename } of renderAgentCommandFiles("devin")) {
+  for (const { filename } of renderAgentCommandFiles("skill")) {
     const entry = join(skills, filename.split("/", 1)[0]);
 
     if (existsSync(entry) && !dryRun) {

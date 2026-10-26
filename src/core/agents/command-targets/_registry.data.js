@@ -32,7 +32,7 @@ export const COMMAND_TARGETS = [
     // has not been migrated does not show every command twice.
     agent: "codex",
     label: "Codex CLI",
-    format: "devin",
+    format: "skill",
     scope: "global",
     namespacedPrompts: false,
     detect: (ctx) => ctx.exists(join(ctx.home, ".codex")) || ctx.exists(join(ctx.home, ".agents")),
@@ -40,12 +40,14 @@ export const COMMAND_TARGETS = [
     legacy: [{ format: "args", dirs: (ctx) => [join(ctx.home, ".codex", "prompts")] }],
   },
   {
-    // Copilot CLI personal skills: ~/.copilot/skills/<name>/SKILL.md, invoked
-    // as /<name>. True host slash via the experimental extension SDK is out of
-    // scope for the file sync.
+    // Copilot CLI personal skills: `~/.copilot/skills/<name>/SKILL.md`, invoked
+    // as `/<name>`. The file's own `name` field is the bare id, which is what
+    // the loader validates - the slash is how a user invokes it, never how a
+    // skill is declared. True host slash via the experimental extension SDK is
+    // out of scope for the file sync.
     agent: "copilot",
     label: "GitHub Copilot CLI",
-    format: "devin",
+    format: "skill",
     scope: "global",
     namespacedPrompts: false,
     detect: (ctx) => ctx.exists(join(ctx.home, ".copilot")),

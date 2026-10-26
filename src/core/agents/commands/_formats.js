@@ -19,8 +19,9 @@ export const FORMATS = {
   workflow: { ext: ".md", frontmatter: null, placeholder: null },
   // Gemini CLI (and forks) - TOML with {{args}}
   gemini: { ext: ".toml", frontmatter: "toml", placeholder: "{{args}}" },
-  // Devin - one directory per command, each holding a SKILL.md
-  devin: { ext: "/SKILL.md", frontmatter: "devin", placeholder: null },
+  // Agent Skills (Codex, Copilot CLI) - one directory per skill holding a
+  // SKILL.md whose `name` is the bare skill id
+  skill: { ext: "/SKILL.md", frontmatter: "skill", placeholder: null },
 };
 
 /** Supported render formats -> file extension. */

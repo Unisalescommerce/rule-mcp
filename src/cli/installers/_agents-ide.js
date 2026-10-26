@@ -121,11 +121,13 @@ const installDevin = ({ entrypoint, dryRun, global }) => {
       dryRun,
     }),
   ];
-  // Devin invokes commands as /<name> from ~/.config/devin/skills: the clean
-  // slash-command set, one directory per command, each holding a SKILL.md.
+  // Devin invokes commands as /<name> from ~/.config/devin/skills: one directory
+  // per skill, each holding a SKILL.md. The file declares the bare name, the
+  // same shape Codex and Copilot CLI read - the slash is the invocation, never
+  // the declaration.
   const base = join(HOME, ".config", "devin", "skills");
 
-  for (const { filename, content } of renderAgentCommandFiles("devin")) {
+  for (const { filename, content } of renderAgentCommandFiles("skill")) {
     results.push(writeText({ file: join(base, filename), content, dryRun }));
   }
 

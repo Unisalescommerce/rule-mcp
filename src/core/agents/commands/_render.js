@@ -31,10 +31,14 @@ export function renderAgentCommand(command, format) {
     return ["---", `description: ${quoted(description)}`, `argument-hint: "${argumentHint}"`, "---", body, ""].join("\n");
   }
 
-  if (spec.frontmatter === "devin") {
-    // Devin reads one directory per command, each containing a SKILL.md whose
-    // name field is the slash command.
-    return ["---", `name: /${name}`, `description: ${quoted(description)}`, "---", "", `# ${name}`, "", body, ""].join("\n");
+  if (spec.frontmatter === "skill") {
+    // Agent Skills reads one directory per skill, each containing a SKILL.md
+    // whose `name` is the bare skill id - `name: image-convert`, never
+    // `name: /image-convert`. The slash form was written by this branch and is
+    // what made Copilot CLI report "Failed to load 62 skills": every installed
+    // skill answered a name the loader does not accept, so it rejected the set
+    // instead of the individual entries.
+    return ["---", `name: ${name}`, `description: ${quoted(description)}`, "---", "", `# ${name}`, "", body, ""].join("\n");
   }
   // Prose-only workflow file (Windsurf, Cline).
   return [`# ${name}`, "", body, ""].join("\n");
