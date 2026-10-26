@@ -12,6 +12,30 @@ import { agentInstallTask, runtimeHomeTask, shimTask } from "./_task-core.js";
 import { commandsTask, dockerTask, doctorTask, manifestTask, rulesTask, serviceTask, skillsTask } from "./_task-extras.js";
 import { skillsRemovalTask } from "./_task-remove.js";
 import { cliVerifyTask } from "./_task-cli.js";
+import { allAgents } from "../installers/index.js";
+
+/**
+ * Refuse an agent list the plan cannot act on.
+ *
+ * The wizard's own list once carried a row whose id was `measured:none`, a note
+ * about the study rather than a product, so ticking it put a task in the plan
+ * that could only fail with `Unsupported agent`. The screen is fixed; this is
+ * the boundary that keeps the next one from reintroducing it, because a plan
+ * entry that cannot run is not a warning to report later - it is a broken plan.
+ *
+ * @param {string[]} agents
+ * @returns {string[]}
+ */
+const checkedAgents = (agents) => {
+  const known = new Set(allAgents);
+  const unknown = agents.filter((agent) => !known.has(agent));
+
+  if (unknown.length > 0) {
+    throw new Error(`Not an agent name: ${unknown.map((agent) => `"${agent}"`).join(", ")}. A plan can only install into known agents.`);
+  }
+
+  return agents;
+};
 
 /** The dimensions a flag-driven install wrote, when no profile answered. */
 const dimensionsOf = (extras, agents) => ({
@@ -38,6 +62,7 @@ export function buildInstallPlan({
   profile = null,
   dimensions = null,
 } = {}) {
+  const targets = checkedAgents(agents);
   const plan = [runtimeHomeTask()];
 
   if (context.hasLocalBin) {
@@ -49,7 +74,7 @@ export function buildInstallPlan({
   // than a task the plan can leave out. `extras` only ever carries the steps
   // that were kept, so the test is presence - `!== false` was true for an
   // absent key, which made the hooks impossible to decline.
-  plan.push(...agents.map((agent) => agentInstallTask(agent, mode, force, extras.hooks === true, minimal, surface)));
+  plan.push(...targets.map((agent) => agentInstallTask(agent, mode, force, extras.hooks === true, minimal, surface)));
 
   if (extras.rules) {
     plan.push(rulesTask(agents));
