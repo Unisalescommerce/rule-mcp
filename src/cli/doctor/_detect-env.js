@@ -3,6 +3,7 @@ import { existsSync, readdirSync } from "node:fs";
 import { platform, arch } from "node:os";
 import { join } from "node:path";
 import { HOME } from "./_detect-agents.js";
+import { NODE_FLOOR, nodeAtLeast } from "../../shared/_node-floor.js";
 
 /**
  * Check if IDE-specific configs exist.
@@ -114,6 +115,8 @@ export function getEnvironmentInfo() {
     arch: arch(),
     home: HOME,
     node: process.version,
+    nodeOk: nodeAtLeast(process.version),
+    nodeFloor: NODE_FLOOR,
     cwd: process.cwd(),
     shell: process.env.SHELL || process.env["ComSpec"] || "unknown",
     terminal: process.env.TERM || "unknown",

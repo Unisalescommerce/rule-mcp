@@ -16,10 +16,10 @@ import { tryExecResult } from "../../shared/index.js";
 import { getRepoRoot } from "../paths/index.js";
 import { shimPath, shimWorks } from "./_shim.js";
 
-/** Lowest Node this server runs on; the floor the installers and CI enforce. */
-export const NODE_MIN = 20;
+/** The floor, in one place: `.nvmrc`, this check and the server all read it. */
+export { NODE_FLOOR as NODE_MIN } from "../../shared/_node-floor.js";
 
-const major = (version) => Number.parseInt(String(version).replace(/^v/, "").split(".", 1)[0], 10);
+import { NODE_FLOOR, nodeAtLeast } from "../../shared/_node-floor.js";
 
 /** Whether the repo we are running from is this project's own checkout. */
 export function detectLocalRepo(root = process.cwd()) {
@@ -65,8 +65,8 @@ export function preflight() {
     {
       id: "node",
       label: "Node.js",
-      status: major(nodeVersion) >= NODE_MIN ? "ok" : "fail",
-      detail: major(nodeVersion) >= NODE_MIN ? nodeVersion : `${nodeVersion} - version ${NODE_MIN} or newer is required`,
+      status: nodeAtLeast(nodeVersion) ? "ok" : "fail",
+      detail: nodeAtLeast(nodeVersion) ? nodeVersion : `${nodeVersion} - version ${NODE_FLOOR} or newer is required`,
     },
     {
       id: "package-manager",

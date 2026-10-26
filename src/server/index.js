@@ -111,18 +111,18 @@ export function createServer() {
  * @returns {Promise<void>}
  */
 export async function startServer() {
-  // A long-lived server shared by every client gets guarded checks: one
-  // runaway regex must not freeze the daemon (hardening F-S1). The CLI
-  // one-shot keeps running checks inline - a hung CLI is ctrl-C.
+  // Fails closed below the floor, before anything native loads.
+  (await import("../shared/_node-floor.js")).assertNodeFloor();
+  // A long-lived server gets guarded checks: one runaway regex must not freeze
+  // the daemon (hardening F-S1); the CLI one-shot runs them inline.
   const { enableGuardedChecks } = await import("../core/guardrails/index.js");
   enableGuardedChecks();
-  // A stdio server lives and dies with its client: when the parent process
-  // exits, stdin closes and this process must go with it. The guard polls
-  // the parent pulse and exits (the orphaned-server trap).
+  // A stdio server lives and dies with its client: the guard polls the parent
+  // pulse and exits when it goes (the orphaned-server trap).
   const { installStdioGuard } = await import("../transport/index.js");
   installStdioGuard({ onLost: () => process.exit(0) });
-  // The catalog registers the per-skill tools; the gateway and the apply tool
-  // sit above it and are registered here, once, before the server answers.
+  // The catalog registers the per-skill tools; the gateway and the apply tool sit
+  // above it and are registered here, once, before the server answers.
   const { bootstrapCoreTools } = await import("../tools/_bootstrap.js");
 
   await bootstrapCoreTools();

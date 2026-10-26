@@ -22,7 +22,7 @@ export function systemSection(report) {
     section("System", "🖥️"),
     `Version:     ${color(report.version, "green")}`,
     `MCP SDK:     ${color(report.sdk, "cyan")}`,
-    `Node:        ${color(report.node, "cyan")}`,
+    `Node:        ${color(report.node, report.nodeOk === false ? "yellow" : "cyan")}${report.nodeOk === false ? color(` - ${report.nodeFloor} or newer is required`, "yellow") : ""}`,
     `Platform:    ${color(`${report.platform}/${report.arch}`, "magenta")}`,
     `Entrypoint:  ${color(truncate(report.entrypoint, 100), "dim")}`,
     "",
