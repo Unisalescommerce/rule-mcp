@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-
 /**
  * One-shot style fixer for the repo's own guardrail rules (self-guardrails,
  * F-A1 discipline). The passes themselves live in `src/core/fix/` so this
