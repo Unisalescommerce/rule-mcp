@@ -93,6 +93,10 @@ const measuredSection = () => {
       label: lines[0],
       note: `${gaps.length} products`,
       detail: lines,
+      // Readable, not selectable. The row is a finding about the study, and its
+      // id is not an agent name: ticking it sent `measured:none` to
+      // `installAgent`, which answered "Unsupported agent" on the plan screen.
+      disabled: true,
     },
   ];
 };
