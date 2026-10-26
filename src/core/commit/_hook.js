@@ -40,6 +40,11 @@ function lintCommand(name, command) {
  * blocks the commit or the push, and the chained backup runs only after it
  * passed.
  *
+ * The probe runs the launcher, not `command -v` alone. A launcher whose target
+ * moved - a checkout on a branch that does not ship the entry point - exists and
+ * cannot run; treating that as "on PATH" turned every `git push` on the machine
+ * into a node stack trace, which is the opposite of what this file promises.
+ *
  * @param {string} name
  * @param {string} [command]
  * @returns {string}
@@ -51,7 +56,11 @@ export function hookBody(name, command = DEFAULT_COMMAND) {
     'dir="$(dirname "$0")"',
     `backup="$dir/${name}${BACKUP_SUFFIX}"`,
     `if command -v ${command} >/dev/null 2>&1; then`,
-    `  ${lintCommand(name, command)} || exit 1`,
+    `  if ${command} --version >/dev/null 2>&1; then`,
+    `    ${lintCommand(name, command)} || exit 1`,
+    "  else",
+    `    echo "${HOOK_MARKER}: ${command} exists but cannot run; commit validation skipped - reinstall it (pnpm setup in its checkout)" >&2`,
+    "  fi",
     "else",
     `  echo "${HOOK_MARKER}: ${command} is not on PATH; commit validation skipped" >&2`,
     "fi",
@@ -89,7 +98,10 @@ export function writeHook(hooksDir, name, options = {}) {
   const foreign = current !== null && !current.includes(HOOK_MARKER);
 
   if (foreign) {
+    // Executable, because our body chains it with `[ -x ]`: a displaced hook
+    // stored writable-only is a hook that silently stopped running.
     writeFileSync(`${path}${BACKUP_SUFFIX}`, current);
+    chmodSync(`${path}${BACKUP_SUFFIX}`, 0o755);
   }
 
   writeFileSync(path, body);
