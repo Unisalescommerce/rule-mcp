@@ -32,6 +32,7 @@
     "hooks:check": "node scripts/install/git-hooks/index.mjs --check",
     "setup": "bash ./scripts/reinstall.sh && node ./bin/rule-mcp.js setup",
     "setup:uninstall": "node ./bin/rule-mcp.js setup --uninstall",
+    "uninstall": "node ./bin/rule-mcp.js uninstall",
     "tools": "node ./bin/rule-mcp.js tools list",
     "mcp:install": "bash ./scripts/install.sh --force",
     "mcp:install:ps1": "pwsh ./scripts/install.ps1",
