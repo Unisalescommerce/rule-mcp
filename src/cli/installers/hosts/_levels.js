@@ -61,3 +61,30 @@ export function levelsOf(id) {
 export function ceilingOf(levels) {
   return ["L4", "L3", "L2", "L1"].find((rung) => levels[rung].supported) ?? "L0";
 }
+
+/**
+ * What each rung writes, in words rather than in codes.
+ *
+ * `L0..L4` is the vocabulary of `--level` and of the ceiling table in
+ * `docs/04-operations.md`, and it stays: a flag needs a short spelling. What a
+ * reader of the wizard needs is the other half - a screen that says "server,
+ * rules and commands" instead of asking them to remember what `L2` was.
+ *
+ * `title` names the rung in full, for a row label; `adds` names only what that
+ * rung contributes over the one below it, for the note beside the label.
+ */
+export const RUNG_WORDS = {
+  L0: { title: "Server only", adds: "the MCP entry" },
+  L1: { title: "Server and rules", adds: "the rules file" },
+  L2: { title: "Server, rules and commands", adds: "the /rule-* command files" },
+  L3: { title: "Server, rules, commands and hooks", adds: "the guard hooks" },
+  L4: { title: "Everything, plus a native handler", adds: "the host's own handler" },
+};
+
+/**
+ * A rung in the words of a sentence rather than in the words of a flag.
+ *
+ * @param {string} rung one of L0..L4
+ * @returns {string} the title, lowercased, or the rung itself when unknown
+ */
+export const rungWords = (rung) => RUNG_WORDS[rung]?.title.toLowerCase() ?? rung;

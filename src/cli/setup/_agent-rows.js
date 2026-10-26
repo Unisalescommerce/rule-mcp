@@ -19,6 +19,7 @@ import { allAgents, deprecatedAgents } from "../installers/index.js";
 import { detectInstalledAgents } from "../install/index.js";
 import { GLYPHS } from "./_theme.js";
 import { hostRecord } from "../installers/hosts/index.js";
+import { rungWords } from "../installers/hosts/_levels.js";
 import { nonInstallable } from "../installers/hosts/_evidence.data.js";
 
 /** One line naming how deep this host can be integrated, and what that adds. */
@@ -29,11 +30,7 @@ const ceilingLine = (id) => {
     return "integration: unknown";
   }
 
-  const rungs = Object.entries(record.levels)
-    .filter(([, support]) => support.supported)
-    .map(([rung]) => rung);
-
-  return `integration: up to ${record.ceiling} (${rungs.join(", ")})`;
+  return `integration: ${rungWords(record.ceiling)}`;
 };
 
 /** Where the catalog stops listing coding agents and starts listing IDEs. */

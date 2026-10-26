@@ -13,7 +13,6 @@ import {
   dimensionItems,
   doneLines,
   installedDimensions,
-  modeItems,
   preflightLines,
   profileItems,
   progressRows,
@@ -27,6 +26,7 @@ import {
   tallyLine,
   uninstallItems,
 } from "../_items.js";
+import { modeItems } from "../_items-depth.js";
 
 test("every profile says which dimensions and which surface it turns on", () => {
   const profiles = profileItems();

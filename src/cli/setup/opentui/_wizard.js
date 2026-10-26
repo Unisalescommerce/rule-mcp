@@ -14,7 +14,7 @@
  */
 
 import { DIMENSIONS, resolveProfile } from "../../install/_profiles.js";
-import { depthItems } from "./_items.js";
+import { depthItems, modeItems } from "./_items-depth.js";
 import { readManifest } from "../../install/_manifest.js";
 import { agentRows } from "../_agent-rows.js";
 import { selectionLabel } from "../_commands-items.js";
@@ -30,7 +30,6 @@ import { BACK, CANCEL } from "./_answers.js";
 import {
   doneLines,
   dimensionItems,
-  modeItems,
   preflightLines,
   profileItems,
   progressRows,
@@ -219,11 +218,8 @@ export async function runInstallWizard({ screen, defaults = {} }) {
 
       case "depth": {
         const level = await screen.ask({
-          title: "How deep should the integration go?",
-          help: [
-            "A level is a cap, not a promise: each host installs the rungs it supports up to it.",
-            "The ceiling beside every host on the previous screen is what it can reach.",
-          ],
+          title: "How much should the install write?",
+          help: ["Each host writes as much as it supports, up to the row you pick.", "The screen before this one says where each host stops."],
           items: depthItems(answers.agents),
           mode: "radio",
           initial: [answers.level ?? "auto"],
