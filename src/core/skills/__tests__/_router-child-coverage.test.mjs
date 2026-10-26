@@ -39,9 +39,9 @@ function childrenOf(area, all) {
 
 test("each area router links every child under it", () => {
   const all = skills();
-  // An area is `rule-mcp-<word>`. `rule-mcp` itself is the dispatcher, not an area, and its
-  // table lists skills across every area on purpose.
-  const areas = all.filter((name) => name !== "rule-mcp" && !name.includes("-", 4));
+  // An area is `rule-<word>`, exactly one hyphen. `rule` itself is the dispatcher, not
+  // an area, and its table lists skills across every area on purpose.
+  const areas = all.filter((name) => name !== "rule" && name.split("-").length === 2);
   const unlisted = [];
 
   for (const area of areas) {

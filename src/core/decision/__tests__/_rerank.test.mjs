@@ -18,7 +18,7 @@ test("a shortlist above six options is refused with the cap in the message", () 
 });
 
 test("the choice question describes every option", () => {
-  assert.deepEqual(buildChoiceQuestion([option("a"), option("b")]).pick.criteria, { "rule-mcp-a": "does a", "rule-mcp-b": "does b" });
+  assert.deepEqual(buildChoiceQuestion([option("a"), option("b")]).pick.criteria, { "rule-a": "does a", "rule-b": "does b" });
 });
 
 test("rerankShortlist returns the pick and the probability of the chosen label", async () => {
@@ -32,18 +32,18 @@ test("rerankShortlist returns the pick and the probability of the chosen label",
       asked = { prompt, questions };
 
       return {
-        answers: { pick: { choice: "rule-mcp-b", probabilities: { "rule-mcp-a": 0.2, "rule-mcp-b": 0.8 } } },
+        answers: { pick: { choice: "rule-b", probabilities: { "rule-a": 0.2, "rule-b": 0.8 } } },
         usage: { input_tokens: 9 },
         ms: 12,
       };
     },
   });
 
-  assert.equal(answer.pick, "rule-mcp-b");
+  assert.equal(answer.pick, "rule-b");
   assert.equal(answer.probability, 0.8);
   assert.equal(answer.usage.input_tokens, 9);
   assert.equal(asked.prompt, "route this");
-  assert.deepEqual(Object.keys(asked.questions.pick.criteria), ["rule-mcp-a", "rule-mcp-b"]);
+  assert.deepEqual(Object.keys(asked.questions.pick.criteria), ["rule-a", "rule-b"]);
 });
 
 test("probabilityOf treats an absent distribution as zero", () => {

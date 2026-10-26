@@ -35,7 +35,12 @@ test("suppressIfTokensave stays quiet below the threshold and when inactive", ()
   assert.equal(off, BIG, "tokensave off passes through");
   delete process.env.RULE_MCP_NO_TOKENSAVE;
 
-  const elsewhere = suppressIfTokensave(BIG, { projectDir: "/tmp/no-such-tokensave" });
+  // A fresh temp dir, not a fixed path: the resolver walks up, and a `.tokensave`
+  // anywhere above the path it is given makes this look like a project with a
+  // graph. `/tmp/no-such-tokensave` stopped being safe the moment anything in
+  // `/tmp` had one.
+  const elsewhereDir = mkdtempSync(join(tmpdir(), "rule-mcp-no-graph-"));
+  const elsewhere = suppressIfTokensave(BIG, { projectDir: elsewhereDir });
   assert.equal(elsewhere, BIG, "no graph in that project passes through");
 });
 

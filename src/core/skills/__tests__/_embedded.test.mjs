@@ -55,15 +55,15 @@ test("every tool traces back to a rule-mcp-* directory in ./skills", () => {
   }
 });
 
-test("every skill the registry reports starts with rule-mcp-", () => {
+test("every skill the registry reports starts with rule-", () => {
   const foreign = surface.skills.filter((name) => !name.startsWith("rule-"));
   assert.deepEqual(foreign, [], "a foreign skill name would mint a foreign rule_tool_* tool");
 });
 
 test("the surface size matches the embedded skill count", () => {
-  // All directories minus the bare `rule-mcp` router skill which is registered as
-  // the dispatcher tool rather than a skill tool.
-  const expectedSkills = embeddedSkillDirs.filter((d) => d.startsWith("rule-mcp-")).length;
+  // All directories minus the bare `rule` router skill, which is registered as the
+  // dispatcher tool rather than a skill tool.
+  const expectedSkills = embeddedSkillDirs.filter((d) => d.startsWith("rule-") && d !== "rule").length;
   assert.equal(surface.skills.length, expectedSkills);
   assert.ok(surface.bytes < 130_000, `tool schemas grew to ${surface.bytes} bytes - the surface is leaking again`);
 });

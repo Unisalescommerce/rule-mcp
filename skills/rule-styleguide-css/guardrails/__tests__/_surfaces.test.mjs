@@ -85,7 +85,7 @@ test("a CSS route carries it, a backend route does not", async () => {
   const { callTool } = await import("@src/tools/router/index.js");
   await loadAllSkills();
 
-  const styling = await callTool("pix_tool", { prompt: "style a card component with CSS" });
+  const styling = await callTool("rule_tool", { prompt: "style a card component with CSS" });
   const routed = JSON.parse(
     styling.content
       .map((c) => c.text)
@@ -94,7 +94,7 @@ test("a CSS route carries it, a backend route does not", async () => {
   );
   assert.equal(routed.styling_contract?.layout, FLEX_FIRST);
 
-  const backend = await callTool("pix_tool", { prompt: "add a postgres index for a slow query" });
+  const backend = await callTool("rule_tool", { prompt: "add a postgres index for a slow query" });
   const backendRoute = JSON.parse(
     backend.content
       .map((c) => c.text)

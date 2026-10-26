@@ -66,13 +66,7 @@ test("Codex handlers carry statusMessage so /hooks shows a name", () => {
     .flat()
     .flatMap((group) => group.hooks.map((hook) => hook.statusMessage));
 
-  assert.deepEqual(titles, [
-    "rule-mcp: guard bash",
-    "rule-mcp: guard structure",
-    "rule-mcp: guard write",
-    "rule-mcp: session start",
-    "rule-mcp: prompt submit",
-  ]);
+  assert.deepEqual(titles, ["rule-mcp: guard bash", "rule-mcp: guard structure", "rule-mcp: guard write", "rule-mcp: session start", "rule-mcp: prompt submit"]);
   assert.equal(
     titles.every((title) => typeof title === "string" && title.trim().length > 0),
     true,

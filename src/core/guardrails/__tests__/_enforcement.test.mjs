@@ -1,5 +1,3 @@
-
-
 import { strict as assert } from "node:assert";
 import { readdirSync } from "node:fs";
 import { checkCode } from "../index.js";
@@ -112,7 +110,7 @@ const dependencyCheck = await callTool("rule_tool_check", {
   allowedDependencies: ["react"],
 });
 assert.ok(
-  dependencyCheck._meta?.pixGuardrails?.failed?.some((item) => item.id === "verified-dependencies-only"),
+  dependencyCheck._meta?.ruleGuardrails?.failed?.some((item) => item.id === "verified-dependencies-only"),
   "rule_tool_check MCP schema must pass manifest dependencies into guardrail context",
 );
 

@@ -94,7 +94,7 @@ test("the resource section separates the fixed indexes from the per-skill pair",
   );
 
   assert.match(out, /## MCP resources \(3\)/);
-  assert.match(out, /\| `rulemcp:\/\/skills` +\| All rule-mcp skills index +\| `application\/json` \|/);
+  assert.match(out, /\| `rule:\/\/skills` +\| All rule-mcp skills index +\| `application\/json` \|/);
   assert.match(out, /^2 more, two for each skill that mints them:$/m, "the per-skill pair is counted, not listed");
   assert.doesNotMatch(out, /\| `rulemcp:\/\/rule-styleguide-css` /, "a skill resource is not in the fixed table");
 });
@@ -102,6 +102,6 @@ test("the resource section separates the fixed indexes from the per-skill pair",
 test("a fixed resource with no name or media type renders dashes", () => {
   const out = joined(resourceSection({ resources: [{ uri: "rule://bare" }], skillDirs: [] }));
 
-  assert.match(out, /\| `rulemcp:\/\/bare` +\| - +\| `-` \|/);
+  assert.match(out, /\| `rule:\/\/bare` +\| - +\| `-` \|/);
   assert.doesNotMatch(out, /undefined/);
 });
