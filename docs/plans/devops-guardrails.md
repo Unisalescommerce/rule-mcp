@@ -23,8 +23,8 @@ Audited in this session (read-only):
 
 Current state: 4 rules only.
 
-| Rule                 | Skill             | Trigger                |
-| -------------------- | ----------------- | ---------------------- |
+| Rule                 | Skill              | Trigger                |
+| -------------------- | ------------------ | ---------------------- |
 | `env-gitignore`      | rule-devops        | file name `.gitignore` |
 | `secret-detection`   | rule-devops        | any code               |
 | `docker-healthcheck` | rule-devops-docker | Dockerfile or compose  |
@@ -87,13 +87,13 @@ demote any Tier A rule to Tier B.
 
 ## Where each rule lives
 
-| Rule family   | Owning skill              | Why                                                              |
-| ------------- | ------------------------- | ---------------------------------------------------------------- |
+| Rule family   | Owning skill               | Why                                                               |
+| ------------- | -------------------------- | ----------------------------------------------------------------- |
 | CI/CD         | rule-devops                | No `rule-devops-ci` skill exists, and all devops children inherit |
-| Docker        | rule-devops-docker         | Topic owner                                                      |
-| Testing       | rule-devops-testing        | Topic owner, gains its first `guardrails/` directory             |
-| Observability | rule-devops-observability  | Topic owner, gains its first `guardrails/` directory             |
-| Preview       | rule-devops-deploy-preview | Topic owner, gains its first `guardrails/` directory             |
+| Docker        | rule-devops-docker         | Topic owner                                                       |
+| Testing       | rule-devops-testing        | Topic owner, gains its first `guardrails/` directory              |
+| Observability | rule-devops-observability  | Topic owner, gains its first `guardrails/` directory              |
+| Preview       | rule-devops-deploy-preview | Topic owner, gains its first `guardrails/` directory              |
 
 Reorganization: `env-gitignore` and `secret-detection` stay in `rule-devops`;
 they are already shared. `docker-healthcheck` and `docker-non-root` stay in
@@ -249,15 +249,15 @@ Shared files: none: absorbed into the leaf plans named above
 
 Classes and evidence: section 14 of `docs/plans/plan-of-plans.md`.
 
-| Step                                                      | Class      | Model                   | Why                            |
-| --------------------------------------------------------- | ---------- | ----------------------- | ------------------------------ |
-| Phase 0 - Decisions and scaffolding                       | `T1-plan`  | `gemini-4-argon` (high) | planning and prose that argues |
+| Step                                                       | Class      | Model                   | Why                            |
+| ---------------------------------------------------------- | ---------- | ----------------------- | ------------------------------ |
+| Phase 0 - Decisions and scaffolding                        | `T1-plan`  | `gemini-4-argon` (high) | planning and prose that argues |
 | Phase 1 - CI/CD rules in rule-devops                       | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
 | Phase 2 - Docker rules in rule-devops-docker               | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
 | Phase 3 - Testing rules in rule-devops-testing             | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
 | Phase 4 - Observability rules in rule-devops-observability | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
 | Phase 5 - Preview rules in rule-devops-deploy-preview      | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
-| Phase 6 - Runtime scripts, promotion and documentation    | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
+| Phase 6 - Runtime scripts, promotion and documentation     | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
 
 Plan default: `T3-rules` - `kimi-k2.7-code`. Fallback: `step-5-preview` for authoring, `glm-5.3-flash` for bulk edits.
 

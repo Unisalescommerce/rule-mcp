@@ -40,7 +40,7 @@ Sources fetched and used:
 
 | Question      | Decision                                                             |
 | ------------- | -------------------------------------------------------------------- |
-| Target skills | `rule-ai` owns the shared rules; the area stays otherwise narrative   |
+| Target skills | `rule-ai` owns the shared rules; the area stays otherwise narrative  |
 | Scope         | High-signal selection (4-6)                                          |
 | Candidates    | All eight selected                                                   |
 | Trigger       | Devops default: target file or content heuristic, no universal sweep |
@@ -81,7 +81,7 @@ carries the prompt and model version. Only one of the two owns each claim.
 | `ai-output-validated`     | parsed model output without schema validation                 | A    | OWASP LLM05                  |
 | `ai-no-secrets-in-prompt` | credentials or personal data interpolated into a prompt       | A    | OWASP LLM02 and LLM01        |
 | `ai-trace-span`           | model call with no generation span                            | A    | OpenTelemetry GenAI semconv  |
-| `ai-eval-presence`        | agent project with no eval dataset or CI eval gate            | B    | rule-ai-evals; NIST AI RMF    |
+| `ai-eval-presence`        | agent project with no eval dataset or CI eval gate            | B    | rule-ai-evals; NIST AI RMF   |
 | `ai-mcp-token-validation` | MCP server accepting a token without audience and scope check | B    | MCP Security Best Practices  |
 
 ## Enforcement model
@@ -135,11 +135,11 @@ Shared files: none: absorbed into the leaf plans named above
 
 Classes and evidence: section 14 of `docs/plans/plan-of-plans.md`.
 
-| Step | Class | Model | Why |
-| ---- | ----- | ----- | --- |
-| Phase 0 - Decisions and scaffolding | `T1-plan` | `gemini-4-argon` (high) | planning and prose that argues |
-| Phase 1 - Shared rules in rule-ai | `T3-rules` | `kimi-k2.7-code` | small deterministic code |
-| Phase 2 - Promotion and documentation | `T3-rules` | `kimi-k2.7-code` | small deterministic code |
+| Step                                  | Class      | Model                   | Why                            |
+| ------------------------------------- | ---------- | ----------------------- | ------------------------------ |
+| Phase 0 - Decisions and scaffolding   | `T1-plan`  | `gemini-4-argon` (high) | planning and prose that argues |
+| Phase 1 - Shared rules in rule-ai     | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
+| Phase 2 - Promotion and documentation | `T3-rules` | `kimi-k2.7-code`        | small deterministic code       |
 
 Plan default: `T3-rules` - `kimi-k2.7-code`. Fallback: `step-5-preview` for authoring, `glm-5.3-flash` for bulk edits.
 

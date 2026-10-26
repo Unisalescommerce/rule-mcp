@@ -78,10 +78,10 @@ still gates on transcript capability, not merely "MCP installed".
 
 | #                 | Decision                                                          |
 | ----------------- | ----------------------------------------------------------------- |
-| Pipeline          | scan -> merge telemetry -> emit `.flight` -> optional cleanup        |
+| Pipeline          | scan -> merge telemetry -> emit `.flight` -> optional cleanup     |
 | Cache             | new decision-cache (export-owned) + tool-cache promote where safe |
 | Agents v1         | pi/claude/codex/opencode only; others deferred with reason        |
 | Cleanup           | hard delete after confirm; keep newest N **∪** current session    |
 | Dubious decisions | heuristic triage + interview now; hook short-circuit waits for DM |
-| Env               | `RULE_MCP_EXPORT_KEEP_SESSIONS` default `5`                 |
+| Env               | `RULE_MCP_EXPORT_KEEP_SESSIONS` default `5`                       |
 | Base              | `main`                                                            |

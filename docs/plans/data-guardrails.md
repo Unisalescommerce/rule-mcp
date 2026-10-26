@@ -42,7 +42,7 @@ Sources fetched and used:
 
 | Question      | Decision                                                             |
 | ------------- | -------------------------------------------------------------------- |
-| Target skills | `rule-data` shared plus postgres, mongodb, mysql, sqlite, sql         |
+| Target skills | `rule-data` shared plus postgres, mongodb, mysql, sqlite, sql        |
 | Scope         | High-signal selection (5-7)                                          |
 | Candidates    | All nine selected                                                    |
 | Trigger       | Devops default: target file or content heuristic                     |
@@ -61,8 +61,8 @@ shared ones on that skill.
 
 ### Open item 2: where each rule lives
 
-| Rule id              | Owner               | Why                                         |
-| -------------------- | ------------------- | ------------------------------------------- |
+| Rule id              | Owner                | Why                                         |
+| -------------------- | -------------------- | ------------------------------------------- |
 | `index-on-fk`        | rule-data-postgresql | PostgreSQL does not auto-index foreign keys |
 | `no-select-star`     | rule-data            | Shared SQL hygiene                          |
 | `query-limit`        | rule-data            | Shared, API4 resource consumption           |
@@ -157,13 +157,13 @@ Shared files: none: absorbed into the leaf plans named above
 
 Classes and evidence: section 14 of `docs/plans/plan-of-plans.md`.
 
-| Step | Class | Model | Why |
-| ---- | ----- | ----- | --- |
-| Phase 0 - Decisions and scaffolding | `T1-plan` | `gemini-4-argon` (high) | planning and prose that argues |
-| Phase 1 - Shared rules in rule-data | `T3-rules` | `kimi-k2.7-code` | small deterministic code |
-| Phase 2 - Postgres and SQLite | `T7-author` | `qwen3.8-max` | skill bodies and references |
-| Phase 3 - MongoDB | `T7-author` | `qwen3.8-max` | skill bodies and references |
-| Phase 4 - Promotion and documentation | `T3-rules` | `kimi-k2.7-code` | small deterministic code |
+| Step                                  | Class       | Model                   | Why                            |
+| ------------------------------------- | ----------- | ----------------------- | ------------------------------ |
+| Phase 0 - Decisions and scaffolding   | `T1-plan`   | `gemini-4-argon` (high) | planning and prose that argues |
+| Phase 1 - Shared rules in rule-data   | `T3-rules`  | `kimi-k2.7-code`        | small deterministic code       |
+| Phase 2 - Postgres and SQLite         | `T7-author` | `qwen3.8-max`           | skill bodies and references    |
+| Phase 3 - MongoDB                     | `T7-author` | `qwen3.8-max`           | skill bodies and references    |
+| Phase 4 - Promotion and documentation | `T3-rules`  | `kimi-k2.7-code`        | small deterministic code       |
 
 Plan default: `T3-rules` - `kimi-k2.7-code`. Fallback: `step-5-preview` for authoring, `glm-5.3-flash` for bulk edits.
 

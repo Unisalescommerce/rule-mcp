@@ -15,7 +15,7 @@ Questo manifest è **una proposta architetturale**, non un formato ufficiale di 
   "arguments": {
     "type": "object",
     "properties": {
-      "projectPath": {"type": "string"}
+      "projectPath": { "type": "string" }
     },
     "required": ["projectPath"],
     "additionalProperties": false

@@ -39,17 +39,17 @@ Per un sistema di engineering governance basato su MCP, la seconda possibilità 
 
 ## 1. Matrice comparativa
 
-| Capacità | Codex CLI | Copilot CLI |
-|---|---|---|
-| Slash command nativi | Sì | Sì |
-| Custom slash tramite Markdown | Non più supportati come in passato | Sì, tramite plugin |
-| Skills personalizzate | Sì | Sì |
-| Richiamo di una skill da prompt | `$rule-init` | `/rule-init` come riferimento alla skill |
-| Registrazione slash tramite codice JS | Non documentata come API pubblica equivalente | Sì, con Extensions |
-| Collegamento a tool MCP | Sì | Sì |
-| Esecuzione script locali | Sì, tramite strumenti dell'agente | Sì, anche direttamente da Extension |
-| Esecuzione senza decisione del modello | Wrapper CLI esterno | Extension JS |
-| Supporto a hook | Sì, dove previsti | Sì |
+| Capacità                               | Codex CLI                                     | Copilot CLI                              |
+| -------------------------------------- | --------------------------------------------- | ---------------------------------------- |
+| Slash command nativi                   | Sì                                            | Sì                                       |
+| Custom slash tramite Markdown          | Non più supportati come in passato            | Sì, tramite plugin                       |
+| Skills personalizzate                  | Sì                                            | Sì                                       |
+| Richiamo di una skill da prompt        | `$rule-init`                                  | `/rule-init` come riferimento alla skill |
+| Registrazione slash tramite codice JS  | Non documentata come API pubblica equivalente | Sì, con Extensions                       |
+| Collegamento a tool MCP                | Sì                                            | Sì                                       |
+| Esecuzione script locali               | Sì, tramite strumenti dell'agente             | Sì, anche direttamente da Extension      |
+| Esecuzione senza decisione del modello | Wrapper CLI esterno                           | Extension JS                             |
+| Supporto a hook                        | Sì, dove previsti                             | Sì                                       |
 
 > [!note]
 > Il riferimento a `/rule-init` in Copilot tramite skill non equivale alla registrazione di un comando eseguibile. La distinzione è fondamentale per un workflow deterministico. Le Extensions di Copilot sono ancora sperimentali.
@@ -69,7 +69,7 @@ flowchart TB
     E --> F
 ```
 
-*Architettura proposta, non una funzionalità nativa comune ai due prodotti.*
+_Architettura proposta, non una funzionalità nativa comune ai due prodotti._
 
 L'idea è avere **un solo contratto operativo per il comando** e due adapter specifici per i diversi client. La logica di governance vive in uno script o tool MCP indipendente dall'agente e rimane riutilizzabile.
 
@@ -107,7 +107,7 @@ my-project/
 
 Questo è un esempio di `SKILL.md`:
 
-````markdown
+```markdown
 ---
 name: rule-init
 description: Initialize engineering governance rules for the current project.
@@ -125,7 +125,7 @@ When this skill is explicitly invoked:
 5. Report the MCP result and any errors.
 6. Do not create or modify additional files
    unless the tool explicitly requires it.
-````
+```
 
 Da Codex:
 
@@ -210,9 +210,7 @@ import { fileURLToPath } from "node:url";
 
 const execFileAsync = promisify(execFile);
 
-const script = fileURLToPath(
-  new URL("./scripts/rule-init.mjs", import.meta.url)
-);
+const script = fileURLToPath(new URL("./scripts/rule-init.mjs", import.meta.url));
 
 const session = await joinSession({
   commands: [
@@ -223,17 +221,10 @@ const session = await joinSession({
         const projectPath = (ctx.args ?? "").trim();
 
         try {
-          const { stdout, stderr } = await execFileAsync(
-            process.execPath,
-            [
-              script,
-              ...(projectPath ? [projectPath] : [])
-            ],
-            {
-              cwd: process.cwd(),
-              timeout: 30000
-            }
-          );
+          const { stdout, stderr } = await execFileAsync(process.execPath, [script, ...(projectPath ? [projectPath] : [])], {
+            cwd: process.cwd(),
+            timeout: 30000,
+          });
 
           if (stdout) {
             await session.log(stdout, { level: "info" });
@@ -243,14 +234,11 @@ const session = await joinSession({
             await session.log(stderr, { level: "warning" });
           }
         } catch (error) {
-          await session.log(
-            `rule-init failed: ${error.message}`,
-            { level: "error" }
-          );
+          await session.log(`rule-init failed: ${error.message}`, { level: "error" });
         }
-      }
-    }
-  ]
+      },
+    },
+  ],
 });
 ```
 
@@ -296,12 +284,12 @@ import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js"
 
 const client = new Client({
   name: "rule-command-client",
-  version: "1.0.0"
+  version: "1.0.0",
 });
 
 const transport = new StdioClientTransport({
   command: "node",
-  args: ["/absolute/path/to/mcp-server.mjs"]
+  args: ["/absolute/path/to/mcp-server.mjs"],
 });
 
 try {
@@ -310,8 +298,8 @@ try {
   const result = await client.callTool({
     name: "rule_init",
     arguments: {
-      projectPath: process.cwd()
-    }
+      projectPath: process.cwd(),
+    },
   });
 
   console.log(result);
@@ -378,14 +366,14 @@ Fonti: [Codex Skills](https://developers.openai.com/codex/skills), [Copilot Agen
 
 La parte importante, soprattutto per un sistema di guardrail ingegneristici, è capire cosa possiamo effettivamente garantire.
 
-| Proprietà | Skill | Copilot Extension | CLI diretta |
-|---|---|---|---|
-| Nome operazione prestabilito | Sì, nelle istruzioni | Sì, nel codice | Sì |
-| Scelta tool senza LLM | No | Sì | Sì |
-| Validazione argomenti tramite codice | Tramite script/tool | Sì | Sì |
-| Risultato JSON strutturato | Possibile | Sì | Sì |
-| Exit code verificabile | Tramite esecuzione script | Sì | Sì |
-| Usabile in CI senza agente | Non direttamente | Non come slash | Sì |
+| Proprietà                            | Skill                     | Copilot Extension | CLI diretta |
+| ------------------------------------ | ------------------------- | ----------------- | ----------- |
+| Nome operazione prestabilito         | Sì, nelle istruzioni      | Sì, nel codice    | Sì          |
+| Scelta tool senza LLM                | No                        | Sì                | Sì          |
+| Validazione argomenti tramite codice | Tramite script/tool       | Sì                | Sì          |
+| Risultato JSON strutturato           | Possibile                 | Sì                | Sì          |
+| Exit code verificabile               | Tramite esecuzione script | Sì                | Sì          |
+| Usabile in CI senza agente           | Non direttamente          | Non come slash    | Sì          |
 
 Inoltre, distinguerei **determinismo dell'invocazione** e **determinismo dell'operazione**. Un handler può chiamare sempre lo stesso tool, ma se quel tool dipende da file modificabili, rete, orario corrente o stato Git, il risultato potrebbe comunque cambiare.
 
@@ -451,14 +439,14 @@ Un generatore potrebbe leggere i manifest e produrre automaticamente:
 
 ## 8. Documentazione di riferimento
 
-| Documentazione | Perché è importante |
-|---|---|
-| [OpenAI Codex Skills](https://developers.openai.com/codex/skills) | Definizione, discovery e invocazione delle Skills |
-| [Codex developer commands](https://developers.openai.com/codex/cli/slash-commands) | Interfaccia dei comandi nativi |
-| [Copilot CLI Extensions tutorial](https://docs.github.com/en/copilot/tutorials/create-an-extension) | Registrazione effettiva di slash command JS |
-| [Copilot Plugin Reference](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-plugin-reference) | Packaging dei comandi personalizzati |
-| [Copilot Agent Skills](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills) | Skills e script associati |
-| [Copilot CLI Reference](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference) | Gestione MCP, permessi e funzionalità sperimentali |
+| Documentazione                                                                                                      | Perché è importante                                |
+| ------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| [OpenAI Codex Skills](https://developers.openai.com/codex/skills)                                                   | Definizione, discovery e invocazione delle Skills  |
+| [Codex developer commands](https://developers.openai.com/codex/cli/slash-commands)                                  | Interfaccia dei comandi nativi                     |
+| [Copilot CLI Extensions tutorial](https://docs.github.com/en/copilot/tutorials/create-an-extension)                 | Registrazione effettiva di slash command JS        |
+| [Copilot Plugin Reference](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-plugin-reference) | Packaging dei comandi personalizzati               |
+| [Copilot Agent Skills](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills)         | Skills e script associati                          |
+| [Copilot CLI Reference](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference)   | Gestione MCP, permessi e funzionalità sperimentali |
 
 ## Conclusione
 

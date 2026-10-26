@@ -7,7 +7,7 @@
 
 ## Context
 
-Four registries grew independently: the agent catalog (23 names), the command targets (11 agents), the command gaps (13 reasons) and the hook hosts (15 rows, 5 writable). Each could name a host the others had never heard of, and the paths lived in four more places - install in _agents-*.js, uninstall in _uninstall*.js, detection in _detect.js, and the documented file table in _hosts.data.js. The measured cost: droid was written to ~/.factory/mcp.json and removed from ~/.config/droid/mcp.json; antigravity was written to and read from a path its documentation does not name; neovim and emacs were "removed" from a mcp.json no installer ever wrote; ten catalog hosts had no hook row at all and hookSupport answered for them with an "Unknown host" fallback, so nothing in the tree could tell a measured absence from an oversight.
+Four registries grew independently: the agent catalog (23 names), the command targets (11 agents), the command gaps (13 reasons) and the hook hosts (15 rows, 5 writable). Each could name a host the others had never heard of, and the paths lived in four more places - install in _agents-_.js, uninstall in \_uninstall_.js, detection in _detect.js, and the documented file table in _hosts.data.js. The measured cost: droid was written to ~/.factory/mcp.json and removed from ~/.config/droid/mcp.json; antigravity was written to and read from a path its documentation does not name; neovim and emacs were "removed" from a mcp.json no installer ever wrote; ten catalog hosts had no hook row at all and hookSupport answered for them with an "Unknown host" fallback, so nothing in the tree could tell a measured absence from an oversight.
 
 ## Decision
 

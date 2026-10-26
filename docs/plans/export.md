@@ -57,8 +57,8 @@ WS-0  session map adapters (list/sort/identify current)     EX-02
 
 ## Env
 
-| Variable                              | Default | Meaning                                                                             |
-| ------------------------------------- | ------- | ----------------------------------------------------------------------------------- |
+| Variable                        | Default | Meaning                                                                             |
+| ------------------------------- | ------- | ----------------------------------------------------------------------------------- |
 | `RULE_MCP_EXPORT_KEEP_SESSIONS` | `5`     | Newest sessions retained on cleanup (current always retained even if outside top N) |
 
 Honor `RULE_MCP_NO_CACHE` for cache writes like other caches.

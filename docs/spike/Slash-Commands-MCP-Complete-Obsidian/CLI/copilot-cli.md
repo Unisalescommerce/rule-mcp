@@ -4,6 +4,7 @@ category: CLI
 date: 2026-10-25
 tags: [copilot, cli, mcp, slash-commands]
 ---
+
 # GitHub Copilot CLI
 
 > [!info] Studio completo

@@ -4,6 +4,7 @@ category: CLI
 date: 2026-10-25
 tags: [codex, cli, mcp, slash-commands]
 ---
+
 # Codex CLI
 
 > [!info] Studio completo

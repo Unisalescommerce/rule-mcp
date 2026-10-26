@@ -25,7 +25,7 @@
 ## Matrice implementazione
 
 | Meccanismo      | LLM nel routing | Chiamata script diretta | Portabile  |
-|-----------------|-----------------|-------------------------|------------|
+| --------------- | --------------- | ----------------------- | ---------- |
 | Skill/prompt.   | Sì              | Non garantita           | Alta       |
 | Extension JS/TS | No              | Sì                      | Media      |
 | Workflow prompt | Sì              | Non garantita           | Media      |

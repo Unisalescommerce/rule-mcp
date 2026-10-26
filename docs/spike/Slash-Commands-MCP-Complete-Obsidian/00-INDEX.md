@@ -3,6 +3,7 @@ title: "Slash commands e MCP - ecosistema multi-agent"
 date: 2026-10-25
 tags: [mcp, cli, ide, agentic-engineering, obsidian]
 ---
+
 # Slash commands custom, MCP e script CLI: panoramica
 
 > [!important] Obiettivo
@@ -15,30 +16,30 @@ tags: [mcp, cli, ide, agentic-engineering, obsidian]
 
 L'etichetta CLI riguarda le interfacce terminali; IDE include editor e loro estensioni; Hybrid copre più superfici. Devin è un ambiente cloud agentico, non un IDE desktop classico.
 
-| Client | Categoria | Evidenza | Integrazione consigliata |
-|---|---|---|---|
-| [[CLI/codex-cli|OpenAI Codex CLI]] | CLI | confirmed (Skills) | Skill + dispatcher |
-| [[CLI/copilot-cli|GitHub Copilot CLI]] | CLI | confirmed (experimental extension) | Native extension JS + dispatcher |
-| [[CLI/claude-code|Claude Code]] | CLI | confirmed | Prompt/Skill + dispatcher |
-| [[CLI/gemini-cli|Gemini CLI]] | CLI | confirmed | Prompt/Skill + dispatcher |
-| [[CLI/opencode|OpenCode]] | CLI | confirmed | Prompt/Skill + dispatcher |
-| [[CLI/pi-coding-agent|Pi Coding Agent]] | CLI | confirmed | Native extension |
-| [[CLI/kimi-code-cli|Kimi Code CLI]] | CLI | partial | Prompt/Skill + dispatcher |
-| [[CLI/factory-droid|Factory Droid]] | CLI | confirmed | Prompt/Skill + dispatcher |
-| [[CLI/qwen-code|Qwen Code]] | CLI | confirmed | Prompt/Skill + dispatcher |
-| [[CLI/kiro-cli|Kiro CLI]] | CLI | needs-test | Prompt/Skill + dispatcher |
-| [[CLI/grok|Grok]] | CLI | ambiguous | Prompt/Skill + dispatcher |
-| [[CLI/vibe|Vibe]] | CLI | ambiguous | Prompt/Skill + dispatcher |
-| [[Hybrid/cline|Cline]] | Hybrid | confirmed | Prompt/Skill + dispatcher |
-| [[IDE/roo-code|Roo Code]] | IDE | confirmed | Prompt/Skill + dispatcher |
-| [[IDE/zed|Zed]] | IDE | confirmed | Prompt/Skill + dispatcher |
-| [[Hybrid/google-antigravity|Google Antigravity]] | Hybrid | migration | Prompt/Skill + dispatcher |
-| [[Hybrid/devin|Devin]] | Cloud IDE | needs-test | Prompt/Skill + dispatcher |
-| [[Hybrid/kilo-code|Kilo Code]] | Hybrid | partial | Prompt/Skill + dispatcher |
-| [[IDE/vs-code|VS Code]] | IDE | confirmed | Prompt/Skill + dispatcher |
-| [[IDE/jetbrains-ai-assistant|JetBrains AI Assistant]] | IDE | confirmed | Prompt/Skill + dispatcher |
-| [[IDE/neovim|Neovim]] | IDE | plugin-dependent | Prompt/Skill + dispatcher |
-| [[IDE/emacs|Emacs]] | IDE | plugin-dependent | Prompt/Skill + dispatcher |
+| Client                       | Categoria                | Evidenza  | Integrazione consigliata           |
+| ---------------------------- | ------------------------ | --------- | ---------------------------------- |
+| [[CLI/codex-cli              | OpenAI Codex CLI]]       | CLI       | confirmed (Skills)                 | Skill + dispatcher               |
+| [[CLI/copilot-cli            | GitHub Copilot CLI]]     | CLI       | confirmed (experimental extension) | Native extension JS + dispatcher |
+| [[CLI/claude-code            | Claude Code]]            | CLI       | confirmed                          | Prompt/Skill + dispatcher        |
+| [[CLI/gemini-cli             | Gemini CLI]]             | CLI       | confirmed                          | Prompt/Skill + dispatcher        |
+| [[CLI/opencode               | OpenCode]]               | CLI       | confirmed                          | Prompt/Skill + dispatcher        |
+| [[CLI/pi-coding-agent        | Pi Coding Agent]]        | CLI       | confirmed                          | Native extension                 |
+| [[CLI/kimi-code-cli          | Kimi Code CLI]]          | CLI       | partial                            | Prompt/Skill + dispatcher        |
+| [[CLI/factory-droid          | Factory Droid]]          | CLI       | confirmed                          | Prompt/Skill + dispatcher        |
+| [[CLI/qwen-code              | Qwen Code]]              | CLI       | confirmed                          | Prompt/Skill + dispatcher        |
+| [[CLI/kiro-cli               | Kiro CLI]]               | CLI       | needs-test                         | Prompt/Skill + dispatcher        |
+| [[CLI/grok                   | Grok]]                   | CLI       | ambiguous                          | Prompt/Skill + dispatcher        |
+| [[CLI/vibe                   | Vibe]]                   | CLI       | ambiguous                          | Prompt/Skill + dispatcher        |
+| [[Hybrid/cline               | Cline]]                  | Hybrid    | confirmed                          | Prompt/Skill + dispatcher        |
+| [[IDE/roo-code               | Roo Code]]               | IDE       | confirmed                          | Prompt/Skill + dispatcher        |
+| [[IDE/zed                    | Zed]]                    | IDE       | confirmed                          | Prompt/Skill + dispatcher        |
+| [[Hybrid/google-antigravity  | Google Antigravity]]     | Hybrid    | migration                          | Prompt/Skill + dispatcher        |
+| [[Hybrid/devin               | Devin]]                  | Cloud IDE | needs-test                         | Prompt/Skill + dispatcher        |
+| [[Hybrid/kilo-code           | Kilo Code]]              | Hybrid    | partial                            | Prompt/Skill + dispatcher        |
+| [[IDE/vs-code                | VS Code]]                | IDE       | confirmed                          | Prompt/Skill + dispatcher        |
+| [[IDE/jetbrains-ai-assistant | JetBrains AI Assistant]] | IDE       | confirmed                          | Prompt/Skill + dispatcher        |
+| [[IDE/neovim                 | Neovim]]                 | IDE       | plugin-dependent                   | Prompt/Skill + dispatcher        |
+| [[IDE/emacs                  | Emacs]]                  | IDE       | plugin-dependent                   | Prompt/Skill + dispatcher        |
 
 ## Studio approfondito Codex + Copilot
 

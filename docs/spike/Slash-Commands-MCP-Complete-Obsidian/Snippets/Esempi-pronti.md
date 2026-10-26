@@ -34,7 +34,7 @@ Do not replace it with an approximate implementation.
 
 `.opencode/commands/rule-init.md`:
 
-````markdown
+```markdown
 ---
 description: Initialize project rules
 ---
@@ -44,7 +44,7 @@ Output of the authoritative rule initialization:
 !`node ./tools/rules.mjs init --json`
 
 Report the result above exactly, including any error.
-````
+```
 
 **Nota:** l'interpolazione esegue uno script prima di fornire l'output come contesto, non sostituisce una verifica dei permessi e del workspace.
 
