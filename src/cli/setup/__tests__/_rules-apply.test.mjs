@@ -88,6 +88,28 @@ test("a legacy Cursor path left by an older install is still cleaned", () => {
   assert.ok(!readFileSync(legacy, "utf8").includes("rule-mcp-rules"));
 });
 
+test("Copilot's user-level instructions land in the file the CLI reads", () => {
+  // Copilot CLI reads `$HOME/.copilot/copilot-instructions.md` and says "No
+  // copilot-instructions.md found. Run /init to generate." when it is absent. An
+  // install that wrote nothing there left that prompt on every session, which is
+  // the install's gap, not the user's.
+  const home = mkdtempSync(join(tmpdir(), "rule-mcp-copilot-home-"));
+  const file = join(home, ".copilot", "copilot-instructions.md");
+
+  mkdirSync(join(home, ".copilot"), { recursive: true });
+
+  assert.deepEqual(
+    underTmp(applyRules({ home, agents: ["copilot"] }), home).map((entry) => entry.id),
+    ["copilot"],
+  );
+  assert.match(readFileSync(file, "utf8"), /rule-mcp-rules/u, "the block is what the CLI then applies to every session");
+  assert.deepEqual(
+    removeRules({ home }).map((entry) => entry.file),
+    [file],
+    "uninstall sweeps the same path it wrote",
+  );
+});
+
 test("a selection narrows the targets to the agents named", () => {
   const home = scaffold();
   const rows = underTmp(applyRules({ home, agents: ["cursor"] }), home);

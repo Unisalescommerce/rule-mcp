@@ -23,7 +23,7 @@ const RULES = {
   codex: () => join(HOME, ".codex", "AGENTS.md"),
   cursor: () => join(HOME, ".cursorrules"),
   gemini: () => join(HOME, ".gemini", "GEMINI.md"),
-  copilot: () => join(HOME, ".copilot", "agents", "rule-mcp.agent.md"),
+  copilot: () => join(HOME, ".copilot", "copilot-instructions.md"),
 };
 
 /** The hosts that document a handler of their own, which is what L4 needs. */

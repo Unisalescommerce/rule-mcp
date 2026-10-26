@@ -33,6 +33,11 @@ const RULES_TARGETS = [
   { agent: "codex", probes: [".codex"], file: ".codex/AGENTS.md" },
   { agent: "cursor", probes: [".cursor"], file: ".cursorrules" },
   { agent: "pi", probes: [".pi/agent"], file: ".pi/agent/AGENTS.md" },
+  // The CLI reads user-level instructions from `$HOME/.copilot/copilot-instructions.md`,
+  // which is the file it asks for with "No copilot-instructions.md found. Run
+  // /init to generate." Until this row existed the install wrote no instructions
+  // for Copilot at all, so that prompt appeared on every session.
+  { agent: "copilot", probes: [".copilot"], file: ".copilot/copilot-instructions.md" },
   // Never written now, always swept: an old install wrote `~/.cursorrules`
   // while uninstall cleaned `~/.cursor/.cursorrules`.
   { agent: "cursor-legacy", probes: [], file: ".cursor/.cursorrules", legacy: true },
