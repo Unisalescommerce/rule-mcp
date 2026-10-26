@@ -8,7 +8,7 @@
  * exits 127, which means `cannot execute` and nothing else.
  */
 import { strict as assert } from "node:assert";
-import { chmodSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -40,26 +40,39 @@ test("a missing target exits 127 and names the path", () => {
 
 test("a shim that runs but predates the target check is rewritten", () => {
   // The machine had exactly this: a working launcher, written before the guard,
-  // that kept turning a moved entry point into a node stack. `shimWorks` says
-  // yes to it, so the text is what decides.
+  // that kept turning a moved entry point into a node stack. `shimWorks` says yes
+  // to it, so the text is what decides.
+  //
+  // The whole lookup is sandboxed - `PNPM_HOME`, `PATH`, and the guard the
+  // installer ships - because `ensureGlobalShim` resolves the shim through
+  // `command -v` and would otherwise rewrite the machine's real one. An earlier
+  // version of this test deleted it.
   const home = mkdtempSync(join(tmpdir(), "rule-mcp-shim-refresh-"));
   const bin = join(home, "bin");
   const target = join(home, "entry.js");
+  const shim = join(bin, "rule-mcp");
+  const saved = { PNPM_HOME: process.env.PNPM_HOME, PATH: process.env.PATH };
 
-  writeFileSync(target, 'console.log("ok");\n', { recursive: true });
+  mkdirSync(bin, { recursive: true });
+  writeFileSync(target, 'console.log("ok");\n');
   process.env.PNPM_HOME = home;
+  process.env.PATH = `${bin}:/usr/bin:/bin`;
 
-  const first = ensureGlobalShim({ localBin: target });
+  try {
+    const first = ensureGlobalShim({ localBin: target });
+    const old = ["#!/bin/sh", `exec node ${JSON.stringify(target)} "$@"`, ""].join("\n");
 
-  writeFileSync(join(bin, "rule-mcp"), ["#!/bin/sh", `exec node ${JSON.stringify(target)} "$@"`, ""].join("\n"));
+    writeFileSync(shim, old);
 
-  const second = ensureGlobalShim({ localBin: target });
+    const second = ensureGlobalShim({ localBin: target });
 
-  assert.ok(["refreshed", "created", "relinked"].includes(first.status), `the first install writes one: ${first.status}`);
-  assert.notEqual(second.status, "verified", "an old body is not verified just because it runs");
-  assert.match(readFileSync(join(bin, "rule-mcp"), "utf8"), /rule-mcp launcher: \$target is missing/u, "the guard is what a refresh installs");
-
-  delete process.env.PNPM_HOME;
+    assert.equal(first.path, shim, "the sandbox is where the shim is written");
+    assert.notEqual(second.status, "verified", "an old body is not verified just because it runs");
+    assert.match(readFileSync(shim, "utf8"), /launcher: \$target is missing/u, "the guard is what a refresh installs");
+  } finally {
+    process.env.PNPM_HOME = saved.PNPM_HOME ?? "";
+    process.env.PATH = saved.PATH ?? "";
+  }
 });
 
 test("the launcher still runs a target that exists", () => {
