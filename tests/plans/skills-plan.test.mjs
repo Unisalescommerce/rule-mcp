@@ -67,7 +67,12 @@ const planText = readFileSync(join(skillsPlans, "skills-plan.md"), "utf8");
  * by that one substitution. Deriving it from the file stem instead made the test's
  * ids match nothing, which is why two assertions had been red since the rename.
  */
-const nodeId = (path) => path.split("/").pop().replace(/\.md$/, "").replace(/^rule-mcp-/u, "rule-");
+const nodeId = (path) =>
+  path
+    .split("/")
+    .pop()
+    .replace(/\.md$/, "")
+    .replace(/^rule-mcp-/u, "rule-");
 
 /** The `## Dependency graph` body of one plan, or "". */
 function graphSection(text) {

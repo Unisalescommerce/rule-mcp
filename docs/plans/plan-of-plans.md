@@ -44,16 +44,17 @@ Reference for the retired layer: [`plan-of-plans-reference.md`](plan-of-plans-re
 
 The hierarchy has one rule: **every group of more than one plan gets an orchestrator, and this file names it or says why not.**
 
-| Group                                                     | Orchestrator                        | State                                                                   |
-| --------------------------------------------------------- | ----------------------------------- | ----------------------------------------------------------------------- |
-| the skills catalog (84 leaves, 10 routers, 1 cross-skill) | `docs/plans/skills/skills-plan.md`  | in progress: 3 nodes done (`rule-process-npm/uv/cargo-release`)         |
-| installer and host integration (2 plans)                  | this file, stage 9                  | `installer-scope-adr-policy-features` then `mcp-host-integration-depth` |
-| repository policy, OSS and release duties                 | retired into ADR 135 and handoff 27 | closed                                                                  |
-| single-document tracks                                    | their own `## Dependency graph`     | `export.md`, `2026-10-01-scripts-mcp-layout.md`, `decision-models.md`   |
+| Group                                                     | Orchestrator                              | State                                                                   |
+| --------------------------------------------------------- | ----------------------------------------- | ----------------------------------------------------------------------- |
+| the skills catalog (84 leaves, 10 routers, 1 cross-skill) | `docs/plans/skills/skills-plan.md`        | in progress: 3 nodes done (`rule-process-npm/uv/cargo-release`)         |
+| installer and host integration (2 plans)                  | this file, stage 9                        | `installer-scope-adr-policy-features` then `mcp-host-integration-depth` |
+| repository policy, OSS and release duties                 | retired into ADR 135 and handoff 27       | closed                                                                  |
+| single-document tracks                                    | their own `## Dependency graph`           | `export.md`, `2026-10-01-scripts-mcp-layout.md`, `decision-models.md`   |
+| the global launcher (installer infrastructure)            | `stable-launcher-outside-the-checkout.md` | planned: 4 phases, Phase 1 measures before Phase 2 is written           |
 
 ## 3 - Nodes: one level
 
-**87 skill nodes** (counted by `tests/plans/skills-plan.test.mjs`) plus **five documents tracked on their own**, which are not nodes and are named in the table above: `export.md`, `2026-10-01-scripts-mcp-layout.md`, `decision-models.md`, `installer-scope-adr-policy-features.md`, `mcp-host-integration-depth.md`. Six area plans are `superseded` into their leaf plans and are not nodes either.
+**87 skill nodes** (counted by `tests/plans/skills-plan.test.mjs`) plus **six documents tracked on their own**, which are not nodes and are named in the table above: `export.md`, `2026-10-01-scripts-mcp-layout.md`, `decision-models.md`, `installer-scope-adr-policy-features.md`, `mcp-host-integration-depth.md`, `stable-launcher-outside-the-checkout.md`. Six area plans are `superseded` into their leaf plans and are not nodes either.
 
 Every node carries four parseable lines in its own plan:
 
@@ -90,6 +91,8 @@ rel/v0.1.0
 │   └── stage 10 ................... the area routers
 ├── installer-scope-adr-policy-features  (tracked on its own, planned)
 │   └── --HARD--> mcp-host-integration-depth  (Phase 1 and later; Phase 0 does not wait)
+├── stable-launcher-outside-the-checkout  (tracked on its own, planned)
+│   └── --ORDER--> installer-scope-adr-policy-features  (its installer paths)
 ├── export.md, 2026-10-01-scripts-mcp-layout.md, decision-models.md  (independent)
 └── this file ...................... the order between the groups above
 ```
@@ -156,6 +159,11 @@ The eight OSS findings closed with them: OSS-01 unsigned tags (a `git verify-tag
 - [ ] `installer-scope-adr-policy-features.md`: the port of ADR policy, project-scope installs, features, host paths and the wizard. Its step 3 (`_hosts.data.js`, one table read by install, uninstall and detection) is what the host plan's Phase 1 consumes.
 - [ ] `mcp-host-integration-depth.md` Phase 0: 31 evidence rows with a status and a source, the Roo Code and Codex-prompt contradictions resolved, the eight products with no installer row registered. **This is the next node: it is unblocked today**, because only Phase 1 and later wait on the port plan.
 - [ ] Then Phase 1 of the host plan, once the port plan's host table exists.
+
+### Stage 10 - The launcher (independent of stage 9)
+
+- [ ] `stable-launcher-outside-the-checkout.md` Phase 1: measure what `pnpm pack` produces before promising a copy - packed size, extracted size, and whether OpenTUI's platform binary survives. A failed measurement stops the plan there, and the existing `exit 127` remains the answer.
+- [ ] Then Phase 2: the resolution order (copy, checkout, `127`) and `doctor` naming the live target.
 
 ## 8 - Shared files inside this branch
 
