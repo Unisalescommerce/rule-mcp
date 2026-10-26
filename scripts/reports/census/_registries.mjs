@@ -124,7 +124,9 @@ export function resourceKinds(resources, skillDirs) {
 
   for (const resource of resources) {
     const prefix = String(resource.uri)
-      .replace(/^rulemcp:\/\//, "")
+      // The protocol is `rule://`; `rulemcp://` is the alias a released client
+      // may still send, and both name the same resource.
+      .replace(/^(?:rule|rulemcp):\/\//, "")
       .split("/", 1)[0];
 
     if (skills.has(prefix)) {

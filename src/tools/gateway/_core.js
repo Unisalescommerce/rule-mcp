@@ -55,6 +55,7 @@ export async function computeGatewayCore(arguments_, fileSet) {
 
   // ── Step 1: Route the prompt ──
   const { callTool } = await import("../router/index.js");
+  const { toolNameForSkill } = await import("../skill/_skill-tool.js");
   const routeResult = await callTool("rule_tool", {
     prompt,
     ...(path && { path }),
@@ -81,7 +82,7 @@ export async function computeGatewayCore(arguments_, fileSet) {
     // Skill tools register under rule_tool_<skill-in-underscores>; anything else
     // resolves to "Unknown tool" and the evidence block silently carried that
     // error text instead of the skill's rules (surfaced by the coverage phase).
-    const skillResult = await callTool(`rule_tool_${primarySkill.replace(/^rule-mcp-/, "").replaceAll("-", "_")}`, {
+    const skillResult = await callTool(toolNameForSkill(primarySkill), {
       mode: "tldr",
       query: prompt.slice(0, 300),
     });

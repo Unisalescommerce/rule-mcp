@@ -24,9 +24,9 @@ const NUMBERED = /^(\d{2,4})-(.+)\.md$/;
 function titleOf(content, slug) {
   const heading = content.match(/^#\s+(.+)$/m)?.[1] ?? "";
   const title = heading
-    .replace(/^Session handoff\s+\d+\s*[\u2014\u2013:-]\s*/i, "")
+    .replace(/^Session handoff\s+\d+\s*[\u2014\u2013:,-]\s*/i, "")
     .replace(/^Handoff:\s*/i, "")
-    .replace(/^\d+\s*[\u2014\u2013:-]\s*/, "")
+    .replace(/^\d+\s*[\u2014\u2013:,-]\s*/, "")
     .trim();
 
   return title || slug.replaceAll("-", " ");

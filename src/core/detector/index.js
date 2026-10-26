@@ -14,6 +14,7 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { projectManifest, readManifest } from "../tokensave/_deps.js";
 import { BUILD_TOOL_RULES, FRAMEWORK_RULES, FRAMEWORK_SKILL_MAP } from "./_rules.data.js";
+import { toolNameForSkill } from "../../tools/skill/_skill-tool.js";
 
 /**
  * Get the canonical skill/tool suggestion for a detected framework key.
@@ -23,9 +24,8 @@ import { BUILD_TOOL_RULES, FRAMEWORK_RULES, FRAMEWORK_SKILL_MAP } from "./_rules
  */
 export function getFrameworkSuggestion(framework) {
   const skillName = FRAMEWORK_SKILL_MAP[framework] || "rule-frontend";
-  const displayName = skillName.replace(/^rule-mcp-/, "").replaceAll("-", "_");
 
-  return { skillName, toolName: `rule_tool_${displayName}` };
+  return { skillName, toolName: toolNameForSkill(skillName) };
 }
 
 /**
