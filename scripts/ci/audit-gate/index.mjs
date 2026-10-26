@@ -10,11 +10,16 @@
  * So: a parseable report with advisories fails, a parseable clean report
  * passes, and an audit that could not run at all warns and passes - loudly,
  * naming the reason, so nobody mistakes it for a clean result.
+ *
+ * The audit covers **every** dependency, not only production ones. A dev tree is
+ * still code that runs on a maintainer's machine and in CI (`vite`, `undici` and
+ * `source-map-js` all carry advisories through dev paths), and a gate that looks
+ * at half the lockfile reports "clean" about a tree it never read.
  */
 
 import { spawnSync } from "node:child_process";
 
-const result = spawnSync("pnpm", ["audit", "--prod", "--json"], { encoding: "utf8" });
+const result = spawnSync("pnpm", ["audit", "--json"], { encoding: "utf8" });
 const output = `${result.stdout ?? ""}`.trim();
 
 /** The advisories block of a pnpm audit report, or nothing when unparseable. */
@@ -41,7 +46,7 @@ if (advisories === undefined) {
 const entries = Object.values(advisories);
 
 if (entries.length === 0) {
-  process.stdout.write("[audit-gate] No known vulnerabilities in production dependencies.\n");
+  process.stdout.write("[audit-gate] No known vulnerabilities in any dependency, production or development.\n");
   process.exit(0);
 }
 
@@ -54,5 +59,5 @@ for (const advisory of entries) {
 }
 
 const summary = [...bySeverity].map(([severity, count]) => `${count} ${severity}`).join(", ");
-process.stderr.write(`[audit-gate] ${entries.length} vulnerability(ies) in production dependencies (${summary}).\n`);
+process.stderr.write(`[audit-gate] ${entries.length} vulnerability(ies) across the lockfile (${summary}).\n`);
 process.exit(1);

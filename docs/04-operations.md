@@ -228,7 +228,7 @@ After the first push to `main`, CI starts automatically:
 
 - **Lint job**: syntax check + ESLint + Prettier
 - **Test job**: 6 combinations (ubuntu x node20/22, macos x node20/22, windows x node20/22)
-- **Audit job**: `pnpm audit --prod`
+- **Audit job**: `pnpm audit:gate`, which audits every dependency - production and development - and fails on any advisory by name
 
 Check: **GitHub -> Actions -> ci**
 
