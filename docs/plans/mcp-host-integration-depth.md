@@ -1,7 +1,7 @@
 # mcp-host-integration-depth - per-host install/uninstall, integration levels, and the server-side wiring
 
 Status: `in-progress`
-Notes:`in-progress` 33 of 37. Six phases closed; the four open items are three deferrals with their reasons recorded (`_registry`/`_uninstall` as lookups, the manifest's `written[]`, the per-host token measurement) and one item the measurement produced (the hook's own process cost, 1056 ms per prompt against a 1.3-2.4 s spawn floor). Outside the skills graph: this plan covers the installer, the host registries and
+Notes:`in-progress` 33 of 37. Six phases closed; the four open items are three deferrals with their reasons recorded (`_registry`/`_uninstall` as lookups, the manifest's `written[]`, the per-host token measurement) and one item the measurement produced (the hook's own process cost — remasured 2026-10-27: see Phase 5 open item; the 1056 ms / 1.3-2.4 s floor pair from 2026-10-25 no longer holds on this machine). Outside the skills graph: this plan covers the installer, the host registries and
 the server↔host wiring, not skills, so it is not a node in `docs/plans/skills/skills-plan.md`.
 It is the sibling of `installer-scope-adr-policy-features.md` and depends on it for the host
 path table.
@@ -210,7 +210,7 @@ scripts/bench/hook-lifecycle.mjs`, median of five runs, this machine):
 
 Three facts decided the phase, and each killed one item:
 
-- **the process, not the context, is the cost.** A bare `node -e 0` on this machine takes 1.3-2.4 s under load, and `guard prompt-submit` 1.6 s: the hook's own work is a fraction of a spawn that happens on every prompt. Nothing the server computes inside that process can pay for another one;
+- **the process, not the context, is the cost.** (2026-10-25:) a bare `node -e 0` took 1.3-2.4 s under load and `guard prompt-submit` 1.6 s. (2026-10-27 remasure:) that spawn-floor story does not hold — see the open item below; the lever is still process lifetime / entry weight, not prefetch or invalidate;
 - **a warmed decision has no reader.** `RULE_MCP_DECISION_CACHE_REPLAY` is `1`-gated and ADR 166 keeps it off, so a `UserPromptSubmit` prefetch would write an entry nobody serves;
 - **staleness is already handled on read.** `cacheGet` checks the entry's dependencies and evicts the entry it found stale: measured, the stale read is not served and the entry is gone. An eager `PostToolUse` invalidation duplicates a check that already ran.
 
@@ -219,7 +219,16 @@ Three facts decided the phase, and each killed one item:
 - [x] `PostToolUse` invalidate - **rejected by measurement**: `cacheGet` evicts on the read that found the dependency stale (`entriesAfterStaleRead` drops, the read returns a miss).
 - [x] Overlay delivery by `additionalContext`, and `statusMessage` on every hook - **already shipped** before this phase (ADR 129, ADR 179), and priced above: 291 tokens once per session, 46 per prompt.
 - [x] Gate: the measurement is written down and the items that did not move a number are removed rather than kept. Both halves are in this section.
-- [ ] **Added by the measurement, and not done:** the hook's own cost. If a prompt costs 1 s of wall time before the model sees anything, the lever is the spawn - a persistent guard process, or a cheaper entry point than the full CLI - not anything this plan listed. The number to beat is `prompt-submit` at 1056 ms against a `node -e 0` floor of 1.3-2.4 s under load, so the first step is measuring that floor on an idle machine before choosing.
+- [ ] **Added by the measurement, and not done:** the hook's own cost. Remeasured 2026-10-27 on Node `v26.12.1` (10 CPUs). **Idle floor (`loadavg` ≤ 0.35×CPUs) was not reached** in a 3‑minute wait plus later retries; quietest band observed was `loadavg` ~10–12. In that band: `node -e 0` median **~43–55 ms** (not 1.3–2.4 s), official `scripts/bench/hook-lifecycle.mjs` `prompt-submit` median **~115 ms** (not 1056 ms). The 2026-10-25 table above stays as the day it was taken; it does not decide the lever now. Spike harness: `scripts/bench/hook-spawn-spike.mjs` (same band, loadavg ~11–74 noisy under contention):
+  | Case | Median wall |
+  | --- | ---: |
+  | A `node -e 0` | ~55 ms |
+  | B full CLI `guard prompt-submit` | ~180 ms |
+  | C thin entry (`runGuard` only, no Commander / no `bootstrapCoreTools`) | ~162 ms |
+  | E spawn `buildProgram` + `bootstrapCoreTools` | ~178 ms |
+  | F1 spawn import `promptDirective` only | ~spawn floor |
+  | D daemon-shaped: cold `import runGuard` once, then in-process call | **~0.1–0.2 ms** / call |
+  **Ranking:** persistent guard recovers almost the whole per-prompt wall after one cold import; a thinner CLI entry that still loads `runGuard` recovers only ~18 ms. `promptDirective` alone is near the spawn floor — the cost is the import graph around the full CLI/`runGuard` path (and `preAction` → `bootstrapCoreTools` on every command). **Choose daemon/persistent guard first; skip or bypass `bootstrapCoreTools` for `guard` second; dedicated thin bin only if the daemon path is refused.** Implementation of either lever is not this checkbox — this checkbox is the measured choice.
 - [ ] **Not measured, with the reason:** tokens per turn on `claude`, `codex` and `pi`, which the phase asked for. Nothing in this repository drives those agents end to end; the numbers above are what every one of them pays before it starts. Claiming a per-host figure would be inventing it.
 
 ### Phase 6 - Documents, census, ADRs, doctor
