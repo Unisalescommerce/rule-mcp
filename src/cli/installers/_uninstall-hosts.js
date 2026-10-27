@@ -11,12 +11,12 @@
 import { existsSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
 
-import { readText, removeFile, writeText } from "./_paths.js";
-import { removeJsonServer } from "./_writers-json.js";
+import { HOME, IS_MACOS, IS_WINDOWS, readText, removeFile, writeText } from "./_paths.js";
+import { removeJsonServer, removeVscodeServer } from "./_writers-json.js";
 import { removeHostServer } from "./_host-formats.js";
 import { HOST_FILES, hostFile, hostPaths } from "./_hosts.data.js";
 import { emacsInitFile, nvimMcpFile } from "./_agents-ide.js";
-import { hostRecord } from "./hosts/index.js";
+import { hostRecord } from "./hosts/_core.js";
 import { renderAgentCommandFiles } from "../../core/agents/commands/index.js";
 
 /**
@@ -101,4 +101,51 @@ const uninstallEmacs = ({ dryRun }) => {
   return [writeText({ file, content: without, dryRun })];
 };
 
-export { uninstallDevin, uninstallEmacs, uninstallGeneric, uninstallJetbrains, uninstallNeovim };
+/** VS Code: project file, global User file, Insiders, and Code-OSS where present. */
+const uninstallVscode = ({ dryRun }) => {
+  const removeFromExistingFile = (file) => {
+    if (!existsSync(file)) {
+      return null;
+    }
+
+    const content = removeVscodeServer(readText(file));
+
+    if (content === "") {
+      if (!dryRun) {
+        removeFile(file);
+      }
+
+      return file;
+    }
+
+    return writeText({ file, content, dryRun });
+  };
+
+  const results = [];
+
+  // Project-level
+  const projectFile = join(process.cwd(), ".vscode", "mcp.json");
+  results.push(removeFromExistingFile(projectFile));
+
+  // Global (main VS Code)
+  const globalFile = hostRecord("vscode").server.file;
+  results.push(removeFromExistingFile(globalFile));
+
+  // VS Code Insiders global
+  const insidersDir = IS_MACOS
+    ? join(HOME, "Library", "Application Support", "Code - Insiders", "User")
+    : IS_WINDOWS
+      ? join(process.env.APPDATA || join(HOME, "AppData", "Roaming"), "Code - Insiders", "User")
+      : join(HOME, ".config", "Code - Insiders", "User");
+  results.push(removeFromExistingFile(join(insidersDir, "mcp.json")));
+
+  // Code-OSS global
+  if (!IS_WINDOWS) {
+    const ossDir = IS_MACOS ? join(HOME, "Library", "Application Support", "Code - OSS", "User") : join(HOME, ".config", "Code - OSS", "User");
+    results.push(removeFromExistingFile(join(ossDir, "mcp.json")));
+  }
+
+  return results.filter(Boolean);
+};
+
+export { uninstallDevin, uninstallEmacs, uninstallGeneric, uninstallJetbrains, uninstallNeovim, uninstallVscode };

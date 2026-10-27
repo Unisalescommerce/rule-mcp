@@ -1,89 +1,16 @@
-/** @module cli/installers/uninstall - the editor uninstallers and the registry */
-
-import { existsSync } from "node:fs";
-import { join } from "node:path";
-import { HOME, IS_MACOS, IS_WINDOWS, readText, removeFile, writeText } from "./_paths.js";
-import { removeVscodeServer } from "./_writers-json.js";
-import { vscodeGlobalDir } from "./_agents-ide.js";
-import { hostRecord } from "./hosts/index.js";
+/**
+ * @module cli/installers/uninstall
+ *
+ * Re-exports the per-host uninstall bodies and builds `uninstallers` as a
+ * lookup on the host record (`hostRecord(id).uninstall`).
+ */
 
 export * from "./_uninstall-hosts.js";
-import { uninstallDevin, uninstallEmacs, uninstallGeneric, uninstallJetbrains, uninstallNeovim } from "./_uninstall-hosts.js";
-import { uninstallClaude, uninstallCodex, uninstallCursor, uninstallCopilot, uninstallGemini, uninstallPi } from "./_uninstall-clis.js";
-import { uninstallOpencode } from "./_agents-opencode.js";
 export * from "./_uninstall-clis.js";
 export { uninstallOpencode } from "./_agents-opencode.js";
 
-const uninstallVscode = ({ dryRun }) => {
-  const removeFromExistingFile = (file) => {
-    if (!existsSync(file)) {
-      return null;
-    }
+import { catalogHosts, hostRecord } from "./hosts/index.js";
 
-    const content = removeVscodeServer(readText(file));
+const uninstallers = Object.fromEntries(catalogHosts().map((id) => [id, hostRecord(id).uninstall]));
 
-    if (content === "") {
-      if (!dryRun) {
-        removeFile(file);
-      }
-
-      return file;
-    }
-
-    return writeText({ file, content, dryRun });
-  };
-
-  const results = [];
-
-  // Project-level
-  const projectFile = join(process.cwd(), ".vscode", "mcp.json");
-  results.push(removeFromExistingFile(projectFile));
-
-  // Global (main VS Code)
-  const globalFile = hostRecord("vscode").server.file;
-  results.push(removeFromExistingFile(globalFile));
-
-  // VS Code Insiders global
-  const insidersDir = IS_MACOS
-    ? join(HOME, "Library", "Application Support", "Code - Insiders", "User")
-    : IS_WINDOWS
-      ? join(process.env.APPDATA || join(HOME, "AppData", "Roaming"), "Code - Insiders", "User")
-      : join(HOME, ".config", "Code - Insiders", "User");
-  results.push(removeFromExistingFile(join(insidersDir, "mcp.json")));
-
-  // Code-OSS global
-  if (!IS_WINDOWS) {
-    const ossDir = IS_MACOS ? join(HOME, "Library", "Application Support", "Code - OSS", "User") : join(HOME, ".config", "Code - OSS", "User");
-    results.push(removeFromExistingFile(join(ossDir, "mcp.json")));
-  }
-
-  return results.filter(Boolean);
-};
-
-const uninstallers = {
-  claude: uninstallClaude,
-  codex: uninstallCodex,
-  cursor: uninstallCursor,
-  copilot: uninstallCopilot,
-  gemini: uninstallGemini,
-  pi: uninstallPi,
-  opencode: uninstallOpencode,
-  vscode: uninstallVscode,
-  jetbrains: uninstallJetbrains,
-  cline: uninstallGeneric("cline"),
-  roo: uninstallGeneric("roo"),
-  zed: uninstallGeneric("zed"),
-  antigravity: uninstallGeneric("antigravity"),
-  devin: uninstallDevin,
-  kilo: uninstallGeneric("kilo"),
-  kimi: uninstallGeneric("kimi"),
-  vibe: uninstallGeneric("vibe"),
-  grok: uninstallGeneric("grok"),
-  droid: uninstallGeneric("droid"),
-  kiro: uninstallGeneric("kiro"),
-  qwen: uninstallGeneric("qwen"),
-  neovim: uninstallNeovim,
-  emacs: uninstallEmacs,
-};
-
-export { uninstallVscode, uninstallers };
+export { uninstallers };

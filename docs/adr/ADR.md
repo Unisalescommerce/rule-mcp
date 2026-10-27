@@ -8,6 +8,7 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md)                                            | Host install and uninstall maps are lookups on the host record                                            | 2026-10-27 | accepted   | installer, hosts, architecture                                                      |
 | [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md)                                                 | Hook install starts the guard daemon and writers use --send                                               | 2026-10-27 | accepted   | cli, installer, hooks, performance                                                  |
 | [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md)                                                     | Guard daemon on a Unix socket with a thin --send client                                                   | 2026-10-27 | accepted   | cli, performance, hooks, architecture                                               |
 | [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md)                                                  | Guard skips core-tool bootstrap; optional persistent --loop                                               | 2026-10-27 | accepted   | cli, performance, hooks, architecture                                               |
@@ -205,6 +206,7 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md)                                            | Add hosts/_writers.js as the single table of install/uninstall pairs. hostRecord(id) exposes .install and .uninstall from that table. _registry.js and _uninstall.js build their maps as...                                     | Positive: installers[id] === hostRecord(id).install for all 23 hosts (enforced by host-writers.test.mjs); adding a host requires writers + evidence in one place.                                                               |
 | [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md)                                                 | guardCommand (and the OpenCode/Pi plugin snippets) emit guard --send <kind>. installAgent starts the detached guard daemon whenever hooks are written. uninstallAgent stops the daemon when the install manifest has no...      | Positive: L3+ hook installs get the warm path automatically; uninstall of the last agent cleans up.                                                                                                                             |
 | [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md)                                                     | Add guard --daemon listening on $RULE_MCP_HOME/state/guard.sock and guard --send which forwards one stdin payload over that socket. bin/rule-mcp.js early-dispatches guard --send before loading Commander so the client...     | Positive: a measured reuse path exists; writers can switch later; spawn lifecycle stays correct for the default path.                                                                                                           |
 | [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md)                                                  | 1) shouldBootstrapCoreTools returns false when the Commander action command is named guard, so preAction skips bootstrapCoreTools for that command only. 2) guard gains an optional --loop that reads NDJSON lines and...       | Positive: every guard spawn avoids registering gateway/apply; --loop exists for hosts that can keep a pipe open; tests lock the skip and the loop framing.                                                                      |
@@ -433,6 +435,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### installer
 
+- [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md) Host install and uninstall maps are lookups on the host record
 - [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md) Hook install starts the guard daemon and writers use --send
 - [184](184-the-install-manifest-records-a-level-per-host.md) The install manifest records a level per host
 - [183](183-integration-depth-is-the-second-install-axis-capped-by-a-measured-ceiling.md) Integration depth is the second install axis, capped by a measured ceiling
@@ -460,6 +463,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### architecture
 
+- [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md) Host install and uninstall maps are lookups on the host record
 - [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md) Guard daemon on a Unix socket with a thin --send client
 - [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md) Guard skips core-tool bootstrap; optional persistent --loop
 - [169](169-rename-the-server-to-rulemcp.md) Rename the server to RuleMCP
@@ -965,6 +969,13 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [010](010-backend-framework-skills.md) backend framework skills
 - [005](005-backend-framework-skills.md) Backend Framework Skills
 
+### hosts
+
+- [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md) Host install and uninstall maps are lookups on the host record
+- [184](184-the-install-manifest-records-a-level-per-host.md) The install manifest records a level per host
+- [183](183-integration-depth-is-the-second-install-axis-capped-by-a-measured-ceiling.md) Integration depth is the second install axis, capped by a measured ceiling
+- [182](182-one-host-record-answers-for-every-catalog-host.md) One host record answers for every catalog host
+
 ### infrastructure
 
 - [008](008-scaffold-skill-consolidation.md) scaffold skill consolidation
@@ -1061,12 +1072,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [128](128-consolidate-the-feature-adrs-and-handoffs-into-one-commit-at-the-close-squash.md) Consolidate the feature ADRs and handoffs into one commit at the close squash
 - [126](126-close-a-feature-with-reset-soft-onto-the-merge-base-and-one-validated-commit.md) Close a feature with reset --soft onto the merge base and one validated commit
 - [125](125-normalize-history-on-the-merge-base-and-hold-every-rewrite-to-a-tree-invariant.md) Normalize history on the merge base and hold every rewrite to a tree invariant
-
-### hosts
-
-- [184](184-the-install-manifest-records-a-level-per-host.md) The install manifest records a level per host
-- [183](183-integration-depth-is-the-second-install-axis-capped-by-a-measured-ceiling.md) Integration depth is the second install axis, capped by a measured ceiling
-- [182](182-one-host-record-answers-for-every-catalog-host.md) One host record answers for every catalog host
 
 ### merge
 

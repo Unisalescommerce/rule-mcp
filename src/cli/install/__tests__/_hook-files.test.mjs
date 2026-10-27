@@ -23,7 +23,7 @@ test("Cursor keeps a foreign hook and replaces ours", () => {
   const merged = mergeHookDocument("cursor", current, launcher);
 
   assert.equal(merged.hooks.preToolUse[0].command, "someone-else");
-  assert.match(merged.hooks.preToolUse[1].command, /^\/bin\/rule-mcp guard bash/u);
+  assert.match(merged.hooks.preToolUse[1].command, /^\/bin\/rule-mcp guard --send bash/u);
   assert.equal(merged.hooks.preToolUse.length, 3);
 });
 

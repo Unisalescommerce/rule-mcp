@@ -8,7 +8,7 @@ import { dirname, join } from "node:path";
 import { HOME, readText, removeFile, serverName, writeText } from "./_paths.js";
 import { parseJson, toJson, removeJsonServer } from "./_writers-json.js";
 import { removeInstruction, removeTomlBlock } from "./_writers-text.js";
-import { hostRecord } from "./hosts/index.js";
+import { hostRecord } from "./hosts/_core.js";
 
 /** Per-agent removal: each uninstaller touches its own agent dir only. */
 

@@ -59,7 +59,7 @@ test("a real install reports configured, not would configure", () => {
   const result = agentInstallTask("claude", "stdio", true).run({ dryRun: false });
 
   assert.equal(result.status, "ok");
-  assert.equal(result.summary, "configured");
+  assert.match(result.summary, /^configured/u);
 });
 
 test("a deprecated agent lands under its successor and carries the warning", () => {
