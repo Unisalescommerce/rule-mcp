@@ -112,8 +112,26 @@ export function registerGuardCommand(program) {
     .description("Permission-guard payload processor (invoked by PreToolUse hooks, reads stdin)")
     .argument("[action]", "bash or other guard scope", "bash")
     .option("--loop", "keep the process warm; NDJSON lines in, one JSON answer per line out")
+    .option("--daemon", "listen on the guard Unix socket (one warm process for many --send clients)")
+    .option("--send", "send one stdin payload to the guard daemon and print the answer")
     .allowExcessArguments(false)
     .action(async (action, options) => {
+      if (options.daemon) {
+        const { runGuardDaemon } = await import("./guard/_daemon.js");
+
+        await runGuardDaemon();
+
+        return;
+      }
+
+      if (options.send) {
+        const { runGuardSend } = await import("./guard/_send.js");
+
+        await runGuardSend(action ?? "bash");
+
+        return;
+      }
+
       if (options.loop) {
         const { runGuardLoop } = await import("./guard/_loop.js");
 

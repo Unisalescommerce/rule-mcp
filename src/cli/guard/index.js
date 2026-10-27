@@ -18,8 +18,11 @@
  */
 
 export * from "./_decide.js";
+export * from "./_daemon.js";
 export * from "./_inject.js";
 export * from "./_loop.js";
+export * from "./_send.js";
+export * from "./_socket.js";
 export * from "./_staged.js";
 export * from "./_run.js";
 export { decideStructure, structuralSignal } from "./_structure.js";

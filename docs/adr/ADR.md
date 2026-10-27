@@ -8,6 +8,7 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md)                                                     | Guard daemon on a Unix socket with a thin --send client                                                   | 2026-10-27 | accepted   | cli, performance, hooks, architecture                                               |
 | [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md)                                                  | Guard skips core-tool bootstrap; optional persistent --loop                                               | 2026-10-27 | accepted   | cli, performance, hooks, architecture                                               |
 | [186](186-baseline-the-cli-file-size-debt-in-the-ratchet.md)                                                            | Baseline the CLI file-size debt in the ratchet                                                            | 2026-10-25 | accepted   | governance, file-size, cli                                                          |
 | [185](185-lifecycle-wiring-ships-only-where-a-measurement-moves.md)                                                     | Lifecycle wiring ships only where a measurement moves                                                     | 2026-10-25 | accepted   | hooks, performance, hooks-lifecycle                                                 |
@@ -203,6 +204,7 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md)                                                     | Add guard --daemon listening on $RULE_MCP_HOME/state/guard.sock and guard --send which forwards one stdin payload over that socket. bin/rule-mcp.js early-dispatches guard --send before loading Commander so the client...     | Positive: a measured reuse path exists; writers can switch later; spawn lifecycle stays correct for the default path.                                                                                                           |
 | [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md)                                                  | 1) shouldBootstrapCoreTools returns false when the Commander action command is named guard, so preAction skips bootstrapCoreTools for that command only. 2) guard gains an optional --loop that reads NDJSON lines and...       | Positive: every guard spawn avoids registering gateway/apply; --loop exists for hosts that can keep a pipe open; tests lock the skip and the loop framing.                                                                      |
 | [186](186-baseline-the-cli-file-size-debt-in-the-ratchet.md)                                                            | Record the 33 offenders in FILE_SIZE_RATCHET with the line count the cap measures, and document the adoption baseline here, which is the mechanism the data file's own header describes: an entry is added only as the...       | The budget test is green and stays honest: it now fails on growth and on a stale row instead of failing on the same 33 files forever.                                                                                           |
 | [185](185-lifecycle-wiring-ships-only-where-a-measurement-moves.md)                                                     | Measure first, with scripts/bench/hook-lifecycle.mjs, and drop what does not move.                                                                                                                                              | The measured cost is the process spawn, not the context: a bare node -e 0 takes 1.3-2.4 s under load here, so the hook's own work is a fraction of what every event pays.                                                       |
@@ -453,6 +455,31 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [039](039-fix-vscode-extension-and-derivatives-install-uninstall.md) Fix VS Code extension and derivatives install/uninstall
 - [028](028-clean-rule-mcp-commands-via-user-commands-prompt-suppression-not-a-plugin.md) Clean /rule-mcp-* commands via user commands + prompt suppression, not a plugin
 
+### architecture
+
+- [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md) Guard daemon on a Unix socket with a thin --send client
+- [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md) Guard skips core-tool bootstrap; optional persistent --loop
+- [169](169-rename-the-server-to-rulemcp.md) Rename the server to RuleMCP
+- [156](156-keep-bm25-and-gate-a-local-decision-model-as-a-second-opinion.md) Keep BM25 and gate a local decision model as a second opinion
+- [124](124-make-the-tool-call-host-a-list-so-invocation-hosts-coexist.md) Make the tool-call host a list so invocation hosts coexist
+- [112](112-extend-the-file-size-cap-to-the-shipped-skill-trees.md) Extend the file-size cap to the shipped skill trees
+- [100](100-the-tokensave-integration-closes-out-and-the-adapter-is-the-code-graph-layer.md) The TokenSave integration closes out: the adapter and its graph-backed tools are the code-graph layer
+- [096](096-tokensave-is-the-primary-code-graph-javascript-is-the-fallback.md) TokenSave is the primary code graph, JavaScript is the fallback
+- [092](092-surface-selection-amends-the-install-stack-freeze-with-an-additive-loader-filter.md) Surface selection amends the install stack freeze with an additive loader filter
+- [091](091-install-uninstall-rework-keeps-current-stack-steps-and-contents-only.md) Install/uninstall rework keeps current stack, steps and contents only
+- [089](089-skills-own-their-guardrails-and-three-layers-resolve-both-skills-and-personas.md) Skills own their guardrails, and three layers resolve both skills and personas
+- [058](058-one-file-per-rule-with-underscore-barrel-folders-and-a-size-ratchet.md) One file per rule with underscore-barrel folders and a size ratchet
+- [057](057-reorganize-scripts-src-tests-with-150-line-code-splitting.md) Reorganize scripts, src and tests with 150-line code splitting
+- [033](033-registry-driven-clean-slash-commands-for-every-agent-and-ide.md) Registry-driven clean slash commands for every agent and IDE
+- [032](032-the-tool-surface-is-skills-and-nothing-else.md) The tool surface is ./skills and nothing else
+- [031](031-pin-the-self-update-remote-and-drop-root-in-the-container.md) Pin the self-update remote and drop root in the container
+- [030](030-interview-servers-enforce-same-origin-and-own-their-process-lifecycle.md) Interview servers enforce same-origin and own their process lifecycle
+- [029](029-bind-write-authorization-to-destinations-not-just-content.md) Bind write authorization to destinations, not just content
+- [019](019-use-a-persistent-local-bearer-token-for-daemon-transport.md) use a persistent local bearer token for daemon transport
+- [018](018-fail-closed-mcp-enforcement-and-reusable-agent-commands.md) fail closed mcp enforcement and reusable agent commands
+- [017](017-forms-per-framework-merger-and-distribution.md) forms per framework merger and distribution
+- [011](011-forms-per-framework.md) Forms per Framework - Merger & Distribution
+
 ### guardrails
 
 - [155](155-extend-the-devops-guardrail-family-with-file-scoped-source-cited-rules.md) Extend the devops guardrail family with file-scoped, source-cited rules
@@ -477,30 +504,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [049](049-split-hotspot-modules.md) Split the hotspot modules (guardrails + installer)
 - [044](044-adopt-eslint-plugin-unicorn-for-js-ts-quality.md) Adopt eslint-plugin-unicorn for JS/TS quality
 - [018](018-fail-closed-mcp-enforcement-and-reusable-agent-commands.md) fail closed mcp enforcement and reusable agent commands
-
-### architecture
-
-- [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md) Guard skips core-tool bootstrap; optional persistent --loop
-- [169](169-rename-the-server-to-rulemcp.md) Rename the server to RuleMCP
-- [156](156-keep-bm25-and-gate-a-local-decision-model-as-a-second-opinion.md) Keep BM25 and gate a local decision model as a second opinion
-- [124](124-make-the-tool-call-host-a-list-so-invocation-hosts-coexist.md) Make the tool-call host a list so invocation hosts coexist
-- [112](112-extend-the-file-size-cap-to-the-shipped-skill-trees.md) Extend the file-size cap to the shipped skill trees
-- [100](100-the-tokensave-integration-closes-out-and-the-adapter-is-the-code-graph-layer.md) The TokenSave integration closes out: the adapter and its graph-backed tools are the code-graph layer
-- [096](096-tokensave-is-the-primary-code-graph-javascript-is-the-fallback.md) TokenSave is the primary code graph, JavaScript is the fallback
-- [092](092-surface-selection-amends-the-install-stack-freeze-with-an-additive-loader-filter.md) Surface selection amends the install stack freeze with an additive loader filter
-- [091](091-install-uninstall-rework-keeps-current-stack-steps-and-contents-only.md) Install/uninstall rework keeps current stack, steps and contents only
-- [089](089-skills-own-their-guardrails-and-three-layers-resolve-both-skills-and-personas.md) Skills own their guardrails, and three layers resolve both skills and personas
-- [058](058-one-file-per-rule-with-underscore-barrel-folders-and-a-size-ratchet.md) One file per rule with underscore-barrel folders and a size ratchet
-- [057](057-reorganize-scripts-src-tests-with-150-line-code-splitting.md) Reorganize scripts, src and tests with 150-line code splitting
-- [033](033-registry-driven-clean-slash-commands-for-every-agent-and-ide.md) Registry-driven clean slash commands for every agent and IDE
-- [032](032-the-tool-surface-is-skills-and-nothing-else.md) The tool surface is ./skills and nothing else
-- [031](031-pin-the-self-update-remote-and-drop-root-in-the-container.md) Pin the self-update remote and drop root in the container
-- [030](030-interview-servers-enforce-same-origin-and-own-their-process-lifecycle.md) Interview servers enforce same-origin and own their process lifecycle
-- [029](029-bind-write-authorization-to-destinations-not-just-content.md) Bind write authorization to destinations, not just content
-- [019](019-use-a-persistent-local-bearer-token-for-daemon-transport.md) use a persistent local bearer token for daemon transport
-- [018](018-fail-closed-mcp-enforcement-and-reusable-agent-commands.md) fail closed mcp enforcement and reusable agent commands
-- [017](017-forms-per-framework-merger-and-distribution.md) forms per framework merger and distribution
-- [011](011-forms-per-framework.md) Forms per Framework - Merger & Distribution
 
 ### routing
 
@@ -623,6 +626,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### cli
 
+- [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md) Guard daemon on a Unix socket with a thin --send client
 - [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md) Guard skips core-tool bootstrap; optional persistent --loop
 - [186](186-baseline-the-cli-file-size-debt-in-the-ratchet.md) Baseline the CLI file-size debt in the ratchet
 - [108](108-the-handoff-family-gets-a-generated-index-and-the-root-handoff-summary-retires.md) The handoff family gets a generated index, and the root HANDOFF summary retires
@@ -818,6 +822,16 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [136](136-extend-the-devops-guardrail-family-with-file-scoped-source-cited-rules.md) Extend the devops guardrail family with file-scoped, source-cited rules
 - [112](112-extend-the-file-size-cap-to-the-shipped-skill-trees.md) Extend the file-size cap to the shipped skill trees
 
+### hooks
+
+- [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md) Guard daemon on a Unix socket with a thin --send client
+- [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md) Guard skips core-tool bootstrap; optional persistent --loop
+- [185](185-lifecycle-wiring-ships-only-where-a-measurement-moves.md) Lifecycle wiring ships only where a measurement moves
+- [180](180-codex-pretooluse-silent-allow-and-ask-as-block.md) Codex PreToolUse silent allow and ask as block
+- [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md) Codex named hooks and Codex/Copilot command file targets
+- [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
+- [129](129-a-file-is-reported-on-a-task-is-confirmed.md) A file is reported on, a task is confirmed
+
 ### styleguide
 
 - [150](150-remove-the-rule-mcp-styleguide-patterns-cheat-sheet.md) Remove the rule-styleguide-patterns cheat sheet
@@ -854,15 +868,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [104](104-the-handoff-document-closes-with-the-resume-prompt.md) The handoff document closes with the resume prompt
 - [103](103-every-handoff-mode-sweeps-completed-working-papers-and-closeout-false-is-the-rea.md) Every handoff mode sweeps completed working papers, and closeout false is the read-only run
 - [087](087-session-close-archives-completed-audits-reviews-and-plans.md) Session close archives completed audits, reviews and plans
-
-### hooks
-
-- [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md) Guard skips core-tool bootstrap; optional persistent --loop
-- [185](185-lifecycle-wiring-ships-only-where-a-measurement-moves.md) Lifecycle wiring ships only where a measurement moves
-- [180](180-codex-pretooluse-silent-allow-and-ask-as-block.md) Codex PreToolUse silent allow and ask as block
-- [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md) Codex named hooks and Codex/Copilot command file targets
-- [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
-- [129](129-a-file-is-reported-on-a-task-is-confirmed.md) A file is reported on, a task is confirmed
 
 ### naming
 
@@ -960,6 +965,13 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
 - [092](092-surface-selection-amends-the-install-stack-freeze-with-an-additive-loader-filter.md) Surface selection amends the install stack freeze with an additive loader filter
 - [091](091-install-uninstall-rework-keeps-current-stack-steps-and-contents-only.md) Install/uninstall rework keeps current stack, steps and contents only
+
+### performance
+
+- [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md) Guard daemon on a Unix socket with a thin --send client
+- [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md) Guard skips core-tool bootstrap; optional persistent --loop
+- [185](185-lifecycle-wiring-ships-only-where-a-measurement-moves.md) Lifecycle wiring ships only where a measurement moves
+- [074](074-the-cli-entry-point-loads-no-command-handler-it-has-not-been-asked-for.md) The CLI entry point loads no command handler it has not been asked for
 
 ### ratchet
 
@@ -1067,12 +1079,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md) Retire the cross-branch plan graph and orchestrate from rel/v0.1.0
 - [175](175-orchestrate-the-plan-catalog-with-a-staged-dependency-graph.md) Orchestrate the plan catalog with a staged dependency graph
 - [170](170-retire-the-plan-of-plans-into-an-adr-and-a-handoff.md) Retire the plan-of-plans into an ADR and a handoff
-
-### performance
-
-- [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md) Guard skips core-tool bootstrap; optional persistent --loop
-- [185](185-lifecycle-wiring-ships-only-where-a-measurement-moves.md) Lifecycle wiring ships only where a measurement moves
-- [074](074-the-cli-entry-point-loads-no-command-handler-it-has-not-been-asked-for.md) The CLI entry point loads no command handler it has not been asked for
 
 ### quality
 

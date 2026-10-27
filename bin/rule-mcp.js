@@ -38,6 +38,39 @@ try {
   /* a cache is an optimization, never a reason to fail to start */
 }
 
-const { cli } = await import("../src/index.js");
+/**
+ * `guard --send` talks to the warm daemon and must not load Commander or the
+ * skill catalog: the spawn spike showed a full CLI `--send` costs the same as
+ * `guard` itself, while importing only `_send.js` is ~spawn + 30 ms.
+ *
+ * @param {string[]} argv
+ * @returns {boolean}
+ */
+const isGuardSend = (argv) => argv[0] === "guard" && argv.includes("--send");
 
-cli();
+/**
+ * @param {string[]} argv
+ * @returns {string}
+ */
+const guardSendAction = (argv) => {
+  const positional = argv.slice(1).filter((part) => part !== "--send" && !part.startsWith("-"));
+
+  return positional[0] ?? "bash";
+};
+
+const argv = process.argv.slice(2);
+
+if (isGuardSend(argv)) {
+  try {
+    const { runGuardSend } = await import("../src/cli/guard/_send.js");
+
+    await runGuardSend(guardSendAction(argv));
+  } catch (error) {
+    process.stderr.write(`${error instanceof Error ? error.message : String(error)}\n`);
+    process.exitCode = 1;
+  }
+} else {
+  const { cli } = await import("../src/index.js");
+
+  cli();
+}

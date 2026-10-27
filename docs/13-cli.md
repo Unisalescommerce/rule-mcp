@@ -40,7 +40,7 @@ the package version from anywhere. An error exits 1 and prints to stderr;
 | [`stats`](#rule-stats)                   | 0       | Show telemetry statistics from the local log                                              |
 | [`cache`](#rule-cache)                   | 1       | Inspect the on-disk tool cache                                                            |
 | [`roles`](#rule-roles)                   | 7       | Manage review persona roles                                                               |
-| [`guard`](#rule-guard)                   | 1       | Permission-guard payload processor (invoked by PreToolUse hooks, reads stdin)             |
+| [`guard`](#rule-guard)                   | 3       | Permission-guard payload processor (invoked by PreToolUse hooks, reads stdin)             |
 | [`update`](#rule-update)                 | 0       | Self-update to the newest release tag (or fast-forward when none exist)                   |
 | [`agent-commands`](#rule-agent-commands) | 13      | Registry-driven agent slash-command management                                            |
 | [`reinstall`](#rule-reinstall)           | 0       | Purge node_modules and pnpm-lock.yaml, install again, refresh the global bin              |
@@ -466,9 +466,11 @@ rule-mcp guard action
 
 **Options**
 
-| Flag     | Default | Choices | Description                                                          |
-| -------- | ------- | ------- | -------------------------------------------------------------------- |
-| `--loop` | -       | -       | keep the process warm; NDJSON lines in, one JSON answer per line out |
+| Flag       | Default | Choices | Description                                                                |
+| ---------- | ------- | ------- | -------------------------------------------------------------------------- |
+| `--loop`   | -       | -       | keep the process warm; NDJSON lines in, one JSON answer per line out       |
+| `--daemon` | -       | -       | listen on the guard Unix socket (one warm process for many --send clients) |
+| `--send`   | -       | -       | send one stdin payload to the guard daemon and print the answer            |
 
 ## rule-mcp update
 
