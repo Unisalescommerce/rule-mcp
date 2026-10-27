@@ -71,7 +71,8 @@ one installed before the manifest recorded it. This table is the same data the i
 
 Seven products the study measured have no documented MCP config file at all - `aider`, `amp`,
 `continue`, `goose`, `junie`, `openhands`, `trae` - so `install --agent aider` writes nothing and
-says so. `cursor-cli` is covered by `cursor`: the CLI reads the editor's config file.
+says so. `cursor-cli` is covered by `cursor`: the CLI reads the editor's config file. The catalog
+host `jetbrains` writes Junie's user file at `~/.junie/mcp/mcp.json` (not project `.idea/mcp.json`).
 
 ## Plugins
 

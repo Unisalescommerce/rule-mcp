@@ -46,8 +46,11 @@ const installVscode = ({ entrypoint, dryRun, global, mode }) => {
   return results;
 };
 
+/** Where Junie (and JetBrains AI via Junie) reads the user-level MCP file. */
+const junieConfigPath = () => join(HOME, ".junie", "mcp", "mcp.json");
+
 const installJetbrains = ({ entrypoint, dryRun, global }) => {
-  const file = join(process.cwd(), ".idea", "mcp.json");
+  const file = junieConfigPath();
 
   return [
     writeText({
@@ -134,4 +137,16 @@ const installDevin = ({ entrypoint, dryRun, global }) => {
   return results;
 };
 
-export { vscodeGlobalDir, devinConfigPath, nvimMcpFile, emacsInitFile, installVscode, installJetbrains, installNeovim, installEmacs, createGenericInstaller, installDevin };
+export {
+  vscodeGlobalDir,
+  devinConfigPath,
+  junieConfigPath,
+  nvimMcpFile,
+  emacsInitFile,
+  installVscode,
+  installJetbrains,
+  installNeovim,
+  installEmacs,
+  createGenericInstaller,
+  installDevin,
+};

@@ -25,7 +25,7 @@ Checked on `main` at `46f84e5a`:
 | Claude attribution switch                       | absent                                                    |
 | Path completion in the setup wizard             | absent                                                    |
 | Vendor-documented generic host paths            | partial: most hosts still use `~/.config/<name>/mcp.json` |
-| JetBrains config                                | writes `.idea/mcp.json` into the cwd (undocumented path)  |
+| JetBrains config                                | `~/.junie/mcp/mcp.json` (Junie user file; done step 2)    |
 | Project rules block refresh                     | absent                                                    |
 | Numbering doctor rename threshold               | `--follow` at git's 50% default (same bug)                |
 
@@ -50,20 +50,20 @@ new document built on the same template inherits the deleted one's date and auth
 3. Measure on this repository's own ADRs before trusting 70%.
 4. Commit: `fix(docs): follow only real renames when dating a numbered document`.
 
-### Step 2 - JetBrains goes to Junie's file (quick win)
+### Step 2 - JetBrains goes to Junie's file (quick win) - DONE
 
 JetBrains AI Assistant documents no config file (servers live in the IDE settings). Junie, in the
 IDE and the CLI, documents `~/.junie/mcp/mcp.json` (user) and `.junie/mcp/mcp.json` (project), both
 `mcpServers`.
 
-1. Tests: install, detect and uninstall `jetbrains` in a throwaway `HOME`; the entry lands in
-   `~/.junie/mcp/mcp.json` and nothing is written under the cwd.
-2. `src/cli/installers/_agents-ide.js`: export `junieConfigPath = () => join(HOME, ".junie", "mcp", "mcp.json")`
-   and use it in the jetbrains installer.
-3. Use it in `src/cli/installers/_uninstall.js` and `src/cli/install/_detect.js` too.
-4. Docs: the agent path table (`docs/01-getting-started.md`, `docs/04-operations.md`).
-5. Old `.idea/mcp.json` files are not swept: an uninstall must never touch a project directory.
+1. [x] Tests: install/uninstall `jetbrains` in a throwaway `HOME` (`_jetbrains-junie.test.mjs`).
+2. [x] `junieConfigPath` + jetbrains installer write `~/.junie/mcp/mcp.json`.
+3. [x] `hostRecord("jetbrains")` drives uninstall/detect (no cwd `.idea`).
+4. [x] Docs note in `docs/01-getting-started.md` (ADR 191).
+5. [x] Old `.idea/mcp.json` is never swept.
 6. Commit: `fix(setup): install JetBrains into the file Junie reads`.
+
+Project-scope `.junie/mcp/mcp.json` waits on step 8.
 
 ### Step 3 - Generic hosts at their documented paths
 

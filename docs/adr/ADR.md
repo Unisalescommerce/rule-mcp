@@ -8,6 +8,7 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [191](191-jetbrains-mcp-config-installs-into-junie-s-user-file.md)                                                      | JetBrains MCP config installs into Junie's user file                                                      | 2026-10-27 | accepted   | installer, hosts, jetbrains                                                         |
 | [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md)                                            | Host install and uninstall maps are lookups on the host record                                            | 2026-10-27 | accepted   | installer, hosts, architecture                                                      |
 | [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md)                                                 | Hook install starts the guard daemon and writers use --send                                               | 2026-10-27 | accepted   | cli, installer, hooks, performance                                                  |
 | [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md)                                                     | Guard daemon on a Unix socket with a thin --send client                                                   | 2026-10-27 | accepted   | cli, performance, hooks, architecture                                               |
@@ -206,7 +207,8 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md)                                            | Add hosts/_writers.js as the single table of install/uninstall pairs. hostRecord(id) exposes .install and .uninstall from that table. _registry.js and _uninstall.js build their maps as...                                     | Positive: installers[id] === hostRecord(id).install for all 23 hosts (enforced by host-writers.test.mjs); adding a host requires writers + evidence in one place.                                                               |
+| [191](191-jetbrains-mcp-config-installs-into-junie-s-user-file.md)                                                      | Export junieConfigPath as ~/.junie/mcp/mcp.json and use it for installJetbrains and hostRecord(jetbrains).                                                                                                                      | Positive: installs land where Junie reads them; install/uninstall/detect agree; project trees stay untouched.                                                                                                                   |
+| [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md)                                            | Add hosts/_writers.js as the single table of install/uninstall pairs. hosts/_core.js holds path/identity so uninstall bodies can import it without cycling through the writers table. hosts/index.js attaches...                | Positive: installers[id] === hostRecord(id).install for all 23 hosts (enforced by host-writers.test.mjs); adding a host requires writers + evidence in one place.                                                               |
 | [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md)                                                 | guardCommand (and the OpenCode/Pi plugin snippets) emit guard --send <kind>. installAgent starts the detached guard daemon whenever hooks are written. uninstallAgent stops the daemon when the install manifest has no...      | Positive: L3+ hook installs get the warm path automatically; uninstall of the last agent cleans up.                                                                                                                             |
 | [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md)                                                     | Add guard --daemon listening on $RULE_MCP_HOME/state/guard.sock and guard --send which forwards one stdin payload over that socket. bin/rule-mcp.js early-dispatches guard --send before loading Commander so the client...     | Positive: a measured reuse path exists; writers can switch later; spawn lifecycle stays correct for the default path.                                                                                                           |
 | [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md)                                                  | 1) shouldBootstrapCoreTools returns false when the Commander action command is named guard, so preAction skips bootstrapCoreTools for that command only. 2) guard gains an optional --loop that reads NDJSON lines and...       | Positive: every guard spawn avoids registering gateway/apply; --loop exists for hosts that can keep a pipe open; tests lock the skip and the loop framing.                                                                      |
@@ -435,6 +437,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### installer
 
+- [191](191-jetbrains-mcp-config-installs-into-junie-s-user-file.md) JetBrains MCP config installs into Junie's user file
 - [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md) Host install and uninstall maps are lookups on the host record
 - [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md) Hook install starts the guard daemon and writers use --send
 - [184](184-the-install-manifest-records-a-level-per-host.md) The install manifest records a level per host
@@ -930,6 +933,14 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [017](017-forms-per-framework-merger-and-distribution.md) forms per framework merger and distribution
 - [011](011-forms-per-framework.md) Forms per Framework - Merger & Distribution
 
+### hosts
+
+- [191](191-jetbrains-mcp-config-installs-into-junie-s-user-file.md) JetBrains MCP config installs into Junie's user file
+- [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md) Host install and uninstall maps are lookups on the host record
+- [184](184-the-install-manifest-records-a-level-per-host.md) The install manifest records a level per host
+- [183](183-integration-depth-is-the-second-install-axis-capped-by-a-measured-ceiling.md) Integration depth is the second install axis, capped by a measured ceiling
+- [182](182-one-host-record-answers-for-every-catalog-host.md) One host record answers for every catalog host
+
 ### mcp
 
 - [124](124-make-the-tool-call-host-a-list-so-invocation-hosts-coexist.md) Make the tool-call host a list so invocation hosts coexist
@@ -968,13 +979,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [053](053-gateway-as-the-single-entrypoint-with-server-side-receipts-backend-data-devops-g.md) Gateway as the single entrypoint with server-side receipts; backend/data/devops guardrail families
 - [010](010-backend-framework-skills.md) backend framework skills
 - [005](005-backend-framework-skills.md) Backend Framework Skills
-
-### hosts
-
-- [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md) Host install and uninstall maps are lookups on the host record
-- [184](184-the-install-manifest-records-a-level-per-host.md) The install manifest records a level per host
-- [183](183-integration-depth-is-the-second-install-axis-capped-by-a-measured-ceiling.md) Integration depth is the second install axis, capped by a measured ceiling
-- [182](182-one-host-record-answers-for-every-catalog-host.md) One host record answers for every catalog host
 
 ### infrastructure
 

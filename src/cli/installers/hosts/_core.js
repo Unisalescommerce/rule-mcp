@@ -9,7 +9,7 @@
 import { join } from "node:path";
 
 import { HOME, serverName } from "../_paths.js";
-import { devinConfigPath, emacsInitFile, nvimMcpFile, vscodeGlobalDir } from "../_agents-ide.js";
+import { devinConfigPath, emacsInitFile, junieConfigPath, nvimMcpFile, vscodeGlobalDir } from "../_agents-ide.js";
 import { ceilingOf, levelsOf } from "./_levels.js";
 import { GENERIC_HOSTS, hostFile, hostPaths } from "../_hosts.data.js";
 
@@ -28,9 +28,7 @@ const DEDICATED = {
   pi: () => ({ server: { file: join(process.env.PI_CODING_AGENT_DIR ?? join(HOME, ".pi", "agent"), "mcp.json") } }),
   opencode: () => ({ server: { file: join(HOME, ".config", "opencode", "opencode.json") } }),
   vscode: () => ({ server: { file: join(vscodeGlobalDir(), "mcp.json") } }),
-  // The port plan moves this to Junie's documented file; until then the tree
-  // writes what it has always written and the record says so.
-  jetbrains: () => ({ server: { file: join(process.cwd(), ".idea", "mcp.json") } }),
+  jetbrains: () => ({ server: { file: junieConfigPath() } }),
   neovim: () => ({ server: { file: nvimMcpFile() } }),
   emacs: () => ({ server: { file: emacsInitFile() } }),
   devin: () => ({ server: { file: devinConfigPath() } }),
