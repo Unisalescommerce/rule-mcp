@@ -15,7 +15,12 @@ const normalized = (launcher) => (typeof launcher === "string" ? { command: laun
  */
 export function guardCommand(launcher, subcommand) {
   const { command, args = [] } = normalized(launcher);
-  const line = [command, ...args, "guard", subcommand].map((part) => (/\s/.test(part) ? JSON.stringify(part) : part)).join(" ");
+  // `--send` talks to the warm guard daemon (ADR 188). Install starts the daemon
+  // when hooks are written; a missing daemon fails the hook loudly instead of
+  // silently paying a full CLI spawn again.
+  const line = [command, ...args, "guard", "--send", subcommand]
+    .map((part) => (/\s/.test(part) ? JSON.stringify(part) : part))
+    .join(" ");
 
   return `${line}  # ${HOOK_MARKER}`;
 }
@@ -190,7 +195,7 @@ export function opencodePlugin(launcher) {
     'const WRITE = new Set(["write", "edit", "multiedit", "apply_patch"]);',
     "",
     "const run = (kind, payload) =>",
-    "  spawnSync(GUARD[0], [...GUARD.slice(1), kind], { input: JSON.stringify(payload ?? {}) });",
+    "  spawnSync(GUARD[0], [...GUARD.slice(1), \"--send\", kind], { input: JSON.stringify(payload ?? {}) });",
     "",
     "export const RuleMcpHooks = async () => ({",
     '  "tool.execute.before": async (input) => run(WRITE.has(String(input?.tool ?? "").toLowerCase()) ? "structure" : "bash", input),',
@@ -214,8 +219,8 @@ export function piExtension(launcher) {
 
   return [
     "export default function ruleMcpHooks(pi) {",
-    `  pi.on("tool_call", async (event) => { await pi.exec(${JSON.stringify(command)}, ${JSON.stringify([...args, "guard", "bash"])}); });`,
-    `  pi.on("tool_result", async (event) => { await pi.exec(${JSON.stringify(command)}, ${JSON.stringify([...args, "guard", "write"])}); });`,
+    `  pi.on("tool_call", async (event) => { await pi.exec(${JSON.stringify(command)}, ${JSON.stringify([...args, "guard", "--send", "bash"])}); });`,
+    `  pi.on("tool_result", async (event) => { await pi.exec(${JSON.stringify(command)}, ${JSON.stringify([...args, "guard", "--send", "write"])}); });`,
     "}",
     "",
   ].join("\n");

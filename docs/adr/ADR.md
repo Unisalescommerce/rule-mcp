@@ -8,6 +8,7 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md)                                                 | Hook install starts the guard daemon and writers use --send                                               | 2026-10-27 | accepted   | cli, installer, hooks, performance                                                  |
 | [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md)                                                     | Guard daemon on a Unix socket with a thin --send client                                                   | 2026-10-27 | accepted   | cli, performance, hooks, architecture                                               |
 | [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md)                                                  | Guard skips core-tool bootstrap; optional persistent --loop                                               | 2026-10-27 | accepted   | cli, performance, hooks, architecture                                               |
 | [186](186-baseline-the-cli-file-size-debt-in-the-ratchet.md)                                                            | Baseline the CLI file-size debt in the ratchet                                                            | 2026-10-25 | accepted   | governance, file-size, cli                                                          |
@@ -204,6 +205,7 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md)                                                 | guardCommand (and the OpenCode/Pi plugin snippets) emit guard --send <kind>. installAgent starts the detached guard daemon whenever hooks are written. uninstallAgent stops the daemon when the install manifest has no...      | Positive: L3+ hook installs get the warm path automatically; uninstall of the last agent cleans up.                                                                                                                             |
 | [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md)                                                     | Add guard --daemon listening on $RULE_MCP_HOME/state/guard.sock and guard --send which forwards one stdin payload over that socket. bin/rule-mcp.js early-dispatches guard --send before loading Commander so the client...     | Positive: a measured reuse path exists; writers can switch later; spawn lifecycle stays correct for the default path.                                                                                                           |
 | [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md)                                                  | 1) shouldBootstrapCoreTools returns false when the Commander action command is named guard, so preAction skips bootstrapCoreTools for that command only. 2) guard gains an optional --loop that reads NDJSON lines and...       | Positive: every guard spawn avoids registering gateway/apply; --loop exists for hosts that can keep a pipe open; tests lock the skip and the loop framing.                                                                      |
 | [186](186-baseline-the-cli-file-size-debt-in-the-ratchet.md)                                                            | Record the 33 offenders in FILE_SIZE_RATCHET with the line count the cap measures, and document the adoption baseline here, which is the mechanism the data file's own header describes: an entry is added only as the...       | The budget test is green and stays honest: it now fails on growth and on a stale row instead of failing on the same 33 files forever.                                                                                           |
@@ -431,6 +433,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### installer
 
+- [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md) Hook install starts the guard daemon and writers use --send
 - [184](184-the-install-manifest-records-a-level-per-host.md) The install manifest records a level per host
 - [183](183-integration-depth-is-the-second-install-axis-capped-by-a-measured-ceiling.md) Integration depth is the second install axis, capped by a measured ceiling
 - [182](182-one-host-record-answers-for-every-catalog-host.md) One host record answers for every catalog host
@@ -590,6 +593,23 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [071](071-the-census-generates-eight-numbered-documents-and-three-fenced-blocks-inside-the-chapters-a-person-writes.md) The census generates eight numbered documents and three fenced blocks inside the chapters a person writes
 - [048](048-v100-release-and-docs-accuracy-guard.md) v1.0.0 release and the docs-accuracy guard
 
+### cli
+
+- [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md) Hook install starts the guard daemon and writers use --send
+- [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md) Guard daemon on a Unix socket with a thin --send client
+- [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md) Guard skips core-tool bootstrap; optional persistent --loop
+- [186](186-baseline-the-cli-file-size-debt-in-the-ratchet.md) Baseline the CLI file-size debt in the ratchet
+- [108](108-the-handoff-family-gets-a-generated-index-and-the-root-handoff-summary-retires.md) The handoff family gets a generated index, and the root HANDOFF summary retires
+- [105](105-opencode-gets-a-dedicated-installer-writing-its-own-config-shape.md) opencode gets a dedicated installer writing its own config shape
+- [102](102-reinstall-is-one-shell-script-behind-three-entry-points.md) Reinstall is one shell script behind three entry points
+- [101](101-accept-a-comma-separated-agent-list-in-agent-commands.md) Accept a comma-separated agent list in agent-commands
+- [090](090-the-setup-wizard-is-the-installer-and-it-asks-which-commands-to-write.md) The setup wizard is the installer, and it asks which commands to write
+- [080](080-one-installer-a-node-wizard-with-shell-bootstraps.md) One installer, a Node wizard with shell bootstraps
+- [074](074-the-cli-entry-point-loads-no-command-handler-it-has-not-been-asked-for.md) The CLI entry point loads no command handler it has not been asked for
+- [061](061-one-global-shim-and-hermetic-pnpm-home-in-script-tests.md) One global shim, and hermetic PNPM_HOME in script tests
+- [046](046-installer-self-heals-global-shim-surfaces-failures-gates-tui-rendering.md) Installer self-heals its global shim, surfaces failures, and gates TUI rendering
+- [033](033-registry-driven-clean-slash-commands-for-every-agent-and-ide.md) Registry-driven clean slash commands for every agent and IDE
+
 ### commands
 
 - [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md) Codex named hooks and Codex/Copilot command file targets
@@ -623,22 +643,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [082](082-release-artifacts-are-github-tarballs-not-registry-packages.md) Release artifacts are GitHub tarballs, not registry packages
 - [081](081-mcp-registry-identity-is-the-github-owner-not-a-claimed-brand.md) MCP registry identity is the GitHub owner, not a claimed brand
 - [048](048-v100-release-and-docs-accuracy-guard.md) v1.0.0 release and the docs-accuracy guard
-
-### cli
-
-- [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md) Guard daemon on a Unix socket with a thin --send client
-- [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md) Guard skips core-tool bootstrap; optional persistent --loop
-- [186](186-baseline-the-cli-file-size-debt-in-the-ratchet.md) Baseline the CLI file-size debt in the ratchet
-- [108](108-the-handoff-family-gets-a-generated-index-and-the-root-handoff-summary-retires.md) The handoff family gets a generated index, and the root HANDOFF summary retires
-- [105](105-opencode-gets-a-dedicated-installer-writing-its-own-config-shape.md) opencode gets a dedicated installer writing its own config shape
-- [102](102-reinstall-is-one-shell-script-behind-three-entry-points.md) Reinstall is one shell script behind three entry points
-- [101](101-accept-a-comma-separated-agent-list-in-agent-commands.md) Accept a comma-separated agent list in agent-commands
-- [090](090-the-setup-wizard-is-the-installer-and-it-asks-which-commands-to-write.md) The setup wizard is the installer, and it asks which commands to write
-- [080](080-one-installer-a-node-wizard-with-shell-bootstraps.md) One installer, a Node wizard with shell bootstraps
-- [074](074-the-cli-entry-point-loads-no-command-handler-it-has-not-been-asked-for.md) The CLI entry point loads no command handler it has not been asked for
-- [061](061-one-global-shim-and-hermetic-pnpm-home-in-script-tests.md) One global shim, and hermetic PNPM_HOME in script tests
-- [046](046-installer-self-heals-global-shim-surfaces-failures-gates-tui-rendering.md) Installer self-heals its global shim, surfaces failures, and gates TUI rendering
-- [033](033-registry-driven-clean-slash-commands-for-every-agent-and-ide.md) Registry-driven clean slash commands for every agent and IDE
 
 ### decision-models
 
@@ -800,6 +804,17 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
 - [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
 
+### hooks
+
+- [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md) Hook install starts the guard daemon and writers use --send
+- [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md) Guard daemon on a Unix socket with a thin --send client
+- [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md) Guard skips core-tool bootstrap; optional persistent --loop
+- [185](185-lifecycle-wiring-ships-only-where-a-measurement-moves.md) Lifecycle wiring ships only where a measurement moves
+- [180](180-codex-pretooluse-silent-allow-and-ask-as-block.md) Codex PreToolUse silent allow and ask as block
+- [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md) Codex named hooks and Codex/Copilot command file targets
+- [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
+- [129](129-a-file-is-reported-on-a-task-is-confirmed.md) A file is reported on, a task is confirmed
+
 ### plans
 
 - [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md) Retire the cross-branch plan graph and orchestrate from rel/v0.1.0
@@ -821,16 +836,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [137](137-add-a-source-cited-backend-guardrail-family-and-fix-the-six-existing-rules.md) Add a source-cited backend guardrail family and fix the six existing rules
 - [136](136-extend-the-devops-guardrail-family-with-file-scoped-source-cited-rules.md) Extend the devops guardrail family with file-scoped, source-cited rules
 - [112](112-extend-the-file-size-cap-to-the-shipped-skill-trees.md) Extend the file-size cap to the shipped skill trees
-
-### hooks
-
-- [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md) Guard daemon on a Unix socket with a thin --send client
-- [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md) Guard skips core-tool bootstrap; optional persistent --loop
-- [185](185-lifecycle-wiring-ships-only-where-a-measurement-moves.md) Lifecycle wiring ships only where a measurement moves
-- [180](180-codex-pretooluse-silent-allow-and-ask-as-block.md) Codex PreToolUse silent allow and ask as block
-- [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md) Codex named hooks and Codex/Copilot command file targets
-- [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
-- [129](129-a-file-is-reported-on-a-task-is-confirmed.md) A file is reported on, a task is confirmed
 
 ### styleguide
 
@@ -929,6 +934,14 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [019](019-use-a-persistent-local-bearer-token-for-daemon-transport.md) use a persistent local bearer token for daemon transport
 - [018](018-fail-closed-mcp-enforcement-and-reusable-agent-commands.md) fail closed mcp enforcement and reusable agent commands
 
+### performance
+
+- [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md) Hook install starts the guard daemon and writers use --send
+- [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md) Guard daemon on a Unix socket with a thin --send client
+- [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md) Guard skips core-tool bootstrap; optional persistent --loop
+- [185](185-lifecycle-wiring-ships-only-where-a-measurement-moves.md) Lifecycle wiring ships only where a measurement moves
+- [074](074-the-cli-entry-point-loads-no-command-handler-it-has-not-been-asked-for.md) The CLI entry point loads no command handler it has not been asked for
+
 ### taxonomy
 
 - [075](075-meta-frameworks-get-their-own-namespace-and-a-narrow-dispatcher.md) Meta-frameworks get their own namespace and a narrow dispatcher
@@ -965,13 +978,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
 - [092](092-surface-selection-amends-the-install-stack-freeze-with-an-additive-loader-filter.md) Surface selection amends the install stack freeze with an additive loader filter
 - [091](091-install-uninstall-rework-keeps-current-stack-steps-and-contents-only.md) Install/uninstall rework keeps current stack, steps and contents only
-
-### performance
-
-- [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md) Guard daemon on a Unix socket with a thin --send client
-- [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md) Guard skips core-tool bootstrap; optional persistent --loop
-- [185](185-lifecycle-wiring-ships-only-where-a-measurement-moves.md) Lifecycle wiring ships only where a measurement moves
-- [074](074-the-cli-entry-point-loads-no-command-handler-it-has-not-been-asked-for.md) The CLI entry point loads no command handler it has not been asked for
 
 ### ratchet
 

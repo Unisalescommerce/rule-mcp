@@ -175,6 +175,7 @@ knob documented above can be traced to the code that answers it.
 | `RULE_MCP_DECISION_URL`                 | `src/core/decision/_runtime.js`                                                                                                                                                                                                                                 |
 | `RULE_MCP_DISABLE_AUTO_ADR`             | `src/cli/commands/_configure.js`, `src/cli/commands/_tools.js`, `src/tools/adr/_auto-log.js`                                                                                                                                                                    |
 | `RULE_MCP_DOCKER`                       | `src/cli/paths/_repo.js`                                                                                                                                                                                                                                        |
+| `RULE_MCP_GUARD_DAEMON`                 | `src/cli/guard/_process.js`                                                                                                                                                                                                                                     |
 | `RULE_MCP_GUARDED_CHECKS`               | `src/core/guardrails/guarded/_policy.js`                                                                                                                                                                                                                        |
 | `RULE_MCP_HOME`                         | `src/cli/guard/_socket.js`, `src/cli/paths/_runtime.js`, `src/shared/_testkit.js`                                                                                                                                                                               |
 | `RULE_MCP_HOOK_HOST`                    | `src/cli/guard/_encode.js`, `src/cli/install/_hook-writers.js`                                                                                                                                                                                                  |
@@ -217,9 +218,9 @@ knob documented above can be traced to the code that answers it.
 | `RULE_MCP_UPDATE_REQUIRE_SIGNATURE`     | `src/core/self-update/_banner.js`, `src/core/self-update/_run.js`, `src/tools/actions/_update.js`                                                                                                                                                               |
 | `RULE_MCP_VARS`                         | `src/cli/commands/_configure.js`                                                                                                                                                                                                                                |
 
-58 read by the code, 54 documented in the table above.
+59 read by the code, 54 documented in the table above.
 
-Read but undocumented: `RULE_MCP_BASE_BRANCH`, `RULE_MCP_HOOK_HOST`, `RULE_MCP_SKIP_GLOBAL_LINK`, `RULE_MCP_SURFACE`, `RULE_MCP_VARS`.
+Read but undocumented: `RULE_MCP_BASE_BRANCH`, `RULE_MCP_GUARD_DAEMON`, `RULE_MCP_HOOK_HOST`, `RULE_MCP_SKIP_GLOBAL_LINK`, `RULE_MCP_SURFACE`, `RULE_MCP_VARS`.
 
 Documented but read nowhere in `src/` or `bin/`: `RULE_MCP_TOKENSAVE_AUTOTRACK`.
 

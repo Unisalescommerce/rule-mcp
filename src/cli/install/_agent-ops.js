@@ -5,8 +5,9 @@ import { allAgents, normalizeInstallMode, remoteModeAgents, installers, uninstal
 export * from "../installers/index.js";
 import { deprecatedAgents } from "../installers/index.js";
 import { installHookFile, removeHookFile } from "./_hook-files.js";
-import { forgetHost, writeInstalledManifest } from "./_manifest.js";
+import { forgetHost, readManifest, writeInstalledManifest } from "./_manifest.js";
 import { nonInstallable } from "../installers/hosts/_evidence.data.js";
+import { startGuardDaemonProcess, stopGuardDaemonProcess } from "../guard/_process.js";
 
 /**
  * Whether an agent can be reached in a mode, before anything is written.
@@ -102,6 +103,15 @@ export const installAgent = ({ agent, entrypoint, dryRun = false, force = false,
   }
 
   const ok = Object.values(result).every((entry) => !entry?.error);
+  const wroteHooks = hooks && Object.values(result).some((entry) => entry?.hook || (Array.isArray(entry) && entry.some((row) => row?.action === "hook")));
+
+  if (wroteHooks) {
+    const daemon = startGuardDaemonProcess({ dryRun });
+
+    if (!dryRun && daemon.action === "started") {
+      warnings.push("started the guard daemon for hook --send clients");
+    }
+  }
 
   if (!dryRun) {
     const manifestPath = writeInstalledManifest(selected, entrypoint, global, normalizedMode, level);
@@ -162,6 +172,10 @@ export const uninstallAgent = ({ agent, dryRun = false }) => {
     } catch (error) {
       result[name] = { error: error.message };
     }
+  }
+
+  if (!dryRun && readManifest().agents.length === 0) {
+    stopGuardDaemonProcess({ dryRun });
   }
 
   return { ok: true, dryRun, uninstalled: result, warnings: surfacedWarnings };
