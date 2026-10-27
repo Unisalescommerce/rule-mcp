@@ -40,7 +40,7 @@ the package version from anywhere. An error exits 1 and prints to stderr;
 | [`stats`](#rule-stats)                   | 0       | Show telemetry statistics from the local log                                              |
 | [`cache`](#rule-cache)                   | 1       | Inspect the on-disk tool cache                                                            |
 | [`roles`](#rule-roles)                   | 7       | Manage review persona roles                                                               |
-| [`guard`](#rule-guard)                   | 0       | Permission-guard payload processor (invoked by PreToolUse hooks, reads stdin)             |
+| [`guard`](#rule-guard)                   | 1       | Permission-guard payload processor (invoked by PreToolUse hooks, reads stdin)             |
 | [`update`](#rule-update)                 | 0       | Self-update to the newest release tag (or fast-forward when none exist)                   |
 | [`agent-commands`](#rule-agent-commands) | 13      | Registry-driven agent slash-command management                                            |
 | [`reinstall`](#rule-reinstall)           | 0       | Purge node_modules and pnpm-lock.yaml, install again, refresh the global bin              |
@@ -464,7 +464,11 @@ rule-mcp guard action
 | -------- | ------- | ------------------------- |
 | `action` | bash    | bash or other guard scope |
 
-Takes no options beyond the global `-h, --help`.
+**Options**
+
+| Flag     | Default | Choices | Description                                                          |
+| -------- | ------- | ------- | -------------------------------------------------------------------- |
+| `--loop` | -       | -       | keep the process warm; NDJSON lines in, one JSON answer per line out |
 
 ## rule-mcp update
 

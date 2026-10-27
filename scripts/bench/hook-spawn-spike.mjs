@@ -92,6 +92,13 @@ const rows = [
       stdio: ["pipe", "pipe", "pipe"],
     });
   }),
+  benchSync("B2 spawn full CLI guard --loop (1 line)", () => {
+    execFileSync(process.execPath, ["--import", ALIAS, ENTRY, "guard", "--loop"], {
+      cwd: ROOT,
+      input: `${JSON.stringify({ action: "prompt-submit", prompt: "add pagination to the users endpoint", cwd: ROOT })}\n`,
+      stdio: ["pipe", "pipe", "pipe"],
+    });
+  }),
   benchSync("C spawn thin runGuard only", () => {
     execFileSync(process.execPath, ["--import", ALIAS, "--input-type=module", "-e", thinSource], {
       cwd: ROOT,
@@ -185,12 +192,16 @@ const report = {
     inProcessMinMs: round(Math.min(...inProcess)),
     inProcessMaxMs: round(Math.max(...inProcess)),
   },
-  deltasMs: {
-    fullMinusSpawn: round(rows[1].median - rows[0].median),
-    thinMinusSpawn: round(rows[2].median - rows[0].median),
-    fullMinusThin: round(rows[1].median - rows[2].median),
-    programBootstrapMinusSpawn: round(rows[3].median - rows[0].median),
-  },
+  deltasMs: (() => {
+    const by = Object.fromEntries(rows.map((row) => [row.label, row.median]));
+
+    return {
+      fullMinusSpawn: round(by["B spawn full CLI guard prompt-submit"] - by["A spawn node -e 0"]),
+      thinMinusSpawn: round(by["C spawn thin runGuard only"] - by["A spawn node -e 0"]),
+      fullMinusThin: round(by["B spawn full CLI guard prompt-submit"] - by["C spawn thin runGuard only"]),
+      programBootstrapMinusSpawn: round(by["E spawn buildProgram + bootstrapCoreTools"] - by["A spawn node -e 0"]),
+    };
+  })(),
 };
 
 if (process.argv.includes("--json")) {

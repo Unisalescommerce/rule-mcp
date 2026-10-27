@@ -45,6 +45,19 @@ import {
 const version = JSON.parse(readFileSync(new URL("../../package.json", import.meta.url), "utf8")).version;
 
 /**
+ * Whether this command needs the gateway/apply tools registered before it runs.
+ *
+ * `guard` answers host hooks and never calls those tools. Bootstrapping them on
+ * every hook spawn was pure wall time (Phase 5 spawn spike).
+ *
+ * @param {{ name?: () => string } | undefined} actionCommand - Commander action command
+ * @returns {boolean}
+ */
+export function shouldBootstrapCoreTools(actionCommand) {
+  return actionCommand?.name?.() !== "guard";
+}
+
+/**
  * Build the complete commander program. Pure (no argv access, no side
  * effects) so tests can build and inspect it without spawning.
  *
@@ -66,8 +79,13 @@ export function buildProgram() {
   // The catalog registers the per-skill tools; the core tools the invocation
   // path itself depends on - the gateway and the apply tool - are registered
   // here, once per command. A hook rather than a top-level import, so --help
-  // and --version stay off that import graph.
-  program.hook("preAction", async () => {
+  // and --version stay off that import graph. Guard is excluded: see
+  // shouldBootstrapCoreTools.
+  program.hook("preAction", async (_thisCommand, actionCommand) => {
+    if (!shouldBootstrapCoreTools(actionCommand)) {
+      return;
+    }
+
     const { bootstrapCoreTools } = await import("../tools/_bootstrap.js");
 
     await bootstrapCoreTools();

@@ -111,8 +111,17 @@ export function registerGuardCommand(program) {
     .command("guard")
     .description("Permission-guard payload processor (invoked by PreToolUse hooks, reads stdin)")
     .argument("[action]", "bash or other guard scope", "bash")
+    .option("--loop", "keep the process warm; NDJSON lines in, one JSON answer per line out")
     .allowExcessArguments(false)
-    .action(async (action) => {
+    .action(async (action, options) => {
+      if (options.loop) {
+        const { runGuardLoop } = await import("./guard/_loop.js");
+
+        await runGuardLoop({ defaultAction: action ?? "bash" });
+
+        return;
+      }
+
       const { runGuard } = await import("./guard/index.js");
 
       await runGuard(action ?? "bash");

@@ -53,19 +53,23 @@ async function readPayload(stream) {
  * must not become a guard that blocks every command.
  *
  * @param {"bash"|"structure"|"write"|"migration"|"commit"|"session-start"|"prompt-submit"} kind
- * @param {{ stdin?: NodeJS.ReadStream, write?: (text: string) => void }} [io]
+ * @param {{
+ *   stdin?: NodeJS.ReadStream,
+ *   write?: (text: string) => void,
+ *   payload?: object,
+ * }} [io] - When `payload` is set (loop mode), stdin is not read.
  */
 export async function runGuard(kind = "bash", io = {}) {
-  const { stdin = process.stdin, write = (text) => process.stdout.write(text) } = io;
+  const { stdin = process.stdin, write = (text) => process.stdout.write(text), payload: given } = io;
 
   if (kind === "session-start") {
-    write(JSON.stringify(inject(kind, await readPayload(stdin))));
+    write(JSON.stringify(inject(kind, given ?? (await readPayload(stdin)))));
 
     return;
   }
 
   if (kind === "prompt-submit") {
-    const payload = await readPayload(stdin);
+    const payload = given ?? (await readPayload(stdin));
 
     write(JSON.stringify(inject(kind, payload)));
     // A prompt is where one task ends and the next begins, so the structural
@@ -76,12 +80,16 @@ export async function runGuard(kind = "bash", io = {}) {
   }
 
   let payload;
-  try {
-    payload = JSON.parse(await readStdin(stdin));
-  } catch {
-    reply(write, ALLOW, {});
+  if (given !== undefined) {
+    payload = given;
+  } else {
+    try {
+      payload = JSON.parse(await readStdin(stdin));
+    } catch {
+      reply(write, ALLOW, {});
 
-    return;
+      return;
+    }
   }
 
   if (kind === "structure") {
