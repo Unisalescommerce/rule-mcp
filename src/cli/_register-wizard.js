@@ -17,12 +17,34 @@ import { Option } from "commander";
  * argv for `--no-*` negations commander folds into booleans) so the wizard
  * and the plain runner see the same flags.
  */
+/** Collector for repeatable options: `--project a --project b` -> ["a", "b"]. */
+const collect = (value, previous) => [...previous, value];
+
 export function commanderIo(program, options, argv = process.argv) {
   const getArgument = (name) => {
     const key = name.replace(/^--/, "").replaceAll(/-([a-z])/g, (_, c) => c.toUpperCase());
     const value = options[key];
 
     return typeof value === "string" ? value : undefined;
+  };
+  const getArguments = (name) => {
+    const key = name.replace(/^--/, "").replaceAll(/-([a-z])/g, (_, c) => c.toUpperCase());
+    const value = options[key];
+
+    if (Array.isArray(value)) {
+      return value;
+    }
+
+    // Fall back to raw argv so hand-built option objects still see repeats.
+    const values = [];
+
+    for (let index = 0; index < argv.length; index += 1) {
+      if (argv[index] === name && argv[index + 1] !== undefined) {
+        values.push(argv[index + 1]);
+      }
+    }
+
+    return values;
   };
   // Commander folds `--thing`/`--no-thing` into `options.thing` (true/false/
   // undefined), so the flag readers consult the parsed object first and the
@@ -45,7 +67,7 @@ export function commanderIo(program, options, argv = process.argv) {
     return name.startsWith("--no-") ? value === false : value === true;
   };
 
-  return { getArgument, getArguments: () => [], hasFlag, program, options };
+  return { getArgument, getArguments, hasFlag, program, options };
 }
 
 /** Register the `setup` wizard: full-screen on a terminal, plain otherwise. */
@@ -55,6 +77,10 @@ export function registerSetupCommand(program) {
     .description("Full-screen install/uninstall wizard (falls back to flags when piped)")
     .option("--agent <name>", "narrow the run to one target")
     .option("--mode <name>", "stdio (default), daemon (SSE), or docker", "stdio")
+    .addOption(new Option("--scope <s>", "global (default) or project MCP configs").choices(["global", "project"]))
+    .option("--project <path>", "project root for --scope project (repeatable)", collect, [])
+    .addOption(new Option("--project-config <kind>", "shared (portable) or local launcher").choices(["shared", "local"]))
+    .option("--refresh-projects", "re-apply MCP configs into every recorded project")
     .option("--uninstall", "run the uninstall direction")
     .option("--rules", "write agent instruction files")
     .option("--no-rules", "skip agent instruction files")

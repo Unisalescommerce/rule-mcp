@@ -67,19 +67,7 @@ export function readManifest() {
  * @param {{ agent?: string, mode?: string, profile?: string, dimensions?: object, surface?: object|null, commands?: object|null, entrypoint?: string, global?: boolean, dryRun?: boolean }} entry
  * @returns {object} the manifest as written
  */
-export function recordInstall({
-  agent,
-  level = null,
-  mode,
-  profile,
-  dimensions,
-  surface,
-  commands,
-  entrypoint,
-  global,
-  written,
-  dryRun = false,
-} = {}) {
+export function recordInstall({ agent, level = null, mode, profile, dimensions, surface, commands, entrypoint, global, written, dryRun = false } = {}) {
   const manifest = readManifest();
   const agents = new Set(manifest.agents);
   const hosts = { ...manifest.hosts };

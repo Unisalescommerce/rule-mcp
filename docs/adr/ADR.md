@@ -8,6 +8,7 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [193](193-setup-scope-project-records-projects-json-and-wires-install-writers.md)                                       | Setup --scope project records projects.json and wires install writers                                     | 2026-10-27 | accepted   | installer, setup, projects                                                          |
 | [192](192-project-scope-host-table-and-manifest-written-paths.md)                                                       | Project-scope host table and manifest written paths                                                       | 2026-10-27 | accepted   | installer, hosts, manifest                                                          |
 | [191](191-jetbrains-mcp-config-installs-into-junie-s-user-file.md)                                                      | JetBrains MCP config installs into Junie's user file                                                      | 2026-10-27 | accepted   | installer, hosts, jetbrains                                                         |
 | [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md)                                            | Host install and uninstall maps are lookups on the host record                                            | 2026-10-27 | accepted   | installer, hosts, architecture                                                      |
@@ -208,6 +209,7 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [193](193-setup-scope-project-records-projects-json-and-wires-install-writers.md)                                       | Add state/projects.json (record/forget/list).                                                                                                                                                                                   | Positive: flag path installs into projects, refresh and uninstall reverse them, shared installs stay stdio-only.                                                                                                                |
 | [192](192-project-scope-host-table-and-manifest-written-paths.md)                                                       | Add _project-hosts.data.js (shared/local project files + dialects) and _install-project.js (shared portable entry vs local launcher).                                                                                           | Positive: project writers and the path table agree; uninstall can reverse project files via written[]; JetBrains project path is .junie/mcp/mcp.json.                                                                           |
 | [191](191-jetbrains-mcp-config-installs-into-junie-s-user-file.md)                                                      | Export junieConfigPath as ~/.junie/mcp/mcp.json and use it for installJetbrains and hostRecord(jetbrains).                                                                                                                      | Positive: installs land where Junie reads them; install/uninstall/detect agree; project trees stay untouched.                                                                                                                   |
 | [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md)                                            | Add hosts/_writers.js as the single table of install/uninstall pairs. hosts/_core.js holds path/identity so uninstall bodies can import it without cycling through the writers table. hosts/index.js attaches...                | Positive: installers[id] === hostRecord(id).install for all 23 hosts (enforced by host-writers.test.mjs); adding a host requires writers + evidence in one place.                                                               |
@@ -406,6 +408,37 @@ file. Where a line stops short the rest is in the ADR.
 Tags carried by 3 or more decisions. A decision appears under every
 theme it carries, and the early ADRs that predate the tag field are listed last.
 
+### installer
+
+- [193](193-setup-scope-project-records-projects-json-and-wires-install-writers.md) Setup --scope project records projects.json and wires install writers
+- [192](192-project-scope-host-table-and-manifest-written-paths.md) Project-scope host table and manifest written paths
+- [191](191-jetbrains-mcp-config-installs-into-junie-s-user-file.md) JetBrains MCP config installs into Junie's user file
+- [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md) Host install and uninstall maps are lookups on the host record
+- [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md) Hook install starts the guard daemon and writers use --send
+- [184](184-the-install-manifest-records-a-level-per-host.md) The install manifest records a level per host
+- [183](183-integration-depth-is-the-second-install-axis-capped-by-a-measured-ceiling.md) Integration depth is the second install axis, capped by a measured ceiling
+- [182](182-one-host-record-answers-for-every-catalog-host.md) One host record answers for every catalog host
+- [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md) Codex named hooks and Codex/Copilot command file targets
+- [178](178-surface-is-the-only-tier-picker-slash-commands-follow-it.md) Surface is the only tier picker; slash commands follow it
+- [177](177-rework-the-installer-around-one-profile-a-manifest-and-opentui.md) Rework the installer around one profile, a manifest and OpenTUI
+- [121](121-the-install-reconciles-the-bundled-skills-when-the-step-is-not-selected.md) The install reconciles the bundled skills when the step is not selected
+- [105](105-opencode-gets-a-dedicated-installer-writing-its-own-config-shape.md) opencode gets a dedicated installer writing its own config shape
+- [102](102-reinstall-is-one-shell-script-behind-three-entry-points.md) Reinstall is one shell script behind three entry points
+- [101](101-accept-a-comma-separated-agent-list-in-agent-commands.md) Accept a comma-separated agent list in agent-commands
+- [090](090-the-setup-wizard-is-the-installer-and-it-asks-which-commands-to-write.md) The setup wizard is the installer, and it asks which commands to write
+- [080](080-one-installer-a-node-wizard-with-shell-bootstraps.md) One installer, a Node wizard with shell bootstraps
+- [078](078-compress-agent-command-files-at-write-time.md) Compress agent command files at write time
+- [072](072-the-installer-asks-before-copying-bundled-skills-to-the-central-agents-directory.md) The installer asks before copying bundled skills to the central agents directory
+- [070](070-installer-mode-step-replaces-the-agent-picker-instead-of-stacking-under-it.md) Installer mode step replaces the agent picker instead of stacking under it
+- [061](061-one-global-shim-and-hermetic-pnpm-home-in-script-tests.md) One global shim, and hermetic PNPM_HOME in script tests
+- [056](056-drop-the-vs-code-extension-and-its-installers.md) Drop the VS Code extension and its installers
+- [055](055-restructure-the-command-surface-rule-mcp-router-rule-mcp-area-compression-implicit-rule-mcp-process.md) Restructure the command surface: /rule router, rule-area-*, compression implicit, rule-process-tdd skill
+- [049](049-split-hotspot-modules.md) Split the hotspot modules (guardrails + installer)
+- [046](046-installer-self-heals-global-shim-surfaces-failures-gates-tui-rendering.md) Installer self-heals its global shim, surfaces failures, and gates TUI rendering
+- [041](041-lossless-installer-preserve-toolprefix-normalize-rule-blank-lines.md) Lossless installer: preserve toolPrefix and normalize rule blank lines
+- [039](039-fix-vscode-extension-and-derivatives-install-uninstall.md) Fix VS Code extension and derivatives install/uninstall
+- [028](028-clean-rule-mcp-commands-via-user-commands-prompt-suppression-not-a-plugin.md) Clean /rule-mcp-* commands via user commands + prompt suppression, not a plugin
+
 ### skills
 
 - [153](153-retire-the-rule-mcp-platform-agent-skill.md) Retire the rule-platform-agent skill
@@ -436,36 +469,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [008](008-scaffold-skill-consolidation.md) scaffold skill consolidation
 - [005](005-backend-framework-skills.md) Backend Framework Skills
 - [004](004-scaffold-consolidation.md) Scaffold Skill Consolidation
-
-### installer
-
-- [192](192-project-scope-host-table-and-manifest-written-paths.md) Project-scope host table and manifest written paths
-- [191](191-jetbrains-mcp-config-installs-into-junie-s-user-file.md) JetBrains MCP config installs into Junie's user file
-- [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md) Host install and uninstall maps are lookups on the host record
-- [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md) Hook install starts the guard daemon and writers use --send
-- [184](184-the-install-manifest-records-a-level-per-host.md) The install manifest records a level per host
-- [183](183-integration-depth-is-the-second-install-axis-capped-by-a-measured-ceiling.md) Integration depth is the second install axis, capped by a measured ceiling
-- [182](182-one-host-record-answers-for-every-catalog-host.md) One host record answers for every catalog host
-- [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md) Codex named hooks and Codex/Copilot command file targets
-- [178](178-surface-is-the-only-tier-picker-slash-commands-follow-it.md) Surface is the only tier picker; slash commands follow it
-- [177](177-rework-the-installer-around-one-profile-a-manifest-and-opentui.md) Rework the installer around one profile, a manifest and OpenTUI
-- [121](121-the-install-reconciles-the-bundled-skills-when-the-step-is-not-selected.md) The install reconciles the bundled skills when the step is not selected
-- [105](105-opencode-gets-a-dedicated-installer-writing-its-own-config-shape.md) opencode gets a dedicated installer writing its own config shape
-- [102](102-reinstall-is-one-shell-script-behind-three-entry-points.md) Reinstall is one shell script behind three entry points
-- [101](101-accept-a-comma-separated-agent-list-in-agent-commands.md) Accept a comma-separated agent list in agent-commands
-- [090](090-the-setup-wizard-is-the-installer-and-it-asks-which-commands-to-write.md) The setup wizard is the installer, and it asks which commands to write
-- [080](080-one-installer-a-node-wizard-with-shell-bootstraps.md) One installer, a Node wizard with shell bootstraps
-- [078](078-compress-agent-command-files-at-write-time.md) Compress agent command files at write time
-- [072](072-the-installer-asks-before-copying-bundled-skills-to-the-central-agents-directory.md) The installer asks before copying bundled skills to the central agents directory
-- [070](070-installer-mode-step-replaces-the-agent-picker-instead-of-stacking-under-it.md) Installer mode step replaces the agent picker instead of stacking under it
-- [061](061-one-global-shim-and-hermetic-pnpm-home-in-script-tests.md) One global shim, and hermetic PNPM_HOME in script tests
-- [056](056-drop-the-vs-code-extension-and-its-installers.md) Drop the VS Code extension and its installers
-- [055](055-restructure-the-command-surface-rule-mcp-router-rule-mcp-area-compression-implicit-rule-mcp-process.md) Restructure the command surface: /rule router, rule-area-*, compression implicit, rule-process-tdd skill
-- [049](049-split-hotspot-modules.md) Split the hotspot modules (guardrails + installer)
-- [046](046-installer-self-heals-global-shim-surfaces-failures-gates-tui-rendering.md) Installer self-heals its global shim, surfaces failures, and gates TUI rendering
-- [041](041-lossless-installer-preserve-toolprefix-normalize-rule-blank-lines.md) Lossless installer: preserve toolPrefix and normalize rule blank lines
-- [039](039-fix-vscode-extension-and-derivatives-install-uninstall.md) Fix VS Code extension and derivatives install/uninstall
-- [028](028-clean-rule-mcp-commands-via-user-commands-prompt-suppression-not-a-plugin.md) Clean /rule-mcp-* commands via user commands + prompt suppression, not a plugin
 
 ### architecture
 

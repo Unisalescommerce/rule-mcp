@@ -6,14 +6,7 @@ import { strict as assert } from "node:assert";
 import { join } from "node:path";
 import { test } from "node:test";
 
-import {
-  PROJECT_HOSTS,
-  PROJECT_HOST_IDS,
-  NO_PROJECT_HOSTS,
-  projectHostFile,
-  projectHostLocalFile,
-  projectHostFormat,
-} from "../_project-hosts.data.js";
+import { PROJECT_HOSTS, PROJECT_HOST_IDS, NO_PROJECT_HOSTS, projectHostFile, projectHostLocalFile, projectHostFormat } from "../_project-hosts.data.js";
 
 test("every project host declares a shared file, a dialect, and optional local", () => {
   const expected = {

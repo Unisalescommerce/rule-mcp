@@ -6,10 +6,7 @@ import { test } from "node:test";
 import { runGuardLoop } from "../_loop.js";
 
 test("loop answers two prompt-submit lines without re-reading a closed stdin", async () => {
-  const lines = [
-    JSON.stringify({ action: "prompt-submit", prompt: "one", cwd: "/tmp" }),
-    JSON.stringify({ action: "prompt-submit", prompt: "two", cwd: "/tmp" }),
-  ];
+  const lines = [JSON.stringify({ action: "prompt-submit", prompt: "one", cwd: "/tmp" }), JSON.stringify({ action: "prompt-submit", prompt: "two", cwd: "/tmp" })];
   const stdin = Readable.from(`${lines.join("\n")}\n`);
   const out = [];
 

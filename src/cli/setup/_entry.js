@@ -37,11 +37,17 @@ const pick = (on, off) => (on ? true : !off && undefined);
  * @param {{ getArgument: Function, hasFlag: Function }} io
  * @returns {object}
  */
-export function setupOptions(kind, { getArgument, hasFlag }) {
+export function setupOptions(kind, { getArgument, getArguments = () => [], hasFlag }) {
   return {
     uninstall: kind === "uninstall" || hasFlag("--uninstall"),
     agent: getArgument("--agent"),
     mode: getArgument("--mode", "stdio"),
+    // Project-scope installs write into chosen trees only (ADR 193). `--project`
+    // is repeatable; the adapter must expose getArguments so every path arrives.
+    scope: getArgument("--scope"),
+    projects: getArguments("--project"),
+    projectConfig: getArgument("--project-config"),
+    refreshProjects: hasFlag("--refresh-projects"),
     // The four that narrow the command surface are spelled `--commands-*`
     // because `--skills` is already taken, by the step that copies the skill
     // catalog. One flag with two meanings is a flag nobody can document.

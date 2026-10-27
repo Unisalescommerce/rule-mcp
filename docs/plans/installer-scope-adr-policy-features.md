@@ -20,7 +20,7 @@ Checked on `main` at `46f84e5a`:
 | ADR policy (`full` / `handoff` / `on-demand`)   | absent: only `RULE_MCP_AUTO_ADR` / `DISABLE_AUTO_ADR`     |
 | Pending ADRs numbered on landing                | absent (`docs/adr/_pending/` not used)                    |
 | Index merge driver, `post-merge`/`post-rewrite` | absent                                                    |
-| Install scope `project` for MCP configs         | absent (`--scope` exists for skills only)                 |
+| Install scope `project` for MCP configs         | flags landed (ADR 193); wizard Scope UI still open        |
 | Feature toggles (`feature list/enable/disable`) | absent; switches are raw env vars                         |
 | Claude attribution switch                       | absent                                                    |
 | Path completion in the setup wizard             | absent                                                    |
@@ -203,19 +203,20 @@ One table, read by install, uninstall and detection, so the three cannot disagre
    to `.agents/`.
 
 2. [x] `src/cli/installers/_install-project.js` + `_project-hosts.data.js` (ADR 192). A shared entry is
-   `{ command: "rule-mcp", args: ["serve"] }` with no machine paths. A local entry carries the
-   full launcher and `RULE_MCP_ADR_POLICY` when set. A host with no local file throws
-   "`<agent>` has no local project config: use --project-config shared". Manifest `hosts[].written`
-   merges paths. Remaining: CLI `--scope` / `projects.json` / wizard / Claude extras (items 3–10).
+       `{ command: "rule-mcp", args: ["serve"] }` with no machine paths. A local entry carries the
+       full launcher and `RULE_MCP_ADR_POLICY` when set. A host with no local file throws
+       "`<agent>` has no local project config: use --project-config shared". Manifest `hosts[].written`
+       merges paths.
 3. Claude shared: the short instruction block in `CLAUDE.md`, the commands in `.claude/commands/`,
    hooks and attribution in `.claude/settings.json` (`settings.local.json` for local).
 4. Prompt suppression per client: `RULE_MCP_NO_MCP_PROMPTS` accepts `1` or a comma list of MCP
    client names. A shared `.mcp.json` sets `claude-code`, because copilot and pi read the same file
    and get no command files.
-5. Setup: `--scope global|project`, `--project <path>` (repeatable), `--project-config local|shared`.
-   A shared install is stdio only and writes nothing global (no skills, service or remember).
-6. `~/.rule-mcp/state/projects.json` records each project install. `update`,
-   `setup --refresh-projects` and `setup --uninstall` walk it.
+5. [x] Setup: `--scope global|project`, `--project <path>` (repeatable), `--project-config local|shared`
+       (ADR 193). A shared install is stdio only and writes nothing global (no skills, service or remember).
+       Flag path only in this slice; wizard Scope UI stays item 9.
+6. [x] `~/.rule-mcp/state/projects.json` records each project install. `setup --refresh-projects`
+       and `setup --uninstall` walk it (ADR 193). `update` walk still open with the global update path.
 7. `rule-mcp project add [path] [--project-config] [--agent]` copies the last recorded
    project's configuration; `project remove [path]` takes back every config and forgets it.
    `/rule-init` adds its own project when the install is per project.

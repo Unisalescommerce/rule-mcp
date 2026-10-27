@@ -27,7 +27,7 @@ the package version from anywhere. An error exits 1 and prints to stderr;
 | [`daemon`](#rule-daemon)                 | 1       | Manage the MCP daemon (process and native platform services)                              |
 | [`install`](#rule-install)               | 27      | Install rule-mcp into an agent/IDE (edits mcp.json)                                       |
 | [`uninstall`](#rule-uninstall)           | 7       | Remove rule-mcp from an agent/IDE                                                         |
-| [`setup`](#rule-setup)                   | 29      | Full-screen install/uninstall wizard (falls back to flags when piped)                     |
+| [`setup`](#rule-setup)                   | 33      | Full-screen install/uninstall wizard (falls back to flags when piped)                     |
 | [`tools`](#rule-tools)                   | 1       | List or call MCP tools directly                                                           |
 | [`config`](#rule-config)                 | 5       | Print the mcp.json snippet, or manage RULE_MCP_* env vars with `config env`               |
 | [`doctor`](#rule-doctor)                 | 4       | Run system health check                                                                   |
@@ -182,6 +182,10 @@ rule-mcp setup
 | ---------------------------- | ------- | ----------------------------- | --------------------------------------------------------------------------- |
 | `--agent <name>`             | -       | -                             | narrow the run to one target                                                |
 | `--mode <name>`              | stdio   | -                             | stdio (default), daemon (SSE), or docker                                    |
+| `--scope <s>`                | -       | `global`, `project`           | global (default) or project MCP configs                                     |
+| `--project <path>`           |         | -                             | project root for --scope project (repeatable)                               |
+| `--project-config <kind>`    | -       | `shared`, `local`             | shared (portable) or local launcher                                         |
+| `--refresh-projects`         | -       | -                             | re-apply MCP configs into every recorded project                            |
 | `--uninstall`                | -       | -                             | run the uninstall direction                                                 |
 | `--rules`                    | -       | -                             | write agent instruction files                                               |
 | `--no-rules`                 | -       | -                             | skip agent instruction files                                                |

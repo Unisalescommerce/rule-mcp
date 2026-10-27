@@ -11,7 +11,7 @@ Host hooks spawn `rule-mcp guard` on every prompt. The CLI preAction hook always
 
 ## Decision
 
-1) shouldBootstrapCoreTools returns false when the Commander action command is named guard, so preAction skips bootstrapCoreTools for that command only. 2) guard gains an optional --loop that reads NDJSON lines and answers one JSON object per line via runGuard({ payload }), keeping one warm process. Host hook writers stay on per-spawn until a later rewire measures the install path.
+1. shouldBootstrapCoreTools returns false when the Commander action command is named guard, so preAction skips bootstrapCoreTools for that command only. 2) guard gains an optional --loop that reads NDJSON lines and answers one JSON object per line via runGuard({ payload }), keeping one warm process. Host hook writers stay on per-spawn until a later rewire measures the install path.
 
 ## Consequences
 

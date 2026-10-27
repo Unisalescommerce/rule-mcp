@@ -115,33 +115,20 @@ const rows = [
   benchSync("F1 spawn import promptDirective", () => {
     execFileSync(
       process.execPath,
-      [
-        "--import",
-        ALIAS,
-        "--input-type=module",
-        "-e",
-        `import { promptDirective } from ${JSON.stringify(`${ROOT}/src/core/directive/index.js`)}; promptDirective();`,
-      ],
+      ["--import", ALIAS, "--input-type=module", "-e", `import { promptDirective } from ${JSON.stringify(`${ROOT}/src/core/directive/index.js`)}; promptDirective();`],
       { cwd: ROOT, stdio: ["ignore", "pipe", "pipe"] },
     );
   }),
   benchSync("F2 spawn import runGuard module", () => {
-    execFileSync(
-      process.execPath,
-      ["--import", ALIAS, "--input-type=module", "-e", `import ${JSON.stringify(`${ROOT}/src/cli/guard/_run.js`)};`],
-      { cwd: ROOT, stdio: ["ignore", "pipe", "pipe"] },
-    );
+    execFileSync(process.execPath, ["--import", ALIAS, "--input-type=module", "-e", `import ${JSON.stringify(`${ROOT}/src/cli/guard/_run.js`)};`], {
+      cwd: ROOT,
+      stdio: ["ignore", "pipe", "pipe"],
+    });
   }),
   benchSync("F3 spawn import buildProgram", () => {
     execFileSync(
       process.execPath,
-      [
-        "--import",
-        ALIAS,
-        "--input-type=module",
-        "-e",
-        `import { buildProgram } from ${JSON.stringify(`${ROOT}/src/cli/_program.js`)}; buildProgram();`,
-      ],
+      ["--import", ALIAS, "--input-type=module", "-e", `import { buildProgram } from ${JSON.stringify(`${ROOT}/src/cli/_program.js`)}; buildProgram();`],
       { cwd: ROOT, stdio: ["ignore", "pipe", "pipe"] },
     );
   }),
@@ -216,9 +203,7 @@ if (process.argv.includes("--json")) {
   }
 
   process.stdout.write(`\nloadavg=${report.loadavg.join(",")} quiet=${report.quietHeuristic}\n`);
-  process.stdout.write(
-    `daemon-shaped: cold import ${report.daemonShaped.coldImportRunGuardMs} ms; in-process call median ${report.daemonShaped.inProcessCallMedianMs} ms\n`,
-  );
+  process.stdout.write(`daemon-shaped: cold import ${report.daemonShaped.coldImportRunGuardMs} ms; in-process call median ${report.daemonShaped.inProcessCallMedianMs} ms\n`);
   process.stdout.write(`deltas: ${JSON.stringify(report.deltasMs)}\n`);
 }
 

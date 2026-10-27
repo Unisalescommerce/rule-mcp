@@ -5,8 +5,8 @@
  * portable `{ command: "rule-mcp", args: ["serve"] }` with no machine paths.
  * Local installs carry the full launcher (and ADR policy env when set).
  *
- * CLI `--scope` / `projects.json` wiring is out of scope here: callers pass a
- * project root and collect `written` for the manifest.
+ * Callers (setup `--scope project`, refresh, uninstall) pass a project root and
+ * collect `written` for the manifest and `projects.json` (ADR 193).
  */
 
 import { readText, writeText } from "./_paths.js";
@@ -69,19 +69,10 @@ function targetFile(agent, projectRoot, projectConfig) {
  * @param {{ agent: string, projectRoot: string, projectConfig?: "shared"|"local", entrypoint?: string, dryRun?: boolean }} options
  * @returns {{ written: string[] }}
  */
-export function installProjectHost({
-  agent,
-  projectRoot,
-  projectConfig = "shared",
-  entrypoint,
-  dryRun = false,
-} = {}) {
+export function installProjectHost({ agent, projectRoot, projectConfig = "shared", entrypoint, dryRun = false } = {}) {
   const file = targetFile(agent, projectRoot, projectConfig);
   const format = projectHostFormat(agent);
-  const config =
-    projectConfig === "local"
-      ? localServerConfig(agent, entrypoint ?? process.argv[1] ?? "rule-mcp")
-      : sharedServerConfig();
+  const config = projectConfig === "local" ? localServerConfig(agent, entrypoint ?? process.argv[1] ?? "rule-mcp") : sharedServerConfig();
   const content = upsertHostServer(format, readText(file), config);
 
   if (content === null) {
@@ -102,13 +93,7 @@ export function installProjectHost({
  * @param {{ agent: string, projectRoot: string, projectConfig?: "shared"|"local", written?: string[], dryRun?: boolean }} options
  * @returns {{ written: string[] }}
  */
-export function uninstallProjectHost({
-  agent,
-  projectRoot,
-  projectConfig = "shared",
-  written,
-  dryRun = false,
-} = {}) {
+export function uninstallProjectHost({ agent, projectRoot, projectConfig = "shared", written, dryRun = false } = {}) {
   const format = projectHostFormat(agent);
 
   if (!format) {

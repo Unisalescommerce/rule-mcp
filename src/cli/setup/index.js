@@ -17,6 +17,7 @@
 import { installNextSteps, uninstallNextSteps } from "./_next-steps.js";
 import { printSummary, runPlain } from "./_plain.js";
 import { buildInstallPlan } from "./_plan-install.js";
+import { buildProjectInstallPlan, buildProjectRefreshPlan, buildProjectUninstallPlan } from "./_plan-project.js";
 import { buildUninstallPlan } from "./_plan-uninstall.js";
 import { preflight } from "./_preflight.js";
 import { resolveSetupOptions, wizardRuntimeNote } from "./_options.js";
@@ -27,6 +28,7 @@ export { agentCatalog, agentRows } from "./_agent-rows.js";
 export * from "./_entry.js";
 export * from "./_options.js";
 export * from "./_plan-install.js";
+export * from "./_plan-project.js";
 export * from "./_plan-uninstall.js";
 export * from "./_preflight.js";
 export * from "./_scan.js";
@@ -46,6 +48,50 @@ async function install(options) {
   if (context.blocked) {
     process.stderr.write("Preflight failed - run `rule-mcp doctor` for details.\n");
     process.exitCode = 1;
+
+    return;
+  }
+
+  // Refresh walks `projects.json` and never opens the wizard: the store is the
+  // source of truth for which roots to rewrite.
+  if (options.refreshProjects) {
+    const { counts } = await runPlain({
+      plan: buildProjectRefreshPlan(),
+      dryRun: options.dryRun,
+      title: "rule-mcp setup --refresh-projects",
+      nextSteps: installNextSteps({ mode: "stdio", dryRun: options.dryRun }),
+    });
+
+    settleExit(counts);
+
+    return;
+  }
+
+  // Project-scope installs are flag-driven in this slice; wizard Scope UI is
+  // a later step on the installer-scope plan.
+  if (options.scope === "project") {
+    if (options.interactive) {
+      process.stdout.write("Project-scope setup uses flags in this release: pass --no-wizard with --scope project --project <path>.\n");
+    }
+
+    const agents =
+      options.agents ??
+      detectInstalledAgents()
+        .filter((agent) => agent.configFile)
+        .map((agent) => agent.name);
+    const plan = buildProjectInstallPlan({
+      agents,
+      projects: options.projects,
+      projectConfig: options.projectConfig,
+    });
+    const { counts } = await runPlain({
+      plan,
+      dryRun: options.dryRun,
+      title: "rule-mcp setup --scope project",
+      nextSteps: installNextSteps({ mode: "stdio", dryRun: options.dryRun }),
+    });
+
+    settleExit(counts);
 
     return;
   }
@@ -122,7 +168,9 @@ async function uninstall(options) {
   const scan = scanInstallation();
   const groups = scan.groups.filter((group) => group.count > 0).map((group) => group.id);
   const purgeIds = options.purge && !options.keepConfig ? scan.purge.map((target) => target.id) : [];
-  const plan = buildUninstallPlan({ agents: options.agents ?? scan.agents, groups, purgeIds });
+  // Project installs are recorded separately from the global manifest; walk
+  // them first so uninstall reverses every tree `setup --scope project` wrote.
+  const plan = [...buildProjectUninstallPlan(), ...buildUninstallPlan({ agents: options.agents ?? scan.agents, groups, purgeIds })];
   const { counts } = await runPlain({
     plan,
     dryRun: options.dryRun,

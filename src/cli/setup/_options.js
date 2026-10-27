@@ -135,10 +135,19 @@ export function resolveExtras(options = {}) {
  * @returns {{ mode: string, agents: string[]|null, extras: string[], selection: object|null, minimal: boolean|undefined, surface: object|null, dryRun: boolean, force: boolean, purge: boolean, keepConfig: boolean, interactive: boolean }}
  */
 export function resolveSetupOptions(options = {}) {
-  const mode = normalizeInstallMode(options.mode ?? "stdio");
+  const scope = options.scope === "project" ? "project" : "global";
+  // Project-scope installs are stdio only and never write global extras
+  // (skills, platform service). Wizard UI for scope lands in a later slice.
+  const mode = scope === "project" ? "stdio" : normalizeInstallMode(options.mode ?? "stdio");
+  const projectOptions = scope === "project" ? { ...options, mode, skills: false, service: false } : { ...options, mode };
+  const projects = Array.isArray(options.projects) ? options.projects : options.project ? [].concat(options.project) : [];
 
   return {
     mode,
+    scope,
+    projects,
+    projectConfig: options.projectConfig === "local" ? "local" : "shared",
+    refreshProjects: Boolean(options.refreshProjects),
     // `--minimal` / `--no-minimal` choose the installed server surface;
     // absent leaves the saved config alone (see `applyMinimalEnv`).
     minimal: options.minimal,
@@ -149,7 +158,7 @@ export function resolveSetupOptions(options = {}) {
     // `--agent <name>` narrows the run to one target; absent means "whatever
     // detection found", which the caller resolves.
     agents: options.agent && options.agent !== "all" ? [options.agent] : null,
-    extras: resolveExtras({ ...options, mode }),
+    extras: resolveExtras(projectOptions),
     // Null means no flag narrowed the command surface, which the plan reads as
     // "every command" - what an install wrote before the surface grew one per
     // skill. The wizard replaces it with whatever its commands step answered.

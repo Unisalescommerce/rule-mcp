@@ -9,23 +9,9 @@
 
 import { installClaude, installCodex, installCursor, installCopilot, installGemini, installPi } from "../_agents-cli.js";
 import { installOpencode, uninstallOpencode } from "../_agents-opencode.js";
-import {
-  installVscode,
-  installJetbrains,
-  installNeovim,
-  installEmacs,
-  installDevin,
-  createGenericInstaller,
-} from "../_agents-ide.js";
+import { installVscode, installJetbrains, installNeovim, installEmacs, installDevin, createGenericInstaller } from "../_agents-ide.js";
 import { uninstallClaude, uninstallCodex, uninstallCursor, uninstallCopilot, uninstallGemini, uninstallPi } from "../_uninstall-clis.js";
-import {
-  uninstallDevin,
-  uninstallEmacs,
-  uninstallGeneric,
-  uninstallJetbrains,
-  uninstallNeovim,
-  uninstallVscode,
-} from "../_uninstall-hosts.js";
+import { uninstallDevin, uninstallEmacs, uninstallGeneric, uninstallJetbrains, uninstallNeovim, uninstallVscode } from "../_uninstall-hosts.js";
 import { GENERIC_HOSTS } from "../_hosts.data.js";
 
 const DEDICATED = {
@@ -43,9 +29,7 @@ const DEDICATED = {
   devin: { install: installDevin, uninstall: uninstallDevin },
 };
 
-const GENERIC = Object.fromEntries(
-  GENERIC_HOSTS.map((id) => [id, { install: createGenericInstaller(id), uninstall: uninstallGeneric(id) }]),
-);
+const GENERIC = Object.fromEntries(GENERIC_HOSTS.map((id) => [id, { install: createGenericInstaller(id), uninstall: uninstallGeneric(id) }]));
 
 /** @type {Record<string, { install: Function, uninstall: Function }> } */
 const WRITERS = { ...DEDICATED, ...GENERIC };
