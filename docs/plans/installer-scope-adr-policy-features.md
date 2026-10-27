@@ -174,7 +174,7 @@ One table, read by install, uninstall and detection, so the three cannot disagre
 2. `setup --attribution | --no-attribution`, plus a wizard extra.
 3. Commit: `feat(setup): let setup keep or hide Claude Code attribution`.
 
-### Step 8 - Project-scope install
+### Step 8 - Project-scope install (slice A DONE: table + writer + written[])
 
 1. `src/cli/installers/_project-hosts.data.js`: where each host reads a project config.
 
@@ -202,10 +202,11 @@ One table, read by install, uninstall and detection, so the three cannot disagre
    two files, so wait. Use `.mcp.json` for pi rather than `.pi/mcp.json`: `.pi/` may be a symlink
    to `.agents/`.
 
-2. `src/cli/installers/_install-project.js`: one writer per row. A shared entry is
+2. [x] `src/cli/installers/_install-project.js` + `_project-hosts.data.js` (ADR 192). A shared entry is
    `{ command: "rule-mcp", args: ["serve"] }` with no machine paths. A local entry carries the
    full launcher and `RULE_MCP_ADR_POLICY` when set. A host with no local file throws
-   "`<agent>` has no local project config: use --project-config shared".
+   "`<agent>` has no local project config: use --project-config shared". Manifest `hosts[].written`
+   merges paths. Remaining: CLI `--scope` / `projects.json` / wizard / Claude extras (items 3–10).
 3. Claude shared: the short instruction block in `CLAUDE.md`, the commands in `.claude/commands/`,
    hooks and attribution in `.claude/settings.json` (`settings.local.json` for local).
 4. Prompt suppression per client: `RULE_MCP_NO_MCP_PROMPTS` accepts `1` or a comma list of MCP

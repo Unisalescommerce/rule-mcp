@@ -158,6 +158,7 @@ knob documented above can be traced to the code that answers it.
 
 | Variable                                | Read in                                                                                                                                                                                                                                                         |
 | --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `RULE_MCP_ADR_POLICY`                   | `src/cli/installers/_install-project.js`                                                                                                                                                                                                                        |
 | `RULE_MCP_AUTO_ADR`                     | `src/cli/commands/_configure.js`, `src/tools/adr/_auto-log.js`                                                                                                                                                                                                  |
 | `RULE_MCP_AUTO_UPDATE`                  | `src/core/self-update/_banner.js`, `src/core/self-update/_config.js`                                                                                                                                                                                            |
 | `RULE_MCP_AUTO_UPDATE_INTERVAL_SECONDS` | `src/core/self-update/_config.js`                                                                                                                                                                                                                               |
@@ -218,9 +219,9 @@ knob documented above can be traced to the code that answers it.
 | `RULE_MCP_UPDATE_REQUIRE_SIGNATURE`     | `src/core/self-update/_banner.js`, `src/core/self-update/_run.js`, `src/tools/actions/_update.js`                                                                                                                                                               |
 | `RULE_MCP_VARS`                         | `src/cli/commands/_configure.js`                                                                                                                                                                                                                                |
 
-59 read by the code, 54 documented in the table above.
+60 read by the code, 54 documented in the table above.
 
-Read but undocumented: `RULE_MCP_BASE_BRANCH`, `RULE_MCP_GUARD_DAEMON`, `RULE_MCP_HOOK_HOST`, `RULE_MCP_SKIP_GLOBAL_LINK`, `RULE_MCP_SURFACE`, `RULE_MCP_VARS`.
+Read but undocumented: `RULE_MCP_ADR_POLICY`, `RULE_MCP_BASE_BRANCH`, `RULE_MCP_GUARD_DAEMON`, `RULE_MCP_HOOK_HOST`, `RULE_MCP_SKIP_GLOBAL_LINK`, `RULE_MCP_SURFACE`, `RULE_MCP_VARS`.
 
 Documented but read nowhere in `src/` or `bin/`: `RULE_MCP_TOKENSAVE_AUTOTRACK`.
 

@@ -67,14 +67,32 @@ export function readManifest() {
  * @param {{ agent?: string, mode?: string, profile?: string, dimensions?: object, surface?: object|null, commands?: object|null, entrypoint?: string, global?: boolean, dryRun?: boolean }} entry
  * @returns {object} the manifest as written
  */
-export function recordInstall({ agent, level = null, mode, profile, dimensions, surface, commands, entrypoint, global, dryRun = false } = {}) {
+export function recordInstall({
+  agent,
+  level = null,
+  mode,
+  profile,
+  dimensions,
+  surface,
+  commands,
+  entrypoint,
+  global,
+  written,
+  dryRun = false,
+} = {}) {
   const manifest = readManifest();
   const agents = new Set(manifest.agents);
   const hosts = { ...manifest.hosts };
 
   if (agent && agent !== "all") {
     agents.add(agent);
-    hosts[agent] = { level: level ?? hosts[agent]?.level ?? null };
+    const prior = hosts[agent] ?? {};
+    const mergedWritten = [...new Set([...(prior.written ?? []), ...(written ?? [])])].sort();
+
+    hosts[agent] = {
+      level: level ?? prior.level ?? null,
+      ...(mergedWritten.length > 0 ? { written: mergedWritten } : prior.written ? { written: prior.written } : {}),
+    };
   }
 
   const next = {

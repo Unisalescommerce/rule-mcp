@@ -1,7 +1,7 @@
 # mcp-host-integration-depth - per-host install/uninstall, integration levels, and the server-side wiring
 
 Status: `in-progress`
-Notes:`in-progress` 34 of 37. Six phases closed; the three open items are two deferrals (`written[]`, per-host token measurement) and the hook process-cost path (daemon+`--send` wired 2026-10-27; remasure superseded the 1056 ms / 1.3-2.4 s floor). `_registry`/`_uninstall` lookups closed 2026-10-27 (ADR 190). Outside the skills graph: this plan covers the installer, the host registries and
+Notes:`in-progress` 35 of 37. Six phases closed; open deferral: per-host token measurement (no E2E host driver). `written[]` landed with project writers (ADR 192). Hook daemon+`--send` wired (ADR 187–189). `_registry`/`_uninstall` lookups closed (ADR 190). Outside the skills graph: this plan covers the installer, the host registries and
 the server↔host wiring, not skills, so it is not a node in `docs/plans/skills/skills-plan.md`.
 It is the sibling of `installer-scope-adr-policy-features.md` and depends on it for the host
 path table.
@@ -185,7 +185,7 @@ repository (`claude`, `codex`, `pi`).
 - [x] Fix the asymmetries, each with a test that failed before the fix. **Devin** removed its config and left seventeen `skills/**/SKILL.md` files; **Cursor** never removed the rules block it appended to `~/.cursorrules`; **both manifests** outlived the hosts they described, because an uninstall never called `forgetInstall`. All three are gone, and the roundtrip ratchet that named them is now empty.
 - [x] `doctor` reports the depth per host: `L2 of L3, next L3` for a host installed at a level, `ceiling L3, depth not recorded` for one installed before the manifest knew. Evidence: `depthLine` in `src/cli/doctor/_sections.js`, measured on a fresh install at `--level L2`.
 - [x] Gate: no uninstaller contains a hand-built user-level path to a server config; every one asks the host record. Evidence: `tests/installers/host-uninstall-paths.test.mjs`, written before the refactor and red on eight literals. Two exemptions are documented there with their owners instead of being silently allowed - a variant directory (`Code - Insiders`, `Code - OSS`) and a project-scope path, which belongs to step 8 of the port plan.
-- [ ] **Deferred with the reason:** `written[]` in the manifest. The plan wanted the uninstall to read the files a host wrote; with the uninstall now deriving from one host record, the only thing a written set would add is project-scope installs - which step 8 of `installer-scope-adr-policy-features` has not written yet. A field no reader consumes is the decoration this repository's own rules call out.
+- [x] **`written[]` in the manifest (ADR 192).** `recordInstall` merges unique paths onto `hosts[agent].written`. Project writers in `_install-project.js` return those paths. CLI `--scope project` wiring (rest of installer-scope step 8) still open; uninstall of project files can already consume `written` when the caller passes it.
 
 ### Phase 4 - The eight missing products
 

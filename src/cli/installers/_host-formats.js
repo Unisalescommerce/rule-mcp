@@ -16,7 +16,7 @@
  */
 
 import { serverName } from "./_paths.js";
-import { parseJson, removeJsonServer, toJson, upsertJsonServer } from "./_writers-json.js";
+import { parseJson, removeJsonServer, removeVscodeServer, toJson, upsertJsonServer, upsertVscode } from "./_writers-json.js";
 import { removeTomlBlock, upsertTomlBlock } from "./_writers-text.js";
 import { removeOpencode, upsertOpencode } from "./_writers-opencode.js";
 
@@ -110,6 +110,9 @@ export function upsertHostServer(format, current, config) {
       // rebuilt by its own writer rather than merged like an `mcpServers` one.
       return upsertOpencode(current, config);
     }
+    case "servers": {
+      return upsertVscode(current, config);
+    }
     default: {
       return upsertJsonServer(current, config);
     }
@@ -136,6 +139,9 @@ export function removeHostServer(format, current) {
     }
     case "opencode": {
       return removeOpencode(current);
+    }
+    case "servers": {
+      return removeVscodeServer(current);
     }
     default: {
       return removeJsonServer(current);

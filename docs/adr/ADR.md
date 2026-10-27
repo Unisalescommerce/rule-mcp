@@ -8,6 +8,7 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [192](192-project-scope-host-table-and-manifest-written-paths.md)                                                       | Project-scope host table and manifest written paths                                                       | 2026-10-27 | accepted   | installer, hosts, manifest                                                          |
 | [191](191-jetbrains-mcp-config-installs-into-junie-s-user-file.md)                                                      | JetBrains MCP config installs into Junie's user file                                                      | 2026-10-27 | accepted   | installer, hosts, jetbrains                                                         |
 | [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md)                                            | Host install and uninstall maps are lookups on the host record                                            | 2026-10-27 | accepted   | installer, hosts, architecture                                                      |
 | [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md)                                                 | Hook install starts the guard daemon and writers use --send                                               | 2026-10-27 | accepted   | cli, installer, hooks, performance                                                  |
@@ -207,6 +208,7 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [192](192-project-scope-host-table-and-manifest-written-paths.md)                                                       | Add _project-hosts.data.js (shared/local project files + dialects) and _install-project.js (shared portable entry vs local launcher).                                                                                           | Positive: project writers and the path table agree; uninstall can reverse project files via written[]; JetBrains project path is .junie/mcp/mcp.json.                                                                           |
 | [191](191-jetbrains-mcp-config-installs-into-junie-s-user-file.md)                                                      | Export junieConfigPath as ~/.junie/mcp/mcp.json and use it for installJetbrains and hostRecord(jetbrains).                                                                                                                      | Positive: installs land where Junie reads them; install/uninstall/detect agree; project trees stay untouched.                                                                                                                   |
 | [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md)                                            | Add hosts/_writers.js as the single table of install/uninstall pairs. hosts/_core.js holds path/identity so uninstall bodies can import it without cycling through the writers table. hosts/index.js attaches...                | Positive: installers[id] === hostRecord(id).install for all 23 hosts (enforced by host-writers.test.mjs); adding a host requires writers + evidence in one place.                                                               |
 | [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md)                                                 | guardCommand (and the OpenCode/Pi plugin snippets) emit guard --send <kind>. installAgent starts the detached guard daemon whenever hooks are written. uninstallAgent stops the daemon when the install manifest has no...      | Positive: L3+ hook installs get the warm path automatically; uninstall of the last agent cleans up.                                                                                                                             |
@@ -437,6 +439,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### installer
 
+- [192](192-project-scope-host-table-and-manifest-written-paths.md) Project-scope host table and manifest written paths
 - [191](191-jetbrains-mcp-config-installs-into-junie-s-user-file.md) JetBrains MCP config installs into Junie's user file
 - [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md) Host install and uninstall maps are lookups on the host record
 - [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md) Hook install starts the guard daemon and writers use --send
@@ -881,6 +884,15 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [103](103-every-handoff-mode-sweeps-completed-working-papers-and-closeout-false-is-the-rea.md) Every handoff mode sweeps completed working papers, and closeout false is the read-only run
 - [087](087-session-close-archives-completed-audits-reviews-and-plans.md) Session close archives completed audits, reviews and plans
 
+### hosts
+
+- [192](192-project-scope-host-table-and-manifest-written-paths.md) Project-scope host table and manifest written paths
+- [191](191-jetbrains-mcp-config-installs-into-junie-s-user-file.md) JetBrains MCP config installs into Junie's user file
+- [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md) Host install and uninstall maps are lookups on the host record
+- [184](184-the-install-manifest-records-a-level-per-host.md) The install manifest records a level per host
+- [183](183-integration-depth-is-the-second-install-axis-capped-by-a-measured-ceiling.md) Integration depth is the second install axis, capped by a measured ceiling
+- [182](182-one-host-record-answers-for-every-catalog-host.md) One host record answers for every catalog host
+
 ### naming
 
 - [169](169-rename-the-server-to-rulemcp.md) Rename the server to RuleMCP
@@ -932,14 +944,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [140](140-add-a-shared-frontend-guardrail-family-for-xss-lists-and-workers.md) Add a shared frontend guardrail family for XSS, lists and workers
 - [017](017-forms-per-framework-merger-and-distribution.md) forms per framework merger and distribution
 - [011](011-forms-per-framework.md) Forms per Framework - Merger & Distribution
-
-### hosts
-
-- [191](191-jetbrains-mcp-config-installs-into-junie-s-user-file.md) JetBrains MCP config installs into Junie's user file
-- [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md) Host install and uninstall maps are lookups on the host record
-- [184](184-the-install-manifest-records-a-level-per-host.md) The install manifest records a level per host
-- [183](183-integration-depth-is-the-second-install-axis-capped-by-a-measured-ceiling.md) Integration depth is the second install axis, capped by a measured ceiling
-- [182](182-one-host-record-answers-for-every-catalog-host.md) One host record answers for every catalog host
 
 ### mcp
 
@@ -1076,6 +1080,12 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [128](128-consolidate-the-feature-adrs-and-handoffs-into-one-commit-at-the-close-squash.md) Consolidate the feature ADRs and handoffs into one commit at the close squash
 - [126](126-close-a-feature-with-reset-soft-onto-the-merge-base-and-one-validated-commit.md) Close a feature with reset --soft onto the merge base and one validated commit
 - [125](125-normalize-history-on-the-merge-base-and-hold-every-rewrite-to-a-tree-invariant.md) Normalize history on the merge base and hold every rewrite to a tree invariant
+
+### manifest
+
+- [192](192-project-scope-host-table-and-manifest-written-paths.md) Project-scope host table and manifest written paths
+- [184](184-the-install-manifest-records-a-level-per-host.md) The install manifest records a level per host
+- [109](109-no-corepack-activation-and-no-engines-field-in-a-generated-package-json.md) No corepack activation and no engines field in a generated package.json
 
 ### merge
 
