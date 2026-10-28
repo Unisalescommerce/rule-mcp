@@ -27,9 +27,12 @@ import { installableTargets } from "../_rules-apply.js";
 import { scanInstallation } from "../_scan.js";
 import { GLYPHS } from "../_theme.js";
 import { BACK, CANCEL } from "./_answers.js";
+import { featureIds, FEATURES, levelsFor, readLevel } from "../../../core/runtime/features/index.js";
+import { mergedEnv } from "../../../core/runtime/features/_store.js";
 import {
   doneLines,
   dimensionItems,
+  featureLevelItems,
   preflightLines,
   profileItems,
   progressRows,
@@ -44,13 +47,13 @@ import {
 } from "./_items.js";
 
 /** The rail labels, in the order the wizard lights them. */
-export const INSTALL_STEPS = ["Preflight", "Profile", "Agents", "Depth", "Transport", "Surface", "Review", "Install", "Done"];
+export const INSTALL_STEPS = ["Preflight", "Profile", "Agents", "Depth", "Transport", "Surface", "Features", "Review", "Install", "Done"];
 
 /** The uninstall rail, in the same order. */
 export const UNINSTALL_STEPS = ["Select", "Purge", "Review", "Remove", "Done"];
 
 /** Where each install step sits on that rail. */
-const INSTALL_RAIL = { preflight: 0, profile: 1, agents: 2, depth: 3, transport: 4, surface: 5, review: 6, install: 7, done: 8 };
+const INSTALL_RAIL = { preflight: 0, profile: 1, agents: 2, depth: 3, transport: 4, surface: 5, features: 6, review: 7, install: 8, done: 9 };
 
 /** Where each uninstall step sits on that rail. */
 const UNINSTALL_RAIL = { select: 0, purge: 1, review: 2, remove: 3, done: 4 };
@@ -64,7 +67,7 @@ const UNINSTALL_RAIL = { select: 0, purge: 1, review: 2, remove: 3, done: 4 };
  * @returns {string[]}
  */
 export function installOrder() {
-  return ["preflight", "profile", "agents", "depth", "transport", "surface", "review"];
+  return ["preflight", "profile", "agents", "depth", "transport", "surface", "features", "review"];
 }
 
 /**
@@ -102,6 +105,8 @@ const installPlan = ({ answers, context, force, minimal }) =>
     surface: answers.surface,
     profile: answers.profile,
     dimensions: dimensionMap(answers.dimensions),
+    features: Object.entries(answers.features ?? {}).map(([id, level]) => ({ id, level })),
+    adrPolicy: answers.adrPolicy ?? null,
   });
 
 /** A plan as pending rows, for the frame before the first task starts. */
@@ -121,6 +126,24 @@ export async function runInstallWizard({ screen, defaults = {} }) {
   const catalog = agentRows();
   const ruleFiles = installableTargets(undefined, defaults.agents ?? catalog.detected).map((target) => target.file);
 
+  const flaggedFeatures = Object.fromEntries(
+    (Array.isArray(defaults.features) ? defaults.features : [])
+      .map((spec) => {
+        if (typeof spec === "object" && spec?.id) {
+          return [spec.id, spec.level];
+        }
+
+        if (typeof spec !== "string" || !spec.includes("=")) {
+          return null;
+        }
+
+        const eq = spec.indexOf("=");
+
+        return [spec.slice(0, eq), spec.slice(eq + 1)];
+      })
+      .filter(Boolean),
+  );
+
   const answers = {
     profile: defaults.profile ?? null,
     dimensions: defaults.dimensions ?? null,
@@ -128,6 +151,8 @@ export async function runInstallWizard({ screen, defaults = {} }) {
     mode: defaults.mode ?? "stdio",
     surface: defaults.surface ?? null,
     selection: defaults.selection ?? null,
+    features: { ...flaggedFeatures },
+    adrPolicy: defaults.adrPolicy ?? null,
     dryRun: Boolean(defaults.dryRun),
   };
 
@@ -250,6 +275,41 @@ export async function runInstallWizard({ screen, defaults = {} }) {
         }
 
         answers.mode = mode;
+
+        return undefined;
+      }
+
+      case "features": {
+        // One level screen per feature that offers more than on/off; binary
+        // features share a single radio each so every switch is owned here.
+        const envView = mergedEnv({ env: process.env });
+
+        for (const id of featureIds()) {
+          if (answers.features[id]) {
+            continue;
+          }
+
+          const levels = levelsFor(id);
+
+          if (levels.length < 2) {
+            continue;
+          }
+
+          const chosen = await screen.ask({
+            title: FEATURES[id].label,
+            help: [`Feature: ${id}`, "Pick the level written into ~/.rule-mcp/config/env.json."],
+            items: featureLevelItems(id),
+            mode: "radio",
+            initial: [readLevel(id, envView)],
+            height: Math.min(8, levels.length + 2),
+          });
+
+          if (chosen === CANCEL || chosen === BACK) {
+            return chosen;
+          }
+
+          answers.features[id] = chosen;
+        }
 
         return undefined;
       }

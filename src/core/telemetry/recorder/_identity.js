@@ -58,6 +58,10 @@ export function resetProjectId() {
  * @returns {string}
  */
 export function installationId() {
+  if (process.env.RULE_MCP_TELEMETRY_ANONYMOUS === "1") {
+    return "anonymous";
+  }
+
   if (_installation) {
     return _installation;
   }

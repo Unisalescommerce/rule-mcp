@@ -19,14 +19,11 @@ import { existsSync, mkdirSync, readdirSync, rmSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 import { homedir } from "node:os";
-import { DEFAULT_OPTOUT_ENV, readEnvConfig, writeEnvConfig } from "../installers/index.js";
+import { DEFAULT_OPTOUT_ENV, LEGACY_ENV_CONFIG_DIR, readEnvConfig, writeEnvConfig } from "../installers/index.js";
 import { getRuntimePaths } from "../paths/index.js";
 
 /** Mirrors `cli/installers/_env.js` (not exported there): per-user compile cache. */
 const COMPILE_CACHE_DIR = join(homedir(), ".cache", "rule-mcp", "compile-cache");
-
-/** Also `cli/installers/_env.js`: the switches file and the stored model keys. */
-const ENV_CONFIG_DIR = join(homedir(), ".config", "rule-mcp");
 
 /** Former `ruleGalaxyHome()` - now the rule-mcp runtime root. */
 const ruleGalaxyHome = () => getRuntimePaths().homeDir;
@@ -89,10 +86,10 @@ export function purgeTargets() {
       dir: ruleGalaxyHome(),
     },
     { id: "compile-cache", label: "Compiled-code cache", dir: COMPILE_CACHE_DIR },
-    // A purge that took the runtime home and left this behind is what made
-    // "purge" a promise the uninstall did not keep: the env switches and any
-    // stored model key live here, outside the runtime home.
-    { id: "env-config", label: "Config and stored model keys", dir: ENV_CONFIG_DIR },
+    // Legacy switches dir from before RULE_MCP_HOME owned env.json. The
+    // canonical file is under the runtime home (`config/`); this row only
+    // clears leftovers so a purge does not leave stale keys behind.
+    { id: "env-config", label: "Legacy config and stored model keys", dir: LEGACY_ENV_CONFIG_DIR },
   ].map((target) => ({ ...target, exists: existsSync(target.dir), files: countFiles(target.dir) }));
 }
 

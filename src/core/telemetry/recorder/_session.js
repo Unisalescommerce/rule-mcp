@@ -23,6 +23,10 @@ export function setClientInfo(info) {
 
 /** @returns {string|undefined} the client that connected, as name/version */
 export function clientInfo() {
+  if (process.env.RULE_MCP_TELEMETRY_ANONYMOUS === "1") {
+    return undefined;
+  }
+
   return _client;
 }
 

@@ -1,5 +1,6 @@
 /** The prompt registry: static definitions plus generated persona prompts. */
 import { activeRoles, personaCommandName } from "../core/review/roles/index.js";
+import { ADR_FEATURE_PROMPTS, isAdrFeatureOff } from "../core/runtime/features/_adr-gate.js";
 import { PROMPT_DEFS } from "./_defs.data.js";
 import { listAreaPrompts } from "./_areas.js";
 
@@ -11,8 +12,13 @@ import { listAreaPrompts } from "./_areas.js";
 export function listPrompts() {
   // The area prompts are one per area hub (ADR 117); leaf skills keep tools only.
   const areas = listAreaPrompts().map(({ name, description, arguments: args }) => ({ name, description, arguments: args }));
+  const all = [...PROMPT_DEFS, ...areas, ...rolePrompts()].sort((left, right) => left.name.localeCompare(right.name));
 
-  return [...PROMPT_DEFS, ...areas, ...rolePrompts()].sort((left, right) => left.name.localeCompare(right.name));
+  if (!isAdrFeatureOff()) {
+    return all;
+  }
+
+  return all.filter((prompt) => !ADR_FEATURE_PROMPTS.has(prompt.name));
 }
 
 /**

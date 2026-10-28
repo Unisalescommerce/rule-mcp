@@ -14,6 +14,7 @@
 
 import { areasOfSkills, isRootSkill } from "../../../core/skills/_surface.js";
 import { MINIMAL_ALLOWLIST } from "../../../core/skills/_minimal.js";
+import { FEATURES, levelsFor } from "../../../core/runtime/features/index.js";
 import { getSkillNames } from "../../../tools/router/index.js";
 import { hookSupport } from "../../install/_hook-hosts.js";
 import { DIMENSION_DETAIL, DIMENSIONS, PROFILES } from "../../install/_profiles.js";
@@ -121,6 +122,27 @@ export function dimensionItems({ agents = [], ruleFiles = [] } = {}) {
  *
  * @returns {Array<{ id: string, label: string, note: string, detail: string[] }>}
  */
+/**
+ * Radio rows for one feature's levels (default first in the catalog).
+ *
+ * @param {string} id
+ * @returns {Array<{ id: string, label: string, note: string, detail: string[] }>}
+ */
+export function featureLevelItems(id) {
+  const feature = FEATURES[id];
+
+  if (!feature) {
+    throw new Error(`Unknown feature: ${id}`);
+  }
+
+  return levelsFor(id).map((level, index) => ({
+    id: level,
+    label: level,
+    note: index === 0 ? "default" : "",
+    detail: [`${feature.label}: ${level}`],
+  }));
+}
+
 export function surfaceItems() {
   const skills = getSkillNames();
   const hubs = skills.filter((name) => isRootSkill(name)).length;

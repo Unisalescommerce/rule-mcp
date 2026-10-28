@@ -90,15 +90,28 @@ const reset = () => {
   globalThis.__wizardStub.scan = { groups: [], purge: [], agents: [] };
 };
 
+/** Default answers for the five Features screens (catalog order). */
+const FEATURE_ANSWERS = ["on", "full", "notify", "on", "off"];
+
 test("a standard install asks every step and plans the whole profile", async () => {
   reset();
-  const screen = fakeScreen(["next", "standard", ["claude"], "auto", "stdio", "standard", "run", "close"]);
+  const screen = fakeScreen(["next", "standard", ["claude"], "auto", "stdio", "standard", ...FEATURE_ANSWERS, "run", "close"]);
 
   const outcome = await runInstallWizard({ screen });
 
   assert.equal(outcome.dryRun, false);
-  assert.deepEqual(globalThis.__wizardStub.plans.at(-1), ["runtime-home", "agent:claude", "rules", "commands", "skills", "cli", "manifest", "doctor"]);
-  assert.deepEqual(screen.steps, [0, 1, 2, 3, 4, 5, 6, 7, 8], "the rail lights once per step, in order");
+  assert.deepEqual(globalThis.__wizardStub.plans.at(-1), [
+    "runtime-home",
+    "features",
+    "agent:claude",
+    "rules",
+    "commands",
+    "skills",
+    "cli",
+    "manifest",
+    "doctor",
+  ]);
+  assert.deepEqual(screen.steps, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "the rail lights once per step, in order");
   assert.match(screen.confirms.at(-1).title, /Complete/u);
   assert.ok(
     screen.frames.some((frame) => frame.rows.length > 0),
@@ -113,7 +126,7 @@ test("a standard install asks every step and plans the whole profile", async () 
 
 test("the surface defaults to the one the profile implies", async () => {
   reset();
-  const screen = fakeScreen(["next", "full", ["claude"], "stdio", "full", "run", "close"]);
+  const screen = fakeScreen(["next", "full", ["claude"], "auto", "stdio", "full", ...FEATURE_ANSWERS, "run", "close"]);
 
   await runInstallWizard({ screen });
 
@@ -122,7 +135,7 @@ test("the surface defaults to the one the profile implies", async () => {
 
 test("back from the agents screen re-asks the profile and has no commands step", async () => {
   reset();
-  const screen = fakeScreen(["next", "standard", BACK, "minimal", ["claude"], "stdio", "minimal", "run", "close"]);
+  const screen = fakeScreen(["next", "standard", BACK, "minimal", ["claude"], "auto", "stdio", "minimal", ...FEATURE_ANSWERS, "run", "close"]);
 
   await runInstallWizard({ screen });
 
@@ -132,22 +145,49 @@ test("back from the agents screen re-asks the profile and has no commands step",
     false,
     "commands ride with Surface, they are not a second screen",
   );
-  assert.deepEqual(globalThis.__wizardStub.plans.at(-1), ["runtime-home", "agent:claude", "commands", "skills", "cli", "manifest"]);
+  assert.deepEqual(globalThis.__wizardStub.plans.at(-1), [
+    "runtime-home",
+    "features",
+    "agent:claude",
+    "commands",
+    "skills",
+    "cli",
+    "manifest",
+  ]);
 });
 
 test("a custom profile asks for its dimensions and uses them", async () => {
   reset();
-  const screen = fakeScreen(["next", "custom", ["server", "commands"], ["claude"], "stdio", "full", "run", "close"]);
+  const screen = fakeScreen([
+    "next",
+    "custom",
+    ["server", "commands"],
+    ["claude"],
+    "auto",
+    "stdio",
+    "full",
+    ...FEATURE_ANSWERS,
+    "run",
+    "close",
+  ]);
 
   await runInstallWizard({ screen });
 
   assert.ok(screen.asks.some((ask) => ask.title === "What should this install write?"));
-  assert.deepEqual(globalThis.__wizardStub.plans.at(-1), ["runtime-home", "agent:claude", "commands", "skills", "cli", "manifest"]);
+  assert.deepEqual(globalThis.__wizardStub.plans.at(-1), [
+    "runtime-home",
+    "features",
+    "agent:claude",
+    "commands",
+    "skills",
+    "cli",
+    "manifest",
+  ]);
 });
 
 test("the review can arm a dry run before the plan runs", async () => {
   reset();
-  const screen = fakeScreen(["next", "standard", ["claude"], "auto", "stdio", "standard", "dry", "run", "close"]);
+  const screen = fakeScreen(["next", "standard", ["claude"], "auto", "stdio", "standard", ...FEATURE_ANSWERS, "dry", "run", "close"]);
 
   const outcome = await runInstallWizard({ screen });
 
@@ -205,9 +245,9 @@ test("an uninstall with nothing to remove says so and stops", async () => {
 });
 
 test("the rails and the orders are pure data", () => {
-  assert.deepEqual(INSTALL_STEPS, ["Preflight", "Profile", "Agents", "Depth", "Transport", "Surface", "Review", "Install", "Done"]);
+  assert.deepEqual(INSTALL_STEPS, ["Preflight", "Profile", "Agents", "Depth", "Transport", "Surface", "Features", "Review", "Install", "Done"]);
   assert.deepEqual(UNINSTALL_STEPS, ["Select", "Purge", "Review", "Remove", "Done"]);
-  assert.deepEqual(installOrder(), ["preflight", "profile", "agents", "depth", "transport", "surface", "review"]);
+  assert.deepEqual(installOrder(), ["preflight", "profile", "agents", "depth", "transport", "surface", "features", "review"]);
   assert.deepEqual(uninstallOrder({ hasPurge: true }), ["select", "purge", "review"]);
   assert.deepEqual(uninstallOrder(), ["select", "review"]);
 });

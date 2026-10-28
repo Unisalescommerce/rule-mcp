@@ -81,6 +81,8 @@ export function registerSetupCommand(program) {
     .option("--project <path>", "project root for --scope project (repeatable)", collect, [])
     .addOption(new Option("--project-config <kind>", "shared (portable) or local launcher").choices(["shared", "local"]))
     .option("--refresh-projects", "re-apply MCP configs into every recorded project")
+    .option("--feature <id=level>", "set a feature level before install (repeatable)", collect, [])
+    .option("--adr-policy <level>", "ADR write policy: full, handoff, or on-demand")
     .option("--uninstall", "run the uninstall direction")
     .option("--rules", "write agent instruction files")
     .option("--no-rules", "skip agent instruction files")

@@ -11,13 +11,13 @@
       "file": "02-architecture.md",
       "kind": "block",
       "marker": "surface-counts",
-      "sha256": "7024f2dc8e3ffd8adbf863edd90429e52e03408d146587dbdfe4a784d3f587ef"
+      "sha256": "6c0b6ef1718339383052e793c2d8c1ae38d5c7626768e247690201a3a0dd216e"
     },
     {
       "file": "05-env-variables.md",
       "kind": "block",
       "marker": "env-registry",
-      "sha256": "369324bac43f2e3766deca88ff39389c5c4d623dbdeaa94418e14ab294dae6d6"
+      "sha256": "a486d5f710945bc7e8767996c8f9d65ffd211012b0d23a75ffa10ac45fc7d490"
     },
     {
       "file": "08-engineering-guides.md",
@@ -48,7 +48,7 @@
     {
       "file": "13-cli.md",
       "kind": "document",
-      "sha256": "01573ac9b8bc0c402c89a97c1fb7f1ba6af2003c11f4497d9608d5b950d9fbfe"
+      "sha256": "494eccd261881d962a8b4522954ce86c52efcef5678345a87ebf0923f22daf54"
     },
     {
       "file": "14-personas.md",

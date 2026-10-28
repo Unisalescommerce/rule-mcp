@@ -9,9 +9,10 @@
  * This was a static contract over four shell scripts. They are bootstraps now
  * (ADR 090): the layout and the purge list are node, and so is the assertion.
  *
- * Every case runs in a child process with its own HOME. The config directory
- * is resolved once, when `cli/installers/_env.js` is imported, so a test that
- * swapped HOME in-process would write the switches into the real one.
+ * Every case runs in a child process with its own HOME. The switches file
+ * follows RULE_MCP_HOME (default `~/.rule-mcp/config/env.json`); a test that
+ * swapped HOME in-process could still write into the real tree if the child
+ * were skipped, so these stay out-of-process.
  */
 import { strict as assert } from "node:assert";
 import { execFileSync } from "node:child_process";
@@ -69,7 +70,7 @@ test("an install recreates the whole layout, not just the directory", () => {
 
     assert.equal(result.homeDir, join(home, ".rule-mcp"));
     assert.equal(result.settings, "written", "a fresh install defaults the switches file");
-    assert.ok(existsSync(join(home, ".config", "rule-mcp", "env.json")), "the switches file is part of the install");
+    assert.ok(existsSync(join(home, ".rule-mcp", "config", "env.json")), "the switches file is part of the install");
   } finally {
     rmSync(home, { recursive: true, force: true });
   }

@@ -131,6 +131,8 @@ async function install(options) {
     selection: options.selection,
     minimal: options.minimal,
     surface: options.surface,
+    features: options.features,
+    adrPolicy: options.adrPolicy,
   });
   const { counts } = await runPlain({
     plan,

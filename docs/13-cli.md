@@ -7,7 +7,7 @@ a tool, a skill, a prompt, a role, a command or a guardrail;
 `tests/docs/census-generated.test.mjs` compares this file against the live
 registry, so a stale copy fails the build instead of misleading a reader.
 
-## The commands (25)
+## The commands (26)
 
 Every command is listed with the arguments and options it reads, taken from
 the commander definitions that parse them. The same definitions answer
@@ -27,9 +27,10 @@ the package version from anywhere. An error exits 1 and prints to stderr;
 | [`daemon`](#rule-daemon)                 | 1       | Manage the MCP daemon (process and native platform services)                              |
 | [`install`](#rule-install)               | 27      | Install rule-mcp into an agent/IDE (edits mcp.json)                                       |
 | [`uninstall`](#rule-uninstall)           | 7       | Remove rule-mcp from an agent/IDE                                                         |
-| [`setup`](#rule-setup)                   | 33      | Full-screen install/uninstall wizard (falls back to flags when piped)                     |
+| [`setup`](#rule-setup)                   | 35      | Full-screen install/uninstall wizard (falls back to flags when piped)                     |
 | [`tools`](#rule-tools)                   | 1       | List or call MCP tools directly                                                           |
 | [`config`](#rule-config)                 | 5       | Print the mcp.json snippet, or manage RULE_MCP_* env vars with `config env`               |
+| [`feature`](#rule-feature)               | 0       | List or change user-facing feature switches                                               |
 | [`doctor`](#rule-doctor)                 | 4       | Run system health check                                                                   |
 | [`adr`](#rule-adr)                       | 5       | Create a new Architecture Decision Record (ADR)                                           |
 | [`handoff`](#rule-handoff)               | 9       | Generate a compressed LLM context handoff summary                                         |
@@ -186,6 +187,8 @@ rule-mcp setup
 | `--project <path>`           |         | -                             | project root for --scope project (repeatable)                               |
 | `--project-config <kind>`    | -       | `shared`, `local`             | shared (portable) or local launcher                                         |
 | `--refresh-projects`         | -       | -                             | re-apply MCP configs into every recorded project                            |
+| `--feature <id=level>`       |         | -                             | set a feature level before install (repeatable)                             |
+| `--adr-policy <level>`       | -       | -                             | ADR write policy: full, handoff, or on-demand                               |
 | `--uninstall`                | -       | -                             | run the uninstall direction                                                 |
 | `--rules`                    | -       | -                             | write agent instruction files                                               |
 | `--no-rules`                 | -       | -                             | skip agent instruction files                                                |
@@ -258,6 +261,16 @@ rule-mcp config section
 | `--set <pair>`  |         | -       | KEY=VALUE to save (repeatable)                   |
 | `--list`        | -       | -       | list saved RULE_MCP_* env vars                   |
 | `--unset <key>` | -       | -       | remove a saved RULE_MCP_* env var                |
+
+## rule-mcp feature
+
+List or change user-facing feature switches
+
+```sh
+rule-mcp feature
+```
+
+Takes no options beyond the global `-h, --help`.
 
 ## rule-mcp doctor
 

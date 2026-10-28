@@ -147,7 +147,7 @@ One table, read by install, uninstall and detection, so the three cannot disagre
    alphabetical. Regenerate the index after a squash (`handoff doctor --fix`).
 8. Commit: `feat(adr): number pending ADRs when they land on the trunk`.
 
-### Step 6 - Features
+### Step 6 - Features - DONE (ADR 197)
 
 1. `src/core/runtime/features/_catalog.data.js`: each feature a list of levels (default first),
    each level the env keys it writes (`null` removes the key):

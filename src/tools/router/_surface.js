@@ -2,6 +2,7 @@
 
 import { compressText } from "../../core/text/_compression.js";
 import { compressionEnabled } from "../../core/text/_level.js";
+import { ADR_FEATURE_TOOLS, isAdrFeatureOff } from "../../core/runtime/features/_adr-gate.js";
 import { resolveToolName } from "./_contract.js";
 import { _tools, toolsGeneration } from "./_hooks.js";
 
@@ -71,12 +72,13 @@ function listTools() {
   const generation = toolsGeneration();
 
   const compress = compressionEnabled();
+  const adrOff = isAdrFeatureOff();
 
-  if (memo.generation === generation && memo.compress === compress) {
+  if (memo.generation === generation && memo.compress === compress && memo.adrOff === adrOff) {
     return memo.tools;
   }
 
-  const tools = _tools.map((t) => {
+  const tools = _tools.filter((t) => !(adrOff && ADR_FEATURE_TOOLS.has(t.name))).map((t) => {
     let inputSchema = t.inputSchema ?? { type: "object", properties: {} };
 
     // If a Zod schema is provided, convert it to JSON Schema
@@ -108,7 +110,7 @@ function listTools() {
     return annotations ? { name: t.name, description, inputSchema, annotations } : { name: t.name, description, inputSchema };
   });
 
-  memo = { generation, compress, tools };
+  memo = { generation, compress, adrOff, tools };
 
   return tools;
 }

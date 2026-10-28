@@ -48,6 +48,10 @@ export function setupOptions(kind, { getArgument, getArguments = () => [], hasFl
     projects: getArguments("--project"),
     projectConfig: getArgument("--project-config"),
     refreshProjects: hasFlag("--refresh-projects"),
+    // Feature switches: `--feature id=level` (repeatable) and the ADR write
+    // policy shortcut. Applied before host installs so mcp env carries them.
+    features: getArguments("--feature"),
+    adrPolicy: getArgument("--adr-policy"),
     // The four that narrow the command surface are spelled `--commands-*`
     // because `--skills` is already taken, by the step that copies the skill
     // catalog. One flag with two meanings is a flag nobody can document.

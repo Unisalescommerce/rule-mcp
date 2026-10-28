@@ -26,6 +26,7 @@ import { registerServeCommand, registerUpCommand, registerDaemonCommand } from "
 import { registerInstallCommand, registerUninstallCommand } from "./_register-setup.js";
 import { registerSetupCommand } from "./_register-wizard.js";
 import { registerConfigCommand, registerDoctorCommand, registerCompletionsCommand } from "./_register-health.js";
+import { registerFeatureCommand } from "./_register-feature.js";
 import { registerAgentCommandsCommand } from "./_register-agent-commands.js";
 import { registerReinstallCommand } from "./_register-reinstall.js";
 import { registerCommitLintCommand } from "./_register-commit.js";
@@ -104,6 +105,7 @@ export function buildProgram() {
   registerSetupCommand(program);
   registerToolsCommand(program);
   registerConfigCommand(program);
+  registerFeatureCommand(program);
   registerDoctorCommand(program);
   registerAdrCommand(program);
   registerHandoffCommand(program);

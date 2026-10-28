@@ -19,3 +19,13 @@ export function telemetryEnabled() {
 export function promptsEnabled() {
   return process.env.RULE_MCP_NO_PROMPTS !== "1";
 }
+
+/**
+ * Anonymous telemetry: no prompt text, machine id or client name.
+ * On with RULE_MCP_TELEMETRY_ANONYMOUS=1 (the `telemetry=anonymous` feature).
+ *
+ * @returns {boolean}
+ */
+export function telemetryAnonymous() {
+  return process.env.RULE_MCP_TELEMETRY_ANONYMOUS === "1";
+}

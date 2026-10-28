@@ -10,11 +10,21 @@ import { join } from "node:path";
 import { resolveGlobalBinary, serverName } from "./_paths.js";
 import { normalizeInstallMode } from "./_catalog.js";
 import { getOrCreateSseBearerToken } from "../../transport/index.js";
-import { DEFAULT_SSE_PORT } from "../paths/index.js";
+import { DEFAULT_SSE_PORT, getRuntimePaths } from "../paths/index.js";
 
-const ENV_CONFIG_DIR = join(homedir(), ".config", "rule-mcp");
+/** Legacy path from before RULE_MCP_HOME owned the switches file. */
+const LEGACY_ENV_CONFIG_DIR = join(homedir(), ".config", "rule-mcp");
+const LEGACY_ENV_CONFIG_FILE = join(LEGACY_ENV_CONFIG_DIR, "env.json");
 
-const ENV_CONFIG_FILE = join(ENV_CONFIG_DIR, "env.json");
+/** Canonical switches dir: `~/.rule-mcp/config` (relocatable via RULE_MCP_HOME). */
+export function ENV_CONFIG_DIR() {
+  return getRuntimePaths().configDir;
+}
+
+/** Canonical switches file under the runtime home. */
+export function ENV_CONFIG_FILE() {
+  return join(ENV_CONFIG_DIR(), "env.json");
+}
 
 /**
  * The compiled code cache directory handed to every agent spawn.
@@ -55,19 +65,28 @@ export function minimalEnvFrom(env = process.env) {
 
 function readEnvConfig() {
   try {
-    if (!existsSync(ENV_CONFIG_FILE)) {
+    const canonical = ENV_CONFIG_FILE();
+    const path = existsSync(canonical)
+      ? canonical
+      : existsSync(LEGACY_ENV_CONFIG_FILE)
+        ? LEGACY_ENV_CONFIG_FILE
+        : null;
+
+    if (!path) {
       return {};
     }
 
-    return JSON.parse(readFileSync(ENV_CONFIG_FILE, "utf8"));
+    return JSON.parse(readFileSync(path, "utf8"));
   } catch {
     return {};
   }
 }
 
 function writeEnvConfig(environment) {
-  mkdirSync(ENV_CONFIG_DIR, { recursive: true });
-  writeFileSync(ENV_CONFIG_FILE, JSON.stringify(environment, null, 2) + "\n", "utf8");
+  const dir = ENV_CONFIG_DIR();
+
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(ENV_CONFIG_FILE(), JSON.stringify(environment, null, 2) + "\n", "utf8");
 }
 
 function resolveEnvironment(options = {}) {
@@ -137,4 +156,13 @@ function mcpServerConfig(entrypoint, opts = {}) {
   return { [serverName]: commandConfig(entrypoint, opts) };
 }
 
-export { ENV_CONFIG_DIR, ENV_CONFIG_FILE, DEFAULT_OPTOUT_ENV, readEnvConfig, writeEnvConfig, resolveEnvironment, commandConfig, mcpServerConfig };
+export {
+  LEGACY_ENV_CONFIG_DIR,
+  LEGACY_ENV_CONFIG_FILE,
+  DEFAULT_OPTOUT_ENV,
+  readEnvConfig,
+  writeEnvConfig,
+  resolveEnvironment,
+  commandConfig,
+  mcpServerConfig,
+};

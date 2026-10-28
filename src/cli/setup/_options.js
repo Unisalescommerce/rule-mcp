@@ -148,6 +148,8 @@ export function resolveSetupOptions(options = {}) {
     projects,
     projectConfig: options.projectConfig === "local" ? "local" : "shared",
     refreshProjects: Boolean(options.refreshProjects),
+    features: Array.isArray(options.features) ? options.features : [],
+    adrPolicy: typeof options.adrPolicy === "string" && options.adrPolicy.trim() ? options.adrPolicy.trim() : null,
     // `--minimal` / `--no-minimal` choose the installed server surface;
     // absent leaves the saved config alone (see `applyMinimalEnv`).
     minimal: options.minimal,

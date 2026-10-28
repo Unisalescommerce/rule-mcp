@@ -10,6 +10,7 @@
 
 import { agentInstallTask, runtimeHomeTask, shimTask } from "./_task-core.js";
 import { commandsTask, dockerTask, doctorTask, manifestTask, rulesTask, serviceTask, skillsTask } from "./_task-extras.js";
+import { featuresTask } from "./_task-features.js";
 import { skillsRemovalTask } from "./_task-remove.js";
 import { cliVerifyTask } from "./_task-cli.js";
 import { allAgents } from "../installers/index.js";
@@ -47,7 +48,7 @@ const dimensionsOf = (extras, agents) => ({
 });
 
 /**
- * @param {{ agents?: string[], mode?: string, extras?: object, force?: boolean, context?: object, selection?: object|null, minimal?: boolean, surface?: object|null, profile?: string|null, dimensions?: object|null }} answers
+ * @param {{ agents?: string[], mode?: string, extras?: object, force?: boolean, context?: object, selection?: object|null, minimal?: boolean, surface?: object|null, profile?: string|null, dimensions?: object|null, features?: Array<{ id: string, level: string }>|string[], adrPolicy?: string|null }} answers
  * @returns {Array<{ id: string, title: string, detail: string, run: Function }>}
  */
 export function buildInstallPlan({
@@ -61,9 +62,15 @@ export function buildInstallPlan({
   surface,
   profile = null,
   dimensions = null,
+  features = [],
+  adrPolicy = null,
 } = {}) {
   const targets = checkedAgents(agents);
   const plan = [runtimeHomeTask()];
+
+  if ((Array.isArray(features) && features.length > 0) || adrPolicy) {
+    plan.push(featuresTask({ features, adrPolicy }));
+  }
 
   if (context.hasLocalBin) {
     plan.push(shimTask(context.localBin));
