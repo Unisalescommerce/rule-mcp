@@ -1,7 +1,8 @@
 # Port plan: ADR policy, project installs, features, host paths
 
-Status: `planned`
-Notes:`planned` Notes:`planned`. Outside the skills graph: this plan covers repository policy and the installer, not skills, so it is not a node in `docs/plans/skills/skills-plan.md` and is tracked on its own.
+Status: `in-progress`
+Notes: outside the skills graph: this plan covers repository policy and the installer, not skills, so
+it is not a node in `docs/plans/skills/skills-plan.md` and is tracked on its own.
 
 A sibling project shipped this set of installer and documentation changes on 2026-10-18. This plan
 replays it here, adapted to this repository's names (`rule-mcp`, `RULE_MCP_*`,
@@ -22,7 +23,7 @@ Checked on `main` at `46f84e5a`:
 | Index merge driver, `post-merge`/`post-rewrite` | landed (`.gitattributes` + `.githooks/post-*`)            |
 | Install scope `project` for MCP configs         | flags landed (ADR 193); wizard Scope UI still open        |
 | Feature toggles (`feature list/enable/disable`) | absent; switches are raw env vars                         |
-| Claude attribution switch                       | absent                                                    |
+| Agent attribution switch (per agent, table-driven) | absent                                                 |
 | Path completion in the setup wizard             | absent                                                    |
 | Vendor-documented generic host paths            | partial: most hosts still use `~/.config/<name>/mcp.json` |
 | JetBrains config                                | `~/.junie/mcp/mcp.json` (Junie user file; done step 2)    |
@@ -166,13 +167,47 @@ One table, read by install, uninstall and detection, so the three cannot disagre
    wizard with one level screen per multi-level feature.
 6. Commit: `feat(setup): own every user-facing switch as a feature`.
 
-### Step 7 - Claude attribution
+### Step 7 - Agent attribution
 
-1. `src/cli/installers/_attribution.js`: `applyAttribution(settingsText, { keep })`.
-   `--no-attribution` writes Claude Code's `attribution` setting empty; `--attribution` takes back
-   only the exact value an install wrote. A value the user set stays.
-2. `setup --attribution | --no-attribution`, plus a wizard extra.
-3. Commit: `feat(setup): let setup keep or hide Claude Code attribution`.
+Attribution is not a Claude Code setting with a vendor name on it. Every agent that writes commits,
+pull requests or trailers does it in its own place and its own way, or documents nothing at all. The
+subsystem is therefore a table with one row per agent and a mechanism per row, not a switch wired to
+one vendor's key.
+
+Mechanisms, agent-independent, so a row names one of these and nothing else:
+
+| Mechanism        | What the agent does                                              |
+| ---------------- | ---------------------------------------------------------------- |
+| `commit-trailer` | appends a co-author or tool trailer to the commit message        |
+| `pr-body`        | appends a line to the pull or merge request body                 |
+| `tool-signature` | stamps the tool name into message footers it generates           |
+| `none`           | documents no attribution control - the row states it, no writer  |
+
+1. `src/cli/installers/_attribution.data.js`: one row per agent in `allAgents()` (23 today), read by
+the writer, the wizard and `--dry-run`, the way `_hosts.data.js` is read by install, uninstall and
+detection. A row carries `{ agent, mechanism, file, key, keep, hide, evidence }`. `keep` and `hide`
+are the values that agent reads; `evidence` is the vendor page the row came from, or `unverified`.
+   - **A row is written only with `evidence` filled.** An `unverified` row has no values and produces
+     no writer: the install prints `<agent>: attribution not documented here` and touches nothing. The
+     table states what is not known instead of implying a control that was never read.
+   - The 2026-10-28 pass found no vendor page in this checkout, so the research step comes first and
+     lands row by row; Claude Code's `attribution` key stays the first row, as the one a sibling
+     project already exercised, and still needs its page cited.
+2. `src/cli/installers/_attribution.js`: `applyAttribution(agent, text, { mode })` over the row's own
+   dialect - JSON through `_writers-json.js`, TOML through the `_host-formats.js` writers. Invariants,
+the same for every agent: a value the user set stays; `hide` replaces only the exact value an install
+wrote; a file the writer cannot parse is refused, never overwritten; nothing is written into a
+project unless the install is project-scoped.
+3. `setup --attribution <keep|hide>` applied to every agent whose row is `documented`, plus
+   `--attribution-agent <id>` (repeatable) to narrow it; the wizard asks once and lists which agents
+   it will not touch, with the reason.
+4. Tests first, table-driven: an agent with a documented row flips to `hide` and back; a value the
+   user set, or wrote themselves before the install, survives both directions; an `unverified` row
+   leaves its file byte-identical; a shared project install writes no attribution; a TOML row and a
+   JSON row both round-trip.
+5. ADR when it lands: attribution is per agent and table-driven, and an undocumented agent is left
+   alone rather than guessed.
+6. Commit: `feat(setup): own attribution per agent instead of for Claude Code alone`.
 
 ### Step 8 - Project-scope install (slice A DONE: table + writer + written[])
 
@@ -279,7 +314,8 @@ text forever.
    - "Install into chosen projects" (shared vs local, recorded list, `project add/remove`, hosts
      without a project file).
    - "Features" (table and commands).
-   - "Claude attribution".
+   - "Agent attribution": the mechanism table, the agents with a documented row, and the ones the
+     install deliberately leaves alone.
 3. `docs/05-env-variables.md`: `RULE_MCP_ADR_POLICY`, `NO_ADR`, `TELEMETRY` (full/anonymous/off),
    `NO_MCP_PROMPTS` (client list), and the feature -> env key table.
 4. `docs/08-engineering-guides.md`:
@@ -313,7 +349,33 @@ Shared files: none: outside the skills graph
 
 ## Steps
 
-- [ ] Diff each ported subsystem against this repository and keep what is already better.
+- [x] Diff each ported subsystem against this repository and keep what is already better.
+- [ ] Step 7 - Agent attribution: the table, the writer, `setup --attribution`, its tests.
+- [ ] Step 8 - leftovers: `rule-mcp project add|remove`, the `update` walk, the Claude extras in
+      project scope, the wizard Scope UI, one test file per concern.
+- [ ] Step 9 - Path completion in the wizard.
+- [ ] Step 10 - Refresh an existing project rules block.
+- [ ] Step 11 - Documentation.
+
+## Diff audit (2026-10-28)
+
+The sibling checkout is not on this machine, so the diff ran against the steps above and the tree as
+it stands on `rel/v0.1.0`. Per subsystem, what landed and where this repository kept its own answer:
+
+| Subsystem | Here | Kept over the port |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Numbering doctor | `src/core/docs-numbering/_git.js` | `-M70%` before `--follow` (ADR 194), measured on these ADRs; the port followed at the default threshold |
+| Generic host paths | `src/cli/installers/_hosts.data.js`, `_host-formats.js` | One table read by install, uninstall and detection, with per-host evidence status and the legacy paths still swept |
+| JetBrains | `_jetbrains-junie` install path | Junie's `~/.junie/mcp/mcp.json`; the old `.idea/mcp.json` stays untouched (ADR 191) |
+| ADR policy | `src/core/adr-policy/` | Resolution order file -> env -> `~/.rule-mcp/config/env.json`, default `handoff` (ADR 195) |
+| Pending ADRs | `src/core/docs/adr-pending/` | `_pending/` plus a merge driver that regenerates `ADR.md`/`HANDOFF.md` instead of merging (ADR 196) |
+| Features | `src/core/runtime/features/_catalog.data.js`, `rule-mcp feature` | `tokensave autotrack` and `minimal-tools` levels, plus re-apply of the global install and recorded projects (ADR 197) |
+| Project scope | `_install-project.js`, `_project-hosts.data.js`, `setup --scope/--project/--project-config` | stdio-only shared install that writes nothing global, `~/.rule-mcp/state/projects.json` walked by `--refresh-projects` and `--uninstall` (ADR 192, 193) |
+
+Absent, so still open here and carried as written: `_attribution.data.js` and `_attribution.js`
+(step 7), `_path-complete.js` and `_widget-path.js` (step 9), `_rules-project.js` (step 10),
+`rule-mcp project add|remove` (step 8.7), the wizard Scope UI (8.9), the `update` walk (8.6) and the
+documentation set (step 11).
 
 ## Model assignment
 
