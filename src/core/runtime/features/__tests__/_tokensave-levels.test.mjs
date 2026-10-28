@@ -27,7 +27,8 @@ test.after(() => {
   rmSync(withoutGraph, { recursive: true, force: true });
 });
 
-test("on+autotrack is another name for the autotrack level, not a fourth level", () => {
+test("a recorded level writes its own value, including on", () => {
+  assert.deepEqual(envPatchFor("tokensave", "on"), { RULE_MCP_NO_TOKENSAVE: "0", RULE_MCP_TOKENSAVE_AUTOTRACK: null }, "on writes 0, so it is told apart from never choosing");
   assert.deepEqual(envPatchFor("tokensave", "on+autotrack"), envPatchFor("tokensave", "autotrack"));
   assert.equal(resolveRequestedLevel("tokensave", "on+autotrack"), "autotrack");
   assert.deepEqual(levelsFor("tokensave"), ["on", "autotrack", "off"]);

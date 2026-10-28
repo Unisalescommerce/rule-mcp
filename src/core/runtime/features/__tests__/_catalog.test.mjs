@@ -58,7 +58,7 @@ test("update / tokensave / minimal-tools map to the existing opt-out keys", () =
     RULE_MCP_TOKENSAVE_AUTOTRACK: "1",
   });
   assert.deepEqual(envPatchFor("tokensave", "on"), {
-    RULE_MCP_NO_TOKENSAVE: null,
+    RULE_MCP_NO_TOKENSAVE: "0",
     RULE_MCP_TOKENSAVE_AUTOTRACK: null,
   });
 

@@ -20,7 +20,7 @@ process.env.RULE_MCP_HOME = home;
 // choice nobody made here.
 process.env.HOME = home;
 
-const { tokensaveProjectEnv, writeEnvConfig } = await import("../_env.js");
+const { tokensaveProjectEnv, pruneHistoricalTokensaveDefault, writeEnvConfig } = await import("../_env.js");
 const { installProjectHost } = await import("../_install-project.js");
 
 const withGraph = mkdtempSync(join(tmpdir(), "rule-project-graph-"));
@@ -32,6 +32,8 @@ test.after(() => {
     rmSync(dir, { recursive: true, force: true });
   }
 });
+
+test.beforeEach(() => writeEnvConfig({}));
 
 test("a project without a graph is pinned off, one with a graph is left alone", () => {
   assert.deepEqual(tokensaveProjectEnv(withoutGraph), { RULE_MCP_NO_TOKENSAVE: "1" });
@@ -48,11 +50,37 @@ test("an explicit off or autotrack is not overwritten by the guess", () => {
   writeEnvConfig({});
 });
 
-test("the zero every earlier install wrote is not a decision about this project", () => {
+test("a recorded level blocks the guess, on included", () => {
+  writeEnvConfig({ RULE_MCP_NO_TOKENSAVE: "1" });
+  assert.deepEqual(tokensaveProjectEnv(withGraph), {}, "an explicit off survives a project with a graph");
+
+  writeEnvConfig({ RULE_MCP_TOKENSAVE_AUTOTRACK: "1" });
+  assert.deepEqual(tokensaveProjectEnv(withoutGraph), {}, "an explicit autotrack survives a graphless project");
+
   writeEnvConfig({ RULE_MCP_NO_TOKENSAVE: "0" });
-  assert.deepEqual(tokensaveProjectEnv(withoutGraph), { RULE_MCP_NO_TOKENSAVE: "1" }, "a historical default yields to the project");
+  assert.deepEqual(tokensaveProjectEnv(withoutGraph), {}, "an explicit on survives a graphless project");
 
   writeEnvConfig({});
+});
+
+test("the defaults an earlier install wrote are cleaned out, so the project can decide again", () => {
+  const historical = {
+    RULE_MCP_NO_AUTOUPDATE: "0",
+    RULE_MCP_NO_AUTORESTART: "0",
+    RULE_MCP_NO_CACHE: "0",
+    RULE_MCP_NO_COMPRESSION: "0",
+    RULE_MCP_NO_TOKENSAVE: "0",
+    RULE_MCP_NO_REMINDER: "0",
+    RULE_MCP_NO_FLIGHT: "0",
+    RULE_MCP_NO_PROMPTS: "1",
+  };
+  const pruned = pruneHistoricalTokensaveDefault(historical);
+
+  assert.equal(Object.hasOwn(pruned, "RULE_MCP_NO_TOKENSAVE"), false, "the written default is not a decision");
+  assert.equal(pruned.RULE_MCP_NO_COMPRESSION, "0", "every other key is left as it was");
+
+  assert.equal(pruneHistoricalTokensaveDefault({ RULE_MCP_NO_TOKENSAVE: "1" }).RULE_MCP_NO_TOKENSAVE, "1", "a chosen off stays");
+  assert.equal(pruneHistoricalTokensaveDefault({ RULE_MCP_NO_TOKENSAVE: "0", RULE_MCP_NO_COMPRESSION: "1" }).RULE_MCP_NO_TOKENSAVE, "0", "a file the user edited keeps every key");
 });
 
 test("a local project install carries the derived env into its own config", () => {

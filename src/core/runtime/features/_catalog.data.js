@@ -53,7 +53,11 @@ export const FEATURES = {
   tokensave: {
     label: "Tokensave awareness",
     levels: {
-      on: { RULE_MCP_NO_TOKENSAVE: null, RULE_MCP_TOKENSAVE_AUTOTRACK: null },
+      // `on` writes 0 rather than removing the key. Only a recorded value can be
+      // told apart from "never chose", and the derived default needs that
+      // distinction: without it an explicit on was silently overridden in a
+      // project that has no graph.
+      on: { RULE_MCP_NO_TOKENSAVE: "0", RULE_MCP_TOKENSAVE_AUTOTRACK: null },
       autotrack: { RULE_MCP_NO_TOKENSAVE: null, RULE_MCP_TOKENSAVE_AUTOTRACK: "1" },
       off: { RULE_MCP_NO_TOKENSAVE: "1", RULE_MCP_TOKENSAVE_AUTOTRACK: null },
     },

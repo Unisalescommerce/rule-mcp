@@ -19,7 +19,7 @@ import { existsSync, mkdirSync, readdirSync, rmSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 import { homedir } from "node:os";
-import { DEFAULT_OPTOUT_ENV, LEGACY_ENV_CONFIG_DIR, readEnvConfig, writeEnvConfig } from "../installers/index.js";
+import { DEFAULT_OPTOUT_ENV, LEGACY_ENV_CONFIG_DIR, pruneHistoricalTokensaveDefault, readEnvConfig, writeEnvConfig } from "../installers/index.js";
 import { getRuntimePaths } from "../paths/index.js";
 
 /** Mirrors `cli/installers/_env.js` (not exported there): per-user compile cache. */
@@ -72,6 +72,15 @@ export function ensureRuntimeHome({ dryRun = false } = {}) {
 
   if (settings === "written") {
     writeEnvConfig(DEFAULT_OPTOUT_ENV);
+  } else {
+    // A kept file may still be the table an earlier install wrote, where `0`
+    // meant nothing and now means "on, chosen". Cleaned once, so the derived
+    // tokensave default can apply to a project that never decided.
+    const pruned = pruneHistoricalTokensaveDefault(existing);
+
+    if (pruned !== existing) {
+      writeEnvConfig(pruned);
+    }
   }
 
   return { homeDir, dirs, status: "created", settings };
