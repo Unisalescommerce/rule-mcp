@@ -8,6 +8,7 @@ them by `handoff doctor`, so editing it by hand is work the next run throws away
 
 | #                                                                  | Title                                                                     | Date       | Branch                    |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------------- | ---------- | ------------------------- |
+| [31](31-installer-scope-features-and-guard-daemon.md)              | Installer-scope features, project installs, and the guard daemon          | 2026-10-28 | rel/v0.1.0                |
 | [30](30-host-plan-six-phases.md)                                   | The host plan in six phases, and the plan-of-plans retired                | 2026-10-25 | rel/v0.1.0                |
 | [29](29-release-skills-and-workflow-reader.md)                     | Three release skills, one workflow reader, and the host-integration plan  | 2026-10-25 | rel/v0.1.0                |
 | [28](28-opentui-codex-hooks-and-command-targets.md)                | OpenTUI installer, Codex hooks, and command targets                       | 2026-10-25 | rel/v0.1.0                |
