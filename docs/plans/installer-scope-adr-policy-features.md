@@ -193,6 +193,13 @@ are the values that agent reads; `evidence` is the vendor page the row came from
    - The 2026-10-28 pass found no vendor page in this checkout, so the research step comes first and
      lands row by row; Claude Code's `attribution` key stays the first row, as the one a sibling
      project already exercised, and still needs its page cited.
+   - **2026-10-28, second pass - the pages answer now.** `docs.claude.com/en/docs/claude-code/settings`
+     serves (39 667 chars), so the Claude row is research, not a blocker. Gemini's configuration page
+     moved: `docs/cli/configuration.md` is HTTP 404 and the file is now
+     `docs/reference/configuration.md` (102 865 chars). That page names **no** attribution, co-author
+     or trailer setting, which is the `none` row this table defines - evidence is that page, no
+     writer, no values. It is a fact about the documented control, not about what the CLI emits when
+     nothing is configured.
 2. `src/cli/installers/_attribution.js`: `applyAttribution(agent, text, { mode })` over the row's own
    dialect - JSON through `_writers-json.js`, TOML through the `_host-formats.js` writers. Invariants,
 the same for every agent: a value the user set stays; `hide` replaces only the exact value an install
