@@ -1188,6 +1188,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ## Operating rules
 
-- Record a structural decision with `rule_tool_process_adr`, when it is taken.
+- Write an ADR with rule_tool_process_adr when the project ADR policy allows it (default: at handoff; mid-task only under full).
 - Never rewrite an accepted decision. Supersede it with a new one that says why.
 - Never edit this file. Edit the ADR and let the next call regenerate it.
