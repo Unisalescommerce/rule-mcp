@@ -100,7 +100,11 @@ export function firstMove(claims, claimed) {
     return `Re-run \`${command.value}\` before continuing${reason ? `: ${reason}` : ""}.`;
   }
 
-  const branch = claims.find((claim) => claim.kind === "branch" && claim.bucket === "changed");
+  // Only the branch the handoff declares is "the branch this work was on". A
+  // handoff also cites other branches - the trunk it was cut from, a spike that
+  // never landed - and those are not where the work continues: picking the first
+  // changed one in the array sent the next session to a branch nobody worked on.
+  const branch = claims.find((claim) => claim.kind === "branch" && claim.bucket === "changed" && claim.value === claimed.declaredBranch);
 
   if (branch) {
     return `The branch this work was on (\`${branch.value}\`) is ${branch.verdict}. Confirm where it continues before editing.`;
