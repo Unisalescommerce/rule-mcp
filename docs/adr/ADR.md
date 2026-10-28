@@ -8,6 +8,7 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [194](194-follow-only-real-renames-when-dating-a-numbered-document.md)                                                  | Follow only real renames when dating a numbered document                                                  | 2026-10-28 | accepted   | docs, numbering, git                                                                |
 | [193](193-setup-scope-project-records-projects-json-and-wires-install-writers.md)                                       | Setup --scope project records projects.json and wires install writers                                     | 2026-10-27 | accepted   | installer, setup, projects                                                          |
 | [192](192-project-scope-host-table-and-manifest-written-paths.md)                                                       | Project-scope host table and manifest written paths                                                       | 2026-10-27 | accepted   | installer, hosts, manifest                                                          |
 | [191](191-jetbrains-mcp-config-installs-into-junie-s-user-file.md)                                                      | JetBrains MCP config installs into Junie's user file                                                      | 2026-10-27 | accepted   | installer, hosts, jetbrains                                                         |
@@ -209,13 +210,14 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [194](194-follow-only-real-renames-when-dating-a-numbered-document.md)                                                  | Pass -M70% (RENAME_SIMILARITY) before --follow in createdAt and addedBy in docs-numbering/_git.js.                                                                                                                              | Positive: template copies keep their own date/author.                                                                                                                                                                           |
 | [193](193-setup-scope-project-records-projects-json-and-wires-install-writers.md)                                       | Add state/projects.json (record/forget/list).                                                                                                                                                                                   | Positive: flag path installs into projects, refresh and uninstall reverse them, shared installs stay stdio-only.                                                                                                                |
 | [192](192-project-scope-host-table-and-manifest-written-paths.md)                                                       | Add _project-hosts.data.js (shared/local project files + dialects) and _install-project.js (shared portable entry vs local launcher).                                                                                           | Positive: project writers and the path table agree; uninstall can reverse project files via written[]; JetBrains project path is .junie/mcp/mcp.json.                                                                           |
 | [191](191-jetbrains-mcp-config-installs-into-junie-s-user-file.md)                                                      | Export junieConfigPath as ~/.junie/mcp/mcp.json and use it for installJetbrains and hostRecord(jetbrains).                                                                                                                      | Positive: installs land where Junie reads them; install/uninstall/detect agree; project trees stay untouched.                                                                                                                   |
 | [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md)                                            | Add hosts/_writers.js as the single table of install/uninstall pairs. hosts/_core.js holds path/identity so uninstall bodies can import it without cycling through the writers table. hosts/index.js attaches...                | Positive: installers[id] === hostRecord(id).install for all 23 hosts (enforced by host-writers.test.mjs); adding a host requires writers + evidence in one place.                                                               |
 | [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md)                                                 | guardCommand (and the OpenCode/Pi plugin snippets) emit guard --send <kind>. installAgent starts the detached guard daemon whenever hooks are written. uninstallAgent stops the daemon when the install manifest has no...      | Positive: L3+ hook installs get the warm path automatically; uninstall of the last agent cleans up.                                                                                                                             |
 | [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md)                                                     | Add guard --daemon listening on $RULE_MCP_HOME/state/guard.sock and guard --send which forwards one stdin payload over that socket. bin/rule-mcp.js early-dispatches guard --send before loading Commander so the client...     | Positive: a measured reuse path exists; writers can switch later; spawn lifecycle stays correct for the default path.                                                                                                           |
-| [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md)                                                  | 1) shouldBootstrapCoreTools returns false when the Commander action command is named guard, so preAction skips bootstrapCoreTools for that command only. 2) guard gains an optional --loop that reads NDJSON lines and...       | Positive: every guard spawn avoids registering gateway/apply; --loop exists for hosts that can keep a pipe open; tests lock the skip and the loop framing.                                                                      |
+| [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md)                                                  | 1. shouldBootstrapCoreTools returns false when the Commander action command is named guard, so preAction skips bootstrapCoreTools for that command only. 2) guard gains an optional --loop that reads NDJSON lines and...       | Positive: every guard spawn avoids registering gateway/apply; --loop exists for hosts that can keep a pipe open; tests lock the skip and the loop framing.                                                                      |
 | [186](186-baseline-the-cli-file-size-debt-in-the-ratchet.md)                                                            | Record the 33 offenders in FILE_SIZE_RATCHET with the line count the cap measures, and document the adoption baseline here, which is the mechanism the data file's own header describes: an entry is added only as the...       | The budget test is green and stays honest: it now fails on growth and on a stale row instead of failing on the same 33 files forever.                                                                                           |
 | [185](185-lifecycle-wiring-ships-only-where-a-measurement-moves.md)                                                     | Measure first, with scripts/bench/hook-lifecycle.mjs, and drop what does not move.                                                                                                                                              | The measured cost is the process spawn, not the context: a bare node -e 0 takes 1.3-2.4 s under load here, so the hook's own work is a fraction of what every event pays.                                                       |
 | [184](184-the-install-manifest-records-a-level-per-host.md)                                                             | The manifest is v2: a hosts map carrying the level each host was installed at, beside agents[] for compatibility.                                                                                                               | doctor reports L2 of L3, next L3 for a host installed at a level, and the roundtrip leaves a temporary HOME with nothing but the writers' .bak backups.                                                                         |
@@ -568,6 +570,26 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [079](079-add-the-oss-architect-review-persona.md) Add the OSS Architect review persona
 - [066](066-remove-externally-derived-skills-from-the-served-knowledge-base.md) Remove externally derived skills from the served knowledge base
 
+### docs
+
+- [194](194-follow-only-real-renames-when-dating-a-numbered-document.md) Follow only real renames when dating a numbered document
+- [172](172-retire-closed-plans-into-adrs-and-one-handoff.md) Retire closed plans into ADRs and one handoff
+- [168](168-insert-a-quick-start-chapter-and-shift-the-handbook-numbering.md) Insert a quick-start chapter and shift the handbook numbering
+- [128](128-consolidate-the-feature-adrs-and-handoffs-into-one-commit-at-the-close-squash.md) Consolidate the feature ADRs and handoffs into one commit at the close squash
+- [119](119-close-out-audit-ui.md) Close out audit ui
+- [118](118-close-out-review-ui.md) Close out review ui
+- [111](111-close-out-audit-security.md) Close out audit security
+- [110](110-close-out-review-security.md) Close out review security
+- [108](108-the-handoff-family-gets-a-generated-index-and-the-root-handoff-summary-retires.md) The handoff family gets a generated index, and the root HANDOFF summary retires
+- [104](104-the-handoff-document-closes-with-the-resume-prompt.md) The handoff document closes with the resume prompt
+- [103](103-every-handoff-mode-sweeps-completed-working-papers-and-closeout-false-is-the-rea.md) Every handoff mode sweeps completed working papers, and closeout false is the read-only run
+- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
+- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
+- [087](087-session-close-archives-completed-audits-reviews-and-plans.md) Session close archives completed audits, reviews and plans
+- [086](086-documentation-site-is-hand-written-static-html-from-docs.md) Documentation site is hand-written static HTML from docs
+- [071](071-the-census-generates-eight-numbered-documents-and-three-fenced-blocks-inside-the-chapters-a-person-writes.md) The census generates eight numbered documents and three fenced blocks inside the chapters a person writes
+- [048](048-v100-release-and-docs-accuracy-guard.md) v1.0.0 release and the docs-accuracy guard
+
 ### breaking
 
 - [153](153-retire-the-rule-mcp-platform-agent-skill.md) Retire the rule-platform-agent skill
@@ -586,25 +608,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [115](115-map-tools-slash-commands-and-skills-into-one-surface.md) Map tools, slash commands, and skills into one surface
 - [114](114-flight-is-process-area-guidance-injected-on-every-prompt-not-a-slash-command.md) Flight is process-area guidance injected on every prompt, not a slash command
 - [113](113-rename-the-command-surface-under-process-and-persona-namespaces.md) Rename the command surface under process and persona namespaces
-
-### docs
-
-- [172](172-retire-closed-plans-into-adrs-and-one-handoff.md) Retire closed plans into ADRs and one handoff
-- [168](168-insert-a-quick-start-chapter-and-shift-the-handbook-numbering.md) Insert a quick-start chapter and shift the handbook numbering
-- [128](128-consolidate-the-feature-adrs-and-handoffs-into-one-commit-at-the-close-squash.md) Consolidate the feature ADRs and handoffs into one commit at the close squash
-- [119](119-close-out-audit-ui.md) Close out audit ui
-- [118](118-close-out-review-ui.md) Close out review ui
-- [111](111-close-out-audit-security.md) Close out audit security
-- [110](110-close-out-review-security.md) Close out review security
-- [108](108-the-handoff-family-gets-a-generated-index-and-the-root-handoff-summary-retires.md) The handoff family gets a generated index, and the root HANDOFF summary retires
-- [104](104-the-handoff-document-closes-with-the-resume-prompt.md) The handoff document closes with the resume prompt
-- [103](103-every-handoff-mode-sweeps-completed-working-papers-and-closeout-false-is-the-rea.md) Every handoff mode sweeps completed working papers, and closeout false is the read-only run
-- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
-- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
-- [087](087-session-close-archives-completed-audits-reviews-and-plans.md) Session close archives completed audits, reviews and plans
-- [086](086-documentation-site-is-hand-written-static-html-from-docs.md) Documentation site is hand-written static HTML from docs
-- [071](071-the-census-generates-eight-numbered-documents-and-three-fenced-blocks-inside-the-chapters-a-person-writes.md) The census generates eight numbered documents and three fenced blocks inside the chapters a person writes
-- [048](048-v100-release-and-docs-accuracy-guard.md) v1.0.0 release and the docs-accuracy guard
 
 ### cli
 
@@ -672,6 +675,21 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [157](157-shadow-the-decision-cache-gate-before-replaying.md) Shadow the decision-cache gate before replaying
 - [156](156-keep-bm25-and-gate-a-local-decision-model-as-a-second-opinion.md) Keep BM25 and gate a local decision model as a second opinion
 
+### git
+
+- [194](194-follow-only-real-renames-when-dating-a-numbered-document.md) Follow only real renames when dating a numbered document
+- [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
+- [143](143-rename-rule-mcp-toolchain-commits-to-rule-mcp-styleguide-git.md) Rename rule-toolchain-commits to rule-styleguide-git
+- [134](134-close-features-only-after-persisting-the-final-handoff-and-consolidate-the-featu.md) Close features only after persisting the final handoff and consolidate the feature by default
+- [130](130-this-server-releases-itself-with-pnpm-release-and-the-push-is-the-release.md) This server releases itself with pnpm release, and the push is the release
+- [128](128-consolidate-the-feature-adrs-and-handoffs-into-one-commit-at-the-close-squash.md) Consolidate the feature ADRs and handoffs into one commit at the close squash
+- [127](127-derive-the-next-version-and-the-changelog-from-the-commit-rule.md) Derive the next version and the changelog from the commit rule
+- [126](126-close-a-feature-with-reset-soft-onto-the-merge-base-and-one-validated-commit.md) Close a feature with reset --soft onto the merge base and one validated commit
+- [125](125-normalize-history-on-the-merge-base-and-hold-every-rewrite-to-a-tree-invariant.md) Normalize history on the merge base and hold every rewrite to a tree invariant
+- [124](124-make-the-tool-call-host-a-list-so-invocation-hosts-coexist.md) Make the tool-call host a list so invocation hosts coexist
+- [098](098-develop-merges-into-main-by-area-and-stays-as-an-integration-branch.md) develop merges into main by area, and stays as an integration branch
+- [027](027-add-rule-mcp-toolchain-commits-skill-for-atomic-conventional-commits-with-mandatory-s.md) Add rule-toolchain-commits skill for atomic conventional commits with mandatory scope
+
 ### testing
 
 - [156](156-keep-bm25-and-gate-a-local-decision-model-as-a-second-opinion.md) Keep BM25 and gate a local decision model as a second opinion
@@ -700,20 +718,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [159](159-keep-the-single-batch-decision-cache-shortlist.md) Keep the single-batch decision-cache shortlist
 - [158](158-replay-the-decision-cache-gate-only-behind-a-measured-threshold.md) Replay the decision-cache gate only behind a measured threshold
 - [157](157-shadow-the-decision-cache-gate-before-replaying.md) Shadow the decision-cache gate before replaying
-
-### git
-
-- [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
-- [143](143-rename-rule-mcp-toolchain-commits-to-rule-mcp-styleguide-git.md) Rename rule-toolchain-commits to rule-styleguide-git
-- [134](134-close-features-only-after-persisting-the-final-handoff-and-consolidate-the-featu.md) Close features only after persisting the final handoff and consolidate the feature by default
-- [130](130-this-server-releases-itself-with-pnpm-release-and-the-push-is-the-release.md) This server releases itself with pnpm release, and the push is the release
-- [128](128-consolidate-the-feature-adrs-and-handoffs-into-one-commit-at-the-close-squash.md) Consolidate the feature ADRs and handoffs into one commit at the close squash
-- [127](127-derive-the-next-version-and-the-changelog-from-the-commit-rule.md) Derive the next version and the changelog from the commit rule
-- [126](126-close-a-feature-with-reset-soft-onto-the-merge-base-and-one-validated-commit.md) Close a feature with reset --soft onto the merge base and one validated commit
-- [125](125-normalize-history-on-the-merge-base-and-hold-every-rewrite-to-a-tree-invariant.md) Normalize history on the merge base and hold every rewrite to a tree invariant
-- [124](124-make-the-tool-call-host-a-list-so-invocation-hosts-coexist.md) Make the tool-call host a list so invocation hosts coexist
-- [098](098-develop-merges-into-main-by-area-and-stays-as-an-integration-branch.md) develop merges into main by area, and stays as an integration branch
-- [027](027-add-rule-mcp-toolchain-commits-skill-for-atomic-conventional-commits-with-mandatory-s.md) Add rule-toolchain-commits skill for atomic conventional commits with mandatory scope
 
 ### observability
 

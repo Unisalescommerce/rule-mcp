@@ -8,6 +8,15 @@ export const RECORD = "\u001F";
 /** Record separator for one git log read. */
 export const ENTRY = "\u001E";
 
+/**
+ * Rename similarity passed to `git log` before `--follow`.
+ *
+ * Distinct ADRs measured at most ~32% similar; real renames at least ~85%.
+ * Git's default `-M50%` follows template copies; `-M70%` keeps those as new
+ * files while still tracking genuine renames.
+ */
+export const RENAME_SIMILARITY = "-M70%";
+
 /** Run git, returning trimmed stdout, or "" when it fails. */
 export function gitOut(cwd, args) {
   try {
@@ -30,11 +39,15 @@ export function gitOut(cwd, args) {
  */
 export function createdAt(projectDir, relativePath) {
   try {
-    const out = execFileSync("git", ["log", "--diff-filter=A", "--follow", "--format=%ct", "--", relativePath], {
-      cwd: projectDir,
-      encoding: "utf8",
-      stdio: ["ignore", "pipe", "ignore"],
-    }).trim();
+    const out = execFileSync(
+      "git",
+      ["log", RENAME_SIMILARITY, "--diff-filter=A", "--follow", "--format=%ct", "--", relativePath],
+      {
+        cwd: projectDir,
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "ignore"],
+      },
+    ).trim();
     const first = out.split("\n").findLast(Boolean);
 
     if (first) {
@@ -59,7 +72,15 @@ export function createdAt(projectDir, relativePath) {
  * @returns {string} "Name <address>", or "" when git cannot answer
  */
 export function addedBy(projectDir, relativePath) {
-  const out = gitOut(projectDir, ["log", "--follow", "--diff-filter=A", "--format=%an <%ae>", "--", relativePath]);
+  const out = gitOut(projectDir, [
+    "log",
+    RENAME_SIMILARITY,
+    "--follow",
+    "--diff-filter=A",
+    "--format=%an <%ae>",
+    "--",
+    relativePath,
+  ]);
 
   return out.split("\n").findLast(Boolean) ?? "";
 }

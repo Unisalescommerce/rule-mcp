@@ -27,14 +27,14 @@ Checked on `main` at `46f84e5a`:
 | Vendor-documented generic host paths            | partial: most hosts still use `~/.config/<name>/mcp.json` |
 | JetBrains config                                | `~/.junie/mcp/mcp.json` (Junie user file; done step 2)    |
 | Project rules block refresh                     | absent                                                    |
-| Numbering doctor rename threshold               | `--follow` at git's 50% default (same bug)                |
+| Numbering doctor rename threshold               | `-M70%` before `--follow` (ADR 194)                       |
 
 ## Order
 
 Quick wins first: they are independent and small. Then the ADR stack, then the installer stack,
 which depends on it.
 
-### Step 1 - Numbering doctor follows only real renames (quick win)
+### Step 1 - Numbering doctor follows only real renames (quick win) - DONE (ADR 194)
 
 Problem: `git log --follow` treats any file at least 50% similar to a deleted one as a rename, so a
 new document built on the same template inherits the deleted one's date and author.
