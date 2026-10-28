@@ -30,6 +30,12 @@ export function verify(projectDir, claimed) {
   }
 
   let rangeKnown = false;
+  // Where the handoff stopped counting. A range with a fixed end names the moment
+  // the handoff was written, so a file is "modified since" only if it changed
+  // after that commit. Compared from the range start, every file the handoff had
+  // just committed came back changed, and the reader was told to re-read their
+  // own work: the trunk case read right only because its end was HEAD.
+  let comparisonBase = "";
 
   if (claimed.range) {
     const { start, end } = claimed.range;
@@ -46,6 +52,7 @@ export function verify(projectDir, claimed) {
       const openEnded = end.toUpperCase() === "HEAD";
       const endFixed = !openEnded && git(projectDir, ["rev-parse", "--verify", "--quiet", `${end}^{commit}`]) !== "";
       const from = endFixed ? end : start;
+      comparisonBase = from;
       const count = git(projectDir, ["rev-list", "--count", `${from}..HEAD`]) || "0";
       // Three facts, each with its own sentence: an end that can be counted
       // from, an end the handoff never fixed, and an end it fixed on a commit
@@ -61,7 +68,7 @@ export function verify(projectDir, claimed) {
   for (const file of claimed.files) {
     if (existsSync(join(projectDir, file))) {
       if (rangeKnown) {
-        const touched = git(projectDir, ["diff", "--name-only", `${claimed.range.start}..HEAD`, "--", file]);
+        const touched = git(projectDir, ["diff", "--name-only", `${comparisonBase}..HEAD`, "--", file]);
         add("file", file, touched ? "modified since" : "unchanged");
       } else {
         add("file", file, "unverified, no commit range to compare against");
