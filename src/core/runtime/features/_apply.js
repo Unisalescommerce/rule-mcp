@@ -4,13 +4,15 @@
  * Set a feature to a level, persist it, and optionally refresh installs.
  */
 
-import { envPatchFor, defaultLevel, levelsFor } from "./_catalog.data.js";
+import { canonicalLevel, envPatchFor, defaultLevel, levelsFor } from "./_catalog.data.js";
 import { readLevel } from "./_readers.js";
 import { applyEnvPatch, mergedEnv } from "./_store.js";
 
 /**
  * Normalize a requested level: `enable` defaults to the first non-off level;
- * `disable` maps to `off` when that level exists, else the last level.
+ * `disable` maps to `off` when that level exists, else the last level. A level
+ * alias resolves to the canonical name, so the written patch and the reported
+ * level never disagree.
  *
  * @param {string} id
  * @param {"enable"|"disable"|string} actionOrLevel
@@ -27,11 +29,13 @@ export function resolveRequestedLevel(id, actionOrLevel) {
     return levels.includes("off") ? "off" : levels.at(-1);
   }
 
-  if (!levels.includes(actionOrLevel)) {
+  const requested = canonicalLevel(id, actionOrLevel);
+
+  if (!levels.includes(requested)) {
     throw new Error(`Unknown level "${actionOrLevel}" for feature ${id} (want ${levels.join("|")})`);
   }
 
-  return actionOrLevel;
+  return requested;
 }
 
 /**

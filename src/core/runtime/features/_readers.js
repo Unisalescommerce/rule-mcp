@@ -4,6 +4,7 @@
  * Read each feature's current level back from env (including legacy keys).
  */
 
+import { hasTokensave } from "../../detector/index.js";
 import { FEATURES, defaultLevel, levelsFor } from "./_catalog.data.js";
 
 /**
@@ -55,14 +56,26 @@ function readUpdate(env) {
 
 /**
  * @param {NodeJS.ProcessEnv|Record<string, string|undefined>} env
+ * @param {{ projectDir?: string }} [options]
  * @returns {string}
  */
-function readTokensave(env) {
+function readTokensave(env, { projectDir } = {}) {
   if (get(env, "RULE_MCP_NO_TOKENSAVE") === "1") {
     return "off";
   }
 
-  return get(env, "RULE_MCP_TOKENSAVE_AUTOTRACK") === "1" ? "autotrack" : "on";
+  if (get(env, "RULE_MCP_TOKENSAVE_AUTOTRACK") === "1") {
+    return "autotrack";
+  }
+
+  // No choice recorded: tokensave awareness exists to serve a code graph, so a
+  // project without one gets "off" rather than an integration with nothing to
+  // read. A recorded "0" is a choice and keeps "on".
+  if (get(env, "RULE_MCP_NO_TOKENSAVE") === undefined) {
+    return hasTokensave(projectDir ?? process.cwd()) ? "on" : "off";
+  }
+
+  return "on";
 }
 
 /**
@@ -73,7 +86,7 @@ function readMinimalTools(env) {
   return get(env, "RULE_MCP_MINIMAL_TOOLS") === "1" ? "on" : "off";
 }
 
-/** @type {Record<string, (env: NodeJS.ProcessEnv|Record<string, string|undefined>) => string>} */
+/** @type {Record<string, (env: NodeJS.ProcessEnv|Record<string, string|undefined>, options?: { projectDir?: string }) => string>} */
 export const READERS = {
   adr: readAdr,
   telemetry: readTelemetry,
@@ -87,16 +100,17 @@ export const READERS = {
  *
  * @param {string} id
  * @param {NodeJS.ProcessEnv|Record<string, string|undefined>} [env]
+ * @param {{ projectDir?: string }} [options] - project a per-project default reads
  * @returns {string}
  */
-export function readLevel(id, env = process.env) {
+export function readLevel(id, env = process.env, options = {}) {
   const reader = READERS[id];
 
   if (!reader) {
     throw new Error(`Unknown feature: ${id}`);
   }
 
-  const level = reader(env);
+  const level = reader(env, options);
 
   return levelsFor(id).includes(level) ? level : defaultLevel(id);
 }
@@ -105,8 +119,9 @@ export function readLevel(id, env = process.env) {
  * Snapshot of every feature's level.
  *
  * @param {NodeJS.ProcessEnv|Record<string, string|undefined>} [env]
+ * @param {{ projectDir?: string }} [options]
  * @returns {Record<string, string>}
  */
-export function readAllLevels(env = process.env) {
-  return Object.fromEntries(Object.keys(FEATURES).map((id) => [id, readLevel(id, env)]));
+export function readAllLevels(env = process.env, options = {}) {
+  return Object.fromEntries(Object.keys(FEATURES).map((id) => [id, readLevel(id, env, options)]));
 }

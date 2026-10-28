@@ -10,7 +10,7 @@
  */
 
 import { readText, writeText } from "./_paths.js";
-import { commandConfig } from "./_env.js";
+import { commandConfig, tokensaveProjectEnv } from "./_env.js";
 import { removeHostServer, upsertHostServer } from "./_host-formats.js";
 import { PROJECT_HOSTS, projectHostFile, projectHostFormat, projectHostLocalFile } from "./_project-hosts.data.js";
 
@@ -20,14 +20,24 @@ export function sharedServerConfig() {
 }
 
 /**
- * Local project entry: full launcher plus ADR policy when the ambient sets it.
+ * Local project entry: full launcher plus the env the project itself implies.
+ *
+ * A project entry is the only config that belongs to one project, so it is where
+ * a project-dependent default belongs: tokensave is pinned off when the project
+ * has no graph, and left unpinned when it has one.
  *
  * @param {string} agent
  * @param {string} entrypoint
  * @param {object} [options]
  */
 function localServerConfig(agent, entrypoint, options = {}) {
-  const config = commandConfig(entrypoint, { ...options, agentName: agent, global: false });
+  const { projectRoot, ...rest } = options;
+  const config = commandConfig(entrypoint, {
+    ...rest,
+    agentName: agent,
+    global: false,
+    env: { ...tokensaveProjectEnv(projectRoot ?? process.cwd()), ...rest.env },
+  });
   const policy = process.env.RULE_MCP_ADR_POLICY;
 
   if (policy) {
@@ -72,7 +82,10 @@ function targetFile(agent, projectRoot, projectConfig) {
 export function installProjectHost({ agent, projectRoot, projectConfig = "shared", entrypoint, dryRun = false } = {}) {
   const file = targetFile(agent, projectRoot, projectConfig);
   const format = projectHostFormat(agent);
-  const config = projectConfig === "local" ? localServerConfig(agent, entrypoint ?? process.argv[1] ?? "rule-mcp") : sharedServerConfig();
+  const config =
+    projectConfig === "local"
+      ? localServerConfig(agent, entrypoint ?? process.argv[1] ?? "rule-mcp", { projectRoot })
+      : sharedServerConfig();
   const content = upsertHostServer(format, readText(file), config);
 
   if (content === null) {

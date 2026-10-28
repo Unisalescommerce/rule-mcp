@@ -12,7 +12,7 @@
  *
  * Order of `Object.keys(levels)` is the default-first level list.
  *
- * @type {Record<string, { label: string, levels: Record<string, EnvPatch> }>}
+ * @type {Record<string, { label: string, levels: Record<string, EnvPatch>, aliases?: Record<string, string> }>}
  */
 export const FEATURES = {
   adr: {
@@ -57,6 +57,10 @@ export const FEATURES = {
       autotrack: { RULE_MCP_NO_TOKENSAVE: null, RULE_MCP_TOKENSAVE_AUTOTRACK: "1" },
       off: { RULE_MCP_NO_TOKENSAVE: "1", RULE_MCP_TOKENSAVE_AUTOTRACK: null },
     },
+    // The level reads as what it does when spoken: on, plus autotrack. The
+    // catalog keeps one canonical spelling so `levelsFor` lists a level once and
+    // the env patch stays single-sourced; the other name is only an input.
+    aliases: { "on+autotrack": "autotrack" },
   },
   "minimal-tools": {
     label: "Minimal MCP tool surface",
@@ -89,6 +93,23 @@ export function levelsFor(id) {
 }
 
 /**
+ * The level a user meant, whatever name they typed.
+ *
+ * @param {string} id
+ * @param {string} level
+ * @returns {string}
+ */
+export function canonicalLevel(id, level) {
+  const feature = FEATURES[id];
+
+  if (!feature) {
+    throw new Error(`Unknown feature: ${id}`);
+  }
+
+  return feature.aliases?.[level] ?? level;
+}
+
+/**
  * Env keys one level writes (`null` means remove).
  *
  * @param {string} id
@@ -102,7 +123,7 @@ export function envPatchFor(id, level) {
     throw new Error(`Unknown feature: ${id}`);
   }
 
-  const patch = feature.levels[level];
+  const patch = feature.levels[canonicalLevel(id, level)];
 
   if (!patch) {
     throw new Error(`Unknown level "${level}" for feature ${id}`);

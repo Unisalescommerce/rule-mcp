@@ -9,6 +9,7 @@ import { homedir } from "node:os";
 import { join } from "node:path";
 import { resolveGlobalBinary, serverName } from "./_paths.js";
 import { normalizeInstallMode } from "./_catalog.js";
+import { hasTokensave } from "../../core/detector/index.js";
 import { getOrCreateSseBearerToken } from "../../transport/index.js";
 import { DEFAULT_SSE_PORT, getRuntimePaths } from "../paths/index.js";
 
@@ -40,7 +41,6 @@ const DEFAULT_OPTOUT_ENV = {
   RULE_MCP_NO_AUTORESTART: "0",
   RULE_MCP_NO_CACHE: "0",
   RULE_MCP_NO_COMPRESSION: "0",
-  RULE_MCP_NO_TOKENSAVE: "0",
   RULE_MCP_NO_REMINDER: "0",
   RULE_MCP_NO_FLIGHT: "0",
   RULE_MCP_NO_PROMPTS: "1",
@@ -61,6 +61,34 @@ export function minimalEnvFrom(env = process.env) {
   const value = env[MINIMAL_ENV_VAR];
 
   return value === undefined ? {} : { [MINIMAL_ENV_VAR]: value };
+}
+
+/**
+ * The tokensave switch a project-scope install should carry.
+ *
+ * Every other opt-out is a constant, because whether the feature applies never
+ * depended on the project. Tokensave does: awareness with no code graph has
+ * nothing to read, so a project without `.tokensave/` installs `off`, and one
+ * with a graph is left unpinned so the runtime default applies. A choice the
+ * user already recorded wins over both - the guess must not flip a decision.
+ *
+ * @param {string} projectDir
+ * @returns {Record<string, string>}
+ */
+export function tokensaveProjectEnv(projectDir) {
+  const saved = readEnvConfig();
+  // Only a choice that leaves a trace blocks the guess. `autotrack` and `off`
+  // write `1`; a recorded `0` is what every install wrote before this rule and
+  // is indistinguishable from a decision, so it is left to the project. An
+  // explicit `on` writes no key at all (`envPatchFor` removes them), which is a
+  // limitation this table cannot see and the ADR records.
+  const chosen = saved.RULE_MCP_NO_TOKENSAVE === "1" || saved.RULE_MCP_TOKENSAVE_AUTOTRACK === "1";
+
+  if (chosen) {
+    return {};
+  }
+
+  return hasTokensave(projectDir) ? {} : { RULE_MCP_NO_TOKENSAVE: "1" };
 }
 
 function readEnvConfig() {
