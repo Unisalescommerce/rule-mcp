@@ -10,6 +10,7 @@ import { test } from "node:test";
 
 process.env.RULE_MCP_STATE_DIR = mkdtempSync(join(tmpdir(), "rule-mcp-adr-state-"));
 process.env.RULE_MCP_NO_AUTOUPDATE = "1";
+process.env.RULE_MCP_ADR_POLICY = "full";
 
 const { registerProcessAdrTool } = await import("../_register.js");
 const { autoLog } = await import("../_auto-log.js");

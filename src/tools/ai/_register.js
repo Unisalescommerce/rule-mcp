@@ -136,7 +136,7 @@ export function registerAiTool() {
           : top.length > 0
             ? `Top match: ${decision.skill} (${Math.round(decision.confidence * 100)}%). Relevant sections: ${chosen.sections.join(", ")}. ` +
               `Try: ${nextTools.join(", ")}. Build only what was asked; propose anything extra instead of writing it.` +
-              (followup ? ` Structural change: generate the ADR with ${followup.tool} without being asked.` : "")
+              (followup ? ` Structural change: ${followup.why}` : "")
             : `No matching skill for "${prompt}". Try rule_tool_search for full-text search.`,
       };
 

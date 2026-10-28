@@ -17,7 +17,7 @@ Checked on `main` at `46f84e5a`:
 
 | Capability                                      | Here today                                                |
 | ----------------------------------------------- | --------------------------------------------------------- |
-| ADR policy (`full` / `handoff` / `on-demand`)   | absent: only `RULE_MCP_AUTO_ADR` / `DISABLE_AUTO_ADR`     |
+| ADR policy (`full` / `handoff` / `on-demand`)   | landed (ADR 195); default `handoff`                       |
 | Pending ADRs numbered on landing                | absent (`docs/adr/_pending/` not used)                    |
 | Index merge driver, `post-merge`/`post-rewrite` | absent                                                    |
 | Install scope `project` for MCP configs         | flags landed (ADR 193); wizard Scope UI still open        |
@@ -102,7 +102,7 @@ One table, read by install, uninstall and detection, so the three cannot disagre
 - No instructions file for a generic host any more: `~/.config/<name>/instructions.md` was a path no host documents.
 - Evidence: `src/cli/install/__tests__/_hosts-paths.test.mjs` (7 assertions, table-driven over the 12 hosts), `src/cli/` 648/650 green, and an end-to-end run that installs six hosts, detects all six, and removes each entry including the two legacy droid files.
 
-### Step 4 - ADR policy
+### Step 4 - ADR policy - DONE (ADR 195)
 
 1. `src/core/docs/adr-policy/` (or `src/core/adr-policy/` to match this tree):
    - `_words.data.js`: categories `schema`, `dependency`, `api`, `infra`; levels `full`, `handoff`,

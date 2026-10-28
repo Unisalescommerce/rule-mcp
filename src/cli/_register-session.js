@@ -38,6 +38,8 @@ export function registerAdrCommand(program) {
         decision: options.decision ?? "",
         consequences: options.consequences ?? "",
         tags: (options.tags ?? "architecture").split(","),
+        // CLI `adr new` is an intentional record; default policy is handoff-only.
+        moment: "handoff",
       });
       process.stdout.write(`${result.content[0].text}\n`);
     });

@@ -9,6 +9,7 @@ import { adrEnglishOffenses } from "./_english.js";
 import { updateAdrIndex } from "./_adr-index.js";
 import { ADRSchema } from "./_schema.js";
 import { registerAutoAdrHook } from "./_auto-log.js";
+import { allowsAdrWrite, adrRule, resolveAdrPolicy } from "../../core/adr-policy/index.js";
 
 /**
  * Register the ADR tool: English-gated authoring with auto-numbering and
@@ -18,9 +19,36 @@ export function registerProcessAdrTool() {
   registerTool({
     name: "rule_tool_process_adr",
     entry: "skill",
-    description: "Save an Architecture Decision Record (ADR) to docs/adr/. Auto-numbers, maintains index, uses Nygard template.",
+    description:
+      "Save an Architecture Decision Record (ADR) to docs/adr/. Auto-numbers, maintains index, uses Nygard template. Honors RULE_MCP_ADR_POLICY (default: handoff).",
     zodSchema: ADRSchema,
     handler: async (arguments_) => {
+      const projectDir = arguments_.projectDir || ".";
+      const policy = resolveAdrPolicy({ projectDir });
+      const moment = arguments_.moment || "task";
+      const category = arguments_.category;
+
+      if (!allowsAdrWrite(policy, { category, moment, explicit: true })) {
+        const hint =
+          'Pass moment: "handoff" at session close, set RULE_MCP_ADR_POLICY=full, or override the category.';
+
+        return {
+          content: [
+            {
+              type: "text",
+              text: [
+                "Not written.",
+                "",
+                adrRule(policy),
+                "",
+                `Policy: ${policy.default} (source: ${policy.source})${category ? `; category ${category}` : ""}; moment: ${moment}.`,
+                hint,
+              ].join("\n"),
+            },
+          ],
+        };
+      }
+
       const offenses = adrEnglishOffenses(arguments_);
 
       if (offenses.length > 0) {
@@ -41,8 +69,8 @@ export function registerProcessAdrTool() {
         };
       }
 
-      const projectDir = arguments_.projectDir || ".";
       const adrDir = join(projectDir, ADR_DIR);
+
       mkdirSync(adrDir, { recursive: true });
 
       const number = nextAdrNumber(adrDir);

@@ -32,7 +32,7 @@ test("the diet cuts repetition, not substance", () => {
     /missing evidence means unknown/i,
     /minimal change/i,
     /rule_tool_process_adr/,
-    /without being asked/i,
+    /policy:\s*handoff/i,
     /never spawn subagents/i,
     /rule_tool_check/,
     /every token saved is a token earned/i,

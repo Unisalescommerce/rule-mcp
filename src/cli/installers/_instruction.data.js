@@ -51,7 +51,7 @@ export const RULES_BLOCK = [
   "- Use `/rule-area-styleguide` (name leaves like file-tree in the request) for templates and tree work.",
   "- Run `rule_tool_check`; failed guardrails block completion. Fix and rerun until all pass.",
   "- Run project tests/typecheck; report only commands actually executed.",
-  "- Record structural decisions with `rule_tool_process_adr`.",
+  "- Record structural decisions with `rule_tool_process_adr` when the ADR policy allows it (default: at handoff).",
   "- Declare a structural task with `rule_tool_structural` before changing a boundary, contract, dependency or layout.",
   "- Compress prose and preprocess prompts with `rule_tool_compress` / `/rule-compress`.",
   "- Frontend remains zero CSS classes, zero inline styles, semantic HTML, and external CSS.",

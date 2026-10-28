@@ -335,7 +335,7 @@ Read last handoff in docs/handoff/ and report which of its claims are still true
 
 ### rule_tool_process_adr
 
-Save Architecture Decision Record (ADR) to docs/adr/. Auto-numbers, maintains index, uses Nygard template.
+Save Architecture Decision Record (ADR) to docs/adr/. Auto-numbers, maintains index, uses Nygard template. Honors RULE_MCP_ADR_POLICY (default: handoff).
 
 | Parameter      | Type                                                     | Required | Default            | Description                                                           |
 | -------------- | -------------------------------------------------------- | -------- | ------------------ | --------------------------------------------------------------------- |
@@ -346,6 +346,8 @@ Save Architecture Decision Record (ADR) to docs/adr/. Auto-numbers, maintains in
 | `consequences` | string                                                   | no       | -                  | Consequences: positive and negative outcomes                          |
 | `alternatives` | array of string                                          | no       | -                  | Alternative options considered                                        |
 | `tags`         | array of string                                          | no       | `["architecture"]` | Tags for categorization (e.g. database, api, frontend)                |
+| `category`     | `schema` \| `dependency` \| `api` \| `infra`             | no       | -                  | ADR policy category override (schema, dependency, api, infra)         |
+| `moment`       | `task` \| `handoff`                                      | no       | `"task"`           | When the ADR is being written: task (default) or handoff              |
 | `projectDir`   | string                                                   | no       | `"."`              | Project root directory                                                |
 
 ### rule_tool_handoff

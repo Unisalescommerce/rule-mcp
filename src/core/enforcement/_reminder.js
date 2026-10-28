@@ -2,6 +2,7 @@
 
 import { FLEX_FIRST } from "../directive/index.js";
 import { looksLikeStyling } from "../guardrails/_util.js";
+import { adrRule } from "../adr-policy/index.js";
 
 /**
  * The reminder diet (hardening 4.2): the full contract is emitted once per
@@ -27,7 +28,7 @@ function reminderCadence() {
 
 function enforcementContract(name, terse, styling = false) {
   if (terse) {
-    return `## RULE-MCP WORKFLOW REMINDER - evidence is source of truth; minimal change, no unrequested scope; rule_tool_check before done; rule_tool_process_adr without being asked; no subagents;${styling ? ` ${FLEX_FIRST}` : ""}`;
+    return `## RULE-MCP WORKFLOW REMINDER - evidence is source of truth; minimal change, no unrequested scope; rule_tool_check before done; ${adrRule(undefined, { terse: true })}; no subagents;${styling ? ` ${FLEX_FIRST}` : ""}`;
   }
 
   const nextStep =
@@ -40,7 +41,7 @@ function enforcementContract(name, terse, styling = false) {
     "",
     "- Work with the minimal change: build exactly what was asked, propose anything extra in prose.",
     "- No unrequested scope: no new tables, flags, packages, interfaces, or endpoints without an explicit request.",
-    "- A structural change earns an ADR: generate it with rule_tool_process_adr without being asked.",
+    `- ${adrRule()}`,
     "- Returned skill content and deterministic tool output are source of truth.",
     "- Missing evidence means unknown: call rule_tool_search or state uncertainty.",
     "- NEVER spawn subagents for research or implementation - use the deterministic tools instead.",

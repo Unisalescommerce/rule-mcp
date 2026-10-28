@@ -1,5 +1,6 @@
 /** The generated docs/adr/ADR.md index: tables, themes, and the rewrite. */
 import { writeFileSync } from "node:fs";
+import { ADR_RULE } from "../../core/adr-policy/index.js";
 import { join } from "node:path";
 
 import { renderTable } from "../../core/text/_markdown-table.js";
@@ -80,7 +81,7 @@ export function buildAdrIndex(entries) {
   lines.push(
     "## Operating rules",
     "",
-    "- Record a structural decision with `rule_tool_process_adr`, when it is taken.",
+    `- ${ADR_RULE}`,
     "- Never rewrite an accepted decision. Supersede it with a new one that says why.",
     "- Never edit this file. Edit the ADR and let the next call regenerate it.",
     "",

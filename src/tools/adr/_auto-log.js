@@ -5,6 +5,7 @@ import { addAfterToolHook } from "../router/index.js";
 import { ADR_DIR, slugify, nextAdrNumber, listExistingAdrs } from "./_files.js";
 import { updateAdrIndex } from "./_adr-index.js";
 import { autoLogFields } from "./_auto-log-fields.js";
+import { allowsAdrWrite, resolveAdrPolicy } from "../../core/adr-policy/index.js";
 
 /**
  * Auto-create an ADR after significant tool calls.
@@ -17,13 +18,20 @@ export async function autoLog(toolName, arguments_, result) {
     return;
   }
 
+  const projectDir = arguments_.projectDir || ".";
+  const policy = resolveAdrPolicy({ projectDir });
+
+  // Policy on-demand ("off") and mid-task under handoff: AUTO_ADR writes nothing.
+  if (!allowsAdrWrite(policy, { moment: "task" })) {
+    return;
+  }
+
   const relevant = ["rule_tool", "rule_tool_detect"];
 
   if (!relevant.includes(toolName)) {
     return;
   }
 
-  const projectDir = arguments_.projectDir || ".";
   const adrDir = join(projectDir, ADR_DIR);
   mkdirSync(adrDir, { recursive: true });
 

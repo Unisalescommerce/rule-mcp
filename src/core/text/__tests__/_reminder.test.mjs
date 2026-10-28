@@ -21,7 +21,7 @@ const routed = await callTool("rule_tool", { prompt: "add a payments table migra
 const reminder = routed.content.find((item) => item.text?.includes("## RULE-MCP WORKFLOW REMINDER"))?.text ?? "";
 check("T1 reminder states the minimal-change rule", /minimal change/i.test(reminder));
 check("T1.1 reminder forbids unrequested scope", /unrequested/i.test(reminder));
-check("T1.2 reminder asks for the ADR unprompted", /rule_tool_process_adr/.test(reminder) && /without being asked/i.test(reminder));
+check("T1.2 reminder carries the ADR policy rule", /rule_tool_process_adr/.test(reminder) && /policy:\s*handoff/i.test(reminder));
 
 // ── T2: the router emits a scope contract ──
 const routing = JSON.parse(routed.content[0].text);
