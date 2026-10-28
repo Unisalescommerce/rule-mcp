@@ -8,6 +8,7 @@ them by `handoff doctor`, so editing it by hand is work the next run throws away
 
 | #                                                                  | Title                                                                     | Date       | Branch                    |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------------- | ---------- | ------------------------- |
+| [30](30-host-plan-six-phases.md)                                   | The host plan in six phases, and the plan-of-plans retired                | 2026-10-25 | rel/v0.1.0                |
 | [29](29-release-skills-and-workflow-reader.md)                     | Three release skills, one workflow reader, and the host-integration plan  | 2026-10-25 | rel/v0.1.0                |
 | [28](28-opentui-codex-hooks-and-command-targets.md)                | OpenTUI installer, Codex hooks, and command targets                       | 2026-10-25 | rel/v0.1.0                |
 | [27](27-plans-retirement-index-of-all-plans.md)                    | Plans retirement - index of all plans                                     | 2026-10-24 | feat/evolution            |
@@ -33,7 +34,7 @@ them by `handoff doctor`, so editing it by hand is work the next run throws away
 | [07](07-landing-develop-on-main-and-closing-the-finished-plans.md) | Landing develop on main, and closing the finished plans                   | 2026-09-15 | main                      |
 | [06](06-setup-wizard-and-commands-selection.md)                    | The setup wizard is the installer, and it asks which commands to write    | 2026-09-14 | develop                   |
 | [05](05-v0-1-0-beta-release-retarget.md)                           | v0.1.0-beta release retarget                                              | 2026-09-11 | main                      |
-| [04](04-dco-signoff-and-zizmor-release-fix.md)                     | Session handoff 04, DCO sign-off rewrite + zizmor release fix             | 2026-09-11 | perf/meta-surface         |
+| [04](04-dco-signoff-and-zizmor-release-fix.md)                     | DCO sign-off rewrite + zizmor release fix                                 | 2026-09-11 | perf/meta-surface         |
 | [03](03-roadmap-execution-oss-phases-1-5.md)                       | Roadmap execution: OSS phases 1-5, version reset, follow-ups              | 2026-09-11 | perf/meta-surface         |
 | [02](02-oss-audit-and-remediation-plan.md)                         | OSS audit, review and remediation plan                                    | 2026-09-10 | perf/meta-surface         |
 | [01](01-performance-plan-execution.md)                             | performance plan execution                                                | 2026-09-09 | perf/meta-surface         |
