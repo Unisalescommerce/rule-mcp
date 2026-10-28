@@ -1,0 +1,53 @@
+# 33: Handon stops inventing next moves, tokensave follows the project
+
+- **Branch**: `rel/v0.1.0`
+- **Commit range**: `76893d30..4037c703` (4 commits, this handoff excluded)
+- **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits in the whole feature range: 2
+- **Date**: 2026-10-28
+
+## Done
+
+1. **Handoff 32 verified, not trusted** — ADR 187 read `accepted` in `docs/adr/ADR.md`, ADR 198 absent from both the directory and the index, the pending attribution ADR present, the plan at `Status: in-progress` with 5 open boxes, no `_attribution*` file under `src/cli/installers/`. Two claims were stale: the tree was clean (the "modified since" edits were committed in `14e02ba9`/`a92343f6`), and the suggested first move named `main` although `rel/v0.1.0` was checked out.
+2. **Three handon defects, each test-first** — (a) `parseHandoff` accepted only `**Branch:**` while every handoff here writes `**Branch**:`, so the declared branch was never read and the trunk named under `**Base**:` became "the branch this work was on"; both forms are read, the base is excluded, and `firstMove` only proposes the declared branch. (b) The same parse now exposes `declaredBranch`. (c) Named files were compared from the range *start*, so everything the handoff itself had committed came back "modified since"; the comparison base is the one the commit count uses - the end when it resolves, the start when the range ends at `HEAD`.
+3. **Tokensave switch owns its default** — `on+autotrack` resolves to the canonical `autotrack` level; with no choice recorded `readLevel("tokensave")` follows `hasTokensave(projectDir ?? process.cwd())`; a project-scope `local` install writes the derived value through `tokensaveProjectEnv`, and `RULE_MCP_NO_TOKENSAVE` left `DEFAULT_OPTOUT_ENV` so no config claims a graph it cannot have. Documented in `docs/05-env-variables.md`; `tests/fixtures/census.json` regenerated for the changed `env-registry` block.
+4. **Gemini's attribution page found, not guessed** — `docs/cli/configuration.md` is HTTP 404; the file is `docs/reference/configuration.md`, and it names no attribution, co-author or trailer setting, which is the `none` row plan step 7 defines. Recorded in the plan.
+
+## Commits this handoff window
+
+- `3265ef98` `fix(handon): read a handoff's base trunk as the trunk, not as the working branch`
+- `90a4cfdb` `docs(plans): cite where Gemini's configuration page moved and what it omits`
+- `c2c509b6` `fix(handon): compare named files from the range end, not its start`
+- `4037c703` `feat(installer): own tokensave as on/on+autotrack/off with a project-derived default`
+
+## ADRs
+
+- pending: `docs/adr/_pending/attribution-is-one-table-row-per-agent-and-an-undocumented-agent-is-left-alone.md`
+- pending: `docs/adr/_pending/derive-the-tokensave-switch-from-the-project-and-accept-on-autotrack-as-its-name.md`
+- both land with numbers on trunk (`rule-mcp handoff land`); do not cite a number for either before that.
+
+## Left out / next
+
+- **A known limit, recorded in the ADR:** an explicit `on` leaves no key in `env.json`, so it cannot be told apart from "never chosen" and a graphless project overrides it. Closing it needs a sentinel value or reading the absent key as a choice.
+- `rule_tool_check` and `rule_tool_structural` answer only with `rule-mcp self-update REFUSED - git remote ... is not allowed update source`. Guardrail checks ran through eslint and the local suites instead; the MCP-side structural declaration was never registered.
+- Suites on this tree: `pnpm test:installer` 714 tests, 6 fail; `pnpm test:foundations` 2638 pass, 13 fail. All 13 reproduce with this session's work stashed (bootstrap flag lists, command dispatch, completions, `_static` block sync, self-guardrails, ADR numbering, file-size ratchet), so none are from this window.
+- `unicorn/no-asterisk-prefix-in-documentation-comments` fires across `src/tools/handon/`, `src/cli/installers/_env.js` and others that predate this session; only the new test file was written to pass it.
+- Plan `installer-scope-adr-policy-features.md` step 7 still needs `_attribution.data.js`, `_attribution.js`, `setup --attribution <keep|hide>`, `--attribution-agent <id>` and its table-driven tests; steps 8-11 are unchanged.
+- 2 merge commits (`e9d29e8e`, `df6ba117`) remain in the 336-commit feature range; linearize only with owner confirmation.
+
+### Resume Prompt
+
+```prompt
+Resume work on rule-mcp from docs/handoff/33-handon-base-and-tokensave-defaults.md on branch rel/v0.1.0.
+Run rule_tool_handon first; trust only claims that still hold.
+The handon fixes are landed and tested (48/48); do not re-derive them, verify them.
+Two ADRs are pending in docs/adr/_pending/ and get numbers only on trunk landing
+(`rule-mcp handoff land`): attribution per agent, and the tokensave switch default.
+`docs/plans/installer-scope-adr-policy-features.md` is the open plan (Status: in-progress, 5 open boxes);
+step 7 is agent attribution - a row per agent in src/cli/installers/_attribution.data.js written only
+with a cited vendor page, Claude Code first (docs.claude.com/en/docs/claude-code/settings serves),
+Gemini's row is `none` from docs/reference/configuration.md.
+Known limit to close or accept: an explicit tokensave `on` leaves no trace in env.json.
+MCP guardrail tools answer with a self-update refusal in this environment; use eslint and the local suites.
+Every commit is type(scope): subject; the commit-msg hook rejects a scope-less message.
+Do not push.
+```

@@ -8,6 +8,7 @@ them by `handoff doctor`, so editing it by hand is work the next run throws away
 
 | #                                                                  | Title                                                                     | Date       | Branch                    |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------------- | ---------- | ------------------------- |
+| [33](33-handon-base-and-tokensave-defaults.md)                     | Handon stops inventing next moves, tokensave follows the project          | 2026-10-28 | rel/v0.1.0                |
 | [32](32-port-audit-and-agent-attribution.md)                       | Port audit and attribution as a per-agent table                           | 2026-10-28 | rel/v0.1.0                |
 | [31](31-installer-scope-features-and-guard-daemon.md)              | Installer-scope features, project installs, and the guard daemon          | 2026-10-28 | rel/v0.1.0                |
 | [30](30-host-plan-six-phases.md)                                   | The host plan in six phases, and the plan-of-plans retired                | 2026-10-25 | rel/v0.1.0                |
