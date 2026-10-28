@@ -8,6 +8,7 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [196](196-number-pending-adrs-when-they-land-on-the-trunk.md)                                                           | Number pending ADRs when they land on the trunk                                                           | 2026-10-28 | accepted   | architecture, docs, adr                                                             |
 | [195](195-write-adrs-when-a-policy-says-so-at-handoff-by-default.md)                                                    | Write ADRs when a policy says so at handoff by default                                                    | 2026-10-28 | accepted   | adr, policy, architecture                                                           |
 | [194](194-follow-only-real-renames-when-dating-a-numbered-document.md)                                                  | Follow only real renames when dating a numbered document                                                  | 2026-10-28 | accepted   | docs, numbering, git                                                                |
 | [193](193-setup-scope-project-records-projects-json-and-wires-install-writers.md)                                       | Setup --scope project records projects.json and wires install writers                                     | 2026-10-27 | accepted   | installer, setup, projects                                                          |
@@ -211,6 +212,7 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [196](196-number-pending-adrs-when-they-land-on-the-trunk.md)                                                           | Off trunk, rule_tool_process_adr writes docs/adr/_pending/<slug>.md referred to as ADR <slug>. On trunk, rule-mcp handoff land (also post-merge/post-rewrite and handoff closeout) assigns the next free numbers in...          | Positive: deterministic numbers across parallel landings; squash falls back to alphabetical slug order.                                                                                                                         |
 | [195](195-write-adrs-when-a-policy-says-so-at-handoff-by-default.md)                                                    | Add core/adr-policy (words, resolve, rule).                                                                                                                                                                                     | Positive: mid-task ADR spam stops by default; handoff and full remain available.                                                                                                                                                |
 | [194](194-follow-only-real-renames-when-dating-a-numbered-document.md)                                                  | Pass -M70% (RENAME_SIMILARITY) before --follow in createdAt and addedBy in docs-numbering/_git.js.                                                                                                                              | Positive: template copies keep their own date/author.                                                                                                                                                                           |
 | [193](193-setup-scope-project-records-projects-json-and-wires-install-writers.md)                                       | Add state/projects.json (record/forget/list).                                                                                                                                                                                   | Positive: flag path installs into projects, refresh and uninstall reverse them, shared installs stay stdio-only.                                                                                                                |
@@ -476,6 +478,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### architecture
 
+- [196](196-number-pending-adrs-when-they-land-on-the-trunk.md) Number pending ADRs when they land on the trunk
 - [195](195-write-adrs-when-a-policy-says-so-at-handoff-by-default.md) Write ADRs when a policy says so at handoff by default
 - [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md) Host install and uninstall maps are lookups on the host record
 - [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md) Guard daemon on a Unix socket with a thin --send client
@@ -575,6 +578,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### docs
 
+- [196](196-number-pending-adrs-when-they-land-on-the-trunk.md) Number pending ADRs when they land on the trunk
 - [194](194-follow-only-real-renames-when-dating-a-numbered-document.md) Follow only real renames when dating a numbered document
 - [172](172-retire-closed-plans-into-adrs-and-one-handoff.md) Retire closed plans into ADRs and one handoff
 - [168](168-insert-a-quick-start-chapter-and-shift-the-handbook-numbering.md) Insert a quick-start chapter and shift the handbook numbering
@@ -1042,6 +1046,12 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [130](130-this-server-releases-itself-with-pnpm-release-and-the-push-is-the-release.md) This server releases itself with pnpm release, and the push is the release
 - [097](097-the-release-target-is-v0-1-0-beta-and-the-version-tooling-accepts-a-prerelease.md) The release target is v0.1.0-beta, and the version tooling accepts a prerelease
 - [085](085-reset-the-project-version-to-0-1-0-first-release-will-be-v0-1-0.md) Reset the project version to 0.1.0, first release will be v0.1.0
+
+### adr
+
+- [196](196-number-pending-adrs-when-they-land-on-the-trunk.md) Number pending ADRs when they land on the trunk
+- [195](195-write-adrs-when-a-policy-says-so-at-handoff-by-default.md) Write ADRs when a policy says so at handoff by default
+- [134](134-close-features-only-after-persisting-the-final-handoff-and-consolidate-the-featu.md) Close features only after persisting the final handoff and consolidate the feature by default
 
 ### agents
 

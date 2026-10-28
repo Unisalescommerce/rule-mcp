@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Number pending ADRs after a merge onto a trunk (ADR pending landing).
+set -euo pipefail
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
+if command -v rule-mcp >/dev/null 2>&1; then
+  rule-mcp handoff land --dir "$ROOT" --quiet --commit || true
+elif [[ -x "$ROOT/bin/rule-mcp.js" ]]; then
+  node "$ROOT/bin/rule-mcp.js" handoff land --dir "$ROOT" --quiet --commit || true
+fi

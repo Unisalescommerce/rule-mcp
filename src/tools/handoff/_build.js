@@ -6,6 +6,7 @@ import { graphChanges } from "../../core/tokensave/_changes.js";
 import { affectedTests } from "../../core/tokensave/_insights.js";
 import { sessionRecall } from "../../core/tokensave/_memory.js";
 import { scanProjectDocs } from "./_docs-scan.js";
+import { landPendingAdrs, settleDuplicateAdrs, onTrunk } from "../../core/docs/adr-pending/index.js";
 import { archiveCompletedDocs, closeoutLines } from "./_closeout.js";
 import { autoRenumber, renumberLines } from "./_renumber.js";
 import { estimateTokens } from "./_format.js";
@@ -36,6 +37,17 @@ export function buildHandoff({
   // run asked to keep its hands off the tree does neither. Both handoff modes
   // archive (ADR 103); `closeout: false` is the read-only diagnosis.
   const shouldArchive = closeout !== false;
+
+  // Number pending ADRs on trunk (or settle duplicates off trunk) before any
+  // closeout write, so handoff quotes the numbers that exist after landing.
+  if (shouldArchive) {
+    if (onTrunk(projectDir)) {
+      landPendingAdrs(projectDir, { commit: false, quiet: true });
+    } else {
+      settleDuplicateAdrs(projectDir);
+    }
+  }
+
   const renumber = _renumber === undefined && shouldArchive ? autoRenumber(projectDir, { apply: true }) : _renumber;
   const identity = includeIdentity ? readProjectIdentity(projectDir) : {};
   const adrs = includeAdrs ? readAdrs(projectDir) : [];

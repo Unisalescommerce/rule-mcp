@@ -8,6 +8,9 @@ export const SUMMARY_LIMIT = 220;
 /** ADR directory relative to project root. */
 export const ADR_DIR = "docs/adr";
 
+/** Unnumbered ADRs written off a trunk, relative to the project root. */
+export const ADR_PENDING_DIR = "docs/adr/_pending";
+
 /** Strip diacritics and special chars for slug. */
 export function slugify(text) {
   return text

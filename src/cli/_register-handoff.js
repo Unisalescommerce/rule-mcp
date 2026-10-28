@@ -5,7 +5,11 @@ export function registerHandoffCommand(program) {
   program
     .command("handoff")
     .description("Generate a compressed LLM context handoff summary")
-    .argument("[subcommand]", "doctor to repair ADR/handoff numbering and their generated indexes")
+    .argument(
+      "[subcommand]",
+      "doctor | land | merge-index — repair numbering, number pending ADRs, or regenerate a merge conflict index",
+    )
+    .argument("[args...]", "merge-index receives %O %A %B %P from git")
     .option("--dir <path>", "project root (default: .)", ".")
     .option("--format <f>", "full (default), brief, minimal")
     .option("--compress", "aggressively truncate values")
@@ -13,21 +17,33 @@ export function registerHandoffCommand(program) {
     .option("--no-archive", "render without archiving completed docs or repairing the ADR numbering")
     .option("--fix", "apply the ADR renumber plan")
     .option("--fix-commits", "amend local commit messages to match renumbered ADRs")
-    .allowExcessArguments(false)
-    .action(async function handoffAction(subcommand, options) {
+    .option("--commit", "with land: commit the numbered ADRs")
+    .option("--quiet", "with land: suppress progress")
+    .allowExcessArguments(true)
+    .action(async function handoffAction(subcommand, args, options) {
       if (subcommand === "doctor") {
-        const { applyRenumber, planRenumber, renderRenumberPlan, rewriteCommitReferences } = await import("../core/docs-numbering/index.js");
+        const { applyRenumber, planRenumber, renderRenumberPlan, rewriteCommitReferences } = await import(
+          "../core/docs-numbering/index.js"
+        );
         const projectDir = options.dir;
         const onProgress = ({ message }) => process.stdout.write(`  ${message}\n`);
         const plan = planRenumber({ projectDir, onProgress });
         process.stdout.write(`${renderRenumberPlan(plan, { fix: options.fix })}\n`);
         const authors = plan.authors?.length ?? 0;
-        const somethingToFix = plan.renames.length > 0 || plan.indexUnordered || plan.indexStale || plan.handoffIndexUnordered || plan.handoffIndexStale || authors > 0;
+        const somethingToFix =
+          plan.renames.length > 0 ||
+          plan.indexUnordered ||
+          plan.indexStale ||
+          plan.handoffIndexUnordered ||
+          plan.handoffIndexStale ||
+          authors > 0;
 
         if (options.fixCommits) {
           const rewrite = rewriteCommitReferences(plan, { projectDir, onProgress });
           process.stdout.write(
-            rewrite.refused ? `Commit messages left alone: ${rewrite.refused}.\n` : `Rewrote ${rewrite.rewritten} commit message(s); ${rewrite.skipped} left for a human.\n`,
+            rewrite.refused
+              ? `Commit messages left alone: ${rewrite.refused}.\n`
+              : `Rewrote ${rewrite.rewritten} commit message(s); ${rewrite.skipped} left for a human.\n`,
           );
         }
 
@@ -46,6 +62,58 @@ export function registerHandoffCommand(program) {
         }
 
         process.exitCode = somethingToFix && !options.fix ? 1 : 0;
+
+        return;
+      }
+
+      if (subcommand === "land") {
+        const { landPendingAdrs, settleDuplicateAdrs, onTrunk } = await import("../core/docs/adr-pending/index.js");
+        const projectDir = options.dir;
+
+        if (onTrunk(projectDir)) {
+          const result = landPendingAdrs(projectDir, { commit: Boolean(options.commit), quiet: Boolean(options.quiet) });
+
+          if (!options.quiet) {
+            if (result.skipped) {
+              process.stdout.write(`Land skipped: ${result.skipped}\n`);
+            } else if (result.landed.length === 0) {
+              process.stdout.write("No pending ADRs to land.\n");
+            } else {
+              process.stdout.write(
+                `Landed ${result.landed.length} ADR(s); ${result.referencesUpdated} file(s) updated` +
+                  `${result.committed ? "; committed" : ""}.\n`,
+              );
+            }
+          }
+        } else {
+          const settled = settleDuplicateAdrs(projectDir);
+
+          if (!options.quiet) {
+            process.stdout.write(
+              settled.settled.length === 0
+                ? "Off trunk: nothing to settle; pending ADRs keep their slugs.\n"
+                : `Settled ${settled.settled.length} duplicate number(s) back into _pending.\n`,
+            );
+          }
+        }
+
+        return;
+      }
+
+      if (subcommand === "merge-index") {
+        const [ancestor, ours, theirs, repoPath] = args ?? [];
+
+        if (!ours || !repoPath) {
+          process.stderr.write("usage: rule-mcp handoff merge-index <O> <A> <B> <P>\n");
+          process.exitCode = 2;
+
+          return;
+        }
+
+        const { mergeGeneratedIndex } = await import("../core/docs/adr-pending/index.js");
+        const result = mergeGeneratedIndex(ancestor, ours, theirs, repoPath, { projectDir: options.dir });
+
+        process.exitCode = result.regenerated ? 0 : 1;
 
         return;
       }

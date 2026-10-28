@@ -32,7 +32,7 @@ the package version from anywhere. An error exits 1 and prints to stderr;
 | [`config`](#rule-config)                 | 5       | Print the mcp.json snippet, or manage RULE_MCP_* env vars with `config env`               |
 | [`doctor`](#rule-doctor)                 | 4       | Run system health check                                                                   |
 | [`adr`](#rule-adr)                       | 5       | Create a new Architecture Decision Record (ADR)                                           |
-| [`handoff`](#rule-handoff)               | 7       | Generate a compressed LLM context handoff summary                                         |
+| [`handoff`](#rule-handoff)               | 9       | Generate a compressed LLM context handoff summary                                         |
 | [`skills`](#rule-skills)                 | 4       | Manage the rule-mcp AI skill system                                                       |
 | [`fix`](#rule-fix)                       | 3       | Apply the deterministic guardrail fixes of every skill                                    |
 | [`completions`](#rule-completions)       | 1       | Generate shell auto-completion script                                                     |
@@ -306,14 +306,15 @@ rule-mcp adr action title
 Generate a compressed LLM context handoff summary
 
 ```sh
-rule-mcp handoff subcommand
+rule-mcp handoff subcommand args
 ```
 
 **Arguments**
 
-| Argument     | Default | Description                                                        |
-| ------------ | ------- | ------------------------------------------------------------------ |
-| `subcommand` | -       | doctor to repair ADR/handoff numbering and their generated indexes |
+| Argument     | Default | Description                               |
+| ------------ | ------- | ----------------------------------------- |
+| `subcommand` | -       | doctor \\                                 | land \\ | merge-index — repair numbering, number pending ADRs, or regenerate a merge conflict index |
+| `args`       | -       | merge-index receives %O %A %B %P from git |
 
 **Options**
 
@@ -326,6 +327,8 @@ rule-mcp handoff subcommand
 | `--no-archive`  | -       | -       | render without archiving completed docs or repairing the ADR numbering |
 | `--fix`         | -       | -       | apply the ADR renumber plan                                            |
 | `--fix-commits` | -       | -       | amend local commit messages to match renumbered ADRs                   |
+| `--commit`      | -       | -       | with land: commit the numbered ADRs                                    |
+| `--quiet`       | -       | -       | with land: suppress progress                                           |
 
 ## rule-mcp skills
 

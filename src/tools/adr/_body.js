@@ -1,11 +1,12 @@
 /** Render one ADR document from its fields (Nygard template). */
 import { adrAuthor } from "./_author.js";
 
-/** Generate ADR markdown content. */
-export function generateAdr({ number, title, status, context, decision, consequences, alternatives, endsWhen, tags, date, author }) {
+/** Generate ADR markdown content. Pending (off-trunk) uses `# Pending:` and no number. */
+export function generateAdr({ number, title, status, context, decision, consequences, alternatives, endsWhen, tags, date, author, pending = false }) {
   date ??= new Date().toISOString().slice(0, 10);
+  const heading = pending ? `# Pending: ${title}` : `# ${String(number).padStart(3, "0")}: ${title}`;
   const lines = [
-    `# ${String(number).padStart(3, "0")}: ${title}`,
+    heading,
     "",
     `- **Date**: ${date}`,
     `- **Status**: ${status}`,

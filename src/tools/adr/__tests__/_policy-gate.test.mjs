@@ -47,7 +47,8 @@ test("handoff moment under handoff policy writes the ADR", async () => {
   const text = result.content.map((part) => part.text).join("\n");
 
   assert.match(text, /created:/i);
-  assert.ok(readdirSync(join(project, "docs", "adr")).some((name) => name.endsWith(".md")));
+  // No git trunk here → pending path (numbers land on trunk).
+  assert.ok(readdirSync(join(project, "docs", "adr", "_pending")).some((name) => name.endsWith(".md")));
 });
 
 test("full policy allows a mid-task write", async () => {
@@ -61,5 +62,6 @@ test("full policy allows a mid-task write", async () => {
   const text = result.content.map((part) => part.text).join("\n");
 
   assert.match(text, /created:/i);
+  assert.match(text, /ADR record-the-decision|ADR allow-mid-task|Pending:/i);
   delete process.env.RULE_MCP_ADR_POLICY;
 });

@@ -2,8 +2,9 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { recordDecision } from "../../core/tokensave/_memory.js";
+import { onTrunk } from "../../core/docs/adr-pending/_trunk.js";
 import { registerTool } from "../router/index.js";
-import { ADR_DIR, nextAdrNumber, adrFilename, listExistingAdrs } from "./_files.js";
+import { ADR_DIR, ADR_PENDING_DIR, nextAdrNumber, adrFilename, listExistingAdrs, slugify } from "./_files.js";
 import { generateAdr } from "./_body.js";
 import { adrEnglishOffenses } from "./_english.js";
 import { updateAdrIndex } from "./_adr-index.js";
@@ -69,11 +70,14 @@ export function registerProcessAdrTool() {
         };
       }
 
+      const pending = !onTrunk(projectDir);
       const adrDir = join(projectDir, ADR_DIR);
+      const writeDir = pending ? join(projectDir, ADR_PENDING_DIR) : adrDir;
 
-      mkdirSync(adrDir, { recursive: true });
+      mkdirSync(writeDir, { recursive: true });
 
-      const number = nextAdrNumber(adrDir);
+      const number = pending ? null : nextAdrNumber(adrDir);
+      const slug = slugify(arguments_.title);
       const content = generateAdr({
         number,
         title: arguments_.title,
@@ -83,17 +87,18 @@ export function registerProcessAdrTool() {
         consequences: arguments_.consequences || "",
         alternatives: arguments_.alternatives || [],
         tags: arguments_.tags || ["architecture"],
+        pending,
       });
 
-      const filename = adrFilename(number, arguments_.title);
-      const filePath = join(adrDir, filename);
+      const filename = pending ? `${slug}.md` : adrFilename(number, arguments_.title);
+      const filePath = join(writeDir, filename);
 
       writeFileSync(filePath, content);
 
-      // Update index - listExistingAdrs reads from disk (already includes the new ADR)
-      const existing = listExistingAdrs(adrDir);
-
-      updateAdrIndex(adrDir, existing);
+      if (!pending) {
+        // Update index - listExistingAdrs reads from disk (already includes the new ADR)
+        updateAdrIndex(adrDir, listExistingAdrs(adrDir));
+      }
 
       // The ADR file is the source of truth; the graph keeps a recall index
       // beside it. A missing graph is a no-op, never a failure.
@@ -104,21 +109,26 @@ export function registerProcessAdrTool() {
         tags: arguments_.tags || ["architecture"],
       });
 
+      const label = pending ? `ADR ${slug}` : String(number).padStart(3, "0");
+
       return {
         content: [
           {
             type: "text",
             text: [
-              `✅ ${String(number).padStart(3, "0")} created: ${arguments_.title}`,
+              `✅ ${label} created: ${arguments_.title}`,
               "",
               `File: ${filePath}`,
+              pending ? "Pending: numbers on trunk landing (`rule-mcp handoff land`)." : null,
               `Status: ${arguments_.status || "accepted"}`,
               `Tags: ${(arguments_.tags || ["architecture"]).join(", ")}`,
               "",
               "```markdown",
               content,
               "```",
-            ].join("\n"),
+            ]
+              .filter((line) => line !== null)
+              .join("\n"),
           },
         ],
       };

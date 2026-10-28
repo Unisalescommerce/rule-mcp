@@ -23,6 +23,7 @@ import { join } from "node:path";
 
 import { isInsideGitDir } from "./_containment.mjs";
 import { shim } from "./_shim.mjs";
+import { applyLandHooks } from "../../../src/core/git-hooks/_land-hooks.js";
 
 const check = process.argv.includes("--check");
 
@@ -127,4 +128,14 @@ console.log(installed.length === 0 ? `git hooks: ${names.length} already current
 
 if (backed.length > 0) {
   console.log(`  kept a copy of the previous ${backed.join(", ")} beside it as <name>.bak`);
+}
+
+try {
+  const land = applyLandHooks(ROOT);
+
+  if (land.written.length > 0) {
+    console.log(`git hooks: land hooks wrote ${land.written.join(", ")}`);
+  }
+} catch (error) {
+  console.log(`git hooks: land hooks skipped (${error.message})`);
 }

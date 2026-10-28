@@ -1,0 +1,3 @@
+# Generated indexes: regenerate instead of merging (ADR pending landing).
+docs/adr/ADR.md merge=rule-mcp-index
+docs/handoff/HANDOFF.md merge=rule-mcp-index

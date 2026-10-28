@@ -18,8 +18,8 @@ Checked on `main` at `46f84e5a`:
 | Capability                                      | Here today                                                |
 | ----------------------------------------------- | --------------------------------------------------------- |
 | ADR policy (`full` / `handoff` / `on-demand`)   | landed (ADR 195); default `handoff`                       |
-| Pending ADRs numbered on landing                | absent (`docs/adr/_pending/` not used)                    |
-| Index merge driver, `post-merge`/`post-rewrite` | absent                                                    |
+| Pending ADRs numbered on landing                | landed (ADR pending step 5); `_pending/` + `handoff land` |
+| Index merge driver, `post-merge`/`post-rewrite` | landed (`.gitattributes` + `.githooks/post-*`)            |
 | Install scope `project` for MCP configs         | flags landed (ADR 193); wizard Scope UI still open        |
 | Feature toggles (`feature list/enable/disable`) | absent; switches are raw env vars                         |
 | Claude attribution switch                       | absent                                                    |
@@ -125,7 +125,7 @@ One table, read by install, uninstall and detection, so the three cannot disagre
 7. One ADR (pending, see step 5).
 8. Commit: `feat(adr): write ADRs when a policy says so, at handoff by default`.
 
-### Step 5 - ADR numbers given on landing
+### Step 5 - ADR numbers given on landing - DONE
 
 1. Off the trunk, `rule_tool_process_adr` writes `docs/adr/_pending/<slug>.md` and refers to it as
    `ADR <slug>`.
