@@ -8,6 +8,7 @@ them by `handoff doctor`, so editing it by hand is work the next run throws away
 
 | #                                                                  | Title                                                                     | Date       | Branch                    |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------------- | ---------- | ------------------------- |
+| [35](35-project-scope-finished-and-steps-nine-to-eleven.md)        | Project scope finished, interactive questions, steps 9-11                 | 2026-10-29 | rel/v0.1.0                |
 | [34](34-installer-scope-attribution-and-green-guardrails.md)       | Green guardrails, per-agent attribution, project membership               | 2026-10-29 | rel/v0.1.0                |
 | [33](33-handon-base-and-tokensave-defaults.md)                     | Handon stops inventing next moves, tokensave follows the project          | 2026-10-28 | rel/v0.1.0                |
 | [32](32-port-audit-and-agent-attribution.md)                       | Port audit and attribution as a per-agent table                           | 2026-10-28 | rel/v0.1.0                |
