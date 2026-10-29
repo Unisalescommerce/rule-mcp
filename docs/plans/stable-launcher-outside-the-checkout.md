@@ -125,12 +125,21 @@ this installer wrote, recorded in `~/.rule-mcp/launcher/installed.json`, not whe
 
 ### Phase 3 - the gates stop depending on a working tree
 
-- [ ] The hook writer keeps invoking `rule-mcp` by name, which is now a stable target; the skip
-      warning stays as the last resort, and names the command that repairs the launcher.
-- [ ] Record skips: one line in `~/.rule-mcp/state/launcher-skips.log`, and `doctor` reports the
-      last one. A gate that was skipped is a fact a reader can find, not a message that scrolled by.
-- [ ] Acceptance: `pnpm test:all` green with the launcher broken on purpose, and `doctor` naming the
-      skip.
+- [x] The hook writer keeps invoking `rule-mcp` by name, which is now a stable target; the skip warning
+      stays as the last resort and names the repair (`run: rule-mcp setup`). The repository's own
+      tracked hooks in `.githooks/` probe `rule-mcp --version` before using it and fall back to the
+      in-repo validator, because `command -v` passes for a launcher whose target moved and `set -e`
+      then turns node's exit 1 into a rejected push.
+- [x] Record skips: one line in `state/launcher-skips.log` from the hook itself (`_hook.js`,
+      `_launcher-skips.js`), capped at 200 lines, and `doctor` reports the last one when it is newer
+      than the installed copy - history is not a warning. A gate that was skipped is a fact a reader
+      can find, not a message that scrolled by.
+- [x] Acceptance, run 2026-10-29: with the launcher replaced by a script that prints `Cannot find
+      module` and exits 1, `pnpm test:installer` is 817 tests / 815 pass / 0 fail, `sh
+      .githooks/commit-msg <msg>` exits 0 through the in-repo validator, and the installed hook writes
+      its skip line. Found on the way: this repository has **74 files Prettier would rewrite**, so
+      `pre-push` fails at its formatting step whatever the launcher does - a pre-existing condition,
+      recorded here and left alone because reformatting 74 unrelated files is not this plan.
 
 ### Phase 4 - uninstall, docs, ADR
 
