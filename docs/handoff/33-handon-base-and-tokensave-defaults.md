@@ -1,7 +1,7 @@
 # 33: Handon stops inventing next moves, tokensave follows the project
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `76893d30..83ea733b` (5 commits, this handoff excluded)
+- **Commit range**: `76893d30..f863a08b` (6 commits, this handoff excluded)
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits in the whole feature range: 2
 - **Date**: 2026-10-28
 
@@ -11,7 +11,8 @@
 2. **Three handon defects, each test-first** — (a) `parseHandoff` accepted only `**Branch:**` while every handoff here writes `**Branch**:`, so the declared branch was never read and the trunk named under `**Base**:` became "the branch this work was on"; both forms are read, the base is excluded, and `firstMove` only proposes the declared branch. (b) The same parse now exposes `declaredBranch`. (c) Named files were compared from the range *start*, so everything the handoff itself had committed came back "modified since"; the comparison base is the one the commit count uses - the end when it resolves, the start when the range ends at `HEAD`.
 3. **Tokensave switch owns its default** — `on+autotrack` resolves to the canonical `autotrack` level; with no choice recorded `readLevel("tokensave")` follows `hasTokensave(projectDir ?? process.cwd())`; a project-scope `local` install writes the derived value through `tokensaveProjectEnv`, and `RULE_MCP_NO_TOKENSAVE` left `DEFAULT_OPTOUT_ENV` so no config claims a graph it cannot have. Documented in `docs/05-env-variables.md`; `tests/fixtures/census.json` regenerated for the changed `env-registry` block.
 4. **An explicit `on` is a decision now** — it removed both keys, which read the same as never choosing, so the derived default overrode it in a graphless checkout. `on` writes `RULE_MCP_NO_TOKENSAVE=0`; any recorded value blocks the guess; and the `0` every earlier install wrote is pruned once by the setup path when the file matches that constant table key for key, because it was the installer's value and not a decision. The setup path was verified on a real legacy-shaped file: one key dropped, the other seven kept.
-5. **Gemini's attribution page found, not guessed** — `docs/cli/configuration.md` is HTTP 404; the file is `docs/reference/configuration.md`, and it names no attribution, co-author or trailer setting, which is the `none` row plan step 7 defines. Recorded in the plan.
+5. **Uninstall reclaims what it wrote** — the switches file, the legacy file, the manifest and `projects.json` outlived the agent configs an uninstall removes. A new `config` step lists all four, asks before deleting, keeps the two switches files under `--keep-config` while still dropping the records, and stays silent under `--json`/`--no-interactive`; `--purge` still deletes the home wholesale. Verified end to end on a temp home: canonical, legacy and `projects.json` removed, `install.json` already gone via `forgetInstall`.
+6. **Gemini's attribution page found, not guessed** — `docs/cli/configuration.md` is HTTP 404; the file is `docs/reference/configuration.md`, and it names no attribution, co-author or trailer setting, which is the `none` row plan step 7 defines. Recorded in the plan.
 
 ## Commits this handoff window
 
@@ -20,6 +21,7 @@
 - `c2c509b6` `fix(handon): compare named files from the range end, not its start`
 - `4037c703` `feat(installer): own tokensave as on/on+autotrack/off with a project-derived default`
 - `83ea733b` `fix(installer): record tokensave on as a decision instead of erasing it`
+- `f863a08b` `feat(uninstall): reclaim the switches and records rule-mcp wrote`
 
 ## ADRs
 
@@ -29,7 +31,8 @@
 
 ## Left out / next
 
-- The `0`-means-on rule only reaches a file the setup path touches: a user whose install never runs again keeps the old value as a decision. Nothing detects that state, and `RULE_MCP_NO_TOKENSAVE=0` in a project with no graph is the visible symptom.
+- The `0`-means-on rule reaches a file the setup path touches or an uninstall reclaims; a machine that never runs either keeps the old value as a decision. `RULE_MCP_NO_TOKENSAVE=0` in a project with no graph is the visible symptom.
+- The guardrail MCP tools (`rule_tool_check`, `rule_tool_structural`) answer `self-update REFUSED - git remote ... is not allowed update source`, and `rule_tool_handon` served pre-fix code for the same reason: the MCP server in this session runs an older build than the checkout. Restart the server before trusting any of their output on this tree.
 - `rule_tool_check` and `rule_tool_structural` answer only with `rule-mcp self-update REFUSED - git remote ... is not allowed update source`. Guardrail checks ran through eslint and the local suites instead; the MCP-side structural declaration was never registered.
 - Suites on this tree: `pnpm test:installer` 714 tests, 6 fail; `pnpm test:foundations` 2638 pass, 13 fail. All 13 reproduce with this session's work stashed (bootstrap flag lists, command dispatch, completions, `_static` block sync, self-guardrails, ADR numbering, file-size ratchet), so none are from this window.
 - `unicorn/no-asterisk-prefix-in-documentation-comments` fires across `src/tools/handon/`, `src/cli/installers/_env.js` and others that predate this session; only the new test file was written to pass it.
@@ -48,7 +51,8 @@ Two ADRs are pending in docs/adr/_pending/ and get numbers only on trunk landing
 step 7 is agent attribution - a row per agent in src/cli/installers/_attribution.data.js written only
 with a cited vendor page, Claude Code first (docs.claude.com/en/docs/claude-code/settings serves),
 Gemini's row is `none` from docs/reference/configuration.md.
-Known limit to accept or fix: the pruned `0` only reaches a file the setup path touches again.
+Known limit to accept or fix: the pruned `0` reaches a file the setup path or an uninstall touches, nothing else.
+Restart the MCP server before trusting rule_tool_check/structural/handon: they served a stale build this session.
 MCP guardrail tools answer with a self-update refusal in this environment; use eslint and the local suites.
 Every commit is type(scope): subject; the commit-msg hook rejects a scope-less message.
 Do not push.
