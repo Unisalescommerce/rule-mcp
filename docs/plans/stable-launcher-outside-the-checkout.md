@@ -97,8 +97,13 @@ this installer wrote, recorded in `~/.rule-mcp/launcher/installed.json`, not whe
       install prints, and one version is kept: `docs/plans` risk row "the platform binary is not in
       the tarball" resolved as *not in the tarball, in the deploy*. The integration check
       `_launcher-install.integration.test.mjs` keeps the answer honest (`RULE_MCP_LAUNCHER_INTEGRATION=1`).
-- [ ] Acceptance: an install on this machine leaves `~/.rule-mcp/launcher/1.0.0/bin/rule-mcp.js`
-      runnable with `--version`, and the repository's own `node_modules` untouched.
+- [x] Acceptance, run 2026-10-29 with `RULE_MCP_HOME` pointed at a temporary root:
+      `setup --no-interactive --agent claude` reports `Launcher copy ... 0.1.0 - 71 MB`, leaves
+      `<root>/launcher/0.1.0/`, `current` = `0.1.0` and `installed.json`, and that copy answers
+      `--version` with `0.1.0` on its own. The repository's `node_modules` measured 258168 KB before
+      and after: the deploy reads the store, it does not write the checkout. The step is
+      `_task-launcher.js`, planned after the runtime home and before the shim, and it warns instead of
+      failing so an 85 MB write that cannot happen does not leave the rest of the machine unconfigured.
 
 ### Phase 2 - resolution order in the launcher
 
