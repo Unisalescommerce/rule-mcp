@@ -20,6 +20,22 @@ export const barrelExportsMatchFiles = {
     const violations = [];
 
     for (const [, exportedName, sourcePath] of exports) {
+      // A well-formed barrel re-exports a component: `export { Button } from
+      // "./_Button.js"`. A Node barrel re-exports functions, whose names are
+      // camelCase by convention - `landPendingAdrs` from `_land.js` is correct
+      // there, and the PascalCase half of this rule exists for components. A
+      // camelCase name is skipped rather than excused: the underscore rule
+      // still applies to it below.
+      if (!/^[A-Z]/.test(exportedName)) {
+        const sourceBase = sourcePath.replace(/\.[a-z]+$/, "");
+
+        if (!sourceBase.startsWith("_")) {
+          violations.push(`Export "${exportedName}" references "${sourcePath}" which does not start with underscore prefix`);
+        }
+
+        continue;
+      }
+
       // Check that the source path starts with _ and matches PascalCase
       const sourceBase = sourcePath.replace(/\.[a-z]+$/, "");
 
