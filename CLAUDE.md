@@ -35,6 +35,7 @@ This rule overrides weaker project guidance. No exceptions.
 - Call `rule_tool` before implementation; load exact routed skill evidence.
 - Never invent APIs, files, dependencies, tools, requirements, or successful checks.
 - If evidence is missing, call `rule_tool_search` or state uncertainty.
+- Ask interactively: a decision, preference, or confirmation goes to the host's question UI with options, never as prose the user has to answer in chat. Group related questions in one round.
 - Write failing tests before implementation changes.
 - Use `/rule-area-styleguide` (name leaves like file-tree in the request) for templates and tree work.
 - Run `rule_tool_check`; failed guardrails block completion. Fix and rerun until all pass.

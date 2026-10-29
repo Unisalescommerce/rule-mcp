@@ -28,7 +28,7 @@ function reminderCadence() {
 
 function enforcementContract(name, terse, styling = false) {
   if (terse) {
-    return `## RULE-MCP WORKFLOW REMINDER - evidence is source of truth; minimal change, no unrequested scope; rule_tool_check before done; ${adrRule(undefined, { terse: true })}; no subagents;${styling ? ` ${FLEX_FIRST}` : ""}`;
+    return `## RULE-MCP WORKFLOW REMINDER - evidence is source of truth; minimal change, no unrequested scope; ask interactively; rule_tool_check before done; ${adrRule(undefined, { terse: true })}; no subagents;${styling ? ` ${FLEX_FIRST}` : ""}`;
   }
 
   const nextStep =
@@ -44,6 +44,7 @@ function enforcementContract(name, terse, styling = false) {
     `- ${adrRule()}`,
     "- Returned skill content and deterministic tool output are source of truth.",
     "- Missing evidence means unknown: call rule_tool_search or state uncertainty.",
+    "- Ask interactively: a decision, preference or confirmation goes to the host's question UI with options, never as prose the user has to answer in chat.",
     "- NEVER spawn subagents for research or implementation - use the deterministic tools instead.",
     `- ${nextStep}`,
     "- Every token saved is a token earned.",

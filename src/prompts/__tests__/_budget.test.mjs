@@ -35,6 +35,7 @@ test("the diet cuts repetition, not substance", () => {
     /policy:\s*handoff/i,
     /never spawn subagents/i,
     /rule_tool_check/,
+    /ask .*interactively/i,
     /every token saved is a token earned/i,
   ]) {
     assert.match(full, rule, `the opening contract must still carry ${rule}`);
