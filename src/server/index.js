@@ -15,13 +15,14 @@
 
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { ListToolsRequestSchema, CallToolRequestSchema, ListResourcesRequestSchema, ReadResourceRequestSchema, ErrorCode, McpError } from "@modelcontextprotocol/sdk/types.js";
+import { ListToolsRequestSchema, CallToolRequestSchema, ErrorCode, McpError } from "@modelcontextprotocol/sdk/types.js";
 import { pkg as package_ } from "../cli/paths/index.js";
 import { registerCompletionHandler } from "./_completions.js";
+import { rememberClient } from "./_client-info.js";
+import { registerResourceHandlers } from "./_resource-handlers.js";
 import { registerPromptHandlers } from "./_prompt-handlers.js";
 import { listTools, callTool } from "../tools/router/index.js";
 import { decorateWithTokensave } from "../core/agents/_token-pipeline.js";
-import { compressResourceListing, listResources, readResource } from "../resources/index.js";
 
 /** @type {Server|null} */
 let serverInstance = null;
@@ -61,6 +62,8 @@ export function createServer() {
   server.setRequestHandler(CallToolRequestSchema, async (request) => {
     const { name, arguments: arguments_ } = request.params;
 
+    rememberClient(server);
+
     if (!name) {
       throw new McpError(ErrorCode.InvalidParams, "Tool name is required");
     }
@@ -71,23 +74,7 @@ export function createServer() {
     return decorateWithTokensave(name, result, arguments_ ?? {});
   });
 
-  // ── Resource handlers ──────────────────────────────────────────
-
-  server.setRequestHandler(ListResourcesRequestSchema, async () => {
-    // Labels are prose the model reads to discover a resource; the pass is a
-    // no-op on the terse real set but keeps the every-surface invariant (2c).
-    return { resources: compressResourceListing(listResources()) };
-  });
-
-  server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
-    const { uri } = request.params;
-
-    if (!uri) {
-      throw new McpError(ErrorCode.InvalidParams, "Resource URI is required");
-    }
-
-    return readResource(uri);
-  });
+  registerResourceHandlers(server);
 
   // ── Completion handlers ────────────────────────────────────────
 
@@ -116,10 +103,12 @@ export async function startServer() {
   // A long-lived server gets guarded checks: one runaway regex must not freeze
   // the daemon (hardening F-S1); the CLI one-shot runs them inline.
   const { enableGuardedChecks } = await import("../core/guardrails/index.js");
+
   enableGuardedChecks();
   // A stdio server lives and dies with its client: the guard polls the parent
   // pulse and exits when it goes (the orphaned-server trap).
   const { installStdioGuard } = await import("../transport/index.js");
+
   installStdioGuard({ onLost: () => process.exit(0) });
   // The catalog registers the per-skill tools; the gateway and the apply tool sit
   // above it and are registered here, once, before the server answers.

@@ -11,6 +11,7 @@ import { GetPromptRequestSchema, ListPromptsRequestSchema, ErrorCode, McpError }
 import { compressSurfaceText, MIN_COMPRESS_LENGTH } from "../core/text/_compression.js";
 import { maybeSyncCheck } from "../core/sync/index.js";
 import { recordToolCall } from "../core/telemetry/recorder/index.js";
+import { clientIdentity } from "../prompts/_client-suppression.js";
 import { getPrompt, listActivePrompts } from "../prompts/index.js";
 
 /**
@@ -28,6 +29,7 @@ function compressMessages(messages) {
     }
 
     const result = compressSurfaceText(message.content.text, { source: "compression-prompt" });
+
     saved += result.saved;
 
     return { ...message, content: { ...message.content, text: result.text } };
@@ -38,8 +40,13 @@ function compressMessages(messages) {
 
 /** Register the prompt handlers on the server. */
 export function registerPromptHandlers(server) {
+  // The client a shared entry serves is the one the handshake named, unless the
+  // environment overrode it: that answer is what makes a per-client policy
+  // possible at all.
+  const clientName = () => clientIdentity({ clientVersion: server.getClientVersion?.() }).name;
+
   server.setRequestHandler(ListPromptsRequestSchema, async () => {
-    return { prompts: listActivePrompts() };
+    return { prompts: listActivePrompts(clientName()) };
   });
 
   server.setRequestHandler(GetPromptRequestSchema, async (request) => {
