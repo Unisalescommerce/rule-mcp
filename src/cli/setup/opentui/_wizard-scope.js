@@ -1,6 +1,9 @@
 /** The Scope step: where this install writes, and where inside the project. */
 
+import { existsSync, statSync } from "node:fs";
 import { resolve } from "node:path";
+
+import { expandPath, suggestPaths } from "../_path-complete.js";
 
 import { BACK, CANCEL } from "./_answers.js";
 import { projectConfigItems, scopeItems } from "./_items.js";
@@ -67,7 +70,22 @@ export async function askScope({ screen, answers }) {
       return typed;
     }
 
-    projects.push(resolve(String(typed)));
+    const candidate = expandPath(String(typed));
+    const complete = suggestPaths(String(typed));
+
+    // A path that does not name a folder is refused with the reason: the plan
+    // would otherwise write into a directory that does not exist.
+    if (!existsSync(candidate) || !statSync(candidate).isDirectory()) {
+      const offered = complete?.items?.length ? ` Suggestions: ${complete.items.map((item) => item.value).join(", ")}.` : "";
+
+      return screen.ask({
+        title: `Not a folder: ${String(typed)}`,
+        help: [`Type a path to an existing directory.${offered}`],
+        mode: "text",
+      });
+    }
+
+    projects.push(candidate);
   }
 
   answers.projects = projects;

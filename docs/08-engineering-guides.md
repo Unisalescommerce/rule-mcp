@@ -7,6 +7,32 @@ heavy inventories live in the generated census blocks of `docs/01-`,
 `docs/02-` and `docs/04-`. For the shallow entry, start with
 [Quick start](./07-quick-start.md).
 
+## What `init` and a project install write into a checkout
+
+`rule-mcp init` prepares a project and a project-scope install configures it; both
+touch the same git surface, and both are idempotent.
+
+| Step            | What it writes                                                                                                                              |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Numbering hooks | `.githooks/post-merge`, `.githooks/post-rewrite` - each runs `rule-mcp handoff land --quiet --commit`                                       |
+| Merge driver    | `git config merge.rule-mcp-index.driver <rule-mcp handoff merge-index %O %A %B %P>`                                                         |
+| Attributes      | `docs/adr/ADR.md` and `docs/handoff/HANDOFF.md` with `merge=rule-mcp-index`, in `.gitattributes` (shared) or `.git/info/attributes` (local) |
+| Rules refresh   | the marked block in `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` or `.cursorrules`, only in files that already carry it                            |
+| Project install | the host's MCP entry, plus the Claude extras, then the four rows above                                                                      |
+
+A file a step does not own is never created: the rules refresh reports `absent`
+for a file without the marker, and the git step reports `not a git repository`
+for a root that is not a checkout.
+
+## Handing ADRs off a trunk
+
+Off the trunk, `rule_tool_process_adr` writes `docs/adr/_pending/<slug>.md` and
+refers to the decision as `ADR <slug>` (ADR 196). `rule-mcp handoff land` numbers
+them on the trunk, in the order they were added, and rewrites every reference;
+`handoff merge-index` is the merge driver that regenerates `ADR.md` and
+`HANDOFF.md` instead of merging them as text. `rule-mcp handoff doctor` reports
+numbering problems, and `--fix` regenerates the indexes.
+
 ## The engineering loop
 
 The server is deterministic and LLM-free: tools route, scaffold, validate,
