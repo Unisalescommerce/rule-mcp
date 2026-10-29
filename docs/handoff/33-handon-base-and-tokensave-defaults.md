@@ -1,7 +1,7 @@
 # 33: Handon stops inventing next moves, tokensave follows the project
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `76893d30..f863a08b` (6 commits, this handoff excluded)
+- **Commit range**: `76893d30..1a0c1a0a` (7 commits, this handoff excluded)
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits in the whole feature range: 2
 - **Date**: 2026-10-28
 
@@ -27,6 +27,7 @@
 
 - pending: `docs/adr/_pending/attribution-is-one-table-row-per-agent-and-an-undocumented-agent-is-left-alone.md`
 - pending: `docs/adr/_pending/derive-the-tokensave-switch-from-the-project-and-accept-on-autotrack-as-its-name.md`
+- pending: `docs/adr/_pending/uninstall-reclaims-the-configuration-it-wrote-after-asking.md`
 - both land with numbers on trunk (`rule-mcp handoff land`); do not cite a number for either before that.
 
 ## Left out / next
