@@ -9,15 +9,19 @@
  * collect `written` for the manifest and `projects.json` (ADR 193).
  */
 
-import { existsSync, rmSync } from "node:fs";
+import { join } from "node:path";
 
 import { readText, writeText } from "./_paths.js";
+import { installClaudeProjectExtras } from "./_claude-project.js";
+
+export { installClaudeProjectExtras } from "./_claude-project.js";
 import { commandConfig } from "./_env-command.js";
 import { tokensaveProjectEnv } from "./_env-tokensave.js";
-import { removeHostServer, upsertHostServer } from "./_host-formats.js";
+import { upsertHostServer } from "./_host-formats.js";
 import { PROJECT_HOSTS, projectHostFile, projectHostFormat, projectHostLocalFile } from "./_project-hosts.data.js";
 
-/** Portable shared project entry: no absolute paths, no env. */
+
+/** Portable shared project entry: no absolute paths, no machine environment. */
 export function sharedServerConfig() {
   return { command: "rule-mcp", args: ["serve"] };
 }
@@ -97,50 +101,12 @@ export function installProjectHost({ agent, projectRoot, projectConfig = "shared
 
   writeText({ file, content, dryRun });
 
-  return { written: [file] };
+  // Claude reads its rules, commands and hooks from the project too, and a
+  // project install that wrote only the MCP entry left a server nobody could
+  // ask a question of.
+  const extras = agent === "claude" ? installClaudeProjectExtras({ projectRoot, projectConfig, entrypoint, dryRun }) : [];
+
+  return { written: [file, ...extras] };
 }
 
-/**
- * Remove the MCP server from one host's project config.
- *
- * Prefers `written` paths from the manifest when provided; otherwise resolves
- * from the project table.
- *
- * @param {{ agent: string, projectRoot: string, projectConfig?: "shared"|"local", written?: string[], dryRun?: boolean }} options
- * @returns {{ written: string[] }}
- */
-export function uninstallProjectHost({ agent, projectRoot, projectConfig = "shared", written, dryRun = false } = {}) {
-  const format = projectHostFormat(agent);
-
-  if (!format) {
-    throw new Error(`"${agent}" has no project config`);
-  }
-
-  const files = written?.length ? written : [targetFile(agent, projectRoot, projectConfig)];
-  const touched = [];
-
-  for (const file of files) {
-    const content = removeHostServer(format, readText(file));
-
-    if (content === null) {
-      throw new Error(`Refused to overwrite unreadable project config at ${file}`);
-    }
-
-    // An entry was the whole file: what is left is an empty document, and a
-    // project tree should not keep one. Any other server or key keeps the file
-    // alive, so only a file the install itself emptied is removed.
-    if (content.trim() === "") {
-      if (!dryRun && existsSync(file)) {
-        rmSync(file, { force: true });
-      }
-
-      touched.push(file);
-      continue;
-    }
-
-    writeText({ file, content, dryRun });
-    touched.push(file);
-  }
-
-  return { written: touched };
-}
+export { uninstallProjectHost } from "./_uninstall-project.js";
