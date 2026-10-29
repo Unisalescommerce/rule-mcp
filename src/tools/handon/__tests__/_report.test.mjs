@@ -13,6 +13,7 @@ test("the report separates what holds from what changed", () => {
 
 test("the report is smaller than the handoff it read", () => {
   const source = readFileSync(join(fixture.root, fixture.handoff), "utf8");
+
   assert.ok(report.text.length < source.length, `report ${report.text.length} chars vs handoff ${source.length}`);
 });
 
@@ -40,6 +41,7 @@ ${"Narrative a resuming reader already lived through, which is most of what a ha
 `;
   write(fixture.root, "docs/handoff/09-long.md", long);
   const verified = handon({ projectDir: fixture.root, file: "docs/handoff/09-long.md" });
+
   rmSync(join(fixture.root, "docs/handoff/09-long.md"));
 
   assert.ok(verified.text.length < long.length / 2, `report ${verified.text.length} chars vs handoff ${long.length}: a handon should be a fraction, not a trim`);
@@ -47,7 +49,12 @@ ${"Narrative a resuming reader already lived through, which is most of what a ha
 });
 
 test("a file path is not mistaken for a branch, and a glob is not a file", () => {
-  const own = handon({ projectDir: "." });
+  // This read `.`, the repository itself, and handon sweeps completed plans into
+  // ADRs: the assertion was read-only in intent and destructive in fact, and one
+  // run archived a finished plan out of this very tree. The claims are the same
+  // either way, so the handoff is written to the fixture instead.
+  write(fixture.root, "docs/handoff/05-parsing.md", "# Handoff 05: parsing\n\n**Branch:** `main`\n\n## Files\n- `src/tools/handon/_report.js`\n- `src/*.mjs`\n");
+  const own = handon({ projectDir: fixture.root, file: "docs/handoff/05-parsing.md" });
   const branches = own.claims.filter((claim) => claim.kind === "branch").map((claim) => claim.value);
   assert.ok(
     branches.every((value) => !value.endsWith(".mjs") && !value.endsWith(".js")),
@@ -58,16 +65,29 @@ test("a file path is not mistaken for a branch, and a glob is not a file", () =>
     files.every((value) => !value.includes("*")),
     `a glob was verified as a path: ${files.join(", ")}`,
   );
+  rmSync(join(fixture.root, "docs/handoff/05-parsing.md"));
+});
+
+test("a read-only handon on this repository writes nothing", () => {
+  const before = snapshot(process.cwd());
+
+  // `closeout: false`, because the sweep is a write by design: a suite that ran
+  // it against this checkout archived a finished plan out of this very tree.
+  // What this pins is the read path, which must never move anything.
+  handon({ projectDir: ".", closeout: false });
+  assert.equal(snapshot(process.cwd()), before, "a test run must not move the working tree it runs in");
 });
 
 test("nothing on disk moves", () => {
   const before = snapshot(fixture.root);
+
   handon({ projectDir: fixture.root });
   assert.equal(snapshot(fixture.root), before, "handon wrote to the working tree");
 });
 
 test("--list names every handoff without verifying any", () => {
   const listed = handon({ projectDir: fixture.root, list: true });
+
   assert.ok(listed.text.includes("07-fixture-session.md"));
   assert.equal(listed.claims.length, 0, "listing verifies nothing");
 });
@@ -75,6 +95,7 @@ test("--list names every handoff without verifying any", () => {
 test("a chosen file overrides the newest", () => {
   write(fixture.root, "docs/handoff/02-older.md", "# Handoff 02: older\n\n**Branch:** `main`\n");
   const chosen = handon({ projectDir: fixture.root, file: "docs/handoff/02-older.md" });
+
   assert.equal(chosen.source, "docs/handoff/02-older.md");
   rmSync(join(fixture.root, "docs/handoff/02-older.md"));
 });
@@ -82,6 +103,7 @@ test("a chosen file overrides the newest", () => {
 test("a malformed handoff reports what parsed and what did not", () => {
   write(fixture.root, "docs/handoff/99-malformed.md", "# Notes\n\nSome prose with no branch, no range, no paths.\n");
   const partial = handon({ projectDir: fixture.root, file: "docs/handoff/99-malformed.md" });
+
   assert.ok(partial.text.includes("Could not parse"), "the report says what it failed to find");
   assert.ok(partial.text.includes("branch"), "and names the missing claim");
   rmSync(join(fixture.root, "docs/handoff/99-malformed.md"));
