@@ -1,6 +1,6 @@
 # Port plan: ADR policy, project installs, features, host paths
 
-Status: `in-progress`
+Status: `done` - every step is closed; what a step changed is stated in the step itself.
 Notes: outside the skills graph: this plan covers repository policy and the installer, not skills, so
 it is not a node in `docs/plans/skills/skills-plan.md` and is tracked on its own.
 
@@ -213,7 +213,8 @@ project unless the install is project-scoped.
    leaves its file byte-identical; a shared project install writes no attribution; a TOML row and a
    JSON row both round-trip.
 5. ADR when it lands: attribution is per agent and table-driven, and an undocumented agent is left
-   alone rather than guessed.
+   alone rather than guessed. One item changed while landing: no documented row lives in TOML, so the
+   TOML round-trip case has nothing to exercise and no TOML writer was written for it.
 6. Commit: `feat(setup): own attribution per agent instead of for Claude Code alone`.
 
 ### Step 8 - Project-scope install (slice A DONE: table + writer + written[])
@@ -279,9 +280,11 @@ project unless the install is project-scoped.
 9. [x] Wizard: a Scope step (global / project), a project list with the cwd offered, `p` to type a
        path, then a Project config step (shared / local). `_wizard-scope.js` asks the three, `_items.js`
        carries the rows, and the plan switches to `buildProjectInstallPlan` when the answer is project.
-10. [~] One test file per concern: hosts table, Claude project, membership, record, git, scope; each
-        under the 150-line cap. `_project-command.test.mjs` (membership) and `_update-reapply.test.mjs`
-        (the update walk) exist; the Claude-project, git and scope files come with their items.
+10. [x] One test file per concern, each under the size cap: `_project-hosts.test.mjs` (hosts table),
+        `_claude-project-extras.test.mjs` (Claude project), `_project-command.test.mjs` (membership),
+        `_plan-project.test.mjs` and `_projects.test.mjs` (the record), `_task-git.test.mjs` (git),
+        `_wizard-scope.test.mjs` with `_path-accept.test.mjs` and `_widget-path.test.mjs` (scope and the
+        path field), and `_update-reapply.test.mjs` (the update walk).
 11. ADR: a project-scope install writes only into the chosen projects.
 12. Commit: `feat(setup): install into chosen projects`.
 
@@ -325,7 +328,8 @@ text forever.
 2. `src/cli/installers/_rules-project.js`: `refreshProjectRules(project, { dryRun })` over
    `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, `.cursorrules`. It touches only files that already carry
    the marker, using the same strip-and-append the global writer uses.
-3. A `projectRulesTask({ project })` step in every project install, before the git step.
+3. A `projectRulesTask` step in every project install, before the git step. The step id is
+   `project-rules:<root>`: a plan's ids are its ledger, and the root makes two checkouts distinguishable.
 4. `init`: call it and print a "Rules block:" line.
 5. Commit: `feat(setup): refresh an existing project rules block on init and project installs`.
 
@@ -380,9 +384,10 @@ Shared files: none: outside the skills graph
 - [x] Step 7 - Agent attribution: the table, the writer, `setup --attribution`, its tests
       (landed 2026-10-29: `_attribution.data.js` with 23 rows, 2 documented; `applyAttribution`;
       `setup --attribution <keep|hide>` + `--attribution-agent`; the wizard asks once).
-- [ ] Step 8 - leftovers: `rule-mcp project add|remove` (done), the `update` walk (done), the Claude
-      extras in project scope (done). Still open: per-client prompt suppression (item 4, blocked on a
-      consumer). Step 8's other items are done.
+- [x] Step 8 - project scope, every item: `rule-mcp project add|remove`, the `update` walk, the Claude
+      extras in project scope, the per-project git task, and per-client prompt suppression
+      (`RULE_MCP_NO_MCP_PROMPTS`, with the client from `RULE_MCP_CLIENT` or the handshake - the consumer
+      was `promptsSuppressed` all along; what was missing was the client's identity).
 - [x] Step 9 - Path completion in the wizard (`_path-complete.js`; the typed path is refused when it is not a folder, with its suggestions quoted).
 - [x] Step 10 - Refresh an existing project rules block (`_rules-project.js`, `projectRulesTask`, `init`).
 - [x] Step 11 - Documentation (`03`, `04`, `05`, `08` sections; `13-cli.md` from the census).
