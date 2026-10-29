@@ -1,7 +1,7 @@
 # 33: Handon stops inventing next moves, tokensave follows the project
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `76893d30..8a147b5b` (28 commits, this handoff excluded)
+- **Commit range**: `76893d30..9a4898e7` (30 commits, this handoff excluded)
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits in the whole feature range: 2
 - **Date**: 2026-10-28
 
@@ -67,3 +67,13 @@ MCP guardrail tools answer with a self-update refusal in this environment; use e
 Every commit is type(scope): subject; the commit-msg hook rejects a scope-less message.
 Do not push.
 ```
+
+## After the last window
+
+- **Guardrails are green** (`9a4898e7`). `project-circular` and `project-dead-code` reported
+  artefacts, not defects: a JSDoc type reference is a module name in a comment that the graph reads
+  as an import, and a function reached through a table, a run-time import or a test has no edge.
+  Both checks now filter from the source (`_circular.js`, `_dead-code.js`, `_source-comments.js`)
+  and both take the project root through `evaluate`. The cycles that were real are gone: the
+  manifest primitives, the launchd label, the resume record and the target resolution each moved to
+  a leaf both sides import. `rule_tool_check`: 4 passing, 0 failed. Both suites: 743 and 2789, 0 fail.
