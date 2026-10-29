@@ -16,12 +16,15 @@ import test from "node:test";
 
 import { ensureGlobalShim, launcher } from "../_shim-apply.js";
 
+/** A runtime root with no copy in it, so the launcher has to fall through. */
+const emptyRoot = () => mkdtempSync(join(tmpdir(), "rule-mcp-shim-root-"));
+
 /** Write a launcher for a target and run it the way the shell would. */
 function run(localBin) {
   const dir = mkdtempSync(join(tmpdir(), "rule-mcp-shim-"));
   const shim = join(dir, "rule-mcp");
 
-  writeFileSync(shim, launcher(localBin));
+  writeFileSync(shim, launcher(localBin, { root: emptyRoot() }));
   chmodSync(shim, 0o755);
 
   return spawnSync("sh", [shim], { encoding: "utf8" });
@@ -34,8 +37,8 @@ test("a missing target exits 127 and names the path", () => {
   assert.equal(result.status, 127, "127 is `cannot execute`, which a hook can tell apart from a verdict");
   assert.match(result.stderr, /rule-mcp launcher:/u, "the message comes from the launcher, not from node");
   assert.ok(!/MODULE_NOT_FOUND|node:internal/u.test(result.stderr), "no stack trace reaches the reader");
-  assert.ok(result.stderr.includes(missing), "the message names the path that is missing");
-  assert.match(result.stderr, /pnpm setup/u, "and what to do about it");
+  assert.ok(result.stderr.includes(missing), "the message names the checkout it looked for");
+  assert.match(result.stderr, /rule-mcp setup/u, "and the command that repairs it");
 });
 
 test("a shim that runs but predates the target check is rewritten", () => {
@@ -68,14 +71,14 @@ test("a shim that runs but predates the target check is rewritten", () => {
 
     assert.equal(first.path, shim, "the sandbox is where the shim is written");
     assert.notEqual(second.status, "verified", "an old body is not verified just because it runs");
-    assert.match(readFileSync(shim, "utf8"), /launcher: \$target is missing/u, "the guard is what a refresh installs");
+    assert.match(readFileSync(shim, "utf8"), /rule-mcp launcher: cannot start\./u, "the resolution guard is what a refresh installs");
   } finally {
     process.env.PNPM_HOME = saved.PNPM_HOME ?? "";
     process.env.PATH = saved.PATH ?? "";
   }
 });
 
-test("the launcher still runs a target that exists", () => {
+test("the launcher still runs a checkout that exists", () => {
   const dir = mkdtempSync(join(tmpdir(), "rule-mcp-shim-ok-"));
   const target = join(dir, "ok.js");
 
