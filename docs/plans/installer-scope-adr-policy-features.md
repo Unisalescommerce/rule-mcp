@@ -249,11 +249,13 @@ project unless the install is project-scoped.
        full launcher and `RULE_MCP_ADR_POLICY` when set. A host with no local file throws
        "`<agent>` has no local project config: use --project-config shared". Manifest `hosts[].written`
        merges paths.
-3. Claude shared: the short instruction block in `CLAUDE.md`, the commands in `.claude/commands/`,
-   hooks and attribution in `.claude/settings.json` (`settings.local.json` for local). **Not done.**
+3. [x] Claude shared: the short instruction block in `CLAUDE.md`, the commands in `.claude/commands/`,
+       hooks and attribution in `.claude/settings.json` (`settings.local.json` for local).
+       `installClaudeProjectExtras` / `uninstallClaudeProjectExtras` in `_claude-project.js`, wired into
+       the project host install and removal; six tests in `_claude-project-extras.test.mjs`.
 4. Prompt suppression per client: `RULE_MCP_NO_MCP_PROMPTS` accepts `1` or a comma list of MCP
-   client names. A shared `.mcp.json` sets `claude-code`, because copilot and pi read the same file
-   and get no command files. **Not done.**
+   client names. **Not done**: nothing reads the variable yet, and writing it into a shared `.mcp.json`
+   before the server can answer "which client is this" would ship an inert env. The consumer comes first.
 5. [x] Setup: `--scope global|project`, `--project <path>` (repeatable), `--project-config local|shared`
        (ADR 193). A shared install is stdio only and writes nothing global (no skills, service or remember).
        Flag path only in this slice; wizard Scope UI stays item 9.
@@ -364,10 +366,9 @@ Shared files: none: outside the skills graph
 - [x] Step 7 - Agent attribution: the table, the writer, `setup --attribution`, its tests
       (landed 2026-10-29: `_attribution.data.js` with 23 rows, 2 documented; `applyAttribution`;
       `setup --attribution <keep|hide>` + `--attribution-agent`; the wizard asks once).
-- [ ] Step 8 - leftovers: `rule-mcp project add|remove` (done), the `update` walk (done), one test
-      file per concern (membership and update done). Still open: the Claude extras in project scope
-      (item 3), per-client prompt suppression (item 4), the numbering hooks per project (item 8), the
-      wizard Scope UI (item 9).
+- [ ] Step 8 - leftovers: `rule-mcp project add|remove` (done), the `update` walk (done), the Claude
+      extras in project scope (done). Still open: per-client prompt suppression (item 4, blocked on a
+      consumer), the numbering hooks per project (item 8) and the wizard Scope UI (item 9).
 - [ ] Step 9 - Path completion in the wizard.
 - [ ] Step 10 - Refresh an existing project rules block.
 - [ ] Step 11 - Documentation.
