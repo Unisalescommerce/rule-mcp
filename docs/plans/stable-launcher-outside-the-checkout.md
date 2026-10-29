@@ -107,15 +107,21 @@ this installer wrote, recorded in `~/.rule-mcp/launcher/installed.json`, not whe
 
 ### Phase 2 - resolution order in the launcher
 
-- [ ] Test first: the launcher matrix as shell tests, extending `_shim-launcher.test.mjs`: copy
-      present; copy broken and checkout present; both broken; pointer file unreadable.
-- [ ] `src/cli/setup/_shim-apply.js`: the launcher becomes a short resolution script. The exit codes
-      keep their meaning: `0` ran, `127` cannot run, anything else is the CLI's own.
-- [ ] `doctor` reports which target is live (`copy 1.0.0`, `checkout rel/v0.1.0`, `none`) and the
-      date it was installed, because "which binary am I talking to" is the question the incident
-      produced.
-- [ ] Acceptance: with the checkout on a branch that has no entry point, `rule-mcp --version`
-      answers from the copy, and the git hook validates instead of warning.
+- [x] Test first: the launcher matrix as shell tests in `_shim-resolution.test.mjs`, each one running
+      the generated script through `sh`: the copy answers first even when the checkout could; a copy
+      whose entry point is gone falls through to the checkout; an unreadable pointer is treated as no
+      pointer; neither exits 127 naming the copy, the pointer and the checkout plus the repair; the
+      target's exit code and arguments pass through unchanged.
+- [x] `src/cli/setup/_launcher-script.js`: the launcher is a resolution script - copy first from
+      `launcher/current`, the checkout second, 127 last. `_shim-apply.js` renders it with the runtime
+      root its install wrote, so a shim is current when it names *this* root.
+- [x] `doctor` reports which target is live (`Launcher: copy 0.1.0 (installed 2026-10-29)`, the
+      checkout path, or `none - run rule-mcp setup`), from `_launcher-live.js`, because "which binary am
+      I talking to" is the question the incident produced.
+- [x] Acceptance, run 2026-10-29 on this machine: with `bin/rule-mcp.js` moved aside - the incident,
+      reproduced - `rule-mcp --version` answers `0.1.0` and exits `0` from the copy. Before this phase
+      the same state was a node stack trace and exit 1, which the git hook read as a verdict. The hook
+      itself is unchanged since `d5301bba`: it probes `--version`, and that probe now succeeds.
 
 ### Phase 3 - the gates stop depending on a working tree
 
