@@ -1,7 +1,7 @@
 # 33: Handon stops inventing next moves, tokensave follows the project
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `76893d30..89cd917c` (26 commits, this handoff excluded)
+- **Commit range**: `76893d30..8a147b5b` (28 commits, this handoff excluded)
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits in the whole feature range: 2
 - **Date**: 2026-10-28
 
@@ -41,7 +41,7 @@ Handoff and ADR commits in the same window: `56156c50`, `a63a8403`, `0207ef09`, 
 - `rule_tool_check` and `rule_tool_structural` answer only with `rule-mcp self-update REFUSED - git remote ... is not allowed update source`. Guardrail checks ran through eslint and the local suites instead; the MCP-side structural declaration was never registered.
 - **The pre-existing failures this handoff listed are gone, except one theme.** Fixed and verified: bootstrap flag lists (`scripts/install.sh`, `install.ps1`, SHA256SUMS), the bare `feature` command having no action, `feature` missing from the zsh/bash/fish completions, the committed CLAUDE.md rules block, ADR numbering tests that ran against a non-repository, the seven self-guardrail findings plus the camelCase-barrel false positive, and a daemon test that used the real home and the fixed port 37999. Suites now: `pnpm test:installer` 722 tests, **0 fail**; `pnpm test:foundations` 2756 tests, **2 fail**.
 - **Both size tests are green.** Nine files that had grown past their ceiling (and five this window had grown) were split into named modules and `.fixture.mjs` files; five ratchet entries were deleted because those files now fit the cap, four ceilings came down, and the eight offenders that predate this window were baselined at their current size. Both suites are now green: `pnpm test:installer` 722 tests, 0 fail; `pnpm test:foundations` 2756 tests, 0 fail.
-- `rule-mcp fix` cannot converge its `js-style` pass on a one-line `return [ ... ]` inside a function: it emits `;;` and oscillates, so it reports the file and refuses to write it. Left alone rather than worked around; the file passes `rule_tool_check` and its tests.
+- **The style fixer no longer rewrites its own output** (`8a147b5b`). Three defects: the one-liner splitter matched a multi-line block whose body was one line and appended `;` to a body that already had one; the declaration opener counted `function`/`class` as `const`, so `const-top` inserted a blank line inside every function whose first statement was a return; and the chain ran once, so a pass fed the next round text it would change again. `applyJsStyle` now runs until the text stops moving, and the splitter skips string and comment ranges through `_literals.js`. `rule-mcp fix --dir .` reports nothing, three runs in a row.
 - `unicorn/no-asterisk-prefix-in-documentation-comments` fires across many files that predate this session (`src/tools/handon/`, `src/cli/installers/_env.js`, `src/cli/commands/_lifecycle.js`). Every new comment in this window is written without asterisk prefixes, so no debt was added; clearing the rest is a mechanical `eslint --fix` over files this session did not touch.
 - Plan `installer-scope-adr-policy-features.md` step 7 still needs `_attribution.data.js`, `_attribution.js`, `setup --attribution <keep|hide>`, `--attribution-agent <id>` and its table-driven tests; steps 8-11 are unchanged.
 - 2 merge commits (`e9d29e8e`, `df6ba117`) remain in the 336-commit feature range; linearize only with owner confirmation.
