@@ -85,11 +85,18 @@ this installer wrote, recorded in `~/.rule-mcp/launcher/installed.json`, not whe
       install of the same version is idempotent (`verified`, not a rewrite); a different version
       adds a directory and moves `current`; `installed.json` records version, source checkout and
       date.
-- [ ] `src/cli/setup/_launcher-install.js`: `packCheckout()`, `extractTo(version)`, `setCurrent()`,
-      `installedVersions()`. `pnpm pack` in a temp dir; `tar -xzf` through node, not a shell.
-- [ ] Measure the cost before committing to it: packed size, extracted size, and whether OpenTUI's
-      platform binary survives `pnpm pack` (it is an optional dependency, and an optional
-      dependency that is not packed is a launcher that cannot start).
+- [x] `src/cli/setup/_launcher-install.js` + `_launcher-store.js`: `installLauncher()` (deploy, record,
+      pointer, prune), `setCurrent()`, `currentVersion()`, `installedVersions()`, `probeCopy()`.
+      The mechanism changed with the measurement below: `pnpm deploy --prod --legacy`, not pack.
+- [x] **Measured 2026-10-29, and the measurement decided.** `pnpm pack` -> 1.2 MB packed, 6.8 MB
+      extracted, **cannot start**: `commander` is missing (no `node_modules` in a tarball) and
+      OpenTUI's `@opentui/core-darwin-arm64` is not packed at all, so the terminal UI would not run
+      either. `pnpm deploy --prod --legacy <dir>` -> **85 MB** (79 MB of it `node_modules`, the platform
+      binary included), and `bin/rule-mcp.js --version` answers `0.1.0` from it with no network.
+      A copy that cannot run is not a copy, so the copy is a deploy. The cost is now a number the
+      install prints, and one version is kept: `docs/plans` risk row "the platform binary is not in
+      the tarball" resolved as *not in the tarball, in the deploy*. The integration check
+      `_launcher-install.integration.test.mjs` keeps the answer honest (`RULE_MCP_LAUNCHER_INTEGRATION=1`).
 - [ ] Acceptance: an install on this machine leaves `~/.rule-mcp/launcher/1.0.0/bin/rule-mcp.js`
       runnable with `--version`, and the repository's own `node_modules` untouched.
 
