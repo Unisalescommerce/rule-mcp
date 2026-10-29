@@ -19,6 +19,7 @@ _rule_mcp_commands() {
     'doctor:Run system health check'
     'skills:Manage skills (reload)'
     'adr:Manage Architecture Decision Records'
+    'feature:List or change user-facing feature switches'
     'handoff:Generate LLM context handoff summary'
     'handon:Verify the last handoff against the repo'
     'fix:Validate and auto-fix project file tree'
@@ -83,6 +84,15 @@ _rule_mcp_adr_actions() {
   _describe 'action' sub
 }
 
+_rule_mcp_feature_actions() {
+  local -a sub=(
+    'list:Show every feature and its current level'
+    'enable:Turn a feature on, or set an explicit level'
+    'disable:Turn a feature off'
+  )
+  _describe 'action' sub
+}
+
 _rule_mcp() {
   local curcontext="$curcontext" state line
   typeset -A opt_args
@@ -104,6 +114,7 @@ _rule_mcp() {
         skills)     _rule_mcp_skills_actions ;;
         adr)        _rule_mcp_adr_actions ;;
         install|uninstall|setup) _rule_mcp_options ;;
+        feature)    _rule_mcp_feature_actions ;;
         handoff|serve|config|doctor|completions|help) _rule_mcp_options ;;
         *)          _rule_mcp_options ;;
       esac

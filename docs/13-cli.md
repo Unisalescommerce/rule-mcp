@@ -326,7 +326,7 @@ rule-mcp handoff subcommand args
 
 | Argument     | Default | Description                               |
 | ------------ | ------- | ----------------------------------------- |
-| `subcommand` | -       | doctor \\                                 | land \\ | merge-index — repair numbering, number pending ADRs, or regenerate a merge conflict index |
+| `subcommand` | -       | doctor \\                                 | land \\ | merge-index - repair numbering, number pending ADRs, or regenerate a merge conflict index |
 | `args`       | -       | merge-index receives %O %A %B %P from git |
 
 **Options**

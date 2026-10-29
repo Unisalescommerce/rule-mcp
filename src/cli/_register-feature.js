@@ -8,7 +8,12 @@ import { Option } from "commander";
 
 /** Register the `feature` command group. */
 export function registerFeatureCommand(program) {
-  const feature = program.command("feature").description("List or change user-facing feature switches");
+  const feature = program
+    .command("feature")
+    .description("List or change user-facing feature switches")
+    .action(function featureAction(options, command) {
+      command.outputHelp();
+    });
 
   feature
     .command("list")
