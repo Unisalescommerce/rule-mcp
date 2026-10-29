@@ -16,6 +16,11 @@ test("a complete single-line declaration does not continue", () => {
 
 test("the declaration opener matches the shapes the fixer extends", () => {
   assert.equal(DECL.test("const a = 1;"), true);
-  assert.equal(DECL.test("  export function f() {"), true);
+  assert.equal(DECL.test("  export const a = 1;"), true);
   assert.equal(DECL.test("a = 1;"), false);
+  // A function opener is not a declaration group: read as one, the pass put a
+  // blank line inside every function whose first statement was a return.
+  assert.equal(DECL.test("  export function f() {"), false);
+  assert.equal(DECL.test("function f() {"), false);
+  assert.equal(DECL.test("class A {"), false);
 });
