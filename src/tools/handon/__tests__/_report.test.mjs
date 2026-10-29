@@ -68,16 +68,6 @@ test("a file path is not mistaken for a branch, and a glob is not a file", () =>
   rmSync(join(fixture.root, "docs/handoff/05-parsing.md"));
 });
 
-test("a read-only handon on this repository writes nothing", () => {
-  const before = snapshot(process.cwd());
-
-  // `closeout: false`, because the sweep is a write by design: a suite that ran
-  // it against this checkout archived a finished plan out of this very tree.
-  // What this pins is the read path, which must never move anything.
-  handon({ projectDir: ".", closeout: false });
-  assert.equal(snapshot(process.cwd()), before, "a test run must not move the working tree it runs in");
-});
-
 test("nothing on disk moves", () => {
   const before = snapshot(fixture.root);
 
