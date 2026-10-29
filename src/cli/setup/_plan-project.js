@@ -10,6 +10,7 @@ import { resolve } from "node:path";
 import { listProjects } from "../install/_projects.js";
 import { projectAgentInstallTask, projectAgentRemovalTask, projectAgents, projectForgetTask, refreshTasksFromStore, runtimeHomeTask } from "./_task-project.js";
 import { projectGitRemovalTask, projectGitTask } from "./_task-git.js";
+import { projectRulesTask } from "./_task-rules.js";
 
 /**
  * Build the flag-driven project-scope install plan.
@@ -36,7 +37,7 @@ export function buildProjectInstallPlan({ agents = [], projects = [], projectCon
 
     // One task per checkout: the hooks and the driver belong to the repository,
     // not to each agent installed into it.
-    plan.push(projectGitTask(projectRoot, projectConfig));
+    plan.push(projectRulesTask(projectRoot), projectGitTask(projectRoot, projectConfig));
   }
 
   return plan;

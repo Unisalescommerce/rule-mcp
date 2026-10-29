@@ -109,4 +109,4 @@ const geminiCommand = () => ['description = "Route coding work through rule-mcp"
 const copilotAgent = () =>
   ["---", "name: rule-mcp", "description: Route work through rule-mcp MCP skills and enforce validation before completion.", "---", "", commandBody(), ""].join("\n");
 
-export { upsertTomlBlock, removeTomlBlock, appendInstruction, removeInstruction, commandTemplate, commandBody, geminiCommand, copilotAgent };
+export { upsertTomlBlock, removeTomlBlock, appendInstruction, carriesBlock, removeInstruction, commandTemplate, commandBody, geminiCommand, copilotAgent };

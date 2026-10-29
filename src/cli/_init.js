@@ -23,7 +23,8 @@
  * @see module:core/commit - the git governance step
  */
 
-import { execFileSync } from "node:child_process";
+import { refreshProjectRulesSafely } from "./_init-rules.js";
+import { initTokensave } from "./_init-tokensave.js";
 import { mkdirSync } from "node:fs";
 import { installGitGovernance } from "../core/commit/index.js";
 import { detectReleaseTooling, renderInitExtras, unpinnedDependencies } from "../core/release/index.js";
@@ -31,25 +32,6 @@ import { hostLevels } from "./install/_manifest.js";
 import { reasonOf } from "../core/tokensave/_client.js";
 import { probeFilesystem } from "../core/tokensave/_probe.js";
 import { findProjectRoot, getProjectPaths } from "./paths/index.js";
-
-/**
- * Find the tokensave binary, or nothing.
- *
- * @returns {string|undefined}
- */
-function findTokensave() {
-  try {
-    return (
-      execFileSync("command", ["-v", "tokensave"], {
-        encoding: "utf8",
-        shell: "/bin/sh",
-        stdio: ["ignore", "pipe", "ignore"],
-      }).trim() || undefined
-    );
-  } catch {
-    return;
-  }
-}
 
 /**
  * Prepare a project directory.
@@ -73,35 +55,7 @@ export function initProject(options = {}) {
     created = false;
   }
 
-  let tokensave;
-
-  if (options.tokensave !== false) {
-    const binary = (options.tokensaveBinary ?? findTokensave)();
-
-    if (binary) {
-      const run = options.run ?? ((command, args, runOptions) => execFileSync(command, args, { ...runOptions, stdio: "ignore" }));
-      // A graph that already exists is the correct state, and `init` says so on
-      // stderr - which `stdio: "ignore"` does not capture. The probe answers the
-      // same question from the filesystem, and the report says `existing`
-      // instead of dressing a healthy project as a failure.
-      const probe = options.probe ?? probeFilesystem;
-
-      if (probe(projectDir).available) {
-        tokensave = "existing";
-      } else {
-        try {
-          run(binary, ["init"], { cwd: projectDir });
-          tokensave = "initialized";
-        } catch (error) {
-          const reason = reasonOf(error);
-
-          tokensave = /already initiali[sz]ed/i.test(reason) ? "existing" : `failed: ${reason.split("\n", 1)[0]}`;
-        }
-      }
-    } else {
-      tokensave = "not installed";
-    }
-  }
+  const tokensave = options.tokensave === false ? undefined : initTokensave(projectDir, options);
 
   let governance;
 
@@ -113,9 +67,11 @@ export function initProject(options = {}) {
     }
   }
 
+  const rules = options.rules === false ? undefined : refreshProjectRulesSafely(projectDir, options);
+
   const unpinned = unpinnedDependencies(projectDir);
 
-  return { projectDir, dir, created, tokensave, governance, release: detectReleaseTooling(projectDir), dependencies: { unpinned } };
+  return { projectDir, dir, created, tokensave, governance, rules, release: detectReleaseTooling(projectDir), dependencies: { unpinned } };
 }
 
 /**
@@ -126,6 +82,12 @@ export function initProject(options = {}) {
  */
 export function renderInit(result) {
   const lines = [`Project:      ${result.projectDir}`, `Recorder dir: ${result.dir}${result.created ? "" : " (could not be created)"}`];
+
+  if (result.rules) {
+    const refreshed = result.rules.filter((entry) => entry.status === "refreshed" || entry.status === "planned");
+
+    lines.push(`Rules block:  ${refreshed.length > 0 ? refreshed.map((entry) => `${entry.status} ${entry.file}`).join(", ") : "current"}`);
+  }
 
   if (result.tokensave) {
     lines.push(`tokensave:    ${result.tokensave}`);

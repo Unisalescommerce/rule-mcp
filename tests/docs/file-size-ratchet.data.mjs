@@ -27,7 +27,6 @@ export const FILE_SIZE_RATCHET = new Map([
   ["skills/rule-frontend-template-engine/assets/template-engine/tests/inheritance.test.js", 261],
   ["skills/rule-frontend-template-engine/assets/template-engine/tests/renderer.test.js", 283],
   ["src/cli/__tests__/_register-handoff-branches.test.mjs", 157],
-  ["src/cli/_init.js", 165],
   ["src/cli/commands/__tests__/_targets-sync.test.mjs", 166],
   ["src/cli/install/_hook-files.js", 223],
   ["src/cli/install/_hook-writers.js", 206],
