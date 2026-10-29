@@ -375,9 +375,9 @@ Shared files: none: outside the skills graph
 - [ ] Step 8 - leftovers: `rule-mcp project add|remove` (done), the `update` walk (done), the Claude
       extras in project scope (done). Still open: per-client prompt suppression (item 4, blocked on a
       consumer). Step 8's other items are done.
-- [ ] Step 9 - Path completion in the wizard.
-- [ ] Step 10 - Refresh an existing project rules block.
-- [ ] Step 11 - Documentation.
+- [x] Step 9 - Path completion in the wizard (`_path-complete.js`; the typed path is refused when it is not a folder, with its suggestions quoted).
+- [x] Step 10 - Refresh an existing project rules block (`_rules-project.js`, `projectRulesTask`, `init`).
+- [x] Step 11 - Documentation (`03`, `04`, `05`, `08` sections; `13-cli.md` from the census).
 
 ## Diff audit (2026-10-28)
 

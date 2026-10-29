@@ -3,6 +3,64 @@
 How to operate this server: the tool surface in one pointer, then plugins,
 release and troubleshooting. Installing it is [01 getting started](./01-getting-started.md).
 
+## Install into chosen projects
+
+`rule-mcp setup --scope project --project <path> [--project-config shared|local]`
+writes only into the project trees it is given, and records each one in
+`~/.rule-mcp/state/projects.json` (ADR 193). `rule-mcp project add [path]` joins
+another project, reusing the agents and the config kind of the most recently
+recorded one; `rule-mcp project remove [path]` takes every config back and
+forgets the root.
+
+A **shared** entry is `{ "command": "rule-mcp", "args": ["serve"] }` with no
+machine path, so a teammate's clone works. A **local** entry carries the full
+launcher and the switches the machine implies (the project's tokensave default).
+`--project-config local` is only available for a host that documents a private
+project file; a host without one refuses with "has no local project config".
+
+A project with a Claude in it also gets the three files a global Claude install
+writes, cut down to the project root: the rules block in `CLAUDE.md`, the
+`/rule-*` commands in `.claude/commands/`, and the guard hooks in
+`.claude/settings.json` (`.claude/settings.local.json` for a local config).
+
+Every project also gets the git side of ADR numbering: `.githooks/post-merge` and
+`post-rewrite` run `rule-mcp handoff land --quiet --commit`, the
+`rule-mcp-index` merge driver regenerates `ADR.md` and `HANDOFF.md` instead of
+merging them as text, and the attributes go in `.gitattributes` (shared) or
+`.git/info/attributes` (local). A root that is not a git repository is reported
+as skipped: a shared `.mcp.json` is useful outside git too.
+
+## Features
+
+`rule-mcp feature list | enable <id> [--level <name>] | disable <id>` owns every
+user-facing switch. The catalog is `src/core/runtime/features/_catalog.data.js`
+and each level is an env patch: `adr` (on|off), `telemetry` (full|anonymous|off),
+`update` (auto|notify|off), `tokensave` (on|autotrack|off), `minimal-tools`
+(off|on). `on+autotrack` is accepted as another name for `autotrack`.
+
+A feature's default is a constant except for `tokensave`: with no choice
+recorded, the level follows the project's own `.tokensave/`, and a project-scope
+install writes that choice into the project's entry.
+
+## Agent attribution
+
+Attribution is a table with one row per agent, not a switch with a vendor name on
+it (`src/cli/installers/_attribution.data.js`). A row carries a mechanism
+(`commit-trailer`, `pr-body`, `tool-signature`, `none`), the file and key that
+agent reads, the values for keep and hide, and the page the row came from.
+
+Two rows are documented today: Claude Code (`attribution` in
+`~/.claude/settings.json`, set to `false` to hide the trailer and the PR line) and
+Gemini, whose configuration page names no attribution control at all - the `none`
+row. The other twenty-one agents are `unverified`: no values, no writer, and the
+install prints `<agent>: attribution not documented here`. A row is added only
+with a cited page.
+
+`rule-mcp setup --attribution <keep|hide>` applies to the documented agents,
+`--attribution-agent <id>` narrows it, and the wizard asks once. Invariants: a
+value the user set stays, `keep` removes only the marker an install wrote, a file
+the writer cannot parse is refused.
+
 ## Tool and prompt reference
 
 The tool, prompt and resource lists are generated from the running server by

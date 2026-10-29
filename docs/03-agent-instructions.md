@@ -2,6 +2,40 @@
 
 Use the rule-mcp workflow for every coding task.
 
+## Where the rules live
+
+An install writes two marked blocks into an agent's instruction file: the short
+routing block (`<!-- rule-mcp -->`) and the enforced workflow
+(`<!-- rule-mcp-rules -->`). A global install writes them into every agent it
+configures. A project keeps its own copy: the project install writes them into
+the project's `CLAUDE.md`, and `rule-mcp init` and every project install
+**refresh** a block the project already carries - replacing the marked block and
+keeping the rest of the file. A project without a block is left alone, and no
+file is created for it.
+
+The refresh is why a committed block does not rot: without it, the text a project
+pinned at install time stays pinned while the server's rules move on.
+
+## ADR policy
+
+Which decisions get an ADR, and when, is one switch: `RULE_MCP_ADR_POLICY`.
+
+| Level      | When the ADR is written                                          |
+| ---------- | ---------------------------------------------------------------- |
+| `full`     | As the decision is made, inside the task                          |
+| `handoff`  | At the handoff, from the session's own record (the default)       |
+| `on-demand`| Only when the caller asks with `rule_tool_process_adr`            |
+
+`RULE_MCP_NO_ADR` is the blunt instrument: no ADR tool is exposed at all. The
+`adr` feature level writes the same key.
+
+## Prompts in a project
+
+A shared `.mcp.json` is one file that several clients read, so a switch written
+there applies to all of them. The server's MCP prompts stay out of a client's `/`
+menu when the client is named in `RULE_MCP_NO_MCP_PROMPTS`; the shared entry does
+not set it today, because the server cannot tell which client it is serving.
+
 ## Every prompt
 
 Three rules ride on every prompt, injected by the harness hooks the installer writes
