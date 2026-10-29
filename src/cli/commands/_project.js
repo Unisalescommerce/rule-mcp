@@ -18,6 +18,7 @@ import { resolve } from "node:path";
 import { listProjects } from "../install/_projects.js";
 import { PROJECT_HOST_IDS } from "../installers/_project-hosts.data.js";
 import { projectAgentInstallTask, projectAgentRemovalTask, projectForgetTask, projectAgents, runtimeHomeTask } from "../setup/_task-project.js";
+import { projectGitRemovalTask, projectGitTask } from "../setup/_task-git.js";
 import { runPlan } from "../setup/_run-plan.js";
 
 /** The most recently recorded project, or undefined when the store is empty. */
@@ -56,7 +57,11 @@ Configure one project root, recording it.
 export async function projectAdd({ path = process.cwd(), agents, projectConfig, dryRun = false } = {}) {
   const root = resolve(path);
   const chosen = projectDefaults({ agents, projectConfig });
-  const plan = [runtimeHomeTask(), ...chosen.agents.map((agent) => projectAgentInstallTask(agent, root, chosen.projectConfig))];
+  const plan = [
+    runtimeHomeTask(),
+    ...chosen.agents.map((agent) => projectAgentInstallTask(agent, root, chosen.projectConfig)),
+    projectGitTask(root, chosen.projectConfig),
+  ];
   const results = await runPlan(plan, { dryRun });
 
   return { root, dryRun, projectConfig: chosen.projectConfig, agents: chosen.agents, results };
@@ -81,6 +86,7 @@ export async function projectRemove({ path = process.cwd(), dryRun = false } = {
     ...(recorded.agents ?? []).map((agent) =>
       projectAgentRemovalTask(agent, root, recorded.projectConfig ?? "shared", recorded.written?.[agent]),
     ),
+    projectGitRemovalTask(root),
     projectForgetTask(root),
   ];
   const results = await runPlan(plan, { dryRun });

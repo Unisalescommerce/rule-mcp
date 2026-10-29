@@ -267,7 +267,12 @@ project unless the install is project-scoped.
        An entry that was the whole file now takes the file with it, so a project tree is not left
        with an empty document.
    `/rule-init` adds its own project when the install is per project.
-8. Each project also gets the numbering hooks and merge driver from step 5.
+8. [x] Each project also gets the numbering hooks and merge driver from step 5.
+       `_task-git.js`: `.githooks/post-merge` and `post-rewrite` run
+       `rule-mcp handoff land --quiet --commit`, the `rule-mcp-index` driver is configured, and the
+       attributes are tracked for a shared install or private (`.git/info/attributes`) for a local one.
+       One task per checkout, wired into the install, uninstall and `project add|remove` plans; a root
+       that is not a repository is reported, not failed.
 9. [x] Wizard: a Scope step (global / project), a project list with the cwd offered, `p` to type a
        path, then a Project config step (shared / local). `_wizard-scope.js` asks the three, `_items.js`
        carries the rows, and the plan switches to `buildProjectInstallPlan` when the answer is project.
@@ -369,7 +374,7 @@ Shared files: none: outside the skills graph
       `setup --attribution <keep|hide>` + `--attribution-agent`; the wizard asks once).
 - [ ] Step 8 - leftovers: `rule-mcp project add|remove` (done), the `update` walk (done), the Claude
       extras in project scope (done). Still open: per-client prompt suppression (item 4, blocked on a
-      consumer) and the numbering hooks per project (item 8).
+      consumer). Step 8's other items are done.
 - [ ] Step 9 - Path completion in the wizard.
 - [ ] Step 10 - Refresh an existing project rules block.
 - [ ] Step 11 - Documentation.
