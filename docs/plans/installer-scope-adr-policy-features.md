@@ -253,9 +253,12 @@ project unless the install is project-scoped.
        hooks and attribution in `.claude/settings.json` (`settings.local.json` for local).
        `installClaudeProjectExtras` / `uninstallClaudeProjectExtras` in `_claude-project.js`, wired into
        the project host install and removal; six tests in `_claude-project-extras.test.mjs`.
-4. Prompt suppression per client: `RULE_MCP_NO_MCP_PROMPTS` accepts `1` or a comma list of MCP
-   client names. **Not done**: nothing reads the variable yet, and writing it into a shared `.mcp.json`
-   before the server can answer "which client is this" would ship an inert env. The consumer comes first.
+4. [x] Prompt suppression per client: `RULE_MCP_NO_MCP_PROMPTS` accepts `1` or a comma list of MCP
+       client names, matched against `RULE_MCP_CLIENT` or the handshake's `clientInfo.name`
+       (`_client-suppression.js`, wired into `listActivePrompts`). The installer writes no policy of
+       its own into a shared entry. The telemetry level moved off the overloaded key onto
+       `RULE_MCP_NO_PROMPT_TEXT`. See
+       `docs/adr/_pending/let-the-environment-name-the-client-and-the-handshake-answer-when-it-does-not.md`.
 5. [x] Setup: `--scope global|project`, `--project <path>` (repeatable), `--project-config local|shared`
        (ADR 193). A shared install is stdio only and writes nothing global (no skills, service or remember).
        Flag path only in this slice; wizard Scope UI stays item 9.
@@ -293,15 +296,20 @@ project unless the install is project-scoped.
      folders only once a dot is typed. It skips names with control characters (macOS `Icon\r`),
      offers folders only, sorts with `localeCompare`, and returns
      `{ prefix, items: [{ name, value }] }` with `value` ending in `/`.
-2. `src/cli/setup/_widget-path.js` (`PathInput`):
+2. [x] `src/cli/setup/opentui/_widget-path.js` (the `PathInput` reducer, with `_path-menu.js` for the
+       rows and `_path-accept.js` for the Enter rule), mounted by `_screen-path-field.js` and used by the
+       Scope prompt (`screen.askPath`). The old text mode it replaced did not exist: the field was
+       calling a screen mode the renderer never implemented.
    - Tab opens a menu (8 visible, `n/total` footer); Tab or Enter applies the selection.
    - Up and down wrap around.
    - Esc closes the menu, or goes back when none is open.
    - Typing closes the menu.
    - Enter accepts the text only when it names a folder; otherwise "Not a folder: <path>".
    - Count backspaces per character: a burst arrives as one chunk.
-3. Tests: `suggestPaths` over a temp tree; the widget driven by keystrokes in the fake terminal.
-4. Commit: `feat(setup): complete project paths from a scrollable menu`.
+3. [x] Tests: `suggestPaths` over a temp tree (`_path-complete.test.mjs`); the widget driven by
+       keystrokes in the fake terminal (`_screen-path.test.mjs`, with `_screen-path.stub.mjs` standing in
+       for `@opentui/core`), plus the reducer and the acceptance rule in their own files.
+4. [x] Commit: `feat(setup): complete project paths from a scrollable menu`.
 
 ### Step 10 - Refresh an existing project rules block
 
