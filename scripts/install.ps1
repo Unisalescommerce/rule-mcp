@@ -32,8 +32,8 @@ $nodeMin = 20
 
 # Options `rule-mcp setup` accepts - same contract as install.sh (see
 # the install-script-flags test); unknown options fail before any download.
-$KnownSetupFlags = @('agent', 'mode', 'uninstall', 'rules', 'no-rules', 'commands', 'no-commands', 'hooks', 'no-hooks', 'skills', 'no-skills', 'minimal', 'no-minimal', 'surface', 'service', 'no-service', 'doctor', 'no-doctor', 'commands-preset', 'commands-families', 'commands-areas', 'commands-skills', 'purge', 'keep-config', 'force', 'dry-run', 'no-wizard', 'no-interactive', 'json', 'help', 'version')
-$ValueSetupFlags = @('agent', 'mode', 'commands-preset', 'commands-families', 'commands-areas', 'commands-skills', 'surface')
+$KnownSetupFlags = @('agent', 'mode', 'uninstall', 'rules', 'no-rules', 'commands', 'no-commands', 'hooks', 'no-hooks', 'skills', 'no-skills', 'minimal', 'no-minimal', 'surface', 'service', 'no-service', 'doctor', 'no-doctor', 'commands-preset', 'commands-families', 'commands-areas', 'commands-skills', 'scope', 'project', 'project-config', 'refresh-projects', 'feature', 'adr-policy', 'purge', 'keep-config', 'force', 'dry-run', 'no-wizard', 'no-interactive', 'json', 'help', 'version')
+$ValueSetupFlags = @('agent', 'mode', 'commands-preset', 'commands-families', 'commands-areas', 'commands-skills', 'surface', 'scope', 'project', 'project-config', 'feature', 'adr-policy')
 
 function Assert-SetupArguments([string[]]$rest) {
   $i = 0
