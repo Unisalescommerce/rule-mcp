@@ -2,15 +2,16 @@
 
 import { DIMENSIONS } from "../../install/_profiles.js";
 import { buildInstallPlan } from "../_plan-install.js";
+import { buildProjectInstallPlan } from "../_plan-project.js";
 
 /** The rail labels, in the order the wizard lights them. */
-export const INSTALL_STEPS = ["Preflight", "Profile", "Agents", "Depth", "Transport", "Surface", "Features", "Review", "Install", "Done"];
+export const INSTALL_STEPS = ["Preflight", "Profile", "Agents", "Scope", "Depth", "Transport", "Surface", "Features", "Review", "Install", "Done"];
 
 /** The uninstall rail, in the same order. */
 export const UNINSTALL_STEPS = ["Select", "Purge", "Review", "Remove", "Done"];
 
 /** Where each install step sits on that rail. */
-export const INSTALL_RAIL = { preflight: 0, profile: 1, agents: 2, depth: 3, transport: 4, surface: 5, features: 6, review: 7, install: 8, done: 9 };
+export const INSTALL_RAIL = { preflight: 0, profile: 1, agents: 2, scope: 3, depth: 4, transport: 5, surface: 6, features: 7, review: 8, install: 9, done: 10 };
 
 /** Where each uninstall step sits on that rail. */
 export const UNINSTALL_RAIL = { select: 0, purge: 1, review: 2, remove: 3, done: 4 };
@@ -24,7 +25,7 @@ export const UNINSTALL_RAIL = { select: 0, purge: 1, review: 2, remove: 3, done:
  * @returns {string[]}
  */
 export function installOrder() {
-  return ["preflight", "profile", "agents", "depth", "transport", "surface", "features", "review"];
+  return ["preflight", "profile", "agents", "scope", "depth", "transport", "surface", "features", "review"];
 }
 
 /**
@@ -40,9 +41,23 @@ export function uninstallOrder({ hasPurge = false } = {}) {
 /** The dimensions map the manifest records. */
 export const dimensionMap = (dimensions) => Object.fromEntries(DIMENSIONS.map((dimension) => [dimension, dimensions.includes(dimension)]));
 
-/** The plan the review screen lists and the run executes. */
-export const installPlan = ({ answers, context, force, minimal }) =>
-  buildInstallPlan({
+/**
+ * The plan the review screen lists and the run executes.
+ *
+ * A project scope answers with the roots it writes and the kind of entry; a
+ * global one answers with neither, and the two plans are built by the modules
+ * that already own them.
+ */
+export const installPlan = ({ answers, context, force, minimal }) => {
+  if (answers.scope === "project") {
+    return buildProjectInstallPlan({
+      agents: answers.dimensions.includes("server") ? answers.agents : [],
+      projects: answers.projects ?? [],
+      projectConfig: answers.projectConfig ?? "shared",
+    });
+  }
+
+  return buildInstallPlan({
     agents: answers.dimensions.includes("server") ? answers.agents : [],
     mode: answers.mode,
     extras: {
@@ -69,3 +84,4 @@ export const installPlan = ({ answers, context, force, minimal }) =>
     attribution: answers.attribution ?? null,
     attributionAgents: answers.dimensions.includes("server") ? answers.agents : [],
   });
+};

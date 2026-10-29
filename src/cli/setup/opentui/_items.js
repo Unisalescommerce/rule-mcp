@@ -123,6 +123,30 @@ export function dimensionItems({ agents = [], ruleFiles = [] } = {}) {
  * @returns {Array<{ id: string, label: string, note: string, detail: string[] }>}
  */
 /**
+ * The two places an install can write.
+ *
+ * @returns {Array<{ id: string, label: string, note: string, detail: string[] }>}
+ */
+export function scopeItems() {
+  return [
+    { id: "global", label: "Global", note: "your agent configs", detail: ["Writes the MCP entry into every picked agent's own config."] },
+    { id: "project", label: "Project", note: "the repositories you name", detail: ["Writes only into the project trees picked next, and records them."] },
+  ];
+}
+
+/**
+ * The two kinds of project entry.
+ *
+ * @returns {Array<{ id: string, label: string, note: string, detail: string[] }>}
+ */
+export function projectConfigItems() {
+  return [
+    { id: "shared", label: "Shared", note: "portable", detail: ["No machine paths, so a teammate's clone works."] },
+    { id: "local", label: "Local", note: "this machine", detail: ["The full launcher, in the file the host keeps out of git."] },
+  ];
+}
+
+/**
  * The attribution choices: what happens to a commit trailer an install wrote.
  *
  * @returns {Array<{ id: string, label: string, note: string, detail: string[] }>}

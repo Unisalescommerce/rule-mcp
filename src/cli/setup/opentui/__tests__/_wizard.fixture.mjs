@@ -94,5 +94,8 @@ const reset = () => {
 /** One answer per feature screen, then the single attribution question. */
 const FEATURE_ANSWERS = ["on", "full", "notify", "on", "off", "keep"];
 
+/** The Scope answer a global run gives: one radio, nothing else. */
+const SCOPE_ANSWER = "global";
 
-export { INSTALL_STEPS, UNINSTALL_STEPS, installOrder, uninstallOrder, runInstallWizard, runUninstallWizard, BACK, CANCEL, fakeScreen, reset, FEATURE_ANSWERS };
+
+export { INSTALL_STEPS, UNINSTALL_STEPS, installOrder, uninstallOrder, runInstallWizard, runUninstallWizard, BACK, CANCEL, fakeScreen, reset, FEATURE_ANSWERS, SCOPE_ANSWER };

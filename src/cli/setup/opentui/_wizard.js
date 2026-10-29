@@ -48,6 +48,8 @@ import {
 } from "./_items.js";
 
 import { askFeatures } from "./_wizard-features.js";
+import { askReview } from "./_wizard-review.js";
+import { askScope } from "./_wizard-scope.js";
 import { INSTALL_RAIL, INSTALL_STEPS, UNINSTALL_RAIL, UNINSTALL_STEPS } from "./_wizard-steps.js";
 import { dimensionMap, installOrder, installPlan, uninstallOrder } from "./_wizard-steps.js";
 
@@ -98,6 +100,9 @@ export async function runInstallWizard({ screen, defaults = {} }) {
     features: { ...flaggedFeatures },
     adrPolicy: defaults.adrPolicy ?? null,
     attribution: defaults.attribution ?? "keep",
+    scope: defaults.scope === "project" ? "project" : "global",
+    projects: Array.isArray(defaults.projects) ? defaults.projects : [],
+    projectConfig: defaults.projectConfig === "local" ? "local" : "shared",
     dryRun: Boolean(defaults.dryRun),
   };
 
@@ -184,6 +189,12 @@ export async function runInstallWizard({ screen, defaults = {} }) {
         answers.agents = picked;
 
         return undefined;
+      }
+
+      case "scope": {
+        const outcome = await askScope({ screen, answers });
+
+        return outcome;
       }
 
       case "depth": {
@@ -288,36 +299,7 @@ export async function runInstallWizard({ screen, defaults = {} }) {
       }
 
       case "review": {
-        const plan = installPlan({ answers, context, force: Boolean(defaults.force), minimal: defaults.minimal });
-
-        for (;;) {
-          const action = await screen.confirm({
-            title: "Review",
-            lines: [
-              { text: `Profile: ${answers.profile} - ${answers.dimensions.join(", ") || "nothing"}`, tone: "muted" },
-              { text: `Surface: ${surfaceLabel(answers.surface)} - commands ${selectionLabel(answers.selection)}`, tone: "muted" },
-              { text: "" },
-              ...reviewLines(plan, { dryRun: answers.dryRun }),
-            ],
-            actions: [
-              { key: "d", label: "toggle dry run", value: "dry" },
-              { key: "return", label: answers.dryRun ? "keep it a dry run" : "run it", value: "run" },
-            ],
-          });
-
-          if (action === CANCEL || action === BACK) {
-            return action;
-          }
-
-          if (action === "dry") {
-            answers.dryRun = !answers.dryRun;
-            continue;
-          }
-
-          answers.plan = plan;
-
-          return undefined;
-        }
+        return askReview({ screen, answers, context, defaults });
       }
 
       default: {
