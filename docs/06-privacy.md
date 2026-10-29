@@ -80,6 +80,13 @@ treated as personal data here even though this server never transmits them:
   runtime home; `--keep-config` preserves the configuration directories. In the
   wizard the purge is its own screen, starts empty, and names the file count
   before it deletes anything.
+- **Uninstall erases what it wrote, too**: a plain `rule-mcp uninstall` removes
+  the switches file (`~/.rule-mcp/config/env.json`), the legacy
+  `~/.config/rule-mcp/env.json`, and the install records (manifest,
+  `projects.json`). It asks before deleting them; `--keep-config` keeps the two
+  switches files and still drops the records; `--json` and `--no-interactive`
+  answer for you. `--purge` deletes the runtime home instead, so the reclaim
+  does not run twice.
 - **Access/portability**: the format is JSON on your disk. `rule-mcp
 stats` renders the local aggregate; any text editor reads the raw files.
 

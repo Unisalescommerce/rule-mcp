@@ -155,12 +155,13 @@ export function registerUninstallCommand(program) {
         }
       }
 
-      (await import("./commands/_lifecycle.js")).uninstallCommand({
+      await (await import("./commands/_lifecycle.js")).uninstallCommand({
         agent: options.agent,
         dryRun: options.dryRun,
         json: options.json,
         purge: options.purge,
         keepConfig: options.keepConfig,
+        interactive: options.interactive,
       });
     });
 }
