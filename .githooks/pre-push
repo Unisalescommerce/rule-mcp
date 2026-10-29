@@ -13,7 +13,10 @@ cd "$(git rev-parse --show-toplevel)" || exit 1
 
 echo "pre-push: checking commit messages..."
 
-if command -v rule-mcp >/dev/null 2>&1; then
+# The probe, not `command -v`: a launcher whose target moved exists and cannot run,
+# and under `set -e` its exit 1 blocks the push with node's module error. The
+# in-repo validator answers when the launcher does not.
+if command -v rule-mcp >/dev/null 2>&1 && rule-mcp --version >/dev/null 2>&1; then
   rule-mcp commit-lint --stdin-push
 else
   node scripts/build/commit-types/index.mjs --stdin-push

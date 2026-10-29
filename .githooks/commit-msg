@@ -21,7 +21,10 @@ case "$first" in
   "Merge "*|"Revert "*) exit 0 ;;
 esac
 
-if command -v rule-mcp >/dev/null 2>&1; then
+# `command -v` passes for a launcher whose target moved. The probe asks whether it
+# answers, so a broken binary falls back to the in-repo validator instead of
+# turning exit 1 from node into a rejected commit.
+if command -v rule-mcp >/dev/null 2>&1 && rule-mcp --version >/dev/null 2>&1; then
   exec rule-mcp commit-lint --msg-file "$msg_file"
 fi
 
