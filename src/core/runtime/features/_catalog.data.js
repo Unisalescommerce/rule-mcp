@@ -25,18 +25,24 @@ export const FEATURES = {
   telemetry: {
     label: "Local telemetry",
     levels: {
+      // `RULE_MCP_NO_PROMPTS` is cleared in every level: the key hides the MCP
+      // prompt list from a client's slash menu, and an earlier version of this
+      // level wrote it there to mean "record a length, not the text".
       full: {
         RULE_MCP_NO_TELEMETRY: null,
+        RULE_MCP_NO_PROMPT_TEXT: null,
         RULE_MCP_NO_PROMPTS: null,
         RULE_MCP_TELEMETRY_ANONYMOUS: null,
       },
       anonymous: {
         RULE_MCP_NO_TELEMETRY: null,
-        RULE_MCP_NO_PROMPTS: "1",
+        RULE_MCP_NO_PROMPT_TEXT: "1",
+        RULE_MCP_NO_PROMPTS: null,
         RULE_MCP_TELEMETRY_ANONYMOUS: "1",
       },
       off: {
         RULE_MCP_NO_TELEMETRY: "1",
+        RULE_MCP_NO_PROMPT_TEXT: null,
         RULE_MCP_NO_PROMPTS: null,
         RULE_MCP_TELEMETRY_ANONYMOUS: null,
       },

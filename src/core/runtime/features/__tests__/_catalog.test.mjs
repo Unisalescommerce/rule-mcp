@@ -29,16 +29,19 @@ test("adr off writes NO_ADR; adr on clears it", () => {
 test("telemetry anonymous drops prompt text and marks anonymous; off kills telemetry", () => {
   assert.deepEqual(envPatchFor("telemetry", "anonymous"), {
     RULE_MCP_NO_TELEMETRY: null,
-    RULE_MCP_NO_PROMPTS: "1",
+    RULE_MCP_NO_PROMPT_TEXT: "1",
+    RULE_MCP_NO_PROMPTS: null,
     RULE_MCP_TELEMETRY_ANONYMOUS: "1",
   });
   assert.deepEqual(envPatchFor("telemetry", "off"), {
     RULE_MCP_NO_TELEMETRY: "1",
+    RULE_MCP_NO_PROMPT_TEXT: null,
     RULE_MCP_NO_PROMPTS: null,
     RULE_MCP_TELEMETRY_ANONYMOUS: null,
   });
   assert.deepEqual(envPatchFor("telemetry", "full"), {
     RULE_MCP_NO_TELEMETRY: null,
+    RULE_MCP_NO_PROMPT_TEXT: null,
     RULE_MCP_NO_PROMPTS: null,
     RULE_MCP_TELEMETRY_ANONYMOUS: null,
   });

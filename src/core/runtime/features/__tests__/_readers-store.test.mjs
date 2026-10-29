@@ -32,7 +32,8 @@ test("setFeatureLevel writes under RULE_MCP_HOME/config/env.json", () => {
   assert.equal(result.path, envConfigPath(home));
   const saved = JSON.parse(readFileSync(result.path, "utf8"));
 
-  assert.equal(saved.RULE_MCP_NO_PROMPTS, "1");
+  assert.equal(saved.RULE_MCP_NO_PROMPT_TEXT, "1", "the level writes the key that is about the prompt text");
+  assert.equal(saved.RULE_MCP_NO_PROMPTS, undefined, "and leaves the slash-menu key alone");
   assert.equal(saved.RULE_MCP_TELEMETRY_ANONYMOUS, "1");
   assert.equal("RULE_MCP_NO_TELEMETRY" in saved, false);
   assert.equal(readLevel("telemetry", mergedEnv({ homeDir: home, env: {} })), "anonymous");
@@ -50,6 +51,7 @@ test("disable clears keys that the off level nulls", () => {
 
 test("dry-run does not touch the file", () => {
   const before = readAllLevels(mergedEnv({ homeDir: home, env: {} }));
+
   applyEnvPatch({ RULE_MCP_NO_ADR: "1" }, { homeDir: home, dryRun: true });
   assert.deepEqual(readAllLevels(mergedEnv({ homeDir: home, env: {} })), before);
 });

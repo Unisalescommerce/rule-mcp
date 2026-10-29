@@ -35,7 +35,9 @@ function readTelemetry(env) {
     return "off";
   }
 
-  if (get(env, "RULE_MCP_TELEMETRY_ANONYMOUS") === "1" || get(env, "RULE_MCP_NO_PROMPTS") === "1") {
+  // `RULE_MCP_NO_PROMPTS` still reads as anonymous: it is what an earlier
+  // version wrote, and a config that meant "length only" keeps meaning it.
+  if (get(env, "RULE_MCP_TELEMETRY_ANONYMOUS") === "1" || get(env, "RULE_MCP_NO_PROMPT_TEXT") === "1" || get(env, "RULE_MCP_NO_PROMPTS") === "1") {
     return "anonymous";
   }
 
