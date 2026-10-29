@@ -1,7 +1,7 @@
 # 33: Handon stops inventing next moves, tokensave follows the project
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `76893d30..13d94451` (24 commits, this handoff excluded)
+- **Commit range**: `76893d30..89cd917c` (26 commits, this handoff excluded)
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits in the whole feature range: 2
 - **Date**: 2026-10-28
 
@@ -57,8 +57,10 @@ Two ADRs are pending in docs/adr/_pending/ and get numbers only on trunk landing
 `docs/plans/installer-scope-adr-policy-features.md` is the open plan (Status: in-progress, 5 open boxes);
 step 7 (agent attribution) landed in `13d94451`: `_attribution.data.js` (23 rows, 2 documented:
 Claude Code from code.claude.com settings-reference, Gemini `none`), `applyAttribution`,
-`setup --attribution <keep|hide>`, `--attribution-agent`, and one wizard question. Next plans step
-is 8 (project-scope leftovers).
+`setup --attribution <keep|hide>`, `--attribution-agent`, and one wizard question. Plans step 8 is partly done in `89cd917c`:
+`rule-mcp project add|remove`, the `update` walk, an uninstall that removes a project config file it
+emptied, and two test files. Still open in step 8: the Claude extras in project scope, per-client
+prompt suppression, numbering hooks per project, and the wizard Scope UI.
 Known limit to accept or fix: the pruned `0` reaches a file the setup path or an uninstall touches, nothing else.
 Restart the MCP server before trusting rule_tool_check/structural/handon: they served a stale build this session.
 MCP guardrail tools answer with a self-update refusal in this environment; use eslint and the local suites.
