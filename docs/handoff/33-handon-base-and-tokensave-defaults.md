@@ -1,7 +1,7 @@
 # 33: Handon stops inventing next moves, tokensave follows the project
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `76893d30..1a0c1a0a` (7 commits, this handoff excluded)
+- **Commit range**: `76893d30..8ad3cf58` (11 commits, this handoff excluded)
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits in the whole feature range: 2
 - **Date**: 2026-10-28
 
@@ -22,6 +22,8 @@
 - `4037c703` `feat(installer): own tokensave as on/on+autotrack/off with a project-derived default`
 - `83ea733b` `fix(installer): record tokensave on as a decision instead of erasing it`
 - `f863a08b` `feat(uninstall): reclaim the switches and records rule-mcp wrote`
+
+Handoff and ADR commits in the same window: `56156c50`, `a63a8403`, `0207ef09`, `6f1dd4b0`, `8ad3cf58`.
 
 ## ADRs
 
