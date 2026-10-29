@@ -15,7 +15,7 @@ import { runPlan, tally } from "../_run-plan.js";
 const ids = (plan) => plan.map((task) => task.id);
 
 test("a minimal install plan is the runtime home, the skills reconcile, the cli check and the manifest", () => {
-  assert.deepEqual(ids(buildInstallPlan({})), ["runtime-home", "skills", "cli", "manifest"]);
+  assert.deepEqual(ids(buildInstallPlan({})), ["runtime-home", "launcher", "skills", "cli", "manifest"]);
 });
 
 test("building a plan touches no filesystem", () => {
@@ -29,7 +29,7 @@ test("building a plan touches no filesystem", () => {
 test("every selected agent gets its own row", () => {
   const plan = buildInstallPlan({ agents: ["claude", "cursor", "pi"] });
 
-  assert.deepEqual(ids(plan), ["runtime-home", "agent:claude", "agent:cursor", "agent:pi", "skills", "cli", "manifest"]);
+  assert.deepEqual(ids(plan), ["runtime-home", "launcher", "agent:claude", "agent:cursor", "agent:pi", "skills", "cli", "manifest"]);
 });
 
 test("the skills row installs when selected and reconciles when not", () => {
@@ -77,6 +77,7 @@ test("purge is appended only when a purge target is chosen", () => {
 
 test("a failing task never stops the ones after it", async () => {
   const plan = [
+
     { id: "a", title: "A", run: () => ({ status: "ok" }) },
     {
       id: "b",

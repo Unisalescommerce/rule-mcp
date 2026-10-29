@@ -23,7 +23,8 @@ import { existsSync, mkdirSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { join } from "node:path";
 
-import { currentVersion, installedVersions, launcherRoot, pruneVersions, recordPrune, recordVersion, setCurrent } from "./_launcher-store.js";
+import { currentVersion, installedVersions, launcherRoot, recordVersion, setCurrent } from "./_launcher-store.js";
+import { pruneVersions, recordPrune } from "./_launcher-prune.js";
 
 export { currentVersion, installedVersions, launcherRoot, setCurrent } from "./_launcher-store.js";
 
@@ -76,12 +77,11 @@ export function probeCopy({ dir, run = (command, args, options) => ({ stdout: ex
 /**
  * Install one version, point the launcher at it, and prune the copy it replaced.
  *
- * @param {{ checkout: string, version: string, homeDir?: string, run?: Function, now?: Function, dryRun?: boolean, probe?: Function }} options
+ * @param {{ checkout: string, version: string, root?: string, run?: Function, now?: Function, dryRun?: boolean, probe?: Function }} options
  * @returns {{ status: "installed"|"verified"|"planned"|"failed", dir: string, version: string, pruned?: string[], reason?: string }}
  */
-export function installLauncher({ checkout, version, homeDir, run, now = () => new Date().toISOString().slice(0, 10), dryRun = false, probe }) {
-  const root = launcherRoot({ homeDir });
-  const dir = join(root, version);
+export function installLauncher({ checkout, version, root, run, now = () => new Date().toISOString().slice(0, 10), dryRun = false, probe }) {
+  const dir = join(launcherRoot({ root }), version);
 
   if (dryRun) {
     return { status: "planned", dir, version };
@@ -89,9 +89,9 @@ export function installLauncher({ checkout, version, homeDir, run, now = () => n
 
   // A copy this record already names, and that still answers, is the state the
   // caller wanted: deploying it again would rewrite 85 MB for nothing.
-  const known = installedVersions({ homeDir }).find((row) => row.version === version);
+  const known = installedVersions({ root }).find((row) => row.version === version);
 
-  if (known && existsSync(dir) && currentVersion({ homeDir }) === version) {
+  if (known && existsSync(dir) && currentVersion({ root }) === version) {
     return { status: "verified", dir, version };
   }
 
@@ -107,14 +107,14 @@ export function installLauncher({ checkout, version, homeDir, run, now = () => n
     return { status: "failed", dir, version, reason: "the copy does not answer --version" };
   }
 
-  recordVersion({ homeDir, row: { version, source: checkout, installedAt: now() } });
-  setCurrent({ homeDir, version });
+  recordVersion({ root, row: { version, source: checkout, installedAt: now() } });
+  setCurrent({ root, version });
 
   // One copy kept: the copy it replaced is the second thing to trust on the
   // machine and the second thing to get out of date, for no gain.
-  const pruned = pruneVersions({ homeDir, keep: [version] });
+  const pruned = pruneVersions({ root, keep: [version] });
 
-  recordPrune({ homeDir, keep: [version] });
+  recordPrune({ root, keep: [version] });
 
   return { status: "installed", dir, version, pruned };
 }

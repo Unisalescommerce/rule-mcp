@@ -10,6 +10,7 @@
 
 import { attributionTask } from "./_task-attribution.js";
 import { agentInstallTask, runtimeHomeTask, shimTask } from "./_task-core.js";
+import { launcherTask } from "./_task-launcher.js";
 import { commandsTask, dockerTask, doctorTask, manifestTask, rulesTask, serviceTask, skillsTask } from "./_task-extras.js";
 import { featuresTask } from "./_task-features.js";
 import { skillsRemovalTask } from "./_task-remove.js";
@@ -74,6 +75,10 @@ export function buildInstallPlan({
   if ((Array.isArray(features) && features.length > 0) || adrPolicy) {
     plan.push(featuresTask({ features, adrPolicy }));
   }
+
+  // The copy comes before the shim: a launcher is a copy plus a pointer, and a
+  // pointer written to a copy that does not exist is the failure this replaces.
+  plan.push(launcherTask());
 
   if (context.hasLocalBin) {
     plan.push(shimTask(context.localBin));

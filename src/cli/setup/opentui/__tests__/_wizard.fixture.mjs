@@ -104,4 +104,7 @@ const FEATURE_ANSWERS = ["on", "full", "notify", "on", "off", "keep"];
 /** The Scope answer a global run gives: one radio, nothing else. */
 const SCOPE_ANSWER = "global";
 
-export { INSTALL_STEPS, UNINSTALL_STEPS, installOrder, uninstallOrder, runInstallWizard, runUninstallWizard, BACK, CANCEL, fakeScreen, reset, FEATURE_ANSWERS, SCOPE_ANSWER };
+/** The steps a global run plans, in order, without the profile-specific tail. */
+const GLOBAL_PLAN_HEAD = ["runtime-home", "features", "launcher", "attribution", "agent:claude"];
+
+export { GLOBAL_PLAN_HEAD, INSTALL_STEPS, UNINSTALL_STEPS, installOrder, uninstallOrder, runInstallWizard, runUninstallWizard, BACK, CANCEL, fakeScreen, reset, FEATURE_ANSWERS, SCOPE_ANSWER };

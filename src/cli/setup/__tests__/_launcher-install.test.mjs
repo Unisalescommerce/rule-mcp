@@ -21,6 +21,7 @@ import { join } from "node:path";
 import { installLauncher, installedVersions, launcherRoot, setCurrent, currentVersion } from "../_launcher-install.js";
 
 const home = mkdtempSync(join(tmpdir(), "rule-launcher-"));
+const root = join(home, ".rule-mcp");
 
 test.after(() => rmSync(home, { recursive: true, force: true }));
 
@@ -48,72 +49,72 @@ function fakeRunner() {
 }
 
 test.beforeEach(() => {
-  rmSync(launcherRoot({ homeDir: home }), { recursive: true, force: true });
+  rmSync(launcherRoot({ root }), { recursive: true, force: true });
 });
 
 test("an install deploys, points the pointer at the version and records it", () => {
   const run = fakeRunner();
-  const result = installLauncher({ checkout: "/tmp/checkout", version: "1.0.0", homeDir: home, run, now: () => "2026-10-29" });
+  const result = installLauncher({ checkout: "/tmp/checkout", version: "1.0.0", root, run, now: () => "2026-10-29" });
 
   assert.equal(result.status, "installed");
-  assert.equal(existsSync(join(launcherRoot({ homeDir: home }), "1.0.0/bin/rule-mcp.js")), true, "the copy has an entry point");
-  assert.equal(currentVersion({ homeDir: home }), "1.0.0", "and the pointer names it");
-  assert.deepEqual(installedVersions({ homeDir: home }), [{ version: "1.0.0", source: "/tmp/checkout", installedAt: "2026-10-29" }]);
+  assert.equal(existsSync(join(launcherRoot({ root }), "1.0.0/bin/rule-mcp.js")), true, "the copy has an entry point");
+  assert.equal(currentVersion({ root }), "1.0.0", "and the pointer names it");
+  assert.deepEqual(installedVersions({ root }), [{ version: "1.0.0", source: "/tmp/checkout", installedAt: "2026-10-29" }]);
 
   const deploy = run.calls[0];
 
   assert.equal(deploy.command, "pnpm");
   assert.deepEqual(deploy.args.slice(0, 3), ["deploy", "--prod", "--legacy"], "the mechanism the measurement chose");
-  assert.equal(deploy.args[3], join(launcherRoot({ homeDir: home }), "1.0.0"));
+  assert.equal(deploy.args[3], join(launcherRoot({ root }), "1.0.0"));
 });
 
 test("a second install of the same version verifies instead of rewriting", () => {
-  installLauncher({ checkout: "/tmp/checkout", version: "1.0.0", homeDir: home, run: fakeRunner(), now: () => "2026-10-29" });
+  installLauncher({ checkout: "/tmp/checkout", version: "1.0.0", root, run: fakeRunner(), now: () => "2026-10-29" });
 
   const run = fakeRunner();
-  const again = installLauncher({ checkout: "/tmp/checkout", version: "1.0.0", homeDir: home, run, now: () => "2026-10-30" });
+  const again = installLauncher({ checkout: "/tmp/checkout", version: "1.0.0", root, run, now: () => "2026-10-30" });
 
   assert.equal(again.status, "verified");
   assert.equal(run.calls.length, 0, "nothing is deployed twice");
-  assert.equal(installedVersions({ homeDir: home }).length, 1, "and no second row is recorded");
+  assert.equal(installedVersions({ root }).length, 1, "and no second row is recorded");
 });
 
 test("a new version adds a directory, moves the pointer and prunes the old copy", () => {
-  installLauncher({ checkout: "/tmp/checkout", version: "1.0.0", homeDir: home, run: fakeRunner(), now: () => "2026-10-29" });
-  const result = installLauncher({ checkout: "/tmp/checkout", version: "1.1.0", homeDir: home, run: fakeRunner(), now: () => "2026-10-30" });
+  installLauncher({ checkout: "/tmp/checkout", version: "1.0.0", root, run: fakeRunner(), now: () => "2026-10-29" });
+  const result = installLauncher({ checkout: "/tmp/checkout", version: "1.1.0", root, run: fakeRunner(), now: () => "2026-10-30" });
 
   assert.equal(result.status, "installed");
-  assert.equal(currentVersion({ homeDir: home }), "1.1.0");
+  assert.equal(currentVersion({ root }), "1.1.0");
   assert.deepEqual(result.pruned, ["1.0.0"], "the copy it replaced is gone");
-  assert.equal(existsSync(join(launcherRoot({ homeDir: home }), "1.0.0")), false);
-  assert.deepEqual(installedVersions({ homeDir: home }).map((row) => row.version), ["1.1.0"]);
+  assert.equal(existsSync(join(launcherRoot({ root }), "1.0.0")), false);
+  assert.deepEqual(installedVersions({ root }).map((row) => row.version), ["1.1.0"]);
 });
 
 test("a dry run reports and writes nothing", () => {
   const run = fakeRunner();
-  const result = installLauncher({ checkout: "/tmp/checkout", version: "1.0.0", homeDir: home, run, dryRun: true });
+  const result = installLauncher({ checkout: "/tmp/checkout", version: "1.0.0", root, run, dryRun: true });
 
   assert.equal(result.status, "planned");
   assert.equal(run.calls.length, 0);
-  assert.equal(existsSync(launcherRoot({ homeDir: home })), false);
-  assert.equal(currentVersion({ homeDir: home }), undefined);
+  assert.equal(existsSync(launcherRoot({ root })), false);
+  assert.equal(currentVersion({ root }), undefined);
 });
 
 test("a failed deploy leaves no pointer and says what failed", () => {
   const run = () => {
     throw new Error("pnpm not found");
   };
-  const result = installLauncher({ checkout: "/tmp/checkout", version: "1.0.0", homeDir: home, run });
+  const result = installLauncher({ checkout: "/tmp/checkout", version: "1.0.0", root, run });
 
   assert.equal(result.status, "failed");
   assert.match(result.reason, /pnpm not found/u);
-  assert.equal(currentVersion({ homeDir: home }), undefined, "a pointer to nothing would be the incident again");
+  assert.equal(currentVersion({ root }), undefined, "a pointer to nothing would be the incident again");
 });
 
 test("the pointer file is a plain word, so a rollback is an edit", () => {
-  mkdirSync(launcherRoot({ homeDir: home }), { recursive: true });
-  setCurrent({ homeDir: home, version: "0.9.0" });
+  mkdirSync(launcherRoot({ root }), { recursive: true });
+  setCurrent({ root, version: "0.9.0" });
 
-  assert.equal(readFileSync(join(launcherRoot({ homeDir: home }), "current"), "utf8").trim(), "0.9.0");
-  assert.equal(currentVersion({ homeDir: home }), "0.9.0");
+  assert.equal(readFileSync(join(launcherRoot({ root }), "current"), "utf8").trim(), "0.9.0");
+  assert.equal(currentVersion({ root }), "0.9.0");
 });

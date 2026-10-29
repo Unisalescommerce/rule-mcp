@@ -22,9 +22,10 @@ const enabled = process.env.RULE_MCP_LAUNCHER_INTEGRATION === "1";
 
 test("a deployed copy answers --version and carries the platform binary", { skip: !enabled && "set RULE_MCP_LAUNCHER_INTEGRATION=1" }, () => {
   const home = mkdtempSync(join(tmpdir(), "rule-launcher-real-"));
+  const root = join(home, ".rule-mcp");
 
   try {
-    const result = installLauncher({ checkout: process.cwd(), version: "0.0.0-integration", homeDir: home });
+    const result = installLauncher({ checkout: process.cwd(), version: "0.0.0-integration", root });
 
     assert.equal(result.status, "installed", `deploy failed: ${result.reason ?? ""}`);
     assert.equal(probeCopy({ dir: result.dir }).ok, true, "the copy must start on its own");

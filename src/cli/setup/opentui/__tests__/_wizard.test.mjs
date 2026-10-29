@@ -17,6 +17,7 @@ import {
   reset,
   runInstallWizard,
   runUninstallWizard,
+  GLOBAL_PLAN_HEAD,
   uninstallOrder,
 } from "./_wizard.fixture.mjs";
 
@@ -29,13 +30,7 @@ test("a standard install asks every step and plans the whole profile", async () 
   const outcome = await runInstallWizard({ screen });
 
   assert.equal(outcome.dryRun, false);
-  assert.deepEqual(globalThis.__wizardStub.plans.at(-1), [
-    "runtime-home",
-    "features",
-    "attribution",
-    "agent:claude",
-    "rules",
-    "commands",
+  assert.deepEqual(globalThis.__wizardStub.plans.at(-1), [...GLOBAL_PLAN_HEAD, "rules", "commands",
     "skills",
     "cli",
     "manifest",
@@ -75,12 +70,7 @@ test("back from the agents screen re-asks the profile and has no commands step",
     false,
     "commands ride with Surface, they are not a second screen",
   );
-  assert.deepEqual(globalThis.__wizardStub.plans.at(-1), [
-    "runtime-home",
-    "features",
-    "attribution",
-    "agent:claude",
-    "commands",
+  assert.deepEqual(globalThis.__wizardStub.plans.at(-1), [...GLOBAL_PLAN_HEAD, "commands",
     "skills",
     "cli",
     "manifest",
@@ -90,6 +80,7 @@ test("back from the agents screen re-asks the profile and has no commands step",
 test("a custom profile asks for its dimensions and uses them", async () => {
   reset();
   const screen = fakeScreen([
+
     "next",
     "custom",
     ["server", "commands"],
@@ -106,12 +97,7 @@ test("a custom profile asks for its dimensions and uses them", async () => {
   await runInstallWizard({ screen });
 
   assert.ok(screen.asks.some((ask) => ask.title === "What should this install write?"));
-  assert.deepEqual(globalThis.__wizardStub.plans.at(-1), [
-    "runtime-home",
-    "features",
-    "attribution",
-    "agent:claude",
-    "commands",
+  assert.deepEqual(globalThis.__wizardStub.plans.at(-1), [...GLOBAL_PLAN_HEAD, "commands",
     "skills",
     "cli",
     "manifest",
@@ -168,5 +154,4 @@ test("an uninstall with nothing to remove says so and stops", async () => {
   assert.match(screen.confirms[0].title, /Nothing to remove/u);
   assert.deepEqual(globalThis.__wizardStub.plans, []);
 });
-
 
