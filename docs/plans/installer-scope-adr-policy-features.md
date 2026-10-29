@@ -268,8 +268,9 @@ project unless the install is project-scoped.
        with an empty document.
    `/rule-init` adds its own project when the install is per project.
 8. Each project also gets the numbering hooks and merge driver from step 5.
-9. Wizard: a Scope step (global / project), a project list with the cwd offered, `p` to type a
-   path, then a Project config step (shared / local). **Not done.**
+9. [x] Wizard: a Scope step (global / project), a project list with the cwd offered, `p` to type a
+       path, then a Project config step (shared / local). `_wizard-scope.js` asks the three, `_items.js`
+       carries the rows, and the plan switches to `buildProjectInstallPlan` when the answer is project.
 10. [~] One test file per concern: hosts table, Claude project, membership, record, git, scope; each
         under the 150-line cap. `_project-command.test.mjs` (membership) and `_update-reapply.test.mjs`
         (the update walk) exist; the Claude-project, git and scope files come with their items.
@@ -368,7 +369,7 @@ Shared files: none: outside the skills graph
       `setup --attribution <keep|hide>` + `--attribution-agent`; the wizard asks once).
 - [ ] Step 8 - leftovers: `rule-mcp project add|remove` (done), the `update` walk (done), the Claude
       extras in project scope (done). Still open: per-client prompt suppression (item 4, blocked on a
-      consumer), the numbering hooks per project (item 8) and the wizard Scope UI (item 9).
+      consumer) and the numbering hooks per project (item 8).
 - [ ] Step 9 - Path completion in the wizard.
 - [ ] Step 10 - Refresh an existing project rules block.
 - [ ] Step 11 - Documentation.
