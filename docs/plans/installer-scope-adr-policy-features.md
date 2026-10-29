@@ -357,7 +357,9 @@ Shared files: none: outside the skills graph
 ## Steps
 
 - [x] Diff each ported subsystem against this repository and keep what is already better.
-- [ ] Step 7 - Agent attribution: the table, the writer, `setup --attribution`, its tests.
+- [x] Step 7 - Agent attribution: the table, the writer, `setup --attribution`, its tests
+      (landed 2026-10-29: `_attribution.data.js` with 23 rows, 2 documented; `applyAttribution`;
+      `setup --attribution <keep|hide>` + `--attribution-agent`; the wizard asks once).
 - [ ] Step 8 - leftovers: `rule-mcp project add|remove`, the `update` walk, the Claude extras in
       project scope, the wizard Scope UI, one test file per concern.
 - [ ] Step 9 - Path completion in the wizard.

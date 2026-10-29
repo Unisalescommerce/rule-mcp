@@ -52,6 +52,9 @@ export function setupOptions(kind, { getArgument, getArguments = () => [], hasFl
     // policy shortcut. Applied before host installs so mcp env carries them.
     features: getArguments("--feature"),
     adrPolicy: getArgument("--adr-policy"),
+    // Attribution is per agent: one mode, plus the repeatable narrowing flag.
+    attribution: getArgument("--attribution"),
+    attributionAgent: getArguments("--attribution-agent"),
     // The four that narrow the command surface are spelled `--commands-*`
     // because `--skills` is already taken, by the step that copies the skill
     // catalog. One flag with two meanings is a flag nobody can document.

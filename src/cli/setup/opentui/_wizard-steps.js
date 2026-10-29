@@ -64,4 +64,8 @@ export const installPlan = ({ answers, context, force, minimal }) =>
     dimensions: dimensionMap(answers.dimensions),
     features: Object.entries(answers.features ?? {}).map(([id, level]) => ({ id, level })),
     adrPolicy: answers.adrPolicy ?? null,
+    // Only the agents this run installs into: an attribution write for an agent
+    // whose config was not written would be a setting nobody asked for.
+    attribution: answers.attribution ?? null,
+    attributionAgents: answers.dimensions.includes("server") ? answers.agents : [],
   });

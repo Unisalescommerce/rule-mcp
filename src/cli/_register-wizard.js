@@ -93,6 +93,8 @@ export function registerSetupCommand(program) {
     .option("--refresh-projects", "re-apply MCP configs into every recorded project")
     .option("--feature <id=level>", "set a feature level before install (repeatable)", collect, [])
     .option("--adr-policy <level>", "ADR write policy: full, handoff, or on-demand")
+    .addOption(new Option("--attribution <mode>", "commit attribution per agent: keep (default) or hide").choices(["keep", "hide"]))
+    .option("--attribution-agent <id>", "narrow attribution to one agent (repeatable)", collect, [])
     .option("--uninstall", "run the uninstall direction")
     .option("--rules", "write agent instruction files")
     .option("--no-rules", "skip agent instruction files")

@@ -91,7 +91,8 @@ const reset = () => {
 };
 
 /** Default answers for the five Features screens (catalog order). */
-const FEATURE_ANSWERS = ["on", "full", "notify", "on", "off"];
+/** One answer per feature screen, then the single attribution question. */
+const FEATURE_ANSWERS = ["on", "full", "notify", "on", "off", "keep"];
 
 
 export { INSTALL_STEPS, UNINSTALL_STEPS, installOrder, uninstallOrder, runInstallWizard, runUninstallWizard, BACK, CANCEL, fakeScreen, reset, FEATURE_ANSWERS };

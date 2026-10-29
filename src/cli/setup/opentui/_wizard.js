@@ -44,8 +44,10 @@ import {
   surfaceLabel,
   surfaceSkillItems,
   uninstallItems,
+  attributionItems,
 } from "./_items.js";
 
+import { askFeatures } from "./_wizard-features.js";
 import { INSTALL_RAIL, INSTALL_STEPS, UNINSTALL_RAIL, UNINSTALL_STEPS } from "./_wizard-steps.js";
 import { dimensionMap, installOrder, installPlan, uninstallOrder } from "./_wizard-steps.js";
 
@@ -95,6 +97,7 @@ export async function runInstallWizard({ screen, defaults = {} }) {
     selection: defaults.selection ?? null,
     features: { ...flaggedFeatures },
     adrPolicy: defaults.adrPolicy ?? null,
+    attribution: defaults.attribution ?? "keep",
     dryRun: Boolean(defaults.dryRun),
   };
 
@@ -222,38 +225,9 @@ export async function runInstallWizard({ screen, defaults = {} }) {
       }
 
       case "features": {
-        // One level screen per feature that offers more than on/off; binary
-        // features share a single radio each so every switch is owned here.
-        const envView = mergedEnv({ env: process.env });
+        const outcome = await askFeatures({ screen, answers });
 
-        for (const id of featureIds()) {
-          if (answers.features[id]) {
-            continue;
-          }
-
-          const levels = levelsFor(id);
-
-          if (levels.length < 2) {
-            continue;
-          }
-
-          const chosen = await screen.ask({
-            title: FEATURES[id].label,
-            help: [`Feature: ${id}`, "Pick the level written into ~/.rule-mcp/config/env.json."],
-            items: featureLevelItems(id),
-            mode: "radio",
-            initial: [readLevel(id, envView)],
-            height: Math.min(8, levels.length + 2),
-          });
-
-          if (chosen === CANCEL || chosen === BACK) {
-            return chosen;
-          }
-
-          answers.features[id] = chosen;
-        }
-
-        return undefined;
+        return outcome;
       }
 
       case "surface": {

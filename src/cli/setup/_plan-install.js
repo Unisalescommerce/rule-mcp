@@ -8,6 +8,7 @@
  * is the only step that reports on all the others.
  */
 
+import { attributionTask } from "./_task-attribution.js";
 import { agentInstallTask, runtimeHomeTask, shimTask } from "./_task-core.js";
 import { commandsTask, dockerTask, doctorTask, manifestTask, rulesTask, serviceTask, skillsTask } from "./_task-extras.js";
 import { featuresTask } from "./_task-features.js";
@@ -64,6 +65,8 @@ export function buildInstallPlan({
   dimensions = null,
   features = [],
   adrPolicy = null,
+  attribution = null,
+  attributionAgents = [],
 } = {}) {
   const targets = checkedAgents(agents);
   const plan = [runtimeHomeTask()];
@@ -74,6 +77,13 @@ export function buildInstallPlan({
 
   if (context.hasLocalBin) {
     plan.push(shimTask(context.localBin));
+  }
+
+  // Attribution is per agent, so it runs where the agent configs are written,
+  // and only when a mode was asked for: absent means the vendor's own default
+  // stands and no file is touched.
+  if (attribution) {
+    plan.push(attributionTask({ mode: attribution, agents: attributionAgents ?? [] }));
   }
 
   // The guard hooks are not a step of their own: they are written by the

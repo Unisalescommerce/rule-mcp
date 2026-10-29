@@ -123,6 +123,18 @@ export function dimensionItems({ agents = [], ruleFiles = [] } = {}) {
  * @returns {Array<{ id: string, label: string, note: string, detail: string[] }>}
  */
 /**
+ * The attribution choices: what happens to a commit trailer an install wrote.
+ *
+ * @returns {Array<{ id: string, label: string, note: string, detail: string[] }>}
+ */
+export function attributionItems() {
+  return [
+    { id: "keep", label: "Keep", note: "vendor default", detail: ["Remove only what an install wrote. Nothing moves for an undocumented agent."] },
+    { id: "hide", label: "Hide", note: "no trailer", detail: ["Write the documented value that hides the attribution, per documented agent."] },
+  ];
+}
+
+/**
  * Radio rows for one feature's levels (default first in the catalog).
  *
  * @param {string} id

@@ -90,6 +90,11 @@ export function resolveSetupOptions(options = {}) {
     refreshProjects: Boolean(options.refreshProjects),
     features: Array.isArray(options.features) ? options.features : [],
     adrPolicy: typeof options.adrPolicy === "string" && options.adrPolicy.trim() ? options.adrPolicy.trim() : null,
+    // Attribution is a per-agent table, so a run carries the mode and the
+    // agents it may touch; absent means "the documented ones, keeping what the
+    // vendor already does" - the install writes nothing in that case.
+    attribution: options.attribution === "hide" ? "hide" : options.attribution === "keep" ? "keep" : null,
+    attributionAgents: Array.isArray(options.attributionAgent) ? options.attributionAgent : [],
     // `--minimal` / `--no-minimal` choose the installed server surface;
     // absent leaves the saved config alone (see `applyMinimalEnv`).
     minimal: options.minimal,

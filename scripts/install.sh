@@ -36,8 +36,8 @@ NODE_MIN=20
 # Options `rule-mcp setup` accepts. The shell runs before node exists,
 # so it cannot ask: this table is the contract, kept honest by the
 # install-script-flags test against the `setup` command source.
-KNOWN_SETUP_FLAGS="agent mode uninstall rules no-rules commands no-commands hooks no-hooks skills no-skills minimal no-minimal surface service no-service doctor no-doctor commands-preset commands-families commands-areas commands-skills scope project project-config refresh-projects feature adr-policy purge keep-config force dry-run no-wizard no-interactive json help version"
-VALUE_SETUP_FLAGS="agent mode commands-preset commands-families commands-areas commands-skills surface scope project project-config feature adr-policy"
+KNOWN_SETUP_FLAGS="agent mode uninstall rules no-rules commands no-commands hooks no-hooks skills no-skills minimal no-minimal surface service no-service doctor no-doctor commands-preset commands-families commands-areas commands-skills scope project project-config refresh-projects feature adr-policy attribution attribution-agent purge keep-config force dry-run no-wizard no-interactive json help version"
+VALUE_SETUP_FLAGS="agent mode commands-preset commands-families commands-areas commands-skills surface scope project project-config feature adr-policy attribution attribution-agent"
 
 # Reject anything `setup` cannot spell before a byte is downloaded: a typo
 # surfaces here, with the list, instead of deep in a fetched install. A

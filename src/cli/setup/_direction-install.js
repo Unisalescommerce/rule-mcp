@@ -102,6 +102,8 @@ export async function install(options) {
     surface: options.surface,
     features: options.features,
     adrPolicy: options.adrPolicy,
+    attribution: options.attribution,
+    attributionAgents: options.attributionAgents,
   });
   const { counts } = await runPlain({
     plan,

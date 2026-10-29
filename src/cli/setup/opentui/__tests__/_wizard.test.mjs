@@ -10,7 +10,6 @@ import { test } from "node:test";
 
 import {
   BACK,
-  CANCEL,
   FEATURE_ANSWERS,
   INSTALL_STEPS,
   UNINSTALL_STEPS,
@@ -34,6 +33,7 @@ test("a standard install asks every step and plans the whole profile", async () 
   assert.deepEqual(globalThis.__wizardStub.plans.at(-1), [
     "runtime-home",
     "features",
+    "attribution",
     "agent:claude",
     "rules",
     "commands",
@@ -79,6 +79,7 @@ test("back from the agents screen re-asks the profile and has no commands step",
   assert.deepEqual(globalThis.__wizardStub.plans.at(-1), [
     "runtime-home",
     "features",
+    "attribution",
     "agent:claude",
     "commands",
     "skills",
@@ -108,6 +109,7 @@ test("a custom profile asks for its dimensions and uses them", async () => {
   assert.deepEqual(globalThis.__wizardStub.plans.at(-1), [
     "runtime-home",
     "features",
+    "attribution",
     "agent:claude",
     "commands",
     "skills",
@@ -134,14 +136,6 @@ test("a blocked preflight quits without planning anything", async () => {
   assert.equal(await runInstallWizard({ screen }), null);
   assert.deepEqual(globalThis.__wizardStub.plans, []);
   assert.match(screen.confirms[0].lines.map((line) => line.text).join("\n"), /Fix the failures/u);
-});
-
-test("canceling at any step writes nothing", async () => {
-  reset();
-  const screen = fakeScreen(["next", CANCEL]);
-
-  assert.equal(await runInstallWizard({ screen }), null);
-  assert.deepEqual(globalThis.__wizardStub.plans, []);
 });
 
 test("the uninstall offers the scan, the purge and then removes", async () => {

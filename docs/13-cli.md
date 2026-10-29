@@ -27,7 +27,7 @@ the package version from anywhere. An error exits 1 and prints to stderr;
 | [`daemon`](#rule-daemon)                 | 1       | Manage the MCP daemon (process and native platform services)                              |
 | [`install`](#rule-install)               | 27      | Install rule-mcp into an agent/IDE (edits mcp.json)                                       |
 | [`uninstall`](#rule-uninstall)           | 7       | Remove rule-mcp from an agent/IDE                                                         |
-| [`setup`](#rule-setup)                   | 35      | Full-screen install/uninstall wizard (falls back to flags when piped)                     |
+| [`setup`](#rule-setup)                   | 37      | Full-screen install/uninstall wizard (falls back to flags when piped)                     |
 | [`tools`](#rule-tools)                   | 1       | List or call MCP tools directly                                                           |
 | [`config`](#rule-config)                 | 5       | Print the mcp.json snippet, or manage RULE_MCP_* env vars with `config env`               |
 | [`feature`](#rule-feature)               | 0       | List or change user-facing feature switches                                               |
@@ -189,6 +189,8 @@ rule-mcp setup
 | `--refresh-projects`         | -       | -                             | re-apply MCP configs into every recorded project                            |
 | `--feature <id=level>`       |         | -                             | set a feature level before install (repeatable)                             |
 | `--adr-policy <level>`       | -       | -                             | ADR write policy: full, handoff, or on-demand                               |
+| `--attribution <mode>`       | -       | `keep`, `hide`                | commit attribution per agent: keep (default) or hide                        |
+| `--attribution-agent <id>`   |         | -                             | narrow attribution to one agent (repeatable)                                |
 | `--uninstall`                | -       | -                             | run the uninstall direction                                                 |
 | `--rules`                    | -       | -                             | write agent instruction files                                               |
 | `--no-rules`                 | -       | -                             | skip agent instruction files                                                |
