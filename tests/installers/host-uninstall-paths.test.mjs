@@ -30,8 +30,8 @@ const SOURCES = ["../../src/cli/installers/_uninstall.js", "../../src/cli/instal
  *   the same host under another profile directory, and the record owns the
  *   directory, not the file name;
  * - a `join(process.cwd(), ...)` path - the record is user-level, and the
- *   project-scope table belongs to step 8 of
- *   `docs/plans/installer-scope-adr-policy-features.md`, which writes it.
+ *   project-scope table belongs to step 8 of the port plan, which wrote it and
+ *   closed into ADR 198.
  */
 const HAND_BUILT_SERVER_PATH =
   /join\(\s*(?:HOME|homedir\(\))[^)]*["'`](?:\.claude\.json|config\.toml|settings\.json|mcp-config\.json|opencode\.json|mcp_config\.json|mcp\.json)["'`]/u;

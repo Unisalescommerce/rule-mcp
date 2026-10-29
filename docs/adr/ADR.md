@@ -8,6 +8,7 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [198](198-close-out-plan-installer-scope-adr-policy-features.md)                                                        | Close out the port plan for ADR policy, project installs, features and host paths                         | 2026-10-29 | accepted   | docs, closeout, plan, installer                                                     |
 | [197](197-own-every-user-facing-switch-as-a-feature.md)                                                                 | Own every user-facing switch as a feature                                                                 | 2026-10-28 | accepted   | installer, features, api                                                            |
 | [196](196-number-pending-adrs-when-they-land-on-the-trunk.md)                                                           | Number pending ADRs when they land on the trunk                                                           | 2026-10-28 | accepted   | architecture, docs, adr                                                             |
 | [195](195-write-adrs-when-a-policy-says-so-at-handoff-by-default.md)                                                    | Write ADRs when a policy says so at handoff by default                                                    | 2026-10-28 | accepted   | adr, policy, architecture                                                           |
@@ -213,6 +214,7 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [198](198-close-out-plan-installer-scope-adr-policy-features.md)                                                        | Fold the record into this ADR and delete the source file.                                                                                                                                                                       | - The installer writes into a project only when asked, and the project keeps the git side of ADR numbering whether or not anyone remembers to wire it.                                                                          |
 | [197](197-own-every-user-facing-switch-as-a-feature.md)                                                                 | Add src/core/runtime/features with level→env writers, persist under RULE_MCP_HOME/config/env.json, expose feature list/enable/disable plus setup --feature/--adr-policy and a wizard Features step.                             | Positive: one vocabulary for switches and re-apply on enable.                                                                                                                                                                   |
 | [196](196-number-pending-adrs-when-they-land-on-the-trunk.md)                                                           | Off trunk, rule_tool_process_adr writes docs/adr/_pending/<slug>.md referred to as ADR <slug>. On trunk, rule-mcp handoff land (also post-merge/post-rewrite and handoff closeout) assigns the next free numbers in...          | Positive: deterministic numbers across parallel landings; squash falls back to alphabetical slug order.                                                                                                                         |
 | [195](195-write-adrs-when-a-policy-says-so-at-handoff-by-default.md)                                                    | Add core/adr-policy (words, resolve, rule).                                                                                                                                                                                     | Positive: mid-task ADR spam stops by default; handoff and full remain available.                                                                                                                                                |
@@ -418,6 +420,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### installer
 
+- [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
 - [197](197-own-every-user-facing-switch-as-a-feature.md) Own every user-facing switch as a feature
 - [193](193-setup-scope-project-records-projects-json-and-wires-install-writers.md) Setup --scope project records projects.json and wires install writers
 - [192](192-project-scope-host-table-and-manifest-written-paths.md) Project-scope host table and manifest written paths
@@ -581,6 +584,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### docs
 
+- [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
 - [196](196-number-pending-adrs-when-they-land-on-the-trunk.md) Number pending ADRs when they land on the trunk
 - [194](194-follow-only-real-renames-when-dating-a-numbered-document.md) Follow only real renames when dating a numbered document
 - [172](172-retire-closed-plans-into-adrs-and-one-handoff.md) Retire closed plans into ADRs and one handoff
@@ -797,6 +801,18 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [015](015-toolchain-skill-isolation-vite.md) toolchain skill isolation vite
 - [009](009-toolchain-vite.md) Toolchain Skill Isolation (Vite)
 
+### closeout
+
+- [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
+- [119](119-close-out-audit-ui.md) Close out audit ui
+- [118](118-close-out-review-ui.md) Close out review ui
+- [111](111-close-out-audit-security.md) Close out audit security
+- [110](110-close-out-review-security.md) Close out review security
+- [103](103-every-handoff-mode-sweeps-completed-working-papers-and-closeout-false-is-the-rea.md) Every handoff mode sweeps completed working papers, and closeout false is the read-only run
+- [100](100-the-tokensave-integration-closes-out-and-the-adapter-is-the-code-graph-layer.md) The TokenSave integration closes out: the adapter and its graph-backed tools are the code-graph layer
+- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
+- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
+
 ### security
 
 - [174](174-retire-the-codeql-workflow-until-code-scanning-is-available.md) Retire the CodeQL workflow until code scanning is available
@@ -819,17 +835,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [064](064-coverage-floor-raised-to-89-toward-the-95-endpoint.md) Coverage floor raised to 89 toward the 95 endpoint
 - [063](063-coverage-floor-raised-to-87-95-remains-the-ratchet-endpoint.md) Coverage floor raised to 87; 95 remains the ratchet endpoint
 - [062](062-glob-suite-runner-colocated-tests-and-a-branch-coverage-ratchet.md) Glob suite runner, co-located tests, and a branch-coverage ratchet
-
-### closeout
-
-- [119](119-close-out-audit-ui.md) Close out audit ui
-- [118](118-close-out-review-ui.md) Close out review ui
-- [111](111-close-out-audit-security.md) Close out audit security
-- [110](110-close-out-review-security.md) Close out review security
-- [103](103-every-handoff-mode-sweeps-completed-working-papers-and-closeout-false-is-the-rea.md) Every handoff mode sweeps completed working papers, and closeout false is the read-only run
-- [100](100-the-tokensave-integration-closes-out-and-the-adapter-is-the-code-graph-layer.md) The TokenSave integration closes out: the adapter and its graph-backed tools are the code-graph layer
-- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
-- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
 
 ### hooks
 
@@ -1127,6 +1132,12 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md) Retire the cross-branch plan graph and orchestrate from rel/v0.1.0
 - [175](175-orchestrate-the-plan-catalog-with-a-staged-dependency-graph.md) Orchestrate the plan catalog with a staged dependency graph
 - [170](170-retire-the-plan-of-plans-into-an-adr-and-a-handoff.md) Retire the plan-of-plans into an ADR and a handoff
+
+### plan
+
+- [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
+- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
+- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
 
 ### quality
 
