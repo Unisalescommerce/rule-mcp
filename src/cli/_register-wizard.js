@@ -20,6 +20,16 @@ import { Option } from "commander";
 /** Collector for repeatable options: `--project a --project b` -> ["a", "b"]. */
 const collect = (value, previous) => [...previous, value];
 
+/**
+ * The `{ getArgument, hasFlag }` reader the setup runner expects, built from a
+ * parsed commander options object. Repeats fall back to raw argv, because
+ * `--no-*` negations are folded into booleans before this sees them.
+ *
+ * @param {import("commander").Command} program
+ * @param {Record<string, unknown>} options
+ * @param {string[]} [argv]
+ * @returns {object}
+ */
 export function commanderIo(program, options, argv = process.argv) {
   const getArgument = (name) => {
     const key = name.replace(/^--/, "").replaceAll(/-([a-z])/g, (_, c) => c.toUpperCase());

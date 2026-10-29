@@ -97,6 +97,7 @@ export async function startGuardDaemon(options = {}) {
           } catch {
             /* already gone */
           }
+
           resolve();
         });
       }),

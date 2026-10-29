@@ -7,7 +7,7 @@ export function registerHandoffCommand(program) {
     .description("Generate a compressed LLM context handoff summary")
     .argument(
       "[subcommand]",
-      "doctor | land | merge-index — repair numbering, number pending ADRs, or regenerate a merge conflict index",
+      "doctor | land | merge-index - repair numbering, number pending ADRs, or regenerate a merge conflict index",
     )
     .argument("[args...]", "merge-index receives %O %A %B %P from git")
     .option("--dir <path>", "project root (default: .)", ".")

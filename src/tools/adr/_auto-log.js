@@ -69,6 +69,7 @@ export async function autoLog(toolName, arguments_, result) {
   ].join("\n");
 
   const filename = pending ? `${slug}.md` : `${String(number).padStart(3, "0")}-${slug}.md`;
+
   writeFileSync(join(writeDir, filename), content);
 
   if (!pending) {

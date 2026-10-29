@@ -143,6 +143,12 @@ export function featureLevelItems(id) {
   }));
 }
 
+/**
+ * The MCP surface choices the wizard offers, one per tier, with the skill count
+ * each one exposes.
+ *
+ * @returns {Array<{ id: string, label: string, note: string, detail: string[] }>}
+ */
 export function surfaceItems() {
   const skills = getSkillNames();
   const hubs = skills.filter((name) => isRootSkill(name)).length;

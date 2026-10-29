@@ -80,6 +80,7 @@ export async function runGuard(kind = "bash", io = {}) {
   }
 
   let payload;
+
   if (given !== undefined) {
     payload = given;
   } else {
