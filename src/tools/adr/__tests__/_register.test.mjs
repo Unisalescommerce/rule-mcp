@@ -3,10 +3,12 @@
  * the English gate, the numbering, the index, and when auto-logging declines.
  */
 import { strict as assert } from "node:assert";
-import { mkdtempSync, readFileSync, readdirSync, rmSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
+import "../../../../tests/fixtures/git-hermetic.mjs";
 
 process.env.RULE_MCP_STATE_DIR = mkdtempSync(join(tmpdir(), "rule-mcp-adr-state-"));
 process.env.RULE_MCP_NO_AUTOUPDATE = "1";
@@ -23,6 +25,26 @@ const text = (result) => result.content.map((part) => part.text).join("\n");
 
 /** The ADR files a project directory holds, excluding the index. */
 const adrs = (root) => readdirSync(join(root, "docs", "adr")).filter((name) => name !== "ADR.md");
+
+const git = (root, ...arguments_) => execFileSync("git", arguments_, { cwd: root, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();
+
+/**
+ * A project on a trunk, because numbering happens on trunk and a bare directory
+ * is off one: ADR 196 keeps ADRs pending until they land, so a temp directory
+ * that is not a repository tested the pending path while asserting a number.
+ */
+const trunkProject = (prefix) => {
+  const root = mkdtempSync(join(tmpdir(), prefix));
+
+  git(root, "init", "--initial-branch=main", "-q");
+  git(root, "config", "user.email", "fixture@example.com");
+  git(root, "config", "user.name", "Fixture");
+  writeFileSync(join(root, "README.md"), "fixture\n");
+  git(root, "add", "-A");
+  git(root, "commit", "-qm", "chore(fixture): initial");
+
+  return root;
+};
 
 test("an ADR written in another language is refused, with the offenses named", async () => {
   const root = mkdtempSync(join(tmpdir(), "rule-mcp-adr-"));
@@ -43,7 +65,7 @@ test("an ADR written in another language is refused, with the offenses named", a
 });
 
 test("an ADR is written, numbered, and added to the index", async () => {
-  const root = mkdtempSync(join(tmpdir(), "rule-mcp-adr-"));
+  const root = trunkProject("rule-mcp-adr-");
 
   try {
     const result = await callTool("rule_tool_process_adr", {
@@ -75,7 +97,7 @@ test("an ADR is written, numbered, and added to the index", async () => {
 });
 
 test("the next ADR takes the next number", async () => {
-  const root = mkdtempSync(join(tmpdir(), "rule-mcp-adr-"));
+  const root = trunkProject("rule-mcp-adr-");
 
   try {
     await callTool("rule_tool_process_adr", { title: "Use PostgreSQL as the primary database", projectDir: root });
@@ -102,7 +124,7 @@ test("auto-logging declines every tool it was not asked to record", async () => 
 });
 
 test("auto-logging records a routed call as an informational entry", async () => {
-  const root = mkdtempSync(join(tmpdir(), "rule-mcp-adr-auto-"));
+  const root = trunkProject("rule-mcp-adr-auto-");
 
   try {
     await autoLog(
