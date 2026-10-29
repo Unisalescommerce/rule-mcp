@@ -10,28 +10,10 @@
 import { Option } from "commander";
 
 import { commanderIo } from "./_register-wizard.js";
+import { WIZARD_ONLY } from "./_wizard-only.data.js";
 
 const MODE_HELP = "stdio (default), daemon (SSE), docker, or skills (no MCP server, ADR 089)";
 
-/**
- * Options only the wizard's plan performs, by the flag that asks for them.
- *
- * `install` without a wizard is the narrow command it always was: it writes
- * the mcp.json entry and the router command file, and nothing else. Every
- * step below belongs to the plan, so a flag naming one is a flag this path
- * cannot honor.
- */
-const WIZARD_ONLY = {
-  rules: "--rules",
-  commands: "--commands",
-  skills: "--skills",
-  service: "--service",
-  doctor: "--doctor",
-  commandsPreset: "--commands-preset",
-  commandsFamilies: "--commands-families",
-  commandsAreas: "--commands-areas",
-  commandsSkills: "--commands-skills",
-};
 
 /**
  * Say so when a flag the plan owns was given to a run that has no plan.

@@ -21,15 +21,13 @@ import { join } from "node:path";
 import { homedir } from "node:os";
 import {
   DEFAULT_OPTOUT_ENV,
-  ENV_CONFIG_FILE,
   LEGACY_ENV_CONFIG_DIR,
-  LEGACY_ENV_CONFIG_FILE,
-  pruneHistoricalTokensaveDefault,
   readEnvConfig,
   writeEnvConfig,
 } from "../installers/index.js";
-import { manifestPath } from "../install/_manifest.js";
-import { projectsPath } from "../install/_projects.js";
+import { pruneHistoricalTokensaveDefault } from "../installers/_env-tokensave.js";
+
+export { reclaimConfig, reclaimTargets } from "./_config-reclaim.js";
 import { getRuntimePaths } from "../paths/index.js";
 
 /** Mirrors `cli/installers/_env.js` (not exported there): per-user compile cache. */
@@ -94,49 +92,6 @@ export function ensureRuntimeHome({ dryRun = false } = {}) {
   }
 
   return { homeDir, dirs, status: "created", settings };
-}
-
-/**
-The configuration and record files rule-mcp wrote, whichever of them exist.
-
-An uninstall removes the server from each agent's config but not these: the
-switches file keeps a tokensave `0` nobody chose, and the manifest and
-projects store keep pointing at installs that are gone. Listed even when
-absent, so a run can say what it looked for instead of guessing.
-
-@returns {Array<{ id: string, label: string, file: string, exists: boolean }>}
-*/
-export function reclaimTargets() {
-  return [
-    { id: "env-config", label: "Switches (env.json)", file: ENV_CONFIG_FILE() },
-    { id: "legacy-env-config", label: "Legacy switches and stored model keys", file: LEGACY_ENV_CONFIG_FILE },
-    { id: "manifest", label: "Install manifest", file: manifestPath() },
-    { id: "projects", label: "Recorded projects", file: projectsPath() },
-  ].map((target) => ({ ...target, exists: existsSync(target.file) }));
-}
-
-/**
-Delete the files the reclaim names.
-
-@param {{ dryRun?: boolean, ids?: string[] }} [options]
-@returns {Array<{ id: string, file: string, status: "removed"|"planned"|"absent" }>}
-*/
-export function reclaimConfig({ dryRun = false, ids } = {}) {
-  return reclaimTargets()
-    .filter((target) => ids === undefined || ids.includes(target.id))
-    .map((target) => {
-      if (!target.exists) {
-        return { id: target.id, file: target.file, status: "absent" };
-      }
-
-      if (dryRun) {
-        return { id: target.id, file: target.file, status: "planned" };
-      }
-
-      rmSync(target.file, { force: true });
-
-      return { id: target.id, file: target.file, status: "removed" };
-    });
 }
 
 /** What a purge would remove, and how much of it there is. */

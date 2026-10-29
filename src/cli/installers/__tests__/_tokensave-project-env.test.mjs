@@ -20,7 +20,8 @@ process.env.RULE_MCP_HOME = home;
 // choice nobody made here.
 process.env.HOME = home;
 
-const { tokensaveProjectEnv, pruneHistoricalTokensaveDefault, writeEnvConfig } = await import("../_env.js");
+const { tokensaveProjectEnv, pruneHistoricalTokensaveDefault } = await import("../_env-tokensave.js");
+const { writeEnvConfig } = await import("../_env.js");
 const { installProjectHost } = await import("../_install-project.js");
 
 const withGraph = mkdtempSync(join(tmpdir(), "rule-project-graph-"));

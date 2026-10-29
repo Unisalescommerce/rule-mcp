@@ -10,7 +10,8 @@
  */
 
 import { readText, writeText } from "./_paths.js";
-import { commandConfig, tokensaveProjectEnv } from "./_env.js";
+import { commandConfig } from "./_env.js";
+import { tokensaveProjectEnv } from "./_env-tokensave.js";
 import { removeHostServer, upsertHostServer } from "./_host-formats.js";
 import { PROJECT_HOSTS, projectHostFile, projectHostFormat, projectHostLocalFile } from "./_project-hosts.data.js";
 

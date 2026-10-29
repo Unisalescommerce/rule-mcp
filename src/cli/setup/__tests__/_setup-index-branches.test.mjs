@@ -31,11 +31,11 @@ let mountCalls = 0;
 
 registerHooks({
   resolve(specifier, context, nextResolve) {
-    if (specifier === "./_plain.js" && context.parentURL?.includes("/cli/setup/index.js")) {
+    if (specifier === "./_plain.js" && context.parentURL?.includes("/cli/setup/")) {
       return { url: stubPlainUrl, shortCircuit: true };
     }
 
-    if (specifier === "./_mount.js" && context.parentURL?.includes("/cli/setup/index.js")) {
+    if (specifier === "./_mount.js" && context.parentURL?.includes("/cli/setup/")) {
       return { url: stubMountUrl, shortCircuit: true };
     }
 

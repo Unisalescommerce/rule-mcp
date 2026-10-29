@@ -8,31 +8,13 @@
 // eslint-disable-next-line no-unused-vars
 import { strict as assert } from "node:assert";
 import { existsSync, mkdtempSync, readFileSync, unlinkSync } from "node:fs";
-import { createServer } from "node:net";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-/**
- * A free loopback port, asked of the kernel rather than assumed.
- *
- * The daemon is a real process on a real port. While this test hardcoded 37999
- * and the user's own home, a parallel suite could answer the health check for
- * it - the port was shared with the daemon of whoever ran the tests.
- *
- * @returns {Promise<number>}
- */
-async function freePort() {
-  const server = createServer();
-
-  await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
-  const { port } = server.address();
-  await new Promise((resolve) => server.close(resolve));
-
-  return port;
-}
-
 // Before anything imports the paths: a daemon of its own, on a port of its own.
 process.env.RULE_MCP_HOME = mkdtempSync(join(tmpdir(), "rule-mcp-daemon-test-"));
+const { freePort } = await import("./_daemon.fixture.mjs");
+
 process.env.RULE_MCP_PORT = String(await freePort());
 process.env.RULE_MCP_NO_AUTOUPDATE = "1";
 
@@ -50,47 +32,7 @@ const check = (label, ok) => {
 
 console.log("=== Daemon Command Tests ===\n");
 
-/** Poll the health endpoint until the daemon answers, or give up. */
-async function waitForHealth({ timeoutMs = 15000, stepMs = 200 } = {}) {
-  const deadline = Date.now() + timeoutMs;
-  let last = null;
-
-  while (Date.now() < deadline) {
-    try {
-      const res = await fetch(`http://127.0.0.1:${daemonPort}/health`);
-
-      if (res.status === 200) {
-        return res;
-      }
-
-      last = res;
-    } catch (error) {
-      last = error;
-    }
-
-    await new Promise((r) => setTimeout(r, stepMs));
-  }
-
-  throw new Error(`the daemon never answered on ${daemonPort}: ${last}`);
-}
-
-/** Poll until nothing answers on the daemon port, or give up. */
-async function waitForClosed({ timeoutMs = 5000, stepMs = 200 } = {}) {
-  const deadline = Date.now() + timeoutMs;
-
-  while (Date.now() < deadline) {
-    try {
-      await fetch(`http://127.0.0.1:${daemonPort}/health`);
-    } catch {
-      return;
-    }
-
-    await new Promise((r) => setTimeout(r, stepMs));
-  }
-
-  throw new Error(`something still answers on ${daemonPort} after stop`);
-}
-
+const { waitForClosed, waitForHealth } = await import("./_daemon.fixture.mjs");
 const { getRuntimePaths } = await import("../../paths/index.js");
 const { rmSync } = await import("node:fs");
 
@@ -138,7 +80,7 @@ if (pidExists) {
   // machine running the whole suite gives the child less of the CPU, and a
   // 2 s sleep made this test fail on load instead of on behavior.
   try {
-    const res = await waitForHealth();
+    const res = await waitForHealth(daemonPort);
 
     check("T7.3 daemon health endpoint responds", res.status === 200);
     const body = await res.json();
@@ -159,7 +101,7 @@ await daemonCommand({ action: "stop" });
 check("T9 daemon stop removes pid file", !existsSync(pidFile));
 
 try {
-  await waitForClosed();
+  await waitForClosed(daemonPort);
 
   check("T9.1 daemon port closed after stop", true);
 } catch (error) {

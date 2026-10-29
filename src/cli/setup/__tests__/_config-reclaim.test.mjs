@@ -18,8 +18,7 @@ const home = mkdtempSync(join(tmpdir(), "rule-reclaim-home-"));
 process.env.RULE_MCP_HOME = home;
 process.env.HOME = home;
 
-const { reclaimTargets, reclaimConfig } = await import("../_runtime-home.js");
-const { reclaimConfiguration } = await import("../../commands/_lifecycle.js");
+const { reclaimConfiguration, reclaimConfig, reclaimTargets } = await import("../_config-reclaim.js");
 const { manifestPath } = await import("../../install/_manifest.js");
 const { projectsPath } = await import("../../install/_projects.js");
 const { ENV_CONFIG_FILE, LEGACY_ENV_CONFIG_FILE } = await import("../../installers/_env.js");

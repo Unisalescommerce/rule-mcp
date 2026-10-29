@@ -123,6 +123,7 @@ export function forgetInstall({ agent, dryRun = false } = {}) {
   }
 
   const next = { ...manifest, agents, hosts };
+
   writeFileSync(manifestPath(), `${JSON.stringify(next, null, 2)}\n`);
 
   return next;
@@ -133,27 +134,3 @@ export function hasManifest() {
   return existsSync(manifestPath());
 }
 
-/**
- * Record one install and return the manifest path (the agent-ops caller
- * reports it in its result).
- *
- * @param {string|string[]} agents
- * @param {string} [entrypoint]
- * @param {boolean} [global]
- * @param {string} [mode]
- * @returns {string}
- */
-export function writeInstalledManifest(agents, entrypoint, global, mode, level = null) {
-  const list = Array.isArray(agents) ? agents : [agents];
-
-  for (const agent of list) {
-    recordInstall({ agent, level, mode, entrypoint, global, dimensions: { server: true } });
-  }
-
-  // The human-readable manifest beside the JSON one: the test and the doctor
-  // both read the transport line, and an older release wrote only this file.
-  mkdirSync(dirname(readmePath()), { recursive: true });
-  writeFileSync(readmePath(), ["# rule-mcp", "", `- Transport: ${mode ?? "stdio"}`, `- Entrypoint: ${entrypoint ?? ""}`, `- Agents: ${list.join(", ")}`, ""].join("\n"));
-
-  return manifestPath();
-}

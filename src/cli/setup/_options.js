@@ -12,73 +12,13 @@
 import { MINIMAL_ENV_VAR, normalizeInstallMode } from "../installers/index.js";
 import { selectionOf } from "../install/_selection-flags.js";
 import { surfaceOf } from "../install/_surface-flags.js";
+import { canRenderWizard } from "./_version-floor.js";
+
+export { WIZARD_NODE_MIN, atLeast, canRenderWizard, versionParts, wizardRuntimeNote } from "./_version-floor.js";
 
 /** Optional steps that run unless the caller opts out. */
 export const DEFAULT_EXTRAS = ["rules", "commands", "hooks", "doctor"];
 
-/**
- * The node the renderer needs, which is higher than the one the server needs.
- *
- * OpenTUI's core is a native library that declares `engines.node >=26.4.0`;
- * the package floor is 20, and a node 20 install still has to work. It gets
- * the plain runner - the same plan, printed rather than drawn - so the floor
- * costs a frame and not an install.
- */
-export const WIZARD_NODE_MIN = "26.4.0";
-
-/** A version as comparable numbers, `v26.4.0` and `26.4.0` alike. */
-export const versionParts = (version = process.version) =>
-  String(version)
-    .replace(/^v/u, "")
-    .split(".")
-    .map((part) => Number.parseInt(part, 10) || 0);
-
-/**
- * Whether `version` reaches `floor`.
- *
- * The minor matters: node 26.0 exists and cannot load the renderer, so a
- * major-only comparison would hand it a wizard that fails on mount.
- *
- * @param {string} version
- * @param {string} floor
- * @returns {boolean}
- */
-export function atLeast(version, floor) {
-  const left = versionParts(version);
-  const right = versionParts(floor);
-
-  for (let index = 0; index < Math.max(left.length, right.length); index += 1) {
-    const a = left[index] ?? 0;
-    const b = right[index] ?? 0;
-
-    if (a !== b) {
-      return a > b;
-    }
-  }
-
-  return true;
-}
-
-/**
- * Whether this process can host a full-screen wizard.
- *
- * Four reasons it cannot, and each one is a real install someone runs: a node
- * older than the renderer, a pipe on either end, a CI job, and a terminal that
- * declares itself dumb.
- *
- * @param {object} [env] @param {object} [stdin] @param {object} [stdout] @param {string} [version]
- */
-export function canRenderWizard(env = process.env, stdin = process.stdin, stdout = process.stdout, version = process.version) {
-  if (!atLeast(version, WIZARD_NODE_MIN)) {
-    return false;
-  }
-
-  return Boolean(stdin.isTTY && stdout.isTTY) && !env.CI && env.TERM !== "dumb";
-}
-
-/** Why the wizard is not drawing, when the reason is the runtime. */
-export const wizardRuntimeNote = () =>
-  atLeast(process.version, WIZARD_NODE_MIN) ? "" : `${process.version} cannot host the wizard (node ${WIZARD_NODE_MIN} or newer draws it) - running the same plan from the flags.`;
 
 /**
  * Carry a `--minimal` / `--no-minimal` answer into the process environment.

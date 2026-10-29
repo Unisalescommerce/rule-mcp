@@ -3,8 +3,7 @@
  * the English gate, the numbering, the index, and when auto-logging declines.
  */
 import { strict as assert } from "node:assert";
-import { execFileSync } from "node:child_process";
-import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, readdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
@@ -17,6 +16,7 @@ process.env.RULE_MCP_ADR_POLICY = "full";
 const { registerProcessAdrTool } = await import("../_register.js");
 const { autoLog } = await import("../_auto-log.js");
 const { callTool } = await import("../../router/index.js");
+const { trunkProject } = await import("./_adr-trunk.fixture.mjs");
 
 registerProcessAdrTool();
 
@@ -25,26 +25,6 @@ const text = (result) => result.content.map((part) => part.text).join("\n");
 
 /** The ADR files a project directory holds, excluding the index. */
 const adrs = (root) => readdirSync(join(root, "docs", "adr")).filter((name) => name !== "ADR.md");
-
-const git = (root, ...arguments_) => execFileSync("git", arguments_, { cwd: root, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();
-
-/**
- * A project on a trunk, because numbering happens on trunk and a bare directory
- * is off one: ADR 196 keeps ADRs pending until they land, so a temp directory
- * that is not a repository tested the pending path while asserting a number.
- */
-const trunkProject = (prefix) => {
-  const root = mkdtempSync(join(tmpdir(), prefix));
-
-  git(root, "init", "--initial-branch=main", "-q");
-  git(root, "config", "user.email", "fixture@example.com");
-  git(root, "config", "user.name", "Fixture");
-  writeFileSync(join(root, "README.md"), "fixture\n");
-  git(root, "add", "-A");
-  git(root, "commit", "-qm", "chore(fixture): initial");
-
-  return root;
-};
 
 test("an ADR written in another language is refused, with the offenses named", async () => {
   const root = mkdtempSync(join(tmpdir(), "rule-mcp-adr-"));
