@@ -5,7 +5,7 @@ import { existsSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } f
 import { print } from "./_shared.js";
 import { isRuleCommandEntry, stalePersonaFiles } from "./_targets-stale.js";
 import { dirname, resolve } from "node:path";
-import { resolvedTargets } from "./_targets.js";
+import { resolvedTargets } from "./_targets-resolve.js";
 
 /**
  * Write, or remove, the rendered command set in every resolved target.

@@ -9,11 +9,12 @@
  * what this machine has, and what it has per host.
  */
 
-import { rmSync, writeFileSync } from "node:fs";
+import { rmSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 
-import { forgetInstall, readManifest } from "./_manifest.js";
+
+import { forgetInstall, readManifest } from "./_manifest-store.js";
 
 /** The path of the human-readable manifest written beside the JSON one. */
 export function readmePath() {

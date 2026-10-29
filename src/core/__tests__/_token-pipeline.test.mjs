@@ -15,7 +15,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 const BASE = new URL("../../..", import.meta.url).pathname;
-const { resolveTokensaveDir, tokensaveActive, suppressIfTokensave, decorateWithTokensave, resetTokenPipeline } = await import(join(BASE, "src/core/agents/_integrations.js"));
+const { resolveTokensaveDir, tokensaveActive, suppressIfTokensave, decorateWithTokensave, resetTokenPipeline } = await import(join(BASE, "src/core/agents/index.js"));
 const { compressResult, compressText } = await import(join(BASE, "src/core/text/_compression.js"));
 const { compressTextAggressive } = await import(join(BASE, "src/core/text/_compression-aggressive.js"));
 const { getTokenStats, resetTokenStats } = await import(join(BASE, "src/core/telemetry/_token-stats.js"));

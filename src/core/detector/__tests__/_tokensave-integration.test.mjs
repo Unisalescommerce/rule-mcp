@@ -29,7 +29,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { detectProject, hasTokensave } from "../index.js";
 // eslint-disable-next-line no-unused-vars
-import { suppressIfTokensave, tokensaveActive, TOKENSAVE_DIRECTIVE } from "../../agents/_integrations.js";
+import { tokensaveActive, TOKENSAVE_DIRECTIVE } from "../../agents/_integrations.js";
+import { suppressIfTokensave } from "../../agents/_token-pipeline.js";
 import { loadAllSkills } from "../../skills/index.js";
 import { callTool } from "../../../tools/router/index.js";
 

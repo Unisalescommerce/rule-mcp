@@ -6,12 +6,10 @@ import { print } from "./_shared.js";
 import { resolve } from "node:path";
 import { resolveCommandTargets } from "../../core/agents/command-targets/index.js";
 import { syncCommandTargets } from "./_targets-sync.js";
-/** Resolve the command targets for these options, detected-only by default. */
-export function resolvedTargets(opts) {
-  const filter = opts.agent ? { agent: opts.agent } : { detectedOnly: true };
+import { resolvedTargets } from "./_targets-resolve.js";
 
-  return resolveCommandTargets({ ...filter, includeLegacy: Boolean(opts.includeLegacy) });
-}
+export { resolvedTargets } from "./_targets-resolve.js";
+/** Resolve the command targets for these options, detected-only by default. */
 
 /**
  * Print the resolved command targets - `agent<TAB>format<TAB>scope<TAB>dir`, or

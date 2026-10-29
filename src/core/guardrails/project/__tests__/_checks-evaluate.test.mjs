@@ -9,9 +9,14 @@
  * against both.
  */
 import { strict as assert } from "node:assert";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { test } from "node:test";
 
 import { HEALTH_FLOOR, PROJECT_CHECKS } from "../_checks.js";
+import { cyclicSource } from "./_cycle.fixture.mjs";
+import { deadProject } from "./_projects.fixture.mjs";
 
 const check = (id) => PROJECT_CHECKS.find((entry) => entry.id === id);
 
@@ -40,16 +45,36 @@ test("a graph that answered with nothing passes every check", () => {
   }
 });
 
-test("circular counts only the cycles that touch src", () => {
+test("circular counts only the cycles that touch src, and only real imports", () => {
   const circular = check("project-circular");
+  const root = mkdtempSync(join(tmpdir(), "rule-checks-cycle-"));
+  const write = (path, body) => {
+    mkdirSync(join(root, path, ".."), { recursive: true });
+    writeFileSync(join(root, path), body);
+  };
 
-  assert.equal(circular.evaluate({ cycles: [["lib/a.js", "lib/b.js"]] }), null, "a cycle outside src is not this rule's business");
+  try {
+    // A real cycle: each file imports the other outside a comment.
+    write("src/a.js", cyclicSource("a", "b"));
+    write("src/b.js", cyclicSource("b", "a"));
+    // A documented type is not an import, so this pair is not a cycle.
+    write("src/c.js", `/** @param {import(".${"/d"}${".js"}").D} d */\nexport const c = 1;\n`);
+    write("src/d.js", cyclicSource("d", "c"));
 
-  const failure = circular.evaluate({ cycles: [["lib/a.js"], ["src/a.js", "src/b.js", "src/a.js"]] });
+    assert.equal(
+      circular.evaluate({ cycles: [["lib/a.js", "lib/b.js"]] }, { projectDir: root }),
+      null,
+      "a cycle outside src is not this rule's business",
+    );
 
-  assert.equal(failure.failCount, 1, "only the src cycle counts");
-  assert.match(failure.detail[1], /src\/a\.js -> src\/b\.js -> src\/a\.js/, "the first cycle is spelled out");
-  assert.match(failure.suggestion, /tokensave_imports/);
+    const failure = circular.evaluate({ cycles: [["src/a.js", "src/b.js"], ["src/c.js", "src/d.js"]] }, { projectDir: root });
+
+    assert.equal(failure.failCount, 1, "the type reference does not count as an edge");
+    assert.match(failure.detail[1], /src\/a\.js -> src\/b\.js/, "the first cycle is spelled out");
+    assert.match(failure.suggestion, /tokensave_imports/);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
 });
 
 test("circular tolerates a cycles field that is not a list", () => {
@@ -75,12 +100,20 @@ test("health says so when the tool returned no score at all", () => {
   assert.equal(check("project-health").evaluate({ quality_signal: "not a number" }).detail[0], "the health tool returned no score");
 });
 
-test("dead code reports the count it was given", () => {
+test("dead code counts only what the graph can prove is dead", () => {
   const dead = check("project-dead-code");
+  const root = deadProject();
 
-  assert.equal(dead.evaluate({ dead_code_count: 0 }), null);
-  assert.equal(dead.evaluate({ dead_code_count: "not a number" }), null, "a count that is not one is treated as none");
-  assert.equal(dead.evaluate({ dead_code_count: 3 }).failCount, 3);
+  try {
+    assert.equal(dead.evaluate({ dead_code_count: 0 }, { projectDir: root }), null);
+    assert.equal(dead.evaluate({ dead_code_count: 3 }, { projectDir: root }), null, "a count without symbols decides nothing");
+    assert.equal(
+      dead.evaluate({ dead_code_count: 1, symbols: [{ file: "src/dead.js", name: "orphan" }] }, { projectDir: root }).failCount,
+      1,
+    );
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
 });
 
 test("unsafe patterns lists the kinds when the payload names them", () => {

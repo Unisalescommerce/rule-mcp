@@ -119,9 +119,6 @@ test("the fixer separates consecutive multi-line exports but not barrel lines", 
   assert.doesNotMatch(out, /x\}\n\nexport \{ y/, "barrel re-exports stay adjacent");
 });
 
-function require_utf8(file) {
-  return readFileUni(file);
-}
 
 function readFileUni(file) {
   return import("node:fs").then((fs) => fs.readFileSync(file, "utf8"));

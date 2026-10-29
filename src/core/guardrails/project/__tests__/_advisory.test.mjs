@@ -7,17 +7,30 @@
  * stop reading its output.
  */
 import { strict as assert } from "node:assert";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { test } from "node:test";
 
 import { checkProjectGuarded } from "../_run.js";
+import { cyclicSource } from "./_cycle.fixture.mjs";
 
 const available = () => ({ available: true });
+
+/** A project with one real import cycle, so the cycle check has something to read. */
+const project = mkdtempSync(join(tmpdir(), "rule-advisory-"));
+
+mkdirSync(join(project, "src"), { recursive: true });
+writeFileSync(join(project, "src", "a.js"), cyclicSource("a", "b"));
+writeFileSync(join(project, "src", "b.js"), cyclicSource("b", "a"));
+
+test.after(() => rmSync(project, { recursive: true, force: true }));
 
 /** A client that answers each tool with the payload the test wants. */
 const clientFor = (payloads) => (tool) => ({ ok: true, value: payloads[tool] ?? {} });
 
 test("an advisory finding is reported without failing the run", () => {
-  const result = checkProjectGuarded("/tmp/x", {
+  const result = checkProjectGuarded(project, {
     probe: available,
     client: clientFor({
       circular: { cycles: [] },
@@ -37,7 +50,7 @@ test("an advisory finding is reported without failing the run", () => {
 });
 
 test("an advisory check that passes is counted as a pass", () => {
-  const result = checkProjectGuarded("/tmp/x", {
+  const result = checkProjectGuarded(project, {
     probe: available,
     client: clientFor({
       circular: { cycles: [] },
@@ -54,7 +67,7 @@ test("an advisory check that passes is counted as a pass", () => {
 });
 
 test("a blocking check still fails the run beside an advisory", () => {
-  const result = checkProjectGuarded("/tmp/x", {
+  const result = checkProjectGuarded(project, {
     probe: available,
     client: clientFor({
       circular: { cycles: [["src/a.js", "src/b.js"]] },
@@ -72,7 +85,7 @@ test("a blocking check still fails the run beside an advisory", () => {
 });
 
 test("two identical bodies are an advisory, named with both sites", () => {
-  const result = checkProjectGuarded("/tmp/x", {
+  const result = checkProjectGuarded(project, {
     probe: available,
     client: clientFor({
       circular: { cycles: [] },

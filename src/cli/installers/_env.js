@@ -97,8 +97,6 @@ function resolveEnvironment(options = {}) {
   return { NODE_COMPILE_CACHE: COMPILE_CACHE_DIR, ...DEFAULT_OPTOUT_ENV, ...saved, ...minimalEnvFrom(), ...options.env };
 }
 
-export { commandConfig, mcpServerConfig } from "./_env-command.js";
-
 export {
   LEGACY_ENV_CONFIG_DIR,
   LEGACY_ENV_CONFIG_FILE,

@@ -20,7 +20,7 @@ import { pkg as package_ } from "../cli/paths/index.js";
 import { registerCompletionHandler } from "./_completions.js";
 import { registerPromptHandlers } from "./_prompt-handlers.js";
 import { listTools, callTool } from "../tools/router/index.js";
-import { decorateWithTokensave } from "../core/agents/_integrations.js";
+import { decorateWithTokensave } from "../core/agents/_token-pipeline.js";
 import { compressResourceListing, listResources, readResource } from "../resources/index.js";
 
 /** @type {Server|null} */

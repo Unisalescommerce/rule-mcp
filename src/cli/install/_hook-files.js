@@ -4,7 +4,7 @@ import { join } from "node:path";
 
 import { HOME, atomicWrite, readText, removeFile } from "../installers/_paths.js";
 import { parseJson, toJson } from "../installers/_writers-json.js";
-import { commandConfig } from "../installers/_env.js";
+import { commandConfig } from "../installers/_env-command.js";
 import { HOOK_MARKER } from "../../core/agents/_hook-commands.js";
 import { withHooks, withoutHooks } from "../../core/agents/_hooks.js";
 import { codexHooks, cursorHooks, geminiHooks, kiroHooks } from "./_hook-writers.js";

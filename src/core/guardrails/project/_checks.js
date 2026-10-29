@@ -9,6 +9,9 @@
  * adapter never learns what a failing graph looks like.
  */
 
+import { circularFailure } from "./_circular.js";
+import { deadCodeFailure } from "./_dead-code.js";
+
 /** The composite quality floor the health check enforces. */
 export const HEALTH_FLOOR = 7000;
 
@@ -29,22 +32,7 @@ export const PROJECT_CHECKS = [
     label: "No circular file dependencies in src",
     tool: "circular",
     args: {},
-    evaluate: (value) => {
-      const cycles = Array.isArray(value?.cycles) ? value.cycles : [];
-      const relevant = cycles.filter((cycle) => cycle.some((file) => String(file).startsWith("src/")));
-
-      if (relevant.length === 0) {
-        return null;
-      }
-
-      const first = relevant[0].join(" -> ");
-
-      return {
-        failCount: relevant.length,
-        detail: [`${relevant.length} circular file dependency cycle(s) touching src/`, `first: ${first}`],
-        suggestion: "Break the cycle; `tokensave_imports` names the import statements to cut.",
-      };
-    },
+    evaluate: (value, context) => circularFailure(value, context?.projectDir ?? process.cwd()),
   },
   {
     id: "project-health",
@@ -70,19 +58,7 @@ export const PROJECT_CHECKS = [
     label: "No dead symbols in src",
     tool: "dead_code",
     args: { path: "src" },
-    evaluate: (value) => {
-      const count = Number(value?.dead_code_count) || 0;
-
-      if (count === 0) {
-        return null;
-      }
-
-      return {
-        failCount: count,
-        detail: [`${count} symbol(s) with no incoming edge`],
-        suggestion: "Remove the symbol or call it; pass `include_public` to audit public items.",
-      };
-    },
+    evaluate: (value, context) => deadCodeFailure(value, context?.projectDir ?? process.cwd()),
   },
   {
     id: "project-unsafe-patterns",

@@ -13,7 +13,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { HOME, readText, removeFile, writeText } from "./_paths.js";
-import { commandConfig } from "./_env.js";
+import { commandConfig } from "./_env-command.js";
 import { removeJsonServer } from "./_writers-json.js";
 import { appendInstruction, removeInstruction } from "./_writers-text.js";
 import { upsertOpencode, removeOpencode } from "./_writers-opencode.js";

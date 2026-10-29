@@ -3,4 +3,6 @@ export * from "./_help-text.js";
 export * from "./_init.js";
 export * from "./_program.js";
 export * from "./_tui.js";
+
+export * from "./_tui-formats.js";
 export * from "./_uninstall.js";

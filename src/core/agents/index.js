@@ -4,4 +4,6 @@ export * from "./command-targets/index.js";
 export * from "./_hook-commands.js";
 export * from "./_hooks.js";
 export * from "./_integrations.js";
+
+export * from "./_token-pipeline.js";
 export * from "./transcripts/index.js";

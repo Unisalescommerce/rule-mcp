@@ -1,10 +1,10 @@
 /** @module core/session/resume/announce - one announcement per session, tracked on disk */
 
-import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
-import { getRuntimePaths } from "@src/cli/paths/index.js";
+import { existsSync, readFileSync, rmSync } from "node:fs";
 
+import { markAnnounced, recordFile } from "./_announced.js";
+
+export { markAnnounced } from "./_announced.js";
 import { handoffBlock } from "./_context.js";
 import { isResumeSignal } from "./_signal.js";
 
@@ -20,31 +20,6 @@ let announced = false;
  */
 const PROCESS_STARTED_AT = Date.now() - Math.round(process.uptime() * 1000);
 
-/** Where the record lives. Keyed by project, because two projects are two answers. */
-function recordFile(cwd) {
-  const key = createHash("sha256")
-    .update(resolve(cwd ?? process.cwd()))
-    .digest("hex")
-    .slice(0, 16);
-
-  return join(getRuntimePaths().stateDir, "resume", `${key}.json`);
-}
-
-/**
- * Record that the handoff was announced for this project, now.
- *
- * @param {string} [cwd]
- * @param {number} [at] - Epoch ms, for tests that need an older record
- */
-export function markAnnounced(cwd, at = Date.now()) {
-  const file = recordFile(cwd);
-  try {
-    mkdirSync(join(file, ".."), { recursive: true });
-    writeFileSync(file, JSON.stringify({ at }), "utf8");
-  } catch {
-    /* a record that cannot be written costs a duplicate, never a crash */
-  }
-}
 
 /**
  * Whether something already announced the handoff for this project during this

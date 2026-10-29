@@ -1,6 +1,7 @@
 /** macOS launchd adapter: the LaunchAgent plist, install, uninstall, the lifecycle verbs, check. */
 import { writeFileSync, mkdirSync, existsSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
+import { LAUNCH_AGENT_LABEL } from "./_launchd-label.js";
 import { generateLaunchAgentPlist } from "./_launchd-plist.js";
 import { HOME, resolveEntrypoint, tryExecFile, WRAPPER_SCRIPT_PATH, generateWrapperScript } from "./_service-shared.js";
 
@@ -9,7 +10,6 @@ import { HOME, resolveEntrypoint, tryExecFile, WRAPPER_SCRIPT_PATH, generateWrap
 // ═══════════════════════════════════════════════════════════════════════════
 
 /** The LaunchAgent label. */
-export const LAUNCH_AGENT_LABEL = "io.github.rule-mcp.rule-mcp";
 
 /** Where user LaunchAgents live. */
 export const LAUNCH_AGENT_DIR = join(HOME, "Library", "LaunchAgents");

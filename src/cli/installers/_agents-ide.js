@@ -6,7 +6,7 @@
 
 import { join } from "node:path";
 import { HOME, IS_WINDOWS, readText, writeText, serverName } from "./_paths.js";
-import { commandConfig } from "./_env.js";
+import { commandConfig } from "./_env-command.js";
 import { upsertJsonServer, upsertVscode } from "./_writers-json.js";
 import { HOST_FILES, hostFile } from "./_hosts.data.js";
 import { upsertHostServer } from "./_host-formats.js";

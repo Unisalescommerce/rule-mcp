@@ -10,7 +10,8 @@
 import { strict as assert } from "node:assert";
 import { afterEach, test } from "node:test";
 
-import { commandConfig, minimalEnvFrom, MINIMAL_ENV_VAR } from "../_env.js";
+import { commandConfig } from "../_env-command.js";
+import { minimalEnvFrom, MINIMAL_ENV_VAR } from "../_env.js";
 
 const saved = process.env[MINIMAL_ENV_VAR];
 

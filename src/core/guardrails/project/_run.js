@@ -59,7 +59,7 @@ export function checkProjectGuarded(projectDir = process.cwd(), { skill = "rule-
       continue;
     }
 
-    const outcome = check.evaluate(result.value);
+    const outcome = check.evaluate(result.value, { projectDir });
 
     if (outcome) {
       const entry = { id: check.id, wcag: "", label: check.label, failCount: outcome.failCount, detail: outcome.detail, suggestion: outcome.suggestion };

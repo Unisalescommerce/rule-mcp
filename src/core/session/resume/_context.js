@@ -2,7 +2,7 @@
 
 import { compressSurfaceText } from "@src/core/text/_compression.js";
 import { handon } from "@src/tools/handon/index.js";
-import { markAnnounced } from "./_announce.js";
+import { markAnnounced } from "./_announced.js";
 
 /** Session sources that mean "the user came back to unfinished work". */
 const RESUMED = new Set(["resume"]);

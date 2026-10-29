@@ -12,7 +12,7 @@
 import { existsSync, rmSync } from "node:fs";
 
 import { readText, writeText } from "./_paths.js";
-import { commandConfig } from "./_env.js";
+import { commandConfig } from "./_env-command.js";
 import { tokensaveProjectEnv } from "./_env-tokensave.js";
 import { removeHostServer, upsertHostServer } from "./_host-formats.js";
 import { PROJECT_HOSTS, projectHostFile, projectHostFormat, projectHostLocalFile } from "./_project-hosts.data.js";
