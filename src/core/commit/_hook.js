@@ -13,6 +13,8 @@
 import { chmodSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
+import { getRuntimePaths } from "../../cli/paths/index.js";
+
 /** The marker every file this module writes carries. */
 export const HOOK_MARKER = "rule-mcp:commit-lint";
 
@@ -45,11 +47,28 @@ function lintCommand(name, command) {
  * cannot run; treating that as "on PATH" turned every `git push` on the machine
  * into a node stack trace, which is the opposite of what this file promises.
  *
- * @param {string} name
+ * A skip is also written down: the warning scrolls away, and "the gate was off
+ * yesterday at 14:02" is a question someone asks after a release lands
+ * unchecked. Recording is a courtesy - a record that cannot be written never
+ * blocks the push.
+ *
+ * @param {string} name "commit-msg" or "pre-push"
  * @param {string} [command]
+ * @param {{ root?: string }} [options] - where the skip record lives
  * @returns {string}
  */
-export function hookBody(name, command = DEFAULT_COMMAND) {
+export function hookBody(name, command = DEFAULT_COMMAND, { root = getRuntimePaths().homeDir } = {}) {
+  const logDir = join(root, "state");
+  const logFile = join(logDir, "launcher-skips.log");
+
+  /** The warning, and the line that outlives it. */
+  const skip = (reason) => [
+
+    `    echo "${HOOK_MARKER}: ${reason}; commit validation skipped - run: rule-mcp setup" >&2`,
+    `    mkdir -p ${JSON.stringify(logDir)} 2>/dev/null`,
+    `    printf '%s ${name}: ${reason}\\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> ${JSON.stringify(logFile)} 2>/dev/null`,
+  ];
+
   return [
     "#!/bin/sh",
     `# ${HOOK_MARKER} - reject a commit or push that is not type(scope): subject.`,
@@ -59,10 +78,10 @@ export function hookBody(name, command = DEFAULT_COMMAND) {
     `  if ${command} --version >/dev/null 2>&1; then`,
     `    ${lintCommand(name, command)} || exit 1`,
     "  else",
-    `    echo "${HOOK_MARKER}: ${command} exists but cannot run; commit validation skipped - reinstall it (pnpm setup in its checkout)" >&2`,
+    ...skip(`${command} exists but cannot run`),
     "  fi",
     "else",
-    `  echo "${HOOK_MARKER}: ${command} is not on PATH; commit validation skipped" >&2`,
+    ...skip(`${command} is not on PATH`),
     "fi",
     'if [ -x "$backup" ]; then',
     '  exec "$backup" "$@"',
@@ -88,7 +107,7 @@ export function writeHook(hooksDir, name, options = {}) {
   mkdirSync(hooksDir, { recursive: true });
 
   const path = join(hooksDir, name);
-  const body = hookBody(name, options.command ?? DEFAULT_COMMAND);
+  const body = hookBody(name, options.command ?? DEFAULT_COMMAND, { root: options.root });
   const current = existsSync(path) ? readFileSync(path, "utf8") : null;
 
   if (current === body) {

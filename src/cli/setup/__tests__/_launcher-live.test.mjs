@@ -54,3 +54,12 @@ test("neither answers, and the row names the repair", () => {
   assert.equal(live.kind, "none");
   assert.match(live.label, /rule-mcp setup/u);
 });
+
+test("a skip newer than the install is current, an older one is history", async () => {
+  const { skipIsCurrent } = await import("../_launcher-live.js");
+
+  assert.equal(skipIsCurrent({ skip: { at: "2026-10-30T09:00:00Z" }, live: { kind: "copy", installedAt: "2026-10-29" } }), true);
+  assert.equal(skipIsCurrent({ skip: { at: "2026-10-28T09:00:00Z" }, live: { kind: "copy", installedAt: "2026-10-29" } }), false);
+  assert.equal(skipIsCurrent({ skip: { at: "2026-10-28T09:00:00Z" }, live: { kind: "none" } }), true, "with no copy at all the old skip is still the state of things");
+  assert.equal(skipIsCurrent({ live: { kind: "none" } }), false, "no skip, no row");
+});

@@ -1,4 +1,5 @@
 /** Assemble the doctor report: SDK, agents, daemon, environment, telemetry. */
+import { lastSkip } from "../setup/_launcher-skips.js";
 import { liveLauncher } from "../setup/_launcher-live.js";
 import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -85,6 +86,7 @@ export async function runDoctor(telemetry = false) {
 
     entrypoint: fileURLToPath(new URL("../../../bin/rule-mcp.js", import.meta.url)),
     launcher: liveLauncher(),
+    launcherSkip: lastSkip(),
 
     tools: listTools().map((t) => t.name),
 

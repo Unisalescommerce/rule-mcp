@@ -16,6 +16,32 @@ import { currentVersion, installedVersions, launcherRoot } from "./_launcher-ins
 import { ownEntrypoint } from "./_shim.js";
 
 /**
+ * Whether a recorded skip still describes the machine as it is.
+ *
+ * History is not a warning. A skip from before the copy was installed says
+ * nothing about today, and a row that never goes away is a row people stop
+ * reading; a skip newer than the install is the one to look at.
+ *
+ * @param {{ skip?: { at?: string }, live: { kind: string, installedAt?: string } }} input
+ * @returns {boolean}
+ */
+export function skipIsCurrent({ skip, live }) {
+  if (!skip) {
+    return false;
+  }
+
+  if (live.kind !== "copy") {
+    return true;
+  }
+
+  if (!skip.at || !live.installedAt) {
+    return true;
+  }
+
+  return skip.at.slice(0, 10) > live.installedAt;
+}
+
+/**
  * The live target, as a doctor row.
  *
  * @param {{ root?: string, checkout?: string }} [options]

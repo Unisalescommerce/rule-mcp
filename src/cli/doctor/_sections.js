@@ -26,6 +26,9 @@ export function systemSection(report) {
     `Platform:    ${color(`${report.platform}/${report.arch}`, "magenta")}`,
     `Entrypoint:  ${color(truncate(report.entrypoint, 100), "dim")}`,
     ...(report.launcher ? [`Launcher:    ${color(report.launcher.label, report.launcher.kind === "none" ? "yellow" : "green")}`] : []),
+    ...(report.launcherSkip && (report.launcher?.kind !== "copy" || String(report.launcherSkip.at).slice(0, 10) > String(report.launcher?.installedAt))
+      ? [`Gate skip:   ${color(`${report.launcherSkip.at ?? "unknown"} ${report.launcherSkip.reason}`, "yellow")}`]
+      : []),
     "",
   ];
 }
