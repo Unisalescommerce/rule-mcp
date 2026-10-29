@@ -18,10 +18,12 @@
 
 import { pkg } from "../../paths/index.js";
 import { COLORS, GLYPHS } from "../_theme.js";
-import { barText, colorOf } from "./_screen-paint.js";
+import { createPlanFrame } from "./_screen-plan.js";
+import { colorOf } from "./_screen-paint.js";
 import { BACK, CANCEL } from "./_answers.js";
 import { copyToClipboard, toast } from "./_clipboard.js";
 import { detailLines, enabledIds, initialCursor, markOf, moveCursor, selectableIndexes, windowFor } from "./_list.js";
+import { askPathField } from "./_screen-path-field.js";
 
 /**
  * The renderer options the wizard needs.
@@ -60,17 +62,6 @@ export async function openScreen({ title, subtitle = "", steps = [] }) {
     }
   };
 
-  /** Drop the running plan's frame, if one is still mounted. */
-  const clearProgress = () => {
-    if (!progressHost) {
-      return;
-    }
-
-    body.remove(progressHost.host);
-    progressHost.host.destroyRecursively();
-    progressHost = null;
-  };
-
   const header = new BoxRenderable(renderer, { flexDirection: "row", justifyContent: "space-between", borderStyle: "rounded", borderColor: COLORS.accent, paddingX: 1 });
   const rail = new BoxRenderable(renderer, { flexDirection: "row", paddingX: 2 });
   const body = new BoxRenderable(renderer, { flexDirection: "column", flexGrow: 1, paddingX: 2, paddingTop: 1, overflow: "hidden" });
@@ -92,10 +83,12 @@ export async function openScreen({ title, subtitle = "", steps = [] }) {
   renderer.root.add(body);
   renderer.root.add(footer);
 
+  // The plan frame needs `body`, so it is built after the layout exists.
+  const { clearProgress, progress } = createPlanFrame({ renderer, body, empty, text });
+
   /** The handler the current screen installed, if any. */
   let pending = null;
   let activeStep = -1;
-  let progressHost = null;
 
   const setHints = (hints) => {
     clear(footer);
@@ -336,6 +329,13 @@ export async function openScreen({ title, subtitle = "", steps = [] }) {
     });
   };
 
+  /** Take the key loop for the path field; the list screens do the same. */
+  const press = (handler) => {
+    pending = handler;
+  };
+
+  const askPath = (spec) => askPathField({ renderer, body, empty, text, BoxRenderable, clear, finish, setHints, clearProgress, press, spec });
+
   /**
    * Show a block of lines and wait for one of the offered actions.
    *
@@ -397,35 +397,6 @@ export async function openScreen({ title, subtitle = "", steps = [] }) {
     });
   };
 
-  /**
-   * Replace the body with one row per task, updated as the plan runs.
-   *
-   * @param {{ title: string, rows?: Array<{ text: string, tone?: string, bold?: boolean }>, done?: number }} spec
-   */
-  const progress = ({ title: heading, rows = [], done = 0 }) => {
-    if (!progressHost) {
-      const host = empty();
-      const bar = text("", { fg: COLORS.accent });
-      const list = empty();
-
-      list.paddingTop = 1;
-      host.add(text(heading, { fg: COLORS.accentSoft, attributes: bold }));
-      host.add(bar);
-      host.add(list);
-      body.add(host);
-      progressHost = { host, bar, list };
-    }
-
-    const { bar, list } = progressHost;
-
-    bar.content = barText(done, rows.length);
-    clear(list);
-
-    for (const row of rows) {
-      list.add(text(row.text, { fg: colorOf(row.tone), ...(row.bold ? { attributes: bold } : {}) }));
-    }
-  };
-
   renderer.keyInput.on("keypress", (key) => {
     pending?.(key);
   });
@@ -436,6 +407,7 @@ export async function openScreen({ title, subtitle = "", steps = [] }) {
   return {
     setStep,
     ask,
+    askPath,
     confirm,
     progress,
     /** Tear the renderer down; the alternate screen is restored with it. */

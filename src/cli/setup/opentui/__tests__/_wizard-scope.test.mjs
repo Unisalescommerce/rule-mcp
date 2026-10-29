@@ -48,3 +48,16 @@ test("the rails and the orders are pure data", () => {
   assert.deepEqual(uninstallOrder({ hasPurge: true }), ["select", "purge", "review"]);
   assert.deepEqual(uninstallOrder(), ["select", "review"]);
 });
+test("a typed path comes from the path field, not from a free-text answer", async () => {
+  reset();
+  const root = resolve(process.cwd(), "src");
+  const screen = fakeScreen([...base, "project", ["p"], root, "shared", "auto", "stdio", "standard", ...FEATURE_ANSWERS, "run", "close"]);
+
+  await runInstallWizard({ screen });
+
+  assert.equal(screen.paths.length, 1, "the field is asked once");
+  assert.equal(screen.paths[0].title, "Project root");
+  const plan = globalThis.__wizardStub.plans.at(-1);
+
+  assert.ok(plan.some((id) => String(id).includes(root)), `the typed root is planned: ${plan.join(", ")}`);
+});

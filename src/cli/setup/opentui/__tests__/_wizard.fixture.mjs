@@ -61,7 +61,7 @@ A screen that answers from a script and records what it was asked.
 */
 function fakeScreen(script) {
   const queue = [...script];
-  const screen = { asks: [], confirms: [], steps: [], frames: [] };
+  const screen = { asks: [], paths: [], confirms: [], steps: [], frames: [] };
   const take = (spec) => {
     const answer = queue.shift();
 
@@ -71,6 +71,13 @@ function fakeScreen(script) {
   screen.setStep = (index) => screen.steps.push(index);
   screen.ask = async (spec) => {
     screen.asks.push(spec);
+
+    return take(spec);
+  };
+  // The path field is its own port call: a fake that only knew `ask` left the
+  // typed-path branch unexercised.
+  screen.askPath = async (spec) => {
+    screen.paths.push(spec);
 
     return take(spec);
   };
@@ -96,6 +103,5 @@ const FEATURE_ANSWERS = ["on", "full", "notify", "on", "off", "keep"];
 
 /** The Scope answer a global run gives: one radio, nothing else. */
 const SCOPE_ANSWER = "global";
-
 
 export { INSTALL_STEPS, UNINSTALL_STEPS, installOrder, uninstallOrder, runInstallWizard, runUninstallWizard, BACK, CANCEL, fakeScreen, reset, FEATURE_ANSWERS, SCOPE_ANSWER };

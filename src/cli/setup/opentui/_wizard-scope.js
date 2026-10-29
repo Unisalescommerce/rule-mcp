@@ -1,9 +1,6 @@
 /** The Scope step: where this install writes, and where inside the project. */
 
-import { existsSync, statSync } from "node:fs";
 import { resolve } from "node:path";
-
-import { expandPath, suggestPaths } from "../_path-complete.js";
 
 import { BACK, CANCEL } from "./_answers.js";
 import { projectConfigItems, scopeItems } from "./_items.js";
@@ -60,32 +57,18 @@ export async function askScope({ screen, answers }) {
   const projects = chosen.includes("cwd") ? [resolve(process.cwd())] : [];
 
   if (chosen.includes("p")) {
-    const typed = await screen.ask({
+    // The field refuses a path that is not a folder, so no answer here can put
+    // the plan inside a directory that does not exist.
+    const typed = await screen.askPath({
       title: "Project root",
-      help: ["Absolute, or relative to the current directory."],
-      mode: "text",
+      help: ["Tab lists the folders here, and applies the row you pick. Enter accepts a full path."],
     });
 
     if (typed === CANCEL || typed === BACK) {
       return typed;
     }
 
-    const candidate = expandPath(String(typed));
-    const complete = suggestPaths(String(typed));
-
-    // A path that does not name a folder is refused with the reason: the plan
-    // would otherwise write into a directory that does not exist.
-    if (!existsSync(candidate) || !statSync(candidate).isDirectory()) {
-      const offered = complete?.items?.length ? ` Suggestions: ${complete.items.map((item) => item.value).join(", ")}.` : "";
-
-      return screen.ask({
-        title: `Not a folder: ${String(typed)}`,
-        help: [`Type a path to an existing directory.${offered}`],
-        mode: "text",
-      });
-    }
-
-    projects.push(candidate);
+    projects.push(resolve(String(typed)));
   }
 
   answers.projects = projects;
