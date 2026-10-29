@@ -27,6 +27,10 @@ import { registerInstallCommand, registerUninstallCommand } from "./_register-se
 import { registerSetupCommand } from "./_register-wizard.js";
 import { registerConfigCommand, registerDoctorCommand, registerCompletionsCommand } from "./_register-health.js";
 import { registerFeatureCommand } from "./_register-feature.js";
+import { registerProjectCommand } from "./_register-project.js";
+import { installPreActionHook } from "./_pre-action.js";
+
+export { shouldBootstrapCoreTools } from "./_pre-action.js";
 import { registerAgentCommandsCommand } from "./_register-agent-commands.js";
 import { registerReinstallCommand } from "./_register-reinstall.js";
 import { registerCommitLintCommand } from "./_register-commit.js";
@@ -45,18 +49,6 @@ import {
 
 const version = JSON.parse(readFileSync(new URL("../../package.json", import.meta.url), "utf8")).version;
 
-/**
- * Whether this command needs the gateway/apply tools registered before it runs.
- *
- * `guard` answers host hooks and never calls those tools. Bootstrapping them on
- * every hook spawn was pure wall time (Phase 5 spawn spike).
- *
- * @param {{ name?: () => string } | undefined} actionCommand - Commander action command
- * @returns {boolean}
- */
-export function shouldBootstrapCoreTools(actionCommand) {
-  return actionCommand?.name?.() !== "guard";
-}
 
 /**
  * Build the complete commander program. Pure (no argv access, no side
@@ -77,20 +69,7 @@ export function buildProgram() {
     .showHelpAfterError()
     .exitOverride();
 
-  // The catalog registers the per-skill tools; the core tools the invocation
-  // path itself depends on - the gateway and the apply tool - are registered
-  // here, once per command. A hook rather than a top-level import, so --help
-  // and --version stay off that import graph. Guard is excluded: see
-  // shouldBootstrapCoreTools.
-  program.hook("preAction", async (_thisCommand, actionCommand) => {
-    if (!shouldBootstrapCoreTools(actionCommand)) {
-      return;
-    }
-
-    const { bootstrapCoreTools } = await import("../tools/_bootstrap.js");
-
-    await bootstrapCoreTools();
-  });
+  installPreActionHook(program);
 
   // Bare invocation = STDIO server. Agent mcp.json entries spawn the binary
   // with no arguments, so `rule-mcp` with an empty argv must serve.
@@ -106,6 +85,7 @@ export function buildProgram() {
   registerToolsCommand(program);
   registerConfigCommand(program);
   registerFeatureCommand(program);
+  registerProjectCommand(program);
   registerDoctorCommand(program);
   registerAdrCommand(program);
   registerHandoffCommand(program);

@@ -9,6 +9,8 @@
  * collect `written` for the manifest and `projects.json` (ADR 193).
  */
 
+import { existsSync, rmSync } from "node:fs";
+
 import { readText, writeText } from "./_paths.js";
 import { commandConfig } from "./_env.js";
 import { tokensaveProjectEnv } from "./_env-tokensave.js";
@@ -122,6 +124,18 @@ export function uninstallProjectHost({ agent, projectRoot, projectConfig = "shar
 
     if (content === null) {
       throw new Error(`Refused to overwrite unreadable project config at ${file}`);
+    }
+
+    // An entry was the whole file: what is left is an empty document, and a
+    // project tree should not keep one. Any other server or key keeps the file
+    // alive, so only a file the install itself emptied is removed.
+    if (content.trim() === "") {
+      if (!dryRun && existsSync(file)) {
+        rmSync(file, { force: true });
+      }
+
+      touched.push(file);
+      continue;
     }
 
     writeText({ file, content, dryRun });

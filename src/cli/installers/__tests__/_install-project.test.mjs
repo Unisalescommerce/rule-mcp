@@ -92,7 +92,5 @@ test("uninstall removes the shared entry using the written path", () => {
   installProjectHost({ agent: "cursor", projectRoot: root, projectConfig: "shared", dryRun: false });
   uninstallProjectHost({ agent: "cursor", projectRoot: root, projectConfig: "shared", written: [file], dryRun: false });
 
-  const leftover = readFileSync(file, "utf8").trim();
-
-  assert.equal(leftover === "" ? undefined : JSON.parse(leftover).mcpServers?.["rule-mcp"], undefined);
+  assert.equal(existsSync(file), false, "an entry that was the whole file takes the file with it");
 });

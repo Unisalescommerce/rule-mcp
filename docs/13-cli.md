@@ -7,7 +7,7 @@ a tool, a skill, a prompt, a role, a command or a guardrail;
 `tests/docs/census-generated.test.mjs` compares this file against the live
 registry, so a stale copy fails the build instead of misleading a reader.
 
-## The commands (26)
+## The commands (27)
 
 Every command is listed with the arguments and options it reads, taken from
 the commander definitions that parse them. The same definitions answer
@@ -31,6 +31,7 @@ the package version from anywhere. An error exits 1 and prints to stderr;
 | [`tools`](#rule-tools)                   | 1       | List or call MCP tools directly                                                           |
 | [`config`](#rule-config)                 | 5       | Print the mcp.json snippet, or manage RULE_MCP_* env vars with `config env`               |
 | [`feature`](#rule-feature)               | 0       | List or change user-facing feature switches                                               |
+| [`project`](#rule-project)               | 0       | Configure or take back a project-scope install                                            |
 | [`doctor`](#rule-doctor)                 | 4       | Run system health check                                                                   |
 | [`adr`](#rule-adr)                       | 5       | Create a new Architecture Decision Record (ADR)                                           |
 | [`handoff`](#rule-handoff)               | 9       | Generate a compressed LLM context handoff summary                                         |
@@ -270,6 +271,16 @@ List or change user-facing feature switches
 
 ```sh
 rule-mcp feature
+```
+
+Takes no options beyond the global `-h, --help`.
+
+## rule-mcp project
+
+Configure or take back a project-scope install
+
+```sh
+rule-mcp project
 ```
 
 Takes no options beyond the global `-h, --help`.

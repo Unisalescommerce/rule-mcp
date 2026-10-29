@@ -21,6 +21,7 @@ complete -c rule-mcp -n "__fish_use_subcommand" -a doctor    -d "System health c
 complete -c rule-mcp -n "__fish_use_subcommand" -a skills    -d "Manage skills"
 complete -c rule-mcp -n "__fish_use_subcommand" -a adr       -d "Architecture Decision Records"
 complete -c rule-mcp -n "__fish_use_subcommand" -a feature   -d "List or change user-facing feature switches"
+complete -c rule-mcp -n "__fish_use_subcommand" -a project   -d "Configure or take back a project-scope install"
 complete -c rule-mcp -n "__fish_use_subcommand" -a handoff   -d "LLM context handoff"
 complete -c rule-mcp -n "__fish_use_subcommand" -a handon    -d "Verify the last handoff"
 complete -c rule-mcp -n "__fish_use_subcommand" -a fix       -d "Auto-fix project file tree"
@@ -47,6 +48,7 @@ complete -c rule-mcp -n "__fish_seen_subcommand_from skills" -a "reload" -f
 # ADR actions
 complete -c rule-mcp -n "__fish_seen_subcommand_from adr" -a "new" -f
 complete -c rule-mcp -n "__fish_seen_subcommand_from feature" -a "list enable disable" -f
+complete -c rule-mcp -n "__fish_seen_subcommand_from project" -a "add remove" -f
 
 # Global options
 complete -c rule-mcp -l help -s h -d "Show help"

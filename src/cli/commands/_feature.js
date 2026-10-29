@@ -38,9 +38,16 @@ export async function refreshRememberedInstalls() {
   }
 
   const plan = buildProjectRefreshPlan();
-  const { results } = await runPlan({ plan, dryRun: false });
+  // `runPlan` takes the plan as its first argument; passing an object made the
+  // re-apply throw as soon as it ran, so `feature enable` could not refresh the
+  // projects it claims to refresh.
+  const results = await runPlan(plan, { dryRun: false });
 
-  return { global: agents.length, projects: results.length };
+  // The empty store answers with a placeholder task, which is a report line and
+  // not a project that was re-applied.
+  const refreshed = results.filter((result) => result.id !== "project-refresh-empty");
+
+  return { global: agents.length, projects: refreshed.length };
 }
 
 /**

@@ -10,12 +10,13 @@ _rule_mcp() {
   local cur prev words cword
   _init_completion || return
 
-  local commands="init serve up daemon install uninstall setup config tools doctor skills adr feature handoff handon fix stats cache roles guard update agent-commands reinstall commit-lint completions help"
+  local commands="init serve up daemon install uninstall setup config tools doctor skills adr feature project handoff handon fix stats cache roles guard update agent-commands reinstall commit-lint completions help"
   local daemon_actions="start stop status logs"
   local tools_sub="list call"
   local skills_actions="reload"
   local adr_actions="new"
   local feature_actions="list enable disable"
+  local project_actions="add remove"
   local agents="claude codex cursor copilot gemini cline roo zed opencode antigravity devin kilo kimi vibe grok droid kiro qwen pi vscode jetbrains neovim emacs"
   local handoff_format="full brief minimal"
   local adr_status="proposed accepted deprecated superseded"
@@ -35,6 +36,10 @@ _rule_mcp() {
       ;;
     skills)
       [[ $cword -eq 2 ]] && COMPREPLY=($(compgen -W "$skills_actions" -- "$cur"))
+      ;;
+    project)
+      [[ $cword -eq 2 ]] && COMPREPLY=($(compgen -W "$project_actions" -- "$cur"))
+      [[ $cword -ge 3 ]] && COMPREPLY=($(compgen -W "--agent --project-config --dry-run --json" -- "$cur"))
       ;;
     feature)
       [[ $cword -eq 2 ]] && COMPREPLY=($(compgen -W "$feature_actions" -- "$cur"))

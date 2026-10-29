@@ -250,23 +250,27 @@ project unless the install is project-scoped.
        "`<agent>` has no local project config: use --project-config shared". Manifest `hosts[].written`
        merges paths.
 3. Claude shared: the short instruction block in `CLAUDE.md`, the commands in `.claude/commands/`,
-   hooks and attribution in `.claude/settings.json` (`settings.local.json` for local).
+   hooks and attribution in `.claude/settings.json` (`settings.local.json` for local). **Not done.**
 4. Prompt suppression per client: `RULE_MCP_NO_MCP_PROMPTS` accepts `1` or a comma list of MCP
    client names. A shared `.mcp.json` sets `claude-code`, because copilot and pi read the same file
-   and get no command files.
+   and get no command files. **Not done.**
 5. [x] Setup: `--scope global|project`, `--project <path>` (repeatable), `--project-config local|shared`
        (ADR 193). A shared install is stdio only and writes nothing global (no skills, service or remember).
        Flag path only in this slice; wizard Scope UI stays item 9.
 6. [x] `~/.rule-mcp/state/projects.json` records each project install. `setup --refresh-projects`
-       and `setup --uninstall` walk it (ADR 193). `update` walk still open with the global update path.
-7. `rule-mcp project add [path] [--project-config] [--agent]` copies the last recorded
-   project's configuration; `project remove [path]` takes back every config and forgets it.
+       and `setup --uninstall` walk it (ADR 193). `update` walks it too now: a successful self-update
+       re-applies every recorded install and each recorded project (`reapplyRememberedInstalls`).
+7. [x] `rule-mcp project add [path] [--project-config] [--agent]` copies the last recorded
+       project's configuration; `project remove [path]` takes back every config and forgets it.
+       An entry that was the whole file now takes the file with it, so a project tree is not left
+       with an empty document.
    `/rule-init` adds its own project when the install is per project.
 8. Each project also gets the numbering hooks and merge driver from step 5.
 9. Wizard: a Scope step (global / project), a project list with the cwd offered, `p` to type a
-   path, then a Project config step (shared / local).
-10. One test file per concern: hosts table, Claude project, membership, record, git, scope; each
-    under the 150-line cap.
+   path, then a Project config step (shared / local). **Not done.**
+10. [~] One test file per concern: hosts table, Claude project, membership, record, git, scope; each
+        under the 150-line cap. `_project-command.test.mjs` (membership) and `_update-reapply.test.mjs`
+        (the update walk) exist; the Claude-project, git and scope files come with their items.
 11. ADR: a project-scope install writes only into the chosen projects.
 12. Commit: `feat(setup): install into chosen projects`.
 
@@ -360,8 +364,10 @@ Shared files: none: outside the skills graph
 - [x] Step 7 - Agent attribution: the table, the writer, `setup --attribution`, its tests
       (landed 2026-10-29: `_attribution.data.js` with 23 rows, 2 documented; `applyAttribution`;
       `setup --attribution <keep|hide>` + `--attribution-agent`; the wizard asks once).
-- [ ] Step 8 - leftovers: `rule-mcp project add|remove`, the `update` walk, the Claude extras in
-      project scope, the wizard Scope UI, one test file per concern.
+- [ ] Step 8 - leftovers: `rule-mcp project add|remove` (done), the `update` walk (done), one test
+      file per concern (membership and update done). Still open: the Claude extras in project scope
+      (item 3), per-client prompt suppression (item 4), the numbering hooks per project (item 8), the
+      wizard Scope UI (item 9).
 - [ ] Step 9 - Path completion in the wizard.
 - [ ] Step 10 - Refresh an existing project rules block.
 - [ ] Step 11 - Documentation.
