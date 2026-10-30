@@ -1,7 +1,7 @@
 # rule-toolchain-rspack - best-practice implementation plan
 
 Status: `planned`
-Notes:`planned` Notes: plan only. Each skill waits for the owner before implementation. Output convention: one plan per skill at `docs/plans/skills/<area>/<skill>.md`. Index: `docs/plans/skills/README.md`. Family contract: `docs/plans/skills/toolchain/bundler-family.md`. This plan covers only what is Rspack-specific.
+Notes:`planned` Notes: plan only. Each skill waits for the owner before implementation. Output convention: one plan per skill at `docs/plans/skills/<area>/<skill>.md`. Index: `docs/plans/skills/README.md`. Family contract: `docs/plans/skills/toolchain/_bundler-family.md`. This plan covers only what is Rspack-specific.
 
 Area: toolchain. Order: reverse alphabetical, fifth skill.
 

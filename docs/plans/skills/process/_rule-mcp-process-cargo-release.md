@@ -205,7 +205,7 @@ Depends on: `rule-process-ai` (HARD), `rule-process-npm-release#1` (CONTRACT)
 
 Feeds: `rule-process` (HARD, the area router gains one row)
 
-Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, tests/fixtures/tool-surface.json, docs/10-tools.md, docs/09-skills.md, docs/plans/skills/README.md, docs/plans/skills/skills-plan.md
+Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, tests/fixtures/tool-surface.json, docs/10-tools.md, docs/09-skills.md, docs/plans/skills/README.md, docs/plans/skills/_skills-plan.md
 
 ### Phase 0 - Evaluation and decisions
 

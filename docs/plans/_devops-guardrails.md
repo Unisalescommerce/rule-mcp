@@ -1,7 +1,7 @@
 # rule-devops guardrails execution plan
 
-Status: `superseded` by `docs/plans/skills/skills-plan.md` (ADR 153). Absorbed by: the four rule-devops leaves.
-Notes:`superseded` by `docs/plans/skills/skills-plan.md` (ADR 153). Absorbed by: the four rule-devops leaves. Notes:`superseded` by `docs/plans/skills/skills-plan.md` (ADR 153). Absorbed by: the four rule-devops leaves, one rule set per plan. Graph: not a node; see the absorbed table in `skills-plan.md`.
+Status: `superseded` by `docs/plans/skills/_skills-plan.md` (ADR 153). Absorbed by: the four rule-devops leaves.
+Notes: subordinate plan (leading `_`); coordinated by `docs/plans/plan-of-plans.md` (superseded area plan; no new workstream execution). `superseded` by `docs/plans/skills/_skills-plan.md` (ADR 153). Absorbed by: the four rule-devops leaves. Notes:`superseded` by `docs/plans/skills/_skills-plan.md` (ADR 153). Absorbed by: the four rule-devops leaves, one rule set per plan. Graph: not a node; see the absorbed table in `_skills-plan.md`.
 
 Scope: extend the deterministic guardrails of the five `rule-devops*` skills,
 reorganize the four rules that already exist, and record every rule against a

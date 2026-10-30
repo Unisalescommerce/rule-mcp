@@ -3,7 +3,7 @@
 - **Branch**: `feat/guardrails-evolution`
 - **Date**: 2026-10-21
 - **Commit range**: `6b540b66..HEAD`
-- **Plans**: `docs/plans/skills/DEPENDENCIES.md`, `docs/plans/skills/process/rule-process-ai.md`
+- **Plans**: `docs/plans/skills/DEPENDENCIES.md`, `docs/plans/skills/process/_rule-mcp-process-ai.md`
 
 ## What this session did
 

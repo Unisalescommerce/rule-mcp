@@ -1,14 +1,14 @@
 # rule-backend guardrails execution plan
 
-Status: `superseded` by `docs/plans/skills/skills-plan.md` (ADR 153). Absorbed by: the eight rule-backend leaves.
-Notes:`superseded` by `docs/plans/skills/skills-plan.md` (ADR 153). Absorbed by: the eight rule-backend leaves. Notes:`superseded` by `docs/plans/skills/skills-plan.md` (ADR 153). Absorbed by: the eight rule-backend leaves, one rule set per plan. Graph: not a node; see the absorbed table in `skills-plan.md`.
+Status: `superseded` by `docs/plans/skills/_skills-plan.md` (ADR 153). Absorbed by: the eight rule-backend leaves.
+Notes: subordinate plan (leading `_`); coordinated by `docs/plans/plan-of-plans.md` (superseded area plan; no new workstream execution). `superseded` by `docs/plans/skills/_skills-plan.md` (ADR 153). Absorbed by: the eight rule-backend leaves. Notes:`superseded` by `docs/plans/skills/_skills-plan.md` (ADR 153). Absorbed by: the eight rule-backend leaves, one rule set per plan. Graph: not a node; see the absorbed table in `_skills-plan.md`.
 
 Scope: extend the deterministic guardrails of the nine `rule-backend*` skills,
 fix the false positives inside the six rules that already exist, and record
 every rule against a citable public source. Implementation happens in a
 dedicated session: this document is the plan only.
 
-Companion plan: `docs/plans/devops-guardrails.md` (same method, other area).
+Companion plan: `docs/plans/_devops-guardrails.md` (same method, other area).
 
 ## Evidence base
 
@@ -301,6 +301,6 @@ the promotion list.
 
 ## See also
 
-- `docs/plans/devops-guardrails.md` - the sibling plan for the devops area
+- `docs/plans/_devops-guardrails.md` - the sibling plan for the devops area
 - `docs/14-guardrails.md` - the generated guardrail census
 - `docs/07-engineering-guides.md` - the guardrail workflow and quality gates

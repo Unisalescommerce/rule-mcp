@@ -1,7 +1,7 @@
 # rule-toolchain-vite - best-practice implementation plan
 
 Status: `planned`
-Notes:`planned` Notes: plan only. Each skill waits for the owner before implementation. Output convention: one plan per skill at `docs/plans/skills/<area>/<skill>.md`. Index: `docs/plans/skills/README.md`. Family contract: `docs/plans/skills/toolchain/bundler-family.md` (Vite, Rspack, Parcel; webpack removed). This plan covers only what is Vite-specific.
+Notes:`planned` Notes: plan only. Each skill waits for the owner before implementation. Output convention: one plan per skill at `docs/plans/skills/<area>/<skill>.md`. Index: `docs/plans/skills/README.md`. Family contract: `docs/plans/skills/toolchain/_bundler-family.md` (Vite, Rspack, Parcel; webpack removed). This plan covers only what is Vite-specific.
 
 Area: toolchain. Order: reverse alphabetical, third skill.
 
@@ -229,7 +229,7 @@ pnpm test
 
 ## Open notes
 
-- The family contract lives in `bundler-family.md`; this skill must point at it
+- The family contract lives in `_bundler-family.md`; this skill must point at it
   and not restate a row, per the no-duplication rule.
 - The `advancedChunks` shape will be confirmed against rolldown.rs during
   implementation; the plan does not freeze an object literal it cannot verify.

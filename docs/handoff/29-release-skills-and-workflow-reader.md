@@ -13,7 +13,7 @@
 4. **uv release skill** — 8 rules (PyPI Trusted Publishing, `uv build --no-sources`, `--locked` syncs, the attestation trap: uv uploads `*.publish.attestation` and creates none).
 5. **cargo release skill** — 8 rules. Phase 0 corrected the plan: crates.io **has** Trusted Publishing (RFC 3691, 30-minute tokens, `rust-lang/crates-io-auth-action`). cargo cannot perform the exchange - `cargo publish --help` on 1.99.0 has no token or OIDC flag - so the token is injected through `CARGO_REGISTRY_TOKEN`, and where it is written is the rule set.
 6. **`/rule-init` sees Python and Rust** — `pyproject`, `pythonBuildSystem`, `uvLock`, `cargoManifest`, `cargoLock`, with labels a reader recognizes.
-7. **Plans** — npm 20/20 done, uv 20/20 done, cargo 19/19 done; `mcp-host-integration-depth.md` planned at 0/26; `plan-of-plans.md` section 16 registers the plans written after the 2026-10-21 graph.
+7. **Plans** — npm 20/20 done, uv 20/20 done, cargo 19/19 done; `_mcp-host-integration-depth.md` planned at 0/26; `plan-of-plans.md` section 16 registers the plans written after the 2026-10-21 graph.
 
 ## Commits this session
 
@@ -35,7 +35,7 @@ None written this session. The three release plans carry their own decisions in 
 ## Left out / next
 
 - `docs/spike/` stays untracked (owner choice, unchanged from handoff 28).
-- `mcp-host-integration-depth.md` Phase 0: 31 evidence rows, the Roo Code contradiction (the spike says `confirmed`, `_hook-hosts.js` says the extension shut down in May 2026), the Codex prompt directory (ADR 179 vs a Skill-first upstream), and the eight products with no installer row.
+- `_mcp-host-integration-depth.md` Phase 0: 31 evidence rows, the Roo Code contradiction (the spike says `confirmed`, `_hook-hosts.js` says the extension shut down in May 2026), the Codex prompt directory (ADR 179 vs a Skill-first upstream), and the eight products with no installer row.
 - Two findings recorded, not fixed: `pnpm census` reports 9 distinct guardrails while the tree carries ~100 (it counts the engine's own families only), and the JavaScript rules run on `.yml` files (`js-if-braces` on `release.yml`).
 - Two substitutions recorded, not reversed: `release-actions-pinned` and `release-id-token-isolated` are copies with the shared parser (a rule imports nothing, the engine has no partial inheritance), and `release-version-matches-tag` became `release-version-not-in-workflow` in both new skills because a rule is handed one file.
 - Dependency cooldown still has no Python or Rust owner: the npm plan hands `pkg-minimum-release-age` to `rule-toolchain-pnpm`, and the uv spelling (`exclude-newer`) and the cargo one are named as unowned in its Phase 2.
@@ -50,7 +50,7 @@ Run rule_tool_handon first; trust only claims that still hold.
 Three release skills are done (npm 20/20, uv 20/20, cargo 19/19) and share one reader:
 src/core/guardrails/workflow/. Do not reimplement YAML parsing in a rule; call
 context.helpers.parseWorkflow, and scope every release rule to a workflow that publishes.
-First step: start docs/plans/mcp-host-integration-depth.md Phase 0 - one evidence row per
+First step: start docs/plans/_mcp-host-integration-depth.md Phase 0 - one evidence row per
 spike product (31), resolve the Roo Code and Codex-prompt contradictions, and register the
 eight products that have no installer row.
 Every commit is type(scope): subject; the commit-msg hook rejects a scope-less message.

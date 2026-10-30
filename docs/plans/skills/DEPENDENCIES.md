@@ -1,6 +1,6 @@
 # Per-skill plan dependencies
 
-Live ordering authority: [skills-plan.md](skills-plan.md).
+Live ordering authority: [_skills-plan.md](_skills-plan.md).
 
 One plan per skill, and an order to run them in that does not leave two people editing the same contract at the same time. The index is `docs/plans/skills/README.md`; this file says what must be true before a plan starts.
 

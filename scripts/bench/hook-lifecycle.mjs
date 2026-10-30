@@ -2,7 +2,7 @@
  * @module scripts/bench/hook-lifecycle
  *
  * What the lifecycle hooks cost, and whether the three cache-touching ideas in
- * `docs/plans/mcp-host-integration-depth.md` Phase 5 could pay for themselves.
+ * `docs/plans/_mcp-host-integration-depth.md` Phase 5 could pay for themselves.
  *
  * The plan asks for a measurement before any of them is implemented, and for an
  * item that does not move a number to be dropped rather than kept. This script is

@@ -9,7 +9,7 @@
 
 `docs/plans/plan-of-plans.md` was the level-0 orchestrator: it measured 150 plan-file instances across five branches, defined the level-1 graph and the stage order, and carried the work from the branch inventory to the RuleMCP rename. Its stages 0-8 are complete, including the `ge`/`dm`/`ex`/`[removed]` merges into `feat/evolution`, the Stage 3.5 quick start, the Stage 6 owner handover and the Stage 8 rename. The file is `Status: done` with zero real open checkboxes; the only `- [ ]` is prose describing the ten layout boxes.
 
-The open child plans are a separate concern. They are 10 non-skill plans with 146 open boxes and 86 skill plans with 1,336 open boxes. The plan-of-plans does not claim them as complete, and the reference audit (`docs/plans/plan-of-plans-reference.md`) is retired by ADR 171.
+The open child plans are a separate concern. They are 10 non-skill plans with 146 open boxes and 86 skill plans with 1,336 open boxes. The plan-of-plans does not claim them as complete, and the reference audit (`docs/plans/_plan-of-plans-reference.md`) is retired by ADR 171.
 
 ## Decision
 

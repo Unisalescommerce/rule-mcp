@@ -1,8 +1,8 @@
 # Stable launcher: `~/.rule-mcp/launcher/` instead of a path into a checkout
 
 Status: `planned`
-Notes: outside the skills graph. This plan is about the installer's global launcher, not a skill, so
-it is not a node in `docs/plans/skills/skills-plan.md`; it is tracked on its own like `export.md`.
+Notes: subordinate plan (leading `_`); coordinated by `docs/plans/plan-of-plans.md` workstream WS-B. Outside the skills graph. This plan is about the installer's global launcher, not a skill, so
+it is not a node in `docs/plans/skills/_skills-plan.md`; it is tracked on its own like `_export.md`. Phases 1–3 done (handoff 36); Phase 4 remains.
 
 The `rule-mcp` launcher on `PATH` is a two-line shell script naming an absolute path into this
 repository:

@@ -11,7 +11,7 @@ The 83 plan files were written across eleven areas over several sessions. Each o
 
 ## Decision
 
-A plan file carries, in this order: an H1; a status line with one of five values (planned, in-progress, done, blocked, superseded) plus a reason when it is blocked or superseded; a '## Dependency graph' section with free prose plus three parseable lines - Depends on:, Feeds:, Shared files:; and checkbox steps in the form - [ ] while open and - [x] when closed, lowercase x, no other marker form. The progress table in skills-plan.md keeps one row per node and the verification test recomputes it, so a stale row fails. A node is done when its boxes are closed and the gates its own plan declares have run; nothing else is required.
+A plan file carries, in this order: an H1; a status line with one of five values (planned, in-progress, done, blocked, superseded) plus a reason when it is blocked or superseded; a '## Dependency graph' section with free prose plus three parseable lines - Depends on:, Feeds:, Shared files:; and checkbox steps in the form - [ ] while open and - [x] when closed, lowercase x, no other marker form. The progress table in _skills-plan.md keeps one row per node and the verification test recomputes it, so a stale row fails. A node is done when its boxes are closed and the gates its own plan declares have run; nothing else is required.
 
 **Amendment 2026-10-21 (finding F5 of `docs/reviews/plan-graph.md`):** a plan that
 lives inside a branch carries four lines - `Depends on:`, `Feeds:`, `Shared files:`
@@ -35,5 +35,5 @@ The assumption this leans on, and the observation that would make it wrong.
 
 1. Three parseable lines with no prose (rejected: the prose is where the reason for an edge lives, and a bare edge list invites deleting it)
 1. A machine-readable table of edges in every plan (rejected: 83 tables to maintain by hand, and the orchestrator already holds the graph)
-1. Generate the status line and the graph section from skills-plan.md (rejected: the plan is the record; the orchestrator is the summary, and reversing that makes every edit a two-file edit)
+1. Generate the status line and the graph section from _skills-plan.md (rejected: the plan is the record; the orchestrator is the summary, and reversing that makes every edit a two-file edit)
 1. Uppercase - [X] as the closed marker (rejected: every existing file uses lowercase and the test normalizes anyway)

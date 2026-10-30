@@ -1,6 +1,7 @@
 # export plan
 
 Status: `planned`
+Notes: subordinate plan (leading `_`); coordinated by `docs/plans/plan-of-plans.md` workstream WS-D.
 
 - **Role**: export v1
 - **Date**: 2026-10-21
@@ -26,7 +27,7 @@ decision-models lands.
 ## Dependency graph
 
 Branch: feat/export
-Path: docs/plans/export.md
+Path: docs/plans/_export.md
 Depends on: -
 Feeds: `decision-models` (ORDER): it consumes the decision-cache this plan defines; export v1 ships without the runtime hook
 Shared files: `docs/handoff/HANDOFF.md`, `tests/fixtures/census.json`, `docs/02-architecture.md`, `docs/16-surface-map.md`

@@ -1,10 +1,9 @@
 # mcp-host-integration-depth - per-host install/uninstall, integration levels, and the server-side wiring
 
 Status: `in-progress`
-Notes:`in-progress` 35 of 37. Six phases closed; open deferral: per-host token measurement (no E2E host driver). `written[]` landed with project writers (ADR 192). Hook daemon+`--send` wired (ADR 187–189). `_registry`/`_uninstall` lookups closed (ADR 190). Outside the skills graph: this plan covers the installer, the host registries and
-the server↔host wiring, not skills, so it is not a node in `docs/plans/skills/skills-plan.md`.
-It is the sibling of `installer-scope-adr-policy-features.md` and depends on it for the host
-path table.
+Notes: subordinate plan (leading `_`); coordinated by `docs/plans/plan-of-plans.md` workstream WS-A. `in-progress` 35 of 37. Six phases closed; open deferral: per-host token measurement (no E2E host driver). `written[]` landed with project writers (ADR 192). Hook daemon+`--send` wired (ADR 187–189). `_registry`/`_uninstall` lookups closed (ADR 190). Outside the skills graph: this plan covers the installer, the host registries and
+the server↔host wiring, not skills, so it is not a node in `docs/plans/skills/_skills-plan.md`.
+It is the sibling of the retired `installer-scope-adr-policy-features` plan (ADR 198) and depended on it for the host path table — that HARD edge is satisfied.
 
 ## 1 - Why this plan exists
 

@@ -1,6 +1,7 @@
 # Plan: pnpm workspace with `packages/{mcp,shared,docs}` + sibling Nyx
 
-Status: `planned` (not executed)
+Status: `planned`
+Notes: subordinate plan (leading `_`); coordinated by `docs/plans/plan-of-plans.md` workstream WS-D. (not executed)
 
 - **Date**: 2026-10-01
 - **Updated**: 2026-10-01 (package names `rule-mcp*`; shared boundary re-audited)
@@ -197,7 +198,7 @@ Must find zero hits for:
 ## Dependency graph
 
 Branch: feat/nyx
-Path: docs/plans/2026-10-01-scripts-mcp-layout.md
+Path: docs/plans/_2026-10-01-scripts-mcp-layout.md
 Depends on: -
 Feeds: -
 Shared files: `docs/handoff/HANDOFF.md`, `docs/02-architecture.md`, `docs/05-env-variables.md`, `package.json`

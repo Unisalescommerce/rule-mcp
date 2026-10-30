@@ -1,13 +1,13 @@
 # rule-ai guardrails execution plan
 
-Status: `superseded` by `docs/plans/skills/skills-plan.md` (ADR 153). Absorbed by: rule-ai-agent-architecture.
-Notes:`superseded` by `docs/plans/skills/skills-plan.md` (ADR 153). Absorbed by: rule-ai-agent-architecture. Notes:`superseded` by `docs/plans/skills/skills-plan.md` (ADR 153). Absorbed by: rule-ai-agent-architecture, one rule set per plan. Graph: not a node; see the absorbed table in `skills-plan.md`.
+Status: `superseded` by `docs/plans/skills/_skills-plan.md` (ADR 153). Absorbed by: rule-ai-agent-architecture.
+Notes: subordinate plan (leading `_`); coordinated by `docs/plans/plan-of-plans.md` (superseded area plan; no new workstream execution). `superseded` by `docs/plans/skills/_skills-plan.md` (ADR 153). Absorbed by: rule-ai-agent-architecture. Notes:`superseded` by `docs/plans/skills/_skills-plan.md` (ADR 153). Absorbed by: rule-ai-agent-architecture, one rule set per plan. Graph: not a node; see the absorbed table in `_skills-plan.md`.
 
 Scope: give the AI area its first deterministic guardrails, keep the rest of the
 area narrative, and record every rule against a citable public source.
 Implementation happens in a dedicated session: this document is the plan only.
 
-Companion plans: `docs/plans/devops-guardrails.md`, `docs/plans/backend-guardrails.md`.
+Companion plans: `docs/plans/_devops-guardrails.md`, `docs/plans/_backend-guardrails.md`.
 Enforcement and delivery follow the devops decisions (advisory first, then
 blocking; fixtures, unit tests, inheritance test; census, ADR, changelog,
 per-rule source).
@@ -155,5 +155,5 @@ pnpm test
 
 ## See also
 
-- `docs/plans/devops-guardrails.md` - the enforcement model this plan follows
-- `docs/plans/data-guardrails.md` - the sibling plan for the data area
+- `docs/plans/_devops-guardrails.md` - the enforcement model this plan follows
+- `docs/plans/_data-guardrails.md` - the sibling plan for the data area

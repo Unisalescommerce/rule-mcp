@@ -10,7 +10,7 @@
  * node reads exactly like "the validator found violations", which is how a missing
  * entry point once turned a security gate off and looked like a policy decision.
  *
- * @see docs/plans/stable-launcher-outside-the-checkout.md - Phase 2
+ * @see docs/plans/_stable-launcher-outside-the-checkout.md - Phase 2
  */
 
 /**

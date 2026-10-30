@@ -24,7 +24,7 @@ Read and measured in this session:
 - `skills/rule-process-npm-release/SKILL.md`: 320 lines, the sibling this skill mirrors. Its
   structure - loose the facts, one batch of questions, the manual settings the user must
   change, then the repo changes - is the shape reused here.
-- `docs/plans/skills/process/rule-mcp-process-npm-release.md`: the rule set (four blocking,
+- `docs/plans/skills/process/_rule-mcp-process-npm-release.md`: the rule set (four blocking,
   four advisory), the `_workflow.js` helper and the `references/` split. This plan does not
   invent a second format; it reuses both.
 - [Building and publishing a package](https://docs.astral.sh/uv/guides/package/) (uv docs,
@@ -174,7 +174,7 @@ Depends on: `rule-process-ai` (HARD), `rule-process-npm-release#1` (CONTRACT)
 
 Feeds: `rule-process` (HARD, the area router gains one row)
 
-Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, tests/fixtures/tool-surface.json, docs/10-tools.md, docs/09-skills.md, docs/plans/skills/README.md, docs/plans/skills/skills-plan.md
+Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, tests/fixtures/tool-surface.json, docs/10-tools.md, docs/09-skills.md, docs/plans/skills/README.md, docs/plans/skills/_skills-plan.md
 
 ### Phase 0 - Evaluation and decisions
 
@@ -182,7 +182,7 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, t
 - [x] Verify the cooldown spelling (`exclude-newer` / `UV_EXCLUDE_NEWER`) before anything is written about it. Verified on 0.13.5: `uv sync --help` carries `--exclude-newer <EXCLUDE_NEWER>` (env `UV_EXCLUDE_NEWER`) and `--exclude-newer-package <EXCLUDE_NEWER_PACKAGE>`.
 - [x] Verify the read-only "is this package already on PyPI" command and its output on a real name. Verified 2026-10-25: `curl -s https://pypi.org/pypi/<name>/json` answers `.info.version` (checked on `requests`) and 404 for a name that does not exist. `uv pip install --dry-run` exists but answers a different question, so the reference uses the JSON API.
 - [x] Confirm with the owner whether the shared workflow helper lives in `src/core/guardrails/`. Decided 2026-10-25: yes - `src/core/guardrails/workflow/`, implemented with the npm node, exported from the engine barrel.
-- [x] Add the row to `docs/plans/skills/README.md` (#89) and to the stage table of `skills-plan.md`; the skill directory itself is created in Phase 1.
+- [x] Add the row to `docs/plans/skills/README.md` (#89) and to the stage table of `_skills-plan.md`; the skill directory itself is created in Phase 1.
 
 ### Phase 1 - The helper and the fixtures
 

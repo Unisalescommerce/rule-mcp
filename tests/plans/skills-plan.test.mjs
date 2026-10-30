@@ -27,7 +27,13 @@ const plansRoot = join(root, "docs", "plans");
 const skillsPlans = join(plansRoot, "skills");
 
 /** Files under docs/plans that are not executable plans. */
-const NOT_A_PLAN = new Set(["skills/README.md", "skills/DEPENDENCIES.md", "skills/skills-plan.md", "plan-of-plans-reference.md"]);
+const NOT_A_PLAN = new Set([
+  "skills/README.md",
+  "skills/DEPENDENCIES.md",
+  "skills/_skills-plan.md",
+  "_plan-of-plans-reference.md",
+  "plan-of-plans.md",
+]);
 const STATUSES = new Set(["planned", "in-progress", "done", "blocked", "superseded"]);
 const GRAPH_LINES = ["Depends on:", "Feeds:", "Shared files:"];
 
@@ -58,22 +64,23 @@ function planFiles() {
 
 const files = planFiles();
 const texts = new Map(files.map((path) => [path, readFileSync(join(plansRoot, path), "utf8")]));
-const planText = readFileSync(join(skillsPlans, "skills-plan.md"), "utf8");
+const planText = readFileSync(join(skillsPlans, "_skills-plan.md"), "utf8");
 
 /** The node id of a plan path: the file stem. */
 /**
  * The node id of a plan path: the skill name.
  *
- * Plan files are named `rule-mcp-<skill>.md` while every stage table, graph line
- * and CONTRACT edge names the skill itself (`rule-<skill>`), so the id is derived
- * by that one substitution. Deriving it from the file stem instead made the test's
- * ids match nothing, which is why two assertions had been red since the rename.
+ * Plan files are named `_<optional>rule-mcp-<skill>.md` (leading underscore marks a
+ * subordinate plan under plan-of-plans.md) while every stage table, graph line and
+ * CONTRACT edge names the skill itself (`rule-<skill>`), so the id strips `_` then
+ * applies that one substitution.
  */
 const nodeId = (path) =>
   path
     .split("/")
     .pop()
     .replace(/\.md$/, "")
+    .replace(/^_/u, "")
     .replace(/^rule-mcp-/u, "rule-");
 
 function stageNumber(title) {
@@ -171,7 +178,7 @@ test("the stage tables list every node exactly once", () => {
   }
 
   const missing = [...texts.keys()]
-    .filter((path) => path.startsWith("skills/") && !path.endsWith("skills-plan.md"))
+    .filter((path) => path.startsWith("skills/") && !path.endsWith("_skills-plan.md"))
     .map(nodeId)
     .filter((id) => !stageOf.has(id));
 

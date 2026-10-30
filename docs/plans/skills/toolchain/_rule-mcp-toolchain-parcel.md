@@ -1,7 +1,7 @@
 # rule-toolchain-parcel - best-practice implementation plan
 
 Status: `planned`
-Notes:`planned` Notes: plan only. Each skill waits for the owner before implementation. Output convention: one plan per skill at `docs/plans/skills/<area>/<skill>.md`. Index: `docs/plans/skills/README.md`. Family contract: `docs/plans/skills/toolchain/bundler-family.md`. This plan covers only what is Parcel-specific.
+Notes:`planned` Notes: plan only. Each skill waits for the owner before implementation. Output convention: one plan per skill at `docs/plans/skills/<area>/<skill>.md`. Index: `docs/plans/skills/README.md`. Family contract: `docs/plans/skills/toolchain/_bundler-family.md`. This plan covers only what is Parcel-specific.
 
 Area: toolchain. Order: reverse alphabetical, seventh skill.
 
@@ -12,7 +12,7 @@ Read in this session:
 - `skills/rule-toolchain-parcel/SKILL.md`: zero-config, entry point, scripts
   with `npx serve`, `.parcelrc`, features, an environment section, production
   notes, a migration table that includes webpack.
-- `docs/plans/skills/toolchain/bundler-family.md` for the shared rules.
+- `docs/plans/skills/toolchain/_bundler-family.md` for the shared rules.
 
 Public sources verified in this session:
 

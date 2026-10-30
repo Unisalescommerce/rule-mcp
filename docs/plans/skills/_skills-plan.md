@@ -3,14 +3,17 @@
 Status: `in-progress`. This is the one plan that does not plan a skill: it plans
 the execution of the other 83 plans, in dependency order, on this branch.
 
-Where it lives: `docs/plans/skills/skills-plan.md`, inside the skills catalog it
+Where it lives: `docs/plans/skills/_skills-plan.md`, inside the skills catalog it
 orchestrates, so the structure used to plan the skills is the structure used to
-plan their execution.
+plan their execution. The leading `_` marks it as a subordinate plan; the
+level-0 index is [`docs/plans/plan-of-plans.md`](../plan-of-plans.md) (workstream
+WS-C delegates here and does not restate this order).
 
-Scope: **every plan in this tree**, which since 2026-10-25 is one branch
+Scope: **every skill plan in this tree**, which since 2026-10-25 is one branch
 (`rel/v0.1.0`). The `feat/*` branches this file was written on are remote
 history and their content is here (ADR 181); a plan that lands later lands here
-too, and this file is its ordering authority.
+too, and this file is its ordering authority. Non-skill tracks (host, launcher,
+export, …) are ordered only by `plan-of-plans.md`.
 
 Decisions recorded: ADR 153 (this model), ADR 154 (the plan format contract),
 ADR 181 (one branch, and this file as the level-1 orchestrator of it).
@@ -18,17 +21,17 @@ ADR 181 (one branch, and this file as the level-1 orchestrator of it).
 ## 1 - The universe
 
 Measured on 2026-10-21 on this branch: **94 files** under `docs/plans` before this
-file existed, 95 after, 96 after the Stage 1 fold added `decision-models.md`.
+file existed, 95 after, 96 after the Stage 1 fold added `_decision-models.md`.
 
 | Kind                                                                                                                                                | Count | In the graph                                                                  |
 | --------------------------------------------------------------------------------------------------------------------------------------------------- | ----- | ----------------------------------------------------------------------------- |
-| Skill plans (`docs/plans/skills/<area>/<skill>.md`)                                                                                                 | 84    | yes, one node each                                                            |
-| Cross-skill plan (`docs/plans/skills/toolchain/bundler-family.md`)                                                                                  | 1     | yes: a shared contract for Vite, Rspack and Parcel, owned by `rule-toolchain` |
-| Area plans (`docs/plans/*-guardrails.md`, `oss.md`, `execution-plan.md`, `installer-scope-adr-policy-features.md`, `mcp-host-integration-depth.md`) | 10    | **no**: absorbed or tracked on their own, see section 9                       |
-| Decision-models plan (`docs/plans/decision-models.md`)                                                                                              | 1     | **no**: outside the skills graph, see `DEPENDENCIES.md`                       |
+| Skill plans (`docs/plans/skills/<area>/_*.md`)                                                                                                       | 84    | yes, one node each                                                            |
+| Cross-skill plan (`docs/plans/skills/toolchain/_bundler-family.md`)                                                                                  | 1     | yes: a shared contract for Vite, Rspack and Parcel, owned by `rule-toolchain` |
+| Area / non-skill plans (`docs/plans/_*-guardrails.md`, retired oss/execution/installer-scope, `_mcp-host-integration-depth.md`)                    | 10    | **no**: absorbed or tracked on their own, see section 9                       |
+| Decision-models plan (`docs/plans/_decision-models.md`)                                                                                              | 1     | **no**: outside the skills graph, see `DEPENDENCIES.md`                       |
 | `docs/plans/skills/README.md`                                                                                                                       | 1     | no: it is the index table                                                     |
 | `docs/plans/skills/DEPENDENCIES.md`                                                                                                                 | 1     | no: superseded by section 5, kept as history                                  |
-| `docs/plans/skills/skills-plan.md`                                                                                                                  | 1     | no: this file orchestrates, it is not work                                    |
+| `docs/plans/skills/_skills-plan.md`                                                                                                                  | 1     | no: this file orchestrates, it is not work                                    |
 
 **Graph nodes: 83.** Measured baseline for the retrofit: every plan file already
 has `- [ ]` checkboxes except two of the nine area plans; **no plan carries a
@@ -39,7 +42,7 @@ one closed step and none is `done`.
 The counts above are the 2026-10-21 baseline. Measured again on 2026-10-25 the
 catalog carries **two more skill plans** (`rule-process-cargo-release`, #88, and
 `rule-process-uv-release`, #89) and a tenth plan outside the graph
-(`mcp-host-integration-depth.md`); the stage table in section 5 and the progress
+(`_mcp-host-integration-depth.md`); the stage table in section 5 and the progress
 table in section 9 are the current count, this paragraph is the history.
 
 ## 2 - Vocabulary

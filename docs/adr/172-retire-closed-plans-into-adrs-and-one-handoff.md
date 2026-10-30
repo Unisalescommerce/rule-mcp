@@ -7,7 +7,7 @@
 
 ## Context
 
-`docs/plans` holds 100 Markdown files: two closed plans (`plan-of-plans.md`, `plan-of-plans-reference.md`), two catalog documents (`skills/README.md`, `skills/DEPENDENCIES.md`), 10 open non-skill plans (146 open boxes) and 86 open skill plans (1,336 open boxes). The reference carries eight more follow-ups. The plan-of-plans is `Status: done`; the other 98 plan files are not. The user chose to retire only the closed plans and keep the open roadmap.
+`docs/plans` holds 100 Markdown files: two closed plans (`plan-of-plans.md`, `_plan-of-plans-reference.md`), two catalog documents (`skills/README.md`, `skills/DEPENDENCIES.md`), 10 open non-skill plans (146 open boxes) and 86 open skill plans (1,336 open boxes). The reference carries eight more follow-ups. The plan-of-plans is `Status: done`; the other 98 plan files are not. The user chose to retire only the closed plans and keep the open roadmap.
 
 ## Decision
 

@@ -12,7 +12,7 @@ Read in this session:
 - `skills/rule-toolchain/SKILL.md`: four routing tables, a quick selection
   guide, a long "Choosing a formatter and a linter" section with a prescribed
   "rule-mcp default" of Prettier plus ESLint, and two links.
-- `docs/plans/skills/toolchain/bundler-family.md`, which names this router as
+- `docs/plans/skills/toolchain/_bundler-family.md`, which names this router as
   the owner of the shared bundler contract.
 - `docs/plans/skills/ui/rule-ui.md`, the sibling router plan, which proposed
   router-integrity rules owned by that skill.
@@ -63,7 +63,7 @@ stays context only; the plan anchors to the tool documentation.
 2. `rule-toolchain-vite`, `rule-toolchain-rspack` and `rule-toolchain-parcel`
    declare `inherits: [rule-toolchain]`, so the family rules reach them once.
 3. The `guardrails/index.js` here exports the family rules; the plan document
-   `bundler-family.md` becomes the design note behind them.
+   `_bundler-family.md` becomes the design note behind them.
 4. No bundler skill restates a family row; each points here.
 
 ## Workstream C - Generated routing table
@@ -182,5 +182,5 @@ pnpm test
   owned by `rule-ui`. The decision here supersedes that: the ids become
   `router-*` and the owner is `rule-mcp`. The sibling plan needs the same update
   when it is implemented.
-- The family rules move from the `bundler-family.md` design note into this
+- The family rules move from the `_bundler-family.md` design note into this
   skill's guardrails; the note stays as the explanation, not a second copy.

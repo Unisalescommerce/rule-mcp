@@ -16,7 +16,7 @@
  * materialized, platform binary included, and answers `--version` offline. A copy
  * that cannot run is not a copy.
  *
- * @see docs/plans/stable-launcher-outside-the-checkout.md - Phase 1, and the measurement
+ * @see docs/plans/_stable-launcher-outside-the-checkout.md - Phase 1, and the measurement
  */
 
 import { existsSync, mkdirSync } from "node:fs";

@@ -3,7 +3,7 @@
 - **Branch**: `feat/export`
 - **Date**: 2026-10-21
 - **Commit range**: `6967ac02..50f664cd` (3 commits before this handoff)
-- **Audit / review / plan**: `docs/audits/export.md`, `docs/reviews/export.md`, `docs/plans/export.md`
+- **Audit / review / plan**: `docs/audits/export.md`, `docs/reviews/export.md`, `docs/plans/_export.md`
 - **Related branches**: `feat/decision-models` (decision-cache consumer), `feat/guardrails-evolution` (independent)
 
 ## What this session did
@@ -44,7 +44,7 @@ EX-05..EX-08 medium. EX-09..EX-10 low. See `docs/reviews/export.md`.
 
 ## Next session first step
 
-Start **Step 0** of `docs/plans/export.md`: session map API + current-session
+Start **Step 0** of `docs/plans/_export.md`: session map API + current-session
 detection tests for the four supported agents (no deletes yet).
 
 ### Resume Prompt

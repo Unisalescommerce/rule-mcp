@@ -56,7 +56,7 @@ served an older build and used the CLI instead.
 Both suites are green (818 installer, 2881 foundations), the guardrails report no failures, and
 `rule-mcp fix` has nothing to do. Seven ADRs wait in docs/adr/_pending/ and get numbers only on trunk
 landing (`rule-mcp handoff land`).
-The launcher work is at docs/plans/stable-launcher-outside-the-checkout.md, phases 1-3 done: a copy
+The launcher work is at docs/plans/_stable-launcher-outside-the-checkout.md, phases 1-3 done: a copy
 under ~/.rule-mcp/launcher/<version>/ installed by `pnpm deploy --prod --legacy` (not `pnpm pack`, which
 cannot start), a launcher that resolves copy -> checkout -> exit 127, and skipped validations recorded
 in state/launcher-skips.log with doctor showing the last one. Next is Phase 4, the last: `setup

@@ -36,7 +36,7 @@ What is already correct and should not be touched:
 | F3  | **blocker** | Two skills are created in Stage 3 (`rule-toolchain-electron`, `rule-toolchain-tauri`, by `rule-platform-desktop#4`) but belong to the toolchain area, whose leaves run in Stage 1. A later stage creates nodes for an area that already closed | section 8, M6 | write their plans first and give them a stage after 3, or state that the toolchain area is not closed until Stage 3 | `ge`          |
 | F4  | **major**   | Node identity changes mid-flight: the node is `rule-process-bmad` and the resulting skill is `rule-mcp-method`. The graph uses both names, so a parser sees two nodes and a human sees one                                                     | section 8, M5 | one id per node (`rule-process-bmad`, with `Produces: rule-mcp-method`)                                             | `ge`          |
 | F5  | **major**   | Two plan formats. ADR 154 requires `Status:` + `Depends on:` / `Feeds:` / `Shared files:`; `plan-of-plans.md` requires `Branch:` / `Path:` as well. A plan cannot satisfy both without a third amendment                                       | section 8, M3 | add `Branch:` and `Path:` to ADR 154's line set (five lines, one contract), or derive them from the file path       | `ge`          |
-| F6  | **major**   | The contended-file lists disagree: `skills-plan.md` names 5 files, `plan-of-plans.md` names 8 (it adds `HANDOFF.md`, `docs/*`, `docs/adr/*`, `skills/rule/SKILL.md`)                                                                           | section 8, M7 | one list, in `plan-of-plans.md` on `feat/evolution`, referenced by the level-1 file                                 | `main` + `ge` |
+| F6  | **major**   | The contended-file lists disagree: `_skills-plan.md` names 5 files, `plan-of-plans.md` names 8 (it adds `HANDOFF.md`, `docs/*`, `docs/adr/*`, `skills/rule/SKILL.md`)                                                                           | section 8, M7 | one list, in `plan-of-plans.md` on `feat/evolution`, referenced by the level-1 file                                 | `main` + `ge` |
 | F7  | minor       | the cross-branch plan said 98 unique plan paths; it is 99 since the file itself landed                                                                                                                                                         | section 8, M1 | update the count                                                                                                    | `main`        |
 | F8  | minor       | Status vocabulary compliance is 9 of 93. The other 84 say "plan only" or a sentence, which no test can read                                                                                                                                    | section 8, M4 | normalize to the five values as each stage starts                                                                   | `ge`          |
 | F9  | minor       | One plan file has no checkbox: `installer-scope-adr-policy-features.md`, which this plan declares outside the graph. A test that demands a checkbox in every plan file fails on it                                                             | section 8, M2 | exempt the three non-skill plans by path in the test, or give that file a single box                                | both          |
@@ -60,7 +60,7 @@ parallel windows**. The windows are:
 - **after Stage 0, the areas are independent of each other** - toolchain, ui,
   styleguide, platform, meta, frontend, devops, data, backend, ai only touch
   their own files plus the three shared ones. Inside an area, leaves are
-  independent except where section 6 of `skills-plan.md` names a cross-cutting
+  independent except where section 6 of `_skills-plan.md` names a cross-cutting
   commit.
 - **Stage 10's 11 routers serialize among themselves**, by design: they all write
   the dispatcher and `router-gaps`.
@@ -71,7 +71,7 @@ Everything else is sequential. Any plan that claims "83 nodes, mostly parallel"
 is wrong; the correct statement is "one chain, three windows, and the chain is
 short because the windows are wide".
 
-## Stage audit (`skills-plan.md`)
+## Stage audit (`_skills-plan.md`)
 
 | Stage | Declared nodes |  Named in the text | Verdict                                                                                                         |
 | ----- | -------------: | -----------------: | --------------------------------------------------------------------------------------------------------------- |
@@ -98,7 +98,7 @@ its node ids, and the test sums them.
 | Check                    | Result                                                                                                                    |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
 | Branches behind `main`   | 0 for all four: no pre-merge rebase needed                                                                                |
-| Fold correctness         | `dm` = `ge` minus one commit; 29 identical copies, 3 diverged by 1-4 lines, 1 unique plan (`decision-models.md`)          |
+| Fold correctness         | `dm` = `ge` minus one commit; 29 identical copies, 3 diverged by 1-4 lines, 1 unique plan (`_decision-models.md`)          |
 | Merge order vs edges     | consistent: `ex`, `nyx` before `ge`; `dm` folded into `ge`, never merged                                                  |
 | Contended files          | `ge∩dm` 233 (disappears with the fold), `ge∩ex` 3, `ge∩nyx` 1                                                             |
 | Level-0 test feasibility | the test reads `git show <branch>:<path>`: feasible, and it is the only way to verify a node that does not live on `main` |
@@ -135,9 +135,9 @@ M2  git archive ge docs/plans | untar; for each plan file: count '^Status:', '^#
     -> 93 files: status 93, graph 0, checkbox 92 (the missing one is installer-scope-...)
 M3  same loop, matching the status value against the five-value vocabulary -> 9 compliant
 M4  same, listing the non-compliant values -> 84 free-form sentences
-M5  extract backticked rule-mcp-* ids per stage from skills-plan.md and deduplicate
+M5  extract backticked rule-mcp-* ids per stage from _skills-plan.md and deduplicate
 M6  grep for rule-toolchain-electron|rule-toolchain-tauri in docs/plans -> 10 mentions, 0 plans
-M7  compare the shared-file tables of skills-plan.md (§4, 5 rows) and plan-of-plans.md (§8, 5 rows + 3)
+M7  compare the shared-file tables of _skills-plan.md (§4, 5 rows) and plan-of-plans.md (§8, 5 rows + 3)
 M8  git merge-base --is-ancestor dm ge; git rev-list --count ge..dm -> 1 commit
 M9  per-plan diff dm:plan vs ge:plan -> 29 identical, 3 diverged (1, 1, 4 lines)
 ```

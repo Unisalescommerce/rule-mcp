@@ -1,7 +1,7 @@
 # decision-models plan
 
 Status: `planned`
-Notes: Outside the skills graph: this plan covers the router's decision layer, not a skill, so it is not a node in `docs/plans/skills/skills-plan.md`. Moved from `feat/decision-models` by the Stage 1 fold; `feat/guardrails` owns it.
+Notes: subordinate plan (leading `_`); coordinated by `docs/plans/plan-of-plans.md` workstream WS-D. Outside the skills graph: this plan covers the router's decision layer, not a skill, so it is not a node in `docs/plans/skills/_skills-plan.md`. Moved from `feat/decision-models` by the Stage 1 fold; `feat/guardrails` owns it.
 
 - **Role**: decision-models v1
 - **Date**: 2026-10-20
