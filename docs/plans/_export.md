@@ -1,12 +1,12 @@
 # export plan
 
-Status: `planned`
-Notes: subordinate plan (leading `_`); coordinated by `docs/plans/plan-of-plans.md` workstream WS-D.
+Status: `in-progress`
+Notes: subordinate plan (leading `_`); coordinated by `docs/plans/plan-of-plans.md` workstream WS-D. Execution lands on `rel/v0.1.0` (plan-of-plans ADR 181); the historical `feat/export` branch name is retired as an owner.
 
 - **Role**: export v1
 - **Date**: 2026-10-21
-- **Execution branch**: `feat/export` from `main`
-- **Depends (doc)**: `feat/decision-models` consumes decision-cache; no merge required for export v1 ship
+- **Execution branch**: `rel/v0.1.0`
+- **Depends (doc)**: `decision-models` consumes decision-cache; no merge required for export v1 ship
 
 Steps re-derived from [the review](../reviews/export.md). Mark `[x]` when done.
 
@@ -26,11 +26,9 @@ decision-models lands.
 
 ## Dependency graph
 
-Branch: feat/export
-Path: docs/plans/_export.md
 Depends on: -
 Feeds: `decision-models` (ORDER): it consumes the decision-cache this plan defines; export v1 ships without the runtime hook
-Shared files: `docs/handoff/HANDOFF.md`, `tests/fixtures/census.json`, `docs/02-architecture.md`, `docs/16-surface-map.md`
+Shared files: `docs/handoff/HANDOFF.md`, `tests/fixtures/census.json`, `docs/02-architecture.md`, `docs/16-surface-map.md`, `src/core/agents/transcripts/`
 
 The lines above are this plan's node in the cross-branch graph, verified from
 `docs/plans/plan-of-plans.md` on `feat/evolution`. The workstreams below are the
@@ -90,10 +88,10 @@ never delete.
 
 ## Steps
 
-- [ ] **Step 0 - EX-02 (high)**: Session map API per supported agent
-  - [ ] 0.1 Failing tests: list sessions for a fixture project, oldest→newest
-  - [ ] 0.2 `current` detection per agent; if ambiguous, flag `currentUnknown`
-  - [ ] 0.3 Gate: unit tests green; no deletes yet
+- [x] **Step 0 - EX-02 (high)**: Session map API per supported agent — done 2026-10-30
+  - [x] 0.1 Failing tests: list sessions for a fixture project, oldest→newest (`__tests__/_sessions.test.mjs`)
+  - [x] 0.2 `current` detection per agent; if ambiguous, flag `currentUnknown` (`listSessions` in `_sessions.js`)
+  - [x] 0.3 Gate: unit tests green; no deletes yet
 - [ ] **Step 1 - EX-03 (high)**: Idempotent telemetry merge
   - [ ] 1.1 Failing tests: two exports → stats unchanged on second run
   - [ ] 1.2 Merge transcript-derived fields into MCP telemetry store with digests
