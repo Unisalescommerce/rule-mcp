@@ -1,5 +1,6 @@
 /** @module core/guardrails/engine/check - run every applicable rule over one body of code */
 
+import { jsSkipResult } from "../../../shared/index.js";
 import { getGuardrails } from "./_registry.js";
 import { GUARDRAIL_HELPERS } from "../_helpers.js";
 
@@ -66,6 +67,27 @@ export function checkCode(skillName, code, context = {}) {
         note: "Skipped - previously passed",
         skipped: true,
       };
+    }
+
+    // Baseline JS rules ride every skill (BASELINE_SKILLS). Skip them when the
+    // caller named a non-JS file (.py, .yml, …) so regex style checks do not
+    // invent braces/blank-line failures on other languages (handoff 29).
+    if (typeof g.id === "string" && g.id.startsWith("js-")) {
+      const skip = jsSkipResult(code, withHelpers);
+
+      if (skip) {
+        return {
+          id: g.id,
+          label: g.label,
+          wcag: g.wcag || "",
+          pass: true,
+          failCount: 0,
+          detail: [],
+          suggestion: "",
+          note: skip.note,
+          skipped: false,
+        };
+      }
     }
 
     const result = g.check(code, withHelpers);

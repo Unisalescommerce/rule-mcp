@@ -15,7 +15,7 @@
  * rather than an import.
  */
 
-import { countedVerdict, isTypeScriptFile, passResult, tsSkipResult } from "../../shared/index.js";
+import { countedVerdict, isJavaScriptFile, isTypeScriptFile, jsSkipResult, passResult, tsSkipResult } from "../../shared/index.js";
 import { extractRealCSS, looksLikeStylesheet, looksLikeStyling, maskLiterals, unjustifiedGrids } from "./_util.js";
 import { INSTALLED_GROUPS, isPinned, manifestOf, stripLiterals } from "./quality/index.js";
 import { findRaggedBoxes } from "../text/ascii-box/index.js";
@@ -31,7 +31,9 @@ export const GUARDRAIL_HELPERS = Object.freeze({
   // Verdicts: the shapes a check returns.
   countedVerdict,
   passResult,
+  jsSkipResult,
   tsSkipResult,
+  isJavaScriptFile,
   isTypeScriptFile,
 
   // Source: read the code without re-parsing it.

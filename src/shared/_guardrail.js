@@ -1,10 +1,47 @@
 /** Shared guardrail shapes: the typed skip gate and the counted verdict. */
 
+/** Extensions that select JavaScript / TypeScript style checks. */
+export const JS_EXTENSION = /\.(?:[cm]?[jt]s|jsx|tsx)$/i;
+
 /** Extensions that select TypeScript checks. */
 export const TS_EXTENSION = /\.(?:ts|tsx|mts|cts)$/;
 
 /** Syntax that only compiles as TypeScript, for calls that pass no file name. */
 export const TS_SYNTAX = /^\s*(?:export\s+)?(?:interface|type)\s+\w+\s*[=<{]|:\s*(?:string|number|boolean|unknown|any)\b/m;
+
+/**
+ * Whether JavaScript style rules apply: a known JS/TS extension runs them; a
+ * named non-JS file skips; no file name keeps the pasted-snippet path (run).
+ *
+ * @param {string} _code
+ * @param {{ fileName?: string }} [context]
+ * @returns {boolean}
+ */
+export function isJavaScriptFile(_code, context = {}) {
+  const fileName = context.fileName ?? "";
+
+  if (!fileName) {
+    return true;
+  }
+
+  return JS_EXTENSION.test(fileName);
+}
+
+/**
+ * The skip verdict JS rules return for non-JavaScript input, or null when the
+ * rule should run.
+ *
+ * @param {string} code
+ * @param {{ fileName?: string }} [context]
+ * @returns {{ pass: true, note: string }|null}
+ */
+export function jsSkipResult(code, context = {}) {
+  if (isJavaScriptFile(code, context)) {
+    return null;
+  }
+
+  return { pass: true, note: "Not a JavaScript file, skipping" };
+}
 
 /**
  * Whether a check applies to a file: a .ts* name wins, otherwise the code has
