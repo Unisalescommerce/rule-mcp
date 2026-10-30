@@ -110,11 +110,11 @@ never delete.
   - [x] 4.2 `/rule-export` interviews dubious → write pending/confirmed/discard (prompt + EXPORT_BODY)
   - [x] 4.3 `/rule-keep` writes confirmed directly (`rule_tool_keep` + `keepDecision`)
   - [x] 4.4 Gate: prompt defs + tool/handler tests; no hook short-circuit
-- [ ] **Step 5 - EX-05 (medium)**: Restore `/rule-adr`
-  - [ ] 5.1 Product ADR: returns because it binds ADR + decision-cache keep
-  - [ ] 5.2 Prompt def: drive `rule_tool_process_adr`, then `/rule-keep`
-  - [ ] 5.3 Update contract/census/surface-map counts
-  - [ ] 5.4 Gate: prompt contract tests, docs-accuracy
+- [x] **Step 5 - EX-05 (medium)**: Restore `/rule-adr` — done 2026-10-30
+  - [x] 5.1 Product ADR: returns because it binds ADR + decision-cache keep (pending ADR restore-rule-adr-…)
+  - [x] 5.2 Prompt def: drive `rule_tool_process_adr`, then `/rule-keep`
+  - [x] 5.3 Update contract/census/surface-map counts
+  - [x] 5.4 Gate: prompt contract tests, docs-accuracy
 - [ ] **Step 6 - EX-01, EX-06 (high)**: Cleanup
   - [ ] 6.1 Keep-set = newest `N` ∪ `{current}`; `N` from env
   - [ ] 6.2 Confirm gate; refuse if `currentUnknown`

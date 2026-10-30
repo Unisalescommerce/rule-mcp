@@ -23,6 +23,7 @@ export const WORKFLOW_PROMPTS = ["rule-handoff"];
 export const AREA_PROMPTS = listAreaPrompts().map((prompt) => prompt.name);
 
 export const ONE_SHOT_PROMPTS = [
+  "rule-adr",
   "rule-compress",
   "rule-export",
   "rule-git",

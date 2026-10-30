@@ -3,7 +3,7 @@
 import { listPrompts } from "@src/prompts/index.js";
 import { listAreaPrompts } from "@src/prompts/_areas.js";
 import { areaBody, ROUTER, generalCheckBody, generalFixBody } from "./_bodies.js";
-import { COMPRESS_BODY, EXPORT_BODY, GIT_BODY, HANDOFF_BODY, HANDON_BODY, INIT_BODY, KEEP_BODY, STATS_BODY, USAGE_BODY } from "./_bodies-session.js";
+import { ADR_BODY, COMPRESS_BODY, EXPORT_BODY, GIT_BODY, HANDOFF_BODY, HANDON_BODY, INIT_BODY, KEEP_BODY, STATS_BODY, USAGE_BODY } from "./_bodies-session.js";
 import { commandNames, ROUTER_COMMAND, CHECK_COMMAND, FIX_COMMAND } from "./_names.js";
 import { personaBody, personaTarget } from "./_personas.js";
 
@@ -50,6 +50,7 @@ export function commandDefinition(name) {
     "rule-handon": HANDON_BODY,
     "rule-compress": COMPRESS_BODY,
     "rule-stats": STATS_BODY,
+    "rule-adr": ADR_BODY,
     "rule-export": EXPORT_BODY,
     "rule-keep": KEEP_BODY,
     "rule-usage": USAGE_BODY,

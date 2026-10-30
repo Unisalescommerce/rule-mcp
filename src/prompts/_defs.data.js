@@ -71,6 +71,18 @@ export const PROMPT_DEFS = [
     arguments: [{ name: "options", description: "Reserved. Default: full readout.", required: false }],
   },
   {
+    name: "rule-adr",
+    description:
+      "Write an ADR via rule_tool_process_adr, then offer /rule-keep so the decision lands in the export decision-cache",
+    arguments: [
+      {
+        name: "options",
+        description: "ADR fields as free text (title, context, decision). Default: interview the user for the ADR, then offer keep.",
+        required: false,
+      },
+    ],
+  },
+  {
     name: "rule-export",
     description:
       "Distill the current project: session map, idempotent telemetry merge, .flight emit (keep by default), then interview dubious decisions into the export decision-cache",

@@ -7,9 +7,9 @@ a tool, a skill, a prompt, a role, a command or a guardrail;
 `tests/docs/census-generated.test.mjs` compares this file against the live
 registry, so a stale copy fails the build instead of misleading a reader.
 
-## MCP prompts (40)
+## MCP prompts (41)
 
-21 reusable prompts, plus 19 generated from the persona registry.
+22 reusable prompts, plus 19 generated from the persona registry.
 Claude Code installs clean `/rule-mcp-*` commands instead and suppresses these
 (ADR 029), so the two names are deliberately the same.
 
@@ -17,6 +17,7 @@ Claude Code installs clean `/rule-mcp-*` commands instead and suppresses these
 
 | Prompt                  | Arguments | Description                                                                                                                                                                   |
 | ----------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/rule-adr`             | [options] | Write an ADR via rule_tool_process_adr, then offer /rule-keep so the decision lands in the export decision-cache                                                              |
 | `/rule-area-ai`         | <request> | ai work: route free text to the right ai leaf skills/tools                                                                                                                    |
 | `/rule-area-backend`    | <request> | backend work: route free text to the right backend leaf skills/tools                                                                                                          |
 | `/rule-area-data`       | <request> | data work: route free text to the right data leaf skills/tools                                                                                                                |

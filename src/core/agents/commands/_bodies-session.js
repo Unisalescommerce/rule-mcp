@@ -85,6 +85,17 @@ export const USAGE_BODY = [
   "3. Finish by proposing a conventional commit with a mandatory scope only if a tracked file changed.",
 ].join("\n");
 
+/** /rule-adr -> rule_tool_process_adr then /rule-keep. */
+export const ADR_BODY = [
+  "Record an architecture decision and keep it: $ARGUMENTS",
+  "",
+  "1. Call `rule_tool_process_adr` with the title/context/decision from the arguments (or interview the user when fields are missing).",
+  "2. After the ADR is written, offer `/rule-keep` (call `rule_tool_keep`) with a fingerprint for that decision and the choice that was accepted — only when the user confirms.",
+  "3. This prompt exists because bare `rule_tool_process_adr` does not bind the decision into the export decision-cache; `/rule-adr` does both.",
+  "4. Do not short-circuit hooks from the decision-cache.",
+  "5. Finish by proposing a conventional commit with a mandatory scope if the tree changed.",
+].join("\n");
+
 /** /rule-keep -> rule_tool_keep. */
 export const KEEP_BODY = [
   "Confirm one decision into the export decision-cache: $ARGUMENTS",

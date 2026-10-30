@@ -7,7 +7,7 @@ a tool, a skill, a prompt, a role, a command or a guardrail;
 `tests/docs/census-generated.test.mjs` compares this file against the live
 registry, so a stale copy fails the build instead of misleading a reader.
 
-## Command / Tool / Skill map (126)
+## Command / Tool / Skill map (127)
 
 One row per slash command, then every catalog skill that has no slash of its
 own (ADR 117: leaf skills are reached through area hubs or the router), then
@@ -18,6 +18,7 @@ Regenerate with `pnpm census`.
 | Command                     | Tool                                 | Skill             | Description                                                                                                                                                                   |
 | --------------------------- | ------------------------------------ | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `rule`                      | -                                    | -                 | Explicitly route a request through rule-mcp                                                                                                                                   |
+| `rule-adr`                  | -                                    | -                 | Write an ADR via rule_tool_process_adr, then offer /rule-keep so the decision lands in the export decision-cache                                                              |
 | `rule-area-ai`              | `rule_tool_ai`                       | `rule-ai`         | ai work: route free text to the right ai leaf skills/tools                                                                                                                    |
 | `rule-area-backend`         | `rule_tool_backend`                  | `rule-backend`    | backend work: route free text to the right backend leaf skills/tools                                                                                                          |
 | `rule-area-data`            | `rule_tool_data`                     | `rule-data`       | data work: route free text to the right data leaf skills/tools                                                                                                                |
