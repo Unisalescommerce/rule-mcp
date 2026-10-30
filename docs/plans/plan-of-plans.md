@@ -24,7 +24,7 @@ Node ids in graph lines stay skill names (`rule-process-ai`), not filenames. Fil
 | ----- | ---- | ------ | --------- |
 | this index | `plan-of-plans.md` | `in-progress` | workstream ordering + owner merge gate |
 | catalog orchestrator | `skills/_skills-plan.md` | `in-progress` | 3 release nodes done; remaining leaves per its stages |
-| host integration | `_mcp-host-integration-depth.md` | `in-progress` | 35/37; deferral: per-host token measurement |
+| host integration | `_mcp-host-integration-depth.md` | `done` | 37/37; per-host tokens deferred (pending ADR close-host-…) |
 | launcher | `_stable-launcher-outside-the-checkout.md` | `planned` (phases 1-3 done) | Phase 4 only: uninstall, ops docs, ADR |
 | port / installer scope | _(retired)_ | done → ADR 198 | file gone; HARD edge to host plan satisfied |
 | export | `_export.md` | `planned` | own graph |
@@ -42,7 +42,7 @@ Branch history that motivated stages 1-5 (2026-10-21) lives in git and in ADR 18
 | Group | Orchestrator | State |
 | ----- | ------------ | ----- |
 | skills catalog | `skills/_skills-plan.md` | in progress: npm/uv/cargo-release done |
-| host + launcher (installer infrastructure) | this file, workstreams A–B | host nearly closed; launcher Phase 4 |
+| host + launcher (installer infrastructure) | this file, workstreams A–B | host done; launcher Phase 4 |
 | single-document tracks | each plan's `## Dependency graph` | export, scripts-layout, decision-models |
 | superseded area plans | none (historical) | `_*-guardrails.md` |
 | repository policy / OSS Stage 0 | ADR 135 + handoff 27 | closed |
@@ -89,14 +89,14 @@ rel/v0.1.0
 
 Execute one workstream at a time when it touches shared files (section 8). Otherwise WS-A, WS-B and WS-D may proceed in parallel. WS-C serializes on the five shared catalog files named in `_skills-plan.md`.
 
-### WS-A — Host integration closeout (next product node)
+### WS-A — Host integration closeout
 
 Plan: [`_mcp-host-integration-depth.md`](_mcp-host-integration-depth.md)
 
 - [x] Port plan closed (ADR 198); HARD edge satisfied.
 - [x] Phases 0–5 of the host plan (35/37 checkboxes).
-- [ ] Close or explicitly defer the two remaining boxes (per-host token measurement / E2E host driver).
-- [ ] Mark the plan `done` and fold residual decisions into an ADR at handoff.
+- [x] Close or explicitly defer the two remaining boxes (per-host token measurement / E2E host driver). Hook cost closed by ADR 187–189; per-host tokens deferred until an in-repo E2E driver exists (pending ADR `close-host-integration-depth-with-deferred-per-host-token-measurement`).
+- [x] Mark the plan `done` and fold residual decisions into an ADR at handoff.
 
 ### WS-B — Launcher Phase 4
 
