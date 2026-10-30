@@ -101,6 +101,7 @@ function guardrailRulesOf(result) {
 const SKILL_INDEPENDENT = new Set([
   "rule_tool_compress", // pure text transformation
   "rule_tool_stats", // the telemetry log
+  "rule_tool_keep", // export decision-cache confirm
   "rule_tool_usage", // usage sidecar
   "rule_tool_init", // project init
 ]);

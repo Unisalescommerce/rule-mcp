@@ -7,7 +7,7 @@ a tool, a skill, a prompt, a role, a command or a guardrail;
 `tests/docs/census-generated.test.mjs` compares this file against the live
 registry, so a stale copy fails the build instead of misleading a reader.
 
-## Command / Tool / Skill map (124)
+## Command / Tool / Skill map (126)
 
 One row per slash command, then every catalog skill that has no slash of its
 own (ADR 117: leaf skills are reached through area hubs or the router), then
@@ -31,11 +31,13 @@ Regenerate with `pnpm census`.
 | `rule-area-ui`              | `rule_tool_ui`                       | `rule-ui`         | ui work: route free text to the right ui leaf skills/tools                                                                                                                    |
 | `rule-check`                | `rule_tool_check`                    | -                 | Auto-detect area from context and run rule-mcp guardrails validation                                                                                                          |
 | `rule-compress`             | `rule_tool_compress`                 | -                 | Run rule_tool_compress: sole engine for prompt/context preprocessing and prose postprocessing                                                                                 |
+| `rule-export`               | -                                    | -                 | Distill the current project: session map, idempotent telemetry merge, .flight emit (keep by default), then interview dubious decisions into the export decision-cache         |
 | `rule-fix`                  | `rule_tool_fix`                      | -                 | Apply the deterministic guardrail fixes of every skill to the changed files                                                                                                   |
 | `rule-git`                  | `rule_tool_git`                      | -                 | Audit the feature history and normalize it: Conventional Commit violations, merge commits, and (with --force) merge-commit removal - every rewrite behind a confirmation gate |
 | `rule-handoff`              | `rule_tool_handoff`                  | -                 | Produce a compressed context handoff (ADR summary + git context) to resume in a new session, commiting pending work as scoped Conventional Commits first.                     |
 | `rule-handon`               | `rule_tool_handon`                   | -                 | Resume: verify the last handoff against the repository as it is now, archive what finished, and propose the next workstream                                                   |
 | `rule-init`                 | `rule_tool_init`                     | -                 | Prepare a project end to end: git hooks, recorder directory, tokensave, dependency pins, then scaffold the missing config and toolchain                                       |
+| `rule-keep`                 | `rule_tool_keep`                     | -                 | Confirm one decision into the export decision-cache via rule_tool_keep                                                                                                        |
 | `rule-persona-a11y`         | -                                    | -                 | Audit, review and plan as a Accessibility Expert with 20 years of experience - the request decides how deep the run goes                                                      |
 | `rule-persona-ai`           | -                                    | -                 | Audit, review and plan as a AI Engineer with 15 years of experience - the request decides how deep the run goes                                                               |
 | `rule-persona-architect`    | -                                    | -                 | Audit, review and plan as a Software Architect with 30 years of experience - the request decides how deep the run goes                                                        |

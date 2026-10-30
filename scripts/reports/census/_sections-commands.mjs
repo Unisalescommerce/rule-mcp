@@ -14,7 +14,7 @@ import { table } from "./_format.mjs";
 import { ROUTER_COMMAND, parsePersonaName } from "./_registries.mjs";
 
 /** The commands that carry a session across a context boundary. */
-const SESSION = new Set(["rule-compress", "rule-handoff", "rule-handon", "rule-init", "rule-stats", "rule-update", "rule-usage"]);
+const SESSION = new Set(["rule-compress", "rule-export", "rule-handoff", "rule-handon", "rule-init", "rule-keep", "rule-stats", "rule-update", "rule-usage"]);
 
 /**
  * Every command, in its kind.

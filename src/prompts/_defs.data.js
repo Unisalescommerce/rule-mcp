@@ -71,6 +71,29 @@ export const PROMPT_DEFS = [
     arguments: [{ name: "options", description: "Reserved. Default: full readout.", required: false }],
   },
   {
+    name: "rule-export",
+    description:
+      "Distill the current project: session map, idempotent telemetry merge, .flight emit (keep by default), then interview dubious decisions into the export decision-cache",
+    arguments: [
+      {
+        name: "options",
+        description: "Space-separated: cleanup (confirm-gated session delete later), drain (empty MCP log after .flight). Default: distill + interview, no delete, keep log.",
+        required: false,
+      },
+    ],
+  },
+  {
+    name: "rule-keep",
+    description: "Confirm one decision into the export decision-cache via rule_tool_keep",
+    arguments: [
+      {
+        name: "options",
+        description: "fingerprint=<id> choice=<text|json> [agent=<id>]. Default: ask the user for fingerprint and choice.",
+        required: false,
+      },
+    ],
+  },
+  {
     name: "rule-usage",
     description: "Declare a usage sidecar via rule_tool_usage when no transcript is available",
     arguments: [{ name: "options", description: "Reserved. Default: follow the tool schema in the reply.", required: false }],

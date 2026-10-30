@@ -7,9 +7,9 @@ a tool, a skill, a prompt, a role, a command or a guardrail;
 `tests/docs/census-generated.test.mjs` compares this file against the live
 registry, so a stale copy fails the build instead of misleading a reader.
 
-## MCP prompts (38)
+## MCP prompts (40)
 
-19 reusable prompts, plus 19 generated from the persona registry.
+21 reusable prompts, plus 19 generated from the persona registry.
 Claude Code installs clean `/rule-mcp-*` commands instead and suppresses these
 (ADR 029), so the two names are deliberately the same.
 
@@ -29,10 +29,12 @@ Claude Code installs clean `/rule-mcp-*` commands instead and suppresses these
 | `/rule-area-toolchain`  | <request> | toolchain work: route free text to the right toolchain leaf skills/tools                                                                                                      |
 | `/rule-area-ui`         | <request> | ui work: route free text to the right ui leaf skills/tools                                                                                                                    |
 | `/rule-compress`        | [options] | Run rule_tool_compress: sole engine for prompt/context preprocessing and prose postprocessing                                                                                 |
+| `/rule-export`          | [options] | Distill the current project: session map, idempotent telemetry merge, .flight emit (keep by default), then interview dubious decisions into the export decision-cache         |
 | `/rule-git`             | [options] | Audit the feature history and normalize it: Conventional Commit violations, merge commits, and (with --force) merge-commit removal - every rewrite behind a confirmation gate |
 | `/rule-handoff`         | [options] | Produce a compressed context handoff (ADR summary + git context) to resume in a new session, commiting pending work as scoped Conventional Commits first.                     |
 | `/rule-handon`          | [options] | Resume: verify the last handoff against the repository as it is now, archive what finished, and propose the next workstream                                                   |
 | `/rule-init`            | [options] | Prepare a project end to end: git hooks, recorder directory, tokensave, dependency pins, then scaffold the missing config and toolchain                                       |
+| `/rule-keep`            | [options] | Confirm one decision into the export decision-cache via rule_tool_keep                                                                                                        |
 | `/rule-stats`           | [options] | Read local telemetry via rule_tool_stats: calls, cache hits, tokens, latency                                                                                                  |
 | `/rule-update`          | [options] | Apply an available server update explicitly, and report what changed                                                                                                          |
 | `/rule-usage`           | [options] | Declare a usage sidecar via rule_tool_usage when no transcript is available                                                                                                   |

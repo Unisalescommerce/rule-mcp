@@ -66,17 +66,17 @@ Live counts and the Command - Tool - Skill table: [Surface map](./17-surface-map
 
 | Surface                   | Count | Defined in                                    |
 | ------------------------- | ----- | --------------------------------------------- |
-| MCP tools                 | 104   | `src/tools/*` via `src/tools/router/index.js` |
-| - action tools            | 104   | one per module, registered explicitly         |
+| MCP tools                 | 105   | `src/tools/*` via `src/tools/router/index.js` |
+| - action tools            | 105   | one per module, registered explicitly         |
 | - skill tools             | 0     | one per catalog skill, generated              |
 | MCP resources             | 174   | `src/resources/index.js`                      |
-| MCP prompts               | 38    | `src/prompts/index.js`                        |
-| - reusable                | 19    | workflow and area prompts                     |
+| MCP prompts               | 40    | `src/prompts/index.js`                        |
+| - reusable                | 21    | workflow and area prompts                     |
 | - persona                 | 19    | 19 active roles, one command each             |
 | Skills                    | 0     | `skills/rule-*/SKILL.md`                      |
 | Review personas           | 19    | `src/core/review/roles/index.js`              |
 | Guardrail rules           | 9     | `src/core/guardrails/index.js`                |
-| Agent slash commands      | 41    | `src/core/agents/commands/index.js`           |
+| Agent slash commands      | 43    | `src/core/agents/commands/index.js`           |
 | Agent/IDE command targets | 15    | `src/core/agents/command-targets/index.js`    |
 | CLI commands              | 27    | `src/cli/_program.js`                         |
 | Hook events               | 4     | `src/core/agents/_hooks.js`                   |

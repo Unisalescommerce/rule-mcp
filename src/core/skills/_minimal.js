@@ -28,5 +28,6 @@ export const MINIMAL_ALLOWLIST = new Set([
   "rule_tool_handoff",
   "rule_tool_handon",
   "rule_tool_stats",
+  "rule_tool_keep",
   "rule_tool_usage",
 ]);

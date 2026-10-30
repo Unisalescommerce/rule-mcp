@@ -7,7 +7,7 @@ a tool, a skill, a prompt, a role, a command or a guardrail;
 `tests/docs/census-generated.test.mjs` compares this file against the live
 registry, so a stale copy fails the build instead of misleading a reader.
 
-## Action tools (104)
+## Action tools (105)
 
 The tools that do something rather than serve a skill. Every one is
 deterministic: none of them calls a model, so the same arguments return the
@@ -30,6 +30,7 @@ same result behind any client.
 | [`rule_tool_review`](#ruletoolreview)                                    | Run review as expert review persona; returns review operation contract.                                                                                                                                                                                                                                                                       |
 | [`rule_tool_impersonation`](#ruletoolimpersonation)                      | Create or refresh audit/review/plan documents for review persona run (impersonation bookkeeping).                                                                                                                                                                                                                                             |
 | [`rule_tool_stats`](#ruletoolstats)                                      | Read the local telemetry log and summarize it: call counts, cache hit rate, saved/estimated tokens, latency.                                                                                                                                                                                                                                  |
+| [`rule_tool_keep`](#ruletoolkeep)                                        | Confirm one decision into export decision-cache (status confirmed, source rule-keep).                                                                                                                                                                                                                                                         |
 | [`rule_tool_sync`](#ruletoolsync)                                        | Check how far base branch has moved since this branch forked, and propose rebase.                                                                                                                                                                                                                                                             |
 | [`rule_tool_usage`](#ruletoolusage)                                      | Declare an agent usage sidecar for this project when no transcript can be read: input/output tokens, cost.                                                                                                                                                                                                                                    |
 | [`rule_tool_update`](#ruletoolupdate)                                    | Force-update this local MCP server to newest release tag (checkout main, pull, reinstall), or fast-forward upstream branch when no tags exist yet.                                                                                                                                                                                            |
@@ -283,6 +284,17 @@ Read the local telemetry log and summarize it: call counts, cache hit rate, save
 | --------- | ---------------------------- | -------- | -------- | ---------------------- |
 | `scope`   | `session` \| `week` \| `all` | no       | `"week"` | session\\              | week\\ | all |
 | `flight`  | string                       | no       | -        | Path to a .flight file |
+
+### rule_tool_keep
+
+Confirm one decision into export decision-cache (status confirmed, source rule-keep).
+
+| Parameter     | Type   | Required | Default | Description                                       |
+| ------------- | ------ | -------- | ------- | ------------------------------------------------- |
+| `fingerprint` | string | yes      | -       | Stable fingerprint for the decision               |
+| `choice`      | string | yes      | -       | The choice to confirm (JSON string if structured) |
+| `agent`       | string | no       | -       |                                                   |
+| `projectDir`  | string | no       | -       | Project root; default cwd                         |
 
 ### rule_tool_sync
 

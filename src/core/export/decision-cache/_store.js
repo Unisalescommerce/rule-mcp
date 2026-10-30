@@ -157,3 +157,26 @@ export function listDecisions({ projectDir }) {
 
   return readStore(projectDir).records;
 }
+
+/**
+ * Write one confirmed decision (the `/rule-keep` path).
+ *
+ * @param {{ projectDir: string, fingerprint: string, choice: unknown, source?: string, agent?: string }} options
+ * @returns {{ ok: boolean, record?: object, reason?: string }}
+ */
+export function keepDecision({
+  projectDir,
+  fingerprint,
+  choice,
+  source = "rule-keep",
+  agent,
+}) {
+  return putDecision({
+    projectDir,
+    fingerprint,
+    choice,
+    status: "confirmed",
+    source,
+    agent,
+  });
+}

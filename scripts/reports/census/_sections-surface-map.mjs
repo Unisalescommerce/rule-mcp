@@ -23,6 +23,7 @@ const COMMAND_TO_TOOL = {
   "rule-handon": "rule_tool_handon",
   "rule-init": "rule_tool_init",
   "rule-stats": "rule_tool_stats",
+  "rule-keep": "rule_tool_keep",
   "rule-usage": "rule_tool_usage",
   "rule-update": "rule_tool_update",
 };

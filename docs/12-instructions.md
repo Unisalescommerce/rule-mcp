@@ -7,7 +7,7 @@ a tool, a skill, a prompt, a role, a command or a guardrail;
 `tests/docs/census-generated.test.mjs` compares this file against the live
 registry, so a stale copy fails the build instead of misleading a reader.
 
-## Agent slash commands (41)
+## Agent slash commands (43)
 
 The router `/rule` is pinned first; the rest follow in
 locale-alphabetical order. The same set is written for every agent and IDE,
@@ -52,14 +52,14 @@ which agents are installed and where their homes are.
 | `emacs`       | mcp.el exposes prompts directly; there is no command-file convention to write to.                                         |
 | `devin`       | Devin runs commands in its own workspace runtime, not from local slash-command files; MCP prompts remain the entry point. |
 
-### The kinds (41 commands)
+### The kinds (43 commands)
 
 | Kind       | Count | What it is for                                                   |
 | ---------- | ----- | ---------------------------------------------------------------- |
 | `router`   | 1     | Routes a free-text request to the skill that answers it          |
 | `area`     | 11    | Area hub: free text routes to leaf skills/tools (ADR 117)        |
 | `workflow` | 3     | Runs a named workflow (e.g. /rule-check auto-detects guardrails) |
-| `session`  | 7     | Carries a session across a context boundary                      |
+| `session`  | 9     | Carries a session across a context boundary                      |
 | `persona`  | 19    | Runs one review role at one operation, and writes its documents  |
 
 **router**: `/rule`
@@ -68,7 +68,7 @@ which agents are installed and where their homes are.
 
 **workflow**: `/rule-check`, `/rule-fix`, `/rule-git`
 
-**session**: `/rule-compress`, `/rule-handoff`, `/rule-handon`, `/rule-init`, `/rule-stats`, `/rule-update`, `/rule-usage`
+**session**: `/rule-compress`, `/rule-export`, `/rule-handoff`, `/rule-handon`, `/rule-init`, `/rule-keep`, `/rule-stats`, `/rule-update`, `/rule-usage`
 
 The 19 persona commands are one per role and operation
 ([`14-personas.md`](14-personas.md)).

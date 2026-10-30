@@ -85,6 +85,27 @@ export const USAGE_BODY = [
   "3. Finish by proposing a conventional commit with a mandatory scope only if a tracked file changed.",
 ].join("\n");
 
+/** /rule-keep -> rule_tool_keep. */
+export const KEEP_BODY = [
+  "Confirm one decision into the export decision-cache: $ARGUMENTS",
+  "",
+  "1. Parse fingerprint and choice from the arguments (fingerprint=<id> choice=<text|json> [agent=<id>]).",
+  "2. Call `rule_tool_keep` with those fields. Do not invent a fingerprint or a choice.",
+  "3. Report the confirmed record. Do not short-circuit hooks from this cache.",
+  "4. Finish by proposing a conventional commit with a mandatory scope only if a tracked file changed.",
+].join("\n");
+
+/** /rule-export -> distill + interview (no session delete by default). */
+export const EXPORT_BODY = [
+  "Export distill for this project: $ARGUMENTS",
+  "",
+  "1. Use the session map and `exportDistill` path (keep MCP events unless arguments say `drain`).",
+  "2. Flag dubious decisions (ADR writes, conflicts, KEEP/REJECT markers) and interview the user before writing pending/confirmed/discarded entries.",
+  "3. For a confirmed choice the user accepts, call `rule_tool_keep`. For undecided ones, write pending via the decision-cache helpers — never invent confirmation.",
+  "4. Do not hard-delete agent sessions unless arguments include `cleanup` and the user confirmed (Step 6). Unsupported agents are report-only.",
+  "5. Finish by proposing a conventional commit with a mandatory scope only if a tracked file changed.",
+].join("\n");
+
 /** /rule-init -> rule_tool_init. */
 export const INIT_BODY = [
   "Prepare this project for rule-mcp: $ARGUMENTS",
