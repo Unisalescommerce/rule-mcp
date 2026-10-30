@@ -25,7 +25,7 @@ Node ids in graph lines stay skill names (`rule-process-ai`), not filenames. Fil
 | this index | `plan-of-plans.md` | `in-progress` | workstream ordering + owner merge gate |
 | catalog orchestrator | `skills/_skills-plan.md` | `in-progress` | 3 release nodes done; remaining leaves per its stages |
 | host integration | `_mcp-host-integration-depth.md` | `done` | 37/37; per-host tokens deferred (pending ADR close-host-…) |
-| launcher | `_stable-launcher-outside-the-checkout.md` | `planned` (phases 1-3 done) | Phase 4 only: uninstall, ops docs, ADR |
+| launcher | `_stable-launcher-outside-the-checkout.md` | `done` | Phase 4 closed 2026-10-30 (pending ADR the-launcher-owns-…) |
 | port / installer scope | _(retired)_ | done → ADR 198 | file gone; HARD edge to host plan satisfied |
 | export | `_export.md` | `planned` | own graph |
 | scripts layout | `_2026-10-01-scripts-mcp-layout.md` | `planned` | own graph |
@@ -42,7 +42,7 @@ Branch history that motivated stages 1-5 (2026-10-21) lives in git and in ADR 18
 | Group | Orchestrator | State |
 | ----- | ------------ | ----- |
 | skills catalog | `skills/_skills-plan.md` | in progress: npm/uv/cargo-release done |
-| host + launcher (installer infrastructure) | this file, workstreams A–B | host done; launcher Phase 4 |
+| host + launcher (installer infrastructure) | this file, workstreams A–B | both done |
 | single-document tracks | each plan's `## Dependency graph` | export, scripts-layout, decision-models |
 | superseded area plans | none (historical) | `_*-guardrails.md` |
 | repository policy / OSS Stage 0 | ADR 135 + handoff 27 | closed |
@@ -103,8 +103,8 @@ Plan: [`_mcp-host-integration-depth.md`](_mcp-host-integration-depth.md)
 Plan: [`_stable-launcher-outside-the-checkout.md`](_stable-launcher-outside-the-checkout.md)
 
 - [x] Phases 1–3: deploy-based copy, resolution order, skip recording (handoff 36).
-- [ ] Phase 4: `setup --uninstall` removes `~/.rule-mcp/launcher/` then the shim; `docs/04-operations.md`; ADR on checkout vs PATH boundary.
-- [ ] Mark the plan `done`.
+- [x] Phase 4: `setup --uninstall` removes `~/.rule-mcp/launcher/` then the shim; `docs/04-operations.md`; pending ADR `the-launcher-owns-a-copy-outside-the-checkout`.
+- [x] Mark the plan `done`.
 
 ### WS-C — Skills catalog (delegated)
 

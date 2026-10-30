@@ -132,6 +132,22 @@ Seven products the study measured have no documented MCP config file at all - `a
 says so. `cursor-cli` is covered by `cursor`: the CLI reads the editor's config file. The catalog
 host `jetbrains` writes Junie's user file at `~/.junie/mcp/mcp.json` (not project `.idea/mcp.json`).
 
+## Global launcher
+
+`rule-mcp setup` installs a **copy** under `~/.rule-mcp/launcher/<version>/` and writes a PATH
+shim that resolves in this order:
+
+1. the version named by `~/.rule-mcp/launcher/current`, when that copy's entry point exists;
+2. the checkout recorded as the install source, when its entry point still exists;
+3. otherwise exit `127` (cannot execute), naming the copy, the pointer, the checkout, and `rule-mcp setup` as the repair.
+
+`pnpm link --global` is not used: it rewrites the workspace and lockfile of the tree being
+installed from. The boundary between a developer's checkout and the tool on `PATH` is the
+pending ADR `the-launcher-owns-a-copy-outside-the-checkout`.
+
+`doctor` reports which target is live. `setup --uninstall` removes the launcher directory first,
+then the PATH shim, and reports each removal so a shim is never left pointing at a deleted copy.
+
 ## Plugins
 
 ### Overview

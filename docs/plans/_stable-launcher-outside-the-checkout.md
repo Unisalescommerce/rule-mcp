@@ -1,8 +1,8 @@
 # Stable launcher: `~/.rule-mcp/launcher/` instead of a path into a checkout
 
-Status: `planned`
+Status: `done`
 Notes: subordinate plan (leading `_`); coordinated by `docs/plans/plan-of-plans.md` workstream WS-B. Outside the skills graph. This plan is about the installer's global launcher, not a skill, so
-it is not a node in `docs/plans/skills/_skills-plan.md`; it is tracked on its own like `_export.md`. Phases 1–3 done (handoff 36); Phase 4 remains.
+it is not a node in `docs/plans/skills/_skills-plan.md`; it is tracked on its own like `_export.md`. Phases 1–4 done 2026-10-30 (pending ADR `the-launcher-owns-a-copy-outside-the-checkout`).
 
 The `rule-mcp` launcher on `PATH` is a two-line shell script naming an absolute path into this
 repository:
@@ -80,7 +80,7 @@ this installer wrote, recorded in `~/.rule-mcp/launcher/installed.json`, not whe
 
 ### Phase 1 - the pack and the copy
 
-- [ ] Test first: `src/cli/setup/__tests__/_launcher-install.test.mjs` - a temp `HOME`, a packed
+- [x] Test first: `src/cli/setup/__tests__/_launcher-install.test.mjs` - a temp `HOME`, a packed
       fixture, and the matrix: install writes `<version>/bin/rule-mcp.js` and `current`; a second
       install of the same version is idempotent (`verified`, not a rewrite); a different version
       adds a directory and moves `current`; `installed.json` records version, source checkout and
@@ -143,14 +143,15 @@ this installer wrote, recorded in `~/.rule-mcp/launcher/installed.json`, not whe
 
 ### Phase 4 - uninstall, docs, ADR
 
-- [ ] `setup --uninstall` removes `~/.rule-mcp/launcher/` and the shim, in that order, and reports
-      what it removed; an uninstall that leaves a launcher pointing at a deleted directory is the
-      same defect in the other direction.
-- [ ] `docs/04-operations.md`: the launcher, its resolution order and its exit codes; `_shim-apply.js`
-      loses the note about `pnpm link --global` and points at the ADR.
-- [ ] ADR 187 (`docs/adr/187-the-launcher-owns-a-copy-outside-the-checkout.md`): the boundary between
-      "a developer's checkout" and "the tool on `PATH`", and why a copy beats a link. Written last,
-      because the pack measurement decides whether the copy is the answer or a fallback to it.
+- [x] `setup --uninstall` removes `~/.rule-mcp/launcher/` and the shim, in that order, and reports
+      what it removed (`removeLauncher`, `launcherRemovalTask` before `shim` in `_plan-uninstall.js`;
+      evidence `src/cli/setup/__tests__/_launcher-uninstall.test.mjs`). An uninstall that leaves a
+      shim pointing at a deleted directory is the same defect in the other direction.
+- [x] `docs/04-operations.md`: the launcher, its resolution order and its exit codes; `_shim-apply.js`
+      keeps the `pnpm link --global` rejection and points at the pending ADR.
+- [x] Pending ADR `the-launcher-owns-a-copy-outside-the-checkout` (not ADR 187: that number already
+      names the guard bootstrap skip): the boundary between "a developer's checkout" and "the tool
+      on `PATH`", and why a copy beats a link. Written last, after the pack→deploy measurement.
 
 ## Non-goals
 
@@ -179,7 +180,7 @@ Depends on: nothing hard; `installer-scope-adr-policy-features` (ORDER, its step
 
 Feeds: nothing in the skills graph; `docs/04-operations.md`, `doctor` output and the global git hooks read its targets
 
-Shared files: src/cli/setup/_shim-apply.js, src/cli/setup/_shim.js, src/cli/setup/_task-core.js, src/cli/doctor/_sections.js, src/cli/installers/_uninstall.js, docs/04-operations.md, docs/adr/187-the-launcher-owns-a-copy-outside-the-checkout.md
+Shared files: src/cli/setup/_shim-apply.js, src/cli/setup/_shim.js, src/cli/setup/_task-core.js, src/cli/setup/_task-launcher.js, src/cli/setup/_plan-uninstall.js, src/cli/setup/_scan.js, src/cli/doctor/_sections.js, src/cli/installers/_uninstall.js, docs/04-operations.md, docs/adr/_pending/the-launcher-owns-a-copy-outside-the-checkout.md
 
 ## Gates
 
