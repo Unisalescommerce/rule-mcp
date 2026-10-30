@@ -64,8 +64,8 @@ Honor `RULE_MCP_NO_CACHE` for cache writes like other caches.
 
 ## Decision-cache contract (export-owned)
 
-Path: under `~/.rule-mcp/projects/<slug>/` (exact filename in WS-3;
-not in the consumer git tree).
+Path: `~/.rule-mcp/projects/<slug>/decision-cache.json` (export-owned;
+not the L3 routing gate cache).
 
 Minimum record:
 
@@ -101,10 +101,10 @@ never delete.
   - [x] 2.1 Document and test `keep` vs drain when invoked from `/rule-export` (`exportDistill`, ops § Export distill)
   - [x] 2.2 Recommendation: default `keep: true` for distill-only; optional `drain: true` later
   - [x] 2.3 Gate: distill suite green; default path does not drain
-- [ ] **Step 3 - EX-04, EX-08 (high/medium)**: Decision-cache store
-  - [ ] 3.1 Schema + persistence + `schemaVersion`
-  - [ ] 3.2 Status transitions pending↔confirmed↔rejected
-  - [ ] 3.3 Gate: store suite; `NO_CACHE` honored
+- [x] **Step 3 - EX-04, EX-08 (high/medium)**: Decision-cache store — done 2026-10-30
+  - [x] 3.1 Schema + persistence + `schemaVersion` (`src/core/export/decision-cache/`)
+  - [x] 3.2 Status transitions pending↔confirmed↔rejected
+  - [x] 3.3 Gate: store suite; `NO_CACHE` honored
 - [ ] **Step 4 - interview + `/rule-keep`**
   - [ ] 4.1 Heuristics: ADR writes, `rule_tool_process_adr`, conflicting choices, explicit markers
   - [ ] 4.2 `/rule-export` interviews dubious → write pending/confirmed/discard
