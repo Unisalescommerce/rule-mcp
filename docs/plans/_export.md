@@ -92,11 +92,11 @@ never delete.
   - [x] 0.1 Failing tests: list sessions for a fixture project, oldest→newest (`__tests__/_sessions.test.mjs`)
   - [x] 0.2 `current` detection per agent; if ambiguous, flag `currentUnknown` (`listSessions` in `_sessions.js`)
   - [x] 0.3 Gate: unit tests green; no deletes yet
-- [ ] **Step 1 - EX-03 (high)**: Idempotent telemetry merge
-  - [ ] 1.1 Failing tests: two exports → stats unchanged on second run
-  - [ ] 1.2 Merge transcript-derived fields into MCP telemetry store with digests
-  - [ ] 1.3 `/rule-stats` / `rule_tool_stats` read the merged truth
-  - [ ] 1.4 Gate: stats suites + new merge suite
+- [x] **Step 1 - EX-03 (high)**: Idempotent telemetry merge — done 2026-10-30
+  - [x] 1.1 Failing tests: two exports → stats unchanged on second run (`store/__tests__/_transcript-merge.test.mjs`)
+  - [x] 1.2 Merge transcript-derived fields into MCP telemetry store with digests (`_transcript-merge.js`)
+  - [x] 1.3 `/rule-stats` / `rule_tool_stats` read the merged truth (`ruleMergedUsage` in `_stats.js`)
+  - [x] 1.4 Gate: stats suites + new merge suite
 - [ ] **Step 2 - EX-07 (medium)**: Flight emit in the pipeline
   - [ ] 2.1 Document and test `keep` vs drain when invoked from `/rule-export`
   - [ ] 2.2 Recommendation: default `keep: true` for distill-only; optional drain flag later

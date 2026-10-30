@@ -27,7 +27,7 @@ Node ids in graph lines stay skill names (`rule-process-ai`), not filenames. Fil
 | host integration | `_mcp-host-integration-depth.md` | `done` | 37/37; per-host tokens deferred (pending ADR close-host-…) |
 | launcher | `_stable-launcher-outside-the-checkout.md` | `done` | Phase 4 closed 2026-10-30 (pending ADR the-launcher-owns-…) |
 | port / installer scope | _(retired)_ | done → ADR 198 | file gone; HARD edge to host plan satisfied |
-| export | `_export.md` | `in-progress` | Step 0 done (session map); Step 1+ open |
+| export | `_export.md` | `in-progress` | Steps 0–1 done; next Step 2 (flight emit) |
 | scripts layout | `_2026-10-01-scripts-mcp-layout.md` | `planned` | own graph |
 | decision models | `_decision-models.md` | `planned` | own graph |
 | area guardrails (`_*-guardrails.md`) | six files | `superseded` | absorbed into leaf plans; no new work |
@@ -119,7 +119,7 @@ Orchestrator: [`skills/_skills-plan.md`](skills/_skills-plan.md)
 
 Run only when WS-A/B/C are idle on the shared files in section 8, or in parallel when the track edits none of them.
 
-- [ ] [`_export.md`](_export.md) — Step 0 (session map) done; continue from Step 1 (telemetry merge).
+- [ ] [`_export.md`](_export.md) — Steps 0–1 done; continue from Step 2 (flight emit keep vs drain).
 - [ ] [`_2026-10-01-scripts-mcp-layout.md`](_2026-10-01-scripts-mcp-layout.md) — own dependency graph.
 - [ ] [`_decision-models.md`](_decision-models.md) — own dependency graph.
 
