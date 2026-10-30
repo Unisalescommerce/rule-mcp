@@ -30,6 +30,7 @@
 export * from "./_constants.js";
 export * from "./_paths.js";
 export * from "./_sidecar.js";
+export * from "./_transcript-merge.js";
 export * from "./_events.js";
 export * from "./_rollup.js";
 export * from "./_retention.js";

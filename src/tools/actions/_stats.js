@@ -22,7 +22,7 @@ import { z } from "zod/v4";
 import { aggregate, renderFlight, renderStats } from "../../core/telemetry/stats/index.js";
 import { formatBytes, graphAgeSeconds, graphStatus, runtimeSnapshot } from "../../core/tokensave/_insights.js";
 import { tokensaveGain } from "../../core/tokensave/_ledger.js";
-import { readEvents, readRollups } from "../../core/telemetry/store/index.js";
+import { readEvents, readMergedUsage, readRollups } from "../../core/telemetry/store/index.js";
 import { telemetryEnabled } from "../../core/telemetry/recorder/index.js";
 import { registerTool } from "../router/index.js";
 
@@ -77,8 +77,19 @@ export function registerStatsTool() {
       }
 
       const stats = aggregate(events);
+      const merged = readMergedUsage(process.cwd());
       const title = { session: "This session", week: "Last 7 days", all: "All recorded" }[scope];
       let text = renderStats(stats, { title: `rule-mcp telemetry: ${title}` });
+
+      if (merged) {
+        text += [
+          "",
+          "## Merged transcript usage",
+          "",
+          `${merged.agent ?? "agent"}: ${merged.apiCalls ?? 0} calls, ${merged.input ?? 0} in / ${merged.output ?? 0} out (digest ${(merged.digest ?? "").slice(0, 12)}…).`,
+          "",
+        ].join("\n");
+      }
 
       if (scope === "all") {
         const rollups = readRollups();
@@ -137,7 +148,10 @@ export function registerStatsTool() {
         text += [...lines, ""].join("\n");
       }
 
-      return { content: [{ type: "text", text }], _meta: { ruleStats: stats, ruleGraph: status ?? undefined } };
+      return {
+        content: [{ type: "text", text }],
+        _meta: { ruleStats: stats, ruleMergedUsage: merged ?? undefined, ruleGraph: status ?? undefined },
+      };
     },
   });
 }
