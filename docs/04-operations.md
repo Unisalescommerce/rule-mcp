@@ -132,6 +132,16 @@ Seven products the study measured have no documented MCP config file at all - `a
 says so. `cursor-cli` is covered by `cursor`: the CLI reads the editor's config file. The catalog
 host `jetbrains` writes Junie's user file at `~/.junie/mcp/mcp.json` (not project `.idea/mcp.json`).
 
+## Export distill (flight)
+
+`exportDistill` (the `/rule-export` pipeline entry) merges transcript usage into
+the project telemetry store, then writes a `.flight` under the project's exports
+directory. **Default is `keep: true`**: the MCP event log stays on disk so a
+distill-only run cannot erase the recording. Pass `drain: true` only when the
+caller wants the same drain behaviour as a bare `exportFlight()` (file written
+first, then the log emptied). Agent-session cleanup is a separate, confirm-gated
+step and is not implied by drain.
+
 ## Global launcher
 
 `rule-mcp setup` installs a **copy** under `~/.rule-mcp/launcher/<version>/` and writes a PATH

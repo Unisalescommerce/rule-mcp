@@ -97,10 +97,10 @@ never delete.
   - [x] 1.2 Merge transcript-derived fields into MCP telemetry store with digests (`_transcript-merge.js`)
   - [x] 1.3 `/rule-stats` / `rule_tool_stats` read the merged truth (`ruleMergedUsage` in `_stats.js`)
   - [x] 1.4 Gate: stats suites + new merge suite
-- [ ] **Step 2 - EX-07 (medium)**: Flight emit in the pipeline
-  - [ ] 2.1 Document and test `keep` vs drain when invoked from `/rule-export`
-  - [ ] 2.2 Recommendation: default `keep: true` for distill-only; optional drain flag later
-  - [ ] 2.3 Gate: flight export suites still green; no accidental drain in default path
+- [x] **Step 2 - EX-07 (medium)**: Flight emit in the pipeline — done 2026-10-30
+  - [x] 2.1 Document and test `keep` vs drain when invoked from `/rule-export` (`exportDistill`, ops § Export distill)
+  - [x] 2.2 Recommendation: default `keep: true` for distill-only; optional `drain: true` later
+  - [x] 2.3 Gate: distill suite green; default path does not drain
 - [ ] **Step 3 - EX-04, EX-08 (high/medium)**: Decision-cache store
   - [ ] 3.1 Schema + persistence + `schemaVersion`
   - [ ] 3.2 Status transitions pending↔confirmed↔rejected
