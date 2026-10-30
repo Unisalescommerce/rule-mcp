@@ -115,11 +115,11 @@ never delete.
   - [x] 5.2 Prompt def: drive `rule_tool_process_adr`, then `/rule-keep`
   - [x] 5.3 Update contract/census/surface-map counts
   - [x] 5.4 Gate: prompt contract tests, docs-accuracy
-- [ ] **Step 6 - EX-01, EX-06 (high)**: Cleanup
-  - [ ] 6.1 Keep-set = newest `N` ∪ `{current}`; `N` from env
-  - [ ] 6.2 Confirm gate; refuse if `currentUnknown`
-  - [ ] 6.3 Hard delete only outside keep-set; unsupported agents untouched
-  - [ ] 6.4 Gate: temp HOME fixtures per agent; never touch real home in CI
+- [x] **Step 6 - EX-01, EX-06 (high)**: Cleanup — done 2026-10-30
+  - [x] 6.1 Keep-set = newest `N` ∪ `{current}`; `N` from env (`keepSet` / `resolveKeep`)
+  - [x] 6.2 Confirm gate; refuse if `currentUnknown` (`planCleanup` / `runCleanup`)
+  - [x] 6.3 Hard delete only outside keep-set; unsupported agents untouched
+  - [x] 6.4 Gate: temp HOME fixtures per agent; never touch real home in CI
 - [ ] **Step 7 - EX-09 (low)**: Tool-cache promote
   - [ ] 7.1 Only existing promotable entries / rules
   - [ ] 7.2 Gate: tool-cache suites unchanged floors
