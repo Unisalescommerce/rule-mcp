@@ -19,7 +19,7 @@
  * @see docs/plans/_stable-launcher-outside-the-checkout.md - Phase 1, and the measurement
  */
 
-import { existsSync, mkdirSync } from "node:fs";
+import { existsSync, mkdirSync, rmSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { join } from "node:path";
 
@@ -117,4 +117,29 @@ export function installLauncher({ checkout, version, root, run, now = () => new 
   recordPrune({ root, keep: [version] });
 
   return { status: "installed", dir, version, pruned };
+}
+
+/**
+ * Remove every installed copy under `launcher/`, including the pointer and record.
+ *
+ * Callers that also remove the PATH shim must run this first: a shim that still
+ * names a deleted copy is the checkout incident in reverse.
+ *
+ * @param {{ root?: string, dryRun?: boolean }} [options]
+ * @returns {{ status: "removed"|"planned"|"absent", dir: string, lines: string[] }}
+ */
+export function removeLauncher({ root, dryRun = false } = {}) {
+  const dir = launcherRoot({ root });
+
+  if (!existsSync(dir)) {
+    return { status: "absent", dir, lines: [] };
+  }
+
+  if (dryRun) {
+    return { status: "planned", dir, lines: [`would remove ${dir}`] };
+  }
+
+  rmSync(dir, { recursive: true, force: true });
+
+  return { status: "removed", dir, lines: [`removed ${dir}`] };
 }

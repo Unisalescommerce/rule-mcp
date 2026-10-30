@@ -22,6 +22,7 @@ import { copiedSkillDirs } from "./_scan-skills.js";
 import { legacyHookFiles } from "./_legacy-hooks.js";
 import { removableTargets } from "./_rules-apply.js";
 import { purgeTargets } from "./_runtime-home.js";
+import { launcherRoot } from "./_launcher-store.js";
 import { globalShimPresent } from "./_shim-apply.js";
 import { hasOwnedLines, profilePaths } from "./_shell-profile.js";
 import { daemonServicePresent } from "./_service-status.js";
@@ -65,6 +66,8 @@ export function scanInstallation() {
   const service = daemonServicePresent();
   const hooks = legacyHookFiles();
   const shim = globalShimPresent();
+  const launcherDir = launcherRoot();
+  const launcher = existsSync(launcherDir);
   const skills = copiedSkillDirs();
   const commands = installedCommandFiles();
 
@@ -119,9 +122,16 @@ export function scanInstallation() {
       items: profiles,
     },
     {
+      id: "launcher",
+      label: "Launcher copy",
+      detail: "installed copy under ~/.rule-mcp/launcher/",
+      count: launcher ? 1 : 0,
+      items: launcher ? [launcherDir] : [],
+    },
+    {
       id: "shim",
       label: "Global shim",
-      detail: "launchers and pnpm global links",
+      detail: "PATH entry and legacy pnpm global links",
       count: shim ? 1 : 0,
       items: shim ? ["rule-mcp on PATH"] : [],
     },

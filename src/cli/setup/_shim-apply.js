@@ -6,7 +6,8 @@
  * The shim is a plain launcher script on purpose. `pnpm link --global`
  * rewrites pnpm-workspace.yaml (clobbering the overrides) and the lockfile
  * in pnpm 10+, which is unacceptable corruption of the repository being
- * installed from.
+ * installed from. The durable answer is a copy under `~/.rule-mcp/launcher/`
+ * (see pending ADR `the-launcher-owns-a-copy-outside-the-checkout`).
  */
 
 import { chmodSync, existsSync, lstatSync, mkdirSync, readFileSync, rmSync, unlinkSync, writeFileSync } from "node:fs";

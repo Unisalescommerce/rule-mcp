@@ -12,7 +12,7 @@ import { readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 import { pkg } from "../paths/index.js";
-import { currentVersion, installLauncher, launcherRoot } from "./_launcher-install.js";
+import { currentVersion, installLauncher, launcherRoot, removeLauncher } from "./_launcher-install.js";
 
 /**
  * How much disk a directory occupies, in bytes.
@@ -69,6 +69,30 @@ export const launcherTask = ({ checkout = process.cwd(), version = pkg.version, 
       status: "ok",
       summary: `${version} - ${sizeText(dirBytes(result.dir))}`,
       lines: [`current: ${pointer}`, ...(result.pruned.length > 0 ? [`pruned: ${result.pruned.join(", ")}`] : [])],
+    };
+  },
+});
+
+/**
+ * Remove the installed copy before the PATH shim goes.
+ *
+ * @returns {object} a plan task
+ */
+export const launcherRemovalTask = () => ({
+  id: "launcher",
+  title: "Launcher copy",
+  detail: launcherRoot(),
+  run: ({ dryRun }) => {
+    const result = removeLauncher({ dryRun });
+
+    if (result.status === "absent") {
+      return { status: "ok", summary: "nothing found" };
+    }
+
+    return {
+      status: "ok",
+      summary: result.status === "planned" ? "would remove" : "removed",
+      lines: result.lines,
     };
   },
 });

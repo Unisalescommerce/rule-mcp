@@ -9,6 +9,7 @@
  */
 
 import { agentRemovalTask, shimRemovalTask } from "./_task-core.js";
+import { launcherRemovalTask } from "./_task-launcher.js";
 import { commandsRemovalTask, gitHookRemovalTask, profilesTask, purgeTask, rulesRemovalTask, serviceRemovalTask, skillsRemovalTask } from "./_task-remove.js";
 
 const GROUP_TASKS = {
@@ -18,11 +19,12 @@ const GROUP_TASKS = {
   "git-hook": gitHookRemovalTask,
   service: serviceRemovalTask,
   profiles: profilesTask,
+  launcher: launcherRemovalTask,
   shim: shimRemovalTask,
 };
 
-/** The order removal groups run in, whatever order they were selected. */
-const GROUP_ORDER = ["rules", "commands", "skills", "git-hook", "service", "profiles", "shim"];
+/** The order removal groups run in, whatever order they were selected. Copy before PATH shim. */
+const GROUP_ORDER = ["rules", "commands", "skills", "git-hook", "service", "profiles", "launcher", "shim"];
 
 /**
  * @param {{ agents?: string[], groups?: string[], purgeIds?: string[] }} answers
