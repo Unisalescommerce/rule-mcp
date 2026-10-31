@@ -65,11 +65,11 @@ WS-0  loopback client and contract      (DM-03, DM-12)
 
 Every workstream owns files no other workstream writes, so two of them can run in either order but never at the same time on the same file: WS-0 writes the client, WS-1 the supervisor, WS-2 the harness and the corpus, WS-3 the ranker contract, WS-4 the registry and the language slice, WS-5 the cache key, WS-6 and WS-7 the rule family, WS-8 the documents.
 
-Depends on: export (ORDER): durable choices already live in the export-owned decision-cache; DM-07 reads that store rather than inventing a second one
+Depends on: -
 
 Feeds: -
 
-Shared files: `~/.rule-mcp/projects/<slug>/decision-cache.json` (export-owned; see `_export.md`), `src/core/decision/`
+Shared files: `~/.rule-mcp/projects/<slug>/decision-cache.json` (export-owned; see ADR 199), `src/core/decision/`
 
 ## Durable choices (export decision-cache)
 

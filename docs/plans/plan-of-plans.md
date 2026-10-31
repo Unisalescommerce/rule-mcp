@@ -24,10 +24,10 @@ Node ids in graph lines stay skill names (`rule-process-ai`), not filenames. Fil
 | ----- | ---- | ------ | --------- |
 | this index | `plan-of-plans.md` | `in-progress` | workstream ordering + owner merge gate |
 | catalog orchestrator | `skills/_skills-plan.md` | `in-progress` | 3 release nodes done; remaining leaves per its stages |
-| host integration | `_mcp-host-integration-depth.md` | `done` | 37/37; per-host tokens deferred (pending ADR close-host-…) |
-| launcher | `_stable-launcher-outside-the-checkout.md` | `done` | Phase 4 closed 2026-10-30 (pending ADR the-launcher-owns-…) |
+| host integration | _(retired)_ | done → ADR 200 | 37/37; per-host tokens deferred (pending ADR close-host-…) |
+| launcher | _(retired)_ | done → ADR 201 | Phase 4 closed 2026-10-30 (pending ADR the-launcher-owns-…) |
 | port / installer scope | _(retired)_ | done → ADR 198 | file gone; HARD edge to host plan satisfied |
-| export | `_export.md` | `done` | Steps 0–8 complete (2026-10-31) |
+| export | _(retired)_ | done → ADR 199 | Steps 0–8 complete 2026-10-31; review/audit → ADR 202/203 |
 | scripts layout | `_2026-10-01-scripts-mcp-layout.md` | `planned` | own graph |
 | decision models | `_decision-models.md` | `planned` | own graph |
 | area guardrails (`_*-guardrails.md`) | six files | `superseded` | absorbed into leaf plans; no new work |
@@ -43,7 +43,7 @@ Branch history that motivated stages 1-5 (2026-10-21) lives in git and in ADR 18
 | ----- | ------------ | ----- |
 | skills catalog | `skills/_skills-plan.md` | in progress: npm/uv/cargo-release done |
 | host + launcher (installer infrastructure) | this file, workstreams A–B | both done |
-| single-document tracks | each plan's `## Dependency graph` | export, scripts-layout, decision-models |
+| single-document tracks | each plan's `## Dependency graph` | export (ADR 199), scripts-layout, decision-models |
 | superseded area plans | none (historical) | `_*-guardrails.md` |
 | repository policy / OSS Stage 0 | ADR 135 + handoff 27 | closed |
 
@@ -63,15 +63,12 @@ Cross-branch kinds (`MERGE`, `REBASE`, `DIVERGENCE`, `SUPERSEDES`) are retired w
 ```
 rel/v0.1.0
 ├── plan-of-plans.md .................... this index (unprefixed)
-├── WS-A  host closeout
-│   └── _mcp-host-integration-depth.md .. HARD← installer-scope (ADR 198, done)
-├── WS-B  launcher Phase 4
-│   └── _stable-launcher-outside-the-checkout.md
-│       └── independent of WS-A (ORDER only vs catalog churn)
+├── WS-A  host closeout ................. done → ADR 200 (HARD← ADR 198)
+├── WS-B  launcher Phase 4 .............. done → ADR 201
 ├── WS-C  skills catalog
 │   └── skills/_skills-plan.md ......... stages 0-10; 3 release nodes done
 ├── WS-D  single tracks (parallel, no mutual HARD)
-│   ├── _export.md
+│   ├── export ......................... done → ADR 199
 │   ├── _2026-10-01-scripts-mcp-layout.md
 │   └── _decision-models.md
 ├── WS-E  superseded / historical ........ no execution
@@ -91,7 +88,7 @@ Execute one workstream at a time when it touches shared files (section 8). Other
 
 ### WS-A — Host integration closeout
 
-Plan: [`_mcp-host-integration-depth.md`](_mcp-host-integration-depth.md)
+Plan: retired → [ADR 200](../adr/200-close-out-plan-mcp-host-integration-depth.md)
 
 - [x] Port plan closed (ADR 198); HARD edge satisfied.
 - [x] Phases 0–5 of the host plan (35/37 checkboxes).
@@ -100,7 +97,7 @@ Plan: [`_mcp-host-integration-depth.md`](_mcp-host-integration-depth.md)
 
 ### WS-B — Launcher Phase 4
 
-Plan: [`_stable-launcher-outside-the-checkout.md`](_stable-launcher-outside-the-checkout.md)
+Plan: retired → [ADR 201](../adr/201-close-out-plan-stable-launcher-outside-the-checkout.md)
 
 - [x] Phases 1–3: deploy-based copy, resolution order, skip recording (handoff 36).
 - [x] Phase 4: `setup --uninstall` removes `~/.rule-mcp/launcher/` then the shim; `docs/04-operations.md`; pending ADR `the-launcher-owns-a-copy-outside-the-checkout`.
@@ -119,7 +116,7 @@ Orchestrator: [`skills/_skills-plan.md`](skills/_skills-plan.md)
 
 Run only when WS-A/B/C are idle on the shared files in section 8, or in parallel when the track edits none of them.
 
-- [x] [`_export.md`](_export.md) — Steps 0–8 complete (docs / privacy / census).
+- [x] export — Steps 0–8 complete; retired → [ADR 199](../adr/199-close-out-plan-export.md) (review ADR 202, audit ADR 203).
 - [ ] [`_2026-10-01-scripts-mcp-layout.md`](_2026-10-01-scripts-mcp-layout.md) — own dependency graph.
 - [ ] [`_decision-models.md`](_decision-models.md) — own dependency graph.
 

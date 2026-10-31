@@ -39,7 +39,11 @@ test("surface map lists export prompts on docs/17-surface-map.md", () => {
   assert.match(map, /rule-export/);
   assert.match(map, /rule-keep/);
   assert.match(map, /rule-adr/);
-  assert.ok(!readFileSync(`${root}/docs/plans/_export.md`, "utf8").includes("docs/16-surface-map.md"));
+  assert.match(
+    readFileSync(`${root}/docs/adr/199-close-out-plan-export.md`, "utf8"),
+    /Close out plan _export/,
+    "export plan closeout ADR 199 must exist after Step 8 handoff",
+  );
 });
 
 test("decision-models plan points durable choices at the export decision-cache", () => {

@@ -8,6 +8,7 @@ them by `handoff doctor`, so editing it by hand is work the next run throws away
 
 | #                                                                  | Title                                                                     | Date       | Branch                    |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------------- | ---------- | ------------------------- |
+| [38](38-export-workstream-complete.md)                             | export workstream complete (Steps 0–8)                                    | 2026-10-31 | rel/v0.1.0                |
 | [37](37-plan-of-plans-underscore-index-and-workstreams.md)         | plan-of-plans is the sole unprefixed index, with workstreams              | 2026-10-30 | rel/v0.1.0                |
 | [36](36-port-plan-closed-launcher-copy-shipped.md)                 | Port plan closed, launcher copy shipped, phases 1-3                       | 2026-10-30 | rel/v0.1.0                |
 | [35](35-project-scope-finished-and-steps-nine-to-eleven.md)        | Project scope finished, interactive questions, steps 9-11                 | 2026-10-29 | rel/v0.1.0                |
