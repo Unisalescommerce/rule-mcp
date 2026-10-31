@@ -19,6 +19,13 @@ export const STE100_ANCHOR = "STE100~80.";
 export const STE100_DIRECTIVE =
   "Write in ASD-STE100 style at about 80%. Prefer short sentences, active voice, one idea per sentence, and the same word for the same thing. Keep about 20% natural tone so the text does not sound robotic. Prefer concrete verbs and named artifacts over abstract nouns. Technical docs and code stay in American English; chat language follows AGENTS.md.";
 
+/**
+ * Embeddable one-liner for generators (impersonation, persona bodies, handoff,
+ * ADR commands, trio skeletons). Prefer this over copy-pasting a second wording.
+ */
+export const STE100_WRITING_LINE =
+  "Writing: STE100~80. Short sentences, active voice, one idea per sentence, same word for the same thing. Keep about 20% natural tone. Keep findings and summaries short and actionable.";
+
 /** Hard rules we enforce (~80% STE100-ish). */
 export const STE100_HARD_RULES = [
   "Prefer sentences under about 25 words when the idea fits",

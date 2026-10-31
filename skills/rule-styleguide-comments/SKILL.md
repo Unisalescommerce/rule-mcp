@@ -18,7 +18,8 @@ Write a comment to say something the code itself cannot: a constraint, a
 reason, an invariant that is not local. Never to restate what the next line
 does, never to say where the code came from, never to argue that the change is
 correct. That last one is the author talking to the reviewer, and it is noise
-the moment the change merges.
+the moment the change merges. Prefer STE100~80 prose: short sentences, active
+voice, one idea per sentence (`src/core/directive/_ste100.js`).
 
 ## What never ships
 

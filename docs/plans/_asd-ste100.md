@@ -86,14 +86,14 @@ Shared files: `docs/plans/plan-of-plans.md`, `src/tools/actions/_impersonation.j
 
 ### WS2 — Generators and impersonation
 
-- [ ] **WS2-T1** Wire the directive into `rule_tool_impersonation` and persona bodies
-  - [ ] WS2-T1.1 Plan / audit / review sync templates mention the STE100~80 rule
-  - [ ] WS2-T1.2 Finding and summary fields stay short and actionable
-- [ ] **WS2-T2** Wire ADR + handoff writers
-  - [ ] WS2-T2.1 `rule_tool_process_adr` / pending ADR bodies
-  - [ ] WS2-T2.2 `rule_tool_handoff` sections and resume prompts
-- [ ] **WS2-T3** Wire other markdown emitters that this server owns (newsletter/release notes, comment helpers) — only those that already exist; do not invent new products
-- [ ] **WS2-T4** Gate: fixture docs from each wired path pass the WS1 contract tests
+- [x] **WS2-T1** Wire the directive into `rule_tool_impersonation` and persona bodies
+  - [x] WS2-T1.1 Plan / audit / review sync templates mention the STE100~80 rule
+  - [x] WS2-T1.2 Finding and summary fields stay short and actionable
+- [x] **WS2-T2** Wire ADR + handoff writers
+  - [x] WS2-T2.1 `rule_tool_process_adr` / pending ADR bodies
+  - [x] WS2-T2.2 `rule_tool_handoff` sections and resume prompts
+- [x] **WS2-T3** Wire other markdown emitters that this server owns (newsletter/release notes, comment helpers) — only those that already exist; do not invent new products
+- [x] **WS2-T4** Gate: fixture docs from each wired path pass the WS1 contract tests
 
 ### WS3 — Development plan shape (AI-assisted, conflict-free)
 

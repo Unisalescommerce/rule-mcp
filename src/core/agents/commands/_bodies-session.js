@@ -1,5 +1,7 @@
 /** @module core/agents/commands/bodies-session - the session task command bodies */
 
+import { STE100_WRITING_LINE } from "../../directive/_ste100.js";
+
 /**
  * The handoff command body (request-driven session handoff + atomic commits).
  * When the working tree is dirty, pending work is committed as a sequence of
@@ -25,7 +27,8 @@ export const HANDOFF_BODY = [
   "4. Present the handoff as a paste-ready block for the next session: quote the finished `### Resume Prompt` block verbatim, then list the commits just created. The document is the source; the chat is a copy of it.",
   "5. If the grouping into atomic commits is ambiguous, ask the user how to split before committing.",
   "6. Write the handoff and every commit message in English, American spelling (color, behavior, organize).",
-  "7. Responses are compressed automatically by the server: keep the handoff factual and free of filler.",
+  `7. ${STE100_WRITING_LINE}`,
+  "8. Responses are compressed automatically by the server: keep the handoff factual and free of filler.",
 ].join("\n");
 
 /**
@@ -93,7 +96,8 @@ export const ADR_BODY = [
   "2. After the ADR is written, offer `/rule-keep` (call `rule_tool_keep`) with a fingerprint for that decision and the choice that was accepted - only when the user confirms.",
   "3. This prompt exists because bare `rule_tool_process_adr` does not bind the decision into the export decision-cache; `/rule-adr` does both.",
   "4. Do not short-circuit hooks from the decision-cache.",
-  "5. Finish by proposing a conventional commit with a mandatory scope if the tree changed.",
+  `5. ${STE100_WRITING_LINE}`,
+  "6. Finish by proposing a conventional commit with a mandatory scope if the tree changed.",
 ].join("\n");
 
 /** /rule-keep -> rule_tool_keep. */

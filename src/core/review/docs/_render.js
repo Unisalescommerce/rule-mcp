@@ -1,5 +1,6 @@
 /** @module core/review/docs/render */
 
+import { STE100_WRITING_LINE } from "../../directive/_ste100.js";
 import { REVIEW_COLUMNS, table } from "./_table.js";
 
 /** The header every document of the trio opens with; a scoped run names its scope. */
@@ -11,6 +12,8 @@ function header(title, role, version, date, scope) {
 export function renderAudit(role, version, date, scope) {
   return [
     ...header(`${role} audit`, role, version, date, scope),
+    STE100_WRITING_LINE,
+    "",
     "Evidence only: the commands this run executed with their measured values, the files it read,",
     "the sources it consulted. No opinions - those belong in the review.",
     "",
@@ -27,6 +30,8 @@ export function renderReview(role, version, date, findings, scope) {
 
   return [
     ...header(`${role} review`, role, version, date, scope),
+    STE100_WRITING_LINE,
+    "",
     `Findings distilled from [the audit](../audits/${role}.md). A finding this run no longer reports is`,
     "flipped to resolved and kept one run for visibility, then removed.",
     "",
@@ -55,6 +60,8 @@ export function renderPlan(role, version, date, open, checked = new Set(), scope
 
   return [
     ...header(`${role} plan`, role, version, date, scope),
+    STE100_WRITING_LINE,
+    "",
     `Steps re-derived from the open findings in [the review](../reviews/${role}.md) on every run, worst`,
     "first. Mark an executed step or sub-step with `[x]` - the next sync keeps the mark while its",
     "finding stays open. This file is deleted by the run that finds nothing open.",

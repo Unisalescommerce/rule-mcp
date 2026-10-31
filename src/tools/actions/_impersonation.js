@@ -14,6 +14,7 @@
 
 import { z } from "zod/v4";
 
+import { STE100_WRITING_LINE } from "../../core/directive/_ste100.js";
 import { allRoles, roleById } from "../../core/review/roles/index.js";
 import { loadRoleOverlays } from "../../core/review/_overlays.js";
 import { syncRoleDocs } from "../../core/review/docs/index.js";
@@ -22,7 +23,7 @@ import { registerTool } from "../router/index.js";
 const FindingSchema = z.object({
   id: z.string().describe("Finding id"),
   severity: z.string().optional().describe("critical|high|medium|low|info"),
-  summary: z.string().optional().describe("What is wrong"),
+  summary: z.string().optional().describe("What is wrong; short and actionable (STE100~80)"),
   evidence: z.string().optional().describe("Audit pointer"),
   steps: z.array(z.string()).optional().describe("Sub-steps for the plan checklist, one action each"),
 });
@@ -81,6 +82,7 @@ export function registerImpersonationTool() {
         "The headers, tables, plan checklist and statuses are done. Steps are uncapped: pass as many findings",
         "as the run earned, with `steps` sub-actions on any finding that hides more than one. Fill the evidence in the audit, the wording of each",
         "finding in the review, and what each step takes in the plan.",
+        STE100_WRITING_LINE,
       ];
 
       return { content: [{ type: "text", text: lines.join("\n") }] };

@@ -24,10 +24,14 @@ this on every skill with two guardrails you cannot switch off:
    `labeled`, `canceled`).
 3. **ASCII punctuation.** No em/en dashes, no curly quotes, no ellipsis glyph
    (enforced separately by `fp-no-emdash` / `fp-no-typographic-chars`).
-4. **Non-English content belongs in data files, not prose.** A user-facing
+4. **ASD-STE100 (~80%).** Prefer short sentences, active voice, one idea per
+   sentence, and the same word for the same thing. Keep about 20% natural tone.
+   Canonical string: `STE100_DIRECTIVE` / `STE100_WRITING_LINE` in
+   `src/core/directive/_ste100.js`. Do not invent a second wording.
+5. **Non-English content belongs in data files, not prose.** A user-facing
    i18n string or a translated message is data: keep it in a message table or
    resource file, never in a comment or identifier.
-5. **Proper nouns and API identifiers are exempt.** A third-party API name or
+6. **Proper nouns and API identifiers are exempt.** A third-party API name or
    a product name keeps its own spelling; flag it in a code span if the
    spell-check may trip on it.
 

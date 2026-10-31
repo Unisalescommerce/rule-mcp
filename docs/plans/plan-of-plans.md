@@ -129,7 +129,7 @@ Run only when WS-A/B/C are idle on the shared files in section 8, or in parallel
 Plan: [`_asd-ste100.md`](_asd-ste100.md)
 
 - [x] WS1 writing standard (STE100~80 profile + shared directive).
-- [ ] WS2 generators + impersonation (ADR, handoff, review/audit, personas).
+- [x] WS2 generators + impersonation (ADR, handoff, review/audit, personas).
 - [ ] WS3 development-plan shape: `WSn` / `WSn-Tx.y`, edge list + diagram, conflict-free AI execution.
 - [ ] WS4 evaluate (then implement) which tools/skills must honor `.gitignore`.
 - [ ] WS5 docs, census, ADR, handoff closeout.

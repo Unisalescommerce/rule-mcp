@@ -1,4 +1,5 @@
 /** The English gate: every ADR is written in English, filename included. */
+import { scanSte100Prose } from "../../core/directive/_ste100.js";
 import { scanDocumentForForeign, scanPathForForeign } from "../../core/text/index.js";
 
 /**
@@ -29,6 +30,10 @@ export function adrEnglishOffenses(fields) {
 
     for (const finding of [...scanDocumentForForeign(text), ...scanPathForForeign(text.replaceAll(/[\\/]+/g, " "))]) {
       offenses.push(`${field}: ${finding}`);
+    }
+
+    for (const finding of scanSte100Prose(text).findings) {
+      offenses.push(`${field}: STE100 ${finding.id} ("${finding.match}")`);
     }
   }
 

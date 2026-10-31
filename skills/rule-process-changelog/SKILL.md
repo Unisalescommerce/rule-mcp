@@ -128,7 +128,8 @@ them. The hash makes the entry traceable without making it noisy.
 **Clean the rendered subject, never the commit.** Older messages carry
 typographic characters and spellings the house style rejects, and history is
 immutable while the rendered line is not. Run the same prose pass over the
-subject that the project runs over anything else it publishes.
+subject that the project runs over anything else it publishes (STE100~80:
+`src/core/directive/_ste100.js`).
 
 ## A generated file is not formatted by hand
 

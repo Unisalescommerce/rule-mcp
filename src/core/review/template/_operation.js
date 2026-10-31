@@ -1,5 +1,7 @@
 /** @module core/review/template/operation */
 
+import { STE100_WRITING_LINE } from "../../directive/_ste100.js";
+
 /** The operations a persona run can be asked to do, in surface order. */
 export const OPERATIONS = ["plan", "audit", "review"];
 
@@ -23,6 +25,7 @@ function commonLines(role, scope) {
     "",
     "Write every finding, review, plan step and document in English, American spelling",
     "(color, behavior, organize). A user's prompt in another language does not change that.",
+    STE100_WRITING_LINE,
     "Run `rule_tool_check` with rule-process-ai (or rule-styleguide-markdown) over each written",
     "document and iterate until `allPass: true` before closing the run.",
     "",

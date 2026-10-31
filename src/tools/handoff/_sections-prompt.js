@@ -34,6 +34,7 @@ export function resumePromptLines({ projectName }, { isMinimal, heading = "###" 
     `Resume work on ${projectName}. Run \`rule_tool_handon\` first: it checks which claims in this handoff still hold before any of them are trusted.`,
     "The ADR log and the context snapshot capture what has been decided; do not re-ask answered questions.",
     "Every commit is `type(scope): subject`; the commit-msg hook rejects a scope-less message.",
+    "Writing: STE100~80. Short sentences, active voice, one idea per sentence, same word for the same thing.",
     "```",
     "",
   ];
