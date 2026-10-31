@@ -18,7 +18,7 @@ Topology: **`rel/v0.1.0` is where the work is.** Every commit lands here. `main`
 
 Node ids in graph lines stay skill names (`rule-process-ai`), not filenames. Filenames carry `_` + the prior stem (`_rule-mcp-process-ai.md`).
 
-## 1 - Snapshot (2026-10-30)
+## 1 - Snapshot (2026-10-31)
 
 | Group | Path | Status | Open work |
 | ----- | ---- | ------ | --------- |
@@ -30,6 +30,7 @@ Node ids in graph lines stay skill names (`rule-process-ai`), not filenames. Fil
 | export | _(retired)_ | done → ADR 199 | Steps 0–8 complete 2026-10-31; review/audit → ADR 202/203 |
 | scripts layout | `_2026-10-01-scripts-mcp-layout.md` | `planned` | own graph |
 | decision models | `_decision-models.md` | `planned` | own graph |
+| ASD-STE100 writing + plan shape | `_asd-ste100.md` | `planned` | WS-G; STE100~80 prose, WSn tasks, gitignore eval |
 | area guardrails (`_*-guardrails.md`) | six files | `superseded` | absorbed into leaf plans; no new work |
 | plan-graph audit | `_plan-of-plans-reference.md` | `done` | history (ADR 171) |
 
@@ -43,7 +44,7 @@ Branch history that motivated stages 1-5 (2026-10-21) lives in git and in ADR 18
 | ----- | ------------ | ----- |
 | skills catalog | `skills/_skills-plan.md` | in progress: npm/uv/cargo-release done |
 | host + launcher (installer infrastructure) | this file, workstreams A–B | both done |
-| single-document tracks | each plan's `## Dependency graph` | export (ADR 199), scripts-layout, decision-models |
+| single-document tracks | each plan's `## Dependency graph` | export (ADR 199), scripts-layout, decision-models, asd-ste100 |
 | superseded area plans | none (historical) | `_*-guardrails.md` |
 | repository policy / OSS Stage 0 | ADR 135 + handoff 27 | closed |
 
@@ -71,6 +72,8 @@ rel/v0.1.0
 │   ├── export ......................... done → ADR 199
 │   ├── _2026-10-01-scripts-mcp-layout.md
 │   └── _decision-models.md
+├── WS-G  ASD-STE100 writing + plan shape
+│   └── _asd-ste100.md ................. STE100~80, WSn/Tx.y, gitignore eval
 ├── WS-E  superseded / historical ........ no execution
 └── WS-F  owner merge to main ........... human gate only
 ```
@@ -80,11 +83,12 @@ rel/v0.1.0
 | installer-scope (ADR 198) | `_mcp-host-integration-depth` | `HARD` | host path table consumed by host Phase 1+; **satisfied** |
 | `skills/_skills-plan` catalog | host / launcher | `ORDER` | avoid re-testing install against a moving catalog |
 | WS-A, WS-B, WS-D | each other | _(none)_ | no shared-file CONFLICT across these tracks today |
+| WS-G (`_asd-ste100`) | WS-D decision-models / scripts-layout | `ORDER` | writing rules land before new prose-heavy plan work when possible |
 | catalog leaves | area routers | `HARD` / `CONTRACT` | owned inside `_skills-plan.md` |
 
 ## 5 - Workstreams (linear, conflict-free)
 
-Execute one workstream at a time when it touches shared files (section 8). Otherwise WS-A, WS-B and WS-D may proceed in parallel. WS-C serializes on the five shared catalog files named in `_skills-plan.md`.
+Execute one workstream at a time when it touches shared files (section 8). Otherwise WS-A, WS-B, WS-D and WS-G may proceed in parallel when they do not share files. WS-C serializes on the five shared catalog files named in `_skills-plan.md`. Prefer WS-G (STE100 writing) before new prose-heavy plan work on WS-D.
 
 ### WS-A — Host integration closeout
 
@@ -119,6 +123,16 @@ Run only when WS-A/B/C are idle on the shared files in section 8, or in parallel
 - [x] export — Steps 0–8 complete; retired → [ADR 199](../adr/199-close-out-plan-export.md) (review ADR 202, audit ADR 203).
 - [ ] [`_2026-10-01-scripts-mcp-layout.md`](_2026-10-01-scripts-mcp-layout.md) — own dependency graph.
 - [ ] [`_decision-models.md`](_decision-models.md) — own dependency graph.
+
+### WS-G — ASD-STE100 writing and AI plan shape
+
+Plan: [`_asd-ste100.md`](_asd-ste100.md)
+
+- [ ] WS1 writing standard (STE100~80 profile + shared directive).
+- [ ] WS2 generators + impersonation (ADR, handoff, review/audit, personas).
+- [ ] WS3 development-plan shape: `WSn` / `WSn-Tx.y`, edge list + diagram, conflict-free AI execution.
+- [ ] WS4 evaluate (then implement) which tools/skills must honor `.gitignore`.
+- [ ] WS5 docs, census, ADR, handoff closeout.
 
 ### WS-E — Superseded / historical (no execution)
 
@@ -215,6 +229,7 @@ Shared files: `docs/plans/plan-of-plans.md` only. Generated documents belong to 
 ## 11 - Open notes and risks
 
 - **Underscore index rule.** Only this file is unprefixed. A new plan under `docs/plans/` must start with `_` and be registered in section 1 and the matching workstream.
+- **ASD-STE100 (~80%).** New product prose from this server follows [`_asd-ste100.md`](_asd-ste100.md): short, direct, same word for the same thing, still slightly natural. Development plans use `WSn` / `WSn-Tx.y` with a dependency list **and** a diagram.
 - **Host plan almost done.** Do not reopen closed host phases; close the two open boxes or defer with an ADR.
 - **Launcher Phase 4 is the last launcher work.** Phases 1–3 already shipped (handoff 36); measurement chose `pnpm deploy --prod --legacy`, not `pnpm pack`.
 - **`main` diverged ~870 commits.** Merge is a review, not a cherry-pick.
