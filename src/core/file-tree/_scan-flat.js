@@ -12,7 +12,8 @@
 
 import { basename, dirname, join } from "node:path";
 
-import { isIgnored } from "./_conventions.js";
+import { isGitIgnored } from "../ignore/_gitignore.js";
+import { shouldSkipWalk } from "./_conventions.js";
 import { bareFileIssues, componentFolderIssues, orphanCssIssues, staleBarrelIssues } from "./_scan-checks.js";
 
 /**
@@ -57,6 +58,13 @@ export function scanFlat(rootDir, srcDir, files) {
 
   for (const rel of files) {
     if (!rel.startsWith(prefix)) {
+      continue;
+    }
+
+    // Drop gitignored paths before rebuilding the tree. Hardcoded IGNORE_DIRS
+    // still seed the map so totalDirs matches the recursive scanner, then
+    // shouldSkipWalk refuses to descend.
+    if (isGitIgnored(rootDir, rel)) {
       continue;
     }
 
@@ -118,7 +126,9 @@ export function scanFlat(rootDir, srcDir, files) {
     issues.push(...orphanCssIssues(dirFiles, currentPath), ...staleBarrelIssues(dirFiles, currentPath));
 
     for (const child of childDirs) {
-      if (!isIgnored(child)) {
+      const childRelative = dir ? `${srcDir}/${dir}/${child}` : `${srcDir}/${child}`;
+
+      if (!shouldSkipWalk(child, { projectDir: rootDir, relativePath: childRelative.split("\\").join("/") })) {
         walk(join(dir, child), depth + 1);
       }
     }

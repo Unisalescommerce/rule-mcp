@@ -114,11 +114,25 @@ Tasks:
 
 ### WS4 — Gitignore-aware tools and skills
 
-- [ ] **WS4-T1** Inventory: which tools walk the tree today (check, search, file-tree, handon, sync, census inputs, tokensave callers, etc.)
-- [ ] **WS4-T2** Evaluate per tool/skill: must honor `.gitignore` / `.ignore` / tooling ignores; must **not** (security scans that need to see ignored secrets patterns are a special case — document explicitly)
-- [ ] **WS4-T3** Record the matrix in this plan (or a short ADR) before code
-- [ ] **WS4-T4** Implement only the rows marked “must honor”, with failing tests first (temp repo with ignored noise that must not appear in results)
-- [ ] **WS4-T5** Gate: matrix committed; implemented rows green; undecided rows stay open or deferred with reason
+#### Matrix (evaluate before code)
+
+| Surface | Walks project tree? | Decision | Why |
+| ------- | ------------------- | -------- | --- |
+| `file-tree` scan (`scanFileTree`) | yes (src/) | **must honor** | Ignored noise creates false barrel/prefix findings |
+| hardcoded `IGNORE_DIRS` (node_modules, dist, …) | yes | keep | Always skip even without a `.gitignore` |
+| `tokensave` `walkFiles` / index sync | yes | **defer** | Graph ownership is tokensave; do not fork ignore policy here yet |
+| `rule_tool_check` / BM25 `rule_tool_search` | no project walk | **must not** | Checks supplied code / skill corpus, not the user tree |
+| `handon` / `handoff` | scoped `docs/**` | **must not** | Fixed doc paths; gitignored docs are still session artifacts when present |
+| installer `sync` / skills-install | known agent dirs | **must not** | Install targets, not a project content scan |
+| census scripts | fixed registries | **must not** | Counts server surface from known roots |
+| security / privacy persona evidence | may include ignored paths | **must not** | Need to see ignored secret-pattern files when the user asks |
+| scaffold `.gitignore` presence check | N/A | N/A | Only asserts the file exists |
+
+- [x] **WS4-T1** Inventory: which tools walk the tree today (check, search, file-tree, handon, sync, census inputs, tokensave callers, etc.)
+- [x] **WS4-T2** Evaluate per tool/skill: must honor `.gitignore` / `.ignore` / tooling ignores; must **not** (security scans that need to see ignored secrets patterns are a special case — document explicitly)
+- [x] **WS4-T3** Record the matrix in this plan (or a short ADR) before code
+- [x] **WS4-T4** Implement only the rows marked “must honor”, with failing tests first (temp repo with ignored noise that must not appear in results) — `src/core/ignore/_gitignore.js` + file-tree `shouldSkipWalk`
+- [x] **WS4-T5** Gate: matrix committed; implemented rows green; undecided rows stay open or deferred with reason
 
 ### WS5 — Closeout
 

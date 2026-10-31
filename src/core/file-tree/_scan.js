@@ -2,7 +2,7 @@ import { existsSync, readdirSync } from "node:fs";
 import { basename, join } from "node:path";
 
 import { listFiles } from "../tokensave/_files.js";
-import { isIgnored } from "./_conventions.js";
+import { shouldSkipWalk } from "./_conventions.js";
 import { bareFileIssues, componentFolderIssues, orphanCssIssues, staleBarrelIssues } from "./_scan-checks.js";
 import { buildStats, scanFlat } from "./_scan-flat.js";
 
@@ -34,13 +34,13 @@ function emptyReport() {
  * @param {string} target - The source directory to walk
  * @returns {FileTreeReport}
  */
-function scanRecursive(target) {
+function scanRecursive(target, { projectDir, srcDir } = {}) {
   const issues = [];
   let totalFiles = 0;
   let totalDirectories = 0;
 
   /** Depth-first walk of one directory. */
-  const scan = (currentPath, depth = 0) => {
+  const scan = (currentPath, relativePath, depth = 0) => {
     let entries;
 
     try {
@@ -69,13 +69,15 @@ function scanRecursive(target) {
     issues.push(...orphanCssIssues(files, currentPath), ...staleBarrelIssues(files, currentPath));
 
     for (const dir of directories) {
-      if (!isIgnored(dir.name)) {
-        scan(join(currentPath, dir.name), depth + 1);
+      const childRelative = relativePath ? `${relativePath}/${dir.name}` : dir.name;
+
+      if (!shouldSkipWalk(dir.name, { projectDir, relativePath: childRelative })) {
+        scan(join(currentPath, dir.name), childRelative, depth + 1);
       }
     }
   };
 
-  scan(target);
+  scan(target, srcDir || "src");
 
   return { pass: issues.length === 0, issues, stats: buildStats(issues, totalFiles, totalDirectories) };
 }
@@ -104,5 +106,7 @@ export function scanFileTree(rootDir, options = {}) {
 
   const { files, source } = listFiles(rootDir, { path: srcDir, union: true, ...options });
 
-  return source === "tokensave" ? scanFlat(rootDir, srcDir, files) : scanRecursive(target);
+  return source === "tokensave"
+    ? scanFlat(rootDir, srcDir, files)
+    : scanRecursive(target, { projectDir: rootDir, srcDir });
 }

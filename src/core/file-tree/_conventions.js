@@ -1,5 +1,7 @@
 import { extname } from "node:path";
 
+import { isGitIgnored } from "../ignore/_gitignore.js";
+
 /** Directories to ignore during scan. */
 export const IGNORE_DIRS = new Set(["node_modules", ".git", ".tokensave", "dist", "build", ".next", ".nuxt", ".output", "coverage", ".vscode", ".idea", ".agents"]);
 
@@ -29,6 +31,27 @@ export const COMPONENT_EXTENSIONS = new Set([".js", ".jsx", ".ts", ".tsx", ".vue
  */
 export function isIgnored(name) {
   return IGNORE_DIRS.has(name) || name.startsWith(".");
+}
+
+/**
+ * Whether a walk should skip this directory entry.
+ * Combines the hardcoded ignore list with `.gitignore` when a project root and
+ * relative path are provided (WS4 must-honor for file-tree).
+ *
+ * @param {string} name - Basename of the entry
+ * @param {{ projectDir?: string, relativePath?: string }} [context]
+ * @returns {boolean}
+ */
+export function shouldSkipWalk(name, { projectDir, relativePath } = {}) {
+  if (isIgnored(name)) {
+    return true;
+  }
+
+  if (projectDir && relativePath && isGitIgnored(projectDir, relativePath)) {
+    return true;
+  }
+
+  return false;
 }
 
 /**

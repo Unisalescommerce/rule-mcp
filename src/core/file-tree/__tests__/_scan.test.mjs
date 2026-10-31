@@ -1,5 +1,6 @@
 /** scanFileTree over real directory trees: recursion, depth rules, stats. */
 import { strict as assert } from "node:assert";
+import { spawnSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -88,6 +89,29 @@ test("ignored directories are never walked", () => {
     const report = scanFileTree(root);
 
     assert.deepEqual(report.issues, [], "nothing inside node_modules or a dot folder is reported");
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("gitignore entries under src are never walked", () => {
+  const root = project({
+    ".gitignore": "noise/\n",
+    "src/index.js": "export {};\n",
+    "src/noise/Broken/Broken.jsx": "export function Broken() {}\n",
+  });
+
+  try {
+    const init = spawnSync("git", ["init"], { cwd: root, encoding: "utf8" });
+    assert.equal(init.status, 0, `git init must succeed: ${init.stderr}`);
+
+    const report = scanFileTree(root);
+
+    assert.deepEqual(report.issues, [], "gitignored noise/ must not produce file-tree findings");
+    assert.ok(
+      !report.issues.some((issue) => String(issue.path).includes("noise")),
+      "no issue path may mention noise/",
+    );
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
