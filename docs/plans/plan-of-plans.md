@@ -30,7 +30,7 @@ Node ids in graph lines stay skill names (`rule-process-ai`), not filenames. Fil
 | export | _(retired)_ | done → ADR 199 | Steps 0–8 complete 2026-10-31; review/audit → ADR 202/203 |
 | scripts layout | `_2026-10-01-scripts-mcp-layout.md` | `planned` | own graph |
 | decision models | `_decision-models.md` | `planned` | own graph |
-| ASD-STE100 writing + plan shape | `_asd-ste100.md` | `in-progress` | WS-G; STE100~80 prose, WSn tasks, gitignore eval |
+| ASD-STE100 writing + plan shape | _(retired)_ | done → ADR 204 | WS-G closed 2026-10-31; product pending ADR mcp-authored-markdown-uses-asd-ste100… |
 | area guardrails (`_*-guardrails.md`) | six files | `superseded` | absorbed into leaf plans; no new work |
 | plan-graph audit | `_plan-of-plans-reference.md` | `done` | history (ADR 171) |
 
@@ -44,7 +44,7 @@ Branch history that motivated stages 1-5 (2026-10-21) lives in git and in ADR 18
 | ----- | ------------ | ----- |
 | skills catalog | `skills/_skills-plan.md` | in progress: npm/uv/cargo-release done |
 | host + launcher (installer infrastructure) | this file, workstreams A–B | both done |
-| single-document tracks | each plan's `## Dependency graph` | export (ADR 199), scripts-layout, decision-models, asd-ste100 |
+| single-document tracks | each plan's `## Dependency graph` | export (ADR 199), asd-ste100 (ADR 204), scripts-layout, decision-models |
 | superseded area plans | none (historical) | `_*-guardrails.md` |
 | repository policy / OSS Stage 0 | ADR 135 + handoff 27 | closed |
 
@@ -73,7 +73,7 @@ rel/v0.1.0
 │   ├── _2026-10-01-scripts-mcp-layout.md
 │   └── _decision-models.md
 ├── WS-G  ASD-STE100 writing + plan shape
-│   └── _asd-ste100.md ................. STE100~80, WSn/Tx.y, gitignore eval
+│   └── _asd-ste100.md ................. done → ADR 204
 ├── WS-E  superseded / historical ........ no execution
 └── WS-F  owner merge to main ........... human gate only
 ```
@@ -126,13 +126,13 @@ Run only when WS-A/B/C are idle on the shared files in section 8, or in parallel
 
 ### WS-G — ASD-STE100 writing and AI plan shape
 
-Plan: [`_asd-ste100.md`](_asd-ste100.md)
+Retired → [ADR 204](../adr/204-close-out-plan-asd-ste100.md). Product decision pending: `docs/adr/_pending/mcp-authored-markdown-uses-asd-ste100-at-about-80-percent.md`.
 
 - [x] WS1 writing standard (STE100~80 profile + shared directive).
 - [x] WS2 generators + impersonation (ADR, handoff, review/audit, personas).
 - [x] WS3 development-plan shape: `WSn` / `WSn-Tx.y`, edge list + diagram, conflict-free AI execution.
 - [x] WS4 evaluate (then implement) which tools/skills must honor `.gitignore`.
-- [ ] WS5 docs, census, ADR, handoff closeout.
+- [x] WS5 docs, census, ADR, handoff closeout.
 
 ### WS-E — Superseded / historical (no execution)
 
@@ -229,7 +229,7 @@ Shared files: `docs/plans/plan-of-plans.md` only. Generated documents belong to 
 ## 11 - Open notes and risks
 
 - **Underscore index rule.** Only this file is unprefixed. A new plan under `docs/plans/` must start with `_` and be registered in section 1 and the matching workstream.
-- **ASD-STE100 (~80%).** New product prose from this server follows [`_asd-ste100.md`](_asd-ste100.md): short, direct, same word for the same thing, still slightly natural. Development plans use `WSn` / `WSn-Tx.y` with a dependency list **and** a diagram.
+- **ASD-STE100 (~80%).** New product prose from this server follows ADR 204 closeout + pending product ADR (`mcp-authored-markdown-uses-asd-ste100…`): short, direct, same word for the same thing, still slightly natural. Development plans use `WSn` / `WSn-Tx.y` with a dependency list **and** a diagram (ADR 154 amendment).
 - **Host plan almost done.** Do not reopen closed host phases; close the two open boxes or defer with an ADR.
 - **Launcher Phase 4 is the last launcher work.** Phases 1–3 already shipped (handoff 36); measurement chose `pnpm deploy --prod --legacy`, not `pnpm pack`.
 - **`main` diverged ~870 commits.** Merge is a review, not a cherry-pick.

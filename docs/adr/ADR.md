@@ -8,6 +8,7 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [204](204-close-out-plan-asd-ste100.md)                                                                                 | Close out plan _asd-ste100                                                                                | 2026-10-31 | accepted   | docs, closeout, plan                                                                |
 | [203](203-close-out-audit-export.md)                                                                                    | Close out audit export                                                                                    | 2026-10-31 | accepted   | docs, closeout, audit                                                               |
 | [202](202-close-out-review-export.md)                                                                                   | Close out review export                                                                                   | 2026-10-31 | accepted   | docs, closeout, review                                                              |
 | [201](201-close-out-plan-stable-launcher-outside-the-checkout.md)                                                       | Close out plan _stable-launcher-outside-the-checkout                                                      | 2026-10-31 | accepted   | docs, closeout, plan                                                                |
@@ -219,6 +220,7 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [204](204-close-out-plan-asd-ste100.md)                                                                                 | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_asd-ste100.md is gone from the tree; the handoff of this session names what it carried.                                                                                                                             |
 | [203](203-close-out-audit-export.md)                                                                                    | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/audits/export.md is gone from the tree; the handoff of this session names what it carried.                                                                                                                                 |
 | [202](202-close-out-review-export.md)                                                                                   | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/reviews/export.md is gone from the tree; the handoff of this session names what it carried.                                                                                                                                |
 | [201](201-close-out-plan-stable-launcher-outside-the-checkout.md)                                                       | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_stable-launcher-outside-the-checkout.md is gone from the tree; the handoff of this session names what it carried.                                                                                                   |
@@ -522,6 +524,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### docs
 
+- [204](204-close-out-plan-asd-ste100.md) Close out plan _asd-ste100
 - [203](203-close-out-audit-export.md) Close out audit export
 - [202](202-close-out-review-export.md) Close out review export
 - [201](201-close-out-plan-stable-launcher-outside-the-checkout.md) Close out plan _stable-launcher-outside-the-checkout
@@ -638,6 +641,24 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [114](114-flight-is-process-area-guidance-injected-on-every-prompt-not-a-slash-command.md) Flight is process-area guidance injected on every prompt, not a slash command
 - [113](113-rename-the-command-surface-under-process-and-persona-namespaces.md) Rename the command surface under process and persona namespaces
 
+### closeout
+
+- [204](204-close-out-plan-asd-ste100.md) Close out plan _asd-ste100
+- [203](203-close-out-audit-export.md) Close out audit export
+- [202](202-close-out-review-export.md) Close out review export
+- [201](201-close-out-plan-stable-launcher-outside-the-checkout.md) Close out plan _stable-launcher-outside-the-checkout
+- [200](200-close-out-plan-mcp-host-integration-depth.md) Close out plan _mcp-host-integration-depth
+- [199](199-close-out-plan-export.md) Close out plan _export
+- [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
+- [119](119-close-out-audit-ui.md) Close out audit ui
+- [118](118-close-out-review-ui.md) Close out review ui
+- [111](111-close-out-audit-security.md) Close out audit security
+- [110](110-close-out-review-security.md) Close out review security
+- [103](103-every-handoff-mode-sweeps-completed-working-papers-and-closeout-false-is-the-rea.md) Every handoff mode sweeps completed working papers, and closeout false is the read-only run
+- [100](100-the-tokensave-integration-closes-out-and-the-adapter-is-the-code-graph-layer.md) The TokenSave integration closes out: the adapter and its graph-backed tools are the code-graph layer
+- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
+- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
+
 ### cli
 
 - [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md) Hook install starts the guard daemon and writers use --send
@@ -654,23 +675,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [061](061-one-global-shim-and-hermetic-pnpm-home-in-script-tests.md) One global shim, and hermetic PNPM_HOME in script tests
 - [046](046-installer-self-heals-global-shim-surfaces-failures-gates-tui-rendering.md) Installer self-heals its global shim, surfaces failures, and gates TUI rendering
 - [033](033-registry-driven-clean-slash-commands-for-every-agent-and-ide.md) Registry-driven clean slash commands for every agent and IDE
-
-### closeout
-
-- [203](203-close-out-audit-export.md) Close out audit export
-- [202](202-close-out-review-export.md) Close out review export
-- [201](201-close-out-plan-stable-launcher-outside-the-checkout.md) Close out plan _stable-launcher-outside-the-checkout
-- [200](200-close-out-plan-mcp-host-integration-depth.md) Close out plan _mcp-host-integration-depth
-- [199](199-close-out-plan-export.md) Close out plan _export
-- [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
-- [119](119-close-out-audit-ui.md) Close out audit ui
-- [118](118-close-out-review-ui.md) Close out review ui
-- [111](111-close-out-audit-security.md) Close out audit security
-- [110](110-close-out-review-security.md) Close out review security
-- [103](103-every-handoff-mode-sweeps-completed-working-papers-and-closeout-false-is-the-rea.md) Every handoff mode sweeps completed working papers, and closeout false is the read-only run
-- [100](100-the-tokensave-integration-closes-out-and-the-adapter-is-the-code-graph-layer.md) The TokenSave integration closes out: the adapter and its graph-backed tools are the code-graph layer
-- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
-- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
 
 ### commands
 
@@ -889,6 +893,16 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [136](136-extend-the-devops-guardrail-family-with-file-scoped-source-cited-rules.md) Extend the devops guardrail family with file-scoped, source-cited rules
 - [112](112-extend-the-file-size-cap-to-the-shipped-skill-trees.md) Extend the file-size cap to the shipped skill trees
 
+### plan
+
+- [204](204-close-out-plan-asd-ste100.md) Close out plan _asd-ste100
+- [201](201-close-out-plan-stable-launcher-outside-the-checkout.md) Close out plan _stable-launcher-outside-the-checkout
+- [200](200-close-out-plan-mcp-host-integration-depth.md) Close out plan _mcp-host-integration-depth
+- [199](199-close-out-plan-export.md) Close out plan _export
+- [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
+- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
+- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
+
 ### styleguide
 
 - [150](150-remove-the-rule-mcp-styleguide-patterns-cheat-sheet.md) Remove the rule-styleguide-patterns cheat sheet
@@ -943,15 +957,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [084](084-keep-the-name-with-a-written-posture-no-npm-placeholder-yet.md) Keep the name with a written posture, no npm placeholder yet
 - [007](007-thematic-skill-taxonomy-rename.md) thematic skill taxonomy rename
 - [001](001-thematic-skill-rename.md) Thematic Skill Taxonomy Rename
-
-### plan
-
-- [201](201-close-out-plan-stable-launcher-outside-the-checkout.md) Close out plan _stable-launcher-outside-the-checkout
-- [200](200-close-out-plan-mcp-host-integration-depth.md) Close out plan _mcp-host-integration-depth
-- [199](199-close-out-plan-export.md) Close out plan _export
-- [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
-- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
-- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
 
 ### tool
 

@@ -8,6 +8,8 @@ them by `handoff doctor`, so editing it by hand is work the next run throws away
 
 | #                                                                  | Title                                                                     | Date       | Branch                    |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------------- | ---------- | ------------------------- |
+| [40](40-asd-ste100-workstream-complete.md)                         | ASD-STE100 workstream complete (WS-G)                                     | 2026-10-31 | rel/v0.1.0                |
+| [39](39-asd-ste100-plan-registered.md)                             | ASD-STE100 plan registered (WS-G)                                         | 2026-10-31 | rel/v0.1.0                |
 | [38](38-export-workstream-complete.md)                             | export workstream complete (Steps 0–8)                                    | 2026-10-31 | rel/v0.1.0                |
 | [37](37-plan-of-plans-underscore-index-and-workstreams.md)         | plan-of-plans is the sole unprefixed index, with workstreams              | 2026-10-30 | rel/v0.1.0                |
 | [36](36-port-plan-closed-launcher-copy-shipped.md)                 | Port plan closed, launcher copy shipped, phases 1-3                       | 2026-10-30 | rel/v0.1.0                |

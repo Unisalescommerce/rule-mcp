@@ -2,7 +2,9 @@
  * @module test/plans/development-shape
  *
  * ADR 154 amendment (2026-10-31): AI development plans under docs/plans/_*.md
- * carry WSn / WSn-Tx.y and a dual dependency graph. Golden fixture: _asd-ste100.md.
+ * carry WSn / WSn-Tx.y and a dual dependency graph.
+ * Golden fixture: tests/fixtures/plans/development-shape-golden.md
+ * (live plan `_asd-ste100.md` retired → ADR 204).
  */
 
 import { strict as assert } from "node:assert";
@@ -15,8 +17,8 @@ import { scanDevelopmentPlanShape } from "../../src/core/plans/index.js";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
-test("docs/plans/_asd-ste100.md satisfies the development-plan shape gate", () => {
-  const text = readFileSync(join(root, "docs/plans/_asd-ste100.md"), "utf8");
+test("development-shape golden fixture satisfies the shape gate", () => {
+  const text = readFileSync(join(root, "tests/fixtures/plans/development-shape-golden.md"), "utf8");
   const result = scanDevelopmentPlanShape(text);
   assert.equal(result.ok, true, JSON.stringify(result.findings));
 });

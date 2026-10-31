@@ -54,12 +54,17 @@ export function isGitIgnored(projectDir, relativePath) {
 
   // 0 = ignored, 1 = not ignored, other = treat as not ignored
   const ignored = result.status === 0;
+
   rootCache.set(normalized, ignored);
 
   return ignored;
 }
 
-/** Clear the check-ignore cache (tests). */
+/**
+ * Clear the check-ignore cache (tests).
+ *
+ * @returns {void}
+ */
 export function clearGitignoreCache() {
   cacheByRoot.clear();
 }

@@ -81,8 +81,8 @@ test("scanDevelopmentPlanShape passes a WSn plan with edge list and diagram", ()
   assert.deepEqual(result.findings, []);
 });
 
-test("_asd-ste100.md is a golden development-plan fixture", () => {
-  const text = readFileSync(join(root, "docs/plans/_asd-ste100.md"), "utf8");
+test("tests/fixtures/plans/development-shape-golden.md is a golden development-plan fixture", () => {
+  const text = readFileSync(join(root, "tests/fixtures/plans/development-shape-golden.md"), "utf8");
   const result = scanDevelopmentPlanShape(text);
   assert.equal(result.ok, true, JSON.stringify(result.findings));
 });
