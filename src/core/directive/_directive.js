@@ -25,6 +25,7 @@
  */
 
 import { promptFlight, sessionFlight } from "./_flight.js";
+import { STE100_ANCHOR, STE100_DIRECTIVE } from "./_ste100.js";
 
 /** The one sentence that frames every other rule here. */
 export const MANTRA = "Every token saved is a token earned.";
@@ -102,6 +103,7 @@ export function sessionDirective() {
     `- ${NO_SUBAGENTS}`,
     "- Compression output: drop filler, articles and pleasantries. Keep every technical fact, code block, path and error string verbatim.",
     "- American English, ASCII punctuation, no em dashes, no curly quotes.",
+    `- ${STE100_DIRECTIVE}`,
     "- Minimal change: build exactly what was asked. Propose anything extra in prose, never write it.",
     `- ${MANTRA}`,
     ...(flight ? ["", flight] : []),
@@ -120,7 +122,7 @@ export function promptDirective() {
   }
 
   const flight = promptFlight();
-  const base = "rule-mcp first. compression on. no subagents. every token saved is a token earned.";
+  const base = `rule-mcp first. compression on. no subagents. every token saved is a token earned. ${STE100_ANCHOR}`;
 
   return flight ? `${base} ${flight}` : base;
 }

@@ -87,6 +87,7 @@ const example = true;
 - Prefer clear, direct language.
 - Explain "why" for decisions, not only "what".
 - Avoid unnecessary fluff. Add examples when they reduce ambiguity.
+- **ASD-STE100 (~80%).** Write short sentences, active voice, one idea per sentence, and the same word for the same thing. Keep about 20% natural tone. Prefer concrete verbs and named artifacts. Canonical string and banned-pattern scan live in `src/core/directive/_ste100.js` (`STE100_DIRECTIVE`, `scanSte100Prose`). Do not invent a second wording.
 
 ## Repo conventions
 

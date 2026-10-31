@@ -49,6 +49,7 @@ check("T2.2 compression output", /compression/i.test(session));
 check("T2.3 the mantra closes it", session.includes(MANTRA));
 check("T2.4 plain ASCII only", /^[ -~\n]*$/.test(session));
 check("T2.5 flight rides along under rule-area-process-flight", /rule-area-process-flight/.test(session) && /telemetry/i.test(session));
+check("T2.6 STE100~80 writing rides along", /STE100|ASD-STE100/.test(session));
 
 // ── T3: the per-prompt line is one short line, or it is not worth sending ──
 const line = promptDirective();
@@ -56,6 +57,7 @@ check("T3 a single line", !line.includes("\n"));
 check("T3.1 short enough to ride on every prompt", line.length <= 120);
 check("T3.2 it still names all three rules", /rule/i.test(line) && /compression/i.test(line) && /subagent/i.test(line) && /token/i.test(line));
 check("T3.3 it re-anchors flight when costing", /flight/i.test(line));
+check("T3.4 it re-anchors STE100~80", /STE100/.test(line));
 
 // ── T4: one opt-out, honored by both forms ──
 const previous = process.env.RULE_MCP_NO_PROMPT_DIRECTIVE;

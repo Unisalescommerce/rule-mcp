@@ -1,6 +1,6 @@
 # asd-ste100 plan
 
-Status: `planned`
+Status: `in-progress`
 Notes: subordinate plan (leading `_`); coordinated by `docs/plans/plan-of-plans.md` workstream WS-G. This plan owns how the server writes prose. It does not own skill routing.
 
 - **Role**: ASD-STE100 writing + AI plan shape
@@ -75,14 +75,14 @@ Shared files: `docs/plans/plan-of-plans.md`, `src/tools/actions/_impersonation.j
 
 ### WS1 — Writing standard
 
-- [ ] **WS1-T1** Define the rule-mcp ASD-STE100 profile (~80%)
-  - [ ] WS1-T1.1 List allowed STE100 rules we enforce (sentence length, active voice, consistent terms, no synonym churn for key nouns)
-  - [ ] WS1-T1.2 List soft rules (~20% natural tone): limited hedging, light rhythm variation, no slang
-  - [ ] WS1-T1.3 Publish the canonical directive string for prompts and skills (English technical output stays English; user chat language stays per AGENTS.md)
-- [ ] **WS1-T2** Place the profile where writers load it
-  - [ ] WS1-T2.1 Prefer one shared module or skill section (candidate: `rule-styleguide-markdown` + `rule-process-ai`) over copy-paste
-  - [ ] WS1-T2.2 Add failing contract tests that sample generated prose for banned patterns (em dash abuse, “utilize”, stacked hedges) once the profile exists
-- [ ] **WS1-T3** Gate: profile text reviewed; tests red then green; no generator wired yet
+- [x] **WS1-T1** Define the rule-mcp ASD-STE100 profile (~80%)
+  - [x] WS1-T1.1 List allowed STE100 rules we enforce (sentence length, active voice, consistent terms, no synonym churn for key nouns)
+  - [x] WS1-T1.2 List soft rules (~20% natural tone): limited hedging, light rhythm variation, no slang
+  - [x] WS1-T1.3 Publish the canonical directive string for prompts and skills (English technical output stays English; user chat language stays per AGENTS.md)
+- [x] **WS1-T2** Place the profile where writers load it
+  - [x] WS1-T2.1 Prefer one shared module or skill section (candidate: `rule-styleguide-markdown` + `rule-process-ai`) over copy-paste
+  - [x] WS1-T2.2 Add failing contract tests that sample generated prose for banned patterns (em dash abuse, “utilize”, stacked hedges) once the profile exists
+- [x] **WS1-T3** Gate: profile text reviewed; tests red then green; no generator wired yet
 
 ### WS2 — Generators and impersonation
 

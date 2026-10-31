@@ -30,7 +30,7 @@ Node ids in graph lines stay skill names (`rule-process-ai`), not filenames. Fil
 | export | _(retired)_ | done → ADR 199 | Steps 0–8 complete 2026-10-31; review/audit → ADR 202/203 |
 | scripts layout | `_2026-10-01-scripts-mcp-layout.md` | `planned` | own graph |
 | decision models | `_decision-models.md` | `planned` | own graph |
-| ASD-STE100 writing + plan shape | `_asd-ste100.md` | `planned` | WS-G; STE100~80 prose, WSn tasks, gitignore eval |
+| ASD-STE100 writing + plan shape | `_asd-ste100.md` | `in-progress` | WS-G; STE100~80 prose, WSn tasks, gitignore eval |
 | area guardrails (`_*-guardrails.md`) | six files | `superseded` | absorbed into leaf plans; no new work |
 | plan-graph audit | `_plan-of-plans-reference.md` | `done` | history (ADR 171) |
 
@@ -128,7 +128,7 @@ Run only when WS-A/B/C are idle on the shared files in section 8, or in parallel
 
 Plan: [`_asd-ste100.md`](_asd-ste100.md)
 
-- [ ] WS1 writing standard (STE100~80 profile + shared directive).
+- [x] WS1 writing standard (STE100~80 profile + shared directive).
 - [ ] WS2 generators + impersonation (ADR, handoff, review/audit, personas).
 - [ ] WS3 development-plan shape: `WSn` / `WSn-Tx.y`, edge list + diagram, conflict-free AI execution.
 - [ ] WS4 evaluate (then implement) which tools/skills must honor `.gitignore`.
