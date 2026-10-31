@@ -107,10 +107,10 @@ Every development plan this server helps create must include:
 
 Tasks:
 
-- [ ] **WS3-T1** Amend ADR 154 (or add a sibling ADR) for WSn / WSn-Tx.y + dual graph form
-- [ ] **WS3-T2** Update plan templates used by impersonation / review sync so new plans emit this shape by default
-- [ ] **WS3-T3** Extend `tests/plans/**` (and review-docs gates if needed) to require workstream headings and a diagram fence when the plan is a development plan
-- [ ] **WS3-T4** Gate: a fixture plan fails without WS/task ids or without a diagram; passes with both
+- [x] **WS3-T1** Amend ADR 154 (or add a sibling ADR) for WSn / WSn-Tx.y + dual graph form
+- [x] **WS3-T2** Update plan templates used by impersonation / review sync so new plans emit this shape by default
+- [x] **WS3-T3** Extend `tests/plans/**` (and review-docs gates if needed) to require workstream headings and a diagram fence when the plan is a development plan
+- [x] **WS3-T4** Gate: a fixture plan fails without WS/task ids or without a diagram; passes with both
 
 ### WS4 — Gitignore-aware tools and skills
 

@@ -130,7 +130,7 @@ Plan: [`_asd-ste100.md`](_asd-ste100.md)
 
 - [x] WS1 writing standard (STE100~80 profile + shared directive).
 - [x] WS2 generators + impersonation (ADR, handoff, review/audit, personas).
-- [ ] WS3 development-plan shape: `WSn` / `WSn-Tx.y`, edge list + diagram, conflict-free AI execution.
+- [x] WS3 development-plan shape: `WSn` / `WSn-Tx.y`, edge list + diagram, conflict-free AI execution.
 - [ ] WS4 evaluate (then implement) which tools/skills must honor `.gitignore`.
 - [ ] WS5 docs, census, ADR, handoff closeout.
 

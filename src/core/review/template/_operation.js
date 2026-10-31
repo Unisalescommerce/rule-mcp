@@ -1,6 +1,7 @@
 /** @module core/review/template/operation */
 
 import { STE100_WRITING_LINE } from "../../directive/_ste100.js";
+import { DEVELOPMENT_PLAN_SHAPE_GUIDE } from "../../plans/_shape.js";
 
 /** The operations a persona run can be asked to do, in surface order. */
 export const OPERATIONS = ["plan", "audit", "review"];
@@ -57,6 +58,10 @@ function planParagraph(role) {
     "exhaustive and meticulous, as many steps as the findings demand (no fixed count), each step",
     "split into numbered sub-steps (the `steps` array on a finding) whenever it hides more than one",
     "action - name the files, the commands and the gate that proves the step done.",
+    "",
+    "Persona trio plans under docs/plans/<role>.md stay finding checklists (ADR 59).",
+    "When this run also authors a product development plan under docs/plans/_*.md:",
+    DEVELOPMENT_PLAN_SHAPE_GUIDE,
   ];
 }
 

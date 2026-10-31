@@ -23,6 +23,16 @@ lives inside a branch carries four lines - `Depends on:`, `Feeds:`, `Shared file
   A `CONTRACT` edge names a phase (`target#2`) and is exempt from the rule that a
   dependency sits in an earlier stage, because what closes first is the phase.
 
+**Amendment 2026-10-31 (ASD-STE100 WS3):** an **AI-assisted development plan**
+(typically `docs/plans/_*.md`, coordinated by `plan-of-plans.md`) additionally
+carries: workstreams `WS1`..`WSn` (or `WS-A`.. when the level-0 index already uses
+letters); tasks `WSi-Tj` and nested `WSi-Tj.k`; and a **dual** dependency graph -
+the parseable list (or edge table) **and** a fenced text diagram. One workstream
+owns a given file set; `CONFLICT` edges serialize writers. Persona trio plans
+under `docs/plans/<role>.md` remain finding checklists (ADR 59) and are not
+required to use WSn ids. The scanner lives in `src/core/plans/_shape.js`
+(`scanDevelopmentPlanShape`, `DEVELOPMENT_PLAN_SHAPE_GUIDE`).
+
 ## Consequences
 
 The verification test can assert the format, so a plan written next month fails instead of drifting. Cost: 83 files need the head and the graph section, added stage by stage as their work begins, and the five status values are one more thing to get right on every commit. The status line also makes 'blocked' explicit, which is the state nine plans are actually in today without saying so.
