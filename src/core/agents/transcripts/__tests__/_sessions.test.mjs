@@ -1,9 +1,4 @@
-/**
-@module test/agents/transcripts/sessions
-
-EX-02: session map API — list/sort/identify current per supported agent.
-No deletes in this suite.
-*/
+/** @module test/agents/transcripts/sessions - EX-02 session map; no deletes. */
 
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -12,7 +7,6 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 const { listSessions } = await import("../index.js");
-
 const home = mkdtempSync(join(tmpdir(), "rule-mcp-sessions-home-"));
 
 test.after(() => rmSync(home, { recursive: true, force: true }));
@@ -20,7 +14,6 @@ test.after(() => rmSync(home, { recursive: true, force: true }));
 /** Stamp a file's mtime so ordering is deterministic. */
 function stamp(file, ms) {
   const at = new Date(ms);
-
   utimesSync(file, at, at);
 }
 
@@ -150,9 +143,7 @@ test("an unsupported agent is skipped with its reason and lists nothing", () => 
 test("an empty project returns an empty map without inventing current", () => {
   const projectDir = mkdtempSync(join(tmpdir(), "rule-mcp-sessions-empty-"));
   const map = listSessions({ agent: "claude", projectDir, home });
-
   assert.deepEqual(map.sessions, []);
   assert.equal(map.currentUnknown, false);
-
   rmSync(projectDir, { recursive: true, force: true });
 });

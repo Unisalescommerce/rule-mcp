@@ -1,7 +1,7 @@
 # export plan
 
-Status: `in-progress`
-Notes: subordinate plan (leading `_`); coordinated by `docs/plans/plan-of-plans.md` workstream WS-D. Execution lands on `rel/v0.1.0` (plan-of-plans ADR 181); the historical `feat/export` branch name is retired as an owner.
+Status: `done`
+Notes: subordinate plan (leading `_`); coordinated by `docs/plans/plan-of-plans.md` workstream WS-D. Execution lands on `rel/v0.1.0` (plan-of-plans ADR 181); the historical `feat/export` branch name is retired as an owner. Steps 0–8 complete 2026-10-31.
 
 - **Role**: export v1
 - **Date**: 2026-10-21
@@ -28,7 +28,7 @@ decision-models lands.
 
 Depends on: -
 Feeds: `decision-models` (ORDER): it consumes the decision-cache this plan defines; export v1 ships without the runtime hook
-Shared files: `docs/handoff/HANDOFF.md`, `tests/fixtures/census.json`, `docs/02-architecture.md`, `docs/16-surface-map.md`, `src/core/agents/transcripts/`
+Shared files: `docs/handoff/HANDOFF.md`, `tests/fixtures/census.json`, `docs/02-architecture.md`, `docs/17-surface-map.md`, `src/core/agents/transcripts/`
 
 The lines above are this plan's node in the cross-branch graph, verified from
 `docs/plans/plan-of-plans.md` on `feat/evolution`. The workstreams below are the
@@ -123,10 +123,10 @@ never delete.
 - [x] **Step 7 - EX-09 (low)**: Tool-cache promote — done 2026-10-31
   - [x] 7.1 Only existing promotable entries / rules (`promoteToolResults` + `NON_CACHEABLE` + `cachePrime`)
   - [x] 7.2 Gate: tool-cache suites unchanged floors
-- [ ] **Step 8 - EX-10 (low)**: Docs / privacy / census
-  - [ ] 8.1 `docs/05-env-variables.md`, `docs/16-surface-map.md`, privacy note on session delete
-  - [ ] 8.2 Point DM plan/review at export decision-cache as source of truth for durable choices
-  - [ ] 8.3 Gate: `pnpm census:check`, docs-accuracy, full foundations
+- [x] **Step 8 - EX-10 (low)**: Docs / privacy / census — done 2026-10-31
+  - [x] 8.1 `docs/05-env-variables.md`, `docs/17-surface-map.md`, privacy note on session delete
+  - [x] 8.2 Point DM plan/review at export decision-cache as source of truth for durable choices
+  - [x] 8.3 Gate: `pnpm census:check`, docs-accuracy, focused foundations
 
 ## Kill criteria
 

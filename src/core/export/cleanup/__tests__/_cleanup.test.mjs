@@ -45,7 +45,7 @@ test("keepSet is newest N union current", () => {
 
   const kept = keepSet(sessions, { keep: 2 });
 
-  assert.deepEqual([...kept].sort(), ["c", "d"].sort(), "newest 2 includes current even if not newest alone — here c current + d newest");
+  assert.deepEqual([...kept].sort(), ["c", "d"].sort(), "newest 2 includes current even if not newest alone - here c current + d newest");
 });
 
 test("keepSet still retains current when it is outside the newest N", () => {

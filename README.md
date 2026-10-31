@@ -6,10 +6,10 @@
 <ul data-part="stats">
 <li><strong>Node 26.4+</strong></li>
 <li><strong>83 skills</strong></li>
-<li><strong>104 tools</strong></li>
+<li><strong>105 tools</strong></li>
 <li><strong>174 resources</strong></li>
-<li><strong>38 prompts</strong></li>
-<li><strong>41 slash commands</strong></li>
+<li><strong>41 prompts</strong></li>
+<li><strong>44 slash commands</strong></li>
 </ul>
 <p data-part="cta"><a href="docs/01-getting-started.md">Get started</a> <a href="docs/README.md">Browse reference</a></p>
 </section>

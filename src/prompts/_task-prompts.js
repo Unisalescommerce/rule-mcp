@@ -6,6 +6,7 @@
  * not a prompt (ADR 114).
  */
 
+import { exportTaskPrompt } from "./_task-prompts-export.js";
 import { sessionTaskPrompt } from "./_task-prompts-session.js";
 
 /**
@@ -17,7 +18,7 @@ import { sessionTaskPrompt } from "./_task-prompts-session.js";
  * @returns {object|null}
  */
 export function taskPrompt(name, args, user) {
-  const session = sessionTaskPrompt(name, args, user);
+  const session = sessionTaskPrompt(name, args, user) ?? exportTaskPrompt(name, args, user);
 
   if (session) {
     return session;

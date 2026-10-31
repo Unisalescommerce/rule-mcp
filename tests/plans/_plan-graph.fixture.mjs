@@ -39,4 +39,39 @@ function edges(line) {
     .filter(Boolean);
 }
 
-export { edges, graphLine, graphSection };
+/** The node id of a plan path: strip leading `_` then `rule-mcp-` → `rule-`. */
+const nodeId = (path) =>
+  path
+    .split("/")
+    .pop()
+    .replace(/\.md$/, "")
+    .replace(/^_/u, "")
+    .replace(/^rule-mcp-/u, "rule-");
+
+function stageNumber(title) {
+  const match = title.match(/^(\d+)([a-z])?/);
+
+  return match ? Number(match[1]) + (match[2] === "a" ? 0.1 : match[2] === "b" ? 0.2 : 0) : -1;
+}
+
+/** Stage number per node id, parsed from the skills-plan stage tables. */
+function stagesFromPlan(planText) {
+  const stageOf = new Map();
+
+  for (const block of planText.split(/\n### Stage /).slice(1)) {
+    const body = block.split(/\n## /, 1)[0];
+    const stage = stageNumber(body.split("\n", 1)[0]);
+
+    for (const row of body.split("\n")) {
+      const id = row.match(/^\| `([a-z0-9-]+)`/)?.[1];
+
+      if (id) {
+        stageOf.set(id, stage);
+      }
+    }
+  }
+
+  return stageOf;
+}
+
+export { edges, graphLine, graphSection, nodeId, stageNumber, stagesFromPlan };

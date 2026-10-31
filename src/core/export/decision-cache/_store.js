@@ -2,55 +2,11 @@
 @module core/export/decision-cache/store
 
 Export-owned decision cache (EX-04 / EX-08). Not the L3 routing gate cache.
-Persists under the project telemetry directory as `decision-cache.json`.
 */
 
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { SCHEMA_VERSION, SOURCES, STATUSES, cacheEnabled, readStore, writeStore } from "./_io.js";
 
-import { getProjectPaths } from "@src/cli/paths/index.js";
-
-/** Bump only when a reader must refuse older files. */
-export const SCHEMA_VERSION = 1;
-
-const STATUSES = new Set(["pending", "confirmed", "rejected"]);
-const SOURCES = new Set(["rule-keep", "rule-export-interview", "rule-adr"]);
-
-const cacheEnabled = () => process.env.RULE_MCP_NO_CACHE !== "1";
-
-/** @param {string} projectDir @returns {string} */
-function cacheFile(projectDir) {
-  return join(getProjectPaths(projectDir).dir, "decision-cache.json");
-}
-
-/** @param {string} projectDir @returns {{ schemaVersion: number, records: object[] }} */
-function readStore(projectDir) {
-  try {
-    const file = cacheFile(projectDir);
-
-    if (!existsSync(file)) {
-      return { schemaVersion: SCHEMA_VERSION, records: [] };
-    }
-
-    const parsed = JSON.parse(readFileSync(file, "utf8"));
-
-    if (!parsed || parsed.schemaVersion !== SCHEMA_VERSION || !Array.isArray(parsed.records)) {
-      return { schemaVersion: SCHEMA_VERSION, records: [] };
-    }
-
-    return parsed;
-  } catch {
-    return { schemaVersion: SCHEMA_VERSION, records: [] };
-  }
-}
-
-/** @param {string} projectDir @param {{ schemaVersion: number, records: object[] }} store */
-function writeStore(projectDir, store) {
-  const { dir } = getProjectPaths(projectDir);
-
-  mkdirSync(dir, { recursive: true });
-  writeFileSync(cacheFile(projectDir), JSON.stringify(store, undefined, 2));
-}
+export { SCHEMA_VERSION } from "./_io.js";
 
 /**
  * Insert or replace one decision by fingerprint.
@@ -164,19 +120,6 @@ export function listDecisions({ projectDir }) {
  * @param {{ projectDir: string, fingerprint: string, choice: unknown, source?: string, agent?: string }} options
  * @returns {{ ok: boolean, record?: object, reason?: string }}
  */
-export function keepDecision({
-  projectDir,
-  fingerprint,
-  choice,
-  source = "rule-keep",
-  agent,
-}) {
-  return putDecision({
-    projectDir,
-    fingerprint,
-    choice,
-    status: "confirmed",
-    source,
-    agent,
-  });
+export function keepDecision({ projectDir, fingerprint, choice, source = "rule-keep", agent }) {
+  return putDecision({ projectDir, fingerprint, choice, status: "confirmed", source, agent });
 }

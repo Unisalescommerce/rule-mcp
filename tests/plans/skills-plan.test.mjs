@@ -20,7 +20,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
 
-import { edges, graphLine, graphSection } from "./_plan-graph.fixture.mjs";
+import { edges, graphLine, graphSection, nodeId, stagesFromPlan as stagesFromPlanText } from "./_plan-graph.fixture.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const plansRoot = join(root, "docs", "plans");
@@ -66,54 +66,7 @@ const files = planFiles();
 const texts = new Map(files.map((path) => [path, readFileSync(join(plansRoot, path), "utf8")]));
 const planText = readFileSync(join(skillsPlans, "_skills-plan.md"), "utf8");
 
-/** The node id of a plan path: the file stem. */
-/**
- * The node id of a plan path: the skill name.
- *
- * Plan files are named `_<optional>rule-mcp-<skill>.md` (leading underscore marks a
- * subordinate plan under plan-of-plans.md) while every stage table, graph line and
- * CONTRACT edge names the skill itself (`rule-<skill>`), so the id strips `_` then
- * applies that one substitution.
- */
-const nodeId = (path) =>
-  path
-    .split("/")
-    .pop()
-    .replace(/\.md$/, "")
-    .replace(/^_/u, "")
-    .replace(/^rule-mcp-/u, "rule-");
-
-function stageNumber(title) {
-  const match = title.match(/^(\d+)([a-z])?/);
-
-  if (!match) {
-    return -1;
-  }
-
-  return Number(match[1]) + (match[2] === "a" ? 0.1 : match[2] === "b" ? 0.2 : 0);
-}
-
-/** Stage number per node id, parsed from the stage tables. */
-function stagesFromPlan() {
-  const stageOf = new Map();
-
-  for (const block of planText.split(/\n### Stage /).slice(1)) {
-    // A stage block ends at the next level-2 heading: the progress table also
-    // starts with `| <id> |`, and it is not a stage.
-    const body = block.split(/\n## /, 1)[0];
-    const stage = stageNumber(body.split("\n", 1)[0]);
-
-    for (const row of body.split("\n")) {
-      const id = row.match(/^\| `([a-z0-9-]+)`/)?.[1];
-
-      if (id) {
-        stageOf.set(id, stage);
-      }
-    }
-  }
-
-  return stageOf;
-}
+const stagesFromPlan = () => stagesFromPlanText(planText);
 
 test("every plan carries a checkbox step", () => {
   const offenders = files.filter((path) => !/^- \[[ xX]\]/m.test(texts.get(path)));

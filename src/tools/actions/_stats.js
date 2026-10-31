@@ -20,11 +20,11 @@
 import { readFileSync } from "node:fs";
 import { z } from "zod/v4";
 import { aggregate, renderFlight, renderStats } from "../../core/telemetry/stats/index.js";
-import { formatBytes, graphAgeSeconds, graphStatus, runtimeSnapshot } from "../../core/tokensave/_insights.js";
-import { tokensaveGain } from "../../core/tokensave/_ledger.js";
-import { readEvents, readMergedUsage, readRollups } from "../../core/telemetry/store/index.js";
+import { graphStatus } from "../../core/tokensave/_insights.js";
+import { readEvents, readMergedUsage } from "../../core/telemetry/store/index.js";
 import { telemetryEnabled } from "../../core/telemetry/recorder/index.js";
 import { registerTool } from "../router/index.js";
+import { appendStatsExtras } from "./_stats-append.js";
 
 const DAY_MS = 86_400_000;
 
@@ -86,67 +86,13 @@ export function registerStatsTool() {
           "",
           "## Merged transcript usage",
           "",
-          `${merged.agent ?? "agent"}: ${merged.apiCalls ?? 0} calls, ${merged.input ?? 0} in / ${merged.output ?? 0} out (digest ${(merged.digest ?? "").slice(0, 12)}…).`,
+          `${merged.agent ?? "agent"}: ${merged.apiCalls ?? 0} calls, ${merged.input ?? 0} in / ${merged.output ?? 0} out (digest ${(merged.digest ?? "").slice(0, 12)}...).`,
           "",
         ].join("\n");
       }
 
-      if (scope === "all") {
-        const rollups = readRollups();
-
-        if (rollups.length > 0) {
-          const totals = { calls: 0, savedTokens: 0, estimatedTokens: 0 };
-
-          for (const day of rollups) {
-            totals.calls += day.calls ?? 0;
-            totals.savedTokens += day.savedTokens ?? 0;
-            totals.estimatedTokens += day.estimatedTokens ?? 0;
-          }
-
-          text += [
-            "",
-            "## Archived days",
-            "",
-            `${rollups.length} day(s) rolled up beyond the ${7}-day raw window:`,
-            `  ${totals.calls} calls, ~${totals.savedTokens} tokens measured, ~${totals.estimatedTokens} estimated`,
-            "",
-          ].join("\n");
-        }
-      }
-
-      const gain = tokensaveGain(process.cwd());
-
-      if (gain) {
-        text += [
-          "",
-          "## TokenSave ledger",
-          "",
-          `${gain.calls ?? 0} TokenSave calls over ${gain.range ?? "30d"} saved ~${gain.saved_tokens ?? 0} tokens${Number.isFinite(gain.usd) ? ` ($${gain.usd})` : ""}.`,
-          "",
-        ].join("\n");
-      }
-
-      // The graph's own numbers, not an estimate: how much this project is
-      // indexed for, how old the index is, and what the server holding it costs.
+      text = appendStatsExtras(text, scope);
       const status = graphStatus(process.cwd());
-
-      if (status) {
-        const age = graphAgeSeconds(status);
-        const runtime = runtimeSnapshot(process.cwd());
-        const lines = [
-          "",
-          "## TokenSave graph",
-          "",
-          `${status.files} file(s), ${status.nodes} node(s), ${status.edges} edge(s); index ${formatBytes(status.dbBytes)} for ${formatBytes(status.sourceBytes)} of source.`,
-          `Index last updated ${age === null ? "at an unknown time" : `${age}s ago`}.`,
-        ];
-
-        if (runtime) {
-          lines.push(`Server pid ${runtime.pid ?? "?"} on TokenSave ${runtime.version}: ${formatBytes(runtime.rssBytes)} resident, ${runtime.cpuPercent}% cpu.`);
-        }
-
-        text += [...lines, ""].join("\n");
-      }
 
       return {
         content: [{ type: "text", text }],

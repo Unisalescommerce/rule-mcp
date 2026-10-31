@@ -20,7 +20,7 @@ const embeddedSkillCount = readdirSync(new URL("../../../skills", import.meta.ur
 ).length;
 
 /** Core/action tools that are not minted 1:1 from an exposing skill. */
-const CORE_TOOL_COUNT = 24;
+const CORE_TOOL_COUNT = 25;
 
 /** Guaranteed minimal tool surface (sorted). */
 const MINIMAL = [...MINIMAL_ALLOWLIST].sort();

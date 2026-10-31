@@ -1,7 +1,7 @@
 # Privacy: what is recorded, where it lives, and how to erase it
 
 - **Applies to**: rule-mcp, every transport (stdio, SSE, HTTP, daemon, Docker)
-- **Last reviewed**: 2026-09-06
+- **Last reviewed**: 2026-10-31
 - **Related**: ADR 019 (persistent local bearer token), ADR 034 (SSE bearer auth),
   ADR 040 (per-invocation self-update with throttle, fire-and-forget), ADR 051
   (token-efficiency pipeline), `docs/02-architecture.md`,
@@ -35,6 +35,7 @@ project (`<slug>` below).
 | Per-project id                                                                      | `~/.rule-mcp/projects/<slug>/project-id`            | kept until deleted                             | `RULE_MCP_NO_TELEMETRY=1`                   |
 | Agent-declared usage (sidecar)                                                      | `~/.rule-mcp/projects/<slug>/usage.json`            | kept until deleted                             | don't write it (sidecar opt-in)             |
 | Exported recordings                                                                 | `~/.rule-mcp/projects/<slug>/exports/*.flight`      | newest 10, or everything within 90 days        | do not export                               |
+| Export decision-cache (confirmed/pending/rejected choices)                          | `~/.rule-mcp/projects/<slug>/decision-cache.json`   | kept until deleted; honors `RULE_MCP_NO_CACHE` | `RULE_MCP_NO_CACHE=1`                       |
 | Bearer token for SSE/HTTP                                                           | `~/.rule-mcp/state/sse-token` (mode 0600, dir 0700) | until deleted                                  | n/a - required for authenticated transports |
 | Failed-auth audit lines                                                             | stderr of the server process                        | wherever your process manager keeps stderr     | n/a - security logging                      |
 
@@ -43,6 +44,24 @@ filed per project (ADR 082), so there is nothing in a checkout to ignore and
 nothing to commit by accident. The raw log also has a hard size cap
 (`MAX_EVENTS_BYTES`, 8 MiB) beneath the retention window, so a machine that
 never rolls up does not fill up.
+
+## Host-agent session cleanup (`/rule-export cleanup`)
+
+`/rule-export` itself never deletes agent sessions: it distills telemetry into a
+`.flight` (keep-by-default; optional drain) and interviews dubious decisions into
+the export decision-cache. Session erasure is a separate, confirm-gated path:
+
+- `/rule-export cleanup` hard-deletes only sessions **outside** the keep-set
+  `(newest N ∪ {current})`, where `N` defaults to `5` via
+  `RULE_MCP_EXPORT_KEEP_SESSIONS`.
+- Cleanup refuses when the current session is unknown, when the caller has not
+  confirmed, and for every unsupported agent (those hosts are reported as
+  skipped; their files are untouched).
+- There is no soft-delete or undo: a confirmed cleanup is permanent for the
+  deleted host transcripts. Prefer distill-only `/rule-export` when you only
+  need a shareable recording; use `redactFlight` before sharing a `.flight`
+  (prompts stripped, paths hashed) so flight redact policy and session delete
+  stay aligned with this document.
 
 ## Sharing a recording
 

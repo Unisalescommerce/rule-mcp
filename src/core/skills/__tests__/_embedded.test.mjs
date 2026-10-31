@@ -40,6 +40,7 @@ test("every tool traces back to a rule-mcp-* directory in ./skills", () => {
     "rule_tool_process_adr",
     "rule_tool_review",
     "rule_tool_search",
+    "rule_tool_keep",
     "rule_tool_stats",
     "rule_tool_structural",
     "rule_tool_sync",

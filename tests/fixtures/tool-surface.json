@@ -1,5 +1,5 @@
 {
-  "count": 104,
+  "count": 105,
   "tools": [
     "rule_tool",
     "rule_tool_ai",
@@ -50,6 +50,7 @@
     "rule_tool_handon",
     "rule_tool_impersonation",
     "rule_tool_init",
+    "rule_tool_keep",
     "rule_tool_meta",
     "rule_tool_meta_astro",
     "rule_tool_meta_next",

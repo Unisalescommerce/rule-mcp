@@ -1,7 +1,7 @@
 /**
 @module test/export/decision-cache/store
 
-EX-04/EX-08: export-owned decision-cache — schemaVersion, status machine, NO_CACHE.
+EX-04/EX-08: export-owned decision-cache - schemaVersion, status machine, NO_CACHE.
 */
 
 import { strict as assert } from "node:assert";

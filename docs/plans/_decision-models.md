@@ -65,11 +65,23 @@ WS-0  loopback client and contract      (DM-03, DM-12)
 
 Every workstream owns files no other workstream writes, so two of them can run in either order but never at the same time on the same file: WS-0 writes the client, WS-1 the supervisor, WS-2 the harness and the corpus, WS-3 the ranker contract, WS-4 the registry and the language slice, WS-5 the cache key, WS-6 and WS-7 the rule family, WS-8 the documents.
 
-Depends on: -
+Depends on: export (ORDER): durable choices already live in the export-owned decision-cache; DM-07 reads that store rather than inventing a second one
 
 Feeds: -
 
-Shared files: none: outside the skills graph, and it owns `src/core/decision/`
+Shared files: `~/.rule-mcp/projects/<slug>/decision-cache.json` (export-owned; see `_export.md`), `src/core/decision/`
+
+## Durable choices (export decision-cache)
+
+The source of truth for durable routing/ADR choices is the **export-owned**
+decision-cache at `~/.rule-mcp/projects/<slug>/decision-cache.json`
+(`schemaVersion`, fingerprint, status `pending`|`confirmed`|`rejected`,
+source `rule-keep`|`rule-export-interview`|`rule-adr`). Export writes it via
+`/rule-keep`, `/rule-export` interview, and `/rule-adr`. DM-07 may later read
+and revalidate those records (including moving `confirmed` → `rejected` when
+the model or shortlist changes); it must not invent a parallel durable store.
+The L3 routing gate cache under `src/core/decision/` remains a separate,
+opt-in short-circuit and is not that source of truth.
 
 ## Steps
 
