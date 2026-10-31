@@ -120,9 +120,9 @@ never delete.
   - [x] 6.2 Confirm gate; refuse if `currentUnknown` (`planCleanup` / `runCleanup`)
   - [x] 6.3 Hard delete only outside keep-set; unsupported agents untouched
   - [x] 6.4 Gate: temp HOME fixtures per agent; never touch real home in CI
-- [ ] **Step 7 - EX-09 (low)**: Tool-cache promote
-  - [ ] 7.1 Only existing promotable entries / rules
-  - [ ] 7.2 Gate: tool-cache suites unchanged floors
+- [x] **Step 7 - EX-09 (low)**: Tool-cache promote — done 2026-10-31
+  - [x] 7.1 Only existing promotable entries / rules (`promoteToolResults` + `NON_CACHEABLE` + `cachePrime`)
+  - [x] 7.2 Gate: tool-cache suites unchanged floors
 - [ ] **Step 8 - EX-10 (low)**: Docs / privacy / census
   - [ ] 8.1 `docs/05-env-variables.md`, `docs/16-surface-map.md`, privacy note on session delete
   - [ ] 8.2 Point DM plan/review at export decision-cache as source of truth for durable choices

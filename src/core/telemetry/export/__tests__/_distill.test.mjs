@@ -15,6 +15,7 @@ import { withEnv, withHome } from "../../../../shared/_testkit.js";
 const { exportDistill } = await import("../index.js");
 const { readEvents } = await import("../../store/index.js");
 const telemetry = await import("../../recorder/index.js");
+const { cacheClear, cacheLookup } = await import("../../../cache/tool-cache/index.js");
 
 function writePi(home, projectDir) {
   const slug = `--${projectDir.replace(/^\//, "").replaceAll("/", "-")}--`;
@@ -91,4 +92,45 @@ test("exportDistill drain:true empties the log after the file exists", () => {
       }
     });
   }, "rule-mcp-distill-d-");
+});
+
+test("exportDistill promotes only promotable toolCalls into the tool-cache", () => {
+  withHome((ruleHome) => {
+    withEnv({ RULE_MCP_NO_TELEMETRY: undefined, RULE_MCP_NO_PROMPTS: "1", RULE_MCP_NO_CACHE: undefined }, () => {
+      cacheClear();
+
+      const projectDir = mkdtempSync(join(tmpdir(), "rule-distill-promote-"));
+      mkdirSync(join(projectDir, ".git"), { recursive: true });
+      const agents = join(ruleHome, "agents");
+      writePi(agents, projectDir);
+
+      const previous = process.cwd();
+      process.chdir(projectDir);
+
+      try {
+        telemetry.startSession({ transport: "stdio", now: 5_000 });
+        telemetry.recordToolCall({ tool: "rule_tool", durationMs: 3, ok: true, resultBytes: 10, now: 5_100 });
+        telemetry.flush();
+        telemetry.endSession({ now: 5_200 });
+
+        const result = exportDistill({
+          projectDir,
+          home: agents,
+          exportedAt: 6_000,
+          toolCalls: [
+            { tool: "rule_tool", args: { prompt: "from distill" }, result: { content: [{ type: "text", text: "primed" }] } },
+            { tool: "rule_tool_git", args: { action: "status" }, result: { content: [{ type: "text", text: "nope" }] } },
+          ],
+        });
+
+        assert.equal(result.promote.promoted, 1);
+        assert.equal(result.promote.skipped.length, 1);
+        assert.equal(cacheLookup("rule_tool", { prompt: "from distill" })?.result.content[0].text, "primed");
+        assert.equal(cacheLookup("rule_tool_git", { action: "status" }), undefined);
+      } finally {
+        process.chdir(previous);
+        rmSync(projectDir, { recursive: true, force: true });
+      }
+    });
+  }, "rule-mcp-distill-p-");
 });

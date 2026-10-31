@@ -8,6 +8,7 @@ so re-running export cannot erase the recording by accident (EX-07).
 @see docs/plans/_export.md Step 2
 */
 
+import { promoteToolResults } from "../../export/promote/index.js";
 import { exportFlight } from "../flight/index.js";
 import { mergeTranscriptTelemetry } from "../store/index.js";
 
@@ -25,11 +26,20 @@ import { mergeTranscriptTelemetry } from "../store/index.js";
  *   keep?: boolean,
  *   drain?: boolean,
  *   redact?: boolean,
+ *   toolCalls?: { tool: string, args?: object, result?: object }[],
  * }} options
- * @returns {{ file: string, flight: object, calls: number, drained: number, kept: boolean, merge: object }}
+ * @returns {{
+ *   file: string,
+ *   flight: object,
+ *   calls: number,
+ *   drained: number,
+ *   kept: boolean,
+ *   merge: object,
+ *   promote: { promoted: number, skipped: { tool: string, reason: string }[] },
+ * }}
  */
 export function exportDistill(options = {}) {
-  const { drain = false, keep, ...rest } = options;
+  const { drain = false, keep, toolCalls, ...rest } = options;
   // Distill-only keeps the log. An explicit drain wins over keep; an explicit
   // keep:false without drain still drains, matching exportFlight's contract.
   const kept = drain ? false : keep !== false;
@@ -43,6 +53,8 @@ export function exportDistill(options = {}) {
   });
 
   const exported = exportFlight({ ...rest, keep: kept });
+  // EX-09: only prime when the caller mined concrete calls; NON_CACHEABLE + cachePrime gate the rest.
+  const promote = promoteToolResults(Array.isArray(toolCalls) ? toolCalls : []);
 
-  return { ...exported, kept, merge };
+  return { ...exported, kept, merge, promote };
 }

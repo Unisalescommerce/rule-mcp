@@ -17,7 +17,7 @@
 | EX-06 | medium   | open   | registry          | Unsupported agents must appear in the export report as skipped-with-reason; no partial delete                                                                 |
 | EX-07 | medium   | open   | flight/_export.js | Default `exportFlight` drains MCP events. Export pipeline must choose `keep` vs drain explicitly and document interaction with agent-session cleanup          |
 | EX-08 | medium   | open   | interview 6.A+B   | Heuristic interview can write `confirmed` entries that DM later rejects; status machine needs `pending`/`confirmed`/`rejected` and DM revalidation            |
-| EX-09 | low      | open   | tool-cache        | Promoting transcript tool results into tool-cache is easy to get wrong (non-idempotent tools). Restrict to existing promotable rules                          |
+| EX-09 | low      | closed | tool-cache        | Promoting transcript tool results into tool-cache is easy to get wrong (non-idempotent tools). Restrict to existing promotable rules                          |
 | EX-10 | low      | open   | privacy docs      | Session delete and flight redact policies must stay aligned with `docs/06-privacy.md`                                                                         |
 
 ## Severity summary

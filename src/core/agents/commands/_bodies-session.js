@@ -113,8 +113,9 @@ export const EXPORT_BODY = [
   "1. Use the session map and `exportDistill` path (keep MCP events unless arguments say `drain`).",
   "2. Flag dubious decisions (ADR writes, conflicts, KEEP/REJECT markers) and interview the user before writing pending/confirmed/discarded entries.",
   "3. For a confirmed choice the user accepts, call `rule_tool_keep`. For undecided ones, write pending via the decision-cache helpers — never invent confirmation.",
-  "4. Do not hard-delete agent sessions unless arguments include `cleanup` and the user confirmed (Step 6). Unsupported agents are report-only.",
-  "5. Finish by proposing a conventional commit with a mandatory scope only if a tracked file changed.",
+  "4. When transcript tool call/result pairs are available, pass them as `toolCalls` to `exportDistill` so only NON_CACHEABLE-safe tools are primed into the tool-cache (EX-09). Never invent an allowlist; never overwrite existing cache entries.",
+  "5. Do not hard-delete agent sessions unless arguments include `cleanup` and the user confirmed (Step 6). Unsupported agents are report-only.",
+  "6. Finish by proposing a conventional commit with a mandatory scope only if a tracked file changed.",
 ].join("\n");
 
 /** /rule-init -> rule_tool_init. */
