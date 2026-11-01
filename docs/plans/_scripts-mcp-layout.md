@@ -142,10 +142,11 @@ Host CreatePlan writes only under `~/.local/share/opencode/plans/` (session UI).
 
 ### WS1 — Layout contract tests (red)
 
-- [ ] **WS1-T1**: Assert root `package.json` name = `rule-mcp-workspace`, `private: true`.
-- [ ] **WS1-T2**: Assert `packages/{mcp,shared,docs}/package.json` fixed names; `pnpm-workspace.yaml` lists `packages/*` and `../nyx`.
-- [ ] **WS1-T3**: Assert zero root `src/`, `tests/`, `case-studies/`, `scripts/docs-site`; zero `@src/`; `getRepoRoot()` resolves git root; `@mcp/` resolves.
-- [ ] **WS1-T4**: Set this plan Status `in-progress`; check WS-D box progress in `plan-of-plans.md`.
+- [x] **WS1-T1**: Assert root `package.json` name = `rule-mcp-workspace`, `private: true`.
+- [x] **WS1-T2**: Assert `packages/{mcp,shared,docs}/package.json` fixed names; `pnpm-workspace.yaml` lists `packages/*` and `../nyx`.
+- [x] **WS1-T3**: Assert zero root `src/`, `tests/`, `case-studies/`, `scripts/docs-site`; zero legacy `@`+`src` alias; `getRepoRoot()` resolves git root; mcp alias resolves.
+- [x] **WS1-T4**: Set this plan Status `in-progress`; check WS-D box progress in `plan-of-plans.md`.
+  - Note: contract file `tests/plans/monorepo-layout.test.mjs` is red until WS2-WS6.
 
 ### WS2 — Extract `rule-mcp-shared`
 
