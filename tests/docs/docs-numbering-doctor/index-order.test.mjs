@@ -5,7 +5,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 
-import { renderRenumberPlan, planRenumber, applyRenumber } from "../../../src/core/docs-numbering/index.js";
+import { renderRenumberPlan, planRenumber, applyRenumber } from "../../../packages/mcp/core/docs-numbering/index.js";
 import { seedScrambledIndex } from "./_doctor.fixture.mjs";
 
 test("an out-of-order index is reported even when no number collides", () => {

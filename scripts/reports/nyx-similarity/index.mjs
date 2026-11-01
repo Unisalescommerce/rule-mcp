@@ -38,14 +38,14 @@ import { pathToFileURL } from "node:url";
 const asJson = process.argv.includes("--json");
 const THRESHOLDS = [0.995, 0.99, 0.98, 0.97, 0.96, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7];
 
-const { loadAllSkills } = await import("../../../src/core/skills/index.js");
-const { callTool } = await import("../../../src/tools/router/index.js");
+const { loadAllSkills } = await import("../../../packages/mcp/core/skills/index.js");
+const { callTool } = await import("../../../packages/mcp/tools/router/index.js");
 const { CORPUS } = await import("../../../tests/fixtures/routing-corpus.mjs");
 const { variants } = await import("../cache-similarity/_similarity.mjs");
 
 // Nyx is optional in this checkout: resolve it the way the runtime loader does.
 const configuredModule = process.env.RULE_MCP_NYX_MODULE;
-const nyxSpecifier = configuredModule ? (isAbsolute(configuredModule) ? pathToFileURL(configuredModule).href : configuredModule) : "nyx/mcp";
+const nyxSpecifier = configuredModule ? (isAbsolute(configuredModule) ? pathToFileURL(configuredModule).href : configuredModule) : "nyx-gateway/mcp";
 const { createDefaultNyxConfig, createMcpAdapter, createMcpAdapterFromConfigFile } = await import(nyxSpecifier);
 
 await loadAllSkills(true);

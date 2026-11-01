@@ -28,7 +28,7 @@ export function skillCorpus() {
  * records, so the report and the CI floors measure one corpus.
  */
 export async function resultCorpus() {
-  const { CORPUS, recomputeCore, text } = await import(join(ROOT, "src/core/text/__tests__/_efficacy.fixture.mjs"));
+  const { CORPUS, recomputeCore, text } = await import(join(ROOT, "packages/mcp/core/text/__tests__/_efficacy.fixture.mjs"));
   const corpus = [];
 
   for (const [name, args] of CORPUS) {

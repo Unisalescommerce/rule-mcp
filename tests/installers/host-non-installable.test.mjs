@@ -16,9 +16,9 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
 
-import { allAgents } from "../../src/cli/installers/index.js";
-import { evidenceOf, nonInstallable } from "../../src/cli/installers/hosts/_evidence.data.js";
-import { hostRecord } from "../../src/cli/installers/hosts/index.js";
+import { allAgents } from "../../packages/mcp/cli/installers/index.js";
+import { evidenceOf, nonInstallable } from "../../packages/mcp/cli/installers/hosts/_evidence.data.js";
+import { hostRecord } from "../../packages/mcp/cli/installers/hosts/index.js";
 
 const ALIAS_HOOK = fileURLToPath(new URL("../../scripts/alias-hook.mjs", import.meta.url));
 const ROOT = fileURLToPath(new URL("../..", import.meta.url));

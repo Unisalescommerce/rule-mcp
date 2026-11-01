@@ -3,7 +3,7 @@
  *
  * Tool invocation, skill loading, self-update and the gateway import each
  * other through this path, so a change to any one of them has to fight the
- * other three. The edges are held by an `@src/` alias and by `await
+ * other three. The edges are held by an `@mcp/` alias and by `await
  * import(...)`, and the code graph models neither: it reports zero dependents
  * for core/self-update and core/skills, so it cannot see this cycle at all.
  * This test resolves both specifier forms and walks the real graph, one
@@ -56,8 +56,8 @@ function specifiers(text) {
 function resolveSpecifier(fromFile, specifier) {
   let target;
 
-  if (specifier.startsWith("@src/")) {
-    target = join(root, "src", specifier.slice("@src/".length));
+  if (specifier.startsWith("@mcp/")) {
+    target = join(root, "src", specifier.slice("@mcp/".length));
   } else if (specifier.startsWith(".")) {
     target = resolve(root, dirname(fromFile), specifier);
   } else {
@@ -113,34 +113,34 @@ function offenders(startFiles, prefixes) {
 
 test("the graph resolves both specifier forms", () => {
   // Without this, every invariant below would pass on an empty graph.
-  assert.ok(graph.get("src/tools/router/call/_stages.js").includes("src/core/cache/tool-cache/index.js"), "the @src/ alias must resolve to a file");
-  assert.ok(graph.get("src/cli/commands/_help.js").includes("src/core/skills/index.js"), "a dynamic import must resolve to a file");
+  assert.ok(graph.get("packages/mcp/tools/router/call/_stages.js").includes("packages/mcp/core/cache/tool-cache/index.js"), "the @mcp/ alias must resolve to a file");
+  assert.ok(graph.get("packages/mcp/cli/commands/_help.js").includes("packages/mcp/core/skills/index.js"), "a dynamic import must resolve to a file");
 });
 
 test("self-update reaches the reload port and nothing else in the catalog", () => {
-  assert.deepEqual(offenders(under("src/core/self-update/"), ["src/core/skills/"]), ["src/core/skills/_reload-port.js"], "self-update depends on the port, never on the loader");
+  assert.deepEqual(offenders(under("packages/mcp/core/self-update/"), ["packages/mcp/core/skills/"]), ["packages/mcp/core/skills/_reload-port.js"], "self-update depends on the port, never on the loader");
 });
 
 test("the invocation pipeline never reaches self-update", () => {
-  const reached = offenders(["src/tools/router/call/_pipeline.js"], ["src/core/self-update/"]);
+  const reached = offenders(["packages/mcp/tools/router/call/_pipeline.js"], ["packages/mcp/core/self-update/"]);
 
   assert.deepEqual(reached, [], "a tool call must not pull the updater in behind it");
-  assert.ok(graph.get("src/tools/router/call/_pipeline.js").includes("src/tools/router/call/_host.js"), "and it must ask the host");
+  assert.ok(graph.get("packages/mcp/tools/router/call/_pipeline.js").includes("packages/mcp/tools/router/call/_host.js"), "and it must ask the host");
 });
 
 test("the skill catalog never reaches the gateway or the apply tool", () => {
-  assert.deepEqual(offenders(["src/core/skills/_load.js"], ["src/tools/gateway/", "src/tools/apply/"]), [], "the bootstrap registers those, not loadAllSkills");
+  assert.deepEqual(offenders(["packages/mcp/core/skills/_load.js"], ["packages/mcp/tools/gateway/", "packages/mcp/tools/apply/"]), [], "the bootstrap registers those, not loadAllSkills");
 });
 
 test("the search index never reaches the loader", () => {
   // _load.js builds the index and the index reads the skill bodies, so the two
   // modules touch each other. Drawing the index's edge to the skills *barrel*
   // is what turns that into a cycle: the barrel re-exports the loader.
-  assert.deepEqual(offenders(under("src/core/bm25/"), ["src/core/skills/_load.js"]), [], "the index takes the skill cache from its own module, not from the catalog's barrel");
+  assert.deepEqual(offenders(under("packages/mcp/core/bm25/"), ["packages/mcp/core/skills/_load.js"]), [], "the index takes the skill cache from its own module, not from the catalog's barrel");
 });
 
 test("the loader imports the whole catalog statically", () => {
-  const loader = readFileSync(join(root, "src/core/skills/_load.js"), "utf8");
+  const loader = readFileSync(join(root, "packages/mcp/core/skills/_load.js"), "utf8");
 
   assert.doesNotMatch(loader, /await import\(\s*["']/, "no edge may hide behind a dynamic import in the loader");
 });

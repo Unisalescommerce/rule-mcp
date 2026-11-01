@@ -2,7 +2,7 @@
 
 /**
  * One-shot style fixer for the repo's own guardrail rules (self-guardrails,
- * F-A1 discipline). The passes themselves live in `src/core/fix/` so this
+ * F-A1 discipline). The passes themselves live in `packages/mcp/core/fix/` so this
  * script, the `rule_tool_fix` tool and the `/rule-fix` command all run the same
  * code:
  *
@@ -20,11 +20,11 @@
  */
 import { readFileSync, writeFileSync } from "node:fs";
 
-import { applyJsStyle } from "../../../src/core/guardrails/fix/index.js";
+import { applyJsStyle } from "../../../packages/mcp/core/guardrails/fix/index.js";
 import { trackedFiles } from "../_tracked.mjs";
 
 const dryRun = process.argv.includes("--dry-run");
-const files = trackedFiles(["src/**/*.js"]);
+const files = trackedFiles(["packages/mcp/**/*.js"]);
 
 let touched = 0;
 for (const file of files) {

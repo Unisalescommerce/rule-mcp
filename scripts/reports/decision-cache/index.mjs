@@ -1,5 +1,5 @@
 /** Summarize the L3 decision-cache shadow records: precision, floor sweep, latency. */
-import { readShadows, summarizeShadows } from "../../../src/core/cache/tool-cache/_decision-shadow.js";
+import { readShadows, summarizeShadows } from "../../../packages/mcp/core/cache/tool-cache/_decision-shadow.js";
 
 const events = readShadows();
 const summary = summarizeShadows(events);

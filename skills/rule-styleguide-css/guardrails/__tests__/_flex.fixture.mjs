@@ -26,13 +26,13 @@ export const root = fileURLToPath(new URL("../../../../", import.meta.url));
 
 // A skill owns its rules, and the engine only knows the ones a load has
 // registered, so every entry point that asks the engine loads first.
-const { loadAllSkills } = await import("@src/core/skills/index.js");
+const { loadAllSkills } = await import("@mcp/core/skills/index.js");
 await loadAllSkills();
 
 export const { cssFlexFirst } = await import("../_css-flex-first.js");
-export const { GUARDRAIL_HELPERS } = await import("@src/core/guardrails/_helpers.js");
-export const { getGuardrails, checkCode } = await import("@src/core/guardrails/index.js");
-export const { FLEX_FIRST } = await import("@src/core/index.js");
+export const { GUARDRAIL_HELPERS } = await import("@mcp/core/guardrails/_helpers.js");
+export const { getGuardrails, checkCode } = await import("@mcp/core/guardrails/index.js");
+export const { FLEX_FIRST } = await import("@mcp/core/index.js");
 
 export const GUARDRAIL_ID = "css-flex-first";
 

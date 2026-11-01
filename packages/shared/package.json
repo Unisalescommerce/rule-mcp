@@ -1,0 +1,19 @@
+{
+  "name": "rule-mcp-shared",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Cross-cutting helpers for the rule-mcp workspace",
+  "exports": {
+    ".": "./index.js",
+    "./ports": "./ports/index.js",
+    "./utils": "./utils/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "*.js",
+    "ports/",
+    "utils/",
+    "!**/__tests__/"
+  ]
+}

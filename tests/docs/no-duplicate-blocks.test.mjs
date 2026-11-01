@@ -2,12 +2,12 @@
  * Anti-regression gate: no 4-line block may repeat across three or more
  * source files.
  *
- * The structural plan centralized shared helpers into src/shared; this test
+ * The structural plan centralized shared helpers into packages/mcp/shared; this test
  * keeps them there. A normalized 4-line window that appears in >=3 distinct
  * src files is a helper that got re-implemented, and it will show up here
  * before it drifts into three slightly different versions.
  *
- * Excluded on purpose: *.data.js (catalog/dictionary payloads), src/shared (the
+ * Excluded on purpose: *.data.js (catalog/dictionary payloads), packages/mcp/shared (the
  * helpers themselves), the __tests__ folders and fixtures (assertion data), and
  * files whose whole body is a static table. Comment-only and header windows
  * are also ignored: a JSDoc license header is not code to share.
@@ -98,5 +98,5 @@ test("no 4-line block repeats across three or more source files", () => {
     }
   }
 
-  assert.deepEqual(offenders, [], "centralize these into src/shared:\n" + offenders.join("\n"));
+  assert.deepEqual(offenders, [], "centralize these into packages/mcp/shared:\n" + offenders.join("\n"));
 });

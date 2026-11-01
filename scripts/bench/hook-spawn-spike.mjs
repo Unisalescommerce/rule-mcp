@@ -64,7 +64,7 @@ function benchSync(label, fn) {
 }
 
 const thinSource = `
-import { runGuard } from ${JSON.stringify(`${ROOT}/src/cli/guard/_run.js`)};
+import { runGuard } from ${JSON.stringify(`${ROOT}/packages/mcp/cli/guard/_run.js`)};
 import { Readable } from "node:stream";
 const chunks = [];
 for await (const chunk of process.stdin) chunks.push(chunk);
@@ -74,9 +74,9 @@ await runGuard("prompt-submit", { stdin, write: (text) => process.stdout.write(t
 `;
 
 const programOnlySource = `
-import { buildProgram } from ${JSON.stringify(`${ROOT}/src/cli/_program.js`)};
+import { buildProgram } from ${JSON.stringify(`${ROOT}/packages/mcp/cli/_program.js`)};
 buildProgram();
-const { bootstrapCoreTools } = await import(${JSON.stringify(`${ROOT}/src/tools/_bootstrap.js`)});
+const { bootstrapCoreTools } = await import(${JSON.stringify(`${ROOT}/packages/mcp/tools/_bootstrap.js`)});
 await bootstrapCoreTools();
 process.stdout.write("ok");
 `;
@@ -115,12 +115,12 @@ const rows = [
   benchSync("F1 spawn import promptDirective", () => {
     execFileSync(
       process.execPath,
-      ["--import", ALIAS, "--input-type=module", "-e", `import { promptDirective } from ${JSON.stringify(`${ROOT}/src/core/directive/index.js`)}; promptDirective();`],
+      ["--import", ALIAS, "--input-type=module", "-e", `import { promptDirective } from ${JSON.stringify(`${ROOT}/packages/mcp/core/directive/index.js`)}; promptDirective();`],
       { cwd: ROOT, stdio: ["ignore", "pipe", "pipe"] },
     );
   }),
   benchSync("F2 spawn import runGuard module", () => {
-    execFileSync(process.execPath, ["--import", ALIAS, "--input-type=module", "-e", `import ${JSON.stringify(`${ROOT}/src/cli/guard/_run.js`)};`], {
+    execFileSync(process.execPath, ["--import", ALIAS, "--input-type=module", "-e", `import ${JSON.stringify(`${ROOT}/packages/mcp/cli/guard/_run.js`)};`], {
       cwd: ROOT,
       stdio: ["ignore", "pipe", "pipe"],
     });
@@ -128,7 +128,7 @@ const rows = [
   benchSync("F3 spawn import buildProgram", () => {
     execFileSync(
       process.execPath,
-      ["--import", ALIAS, "--input-type=module", "-e", `import { buildProgram } from ${JSON.stringify(`${ROOT}/src/cli/_program.js`)}; buildProgram();`],
+      ["--import", ALIAS, "--input-type=module", "-e", `import { buildProgram } from ${JSON.stringify(`${ROOT}/packages/mcp/cli/_program.js`)}; buildProgram();`],
       { cwd: ROOT, stdio: ["ignore", "pipe", "pipe"] },
     );
   }),
@@ -140,7 +140,7 @@ const rows = [
         ALIAS,
         "--input-type=module",
         "-e",
-        `const { bootstrapCoreTools } = await import(${JSON.stringify(`${ROOT}/src/tools/_bootstrap.js`)}); await bootstrapCoreTools();`,
+        `const { bootstrapCoreTools } = await import(${JSON.stringify(`${ROOT}/packages/mcp/tools/_bootstrap.js`)}); await bootstrapCoreTools();`,
       ],
       { cwd: ROOT, stdio: ["ignore", "pipe", "pipe"] },
     );
@@ -148,7 +148,7 @@ const rows = [
 ];
 
 const coldStarted = process.hrtime.bigint();
-const { runGuard } = await import(`${ROOT}/src/cli/guard/_run.js`);
+const { runGuard } = await import(`${ROOT}/packages/mcp/cli/guard/_run.js`);
 const coldImportMs = round(Number(process.hrtime.bigint() - coldStarted) / 1e6);
 
 const inProcess = [];

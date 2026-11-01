@@ -26,7 +26,7 @@ test("the commit-msg hook delegates to the shared validator", () => {
   const hook = commitMsgHook();
 
   assert.match(hook, /commit-types\/index\.mjs --msg-file/u, "the hook must call the shared entry point");
-  assert.doesNotMatch(hook, /feat\|fix\|docs/u, "the type list lives in src/core/commit, not in the hook");
+  assert.doesNotMatch(hook, /feat\|fix\|docs/u, "the type list lives in packages/mcp/core/commit, not in the hook");
 });
 
 test("the PR title check shares the one type list", () => {

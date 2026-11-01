@@ -15,10 +15,10 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
 
-import { allAgents } from "../../src/cli/installers/index.js";
-import { hostRecord } from "../../src/cli/installers/hosts/index.js";
+import { allAgents } from "../../packages/mcp/cli/installers/index.js";
+import { hostRecord } from "../../packages/mcp/cli/installers/hosts/index.js";
 
-const SOURCES = ["../../src/cli/installers/_uninstall.js", "../../src/cli/installers/_uninstall-clis.js", "../../src/cli/installers/_agents-opencode.js"];
+const SOURCES = ["../../packages/mcp/cli/installers/_uninstall.js", "../../packages/mcp/cli/installers/_uninstall-clis.js", "../../packages/mcp/cli/installers/_agents-opencode.js"];
 
 /**
  * A hand-built absolute path to a user-level server config file: `join(HOME,

@@ -150,18 +150,18 @@ Host CreatePlan writes only under `~/.local/share/opencode/plans/` (session UI).
 
 ### WS2 — Extract `rule-mcp-shared`
 
-- [ ] **WS2-T1**: `git mv src/shared packages/shared`; `git mv src/utils packages/shared/utils`.
-- [ ] **WS2-T2**: Add `packages/shared/package.json` with exports above; keep `_testkit` on main barrel.
-- [ ] **WS2-T3**: Do not run the full suite until WS3 lands (same green arc).
+- [x] **WS2-T1**: `git mv src/shared packages/shared`; `git mv src/utils packages/shared/utils`.
+- [x] **WS2-T2**: Add `packages/shared/package.json` with exports above; keep `_testkit` on main barrel.
+- [x] **WS2-T3**: Do not run the full suite until WS3 lands (same green arc).
 
 ### WS3 — `packages/mcp` + imports
 
-- [ ] **WS3-T1**: `git mv src packages/mcp` (shared/utils already moved).
-- [ ] **WS3-T2**: `packages/mcp/package.json` name `rule-mcp`; deps include `rule-mcp-shared` + `nyx-gateway` workspace; move publish/`files` from root.
-- [ ] **WS3-T3**: Root → `rule-mcp-workspace` private; keep `bin.rule-mcp`; scripts delegate via `pnpm --filter`.
-- [ ] **WS3-T4**: Fix `getRepoRoot` / `getSkillsDirs` depth (`../../../` → `../../../../`); `RULE_MCP_REPO_ROOT` override unchanged.
-- [ ] **WS3-T5**: Alias hook → `packages/mcp/`; rewrite `@src/` → `@mcp/`; shared imports → `rule-mcp-shared`(+`/ports`/`/utils`); Nyx specifier → `nyx-gateway/mcp`.
-- [ ] **WS3-T6**: `pnpm-workspace.yaml` members; re-evaluate root `rule-mcp: 'link:'` override; suite green with real sibling Nyx.
+- [x] **WS3-T1**: `git mv src packages/mcp` (shared/utils already moved).
+- [x] **WS3-T2**: `packages/mcp/package.json` name `rule-mcp`; deps include `rule-mcp-shared` + `nyx-gateway` workspace; move publish/`files` from root.
+- [x] **WS3-T3**: Root → `rule-mcp-workspace` private; keep `bin.rule-mcp`; scripts delegate via `pnpm --filter`.
+- [x] **WS3-T4**: Fix `getRepoRoot` / `getSkillsDirs` depth (`../../../` → `../../../../`); `RULE_MCP_REPO_ROOT` override unchanged.
+- [x] **WS3-T5**: Alias hook → `packages/mcp/`; rewrite `@mcp/` → `@mcp/`; shared imports → `rule-mcp-shared`(+`/ports`/`/utils`); Nyx specifier → `nyx-gateway/mcp`.
+- [x] **WS3-T6**: `pnpm-workspace.yaml` members; re-evaluate root `rule-mcp: 'link:'` override; suite green with real sibling Nyx.
 
 ### WS4 — `packages/docs`
 
@@ -179,7 +179,7 @@ Host CreatePlan writes only under `~/.local/share/opencode/plans/` (session UI).
 - [ ] **WS6-T2**: CI stub `../nyx` when missing; `RULE_MCP_NO_NYX=1`; eslint/find paths.
 - [ ] **WS6-T3**: `scripts/package.sh` → `pnpm pack --filter rule-mcp`.
 - [ ] **WS6-T4**: README / CONTRIBUTING / `docs/02-architecture.md` / `docs/05-env-variables.md` say workspace root + package `rule-mcp`.
-- [ ] **WS6-T5**: Closing sweep zero hits: `src/shared`, `src/utils`, `packages/mcp/shared`, `packages/mcp/utils`, `scripts/docs-site`, `@src/`, bare `nyx/mcp`, root `"name": "rule-mcp"`.
+- [ ] **WS6-T5**: Closing sweep zero hits: `src/shared`, `src/utils`, `packages/mcp/shared`, `packages/mcp/utils`, `scripts/docs-site`, `@mcp/`, bare `nyx/mcp`, root `"name": "rule-mcp"`.
 
 ### WS7 — Closeout
 
@@ -193,7 +193,7 @@ Must find zero hits for:
 
 - `src/shared`, `src/utils`, `packages/mcp/shared`, `packages/mcp/utils` (no shim)
 - `scripts/docs-site`
-- `@src/`, bare `nyx/mcp`
+- `@mcp/`, bare `nyx/mcp`
 - root `package.json` `"name": "rule-mcp"`
 
 ## Risks

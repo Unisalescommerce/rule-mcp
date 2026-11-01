@@ -5,7 +5,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 
-import { renderRenumberPlan, planRenumber, applyRenumber } from "../../../src/core/docs-numbering/index.js";
+import { renderRenumberPlan, planRenumber, applyRenumber } from "../../../packages/mcp/core/docs-numbering/index.js";
 import { git } from "./_doctor.fixture.mjs";
 
 test("an ADR whose author is the tool, or missing, is reported", () => {

@@ -61,7 +61,7 @@ export const VERBOSE_CORPUS = [
       "```",
       "",
       "- Keep in mind that the additional parameters are approximately the same",
-      "- See https://example.com/auth and ./src/core/auth/_expiry.js for the details",
+      "- See https://example.com/auth and ./packages/mcp/core/auth/_expiry.js for the details",
       "",
       "| Field | The default value |",
       "| --- | --- |",

@@ -5,7 +5,7 @@ import { execFileSync } from "node:child_process";
 import { join } from "node:path";
 import test from "node:test";
 
-import { planRenumber, applyRenumber } from "../../../src/core/docs-numbering/index.js";
+import { planRenumber, applyRenumber } from "../../../packages/mcp/core/docs-numbering/index.js";
 import { seedRepo } from "./_doctor.fixture.mjs";
 
 test("progress is reported while the work happens, not only at the end", () => {

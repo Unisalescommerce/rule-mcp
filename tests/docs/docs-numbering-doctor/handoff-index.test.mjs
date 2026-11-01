@@ -12,8 +12,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 
-import { applyRenumber, planRenumber } from "../../../src/core/docs-numbering/index.js";
-import { listExistingHandoffs } from "../../../src/tools/handoff/_handoff-index.js";
+import { applyRenumber, planRenumber } from "../../../packages/mcp/core/docs-numbering/index.js";
+import { listExistingHandoffs } from "../../../packages/mcp/tools/handoff/_handoff-index.js";
 import { seedHandoffs } from "./_doctor.fixture.mjs";
 
 test("the handoff index reads all three header shapes", () => {

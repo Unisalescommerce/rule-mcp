@@ -4,7 +4,7 @@ import { rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import test from "node:test";
 
-import { planRenumber, rewriteCommitReferences } from "../../../src/core/docs-numbering/index.js";
+import { planRenumber, rewriteCommitReferences } from "../../../packages/mcp/core/docs-numbering/index.js";
 import { git, seedRepo } from "./_doctor.fixture.mjs";
 
 test("uncommitted changes block the rewrite with a reason", () => {

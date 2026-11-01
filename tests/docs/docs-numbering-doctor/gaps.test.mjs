@@ -16,7 +16,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 
-import { applyRenumber, planRenumber, renderRenumberPlan } from "../../../src/core/docs-numbering/index.js";
+import { applyRenumber, planRenumber, renderRenumberPlan } from "../../../packages/mcp/core/docs-numbering/index.js";
 import { seedGappedRepo } from "./_doctor.fixture.mjs";
 
 const read = (root, path) => readFileSync(join(root, path), "utf8");

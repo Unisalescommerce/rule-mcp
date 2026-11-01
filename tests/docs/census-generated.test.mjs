@@ -7,7 +7,7 @@
  * This test reads the checked-in snapshot (`tests/fixtures/census.json`) and the
  * documents, and nothing else. It used to import the generator, which reaches
  * 551 source files, so a documentation test loaded the whole application to
- * compare bytes - and a leaf edit anywhere in `src/` was in its dependency
+ * compare bytes - and a leaf edit anywhere in `packages/mcp/` was in its dependency
  * chain.
  *
  * Freshness - the documents against a *fresh* generation from the live code -

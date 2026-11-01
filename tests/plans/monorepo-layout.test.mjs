@@ -10,7 +10,7 @@ import { join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { getRepoRoot } from "../../src/cli/paths/_repo.js";
+import { getRepoRoot } from "../../packages/mcp/cli/paths/_repo.js";
 
 const ROOT = fileURLToPath(new URL("../..", import.meta.url));
 const LEGACY_ALIAS = ["@", "src", "/"].join("");

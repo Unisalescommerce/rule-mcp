@@ -59,7 +59,7 @@ test("non-barrel source files under src are underscore-prefixed", () => {
   assert.deepEqual(unprefixed, [], "implementation files carry a leading underscore");
 });
 
-test("the six core helpers live in owning folders, not as src/core siblings", () => {
+test("the six core helpers live in owning folders, not as packages/mcp/core siblings", () => {
   const leftovers = ["_code-signature.js", "_directive.js", "_git-hooks.js", "_post-process.js", "_tool-budget.js", "_untrusted.js"].filter((name) =>
     existsSync(join(src, "core", name)),
   );
@@ -73,7 +73,7 @@ test("the six core helpers live in owning folders, not as src/core siblings", ()
   assert.ok(existsSync(join(src, "core/enforcement/_untrusted.js")));
 });
 
-test("the six action tools live behind src/tools/actions, not as src/tools siblings", () => {
+test("the six action tools live behind packages/mcp/tools/actions, not as packages/mcp/tools siblings", () => {
   const leftovers = ["_compress.js", "_plan.js", "_impersonation.js", "_stats.js", "_update.js", "_usage.js"].filter((name) => existsSync(join(src, "tools", name)));
 
   assert.deepEqual(leftovers, [], "fold each action tool behind the actions barrel");

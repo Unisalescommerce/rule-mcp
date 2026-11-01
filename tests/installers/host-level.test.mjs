@@ -12,8 +12,8 @@ import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
 
-import { allAgents } from "../../src/cli/installers/index.js";
-import { hostRecord, levelSupport } from "../../src/cli/installers/hosts/index.js";
+import { allAgents } from "../../packages/mcp/cli/installers/index.js";
+import { hostRecord, levelSupport } from "../../packages/mcp/cli/installers/hosts/index.js";
 
 const ALIAS_HOOK = fileURLToPath(new URL("../../scripts/alias-hook.mjs", import.meta.url));
 const ROOT = fileURLToPath(new URL("../..", import.meta.url));

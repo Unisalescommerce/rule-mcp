@@ -1,0 +1,122 @@
+/**
+ * Automatic renumbering: a close-session handoff plans and applies it, a plain
+ * handoff (and a dry run) leaves the files where they are.
+ */
+import { strict as assert } from "node:assert";
+import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { test } from "node:test";
+
+import { seedRepo } from "../../../../../tests/docs/docs-numbering-doctor/_doctor.fixture.mjs";
+import { buildHandoff } from "../_build.js";
+import { autoRenumber, renumberLines } from "../_renumber.js";
+import { listExistingAdrs } from "../../adr/_files.js";
+import { updateAdrIndex } from "../../adr/_adr-index.js";
+
+/**
+ * A clean project with one ADR and an index that matches it.
+ *
+ * The index matters: a family with documents and no index is stale by design,
+ * so a project is only clean once its index exists and is current.
+ */
+function cleanProject() {
+  const root = mkdtempSync(join(tmpdir(), "rule-mcp-renumber-clean-"));
+  const adrDir = join(root, "docs", "adr");
+
+  mkdirSync(adrDir, { recursive: true });
+  writeFileSync(join(adrDir, "001-one.md"), "# 001: One\n\n- **Date**: 2026-09-04\n- **Status**: accepted\n- **Tags**: fixture\n- **Author**: T\n");
+  updateAdrIndex(adrDir, listExistingAdrs(adrDir));
+
+  return root;
+}
+
+test("autoRenumber leaves a clean project alone", () => {
+  const root = cleanProject();
+
+  try {
+    const result = autoRenumber(root);
+
+    assert.equal(result.needed, false);
+    assert.equal(result.applied, null);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("autoRenumber plans without applying", () => {
+  const root = seedRepo();
+
+  try {
+    const result = autoRenumber(root, { apply: false });
+
+    assert.equal(result.needed, true);
+    assert.equal(result.applied, null);
+    assert.ok(existsSync(join(root, "docs/adr/069-personas.md")), "a dry run leaves the file in place");
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("autoRenumber applies the plan", () => {
+  const root = seedRepo();
+
+  try {
+    const result = autoRenumber(root, { apply: true });
+
+    assert.ok(result.applied.renamed > 0);
+    assert.equal(existsSync(join(root, "docs/adr/069-personas.md")), false, "the later collision moved");
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("a close-session handoff renumbers before it writes the ADR log", () => {
+  const root = seedRepo();
+
+  try {
+    const closed = buildHandoff({ projectDir: root, mode: "close-session", maxTokens: 0, format: "full" });
+
+    assert.match(closed.text, /### Renumber/);
+    assert.match(closed.text, /Renumbered \d+ document/);
+    assert.equal(existsSync(join(root, "docs/adr/069-personas.md")), false, "the repair ran");
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("a plain handoff renumbers too, because it archives too", () => {
+  const root = seedRepo();
+
+  try {
+    const plain = buildHandoff({ projectDir: root, mode: "handoff", maxTokens: 0, format: "full" });
+
+    assert.match(plain.text, /Renumbered \d+ document/);
+    assert.equal(existsSync(join(root, "docs/adr/069-personas.md")), false, "the repair ran");
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("closeout false leaves the numbering alone", () => {
+  const root = seedRepo();
+
+  try {
+    const readOnly = buildHandoff({ projectDir: root, mode: "close-session", closeout: false, maxTokens: 0, format: "full" });
+
+    assert.doesNotMatch(readOnly.text, /Renumbered/, "nothing was renumbered");
+    assert.ok(existsSync(join(root, "docs/adr/069-personas.md")), "the collision is still there for the doctor to report");
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("renumberLines renders the applied and pending forms", () => {
+  const applied = renumberLines({ needed: true, plan: { renames: [] }, applied: { renamed: 1, referencesUpdated: 2, indexRegenerated: true } }, { isMinimal: false });
+
+  assert.match(applied.join("\n"), /Renumbered 1 document/);
+
+  const pending = renumberLines({ needed: true, plan: { renames: [1, 2] }, applied: null }, { isMinimal: false });
+
+  assert.match(pending.join("\n"), /2 collision/);
+});

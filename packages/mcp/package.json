@@ -1,0 +1,50 @@
+{
+  "name": "rule-mcp",
+  "version": "0.1.0",
+  "description": "RuleMCP - MCP server for the rule-mcp-* skill ecosystem. Serves styleguides, component templates, framework best practices, and design system patterns.",
+  "type": "module",
+  "license": "MIT",
+  "author": "pixu1980",
+  "homepage": "https://github.com/pixu1980/rule",
+  "repository": "github:pixu1980/rule",
+  "bugs": {
+    "url": "https://github.com/pixu1980/rule/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "**/*.js",
+    "!**/__tests__/"
+  ],
+  "keywords": [
+    "mcp",
+    "styleguide",
+    "design-system",
+    "frontend",
+    "react",
+    "vue",
+    "svelte",
+    "angular",
+    "solidjs",
+    "astro",
+    "rule-mcp",
+    "desktop",
+    "electron",
+    "library",
+    "web"
+  ],
+  "dependencies": {
+    "@clack/prompts": "1.8.1",
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "@opentui/core": "0.6.8",
+    "commander": "15.0.0",
+    "nyx-gateway": "workspace:*",
+    "rule-mcp-shared": "workspace:*",
+    "zod": "4.6.7"
+  }
+}

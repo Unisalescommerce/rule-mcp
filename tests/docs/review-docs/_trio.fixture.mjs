@@ -13,7 +13,7 @@ import { join } from "node:path";
 process.env.RULE_MCP_NO_CACHE = "1";
 process.env.RULE_MCP_NO_AUTOUPDATE = "1";
 
-export const { readFindings, syncRoleDocs, validateTrio } = await import("../../../src/core/review/docs/index.js");
+export const { readFindings, syncRoleDocs, validateTrio } = await import("../../../packages/mcp/core/review/docs/index.js");
 
 /** A project of its own for each case: these tests write files. */
 export function project() {

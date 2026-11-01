@@ -23,8 +23,8 @@
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
-import { cacheEntries, cacheGet, cacheSet } from "../../src/core/cache/tool-cache/index.js";
-import { dependenciesHold, skillDigest } from "../../src/core/cache/tool-cache/_digests.js";
+import { cacheEntries, cacheGet, cacheSet } from "../../packages/mcp/core/cache/tool-cache/index.js";
+import { dependenciesHold, skillDigest } from "../../packages/mcp/core/cache/tool-cache/_digests.js";
 
 const ROOT = fileURLToPath(new URL("../..", import.meta.url));
 const ENTRY = fileURLToPath(new URL("../../bin/rule-mcp.js", import.meta.url));

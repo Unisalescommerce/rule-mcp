@@ -27,9 +27,9 @@ const mark = async (name, work) => {
 
 phases.baseline = { ms: 0, rssMb: rss() };
 
-await mark("importEntry", () => import(`${ROOT}src/index.js`));
-const { loadAllSkills } = await import(`${ROOT}src/core/skills/index.js`);
-const { listTools } = await import(`${ROOT}src/tools/router/index.js`);
+await mark("importEntry", () => import(`${ROOT}packages/mcp/index.js`));
+const { loadAllSkills } = await import(`${ROOT}packages/mcp/core/skills/index.js`);
+const { listTools } = await import(`${ROOT}packages/mcp/tools/router/index.js`);
 
 const skills = await mark("loadAllSkills", () => loadAllSkills(true));
 const first = await mark("listTools", () => listTools());

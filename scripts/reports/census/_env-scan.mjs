@@ -6,7 +6,7 @@
  *
  * The alternative was a second hand-kept list beside the hand-written table in
  * `docs/05-env-variables.md`, which is two copies of one fact and the copy
- * without a generator behind it goes stale first. Scanning `src/` and `bin/`
+ * without a generator behind it goes stale first. Scanning `packages/mcp/` and `bin/`
  * makes the generated half derived, and a variable the code reads but the table
  * never documents shows up as a count that disagrees.
  */
@@ -17,7 +17,7 @@ import { join, relative } from "node:path";
 import { ROOT } from "./_registries.mjs";
 
 /** The directories that ship. Scripts set variables rather than read them. */
-const SOURCE_DIRS = ["src", "bin"];
+const SOURCE_DIRS = ["packages/mcp", "packages/shared", "bin"];
 
 /**
  * Tests are co-located with the module they cover (ADR 070), so the shipped

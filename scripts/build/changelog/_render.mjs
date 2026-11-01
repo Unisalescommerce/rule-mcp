@@ -1,7 +1,7 @@
 /** @module scripts/build/changelog/render - one commit to one entry, one release to one block */
 
-import { stripFingerprint } from "../../../src/core/text/index.js";
-import { parseCommitMessage } from "../../../src/core/commit/_rule.js";
+import { stripFingerprint } from "../../../packages/mcp/core/text/index.js";
+import { parseCommitMessage } from "../../../packages/mcp/core/commit/_rule.js";
 import { SECTION_FOR_TYPE, SECTION_ORDER } from "./_sections.mjs";
 
 export function toEntry(commit) {

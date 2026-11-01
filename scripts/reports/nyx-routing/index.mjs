@@ -25,8 +25,8 @@ process.env.RULE_MCP_NO_CACHE = "1";
 
 const asJson = process.argv.includes("--json");
 const LIMIT = 6;
-const { loadAllSkills } = await import("../../../src/core/skills/index.js");
-const { callTool } = await import("../../../src/tools/router/index.js");
+const { loadAllSkills } = await import("../../../packages/mcp/core/skills/index.js");
+const { callTool } = await import("../../../packages/mcp/tools/router/index.js");
 const { CORPUS } = await import("../../../tests/fixtures/routing-corpus.mjs");
 
 await loadAllSkills(true);

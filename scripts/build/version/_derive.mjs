@@ -11,12 +11,12 @@
  *   `!` or BREAKING CHANGE  -> MAJOR
  *   anything else           -> no bump
  *
- * The commits come from git; the rule comes from `src/core/commit`, the same
+ * The commits come from git; the rule comes from `packages/mcp/core/commit`, the same
  * one the hooks and CI enforce, so a subject the gate accepted is bumpable and
  * one it rejected is not.
  */
 
-import { parseCommitMessage } from "../../../src/core/commit/_rule.js";
+import { parseCommitMessage } from "../../../packages/mcp/core/commit/_rule.js";
 import { readHistory } from "../changelog/_history.mjs";
 
 /** The severity order of a bump. */

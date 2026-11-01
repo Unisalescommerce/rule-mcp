@@ -23,7 +23,7 @@ import { join } from "node:path";
 
 import { isInsideGitDir } from "./_containment.mjs";
 import { shim } from "./_shim.mjs";
-import { applyLandHooks } from "../../../src/core/git-hooks/_land-hooks.js";
+import { applyLandHooks } from "../../../packages/mcp/core/git-hooks/_land-hooks.js";
 
 const check = process.argv.includes("--check");
 

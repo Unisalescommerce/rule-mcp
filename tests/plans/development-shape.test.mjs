@@ -13,7 +13,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
 
-import { scanDevelopmentPlanShape } from "../../src/core/plans/index.js";
+import { scanDevelopmentPlanShape } from "../../packages/mcp/core/plans/index.js";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 

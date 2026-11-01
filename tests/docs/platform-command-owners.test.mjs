@@ -1,8 +1,8 @@
 /**
  * SEC-7: one owner per platform command.
  *
- * The daemon shell-out surface lived twice - src/cli/daemon/ and
- * src/cli/commands/daemon/ - so every launchctl/systemctl/sc line was
+ * The daemon shell-out surface lived twice - packages/mcp/cli/daemon/ and
+ * packages/mcp/cli/commands/daemon/ - so every launchctl/systemctl/sc line was
  * maintained in two files, and a fix in one left the other broken. A command
  * now has exactly one owner, and it is a daemon module: the command layer asks
  * for a verb, it never spells the command.
@@ -46,6 +46,6 @@ for (const tool of ["launchctl", "systemctl", "sc"]) {
     // A log line or a user instruction that names the tool is not an ownership
     // claim, so only the call forms above count.
     assert.equal(owners.length, 1, `${tool} must have exactly one owner, found:\n${owners.join("\n")}`);
-    assert.ok(owners[0].startsWith("src/cli/daemon/"), `${tool} must be owned by a daemon module, owner is ${owners[0]}`);
+    assert.ok(owners[0].startsWith("packages/mcp/cli/daemon/"), `${tool} must be owned by a daemon module, owner is ${owners[0]}`);
   });
 }

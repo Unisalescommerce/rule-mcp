@@ -5,7 +5,7 @@
  *
  * The commit gates' entry point (OSS-19).
  *
- * The rule itself lives in `src/core/commit` and this file only parses argv, so
+ * The rule itself lives in `packages/mcp/core/commit` and this file only parses argv, so
  * the type list, the subject pattern and the system-message exemption have one
  * definition shared by the `commit-msg` hook, the `pre-push` hook, the CLI and
  * the CI lint:
@@ -19,9 +19,9 @@
 
 import { readFileSync } from "node:fs";
 
-import { commitLintCommand } from "../../../src/cli/commands/_commit.js";
+import { commitLintCommand } from "../../../packages/mcp/cli/commands/_commit.js";
 
-export { COMMIT_TYPES, SYSTEM_MESSAGE_PREFIXES, isSystemSubject } from "../../../src/core/commit/index.js";
+export { COMMIT_TYPES, SYSTEM_MESSAGE_PREFIXES, isSystemSubject } from "../../../packages/mcp/core/commit/index.js";
 
 const USAGE = "usage: commit-types/index.mjs --lint-range <base> <head> | --msg-file <path> | --stdin-push\n";
 

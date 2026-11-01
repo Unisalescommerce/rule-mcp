@@ -26,7 +26,7 @@ const result = spawnSync(
     "--reporter",
     "text-summary",
     "--include",
-    "src/**",
+    "packages/mcp/**",
     "--include",
     "bin/**",
     "--exclude",

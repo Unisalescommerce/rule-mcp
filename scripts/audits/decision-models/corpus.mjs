@@ -69,7 +69,7 @@ if (!asJson) {
 let on;
 
 if (wantedOn) {
-  const { createDecisionClient, createSupervisor } = await import("../../../src/core/decision/index.js");
+  const { createDecisionClient, createSupervisor } = await import("../../../packages/mcp/core/decision/index.js");
   const client = createDecisionClient({
     baseUrl: process.env.RULE_MCP_DECISION_URL,
     timeoutMs: Number(process.env.RULE_MCP_DECISION_TIMEOUT ?? 300_000),

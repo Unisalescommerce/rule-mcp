@@ -5,7 +5,7 @@
  * into something a table can hold.
  *
  * Loading happens here so the sections import data rather than reaching into
- * `src/` themselves, and so the telemetry and auto-update opt-outs are set
+ * `packages/mcp/` themselves, and so the telemetry and auto-update opt-outs are set
  * before the first module reads them.
  */
 
@@ -20,21 +20,21 @@ export const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..", ".
 /** Where the census writes. Overridden so a test can render into a copy of the tree. */
 export const DOCS = process.env.RULE_MCP_CENSUS_DOCS_DIR || join(ROOT, "docs");
 
-export const { loadAllSkills, getSkillMetadata } = await import("../../../src/core/skills/index.js");
-export const { bootstrapCoreTools } = await import("../../../src/tools/_bootstrap.js");
-export const { listTools } = await import("../../../src/tools/router/index.js");
-export const { listResources } = await import("../../../src/resources/index.js");
-export const { listPrompts } = await import("../../../src/prompts/index.js");
-export const { allRoles, activeRoles, parsePersonaCommand, personaCommandName } = await import("../../../src/core/review/roles/index.js");
-export const { commandNames, commandDefinition, listAgentCommands, ROUTER_COMMAND } = await import("../../../src/core/agents/commands/index.js");
-export const { listAreaPrompts } = await import("../../../src/prompts/_areas.js");
-export const { allAgents, remoteModeAgents } = await import("../../../src/cli/installers/_catalog.js");
-export const { COMMAND_TARGETS, AGENTS_WITHOUT_COMMAND_SURFACE } = await import("../../../src/core/agents/command-targets/index.js");
-export const { HOOK_EVENTS, hookEntries } = await import("../../../src/core/agents/index.js");
-export const { listExistingAdrs } = await import("../../../src/tools/adr/index.js");
-export const { buildProgram } = await import("../../../src/cli/index.js");
+export const { loadAllSkills, getSkillMetadata } = await import("../../../packages/mcp/core/skills/index.js");
+export const { bootstrapCoreTools } = await import("../../../packages/mcp/tools/_bootstrap.js");
+export const { listTools } = await import("../../../packages/mcp/tools/router/index.js");
+export const { listResources } = await import("../../../packages/mcp/resources/index.js");
+export const { listPrompts } = await import("../../../packages/mcp/prompts/index.js");
+export const { allRoles, activeRoles, parsePersonaCommand, personaCommandName } = await import("../../../packages/mcp/core/review/roles/index.js");
+export const { commandNames, commandDefinition, listAgentCommands, ROUTER_COMMAND } = await import("../../../packages/mcp/core/agents/commands/index.js");
+export const { listAreaPrompts } = await import("../../../packages/mcp/prompts/_areas.js");
+export const { allAgents, remoteModeAgents } = await import("../../../packages/mcp/cli/installers/_catalog.js");
+export const { COMMAND_TARGETS, AGENTS_WITHOUT_COMMAND_SURFACE } = await import("../../../packages/mcp/core/agents/command-targets/index.js");
+export const { HOOK_EVENTS, hookEntries } = await import("../../../packages/mcp/core/agents/index.js");
+export const { listExistingAdrs } = await import("../../../packages/mcp/tools/adr/index.js");
+export const { buildProgram } = await import("../../../packages/mcp/cli/index.js");
 
-const guardrails = await import("../../../src/core/guardrails/index.js");
+const guardrails = await import("../../../packages/mcp/core/guardrails/index.js");
 
 /**
  * The role a persona name addresses, or nothing when the name is not one.

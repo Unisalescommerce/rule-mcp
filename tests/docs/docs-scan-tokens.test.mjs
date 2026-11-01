@@ -14,7 +14,7 @@ import { join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 
-// The scanner loads server code, which resolves `@src/*` through a hook
+// The scanner loads server code, which resolves `@mcp/*` through a hook
 // (ADR 089); a spawned process registers it as every entry point does.
 const ALIAS_HOOK = fileURLToPath(new URL("../../scripts/alias-hook.mjs", import.meta.url));
 

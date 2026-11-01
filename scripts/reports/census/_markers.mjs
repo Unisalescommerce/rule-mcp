@@ -68,7 +68,7 @@ function envRegistry() {
     "",
     "## Where each variable is read",
     "",
-    "Generated from `src/` and `bin/`: the modules that name the variable, so a",
+    "Generated from `packages/mcp/` and `bin/`: the modules that name the variable, so a",
     "knob documented above can be traced to the code that answers it.",
     "",
     ...table(
@@ -83,7 +83,7 @@ function envRegistry() {
     // reads is a behavior the reader will look for and not find.
     undocumented.length > 0 ? `Read but undocumented: ${names(undocumented)}.` : "Nothing the code reads is undocumented.",
     "",
-    unread.length > 0 ? `Documented but read nowhere in \`src/\` or \`bin/\`: ${names(unread)}.` : "Nothing documented goes unread.",
+    unread.length > 0 ? `Documented but read nowhere in \`packages/mcp/\` or \`bin/\`: ${names(unread)}.` : "Nothing documented goes unread.",
     "",
     "Regenerate with `pnpm census`.",
     "",

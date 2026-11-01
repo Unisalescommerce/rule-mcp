@@ -18,11 +18,11 @@
 import { strict as assert } from "node:assert";
 import test from "node:test";
 
-import { allAgents } from "../../src/cli/installers/index.js";
-import { AGENTS_WITHOUT_COMMAND_SURFACE } from "../../src/core/agents/command-targets/index.js";
-import { COMMAND_TARGETS } from "../../src/core/agents/command-targets/index.js";
-import { HOOK_HOSTS, hookSupport } from "../../src/cli/install/_hook-hosts.js";
-import { catalogHosts, hostRecord } from "../../src/cli/installers/hosts/index.js";
+import { allAgents } from "../../packages/mcp/cli/installers/index.js";
+import { AGENTS_WITHOUT_COMMAND_SURFACE } from "../../packages/mcp/core/agents/command-targets/index.js";
+import { COMMAND_TARGETS } from "../../packages/mcp/core/agents/command-targets/index.js";
+import { HOOK_HOSTS, hookSupport } from "../../packages/mcp/cli/install/_hook-hosts.js";
+import { catalogHosts, hostRecord } from "../../packages/mcp/cli/installers/hosts/index.js";
 
 const commandAgents = new Set(COMMAND_TARGETS.map((target) => target.agent));
 const gapAgents = new Set(Object.keys(AGENTS_WITHOUT_COMMAND_SURFACE));

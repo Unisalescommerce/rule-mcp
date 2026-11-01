@@ -31,7 +31,7 @@ A published package was built and removed. It worked, and it cost a package to v
 
 The trade is that the helper list is a contract: adding to it is adding to what every skill on the machine is written against, so it is a decision rather than an import. A rule is also no longer runnable outside the engine without being handed a bag, which is the same statement said twice.
 
-`@src/*` resolves to `./src/` through `module.registerHooks`, registered by every entry point that loads server code. That alias is for this server's own tree only: a file using it is not runnable by a bare `node`, which is exactly why it never appears in a skill's guardrails.
+`@mcp/*` resolves to `./src/` through `module.registerHooks`, registered by every entry point that loads server code. That alias is for this server's own tree only: a file using it is not runnable by a bare `node`, which is exactly why it never appears in a skill's guardrails.
 
 ## Consequences
 

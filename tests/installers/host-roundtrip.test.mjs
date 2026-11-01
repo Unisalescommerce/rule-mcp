@@ -40,9 +40,9 @@ const BACKUP = /\.bak$/u;
 // The child imports by absolute path: it runs with `cwd: ROOT`, and a relative
 // specifier there is indistinguishable from a stale one to the import test.
 const CHILD = (root) => `
-import { allAgents } from ${JSON.stringify(join(root, "src/cli/installers/index.js"))};
-import { installAgent, uninstallAgent } from ${JSON.stringify(join(root, "src/cli/install/index.js"))};
-import { hostRecord } from ${JSON.stringify(join(root, "src/cli/installers/hosts/index.js"))};
+import { allAgents } from ${JSON.stringify(join(root, "packages/mcp/cli/installers/index.js"))};
+import { installAgent, uninstallAgent } from ${JSON.stringify(join(root, "packages/mcp/cli/install/index.js"))};
+import { hostRecord } from ${JSON.stringify(join(root, "packages/mcp/cli/installers/hosts/index.js"))};
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 

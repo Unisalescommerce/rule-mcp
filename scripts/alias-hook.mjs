@@ -1,9 +1,9 @@
 /**
- * Resolve `@src/*` to this package's `src/`.
+ * Resolve `@mcp/*` to this workspace's `packages/mcp/`.
  *
  * The server is one package with a deep tree, and a module five levels down
  * reaching a sibling subsystem through `../../../..` says nothing about where
- * it is going. `@src/core/text/index.js` does.
+ * it is going. `@mcp/core/text/index.js` does.
  *
  * A skill's guardrails never use this alias, and import nothing at all: the
  * helpers they need arrive in the context the check is called with (ADR 089),
@@ -25,8 +25,8 @@
 
 import { registerHooks } from "node:module";
 
-const SRC = new URL("../src/", import.meta.url).href;
-const PREFIX = "@src/";
+const SRC = new URL("../packages/mcp/", import.meta.url).href;
+const PREFIX = "@mcp/";
 
 registerHooks({
   resolve(specifier, context, nextResolve) {

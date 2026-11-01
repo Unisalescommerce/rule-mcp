@@ -29,7 +29,7 @@ function walk(dir, files = []) {
 
 console.log("repository contract test");
 
-// Only check src/, test/, prompts/, scripts/ - the project's own code.
+// Only check packages/mcp/, test/, prompts/, scripts/ - the project's own code.
 // `forbidden` is the token that must not appear in file names/contents.
 // When it is empty there is nothing to scan for - `"".includes("")` is always
 // true, which would flag every file - so skip the substring sweep entirely.
@@ -121,7 +121,7 @@ for (const tool of ["rule_tool_ai", "rule_adr", "rule_handoff"]) {
     return !data.includes(0) && obsoletePattern.test(data.toString("utf8"));
   });
 
-  assert.deepEqual(matches, [], `src/ must not reference obsolete ${tool}`);
+  assert.deepEqual(matches, [], `packages/mcp/ must not reference obsolete ${tool}`);
 }
 
 const skillsInstaller = join(root, "scripts", "install-skills.sh");

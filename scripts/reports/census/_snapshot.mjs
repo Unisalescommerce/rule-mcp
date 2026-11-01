@@ -4,7 +4,7 @@
  * The checked-in snapshot the census test reads, and the shape it holds.
  *
  * The generator reaches 551 source files, so a test that imported it to compare
- * bytes loaded the whole application - and every leaf edit in `src/` was in a
+ * bytes loaded the whole application - and every leaf edit in `packages/mcp/` was in a
  * documentation test's dependency chain. The snapshot is what the test reads
  * instead: the files the census owns and the digest of what it wrote into each.
  * Freshness against the live code stays `--check`'s job, and CI runs it.

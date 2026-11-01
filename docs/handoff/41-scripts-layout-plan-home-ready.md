@@ -25,7 +25,7 @@ This session planned **scripts-layout** (full monorepo) and fixed where durable 
 | Root | `rule-mcp-workspace` (`private: true`) |
 | Packages | `rule-mcp`, `rule-mcp-shared`, `rule-mcp-docs` |
 | Shared IN | `src/shared` + `src/utils` → `packages/shared` (+ `utils/`), no shim |
-| Alias | `@src/*` → `@mcp/*`; hook → `packages/mcp/` |
+| Alias | `@mcp/*` → `@mcp/*`; hook → `packages/mcp/` |
 | [removed] | workspace `../[removed]`; specifier `[removed]-gateway/mcp`; CI stub + `RULE_MCP_NO_[removed]=1` if sibling missing |
 | Relocate | `tests/` → `scripts/__tests__/`; `case-studies/` → `docs/case-studies/` |
 | Publish | `pnpm pack --filter rule-mcp` from `packages/mcp` |

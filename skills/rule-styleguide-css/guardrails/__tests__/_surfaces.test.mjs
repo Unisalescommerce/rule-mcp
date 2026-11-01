@@ -44,7 +44,7 @@ test("the clause is one sentence, kept in one place", () => {
 });
 
 test("compression cannot invert the rule on its way out", async () => {
-  const { compressResult } = await import("@src/core/text/_compression.js");
+  const { compressResult } = await import("@mcp/core/text/_compression.js");
   const compressed = compressResult({ content: [{ type: "text", text: `- ${FLEX_FIRST}` }] })
     .content.map((part) => part.text)
     .join("\n");
@@ -55,7 +55,7 @@ test("compression cannot invert the rule on its way out", async () => {
 });
 
 test("the reminder carries it when CSS is on the table, and not otherwise", async () => {
-  const { decorateWorkflowReminder } = await import("@src/core/enforcement/index.js");
+  const { decorateWorkflowReminder } = await import("@mcp/core/enforcement/index.js");
   // The reminder is on a cadence (hardening 4.2), so the second call would carry
   // nothing at all and prove nothing about the layout rule. Re-anchor on every
   // call here: what is under test is which reminder carries FLEX_FIRST.
@@ -79,8 +79,8 @@ test("the reminder carries it when CSS is on the table, and not otherwise", asyn
 });
 
 test("a CSS route carries it, a backend route does not", async () => {
-  const { loadAllSkills } = await import("@src/core/skills/index.js");
-  const { callTool } = await import("@src/tools/router/index.js");
+  const { loadAllSkills } = await import("@mcp/core/skills/index.js");
+  const { callTool } = await import("@mcp/tools/router/index.js");
   await loadAllSkills();
 
   const styling = await callTool("rule_tool", { prompt: "style a card component with CSS" });

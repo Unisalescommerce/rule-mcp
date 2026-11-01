@@ -13,7 +13,7 @@ import { strict as assert } from "node:assert";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 
-import { allAgents } from "../../src/cli/installers/index.js";
+import { allAgents } from "../../packages/mcp/cli/installers/index.js";
 import {
   EVIDENCE_STATUSES,
   HOST_ALIASES,
@@ -22,7 +22,7 @@ import {
   hostsWithoutInstaller,
   resolvedConflicts,
   unbackedClaims,
-} from "../../src/cli/installers/hosts/_evidence.data.js";
+} from "../../packages/mcp/cli/installers/hosts/_evidence.data.js";
 
 const KINDS = new Set(["cli", "ide", "hybrid", "cloud"]);
 const ids = HOST_EVIDENCE.map((row) => row.id);
@@ -87,7 +87,7 @@ test("the contradictions were resolved, not only recorded", () => {
 
 test("the Roo Code row rests on a live page, and the tree no longer says otherwise", () => {
   const roo = evidenceOf("roo");
-  const hooks = readFileSync(new URL("../../src/cli/install/_hook-hosts.js", import.meta.url), "utf8");
+  const hooks = readFileSync(new URL("../../packages/mcp/cli/install/_hook-hosts.js", import.meta.url), "utf8");
 
   assert.equal(roo.status, "confirmed", "the documentation documents the command files");
   assert.ok(

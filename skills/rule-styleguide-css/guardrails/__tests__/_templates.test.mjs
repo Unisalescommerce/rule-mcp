@@ -6,8 +6,8 @@ import "node:path";
 
 // ── What the server generates ─────────────────────────────────────
 test("generated components pass their own rule", async () => {
-  const { loadAllSkills } = await import("@src/core/skills/index.js");
-  const { callTool } = await import("@src/tools/router/index.js");
+  const { loadAllSkills } = await import("@mcp/core/skills/index.js");
+  const { callTool } = await import("@mcp/tools/router/index.js");
   await loadAllSkills();
 
   for (const component of ["button", "card", "modal", "list", "nav", "form", "table"]) {

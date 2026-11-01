@@ -3,7 +3,7 @@ import { strict as assert } from "node:assert";
 import test from "node:test";
 
 import { cssNoEllipsis } from "../_no-ellipsis.js";
-import { GUARDRAIL_HELPERS } from "@src/core/guardrails/_helpers.js";
+import { GUARDRAIL_HELPERS } from "@mcp/core/guardrails/_helpers.js";
 
 const check = (code, context = {}) => cssNoEllipsis.check(code, { helpers: GUARDRAIL_HELPERS, ...context });
 

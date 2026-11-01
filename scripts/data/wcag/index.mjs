@@ -2,7 +2,7 @@
 /**
  * @module scripts/update-wcag-data
  *
- * Regenerates `src/core/wcag-data/index.js` from the W3C's published WCAG JSON.
+ * Regenerates `packages/mcp/core/wcag-data/index.js` from the W3C's published WCAG JSON.
  *
  * The criteria are vendored rather than fetched at runtime for the same reason
  * every other rule-mcp output is deterministic: a tool that reaches the network
@@ -28,7 +28,7 @@ import { flatten } from "./_flatten.mjs";
 import { render } from "./_render.mjs";
 
 const SOURCE = "https://www.w3.org/WAI/WCAG22/wcag.json";
-const TARGET = fileURLToPath(new URL("../../../src/core/wcag-data/_criteria.data.js", import.meta.url));
+const TARGET = fileURLToPath(new URL("../../../packages/mcp/core/wcag-data/_criteria.data.js", import.meta.url));
 const apply = process.argv.includes("--apply");
 
 const response = await fetch(SOURCE);

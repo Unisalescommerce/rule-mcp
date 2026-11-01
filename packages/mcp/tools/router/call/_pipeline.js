@@ -1,0 +1,121 @@
+/** Tool invocation: hooks, cache read-through, banner, telemetry. */
+import { _tools } from "../_hooks.js";
+import { withBanner } from "../_helpers.js";
+import { computeCore } from "../_compute.js";
+import { hostBanner, hostBeforeCall } from "./_host.js";
+import { enforcementError } from "@mcp/core/enforcement/index.js";
+import { resumeAnnouncement } from "@mcp/core/session/resume/index.js";
+import { touchActivity } from "@mcp/core/session/_activity.js";
+import { z } from "zod/v4";
+import { recordCrashed } from "./_telemetry.js";
+import { replayIfCached, replayIfDecisionCached, replayIfSemanticCached, storeAndFinalize } from "./_stages.js";
+import { observeDecisionShadow, replayEnabled } from "@mcp/core/cache/tool-cache/index.js";
+
+/**
+ * Run one tool call end to end: activity, self-update, resume banner, cache
+ * replay or fresh compute, telemetry, and the closed-fail envelope.
+ *
+ * @param {string} name
+ * @param {object} args
+ * @returns {Promise<{ isError?: boolean, content: Array<{ type: string, text: string }> }>}
+ */
+export async function callTool(name, args) {
+  // A call is the only evidence that anyone still wants this process's heap.
+  try {
+    touchActivity();
+  } catch {
+    /* fail-open */
+  }
+
+  // Self-update: throttled fire-and-forget, kicked before the cache lookup, NOT
+  // awaited; the banner is consumed below and prepended to the result. The host
+  // owns both halves - this module never imports the updater.
+  if (name !== "rule_tool_update") {
+    try {
+      hostBeforeCall(name);
+    } catch {
+      /* fail-open */
+    }
+  }
+
+  // A resume prompt carries no hook, so the prompt is the signal; the notice is
+  // applied here, beside the banner, never inside a cached core.
+  let notice = "";
+  try {
+    notice = resumeAnnouncement({ prompt: args?.prompt, cwd: process.cwd() });
+  } catch {
+    /* fail-open */
+  }
+
+  const banner = [hostBanner(), notice].filter(Boolean).join("\n\n");
+  const tool = _tools.find((entry) => entry.name === name);
+
+  if (!tool) {
+    return withBanner(banner, { isError: true, content: [{ type: "text", text: `Unknown tool: ${name}` }] });
+  }
+
+  let stage = "validation";
+  const startedAt = Date.now();
+
+  try {
+    const validated = tool.zodSchema ? tool.zodSchema.parse(args) : args;
+
+    // Deterministic recycle: the server never calls a model, so an identical
+    // call produces the same output - replay it instead of recomputing. The
+    // tier that answered is reported, because a cache nobody can explain is a
+    // cache nobody debugs.
+    stage = "cache";
+    const replayed = replayIfCached(name, validated, startedAt);
+
+    if (replayed) {
+      return withBanner(banner, replayed);
+    }
+
+    // L2 runs only after L1 missed: it costs an embedding, and it falls
+    // through to compute when Nyx is absent, disabled or uncertain.
+    const similar = await replayIfSemanticCached(name, validated, startedAt);
+
+    if (similar) {
+      return withBanner(banner, similar);
+    }
+
+    // L3 is opt-in. When it is on it must run before compute, because a hit has
+    // to skip the work; a miss has already paid the model call, so it does not
+    // also run the shadow observer.
+    let decisionTried = false;
+
+    if (replayEnabled()) {
+      decisionTried = true;
+      const decided = await replayIfDecisionCached(name, validated, startedAt);
+
+      if (decided) {
+        return withBanner(banner, decided);
+      }
+    }
+
+    stage = "preprocessing";
+    const computeStartedAt = Date.now();
+    const { arguments: processedArguments, core } = await computeCore(name, tool, validated);
+    const computeMs = Date.now() - computeStartedAt;
+
+    stage = "finalize";
+
+    // Phase 1: record what the L3 gate would replay. The response is already
+    // computed, so the observation is fire-and-forget and can never replay it.
+    if (!decisionTried) {
+      void observeDecisionShadow(name, validated, { core, computeMs });
+    }
+
+    return withBanner(banner, storeAndFinalize(name, processedArguments, core, startedAt));
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      const issues = error.issues.map((index) => `- ${index.path.join(".")}: ${index.message}`).join("\n");
+
+      return withBanner(banner, { isError: true, content: [{ type: "text", text: `Invalid arguments:\n${issues}` }] });
+    }
+
+    recordCrashed({ tool: name, args, startedAt });
+
+    return withBanner(banner, enforcementError(name, stage, error));
+  }
+}

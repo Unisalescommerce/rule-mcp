@@ -2,8 +2,8 @@
 import { strict as assert } from "node:assert";
 import { test } from "node:test";
 
-import { renderRenumberPlan } from "../../../src/core/docs-numbering/index.js";
-import { planRenumber } from "../../../src/core/docs-numbering/index.js";
+import { renderRenumberPlan } from "../../../packages/mcp/core/docs-numbering/index.js";
+import { planRenumber } from "../../../packages/mcp/core/docs-numbering/index.js";
 import { seedRepo, git } from "./_doctor.fixture.mjs";
 import { rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";

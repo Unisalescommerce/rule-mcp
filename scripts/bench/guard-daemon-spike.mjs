@@ -59,7 +59,7 @@ const daemon = spawn(process.execPath, ["--import", ALIAS, ENTRY, "guard", "--da
 await new Promise((resolve) => setTimeout(resolve, 400));
 
 const thinSend = `
-import { sendGuardRequest } from ${JSON.stringify(`${ROOT}/src/cli/guard/_send.js`)};
+import { sendGuardRequest } from ${JSON.stringify(`${ROOT}/packages/mcp/cli/guard/_send.js`)};
 const answer = await sendGuardRequest({
   action: "prompt-submit",
   payload: ${payload},

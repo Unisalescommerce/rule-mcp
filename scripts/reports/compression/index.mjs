@@ -16,7 +16,7 @@
  *   node scripts/reports/compression/index.mjs           # report
  *   node scripts/reports/compression/index.mjs --json    # machine-readable
  *
- * @see src/core/text/__tests__/_efficacy.test.mjs - the CI floors
+ * @see packages/mcp/core/text/__tests__/_efficacy.test.mjs - the CI floors
  * @see skills/rule-process-compression/SKILL.md - the rules this ports
  */
 
@@ -30,9 +30,9 @@ import { corpora } from "./_corpora.mjs";
 
 const ROOT = new URL("../../..", import.meta.url).pathname;
 
-const { compressTextGuarded } = await import(join(ROOT, "src/core/text/_compression.js"));
-const { LEVELS } = await import(join(ROOT, "src/core/text/_level.js"));
-const { guardCompression } = await import(join(ROOT, "src/core/text/compress-guard/index.js"));
+const { compressTextGuarded } = await import(join(ROOT, "packages/mcp/core/text/_compression.js"));
+const { LEVELS } = await import(join(ROOT, "packages/mcp/core/text/_level.js"));
+const { guardCompression } = await import(join(ROOT, "packages/mcp/core/text/compress-guard/index.js"));
 
 /** The char/4 heuristic used everywhere in this project. */
 const tokens = (text) => Math.ceil(text.length / 4);

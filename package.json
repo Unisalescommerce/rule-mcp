@@ -1,5 +1,5 @@
 {
-  "name": "rule-mcp",
+  "name": "rule-mcp-workspace",
   "version": "0.1.0",
   "description": "RuleMCP - MCP server for the rule-mcp-* skill ecosystem. Serves styleguides, component templates, framework best practices, and design system patterns.",
   "type": "module",
@@ -10,10 +10,7 @@
   "bugs": {
     "url": "https://github.com/pixu1980/rule/issues"
   },
-  "private": false,
-  "publishConfig": {
-    "access": "public"
-  },
+  "private": true,
   "bin": {
     "rule-mcp": "./bin/rule-mcp.js"
   },
@@ -40,15 +37,15 @@
     "post-process": "node --import ./scripts/alias-hook.mjs scripts/fix/post-process/index.mjs",
     "post-process:fix": "node --import ./scripts/alias-hook.mjs scripts/fix/post-process/index.mjs --fix --no-dry-run",
     "mcp:uninstall:ps1": "pwsh ./scripts/uninstall.ps1",
-    "skills:install": "echo \"ℹ️ pnpm skills:install: skills are loaded directly from ./skills - no separate install step is needed.\"",
+    "skills:install": "echo \"\u2139\ufe0f pnpm skills:install: skills are loaded directly from ./skills - no separate install step is needed.\"",
     "test": "node --import ./scripts/alias-hook.mjs ./tests/smoke.mjs",
     "test:coverage": "node --import ./scripts/alias-hook.mjs scripts/reports/coverage/index.mjs",
     "test:foundations": "node --import ./scripts/alias-hook.mjs scripts/ci/run-tests/index.mjs foundations",
     "test:installer": "node --import ./scripts/alias-hook.mjs scripts/ci/run-tests/index.mjs installer",
     "test:all": "node --import ./scripts/alias-hook.mjs scripts/ci/run-tests/index.mjs all",
     "test:e2e:docs-site": "playwright test tests/e2e/docs-site",
-    "lint": "eslint bin/ src/ tests/ --max-warnings 50",
-    "lint:fix": "eslint bin/ src/ tests/ --max-warnings 50 --fix",
+    "lint": "eslint bin/ packages/ tests/ --max-warnings 50",
+    "lint:fix": "eslint bin/ packages/ tests/ --max-warnings 50 --fix",
     "format": "prettier --check '**/*.{js,mjs,json,md}' --ignore-path .gitignore",
     "format:fix": "prettier --write '**/*.{js,mjs,json,md}' --ignore-path .gitignore",
     "audit": "pnpm audit --prod",
@@ -76,8 +73,10 @@
   },
   "files": [
     "bin/",
-    "src/",
-    "!src/**/__tests__/",
+    "packages/mcp/",
+    "!packages/mcp/**/__tests__/",
+    "packages/shared/",
+    "!packages/shared/**/__tests__/",
     "skills/",
     "personas/",
     "prompts/",
@@ -104,11 +103,13 @@
     "web"
   ],
   "dependencies": {
-    "@clack/prompts": "1.8.1",
+    "rule-mcp": "workspace:*",
+    "rule-mcp-shared": "workspace:*",
     "@modelcontextprotocol/sdk": "1.32.2",
+    "zod": "4.6.7",
+    "@clack/prompts": "1.8.1",
     "@opentui/core": "0.6.8",
-    "commander": "15.0.0",
-    "zod": "4.6.7"
+    "commander": "15.0.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",

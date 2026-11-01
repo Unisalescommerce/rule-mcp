@@ -4,7 +4,7 @@
  * @module bin/rule
  *
  * CLI entry point for rule-mcp.
- * Delegates to the cli() function in src/index.js.
+ * Delegates to the cli() function in packages/mcp/index.js.
  *
  * Usage: rule-mcp [command] [options]
  *   See `rule-mcp help` for full usage.
@@ -19,7 +19,7 @@
  * turns it off, which is what CI and the test suites use so a run never depends
  * on a cache another run wrote.
  *
- * The `@src/*` resolve hook is registered here for the same reason, and not in
+ * The `@mcp/*` resolve hook is registered here for the same reason, and not in
  * the shebang: a shebang takes one argument on Linux, so `node --import ...`
  * there would be passed as a single unknown flag. Every other entry point that
  * loads server code registers it too - see `scripts/alias-hook.mjs`.
@@ -62,7 +62,7 @@ const argv = process.argv.slice(2);
 
 if (isGuardSend(argv)) {
   try {
-    const { runGuardSend } = await import("../src/cli/guard/_send.js");
+    const { runGuardSend } = await import("../packages/mcp/cli/guard/_send.js");
 
     await runGuardSend(guardSendAction(argv));
   } catch (error) {
@@ -70,7 +70,7 @@ if (isGuardSend(argv)) {
     process.exitCode = 1;
   }
 } else {
-  const { cli } = await import("../src/index.js");
+  const { cli } = await import("../packages/mcp/index.js");
 
   cli();
 }

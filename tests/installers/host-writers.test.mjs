@@ -8,8 +8,8 @@
 import { strict as assert } from "node:assert";
 import test from "node:test";
 
-import { allAgents, installers, uninstallers } from "../../src/cli/installers/index.js";
-import { catalogHosts, hostRecord } from "../../src/cli/installers/hosts/index.js";
+import { allAgents, installers, uninstallers } from "../../packages/mcp/cli/installers/index.js";
+import { catalogHosts, hostRecord } from "../../packages/mcp/cli/installers/hosts/index.js";
 
 test("installers and uninstallers cover exactly the catalog hosts", () => {
   assert.deepEqual([...catalogHosts()].sort(), [...allAgents].sort());

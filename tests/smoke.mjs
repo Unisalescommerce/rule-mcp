@@ -5,7 +5,7 @@
  * Verifies that:
  * - The bin entry point exists
  * - package.json has correct structure
- * - All src files are present and non-empty (using SDK-based layout)
+ * - All packages/mcp files are present and non-empty
  * - SDK and Zod dependencies are importable
  */
 
@@ -31,12 +31,16 @@ assert.ok(existsSync(bin), `bin entry point missing: ${bin}`);
 console.log("  ✅ bin/rule-mcp.js exists");
 
 // 2. Check package.json
-const package_ = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
+const workspace = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
+assert.ok(workspace.name === "rule-mcp-workspace", `Wrong workspace name: ${workspace.name}`);
+assert.ok(workspace.private === true, "workspace must be private");
+assert.ok(workspace.bin["rule-mcp"], "Missing bin entry");
+const package_ = JSON.parse(readFileSync(join(root, "packages/mcp/package.json"), "utf8"));
 assert.ok(package_.name === "rule-mcp", `Wrong package name: ${package_.name}`);
-assert.ok(package_.bin["rule-mcp"], "Missing bin entry");
 assert.ok(package_.dependencies["@modelcontextprotocol/sdk"], "Missing @modelcontextprotocol/sdk dependency");
 assert.ok(package_.dependencies["zod"], "Missing zod dependency");
-console.log("  ✅ package.json valid with SDK + Zod deps");
+assert.ok(package_.dependencies["rule-mcp-shared"], "Missing rule-mcp-shared dependency");
+console.log("  ✅ workspace + packages/mcp package.json valid with SDK + Zod deps");
 
 // 3. Check src files (SDK-based layout - no mcp/ directory)
 const sourceFiles = [
@@ -56,13 +60,13 @@ const sourceFiles = [
   "cli/index.js",
 ];
 for (const f of sourceFiles) {
-  const p = join(root, "src", f);
-  assert.ok(existsSync(p), `Missing src/${f}`);
+  const p = join(root, "packages/mcp", f);
+  assert.ok(existsSync(p), `Missing packages/mcp/${f}`);
   const source = readFileSync(p, "utf8");
-  assert.ok(source.length > 50, `src/${f} too short`);
-  assert.ok(source.includes("/**"), `src/${f} missing JSDoc`);
+  assert.ok(source.length > 50, `packages/mcp/${f} too short`);
+  assert.ok(source.includes("/**"), `packages/mcp/${f} missing JSDoc`);
 }
-console.log("  ✅ All src files present with JSDoc");
+console.log("  ✅ All packages/mcp files present with JSDoc");
 
 // 4. Check SDK is importable
 try {
@@ -84,24 +88,24 @@ try {
 
 // 6. Check server exports
 try {
-  const server = await import("../src/server/index.js");
+  const server = await import("../packages/mcp/server/index.js");
   assert.ok(typeof server.startServer === "function", "startServer not exported");
   assert.ok(typeof server.stopServer === "function", "stopServer not exported");
-  console.log("  ✅ src/server.js exports startServer + stopServer");
+  console.log("  ✅ packages/mcp/server.js exports startServer + stopServer");
 } catch (error) {
-  console.log("  ❌ src/server.js export check failed:", error.message);
+  console.log("  ❌ packages/mcp/server.js export check failed:", error.message);
   failures++;
 }
 
 // 7. Check tool router exports
 try {
-  const router = await import("../src/tools/router/index.js");
+  const router = await import("../packages/mcp/tools/router/index.js");
   assert.ok(typeof router.registerTool === "function", "registerTool not exported");
   assert.ok(typeof router.listTools === "function", "listTools not exported");
   assert.ok(typeof router.callTool === "function", "callTool not exported");
-  console.log("  ✅ src/tools/router/index.js exports registerTool, listTools, callTool");
+  console.log("  ✅ packages/mcp/tools/router/index.js exports registerTool, listTools, callTool");
 } catch (error) {
-  console.log("  ❌ src/tools/router/index.js export check failed:", error.message);
+  console.log("  ❌ packages/mcp/tools/router/index.js export check failed:", error.message);
   failures++;
 }
 

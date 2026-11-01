@@ -25,9 +25,9 @@
 
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { compressText } from "../../../src/core/text/_compression.js";
-import { alignAsciiBoxes, findRaggedBoxes } from "../../../src/core/text/index.js";
-import { findFingerprints, stripFingerprint } from "../../../src/core/text/index.js";
+import { compressText } from "../../../packages/mcp/core/text/_compression.js";
+import { alignAsciiBoxes, findRaggedBoxes } from "../../../packages/mcp/core/text/index.js";
+import { findFingerprints, stripFingerprint } from "../../../packages/mcp/core/text/index.js";
 import { SKIP, TRACKED } from "./_targets.data.mjs";
 
 const arguments_ = process.argv.slice(2);

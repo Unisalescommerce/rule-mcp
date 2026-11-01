@@ -21,7 +21,7 @@
  *   1 - Issues found (lint mode) or errors during fix
  */
 
-import { scanFileTree, autoFixFileTree } from "../../../src/core/file-tree/index.js";
+import { scanFileTree, autoFixFileTree } from "../../../packages/mcp/core/file-tree/index.js";
 import { printHelp } from "./_help.mjs";
 
 // ─── CLI args ────────────────────────────────────────────────────────────────

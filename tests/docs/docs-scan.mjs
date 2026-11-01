@@ -6,10 +6,10 @@
  * Usage: node test/docs-scan.mjs
  */
 
-import { validateTrio } from "../../src/core/review/docs/index.js";
-import { bootstrapCoreTools } from "../../src/tools/_bootstrap.js";
-import { loadAllSkills } from "../../src/core/skills/index.js";
-import { listTools } from "../../src/tools/router/index.js";
+import { validateTrio } from "../../packages/mcp/core/review/docs/index.js";
+import { bootstrapCoreTools } from "../../packages/mcp/tools/_bootstrap.js";
+import { loadAllSkills } from "../../packages/mcp/core/skills/index.js";
+import { listTools } from "../../packages/mcp/tools/router/index.js";
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 

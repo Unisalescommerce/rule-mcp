@@ -1,11 +1,11 @@
 /** The corpus run: gold routes, seeded cache, shadow observations and the summary. */
 import { planCorpus, validateCorpus } from "./_corpus.mjs";
-import { loadAllSkills } from "../../../src/core/skills/index.js";
-import { callTool } from "../../../src/tools/router/index.js";
-import { cacheClear, cacheStore, observeDecisionShadow, waitForDecisionShadows } from "../../../src/core/cache/tool-cache/index.js";
-import { clearShadows, readShadows, summarizeShadows } from "../../../src/core/cache/tool-cache/_decision-shadow.js";
-import { clearDecisionCache } from "../../../src/core/decision/_cache.js";
-import { decisionRuntime } from "../../../src/core/decision/_runtime.js";
+import { loadAllSkills } from "../../../packages/mcp/core/skills/index.js";
+import { callTool } from "../../../packages/mcp/tools/router/index.js";
+import { cacheClear, cacheStore, observeDecisionShadow, waitForDecisionShadows } from "../../../packages/mcp/core/cache/tool-cache/index.js";
+import { clearShadows, readShadows, summarizeShadows } from "../../../packages/mcp/core/cache/tool-cache/_decision-shadow.js";
+import { clearDecisionCache } from "../../../packages/mcp/core/decision/_cache.js";
+import { decisionRuntime } from "../../../packages/mcp/core/decision/_runtime.js";
 
 function routeFromText(text) {
   const source = String(text ?? "");

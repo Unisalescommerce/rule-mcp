@@ -5,7 +5,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 
-import { planRenumber, applyRenumber, rewriteCommitReferences, staleCommitReferences } from "../../../src/core/docs-numbering/index.js";
+import { planRenumber, applyRenumber, rewriteCommitReferences, staleCommitReferences } from "../../../packages/mcp/core/docs-numbering/index.js";
 import { git, seedRepo } from "./_doctor.fixture.mjs";
 
 test("commit messages that name a renumbered document are reported", () => {

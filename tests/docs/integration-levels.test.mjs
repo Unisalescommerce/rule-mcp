@@ -14,8 +14,8 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
 
-import { allAgents } from "../../src/cli/installers/index.js";
-import { hostRecord } from "../../src/cli/installers/hosts/index.js";
+import { allAgents } from "../../packages/mcp/cli/installers/index.js";
+import { hostRecord } from "../../packages/mcp/cli/installers/hosts/index.js";
 
 const DOC = fileURLToPath(new URL("../../docs/04-operations.md", import.meta.url));
 

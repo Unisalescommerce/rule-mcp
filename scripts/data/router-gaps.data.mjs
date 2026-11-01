@@ -5,7 +5,7 @@
  *
  * An area router is a table of links, and a table written by hand drifts the
  * moment a skill is created, renamed or moved. The coverage test in
- * `src/core/skills/__tests__/_router-child-coverage.test.mjs` compares each
+ * `packages/mcp/core/skills/__tests__/_router-child-coverage.test.mjs` compares each
  * router against the directories, and this file records the gaps that already
  * existed when the test landed, so the test fails on a new gap without failing
  * on the backlog.

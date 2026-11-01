@@ -12,8 +12,8 @@ import { applyPicks, buildQuestion, pickOf, shortlistFor } from "./_corpus-measu
 
 /** Load the skill universe and route every corpus prompt once with BM25. */
 export async function loadCorpus() {
-  const { loadAllSkills } = await import("../../../src/core/skills/index.js");
-  const { callTool } = await import("../../../src/tools/router/index.js");
+  const { loadAllSkills } = await import("../../../packages/mcp/core/skills/index.js");
+  const { callTool } = await import("../../../packages/mcp/tools/router/index.js");
   const { CORPUS } = await import("../../../tests/fixtures/routing-corpus.mjs");
 
   await loadAllSkills(true);
@@ -45,7 +45,7 @@ export function addressableMisses(rows, shortlistSize) {
 
 /** Ask the model to rerank the addressable misses, one prompt at a time. */
 export async function measure(supervisor, misses, { catalog, shortlistSize }) {
-  const { getSkillNames, getSkillMetadata } = await import("../../../src/tools/router/index.js");
+  const { getSkillNames, getSkillMetadata } = await import("../../../packages/mcp/tools/router/index.js");
   const picks = [];
 
   for (const row of misses) {

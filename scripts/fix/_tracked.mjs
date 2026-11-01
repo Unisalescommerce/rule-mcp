@@ -17,7 +17,7 @@ import { existsSync } from "node:fs";
 /**
  * Tracked and untracked files matching `patterns`, minus what the caller skips.
  *
- * @param {string[]} patterns - git pathspecs, e.g. ["src/**\/*.js"]
+ * @param {string[]} patterns - git pathspecs, e.g. ["packages/mcp/**\/*.js"]
  * @param {{ skip?: RegExp[], prefixes?: string[] }} [options]
  *   `skip`: paths the pass must never touch. `prefixes`: limit to these path
  *   prefixes (empty means no limit).
