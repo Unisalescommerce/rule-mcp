@@ -1,7 +1,7 @@
 # Plan: pnpm workspace with `packages/{mcp,shared,docs}` + sibling Nyx
 
-Status: `planned`
-Notes: subordinate plan (leading `_`); coordinated by `docs/plans/plan-of-plans.md` workstream WS-D. Replaces `_2026-10-01-scripts-mcp-layout.md`. Executes on `rel/v0.1.0` (ADR 181). Do not create `refactor/packages-mcp-nyx-workspace`.
+Status: `in-progress`
+Notes: subordinate plan (leading `_`); coordinated by `docs/plans/plan-of-plans.md` workstream WS-D. Replaces `_2026-10-01-scripts-mcp-layout.md`. Executes on `rel/v0.1.0` (ADR 181). Do not create `refactor/packages-mcp-nyx-workspace`. WS0 landed (`rule_tool_write_plan`).
 
 - **Date**: 2026-10-01
 - **Updated**: 2026-11-01 (rename to `_scripts-mcp-layout.md`; WS0 plan-writer; branch = `rel/v0.1.0`)
@@ -134,11 +134,11 @@ Shared files: `package.json`, `pnpm-workspace.yaml`, `docs/plans/plan-of-plans.m
 
 Host CreatePlan writes only under `~/.local/share/opencode/plans/` (session UI). Source of truth here is `docs/plans/_*.md` registered in `plan-of-plans.md`. MCP cannot patch Cursor CreatePlan; ship a writer and instruct agents to use it.
 
-- [ ] **WS0-T1**: Inventory existing plan/persona writers (`rule_tool_impersonation` / review sync → `docs/plans/<role>.md` per ADR 59). Add or extend an action that accepts `slug`, `title`, `body` (or topic → body honoring STE100~80 + `WSn` / dual graph).
-- [ ] **WS0-T2**: Write `docs/plans/_<slug>.md` only (reject missing `_`; reject silent overwrite without explicit flag); patch `plan-of-plans.md` section 1 + workstream (default WS-D).
-- [ ] **WS0-T3**: TDD with temp `projectDir`: file created with Status + Dependency graph; index updated; path without `_` rejected.
-- [ ] **WS0-T4**: Update `AGENTS.md` / `CLAUDE.md` (and rule-mcp instruction block): durable plans use the MCP plan-writer; CreatePlan host file is not the source of truth.
-- [ ] **WS0-T5**: Gate — writer tests green; no `git mv src` yet.
+- [x] **WS0-T1**: Inventory existing plan/persona writers (`rule_tool_impersonation` / review sync -> `docs/plans/<role>.md` per ADR 59). Added `rule_tool_write_plan` (persona `rule_tool_plan` unchanged).
+- [x] **WS0-T2**: Write `docs/plans/_<slug>.md` only (reject missing `_`; reject silent overwrite without explicit flag); patch `plan-of-plans.md` section 1 + workstream (default WS-D).
+- [x] **WS0-T3**: TDD with temp `projectDir`: file created with Status + Dependency graph; index updated; path without `_` rejected.
+- [x] **WS0-T4**: Update `AGENTS.md` / `CLAUDE.md` (and rule-mcp instruction block): durable plans use the MCP plan-writer; CreatePlan host file is not the source of truth.
+- [x] **WS0-T5**: Gate - writer tests green; no `git mv src` yet.
 
 ### WS1 — Layout contract tests (red)
 

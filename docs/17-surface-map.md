@@ -7,7 +7,7 @@ a tool, a skill, a prompt, a role, a command or a guardrail;
 `tests/docs/census-generated.test.mjs` compares this file against the live
 registry, so a stale copy fails the build instead of misleading a reader.
 
-## Command / Tool / Skill map (127)
+## Command / Tool / Skill map (128)
 
 One row per slash command, then every catalog skill that has no slash of its
 own (ADR 117: leaf skills are reached through area hubs or the router), then
@@ -68,6 +68,7 @@ Regenerate with `pnpm census`.
 | -                           | `rule_tool_plan`                     | -                 | Ask expert review persona to audit, review or plan this project; returns operation contract.                                                                                  |
 | -                           | `rule_tool_audit`                    | -                 | Run audit as expert review persona; returns audit operation contract.                                                                                                         |
 | -                           | `rule_tool_review`                   | -                 | Run review as expert review persona; returns review operation contract.                                                                                                       |
+| -                           | `rule_tool_write_plan`               | -                 | Write durable development plan to docs/plans/_<slug>.md and register it in plan-of-plans.md.                                                                                  |
 | -                           | `rule_tool_impersonation`            | -                 | Create or refresh audit/review/plan documents for review persona run (impersonation bookkeeping).                                                                             |
 | -                           | `rule_tool_sync`                     | -                 | Check how far base branch has moved since this branch forked, and propose rebase.                                                                                             |
 | -                           | `rule_tool_process_adr`              | -                 | Save Architecture Decision Record (ADR) to docs/adr/.                                                                                                                         |

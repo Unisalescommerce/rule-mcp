@@ -7,7 +7,7 @@ a tool, a skill, a prompt, a role, a command or a guardrail;
 `tests/docs/census-generated.test.mjs` compares this file against the live
 registry, so a stale copy fails the build instead of misleading a reader.
 
-## Action tools (105)
+## Action tools (106)
 
 The tools that do something rather than serve a skill. Every one is
 deterministic: none of them calls a model, so the same arguments return the
@@ -28,6 +28,7 @@ same result behind any client.
 | [`rule_tool_plan`](#ruletoolplan)                                        | Ask expert review persona to audit, review or plan this project; returns operation contract.                                                                                                                                                                                                                                                  |
 | [`rule_tool_audit`](#ruletoolaudit)                                      | Run audit as expert review persona; returns audit operation contract.                                                                                                                                                                                                                                                                         |
 | [`rule_tool_review`](#ruletoolreview)                                    | Run review as expert review persona; returns review operation contract.                                                                                                                                                                                                                                                                       |
+| [`rule_tool_write_plan`](#ruletoolwriteplan)                             | Write durable development plan to docs/plans/_<slug>.md and register it in plan-of-plans.md.                                                                                                                                                                                                                                                  |
 | [`rule_tool_impersonation`](#ruletoolimpersonation)                      | Create or refresh audit/review/plan documents for review persona run (impersonation bookkeeping).                                                                                                                                                                                                                                             |
 | [`rule_tool_stats`](#ruletoolstats)                                      | Read the local telemetry log and summarize it: call counts, cache hit rate, saved/estimated tokens, latency.                                                                                                                                                                                                                                  |
 | [`rule_tool_keep`](#ruletoolkeep)                                        | Confirm one decision into export decision-cache (status confirmed, source rule-keep).                                                                                                                                                                                                                                                         |
@@ -264,6 +265,20 @@ Run review as expert review persona; returns review operation contract.
 | `skills`     | array of string | no       | -       |                                                                                      |
 | `topic`      | string          | no       | -       | Free-text request; becomes the binding scope of the run. Default: the whole project. |
 | `projectDir` | string          | no       | -       |                                                                                      |
+
+### rule_tool_write_plan
+
+Write durable development plan to docs/plans/_<slug>.md and register it in plan-of-plans.md. Host CreatePlan files are not source of truth.
+
+| Parameter    | Type    | Required | Default | Description                                                      |
+| ------------ | ------- | -------- | ------- | ---------------------------------------------------------------- |
+| `slug`       | string  | yes      | -       | Plan file stem; leading _ added if missing. Single segment only. |
+| `title`      | string  | yes      | -       | Short plan title used in plan-of-plans snapshot                  |
+| `body`       | string  | no       | -       | Full markdown body (must pass WSn / dual-graph shape)            |
+| `topic`      | string  | no       | -       | When body is omitted, seed a scaffold that mentions this topic   |
+| `overwrite`  | boolean | no       | -       | Replace an existing docs/plans/_slug.md (default false)          |
+| `openWork`   | string  | no       | -       | Open-work cell for the plan-of-plans snapshot row                |
+| `projectDir` | string  | no       | -       |                                                                  |
 
 ### rule_tool_impersonation
 

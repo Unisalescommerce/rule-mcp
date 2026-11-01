@@ -17,6 +17,7 @@ test("registerActionTools mints the action-family tools", () => {
     "rule_tool_compress",
     "rule_tool_git",
     "rule_tool_plan",
+    "rule_tool_write_plan",
     "rule_tool_impersonation",
     "rule_tool_stats",
     "rule_tool_sync",
