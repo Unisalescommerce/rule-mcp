@@ -21,7 +21,9 @@ const tools = new Set(listTools().map((x) => x.name));
 // Archives are scanned for nothing: they quote tool names as they were when they
 // were written. `spike` joined the list with the 2026-10-25 study, which names the
 // pre-rename `rule_init` on purpose.
-const archivalDirectories = new Set(["adr", "handoff", "plans", "reports", "spike"]);
+// case-studies: apps moved under docs/ in WS5; their benchmarks quote historical
+// tool names the same way adr/handoff archives do.
+const archivalDirectories = new Set(["adr", "handoff", "plans", "reports", "spike", "case-studies"]);
 
 function scan(dir) {
   let stale = 0;
