@@ -3,6 +3,11 @@
 How a request moves through rule-mcp, simplified and product-facing. The
 decision log behind it is not part of this site.
 
+The git checkout is a private pnpm workspace (`rule-mcp-workspace`). The
+published product package is `packages/mcp` (`rule-mcp`); shared helpers live
+in `packages/shared`, and the docs site in `packages/docs`. Optional Nyx stays
+a sibling `../nyx` workspace member.
+
 ## Request path
 
 The flow graph below is the same path an agent takes, top to bottom.

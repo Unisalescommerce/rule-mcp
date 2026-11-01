@@ -17,9 +17,14 @@ bans it, so the version is not pinned there.
 
 ```bash
 git clone https://github.com/pixu1980/rule.git
-cd rule-mcp
+cd rule
 pnpm install
 ```
+
+This git root is the private workspace (`rule-mcp-workspace`). The
+published npm package is `packages/mcp` (`rule-mcp`). Optional sibling
+`../nyx` (`nyx-gateway`) is linked via `pnpm-workspace.yaml`; CI stubs it
+when absent and sets `RULE_MCP_NO_NYX=1`.
 
 `pnpm install` runs `prepare`, which installs the git hooks from
 `.githooks/` as shims into `.git/hooks/`. To install them on demand:
@@ -31,7 +36,7 @@ them.
 ```bash
 pnpm install          # dependencies (exact pins, frozen lockfile in CI)
 pnpm test:all         # the whole suite - green before every pull request
-pnpm lint             # eslint over bin/, src/, tests/
+pnpm lint             # eslint over bin/, packages/, scripts/__tests__/
 pnpm format           # prettier check (fix with pnpm format:fix)
 pnpm census:check     # generated catalog docs are current (fix with pnpm census)
 rule-mcp doctor # health report for your machine

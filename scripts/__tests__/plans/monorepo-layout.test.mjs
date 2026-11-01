@@ -1,8 +1,7 @@
 /**
  * WS1 layout contract for docs/plans/_scripts-mcp-layout.md.
  *
- * Red until WS2-WS6 land the pnpm workspace. Lives under tests/ today and
- * moves to scripts/__tests__/ with WS5.
+ * Layout contract for the pnpm workspace (WS1–WS6).
  */
 import { strict as assert } from "node:assert";
 import { existsSync, readFileSync, readdirSync } from "node:fs";

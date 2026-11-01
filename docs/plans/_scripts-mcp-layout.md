@@ -175,11 +175,11 @@ Host CreatePlan writes only under `~/.local/share/opencode/plans/` (session UI).
 
 ### WS6 — Docker, CI, pack, docs
 
-- [ ] **WS6-T1**: Dockerfile `COPY packages/`; CMD via `bin/rule-mcp.js`; syntax-check under `bin` + `packages`.
-- [ ] **WS6-T2**: CI stub `../nyx` when missing; `RULE_MCP_NO_NYX=1`; eslint/find paths.
-- [ ] **WS6-T3**: `scripts/package.sh` → `pnpm pack --filter rule-mcp`.
-- [ ] **WS6-T4**: README / CONTRIBUTING / `docs/02-architecture.md` / `docs/05-env-variables.md` say workspace root + package `rule-mcp`.
-- [ ] **WS6-T5**: Closing sweep zero hits: `src/shared`, `src/utils`, `packages/mcp/shared`, `packages/mcp/utils`, `scripts/docs-site`, `@mcp/`, bare `nyx/mcp`, root `"name": "rule-mcp"`.
+- [x] **WS6-T1**: Dockerfile `COPY packages/`; CMD via `bin/rule-mcp.js`; syntax-check under `bin` + `packages`.
+- [x] **WS6-T2**: CI stub `../nyx` when missing; `RULE_MCP_NO_NYX=1`; eslint/find paths.
+- [x] **WS6-T3**: `scripts/package.sh` → `pnpm pack --filter rule-mcp`.
+- [x] **WS6-T4**: README / CONTRIBUTING / `docs/02-architecture.md` / `docs/05-env-variables.md` say workspace root + package `rule-mcp`.
+- [x] **WS6-T5**: Closing sweep zero hits: `src/shared`, `src/utils`, `packages/mcp/shared`, `packages/mcp/utils`, `scripts/docs-site`, legacy `@src/`, bare `nyx/mcp`, root `"name": "rule-mcp"`.
 
 ### WS7 — Closeout
 
@@ -193,7 +193,7 @@ Must find zero hits for:
 
 - `src/shared`, `src/utils`, `packages/mcp/shared`, `packages/mcp/utils` (no shim)
 - `scripts/docs-site`
-- `@mcp/`, bare `nyx/mcp`
+- legacy `@src/`, bare `nyx/mcp`
 - root `package.json` `"name": "rule-mcp"`
 
 ## Risks

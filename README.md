@@ -39,4 +39,4 @@
 </article>
 </section>
 
-Node >= 20 - [MIT](LICENSE) - [Contributing](CONTRIBUTING.md) - [Governance](GOVERNANCE.md) - [Code of Conduct](CODE_OF_CONDUCT.md) - [Maintainers](MAINTAINERS.md) - [Security](SECURITY.md) - runtime deps: `@modelcontextprotocol/sdk` + `zod` only.
+Workspace root `rule-mcp-workspace` (private); published package `packages/mcp` (`rule-mcp`). Node >= 20 - [MIT](LICENSE) - [Contributing](CONTRIBUTING.md) - [Governance](GOVERNANCE.md) - [Code of Conduct](CODE_OF_CONDUCT.md) - [Maintainers](MAINTAINERS.md) - [Security](SECURITY.md) - runtime deps: `@modelcontextprotocol/sdk` + `zod` only.

@@ -1,0 +1,12 @@
+{
+  "name": "nyx-gateway",
+  "version": "0.0.0-ci-stub",
+  "private": true,
+  "type": "module",
+  "description": "Minimal nyx-gateway stub for CI and Docker when the sibling ../nyx checkout is absent",
+  "exports": {
+    ".": "./index.mjs",
+    "./mcp": "./mcp/index.mjs",
+    "./package.json": "./package.json"
+  }
+}

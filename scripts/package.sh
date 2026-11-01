@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
-# Package rule-mcp for npm, Homebrew, and direct download
+# Package the published rule-mcp product (packages/mcp) for npm, Homebrew, and
+# direct download. The git root is rule-mcp-workspace; packing filters to the
+# product package.
 set -euo pipefail
 
-VERSION=${1:-$(node -e "console.log(require('./package.json').version)")}
-NAME="rule-mcp"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+NAME="rule-mcp"
+VERSION=${1:-$(node -e "console.log(JSON.parse(require('fs').readFileSync('packages/mcp/package.json','utf8')).version)")}
 
 echo "=== Packaging $NAME v$VERSION ==="
 
@@ -17,10 +19,10 @@ if [ ! -f "$ROOT/bin/rule-mcp.js" ]; then
   exit 1
 fi
 
-# 3. Create npm tarball
-echo "--- pnpm pack ---"
+# 3. Create npm tarball from the published package
+echo "--- pnpm pack --filter rule-mcp ---"
 cd "$ROOT"
-pnpm pack 2>/dev/null || echo "  pnpm pack skipped (use 'pnpm publish' directly)"
+pnpm pack --filter rule-mcp 2>/dev/null || echo "  pnpm pack skipped (use 'pnpm publish --filter rule-mcp' directly)"
 
 # 4. Create Homebrew formula
 echo "--- Homebrew formula ---"
@@ -48,7 +50,7 @@ FORMULA
 echo "  Formula: ${NAME}.rb (sha256: ${SHASUM})"
 
 # 5. Install scripts are NOT generated here. They are tracked bootstraps
-# (ADR 080): the single installer implementation lives in src/cli/setup/
+# (ADR 080): the single installer implementation lives in packages/mcp/cli/setup/
 # and the shell scripts only forward to it. Regenerating them from
 # heredocs reintroduced the registry install and the drift this removed.
 
