@@ -8,7 +8,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
 
-import { seedRepo } from "../../../../../tests/docs/docs-numbering-doctor/_doctor.fixture.mjs";
+import { seedRepo } from "../../../../../scripts/__tests__/docs/docs-numbering-doctor/_doctor.fixture.mjs";
 import { buildHandoff } from "../_build.js";
 import { autoRenumber, renumberLines } from "../_renumber.js";
 import { listExistingAdrs } from "../../adr/_files.js";

@@ -11,7 +11,7 @@ import { test } from "node:test";
 
 import { TOKENSAVE_SURFACE } from "../_surface.js";
 
-const ROOT = new URL("../../../../../", import.meta.url).pathname;
+const ROOT = new URL("../../../", import.meta.url).pathname;
 
 /** The tool names one module passes to the client, or declares as a check. */
 function callsIn(file) {

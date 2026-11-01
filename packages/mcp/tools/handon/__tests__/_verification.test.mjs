@@ -8,7 +8,7 @@ import { test } from "node:test";
 
 import { lines, runs } from "../_report.js";
 import { isAncestor, verifyAdr, verifyBranch } from "../_verify-refs.js";
-import "../../../../../tests/fixtures/git-hermetic.mjs";
+import "../../../../../scripts/__tests__/fixtures/git-hermetic.mjs";
 
 const git = (args, cwd) => execFileSync("git", args, { cwd, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();
 

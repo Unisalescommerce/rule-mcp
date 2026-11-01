@@ -15,10 +15,10 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 const BASE = new URL("../../../../", import.meta.url).pathname;
-const { resolveTokensaveDir, tokensaveActive, suppressIfTokensave, decorateWithTokensave, resetTokenPipeline } = await import(join(BASE, "src/core/agents/index.js"));
-const { compressResult, compressText } = await import(join(BASE, "src/core/text/_compression.js"));
-const { compressTextAggressive } = await import(join(BASE, "src/core/text/_compression-aggressive.js"));
-const { getTokenStats, resetTokenStats } = await import(join(BASE, "src/core/telemetry/_token-stats.js"));
+const { resolveTokensaveDir, tokensaveActive, suppressIfTokensave, decorateWithTokensave, resetTokenPipeline } = await import(join(BASE, "packages/mcp/core/agents/index.js"));
+const { compressResult, compressText } = await import(join(BASE, "packages/mcp/core/text/_compression.js"));
+const { compressTextAggressive } = await import(join(BASE, "packages/mcp/core/text/_compression-aggressive.js"));
+const { getTokenStats, resetTokenStats } = await import(join(BASE, "packages/mcp/core/telemetry/_token-stats.js"));
 
 test("multi-source detection: env var wins over a tokensave-less cwd", () => {
   const withTs = mkdtempSync(join(tmpdir(), "pipe-ts-"));

@@ -192,8 +192,8 @@ Superseded as an execution queue by workstreams A–C above; checkbox progress l
 
 | File | Who touches it | Resolution |
 | ---- | -------------- | ---------- |
-| `tests/fixtures/guardrail-corpus.mjs` | every plan that adds a rule | append-only, one plan at a time |
-| `tests/fixtures/census.json` | surface changes | `pnpm census`, never by hand |
+| `scripts/__tests__/fixtures/guardrail-corpus.mjs` | every plan that adds a rule | append-only, one plan at a time |
+| `scripts/__tests__/fixtures/census.json` | surface changes | `pnpm census`, never by hand |
 | generated `docs/0*.md`, `docs/16-*.md`, `docs/17-*.md`, `README.md` | same | regenerate; README accuracy tests |
 | `docs/adr/ADR.md` and ADR numbering | ADR writers | `rule_tool_process_adr` |
 | `docs/handoff/HANDOFF.md` | handoff writers | regenerate index |
@@ -214,8 +214,8 @@ Human only:
 
 ## 10 - Verification
 
-- `tests/plans/skills-plan.test.mjs` over catalog nodes (paths may start with `_`).
-- `pnpm census:check`, `tests/docs/docs-accuracy.test.mjs`.
+- `scripts/__tests__/plans/skills-plan.test.mjs` over catalog nodes (paths may start with `_`).
+- `pnpm census:check`, `scripts/__tests__/docs/docs-accuracy.test.mjs`.
 - Section 5 workstreams and `_skills-plan.md` stage tables agree on ownership.
 
 ## Dependency graph

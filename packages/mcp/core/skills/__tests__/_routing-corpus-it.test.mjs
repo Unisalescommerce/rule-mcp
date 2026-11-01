@@ -7,7 +7,7 @@ process.env.RULE_MCP_SKILL_UNIVERSE = "base";
 
 const { loadAllSkills } = await import("../index.js");
 const { callTool, getSkillNames } = await import("../../../tools/router/index.js");
-const { CORPUS_IT } = await import("../../../../../tests/fixtures/routing-corpus-it.mjs");
+const { CORPUS_IT } = await import("../../../../../scripts/__tests__/fixtures/routing-corpus-it.mjs");
 
 await loadAllSkills(true);
 

@@ -26,7 +26,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const runtimeHome = join(here, "..", "..", "setup", "_runtime-home.js");
 // The module reaches server code through `@mcp/*`, which only resolves with
 // the hook every entry point registers.
-const aliasHook = join(here, "..", "..", "..", "..", "scripts", "alias-hook.mjs");
+const aliasHook = join(here, "..", "..", "..", "..", "..", "scripts", "alias-hook.mjs");
 
 /** Evaluate one expression over the module in a child process with this HOME. */
 function inHome(home, call) {

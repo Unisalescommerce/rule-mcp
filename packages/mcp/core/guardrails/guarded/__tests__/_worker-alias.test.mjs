@@ -20,7 +20,7 @@ const ROOT = new URL("../../../../../../", import.meta.url);
 const SCRIPT = `
 process.env.RULE_MCP_GUARDED_CHECKS = "1";
 const hook = ${JSON.stringify(new URL("scripts/alias-hook.mjs", ROOT).href)};
-const dispatch = ${JSON.stringify(new URL("src/core/guardrails/guarded/_dispatch.js", ROOT).href)};
+const dispatch = ${JSON.stringify(new URL("packages/mcp/core/guardrails/guarded/_dispatch.js", ROOT).href)};
 
 await import(hook);
 

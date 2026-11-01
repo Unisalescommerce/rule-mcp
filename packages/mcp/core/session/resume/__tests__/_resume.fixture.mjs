@@ -24,7 +24,7 @@ import { execFileSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import "../../../../../../tests/fixtures/git-hermetic.mjs";
+import "../../../../../../scripts/__tests__/fixtures/git-hermetic.mjs";
 
 export * from "../index.js";
 

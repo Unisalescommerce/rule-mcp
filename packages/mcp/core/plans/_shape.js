@@ -13,7 +13,7 @@
 export const DEVELOPMENT_PLAN_SHAPE_GUIDE =
   "Development plans (docs/plans/_*.md): organize work as workstreams WS1..WSn (or WS-A when the level-0 index already uses letters). Split each workstream into tasks WS1-T1 / WSn-Tx.y (and nested WSi-Tj.k). Carry a ## Dependency graph with a parseable edge list (Depends on: / Feeds: / Shared files: or an edge table) AND a fenced text diagram. One workstream owns a file set; serialize CONFLICT edges. Keep AI execution linear.";
 
-/** Workstream heading: ### WS1, ## WS-A, ### WS1 — title, etc. */
+/** Workstream heading: ### WS1, ## WS-A, ### WS1 - title, etc. */
 const WORKSTREAM_HEADING = /^#{2,3}\s*WS(?:\d+|[A-Z])\b/m;
 
 /** Task id in a checkbox or bold label: WS1-T1, WS1-T1.1, WS-A-T2 */

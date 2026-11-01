@@ -33,7 +33,7 @@ test("an action call records no dependencies, so no skill edit can touch it", as
 
 test("editing one skill no longer empties the cache", async () => {
   cacheClear();
-  const { CORPUS } = await import("../../../../../tests/fixtures/routing-corpus.mjs");
+  const { CORPUS } = await import("../../../../../scripts/__tests__/fixtures/routing-corpus.mjs");
   for (const item of CORPUS) {
     await callTool("rule_tool", { prompt: item.prompt });
   }

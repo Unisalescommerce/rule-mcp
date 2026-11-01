@@ -46,6 +46,7 @@ test("every tool traces back to a rule-mcp-* directory in ./skills", () => {
     "rule_tool_sync",
     "rule_tool_update",
     "rule_tool_usage",
+    "rule_tool_write_plan",
   ]);
   for (const name of surface.tools) {
     if (ACTION.has(name)) {

@@ -15,7 +15,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { test } from "node:test";
 
-const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..", "..");
+const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..", "..", "..");
 
 test("install.sh --no-wizard configures the agent even with a broken shim on PATH", () => {
   const home = mkdtempSync(join(tmpdir(), "rule-mcp-setup-e2e-"));

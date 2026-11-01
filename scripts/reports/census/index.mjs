@@ -13,7 +13,7 @@
  * than documents.
  *
  * Everything is formatted here, with the repository's own prettier settings,
- * so the writer and `tests/docs/census-generated.test.mjs` compare the same
+ * so the writer and `scripts/__tests__/docs/census-generated.test.mjs` compare the same
  * bytes: a census that drifts fails the build rather than misleading a reader.
  *
  * Usage:
@@ -101,7 +101,7 @@ export async function writeCensus() {
 
   if (readSnapshot() !== snapshot) {
     writeFileSync(SNAPSHOT, snapshot);
-    changed.push("tests/fixtures/census.json");
+    changed.push("scripts/__tests__/fixtures/census.json");
   }
 
   return changed;
@@ -116,7 +116,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     if (stale.length === 0 && !snapshotStale) {
       console.log("the census is current");
     } else {
-      const drifted = [...stale, ...(snapshotStale ? ["tests/fixtures/census.json"] : [])];
+      const drifted = [...stale, ...(snapshotStale ? ["scripts/__tests__/fixtures/census.json"] : [])];
 
       console.error(`stale, run pnpm census: ${drifted.join(", ")}`);
       process.exitCode = 1;

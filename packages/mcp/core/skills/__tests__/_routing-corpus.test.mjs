@@ -35,7 +35,7 @@ process.env.RULE_MCP_SKILL_UNIVERSE = "base";
 
 const { loadAllSkills } = await import("../index.js");
 const { callTool, getSkillNames } = await import("../../../tools/router/index.js");
-const { CORPUS, NONSENSE, PERSONAS, NOT_PERSONAS } = await import("../../../../../tests/fixtures/routing-corpus.mjs");
+const { CORPUS, NONSENSE, PERSONAS, NOT_PERSONAS } = await import("../../../../../scripts/__tests__/fixtures/routing-corpus.mjs");
 
 /** Measured at 87% exact and 100% top-or-alt when BM25 landed (ADR 048).
  * Floors eased slightly after ADR 115 removed process-handoff/compression skills

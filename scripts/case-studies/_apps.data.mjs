@@ -14,8 +14,8 @@ import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 
-/** The repository's `case-studies` directory. */
-export const CASES = join(HERE, "..", "..", "case-studies");
+/** The repository's case-study apps under `docs/case-studies`. */
+export const CASES = join(HERE, "..", "..", "docs", "case-studies");
 
 /** The loopback name Vite binds by default and Electron is told to load. */
 export const HOST = "localhost";

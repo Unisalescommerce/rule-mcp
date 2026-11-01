@@ -120,7 +120,7 @@ test("no tracked file ships a ragged box", () => {
   const files = execFileSync("git", ["ls-files", "--cached", "--others", "--exclude-standard", "*.md", "*.js", "*.mjs", "*.sh", "*.ps1", "*.txt"], { encoding: "utf8" })
     .trim()
     .split("\n")
-    .filter((file) => file && existsSync(file) && !file.startsWith("tests/fixtures/"));
+    .filter((file) => file && existsSync(file) && !file.startsWith("scripts/__tests__/fixtures/"));
 
   const ragged = files.flatMap((file) =>
     findRaggedBoxes(readFileSync(file, "utf8"))

@@ -7,7 +7,7 @@
  * Four registries grew independently - the agent catalog, the command targets,
  * the command gaps and the hook hosts - and each could name a host the others had
  * never heard of. This module is the place where a host is a host: `hostRecord`
- * answers for all 23, and `tests/installers/host-record.test.mjs` fails when the
+ * answers for all 23, and `scripts/__tests__/installers/host-record.test.mjs` fails when the
  * four registries disagree about one.
  *
  * Path and identity live in `./_core.js` so uninstall bodies can read them

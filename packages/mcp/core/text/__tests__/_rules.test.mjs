@@ -68,7 +68,7 @@ check("T5.4 prose comments are not commented-out code", byId["no-commented-out-c
 //    passed it. Both the schema and the migration must fail. ──
 const auditTable = byId["ai-no-speculative-audit-table"];
 for (const fixture of ["over-engineered-migration.sql", "over-engineered-schema.prisma"]) {
-  const result = auditTable.check(readFileSync(join("tests/fixtures", fixture), "utf8"), { fileName: fixture });
+  const result = auditTable.check(readFileSync(join("scripts/__tests__/fixtures", fixture), "utf8"), { fileName: fixture });
   check(`T7 ${fixture} is flagged`, result.pass === false && result.detail.some((d) => /PaymentWebhookEvent/.test(d)));
 }
 const REVIEWED_SQL = `ALTER TABLE "Payment" ADD COLUMN "amount" DECIMAL(10,2) NOT NULL,

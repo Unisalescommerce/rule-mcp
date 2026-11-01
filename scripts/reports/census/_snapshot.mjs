@@ -17,7 +17,7 @@ import { join } from "node:path";
 import { ROOT } from "./_registries.mjs";
 
 /** Where the snapshot lives, inside the fixtures a test may read. */
-export const SNAPSHOT = join(ROOT, "tests", "fixtures", "census.json");
+export const SNAPSHOT = join(ROOT, "scripts", "__tests__", "fixtures", "census.json");
 
 /**
  * The snapshot as it sits on disk, or "" when it is not there yet: a missing

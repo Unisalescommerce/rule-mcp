@@ -89,7 +89,7 @@ const walk = (dir) => {
     const full = join(dir, entry);
     if (statSync(full).isDirectory()) {
       // Co-located unit tests are checked by the test runner, not this sweep.
-      if (entry !== "__tests__") {
+      if (entry !== "__tests__" && entry !== "node_modules" && entry !== ".git") {
         walk(full);
       }
     } else if (/\.(?:js|mjs)$/.test(entry)) {
@@ -97,7 +97,7 @@ const walk = (dir) => {
     }
   }
 };
-walk("src");
+walk("packages/mcp");
 // guardrail-defs.js carries the patterns themselves, so it matches by construction.
 const scanned = sourceFiles.filter(
   (file) =>
@@ -106,7 +106,7 @@ const scanned = sourceFiles.filter(
     // the source keeps them in the single guardrail-defs.js that its own
     // baseline exempts. The definitions' example markers ("for future use",
     // "just in case") are the rule's vocabulary, not violations of it.
-    !file.startsWith(join("src", "core", "guardrails")),
+    !file.startsWith(join("packages", "mcp", "core", "guardrails")),
 );
 const offenders = [];
 for (const file of scanned) {

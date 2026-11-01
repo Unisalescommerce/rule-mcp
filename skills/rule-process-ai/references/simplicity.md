@@ -191,7 +191,7 @@ sitting stays honest; a file that cannot be read whole hides its coupling.
 
 - **100 lines of code per file, with a +50 tolerance.** At 150 lines the file
   must be split - not negotiated. The tolerance absorbs a legitimate long
-  function; it is not a second budget. `tests/docs/file-size-budget.test.mjs`
+  function; it is not a second budget. `scripts/__tests__/docs/file-size-budget.test.mjs`
   enforces it and the ratchet that goes with it (ADR 061).
 - **Split by meaning, never by count.** Each new file holds one nameable
   concern - one rule, one function, one command. A file named for its position
@@ -228,7 +228,7 @@ sitting stays honest; a file that cannot be read whole hides its coupling.
 | `no-future-use-code`            | `rule-styleguide-comments` | code kept for an imagined future                          |
 | `no-commented-out-code`         | `rule-styleguide-comments` | an implementation parked in a comment                     |
 
-- The **file-size budget test** (`tests/docs/file-size-budget.test.mjs`) holds
+- The **file-size budget test** (`scripts/__tests__/docs/file-size-budget.test.mjs`) holds
   this repository to the 150-line cap and the junk-name ban above; its ratchet
   of grandfathered files only ever shrinks.
 - The **removal pass** is yours; nothing static can judge whether a requested

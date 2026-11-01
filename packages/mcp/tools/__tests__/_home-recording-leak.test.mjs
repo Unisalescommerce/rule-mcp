@@ -87,7 +87,7 @@ test("the fixture refuses to build a sandbox in the real home", async () => {
   // The enforcement the three suites above lean on. Asserted here rather than
   // trusted: a gate nothing exercises is a gate that can be deleted by
   // accident, and the message it carries is the fix a reader needs.
-  const { clonePair } = await import("../../../../tests/fixtures/git-sandbox.mjs");
+  const { clonePair } = await import("../../../../scripts/__tests__/fixtures/git-sandbox.mjs");
   const pinned = process.env.HOME;
   delete process.env.HOME;
 

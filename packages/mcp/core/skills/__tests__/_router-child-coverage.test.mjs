@@ -20,9 +20,9 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
 
-import { ROUTER_GAPS } from "../../../../scripts/data/router-gaps.data.mjs";
+import { ROUTER_GAPS } from "../../../../../scripts/data/router-gaps.data.mjs";
 
-const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..", "..");
+const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..", "..", "..");
 const skillsRoot = join(root, "skills");
 
 /** Every skill directory that has a SKILL.md. */

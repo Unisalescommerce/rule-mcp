@@ -45,7 +45,7 @@ test("daemon start detaches instead of holding the daemon open", async (t) => {
       ALIAS_HOOK,
       "--input-type=module",
       "-e",
-      `const { startDaemonProcess } = await import(${JSON.stringify(join(root, "src", "cli", "daemon", "index.js"))});
+      `const { startDaemonProcess } = await import(${JSON.stringify(join(root, "packages", "mcp", "cli", "daemon", "index.js"))});
        const result = startDaemonProcess({});
        process.stdout.write(JSON.stringify(result));`,
     ],

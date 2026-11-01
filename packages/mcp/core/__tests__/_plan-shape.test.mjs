@@ -17,7 +17,7 @@ import {
   scanDevelopmentPlanShape,
 } from "../plans/_shape.js";
 
-const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
+const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..", "..");
 
 test("DEVELOPMENT_PLAN_SHAPE_GUIDE names WSn tasks and dual graph", () => {
   assert.match(DEVELOPMENT_PLAN_SHAPE_GUIDE, /WS\d+|WSn/);
@@ -81,8 +81,8 @@ test("scanDevelopmentPlanShape passes a WSn plan with edge list and diagram", ()
   assert.deepEqual(result.findings, []);
 });
 
-test("tests/fixtures/plans/development-shape-golden.md is a golden development-plan fixture", () => {
-  const text = readFileSync(join(root, "tests/fixtures/plans/development-shape-golden.md"), "utf8");
+test("scripts/__tests__/fixtures/plans/development-shape-golden.md is a golden development-plan fixture", () => {
+  const text = readFileSync(join(root, "scripts/__tests__/fixtures/plans/development-shape-golden.md"), "utf8");
   const result = scanDevelopmentPlanShape(text);
   assert.equal(result.ok, true, JSON.stringify(result.findings));
 });

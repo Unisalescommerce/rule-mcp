@@ -82,7 +82,7 @@ test("skills reload reports done", () => {
 });
 
 test("handoff doctor --fix alone points at --fix-commits for the messages", async () => {
-  const { seedRepo } = await import("../../../../tests/docs/docs-numbering-doctor/_doctor.fixture.mjs");
+  const { seedRepo } = await import("../../../../scripts/__tests__/docs/docs-numbering-doctor/_doctor.fixture.mjs");
   const root = seedRepo();
 
   const fixed = runCli(["handoff", "doctor", "--dir", root, "--fix"], { cwd: root });
@@ -92,7 +92,7 @@ test("handoff doctor --fix alone points at --fix-commits for the messages", asyn
 });
 
 test("handoff doctor --fix-commits alone rewrites messages without moving files", async () => {
-  const { seedRepo } = await import("../../../../tests/docs/docs-numbering-doctor/_doctor.fixture.mjs");
+  const { seedRepo } = await import("../../../../scripts/__tests__/docs/docs-numbering-doctor/_doctor.fixture.mjs");
   const root = seedRepo();
 
   const res = runCli(["handoff", "doctor", "--dir", root, "--fix-commits"], { cwd: root });
@@ -112,7 +112,7 @@ test("handoff honors explicit format and mode flags", () => {
 });
 
 test("handoff doctor plans, applies and rewrites in a collision repo", async () => {
-  const { seedRepo } = await import("../../../../tests/docs/docs-numbering-doctor/_doctor.fixture.mjs");
+  const { seedRepo } = await import("../../../../scripts/__tests__/docs/docs-numbering-doctor/_doctor.fixture.mjs");
   const root = seedRepo();
 
   const dry = runCli(["handoff", "doctor", "--dir", root], { cwd: root });

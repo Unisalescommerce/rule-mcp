@@ -1,9 +1,0 @@
-/**
- * FILE: _Icon.css
- * USAGE: Keeps local SVG icons aligned and prevents flex-layout shrinkage.
- * SCOPE: Icon component SVG output.
- */
-
-svg[data-part="icon"] {
-  flex: 0 0 auto;
-}

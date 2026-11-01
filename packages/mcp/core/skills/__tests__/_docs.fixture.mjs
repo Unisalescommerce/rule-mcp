@@ -12,7 +12,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-export const root = join(__dirname, "..", "..", "..", "..");
+export const root = join(__dirname, "..", "..", "..", "..", "..");
 export const skillsRoot = join(root, "skills");
 
 /** Read one skill's SKILL.md. */

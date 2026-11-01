@@ -15,7 +15,7 @@ import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import "../../../../../tests/fixtures/git-hermetic.mjs";
+import "../../../../../scripts/__tests__/fixtures/git-hermetic.mjs";
 import { projectGitRemovalTask, projectGitTask } from "../_task-git.js";
 
 const git = (root, ...args) => execFileSync("git", args, { cwd: root, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();

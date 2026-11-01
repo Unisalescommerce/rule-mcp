@@ -5,7 +5,7 @@ import { cacheClear, cacheLookupSemantic, cacheStore, result } from "./_tiers.fi
 
 // The stub adapter is a fixture module: no model, no network. It must be set
 // before the first tier lookup, which is the first adapter load.
-process.env.RULE_MCP_NYX_MODULE = new URL("../../../../../tests/fixtures/nyx-adapter-stub.mjs", import.meta.url).href;
+process.env.RULE_MCP_NYX_MODULE = new URL("../../../../../../scripts/__tests__/fixtures/nyx-adapter-stub.mjs", import.meta.url).href;
 process.env.RULE_MCP_NYX_CACHE = "1";
 delete process.env.RULE_MCP_NO_NYX;
 

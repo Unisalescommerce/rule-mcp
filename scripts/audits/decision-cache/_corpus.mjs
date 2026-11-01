@@ -1,8 +1,8 @@
 /** The deterministic plan behind the decision-cache corpus benchmark. */
-import { CACHE_GROUPS as GROUPS_1, CACHE_NEGATIVES as NEGATIVES_1 } from "../../../tests/fixtures/decision-cache-corpus.mjs";
-import { CACHE_GROUPS as GROUPS_2, CACHE_NEGATIVES as NEGATIVES_2 } from "../../../tests/fixtures/decision-cache-corpus-2.mjs";
-import { CACHE_GROUPS as GROUPS_3, CACHE_NEGATIVES as NEGATIVES_3 } from "../../../tests/fixtures/decision-cache-corpus-3.mjs";
-import { CACHE_HISTORY } from "../../../tests/fixtures/decision-cache-history.mjs";
+import { CACHE_GROUPS as GROUPS_1, CACHE_NEGATIVES as NEGATIVES_1 } from "../../../scripts/__tests__/fixtures/decision-cache-corpus.mjs";
+import { CACHE_GROUPS as GROUPS_2, CACHE_NEGATIVES as NEGATIVES_2 } from "../../../scripts/__tests__/fixtures/decision-cache-corpus-2.mjs";
+import { CACHE_GROUPS as GROUPS_3, CACHE_NEGATIVES as NEGATIVES_3 } from "../../../scripts/__tests__/fixtures/decision-cache-corpus-3.mjs";
+import { CACHE_HISTORY } from "../../../scripts/__tests__/fixtures/decision-cache-history.mjs";
 
 /** All three slices are one corpus: the plan and the validator see the merge. */
 export const CACHE_GROUPS = [...GROUPS_1, ...GROUPS_2, ...GROUPS_3];

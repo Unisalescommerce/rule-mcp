@@ -36,7 +36,7 @@ const CATALOGS = new Map([
   ["core/bm25/", "the stopword tables and filter clauses quote the words and syntax they operate on"],
 ]);
 
-const SOURCE_ROOT = new URL("../../../../src", import.meta.url);
+const SOURCE_ROOT = new URL("../../..", import.meta.url);
 
 function sourceFiles(dir = SOURCE_ROOT.pathname) {
   const found = [];
@@ -72,7 +72,7 @@ test("every source file passes the JavaScript guardrails", () => {
     }
 
     const rules = result.failed.map((rule) => `${rule.id} (${(rule.detail?.[0] ?? "").split("\n", 1)[0]})`);
-    failures.push(`${file.split("/src/", 2)[1]}: ${rules.join("; ")}`);
+    failures.push(`${rel}: ${rules.join("; ")}`);
   }
   assert.deepEqual(failures, [], `the repo must pass its own guardrails:\n${failures.join("\n")}`);
 });

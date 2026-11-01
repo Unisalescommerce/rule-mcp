@@ -24,7 +24,7 @@ test("an error storm ends the process instead of being ridden out", async (t) =>
       ALIAS_HOOK,
       "--input-type=module",
       "-e",
-      `const { installProcessErrorHandlers } = await import(${JSON.stringify(join(root, "src", "utils", "index.js"))});
+      `const { installProcessErrorHandlers } = await import(${JSON.stringify(join(root, "packages", "shared", "utils", "index.js"))});
        installProcessErrorHandlers();
        const spin = () => setImmediate(() => { spin(); throw new Error("storm"); });
        spin();`,

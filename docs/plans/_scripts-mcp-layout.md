@@ -146,7 +146,7 @@ Host CreatePlan writes only under `~/.local/share/opencode/plans/` (session UI).
 - [x] **WS1-T2**: Assert `packages/{mcp,shared,docs}/package.json` fixed names; `pnpm-workspace.yaml` lists `packages/*` and `../nyx`.
 - [x] **WS1-T3**: Assert zero root `src/`, `tests/`, `case-studies/`, `scripts/docs-site`; zero legacy `@`+`src` alias; `getRepoRoot()` resolves git root; mcp alias resolves.
 - [x] **WS1-T4**: Set this plan Status `in-progress`; check WS-D box progress in `plan-of-plans.md`.
-  - Note: contract file `tests/plans/monorepo-layout.test.mjs` is red until WS2-WS6.
+  - Note: contract file `scripts/__tests__/plans/monorepo-layout.test.mjs` is red until WS2-WS6.
 
 ### WS2 — Extract `rule-mcp-shared`
 
@@ -165,13 +165,13 @@ Host CreatePlan writes only under `~/.local/share/opencode/plans/` (session UI).
 
 ### WS4 — `packages/docs`
 
-- [ ] **WS4-T1**: `git mv scripts/docs-site packages/docs`; package `rule-mcp-docs`; move `marked` if docs-only.
-- [ ] **WS4-T2**: Root `docs:dev` / `docs:build` → `pnpm --filter rule-mcp-docs …`; content stays `docs/**`.
+- [x] **WS4-T1**: `git mv scripts/docs-site packages/docs`; package `rule-mcp-docs`; move `marked` if docs-only.
+- [x] **WS4-T2**: Root `docs:dev` / `docs:build` → `pnpm --filter rule-mcp-docs …`; content stays `docs/**`.
 
 ### WS5 — Relocate tests + case-studies
 
-- [ ] **WS5-T1**: `git mv tests scripts/__tests__`; `git mv case-studies docs/case-studies` (launcher stays `scripts/case-studies/`).
-- [ ] **WS5-T2**: Retarget suite globs, eslint (`bin/ packages/ scripts/__tests__/`), package.json `test*`/`lint*`, census, docs-accuracy paths, fixtures.
+- [x] **WS5-T1**: `git mv tests scripts/__tests__`; `git mv case-studies docs/case-studies` (launcher stays `scripts/case-studies/`).
+- [x] **WS5-T2**: Retarget suite globs, eslint (`bin/ packages/ scripts/__tests__/`), package.json `test*`/`lint*`, census, docs-accuracy paths, fixtures.
 
 ### WS6 — Docker, CI, pack, docs
 

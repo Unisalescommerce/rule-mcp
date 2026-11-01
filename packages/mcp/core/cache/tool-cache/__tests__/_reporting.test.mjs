@@ -55,7 +55,7 @@ test("the rendered report names the tiers and the entry paths", async () => {
 
 test("a rephrased corpus mostly replays, and L0 alone cannot do it", async () => {
   const { callTool: call } = await import("../../../../tools/router/index.js");
-  const { CORPUS } = await import("../../../../../../tests/fixtures/routing-corpus.mjs");
+  const { CORPUS } = await import("../../../../../../scripts/__tests__/fixtures/routing-corpus.mjs");
 
   const rephrase = (prompt) => {
     const words = prompt.trim().split(/\s+/);

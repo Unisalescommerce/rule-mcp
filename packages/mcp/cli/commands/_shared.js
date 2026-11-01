@@ -6,7 +6,7 @@ export { tryExec } from "rule-mcp-shared";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /** Absolute path of the CLI binary, for subcommands that re-invoke it. */
-export const entrypoint = resolve(__dirname, "..", "..", "..", "bin", "rule-mcp.js");
+export const entrypoint = resolve(__dirname, "..", "..", "..", "..", "bin", "rule-mcp.js");
 
 /** Print one line to stdout. */
 export const print = (v) => process.stdout.write(`${v}\n`);

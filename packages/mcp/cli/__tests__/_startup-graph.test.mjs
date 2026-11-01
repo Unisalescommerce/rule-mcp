@@ -68,11 +68,11 @@ function staticGraph(entry) {
 test("the CLI entry point does not statically import the tool or server graph", () => {
   const graph = staticGraph("packages/mcp/index.js");
   const forbidden = [
-    "src/tools/router/index.js",
-    "src/core/skills/index.js",
-    "src/core/bm25/index.js",
-    "src/server/index.js",
-    "src/transport/index.js",
+    "packages/mcp/tools/router/index.js",
+    "packages/mcp/core/skills/index.js",
+    "packages/mcp/core/bm25/index.js",
+    "packages/mcp/server/index.js",
+    "packages/mcp/transport/index.js",
     "packages/mcp/cli/install/index.js",
   ];
   const leaked = forbidden.filter((file) => graph.has(file));

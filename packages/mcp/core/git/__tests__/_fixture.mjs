@@ -4,7 +4,7 @@
  * Hermetic git fixtures for the shared git foundation.
  *
  * Every fixture repository is created under a temp directory with the private
- * global config `tests/fixtures/git-hermetic.mjs` installs, so an ambient
+ * global config `scripts/__tests__/fixtures/git-hermetic.mjs` installs, so an ambient
  * `core.hooksPath`, `commit.gpgsign` or `init.defaultBranch` on the machine
  * cannot reach it. The repository hooks this project installs (`commit-msg`
  * rejects a scope-less subject) would otherwise fail the fixture commits
@@ -16,7 +16,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import "../../../../../tests/fixtures/git-hermetic.mjs";
+import "../../../../../scripts/__tests__/fixtures/git-hermetic.mjs";
 
 /**
  * Run git in a fixture repository and return trimmed stdout.

@@ -14,8 +14,8 @@
  * Usage:
  *   pnpm case-studies
  *
- * @see case-studies/*\/vite.config.* - env-aware port and proxy target
- * @see case-studies/phonebook/*\/electron/main.* - env-aware renderer URL
+ * @see docs/case-studies/*/vite.config.* - env-aware port and proxy target
+ * @see docs/case-studies/phonebook/*/electron/main.* - env-aware renderer URL
  */
 
 import { existsSync } from "node:fs";

@@ -17,7 +17,7 @@
 import { strict as assert } from "node:assert";
 import { test } from "node:test";
 
-import { VERBOSE_CORPUS } from "../../../../scripts/reports/compression/_verbose.data.mjs";
+import { VERBOSE_CORPUS } from "../../../../../scripts/reports/compression/_verbose.data.mjs";
 import { compressTextGuarded } from "../_compression.js";
 import { guardCompression } from "../compress-guard/index.js";
 import { results, text } from "./_efficacy.fixture.mjs";

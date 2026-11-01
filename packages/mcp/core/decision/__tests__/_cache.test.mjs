@@ -4,7 +4,7 @@ import { test } from "node:test";
 
 import { cacheKey, clearDecisionCache } from "../_cache.js";
 import { rerankShortlist } from "../_rerank.js";
-import { RECORDED_DECISION } from "../../../../../tests/fixtures/decision-models/recorded-answer.mjs";
+import { RECORDED_DECISION } from "../../../../../scripts/__tests__/fixtures/decision-models/recorded-answer.mjs";
 
 const shortlist = [{ skill: "billing" }, { skill: "shipping" }, { skill: "technical" }];
 const questions = { pick: { type: "choice", criteria: { billing: "", shipping: "", technical: "" } } };

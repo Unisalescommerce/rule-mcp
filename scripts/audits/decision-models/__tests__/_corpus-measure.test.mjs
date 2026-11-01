@@ -5,7 +5,7 @@ import { test } from "node:test";
 
 import { buildQuestion, compareOff, pickOf, shortlistFor, summarize } from "../_corpus-measure.mjs";
 
-const FIXTURE = new URL("../../../../tests/fixtures/decision-models/corpus-baseline.json", import.meta.url);
+const FIXTURE = new URL("../../../../scripts/__tests__/fixtures/decision-models/corpus-baseline.json", import.meta.url);
 
 test("summarize counts exact and top-or-alternative", () => {
   const rows = [

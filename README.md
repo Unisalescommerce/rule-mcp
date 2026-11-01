@@ -6,7 +6,7 @@
 <ul data-part="stats">
 <li><strong>Node 26.4+</strong></li>
 <li><strong>83 skills</strong></li>
-<li><strong>105 tools</strong></li>
+<li><strong>106 tools</strong></li>
 <li><strong>174 resources</strong></li>
 <li><strong>41 prompts</strong></li>
 <li><strong>44 slash commands</strong></li>

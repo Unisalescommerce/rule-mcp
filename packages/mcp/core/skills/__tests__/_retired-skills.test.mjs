@@ -18,7 +18,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
 
-const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..", "..");
+const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..", "..", "..");
 
 /** Skills the catalog retired. Adding one is a decision; removing one is not. */
 export const RETIRED = ["rule-platform-agent", "rule-frontend-vanilla-reactive", "rule-frontend-custom-element"];

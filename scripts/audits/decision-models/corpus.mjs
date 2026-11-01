@@ -29,7 +29,7 @@ process.env.RULE_MCP_SKILL_UNIVERSE ??= "base";
 process.env.RULE_MCP_NO_CACHE ??= "1";
 process.env.RULE_MCP_NO_SYNC_GUARD ??= "1";
 
-const DEFAULT_FIXTURE = fileURLToPath(new URL("../../../tests/fixtures/decision-models/corpus-baseline.json", import.meta.url));
+const DEFAULT_FIXTURE = fileURLToPath(new URL("../../../scripts/__tests__/fixtures/decision-models/corpus-baseline.json", import.meta.url));
 const argv = process.argv.slice(2);
 const flag = (name) => argv.includes(name);
 const value = (name, fallback) => {

@@ -17,7 +17,7 @@ import { fileURLToPath } from "node:url";
 // process loads it too, so it registers the hook as every entry point does.
 const ALIAS_HOOK = fileURLToPath(new URL("../../../../scripts/alias-hook.mjs", import.meta.url));
 
-export const ENFORCEMENT = fileURLToPath(new URL("../../../src/core/enforcement/index.js", import.meta.url));
+export const ENFORCEMENT = fileURLToPath(new URL("../../core/enforcement/index.js", import.meta.url));
 
 /**
  * The pre-diet cost of this exact session, measured on the decoration path

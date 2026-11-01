@@ -41,7 +41,7 @@ const asJson = process.argv.includes("--json");
 
 const { loadAllSkills } = await import("../../../packages/mcp/core/skills/index.js");
 const { callTool } = await import("../../../packages/mcp/tools/router/index.js");
-const { CORPUS } = await import("../../../tests/fixtures/routing-corpus.mjs");
+const { CORPUS } = await import("../../../scripts/__tests__/fixtures/routing-corpus.mjs");
 
 await loadAllSkills(true);
 

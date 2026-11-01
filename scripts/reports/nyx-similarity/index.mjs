@@ -40,7 +40,7 @@ const THRESHOLDS = [0.995, 0.99, 0.98, 0.97, 0.96, 0.95, 0.9, 0.85, 0.8, 0.75, 0
 
 const { loadAllSkills } = await import("../../../packages/mcp/core/skills/index.js");
 const { callTool } = await import("../../../packages/mcp/tools/router/index.js");
-const { CORPUS } = await import("../../../tests/fixtures/routing-corpus.mjs");
+const { CORPUS } = await import("../../../scripts/__tests__/fixtures/routing-corpus.mjs");
 const { variants } = await import("../cache-similarity/_similarity.mjs");
 
 // Nyx is optional in this checkout: resolve it the way the runtime loader does.

@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "files": [
+    {
+      "file": "01-getting-started.md",
+      "kind": "block",
+      "marker": "agent-targets",
+      "sha256": "c83b8b0c45fb5b99684d6f8ce036e3ffbec2bbbdaf71ecc1768bc62c571f0c00"
+    },
+    {
+      "file": "02-architecture.md",
+      "kind": "block",
+      "marker": "surface-counts",
+      "sha256": "1baeca542116cfa9853f6f99328394cbafbebc4720a471e66999b307f38e0b77"
+    },
+    {
+      "file": "05-env-variables.md",
+      "kind": "block",
+      "marker": "env-registry",
+      "sha256": "4634f8c4dadd3f6f7629ef8400d76af7dcddb6cac3e957b1758d840c98ca46d4"
+    },
+    {
+      "file": "08-engineering-guides.md",
+      "kind": "block",
+      "marker": "command-surface",
+      "sha256": "91108cbf568888e74715f0566c6902072020fc9782c61f0970f8a9c7cb947306"
+    },
+    {
+      "file": "09-skills.md",
+      "kind": "document",
+      "sha256": "0c8e132fb761acef34be4493f0edd4f16381faeefa3e377a0172047ab83f6d26"
+    },
+    {
+      "file": "10-tools.md",
+      "kind": "document",
+      "sha256": "0cfb68207c24cb979af191b9090734d516b9c30562393e81e9248a71726ede2b"
+    },
+    {
+      "file": "11-prompts.md",
+      "kind": "document",
+      "sha256": "04e7cbe4c00025f5ea8c60b8dfe818f14a142cc1e840660a6bdb48474de5114d"
+    },
+    {
+      "file": "12-instructions.md",
+      "kind": "document",
+      "sha256": "7a104570adbc084f7c0d7d83128e1913885998167c1ee57346907b1b63eda184"
+    },
+    {
+      "file": "13-cli.md",
+      "kind": "document",
+      "sha256": "2bff1b074ab01e620618ce1b03ecb1cdcb5fb7df124db09fd837627ed7bed105"
+    },
+    {
+      "file": "14-personas.md",
+      "kind": "document",
+      "sha256": "3bf526415d2d103d5420144e88437f69bec44752c887cf1c806094bdcceddd1f"
+    },
+    {
+      "file": "15-guardrails.md",
+      "kind": "document",
+      "sha256": "b8189a56ae644d71b048a10e2f82d1bc9e657aaa88b885d86f67c859121c4671"
+    },
+    {
+      "file": "16-resources.md",
+      "kind": "document",
+      "sha256": "458e49c63ce28fbf932095d623427eaa0fea26da905639d27ac491fe77029667"
+    },
+    {
+      "file": "17-surface-map.md",
+      "kind": "document",
+      "sha256": "b56aa176ed6b152e39610843fa9a61776feaa4db984815468342e2c20c7bb6a2"
+    }
+  ]
+}

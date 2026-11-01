@@ -2,7 +2,7 @@
 
 Practical guides for working on rule-mcp itself: the engineering loop,
 the guardrails, the docs pipeline, and the numbers that matter. Counts here are
-verified by `tests/docs/docs-accuracy.test.mjs` against the live registries; the
+verified by `scripts/__tests__/docs/docs-accuracy.test.mjs` against the live registries; the
 heavy inventories live in the generated census blocks of `docs/01-`,
 `docs/02-` and `docs/04-`. For the shallow entry, start with
 [Quick start](./07-quick-start.md).
@@ -49,7 +49,7 @@ follows the standard loop, enforced by the repo's own guardrails:
 4. **Format**: `pnpm format:fix` (prettier) so `pnpm format` stays clean.
 5. **Regenerate the census** when the surface changed: `pnpm census` updates
    the generated blocks in `docs/01-`, `docs/02-`, `docs/04-`, `docs/05-`
-   (`tests/docs/census-generated.test.mjs` fails otherwise).
+   (`scripts/__tests__/docs/census-generated.test.mjs` fails otherwise).
 6. **Commit with a scoped conventional message**: `type(scope): subject`
    (the `commit-msg` hook rejects scope-less subjects).
 
@@ -65,7 +65,7 @@ per skill by `src/core/guardrails.js` (`getGuardrails` / `checkCode`).
   `.md` documents must be English, American spelling).
 - **Domain families** attach per skill: backend, database (data-*), devops,
   a11y (frontend/platform/ui/styleguide), framework and scaffold rules.
-- **Precision is measured**: `tests/fixtures/guardrail-corpus.mjs` feeds every
+- **Precision is measured**: `scripts/__tests__/fixtures/guardrail-corpus.mjs` feeds every
   rule labeled good/bad snippets; `tests/core/guardrails-precision-recall.test.mjs`
   requires 100% precision and recall per rule - a rule that fires on idiomatic
   code or sleeps on violations fails the suite.
@@ -91,7 +91,7 @@ claims a numbered slot: it is deleted when fully executed or obsolete.
 entry.
 
 To add a surface, change the code, run `pnpm census`, verify
-`tests/docs/census-generated.test.mjs` and `tests/docs/docs-accuracy.test.mjs`, then
+`scripts/__tests__/docs/census-generated.test.mjs` and `scripts/__tests__/docs/docs-accuracy.test.mjs`, then
 commit - the docs follow the code instead of being remembered.
 
 ## Measured numbers
@@ -103,7 +103,7 @@ commit - the docs follow the code instead of being remembered.
 - **Skill reading** is cached (LRU): a cache hit is sub-millisecond, a miss is
   one disk read.
 - **Routing** builds a deterministic BM25 index at startup; routing is measured
-  against `tests/fixtures/routing-corpus.mjs` with floors on exact and top-or-alternative
+  against `scripts/__tests__/fixtures/routing-corpus.mjs` with floors on exact and top-or-alternative
   hits, so a new skill can only land when routing still finds the intended
   target.
 - **Tests**: the suite covers the installer (bash + PowerShell), the CLI
@@ -135,7 +135,7 @@ commit - the docs follow the code instead of being remembered.
 
 The rule is one sentence: every text the server hands to a model runs through
 `src/core/text/` before it leaves. The manifest lives in
-[`src/core/text/_surfaces.js`](../src/core/text/_surfaces.js) and is pinned
+[`packages/mcp/core/text/_surfaces.js`](../packages/mcp/core/text/_surfaces.js) and is pinned
 by `src/core/text/__tests__/_surfaces.test.mjs`; the table below is that
 manifest rendered. "Prose" surfaces shorten verbose text, keep JSON identical
 and never break structure (the guard errors stay 0); the documented skips say
@@ -210,7 +210,7 @@ Measured on 2026-09-15, `develop`:
 - **Savings ledger** (`tokensave gain --json --range 30d`): 85 calls, ~97.6k tokens saved, $0.29.
 - **Missed opportunities** (`tokensave discover --since 30d`): 472 navigation turns, ~120.7k
   addressable input tokens, ~60.3k conservative recoverable.
-- **Routing** (`tests/fixtures/routing-corpus.mjs`): 80% exact / 95% top-or-alternative without
+- **Routing** (`scripts/__tests__/fixtures/routing-corpus.mjs`): 80% exact / 95% top-or-alternative without
   the graph, 81% exact / 95% with it.
 
 ## Contributing

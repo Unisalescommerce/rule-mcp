@@ -70,7 +70,7 @@ test("a renamed tool still answers to the name it had", () => {
 });
 
 test("every pinned tool declares the entry it is reached by", () => {
-  const snapshot = JSON.parse(readFileSync(join(root, "tests/fixtures/tool-surface.json"), "utf8"));
+  const snapshot = JSON.parse(readFileSync(join(root, "scripts/__tests__/fixtures/tool-surface.json"), "utf8"));
   const declared = new Map(declaredTools().map((tool) => [tool.name, tool.entry]));
 
   assert.equal(declared.size, snapshot.count, "every pinned tool is registered, and nothing else is");

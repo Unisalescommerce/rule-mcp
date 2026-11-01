@@ -1,6 +1,0 @@
-packages:
-  - "server"
-  - "client"
-allowBuilds:
-  '@biomejs/biome': true
-  esbuild: true

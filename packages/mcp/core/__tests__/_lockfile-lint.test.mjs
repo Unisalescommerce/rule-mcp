@@ -10,7 +10,7 @@ import { strict as assert } from "node:assert";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 
-const lock = readFileSync(new URL("../../../pnpm-lock.yaml", import.meta.url), "utf8");
+const lock = readFileSync(new URL("../../../../pnpm-lock.yaml", import.meta.url), "utf8");
 
 test("every resolution carries an integrity hash or a local link", () => {
   const resolutions = [...lock.matchAll(/^\s+resolution: \{(.+)\}$/gm)].map(([, body]) => body);
@@ -30,7 +30,7 @@ test("the registry is npm", () => {
 });
 
 test("the security overrides are pinned exactly", () => {
-  const workspace = readFileSync(new URL("../../../pnpm-workspace.yaml", import.meta.url), "utf8");
+  const workspace = readFileSync(new URL("../../../../pnpm-workspace.yaml", import.meta.url), "utf8");
   const overrides = workspace.slice(workspace.indexOf("overrides:"));
   const ranged = [...overrides.matchAll(/^ {2}'?([\w@/.-]+)'?: '?([\^~][^'\n]+)'?$/gm)].map(([, name]) => name);
   // brace-expansion is the documented exception: its allowlist spans majors

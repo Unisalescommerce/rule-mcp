@@ -4,7 +4,7 @@
 
 Counted from the registries that define it. Run `pnpm census` after changing
 a tool, a skill, a prompt, a role, a command or a guardrail;
-`tests/docs/census-generated.test.mjs` compares this file against the live
+`scripts/__tests__/docs/census-generated.test.mjs` compares this file against the live
 registry, so a stale copy fails the build instead of misleading a reader.
 
 ## Action tools (106)

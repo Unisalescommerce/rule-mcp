@@ -45,12 +45,12 @@ What is already correct and should not be touched:
 
 **A total order is real, and it is imposed by three files, not by taste:**
 
-1. `tests/fixtures/guardrail-corpus.mjs` - every plan that adds a rule appends to
+1. `scripts/__tests__/fixtures/guardrail-corpus.mjs` - every plan that adds a rule appends to
    it. That is 60+ of the 83 nodes, so the corpus serializes most of the
    catalog by construction.
 2. `docs/adr/ADR.md` and the ADR numbering - every plan creates two ADRs. The
    numbers are global and allocated at merge time.
-3. `tests/fixtures/census.json` and the six generated docs - every plan that
+3. `scripts/__tests__/fixtures/census.json` and the six generated docs - every plan that
    changes a count regenerates them, and a regeneration invalidates the other
    branch's copy.
 
@@ -153,7 +153,7 @@ M9  per-plan diff dm:plan vs ge:plan -> 29 identical, 3 diverged (1, 1, 4 lines)
 ## Resolution (2026-10-21)
 
 Every finding was closed on `feat/guardrails-evolution`, where the plans live:
-`3553780c` adds `tests/plans/skills-plan.test.mjs` (nine assertions, written
+`3553780c` adds `scripts/__tests__/plans/skills-plan.test.mjs` (nine assertions, written
 first and seen red), `6cda42ea` applies the fixes. Verified on that branch: the
 nine assertions pass, `_corpus`, `_router-child-coverage`, `_retired-skills` and
 `docs-accuracy` are green, the census is current, and lint is clean.

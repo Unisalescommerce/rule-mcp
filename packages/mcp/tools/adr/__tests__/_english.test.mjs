@@ -50,7 +50,7 @@ test("an English ADR passes untouched", () => {
 
 test("the tool schema no longer advertises an Italian example title", async () => {
   const { readFileSync } = await import("node:fs");
-  const source = readFileSync("src/tools/adr/index.js", "utf8");
+  const source = readFileSync("packages/mcp/tools/adr/index.js", "utf8");
 
   assert.ok(!source.includes("Usare PostgreSQL come database"), "the zod example title must be English");
 });

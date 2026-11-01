@@ -4,7 +4,7 @@ import { test } from "node:test";
 
 import { resetDecisionRuntime } from "../../../decision/_runtime.js";
 import { startFakeServer } from "../../../decision/__tests__/fixtures/_fake-server.mjs";
-import { CORPUS } from "../../../../../../tests/fixtures/semantic-guardrail-corpus.mjs";
+import { CORPUS } from "../../../../../../scripts/__tests__/fixtures/semantic-guardrail-corpus.mjs";
 import { checkSemantic, SEMANTIC_GUARDRAILS } from "../index.js";
 
 const ENV = ["RULE_MCP_DECISION_MODEL", "RULE_MCP_DECISION_URL", "RULE_MCP_DECISION_TIMEOUT"];

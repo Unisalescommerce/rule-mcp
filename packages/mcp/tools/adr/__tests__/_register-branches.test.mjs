@@ -5,7 +5,7 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
-import "../../../../../tests/fixtures/git-hermetic.mjs";
+import "../../../../../scripts/__tests__/fixtures/git-hermetic.mjs";
 
 process.env.RULE_MCP_STATE_DIR = mkdtempSync(join(tmpdir(), "rule-mcp-adr-branches-"));
 process.env.RULE_MCP_NO_AUTOUPDATE = "1";

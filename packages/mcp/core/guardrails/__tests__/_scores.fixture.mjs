@@ -12,7 +12,7 @@
  * for a corpus somebody wrote by hand: a labeled snippet the rule gets wrong is
  * either a rule bug or a mislabeled snippet, and both need a person.
  */
-import { CORPUS } from "../../../../../tests/fixtures/guardrail-corpus.mjs";
+import { CORPUS } from "../../../../../scripts/__tests__/fixtures/guardrail-corpus.mjs";
 import { checkCode, setSkillGuardrails } from "../index.js";
 import * as DEFS from "../index.js";
 import { loadLayerGuardrails } from "../../layers/_guardrails.js";
@@ -85,4 +85,4 @@ function score() {
 
 export const scores = score();
 
-export { CORPUS } from "../../../../../tests/fixtures/guardrail-corpus.mjs";
+export { CORPUS } from "../../../../../scripts/__tests__/fixtures/guardrail-corpus.mjs";

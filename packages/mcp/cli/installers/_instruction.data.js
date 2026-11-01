@@ -67,6 +67,7 @@ export const RULES_BLOCK = [
   "- rule_tool_process_adr - Architecture Decision Records",
   "- rule_tool_structural - Declare the current task structural, once",
   "- rule_tool_handoff / rule_tool_handon - Session handoff and resume",
+  "- rule_tool_write_plan - Durable docs/plans/_*.md + plan-of-plans registration (host CreatePlan is session UI only)",
   "- rule_tool_detect - Detect project framework",
   "- rule_tool_init / rule_tool_update - Project init and server update",
   "- Flex first: layout with display:flex; display:grid only for named areas, subgrid, explicit placement, or auto-fit tracks, justified with /* grid: why */",

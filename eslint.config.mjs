@@ -119,7 +119,7 @@ export default defineConfig([
   {
     // Co-located unit tests live in Jest-style __tests__/ folders (ADR 061,
     // phase 6); the dunder directory name is the convention, not a case slip.
-    files: ["src/**/__tests__/**/*.mjs", "scripts/**/__tests__/**/*.mjs"],
+    files: ["packages/**/__tests__/**/*.mjs", "scripts/**/__tests__/**/*.mjs"],
     rules: {
       "unicorn/filename-case": "off",
     },
@@ -127,7 +127,7 @@ export default defineConfig([
   {
     // Playwright specs: page.evaluate/addInitScript callbacks run in the
     // browser, where document/window are globals rather than closure leaks.
-    files: ["tests/e2e/**/*.mjs"],
+    files: ["scripts/__tests__/e2e/**/*.mjs"],
     languageOptions: {
       globals: {
         ...globals.browser,
@@ -139,7 +139,7 @@ export default defineConfig([
   },
   {
     // Browser scripts shipped to the docs site are browser code, not node.
-    files: ["scripts/docs-site/prefs.js", "scripts/docs-site/transitions.js", "scripts/docs-site/architecture-diagram.js"],
+    files: ["packages/docs/prefs.js", "packages/docs/transitions.js", "packages/docs/architecture-diagram.js"],
     languageOptions: {
       globals: {
         ...globals.browser,

@@ -48,7 +48,7 @@ import { correctness, invalidationCost, pass } from "./_measure.mjs";
 import { renderReport } from "./_render.mjs";
 import { rephrase, WORKLOAD } from "./_workload.mjs";
 
-const { CORPUS } = await import("../../../tests/fixtures/routing-corpus.mjs");
+const { CORPUS } = await import("../../../scripts/__tests__/fixtures/routing-corpus.mjs");
 
 cacheClear();
 

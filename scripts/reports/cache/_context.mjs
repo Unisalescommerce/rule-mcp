@@ -21,6 +21,6 @@ delete process.env.RULE_MCP_NO_CACHE;
 const { loadAllSkills } = await import("../../../packages/mcp/core/skills/index.js");
 export const { callTool, entryPathOf } = await import("../../../packages/mcp/tools/router/index.js");
 export const { cacheClear, cacheEntries } = await import("../../../packages/mcp/core/cache/tool-cache/index.js");
-export const { CORPUS } = await import("../../../tests/fixtures/routing-corpus.mjs");
+export const { CORPUS } = await import("../../../scripts/__tests__/fixtures/routing-corpus.mjs");
 
 await loadAllSkills(true);

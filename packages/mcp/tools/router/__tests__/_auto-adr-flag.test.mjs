@@ -86,7 +86,7 @@ check("T5 the separate disable name is inert", await hooksAutoLog({ [FLAG]: "1",
 const { readdirSync, readFileSync } = await import("node:fs");
 const walk = (dir) =>
   readdirSync(dir, { withFileTypes: true }).flatMap((entry) => (entry.isDirectory() ? walk(join(dir, entry.name)) : entry.name.endsWith(".js") ? [join(dir, entry.name)] : []));
-const stragglers = walk(new URL("../../../../src", import.meta.url).pathname).filter((file) => {
+const stragglers = walk(new URL("../../..", import.meta.url).pathname).filter((file) => {
   const text = readFileSync(file, "utf8");
 
   return text.includes(RETIRED_ENABLE) || text.includes(RETIRED_DISABLE);

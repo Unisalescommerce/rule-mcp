@@ -8,7 +8,7 @@ import { test } from "node:test";
 import { promptToRunLines, resumePrompt } from "../_resume-prompt.js";
 import { openItems } from "../_open-items.js";
 import { git, handon, write } from "./_handon.fixture.mjs";
-import "../../../../../tests/fixtures/git-hermetic.mjs";
+import "../../../../../scripts/__tests__/fixtures/git-hermetic.mjs";
 
 /** A handoff whose tail carries the block the next session is meant to start from. */
 const body = [

@@ -95,7 +95,7 @@ file and has no command files, so a strict ladder would report `L0` and hide a m
 
 `doctor` prints `L2 of L3, next L3` for a host installed at a level, and the ceiling alone for
 one installed before the manifest recorded it. This table is the same data the installer reads;
-`tests/docs/integration-levels.test.mjs` recomputes it from `hostRecord()` and fails on drift.
+`scripts/__tests__/docs/integration-levels.test.mjs` recomputes it from `hostRecord()` and fails on drift.
 
 <!-- levels:start -->
 
