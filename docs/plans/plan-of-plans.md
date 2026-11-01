@@ -28,7 +28,7 @@ Node ids in graph lines stay skill names (`rule-process-ai`), not filenames. Fil
 | launcher | _(retired)_ | done → ADR 201 | Phase 4 closed 2026-10-30 (pending ADR the-launcher-owns-…) |
 | port / installer scope | _(retired)_ | done → ADR 198 | file gone; HARD edge to host plan satisfied |
 | export | _(retired)_ | done → ADR 199 | Steps 0–8 complete 2026-10-31; review/audit → ADR 202/203 |
-| scripts layout | `_2026-10-01-scripts-mcp-layout.md` | `planned` | own graph |
+| scripts layout | `_scripts-mcp-layout.md` | `planned` | WS0–WS7; own graph |
 | decision models | `_decision-models.md` | `planned` | own graph |
 | ASD-STE100 writing + plan shape | _(retired)_ | done → ADR 204 | WS-G closed 2026-10-31; product pending ADR mcp-authored-markdown-uses-asd-ste100… |
 | area guardrails (`_*-guardrails.md`) | six files | `superseded` | absorbed into leaf plans; no new work |
@@ -70,7 +70,7 @@ rel/v0.1.0
 │   └── skills/_skills-plan.md ......... stages 0-10; 3 release nodes done
 ├── WS-D  single tracks (parallel, no mutual HARD)
 │   ├── export ......................... done → ADR 199
-│   ├── _2026-10-01-scripts-mcp-layout.md
+│   ├── _scripts-mcp-layout.md
 │   └── _decision-models.md
 ├── WS-G  ASD-STE100 writing + plan shape
 │   └── _asd-ste100.md ................. done → ADR 204
@@ -121,7 +121,7 @@ Orchestrator: [`skills/_skills-plan.md`](skills/_skills-plan.md)
 Run only when WS-A/B/C are idle on the shared files in section 8, or in parallel when the track edits none of them.
 
 - [x] export — Steps 0–8 complete; retired → [ADR 199](../adr/199-close-out-plan-export.md) (review ADR 202, audit ADR 203).
-- [ ] [`_2026-10-01-scripts-mcp-layout.md`](_2026-10-01-scripts-mcp-layout.md) — own dependency graph.
+- [ ] [`_scripts-mcp-layout.md`](_scripts-mcp-layout.md) — WS0–WS7; own dependency graph.
 - [ ] [`_decision-models.md`](_decision-models.md) — own dependency graph.
 
 ### WS-G — ASD-STE100 writing and AI plan shape
