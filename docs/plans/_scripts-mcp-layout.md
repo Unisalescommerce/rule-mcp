@@ -1,10 +1,10 @@
 # Plan: pnpm workspace with `packages/{mcp,shared,docs}` + sibling Nyx
 
-Status: `in-progress`
-Notes: subordinate plan (leading `_`); coordinated by `docs/plans/plan-of-plans.md` workstream WS-D. Replaces `_2026-10-01-scripts-mcp-layout.md`. Executes on `rel/v0.1.0` (ADR 181). Do not create `refactor/packages-mcp-nyx-workspace`. WS0 landed (`rule_tool_write_plan`).
+Status: `done`
+Notes: subordinate plan (leading `_`); coordinated by `docs/plans/plan-of-plans.md` workstream WS-D. Replaces `_2026-10-01-scripts-mcp-layout.md`. Executes on `rel/v0.1.0` (ADR 181). Do not create `refactor/packages-mcp-nyx-workspace`. WS0–WS7 closed 2026-11-01; product ADR pending land (`pnpm-workspace-with-packages-mcp-shared-docs-and-publish-from-packages-mcp`).
 
 - **Date**: 2026-10-01
-- **Updated**: 2026-11-01 (rename to `_scripts-mcp-layout.md`; WS0 plan-writer; branch = `rel/v0.1.0`)
+- **Updated**: 2026-11-01 (WS7 closeout; layout live on `rel/v0.1.0`)
 - **Execution branch**: `rel/v0.1.0`
 - **Repos**: workspace root (this git tree) + sibling `../nyx` (`nyx-gateway`)
 
@@ -183,9 +183,9 @@ Host CreatePlan writes only under `~/.local/share/opencode/plans/` (session UI).
 
 ### WS7 — Closeout
 
-- [ ] **WS7-T1**: Product ADR pending (monorepo layout + publish boundary); do not amend ADR 134.
-- [ ] **WS7-T2**: Plan + plan-of-plans WS-D boxes; `pnpm census:check`; quick then all suites; `rule_tool_check` on touched surfaces.
-- [ ] **WS7-T3**: Numbered handoff; Conventional `type(scope):` commits per concern; **no push** unless asked.
+- [x] **WS7-T1**: Product ADR pending (monorepo layout + publish boundary); do not amend ADR 134.
+- [x] **WS7-T2**: Plan + plan-of-plans WS-D boxes; `pnpm census:check`; quick then all suites; `rule_tool_check` on touched surfaces.
+- [x] **WS7-T3**: Numbered handoff; Conventional `type(scope):` commits per concern; **no push** unless asked.
 
 ## Closing sweep
 
