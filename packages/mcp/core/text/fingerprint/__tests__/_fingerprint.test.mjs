@@ -24,7 +24,7 @@ const check = (label, ok) => {
 
 console.log("=== AI fingerprint removal ===\n");
 
-import { fingerprintEnabled, stripFingerprint, stripFingerprintResult } from "../index.js";
+import { findFingerprints, fingerprintEnabled, stripFingerprint, stripFingerprintResult } from "../index.js";
 
 const EM = String.fromCodePoint(0x20_14);
 const EN = String.fromCodePoint(0x20_13);
@@ -56,6 +56,9 @@ check("T2 prose comes out plain ASCII", ASCII_ONLY.test(t2));
 check("T2.1 quotes become straight", t2.includes('"Quoted"') && t2.includes("'single'"));
 check("T2.2 the ellipsis becomes three dots", t2.includes("..."));
 check("T2.3 the arrow becomes ASCII", t2.includes("->"));
+const RLO = String.fromCodePoint(0x20_2e);
+check("T2.4 a bidi override is removed", !stripFingerprint(`safe ${RLO} code`).includes(RLO));
+check("T2.4.1 the detector reports it by code point", findFingerprints(`safe ${RLO} code`).bidi.length === 1);
 
 // ── T3: American English ──
 const british = "The colour of the behaviour we organise, analysed at the centre of the catalogue.";

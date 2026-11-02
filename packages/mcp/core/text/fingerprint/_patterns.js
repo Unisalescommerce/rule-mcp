@@ -21,6 +21,13 @@ export const ISE_RE = new RegExp(String.raw`\b((?:un|re)?(?:${ISE_STEMS}))(e|es|
 export const RE_RE = new RegExp(String.raw`\b(${RE_STEMS})(re|res|red|ring)\b`, "gi");
 export const OGUE_RE = new RegExp(String.raw`\b(${OGUE_STEMS})ogue(s)?\b`, "gi");
 
+/**
+ * Directional overrides and isolates: invisible, and they reorder what the next
+ * reader sees. An override can hide a line of code inside a comment, which is
+ * why this one is a security property and not a style preference.
+ */
+export const BIDI_RE = /[\u202A-\u202E\u2066-\u2069]/g;
+
 /** Dashes a person does not type. Kept separate: this is the strongest tell. */
 export const DASH_RE = /[\u2014\u2013\u2012]/g;
 

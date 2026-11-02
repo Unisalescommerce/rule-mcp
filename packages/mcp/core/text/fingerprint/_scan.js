@@ -1,6 +1,6 @@
 /** @module core/text/fingerprint/scan - find the fingerprints without changing anything */
 
-import { DASH_RE, ISE_RE, OGUE_RE, OUR_RE, RE_RE, TYPOGRAPHIC_RE, WORD_RE } from "./_patterns.js";
+import { BIDI_RE, DASH_RE, ISE_RE, OGUE_RE, OUR_RE, RE_RE, TYPOGRAPHIC_RE, WORD_RE } from "./_patterns.js";
 
 /**
  * The part of a text the transformer is allowed to rewrite: prose, with fenced
@@ -38,11 +38,11 @@ export function scannableProse(text) {
  * literals included - a British spelling in a user-facing message is still one.
  *
  * @param {string} text
- * @returns {{ dashes: string[], typographic: string[], british: string[] }}
+ * @returns {{ dashes: string[], typographic: string[], british: string[], bidi: string[] }}
  */
 export function findFingerprints(text) {
   if (typeof text !== "string" || text.length === 0) {
-    return { dashes: [], typographic: [], british: [] };
+    return { dashes: [], typographic: [], british: [], bidi: [] };
   }
 
   const scannable = scannableProse(text);
@@ -56,6 +56,7 @@ export function findFingerprints(text) {
     dashes: scannable.match(DASH_RE) ?? [],
     typographic: scannable.match(TYPOGRAPHIC_RE) ?? [],
     british: [...new Set(british)],
+    bidi: scannable.match(BIDI_RE) ?? [],
   };
 }
 

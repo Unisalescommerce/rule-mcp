@@ -17,23 +17,29 @@ comments, documentation, UI strings and error messages alike.
 Prose is plain ASCII. Nothing here is a matter of taste: every one of these has
 a keyboard equivalent that reads the same.
 
-| Banned                        | Name                            | Write instead                                 |
-| ----------------------------- | ------------------------------- | --------------------------------------------- |
-| `—`                           | em dash                         | `,` for a clause break, `-` for a list marker |
-| `–` `‒` `−`                   | en dash, figure dash, minus     | `-`                                           |
-| `“` `”` `„`                   | curly double quotes             | `"`                                           |
-| `‘` `’` `‚`                   | curly single quotes, apostrophe | `'`                                           |
-| `…`                           | ellipsis glyph                  | `...`                                         |
-| `•` `‣` `·`                   | bullets                         | `-`                                           |
-| `→` `←` `⇒`                   | arrows                          | `->` `<-` `=>`                                |
-| `≤` `≥` `≠`                   | comparisons                     | `<=` `>=` `!=`                                |
-| `×`                           | multiplication sign             | `x`                                           |
-| non-breaking and thin spaces  | invisible                       | a normal space                                |
-| zero-width space, joiner, BOM | invisible                       | delete                                        |
+| Banned                               | Name                            | Write instead                                 |
+| ------------------------------------ | ------------------------------- | --------------------------------------------- |
+| `—`                                  | em dash                         | `,` for a clause break, `-` for a list marker |
+| `–` `‒` `−`                          | en dash, figure dash, minus     | `-`                                           |
+| `“` `”` `„`                          | curly double quotes             | `"`                                           |
+| `‘` `’` `‚`                          | curly single quotes, apostrophe | `'`                                           |
+| `…`                                  | ellipsis glyph                  | `...`                                         |
+| `•` `‣` `·`                          | bullets                         | `-`                                           |
+| `→` `←` `⇒`                          | arrows                          | `->` `<-` `=>`                                |
+| `≤` `≥` `≠`                          | comparisons                     | `<=` `>=` `!=`                                |
+| `×`                                  | multiplication sign             | `x`                                           |
+| non-breaking and thin spaces         | invisible                       | a normal space                                |
+| zero-width space, joiner, BOM        | invisible                       | delete                                        |
+| `U+202A`-`U+202E`, `U+2066`-`U+2069` | bidi overrides and isolates     | delete                                        |
 
 The em dash earns its own rule because it is the single strongest tell. A model
 writes `The router - which caches results - is fast`; a person writes
 `The router, which caches results, is fast`.
+
+The bidi controls earn a blocking rule of their own: they are invisible, and
+they reorder the characters around them, so a line can read as a comment while
+it is code (Trojan Source). The rule reports the code point, and the suggestion
+is to delete it; a right-to-left document uses markup, not an override.
 
 Code is exempt. A third-party API is allowed to be named `getColour()`, and an
 identifier is not prose. Fenced blocks, inline spans and URLs are never

@@ -59,7 +59,7 @@ references are the parts that apply to every change, not only to an AI one.
 | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | [references/simplicity.md](references/simplicity.md)   | before and during implementation: the scope contract, the over-engineering catalog, the removal pass, file size | `ai-no-speculative-audit-table`, `ai-no-placeholder-implementation`, `ai-no-suppressed-errors` |
 | [references/english.md](references/english.md)         | writing any comment, identifier, commit, prompt or document: English, American spelling, ASCII punctuation      | `ai-english-only-filenames`, `ai-english-only-prose`, `ai-american-english`                    |
-| [references/fingerprint.md](references/fingerprint.md) | writing prose a reader will see: banned characters, drawn boxes, the phrasing that reads as machine-written     | `ai-no-emdash`, `ai-no-typographic-chars`, `ai-box-rectangular`                                |
+| [references/fingerprint.md](references/fingerprint.md) | writing prose a reader will see: banned characters, drawn boxes, the phrasing that reads as machine-written     | `ai-no-emdash`, `ai-no-typographic-chars`, `ai-box-rectangular`, `ai-bidi-controls`            |
 | this file                                              | planning how AI fits the lifecycle: artifacts, plan before code, gates, review, incidents                       | none, deliberately: a gate is a script, and a model in the gate is a suggestion                |
 
 The three references were separate skills until they were merged here. The

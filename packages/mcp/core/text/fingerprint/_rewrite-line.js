@@ -1,7 +1,7 @@
 /** @module core/text/fingerprint/rewrite-line - the per-line rewrites */
 
 import { CHARACTER_MAP, SEQUENCE_MAP, RE_ENDINGS, WORDS } from "../_fingerprint.data.js";
-import { EM_DASH_ALONE, EM_DASH_CLAUSE, EM_DASH_LIST, ISE_RE, OGUE_RE, OUR_RE, RE_RE, WORD_RE } from "./_patterns.js";
+import { BIDI_RE, EM_DASH_ALONE, EM_DASH_CLAUSE, EM_DASH_LIST, ISE_RE, OGUE_RE, OUR_RE, RE_RE, WORD_RE } from "./_patterns.js";
 
 // One body, two passes: "is this data rather than prose" is the same question
 // for the compressor and for the fingerprint rewriter, and two copies of the
@@ -40,7 +40,7 @@ export function americanise(line) {
 
 /** @param {string} line @returns {string} */
 export function asciify(line) {
-  let work = line.replace(EM_DASH_LIST, "$1- ").replaceAll(EM_DASH_ALONE, "$1$2-$3$4").replaceAll(EM_DASH_CLAUSE, ", ");
+  let work = line.replaceAll(BIDI_RE, "").replace(EM_DASH_LIST, "$1- ").replaceAll(EM_DASH_ALONE, "$1$2-$3$4").replaceAll(EM_DASH_CLAUSE, ", ");
 
   for (const [pattern, replacement] of SEQUENCE_MAP) {
     work = work.replaceAll(pattern, replacement);

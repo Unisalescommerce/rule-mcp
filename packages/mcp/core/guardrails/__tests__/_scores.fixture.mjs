@@ -12,7 +12,8 @@
  * for a corpus somebody wrote by hand: a labeled snippet the rule gets wrong is
  * either a rule bug or a mislabeled snippet, and both need a person.
  */
-import { CORPUS } from "../../../../../scripts/__tests__/fixtures/guardrail-corpus.mjs";
+import { CORPUS as GUARDRAIL_CORPUS } from "../../../../../scripts/__tests__/fixtures/guardrail-corpus.mjs";
+import { BIDI_CORPUS } from "../../../../../scripts/__tests__/fixtures/bidi-corpus.mjs";
 import { checkCode, setSkillGuardrails } from "../index.js";
 import * as DEFS from "../index.js";
 import { loadLayerGuardrails } from "../../layers/_guardrails.js";
@@ -23,6 +24,13 @@ import { loadLayerGuardrails } from "../../layers/_guardrails.js";
 const LAYERED = await loadLayerGuardrails();
 
 setSkillGuardrails(LAYERED);
+
+/**
+ * The shared corpus plus the pairs that outgrew it. One list, so a rule's
+ * precision and recall are read from the same place whether its fixture had a
+ * line to spare or not.
+ */
+export const CORPUS = [...GUARDRAIL_CORPUS, ...BIDI_CORPUS];
 
 /** Every rule id the checker knows about, across every group. */
 export function allRuleIds() {
@@ -84,5 +92,3 @@ function score() {
 }
 
 export const scores = score();
-
-export { CORPUS } from "../../../../../scripts/__tests__/fixtures/guardrail-corpus.mjs";

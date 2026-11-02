@@ -1,5 +1,6 @@
 /** The rules rule-process-ai owns, in canonical order. */
 import { fpAmericanEnglish } from "./_american-english.js";
+import { fpBidiControls } from "./_bidi-controls.js";
 import { fpBoxRectangular } from "./_box-rectangular.js";
 import { enEnglishOnlyFilenames } from "./_english-only-filenames.js";
 import { enEnglishOnlyProse } from "./_english-only-prose.js";
@@ -15,6 +16,7 @@ export const GUARDRAILS = [
   fpAmericanEnglish,
   fpNoEmdash,
   fpNoTypographicChars,
+  fpBidiControls,
   fpBoxRectangular,
   noPlaceholderImplementation,
   noSpeculativeAuditTable,
