@@ -42,7 +42,7 @@ Branch history that motivated stages 1-5 (2026-10-21) lives in git and in ADR 18
 
 | Group | Orchestrator | State |
 | ----- | ------------ | ----- |
-| skills catalog | `skills/_skills-plan.md` | in progress: npm/uv/cargo-release done |
+| skills catalog | `skills/_skills-plan.md` | in progress: npm/uv/cargo-release retired (ADR 206-208) |
 | host + launcher (installer infrastructure) | this file, workstreams A–B | both done |
 | single-document tracks | each plan's `## Dependency graph` | export (ADR 199), asd-ste100 (ADR 204), scripts-layout, decision-models |
 | superseded area plans | none (historical) | `_*-guardrails.md` |
@@ -112,7 +112,7 @@ Plan: retired → [ADR 201](../adr/201-close-out-plan-stable-launcher-outside-th
 Orchestrator: [`skills/_skills-plan.md`](skills/_skills-plan.md)
 
 - [x] Format contract on every skill node (ADR 154); Stage 7 id-mismatch finding owned by that test.
-- [x] Three release nodes done (`rule-process-npm/uv/cargo-release`).
+- [x] Three release nodes done (`rule-process-npm/uv/cargo-release`); retired → [ADR 206](../adr/206-close-out-plan-rule-mcp-process-cargo-release.md), [ADR 207](../adr/207-close-out-plan-rule-mcp-process-npm-release.md), [ADR 208](../adr/208-close-out-plan-rule-mcp-process-uv-release.md).
 - [ ] Take the first node whose edges are closed in the current `_skills-plan` stage; one commit per stage; human gates as that file lists.
 - [ ] Exhaust stages 0–10 until every catalog node is `done` or `superseded`.
 
