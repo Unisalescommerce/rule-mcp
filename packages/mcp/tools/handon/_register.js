@@ -7,7 +7,13 @@ const HandonSchema = z.object({
   projectDir: z.string().optional().default(".").describe("Project root directory"),
   file: z.string().optional().describe("A specific handoff to read instead of the newest"),
   list: z.boolean().optional().default(false).describe("List the handoffs and verify nothing"),
-  closeout: z.boolean().optional().default(true).describe("Archive completed audits/reviews/plans into ADRs before verifying (default on; false = verify only, nothing written)"),
+  closeout: z
+    .union([z.boolean(), z.literal("preview")])
+    .optional()
+    .default(true)
+    .describe(
+      "Archive completed audits/reviews/plans into ADRs, retire them from the plan indexes and delete the sources (default true). \"preview\" lists what would close out and writes nothing; false skips the sweep entirely",
+    ),
 });
 
 /** Register the rule_tool_handon tool. */

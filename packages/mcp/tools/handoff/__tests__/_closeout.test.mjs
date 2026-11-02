@@ -1,47 +1,12 @@
 /** Closeout: completed audits/reviews/plans fold into ADRs and leave the tree. */
 import { strict as assert } from "node:assert";
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { existsSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { test } from "node:test";
 
 import { buildHandoff } from "../_build.js";
-import { archiveCompletedDocs, findCompletedDocs } from "../_closeout.js";
-
-const PLAN_DONE = "# done plan\n\n- [x] **Step 1**: first.\n- [x] **1.1**: sub.\n";
-const PLAN_OPEN = "# open plan\n\n- [x] **Step 1**: first.\n- [ ] **Step 2**: second.\n";
-const REVIEW_DONE = "# done review\n\n| Finding | Severity | Status |\n| --- | --- | --- |\n| OSS-1 | high | resolved |\n";
-const REVIEW_OPEN = "# open review\n\n| Finding | Severity | Status |\n| --- | --- | --- |\n| OSS-1 | high | open |\n";
-const AUDIT = "# audit\n\n| What | How | Result |\n| --- | --- | --- |\n| X | `ls` | ok |\n";
-const AUTHOR = "test <t@t.t>";
-
-/** A project with one done and one open doc per kind, plus an orphan audit. */
-function seed() {
-  const dir = mkdtempSync(join(tmpdir(), "rule-mcp-closeout-"));
-
-  for (const sub of ["audits", "reviews", "plans", "adr"]) {
-    mkdirSync(join(dir, "docs", sub), { recursive: true });
-  }
-
-  writeFileSync(join(dir, "docs/plans/done.md"), PLAN_DONE);
-  writeFileSync(join(dir, "docs/plans/open.md"), PLAN_OPEN);
-  writeFileSync(join(dir, "docs/reviews/done.md"), REVIEW_DONE);
-  writeFileSync(join(dir, "docs/reviews/open.md"), REVIEW_OPEN);
-  writeFileSync(join(dir, "docs/audits/done.md"), AUDIT);
-  writeFileSync(join(dir, "docs/audits/orphan.md"), AUDIT);
-
-  return dir;
-}
-
-test("only fully completed docs are found, open and orphaned ones are not", () => {
-  const dir = seed();
-  const found = findCompletedDocs(dir)
-    .map((entry) => entry.path)
-    .sort();
-
-  assert.deepEqual(found, ["docs/audits/done.md", "docs/plans/done.md", "docs/reviews/done.md"]);
-  rmSync(dir, { recursive: true, force: true });
-});
+import { archiveCompletedDocs } from "../_closeout.js";
+import { AUTHOR, seed } from "./_closeout.fixture.mjs";
 
 test("archive writes one ADR per doc, refreshes the index, deletes sources", () => {
   const dir = seed();
@@ -71,7 +36,7 @@ test("archive writes one ADR per doc, refreshes the index, deletes sources", () 
 test("a non-English doc is skipped and kept on disk", () => {
   const dir = seed();
 
-  writeFileSync(join(dir, "docs/plans/piano.md"), "# piano di lavoro senza eccezioni\n\n- [x] **Passo 1**: fatto tutto.\n");
+  writeFileSync(join(dir, "docs/plans/piano.md"), "# piano di lavoro senza eccezioni\n\nStatus: `done`\n\n- [x] **Passo 1**: fatto tutto.\n");
 
   const { archived, skipped } = archiveCompletedDocs(dir, { author: AUTHOR });
 
@@ -98,19 +63,6 @@ test("every mode archives and names the ADR", () => {
   });
 
   for (const root of roots) {
-    rmSync(root, { recursive: true, force: true });
-  }
-});
-
-test("closeout false is a read-only diagnosis in every mode", () => {
-  for (const mode of ["close-session", "handoff"]) {
-    const root = seed();
-    const built = buildHandoff({ projectDir: root, mode, closeout: false, maxTokens: 0, format: "full" });
-
-    assert.doesNotMatch(built.text, /### Closeout/, `${mode} renders no closeout section`);
-    assert.equal(built.stats.archived, 0, `${mode} archives nothing`);
-    assert.equal(existsSync(join(root, "docs/plans/done.md")), true, `${mode} deletes nothing`);
-    assert.equal(readdirSync(join(root, "docs/adr")).length, 0, `${mode} writes no ADR`);
     rmSync(root, { recursive: true, force: true });
   }
 });

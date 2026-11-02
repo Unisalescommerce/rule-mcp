@@ -27,8 +27,8 @@ function seeded() {
   git(root, "config", "user.email", "fixture@example.com");
   git(root, "config", "user.name", "Fixture");
   write(root, "src/keep.js", "export const keep = 1;\n");
-  write(root, "docs/plans/done.md", "# done plan\n\n- [x] **Step 1**: first.\n");
-  write(root, "docs/plans/open.md", "# open plan\n\n- [ ] **Step 1**: first.\n");
+  write(root, "docs/plans/done.md", "# done plan\n\nStatus: `done`\n\n- [x] **Step 1**: first.\n");
+  write(root, "docs/plans/open.md", "# open plan\n\nStatus: `in-progress`\n\n- [ ] **Step 1**: first.\n");
   write(root, "docs/reviews/done.md", "# done review\n\n| Finding | Severity | Status |\n| --- | --- | --- |\n| OSS-1 | high | resolved |\n");
   write(root, "docs/audits/done.md", "# done audit\n\n| What | How | Result |\n| --- | --- | --- |\n| X | `ls` | ok |\n");
   write(root, HANDOFF, ["# Handoff 01: a session", "", "**Branch:** `main` - **Date:** 2026-09-17", "", "## Next", "", "- [ ] finish the sweep", ""].join("\n"));
@@ -65,6 +65,22 @@ test("closeout false resumes without touching the papers", () => {
     const { text } = handon({ projectDir: root, closeout: false });
 
     assert.doesNotMatch(text, /## Closeout/, "no closeout section");
+    assert.equal(existsSync(join(root, "docs/plans/done.md")), true, "the plan stays");
+    assert.equal(existsSync(join(root, "docs/reviews/done.md")), true, "the review stays");
+    assert.equal(adrFiles(root), 0, "no ADR is written");
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("closeout preview names what would go and touches nothing", () => {
+  const root = seeded();
+
+  try {
+    const { text } = handon({ projectDir: root, closeout: "preview" });
+
+    assert.match(text, /## Closeout \(preview\)/, "the section says it is a preview");
+    assert.match(text, /Would archive `docs\/plans\/done\.md`/, "the plan is named");
     assert.equal(existsSync(join(root, "docs/plans/done.md")), true, "the plan stays");
     assert.equal(existsSync(join(root, "docs/reviews/done.md")), true, "the review stays");
     assert.equal(adrFiles(root), 0, "no ADR is written");

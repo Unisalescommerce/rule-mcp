@@ -18,9 +18,9 @@ import { archiveCompletedDocs, closeoutLines } from "../handoff/_closeout.js";
  * Resuming is also the moment the working papers are swept: a session that
  * picks the project up is the one that can tell a finished audit from an open
  * one, and it is the moment the docs tree is looked at anyway. `closeout: false`
- * keeps the call a pure read.
+ * keeps the call a pure read; `"preview"` names the papers and keeps them too.
  *
- * @param {{ projectDir?: string, file?: string, list?: boolean, closeout?: boolean }} options
+ * @param {{ projectDir?: string, file?: string, list?: boolean, closeout?: boolean | "preview" }} options
  * @returns {{ source?: string, claims: Array<object>, text: string, parsed?: object }}
  */
 export function handon({ projectDir = ".", file, list = false, closeout = true } = {}) {
@@ -28,6 +28,7 @@ export function handon({ projectDir = ".", file, list = false, closeout = true }
 
   if (list) {
     const text =
+
       available.length === 0
         ? `No handoff found. \`${HANDOFF_DIR}/\` is missing or holds no \`NN-slug.md\` file.`
         : [`# Handoffs in ${HANDOFF_DIR}/`, "", ...available.map((path) => `- ${path}`)].join("\n");
@@ -57,7 +58,7 @@ export function handon({ projectDir = ".", file, list = false, closeout = true }
   // The verification runs before the sweep, so the report describes the tree
   // the handoff was written against. Sweeping first would make it call the
   // papers it just archived "deleted".
-  const swept = closeout === false ? null : archiveCompletedDocs(projectDir);
+  const swept = closeout === false ? null : archiveCompletedDocs(projectDir, { apply: closeout !== "preview" });
 
   const range = claims.find((claim) => claim.kind === "range");
   const since = range?.verdict.match(/^\d+ commits\b/) ? `, ${range.verdict}` : "";

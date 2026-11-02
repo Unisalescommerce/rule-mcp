@@ -37,10 +37,15 @@ export function buildHandoff({
   // run asked to keep its hands off the tree does neither. Both handoff modes
   // archive (ADR 103); `closeout: false` is the read-only diagnosis.
   const shouldArchive = closeout !== false;
+  const applyCloseout = closeout !== "preview";
+
+  // Preview reports the sweep without touching the tree, so it also skips the
+  // two writes that precede it: landing pending ADRs and the renumber.
+  const writePapers = shouldArchive && applyCloseout;
 
   // Number pending ADRs on trunk (or settle duplicates off trunk) before any
   // closeout write, so handoff quotes the numbers that exist after landing.
-  if (shouldArchive) {
+  if (writePapers) {
     if (onTrunk(projectDir)) {
       landPendingAdrs(projectDir, { commit: false, quiet: true });
     } else {
@@ -48,7 +53,7 @@ export function buildHandoff({
     }
   }
 
-  const renumber = _renumber === undefined && shouldArchive ? autoRenumber(projectDir, { apply: true }) : _renumber;
+  const renumber = _renumber === undefined && writePapers ? autoRenumber(projectDir, { apply: true }) : _renumber;
   const identity = includeIdentity ? readProjectIdentity(projectDir) : {};
   const adrs = includeAdrs ? readAdrs(projectDir) : [];
   const contextValues = includeContext ? readContextValues(projectDir) : {};
@@ -71,7 +76,7 @@ export function buildHandoff({
   };
   // The renumber runs before the archive reads the ADR log, so the handoff
   // quotes the numbers that exist after the repair.
-  const closeoutResult = _closeout === undefined && shouldArchive ? archiveCompletedDocs(projectDir) : _closeout;
+  const closeoutResult = _closeout === undefined && shouldArchive ? archiveCompletedDocs(projectDir, { apply: applyCloseout }) : _closeout;
 
   const lines = [
     ...headerLines(shape),

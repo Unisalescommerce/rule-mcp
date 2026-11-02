@@ -353,12 +353,12 @@ Takes no parameters.
 
 Read last handoff in docs/handoff/ and report which of its claims are still true: branch, commit range, files, ADRs, open work. Sweeps completed audits/reviews/plans into ADRs first, then proposes next workstream each open plan still carries, for user to confirm. Never re-runs claimed command.
 
-| Parameter    | Type    | Required | Default | Description                                                                                                          |
-| ------------ | ------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------- |
-| `projectDir` | string  | no       | `"."`   | Project root directory                                                                                               |
-| `file`       | string  | no       | -       | A specific handoff to read instead of the newest                                                                     |
-| `list`       | boolean | no       | `false` | List the handoffs and verify nothing                                                                                 |
-| `closeout`   | boolean | no       | `true`  | Archive completed audits/reviews/plans into ADRs before verifying (default on; false = verify only, nothing written) |
+| Parameter    | Type                 | Required | Default | Description                                                                                                                                                                                                        |
+| ------------ | -------------------- | -------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `projectDir` | string               | no       | `"."`   | Project root directory                                                                                                                                                                                             |
+| `file`       | string               | no       | -       | A specific handoff to read instead of the newest                                                                                                                                                                   |
+| `list`       | boolean              | no       | `false` | List the handoffs and verify nothing                                                                                                                                                                               |
+| `closeout`   | boolean \| `preview` | no       | `true`  | Archive completed audits/reviews/plans into ADRs, retire them from the plan indexes and delete the sources (default true). "preview" lists what would close out and writes nothing; false skips the sweep entirely |
 
 ### rule_tool_process_adr
 
@@ -381,20 +381,20 @@ Save Architecture Decision Record (ADR) to docs/adr/. Auto-numbers, maintains in
 
 Generate compressed LLM handoff summary from ADR logs and project context. Archives completed audits/reviews/plans as ADRs and repairs ADR numbering first (pass closeout: false to diagnose without writing). Paste output into new chat to resume work seamlessly.
 
-| Parameter         | Type                           | Required | Default     | Description                                                                                                                                    |
-| ----------------- | ------------------------------ | -------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `projectDir`      | string                         | no       | `"."`       | Project root directory                                                                                                                         |
-| `mode`            | `handoff` \| `close-session`   | no       | `"handoff"` | handoff: generate context summary. close-session: the same, with the session-close banner.                                                     |
-| `closeout`        | boolean                        | no       | `true`      | Archive completed audits/reviews/plans into ADRs and repair the ADR numbering first (default on; false = read-only diagnosis, nothing written) |
-| `includeContext`  | boolean                        | no       | `true`      | Include .context/ values                                                                                                                       |
-| `includeAdrs`     | boolean                        | no       | `true`      | Include ADR summaries                                                                                                                          |
-| `includeIdentity` | boolean                        | no       | `true`      | Include project identity                                                                                                                       |
-| `includeGitDiff`  | boolean                        | no       | `true`      | Include git working tree diff                                                                                                                  |
-| `includeGitLog`   | boolean                        | no       | `true`      | Include recent git log                                                                                                                         |
-| `includeRoadmap`  | boolean                        | no       | `true`      | Include roadmap/docs scan                                                                                                                      |
-| `compress`        | boolean                        | no       | `true`      | Aggressively compress output (default: on)                                                                                                     |
-| `maxTokens`       | number                         | no       | `0`         | Target max tokens (0 = no limit)                                                                                                               |
-| `format`          | `full` \| `brief` \| `minimal` | no       | `"full"`    | Output detail level                                                                                                                            |
+| Parameter         | Type                           | Required | Default     | Description                                                                                                                                                                                                        |
+| ----------------- | ------------------------------ | -------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `projectDir`      | string                         | no       | `"."`       | Project root directory                                                                                                                                                                                             |
+| `mode`            | `handoff` \| `close-session`   | no       | `"handoff"` | handoff: generate context summary. close-session: the same, with the session-close banner.                                                                                                                         |
+| `closeout`        | boolean \| `preview`           | no       | `true`      | Archive completed audits/reviews/plans into ADRs, retire them from the plan indexes and delete the sources (default true). "preview" lists what would close out and writes nothing; false skips the sweep entirely |
+| `includeContext`  | boolean                        | no       | `true`      | Include .context/ values                                                                                                                                                                                           |
+| `includeAdrs`     | boolean                        | no       | `true`      | Include ADR summaries                                                                                                                                                                                              |
+| `includeIdentity` | boolean                        | no       | `true`      | Include project identity                                                                                                                                                                                           |
+| `includeGitDiff`  | boolean                        | no       | `true`      | Include git working tree diff                                                                                                                                                                                      |
+| `includeGitLog`   | boolean                        | no       | `true`      | Include recent git log                                                                                                                                                                                             |
+| `includeRoadmap`  | boolean                        | no       | `true`      | Include roadmap/docs scan                                                                                                                                                                                          |
+| `compress`        | boolean                        | no       | `true`      | Aggressively compress output (default: on)                                                                                                                                                                         |
+| `maxTokens`       | number                         | no       | `0`         | Target max tokens (0 = no limit)                                                                                                                                                                                   |
+| `format`          | `full` \| `brief` \| `minimal` | no       | `"full"`    | Output detail level                                                                                                                                                                                                |
 
 ### rule_tool_ai
 

@@ -2,10 +2,11 @@
 import { adrAuthor } from "./_author.js";
 
 /** Generate ADR markdown content. Pending (off-trunk) uses `# Pending:` and no number. */
-export function generateAdr({ number, title, status, context, decision, consequences, alternatives, endsWhen, tags, date, author, pending = false }) {
+export function generateAdr({ number, title, status, context, decision, consequences, outcome, alternatives, endsWhen, tags, date, author, pending = false }) {
   date ??= new Date().toISOString().slice(0, 10);
   const heading = pending ? `# Pending: ${title}` : `# ${String(number).padStart(3, "0")}: ${title}`;
   const lines = [
+
     heading,
     "",
     `- **Date**: ${date}`,
@@ -17,6 +18,15 @@ export function generateAdr({ number, title, status, context, decision, conseque
     "",
     context || "The forcing factors that led to this decision.",
     "",
+    ...(outcome?.items?.length > 0
+      ? [
+          "## Outcome",
+          "",
+          ...outcome.items.map((item) => `- ${item}`),
+          ...(outcome.total > outcome.items.length ? [`- ...and ${outcome.total - outcome.items.length} more step(s) in the closed record.`] : []),
+          "",
+        ]
+      : []),
     "## Decision",
     "",
     decision || "The decision taken, and why.",

@@ -22,6 +22,16 @@ function typeOf(schema) {
     return schema.enum.map((value) => `\`${value}\``).join(" | ");
   }
 
+  const union = schema.anyOf ?? schema.oneOf;
+
+  if (Array.isArray(union)) {
+    return union.map(typeOf).join(" | ");
+  }
+
+  if (schema.const !== undefined) {
+    return `\`${schema.const}\``;
+  }
+
   if (schema.type === "array") {
     return `array of ${schema.items?.type ?? "value"}`;
   }

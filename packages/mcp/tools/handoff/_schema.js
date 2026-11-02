@@ -6,10 +6,12 @@ export const HandoffSchema = z.object({
   projectDir: z.string().optional().default(".").describe("Project root directory"),
   mode: z.enum(["handoff", "close-session"]).optional().default("handoff").describe("handoff: generate context summary. close-session: the same, with the session-close banner."),
   closeout: z
-    .boolean()
+    .union([z.boolean(), z.literal("preview")])
     .optional()
     .default(true)
-    .describe("Archive completed audits/reviews/plans into ADRs and repair the ADR numbering first (default on; false = read-only diagnosis, nothing written)"),
+    .describe(
+      "Archive completed audits/reviews/plans into ADRs, retire them from the plan indexes and delete the sources (default true). \"preview\" lists what would close out and writes nothing; false skips the sweep entirely",
+    ),
   includeContext: z.boolean().optional().default(true).describe("Include .context/ values"),
   includeAdrs: z.boolean().optional().default(true).describe("Include ADR summaries"),
   includeIdentity: z.boolean().optional().default(true).describe("Include project identity"),

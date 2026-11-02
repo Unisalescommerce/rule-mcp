@@ -17,7 +17,7 @@ export function registerHandoffTool() {
       const result = buildHandoff({
         projectDir: arguments_.projectDir || ".",
         mode: arguments_.mode || "handoff",
-        closeout: arguments_.closeout !== false,
+        closeout: arguments_.closeout,
         includeContext: arguments_.includeContext !== false,
         includeAdrs: arguments_.includeAdrs !== false,
         includeIdentity: arguments_.includeIdentity !== false,
