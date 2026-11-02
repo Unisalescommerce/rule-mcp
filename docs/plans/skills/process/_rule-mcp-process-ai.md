@@ -135,8 +135,8 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 
 ### Phase 3 - The routers
 
-- [ ] Add the `router-child-coverage` test for every area router.
-- [ ] Fix the rows it reports, and record in `DEPENDENCIES.md` any area that has to wait for a leaf.
+- [x] Add the `router-child-coverage` test for every area router.
+- [x] Fix the rows it reports, and record in `DEPENDENCIES.md` any area that has to wait for a leaf.
 
 ### Phase 4 - Verification
 

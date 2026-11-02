@@ -51,6 +51,8 @@ Once routed here, consult the table below and load the specific sub-skill's SKIL
 | [rule-styleguide-i18n](../rule-styleguide-i18n/SKILL.md)                   | Translation keys, plurals, `Intl` dates/numbers/currencies, RTL layout, pseudo-localization                  | Shipping in more than one language or region       |
 | [rule-styleguide-naming](../rule-styleguide-naming/SKILL.md)               | PascalCase, camelCase, UPPER_SNAKE_CASE, barrel pattern, `_` prefix, directory layout                        | Creating new files, folders, or exports            |
 | [rule-styleguide-typescript](../rule-styleguide-typescript/SKILL.md)       | any vs unknown, type guards, unions over enum, generics, never, readonly                                     | Writing or reviewing TypeScript                    |
+| [rule-styleguide-comments](../rule-styleguide-comments/SKILL.md)           | What a comment is for, and the three kinds never committed: commented-out code, future-use code, history     | Writing or reviewing a comment                     |
+| [rule-styleguide-file-tree](../rule-styleguide-file-tree/SKILL.md)         | The underscore-barrel convention, where a component folder puts its `index.js`, what a barrel re-exports     | Laying out a source tree                           |
 
 ---
 

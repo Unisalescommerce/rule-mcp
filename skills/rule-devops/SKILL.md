@@ -20,11 +20,12 @@ guardrails: [env-gitignore, secret-detection]
 
 ## Available Skills
 
-| Skill                                                              | Domain           | Best For                                                            |
-| ------------------------------------------------------------------ | ---------------- | ------------------------------------------------------------------- |
-| [rule-devops-docker](../rule-devops-docker/SKILL.md)               | Containerization | Dockerfile, docker-compose, multi-stage builds, security            |
-| [rule-devops-observability](../rule-devops-observability/SKILL.md) | Reliability      | SLOs, telemetry, alerting, incident learning, rollback verification |
-| [rule-devops-testing](../rule-devops-testing/SKILL.md)             | Quality          | Vitest, coverage thresholds, integration tests                      |
+| Skill                                                                | Domain           | Best For                                                            |
+| -------------------------------------------------------------------- | ---------------- | ------------------------------------------------------------------- |
+| [rule-devops-docker](../rule-devops-docker/SKILL.md)                 | Containerization | Dockerfile, docker-compose, multi-stage builds, security            |
+| [rule-devops-deploy-preview](../rule-devops-deploy-preview/SKILL.md) | Preview          | Ephemeral per-MR environments: review apps, dynamic URL, teardown   |
+| [rule-devops-observability](../rule-devops-observability/SKILL.md)   | Reliability      | SLOs, telemetry, alerting, incident learning, rollback verification |
+| [rule-devops-testing](../rule-devops-testing/SKILL.md)               | Quality          | Vitest, coverage thresholds, integration tests                      |
 
 ## Quick Selection Guide
 
