@@ -124,7 +124,7 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 - [x] Move the organizational essay out of `references/simplicity.md` into the lifecycle body, where it belongs.
 - [x] Document the reduction signal and add its corpus test.
 - [x] Narrow the `-ogue` stem and extend the spelling map in `src/core/fingerprint.js`.
-- [ ] Name the file-size test and ADR 061 in the simplicity reference (the `SKILL.md` section already names them; the reference still does not).
+- [x] Name the file-size test and the ADRs that govern the cap (057 splitting, 058 ratchet) in the simplicity reference.
 
 ### Phase 2 - The guards
 
