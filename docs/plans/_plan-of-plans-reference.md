@@ -105,14 +105,18 @@ its node ids, and the test sums them.
 
 Ordered, and none of it is optional except where marked:
 
-- [ ] F2 - decide the Stage 3 order: move `rule-platform-auth` to Stage 4, or add
-      the intra-stage exception.
-- [ ] F3 - decide the toolchain additions: their own plans with a stage after 3,
-      or an explicit statement that the toolchain area is not closed.
+- [x] F2 - Stage 3 split into 3a (umbrella) and 3b (other leaves), so
+      `rule-platform-auth` (3b) depends on `rule-platform-desktop` (3a); the stage
+      test reads 3.1 < 3.2 and exempts CONTRACT edges (2026-10-21, `6cda42ea`).
+- [x] F3 - decide the toolchain additions: two toolchain plans exist
+      (`_rule-mcp-toolchain-electron.md`, `_rule-mcp-toolchain-tauri.md`) and run in
+      Stage 4, after the stage that creates them.
 - [ ] F4 - one id per node: `rule-process-bmad`, with `Produces: rule-method`.
 - [ ] F5 - one format: amend ADR 154 to five lines (`Status`, `Branch`, `Path`,
       `Depends on`, `Feeds`) plus `Shared files`.
-- [ ] F1 - apply the contract, stage by stage, starting with Stage 0.
+- [x] F1 - apply the contract, stage by stage: 92 plans carry a
+      `## Dependency graph` section and 93 carry `Depends on:` / `Feeds:`, asserted
+      by `scripts/__tests__/plans/skills-plan.test.mjs`. Status wording stays F8.
 - [x] F6 - align the contended-file lists (fixed in `plan-of-plans.md`; the
       level-1 file must point at it).
 - [x] F7 - correct 98 to 99.
