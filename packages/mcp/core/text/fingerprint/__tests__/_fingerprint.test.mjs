@@ -70,6 +70,34 @@ const prefixed = stripFingerprint("An unrecognised flag, unauthorised and reorga
 check("T3.4 a prefixed -ise stem is corrected", prefixed.includes("unrecognized") && prefixed.includes("unauthorized") && prefixed.includes("reorganized"));
 check("T3.5 the prefix rule invents nothing", stripFingerprint("unwise reprise franchise") === "unwise reprise franchise");
 
+// ── T3.6-T3.9: the families the map used to miss ──
+// American English keeps -logue in these four, so the stem stops at the words
+// that actually americanize. A widened stem turns them into misspellings.
+const kept = stripFingerprint("the epilogue, the prologue, a monologue, a travelogue");
+check(
+  "T3.6 -ogue narrows to catalogue, dialogue and analogue",
+  kept.includes("epilogue") && kept.includes("prologue") && kept.includes("monologue") && kept.includes("travelogue"),
+);
+check("T3.6.1 the three that do convert still convert", stripFingerprint("catalogue dialogue analogue").includes("catalog dialog analog"));
+
+const medical = stripFingerprint("The foetus arrives; paediatric care, anaemia, diarrhoea, oestrogen, orthopaedic and oedema.");
+check(
+  "T3.7 the medical and Latin family converts",
+  ["fetus", "pediatric", "anemia", "diarrhea", "estrogen", "orthopedic", "edema"].every((word) => medical.includes(word)),
+);
+
+const doubled = stripFingerprint("levelled dialled totalled marvelled channelled quarrelled counselling");
+check(
+  "T3.8 the -lled and -lling family converts",
+  ["leveled", "dialed", "totaled", "marveled", "channeled", "quarreled", "counseling"].every((word) => doubled.includes(word)),
+);
+
+const singles = stripFingerprint("a sceptre, a sceptic, a manoeuvre, a tyre, a cosy room, a moustache, the jewellery, the sulphur, the mediaeval era");
+check(
+  "T3.9 the single words convert",
+  ["scepter", "skeptic", "maneuver", "tire", "cozy", "mustache", "jewelry", "sulfur", "medieval"].every((word) => singles.includes(word)),
+);
+
 // ── T4: code, spans and URLs are data ──
 const withCode = `Set it${EM}like this:\n\`\`\`js\nconst colour = "grey"; // the colour${EM}kept\n\`\`\`\ndone`;
 const t4 = stripFingerprint(withCode);

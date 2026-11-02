@@ -20,8 +20,9 @@ this on every skill with two guardrails you cannot switch off:
    conversation can stay in their language, but what is written into the repo
    is English.
 2. **American spelling.** `-ize` over `-ise`, `-or` over `-our`, `-er` over
-   `-re`, `-og` over `-ogue`; US single-l patterns (`traveled`, `modeled`,
-   `labeled`, `canceled`).
+   `-re`, `-og` over `-ogue` in `catalogue`, `dialogue` and `analogue` only
+   (`monologue`, `epilogue`, `prologue` and `travelogue` keep the British form);
+   US single-l patterns (`traveled`, `modeled`, `labeled`, `canceled`).
 3. **ASCII punctuation.** No em/en dashes, no curly quotes, no ellipsis glyph
    (enforced separately by `fp-no-emdash` / `fp-no-typographic-chars`).
 4. **ASD-STE100 (~80%).** Prefer short sentences, active voice, one idea per
@@ -52,9 +53,16 @@ this on every skill with two guardrails you cannot switch off:
 - travelled → traveled
 - cancelled → canceled
 - grey → gray
+- paediatric → pediatric
+- foetus → fetus
+- sceptic → skeptic
+- manoeuvre → maneuver
+- tyre → tire
+- jewellery → jewelry
 
 The full stem families (`-our`, `-ise`, `-re`, `-ogue`) live in
-`src/core/fingerprint.js` — the same dictionary that powers the guardrail, so
+`packages/mcp/core/text/fingerprint/`, with the dictionary in
+`_fingerprint.data.js` — the same dictionary that powers the guardrail, so
 what this skill documents and what the gate blocks cannot drift.
 
 ## What to do on failure

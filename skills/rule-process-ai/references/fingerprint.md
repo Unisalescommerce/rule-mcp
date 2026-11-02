@@ -50,6 +50,10 @@ The house style is American. Common corrections:
 | `analyse`, `analysed`, `paralyse`                      | `analyze`, `analyzed`, `paralyze`                  |
 | `centre`, `metre`, `litre`, `theatre`, `fibre`         | `center`, `meter`, `liter`, `theater`, `fiber`     |
 | `catalogue`, `dialogue`, `analogue`                    | `catalog`, `dialog`, `analog`                      |
+| `monologue`, `epilogue`, `travelogue`                  | unchanged: American keeps `-logue` here            |
+| `foetus`, `paediatric`, `anaemia`, `oedema`            | `fetus`, `pediatric`, `anemia`, `edema`            |
+| `levelled`, `dialled`, `counselling`, `quarrelled`     | `leveled`, `dialed`, `counseling`, `quarreled`     |
+| `sceptic`, `manoeuvre`, `tyre`, `jewellery`, `sulphur` | `skeptic`, `maneuver`, `tire`, `jewelry`, `sulfur` |
 | `defence`, `offence`, `licence`, `pretence`            | `defense`, `offense`, `license`, `pretense`        |
 | `cancelled`, `travelling`, `modelling`, `labelled`     | `canceled`, `traveling`, `modeling`, `labeled`     |
 | `grey`, `programme`, `storey`, `artefact`              | `gray`, `program`, `story`, `artifact`             |
@@ -122,7 +126,7 @@ delete it.
 
 ## Enforcement: fingerprint guardrails and the compress tool
 
-Not left to memory. `src/core/fingerprint.js` runs on every tool result, after
+Not left to memory. `packages/mcp/core/text/fingerprint/` runs on every tool result, after
 compression, and rewrites prose only - code fences, inline spans, URLs and JSON
 pass through untouched. It is idempotent. Opt out with
 `RULE_MCP_NO_FINGERPRINT=1`. `src/core/ascii-box.js` runs last, because it

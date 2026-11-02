@@ -132,7 +132,7 @@ export const ISE_STEMS = [
   "paralys",
 ].join("|");
 export const RE_STEMS = "cent|met|lit|theat|fib|calib|sab|somb|spect|lust|meag|sept|amphitheat";
-export const OGUE_STEMS = "catal|dial|anal|monol|epil|prol|travel";
+export const OGUE_STEMS = "catal|dial|anal";
 
 /** `-re` and its inflections map to `-er` and its inflections. */
 export const RE_ENDINGS = new Map([
@@ -218,5 +218,60 @@ export const WORDS = new Map(
     serialise: "serialize",
     deserialise: "deserialize",
     behaviours: "behaviors",
+
+    // Medical and Latin: the -oe- / -ae- families, explicitly, because a
+    // blanket rule would also rewrite names and loanwords that keep the pair.
+    foetus: "fetus",
+    foetuses: "fetuses",
+    paediatric: "pediatric",
+    paediatrics: "pediatrics",
+    paediatrician: "pediatrician",
+    anaemia: "anemia",
+    anaemic: "anemic",
+    diarrhoea: "diarrhea",
+    diarrhoeal: "diarrheal",
+    oestrogen: "estrogen",
+    orthopaedic: "orthopedic",
+    orthopaedics: "orthopedics",
+    oedema: "edema",
+
+    // The rest of the doubled-l family.
+    levelled: "leveled",
+    levelling: "leveling",
+    dialled: "dialed",
+    dialling: "dialing",
+    totalled: "totaled",
+    totalling: "totaling",
+    marvelled: "marveled",
+    marvelling: "marveling",
+    channelled: "channeled",
+    channelling: "channeling",
+    quarrelled: "quarreled",
+    quarrelling: "quarreling",
+    counselling: "counseling",
+    jewellers: "jewelers",
+    jewellery: "jewelry",
+
+    // Single words no family reaches.
+    sceptre: "scepter",
+    sceptres: "scepters",
+    sceptic: "skeptic",
+    sceptics: "skeptics",
+    sceptical: "skeptical",
+    scepticism: "skepticism",
+    manoeuvre: "maneuver",
+    manoeuvres: "maneuvers",
+    manoeuvred: "maneuvered",
+    manoeuvring: "maneuvering",
+    tyre: "tire",
+    tyres: "tires",
+    cosy: "cozy",
+    cosier: "cozier",
+    cosiest: "coziest",
+    moustache: "mustache",
+    moustaches: "mustaches",
+    sulphur: "sulfur",
+    sulphuric: "sulfuric",
+    mediaeval: "medieval",
   }),
 );
