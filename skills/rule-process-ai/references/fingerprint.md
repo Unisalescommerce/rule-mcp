@@ -41,6 +41,13 @@ they reorder the characters around them, so a line can read as a comment while
 it is code (Trojan Source). The rule reports the code point, and the suggestion
 is to delete it; a right-to-left document uses markup, not an override.
 
+Two more properties are checked on the same pass. An emoji in a document is a
+tell and a compatibility risk in a terminal, so `ai-no-emoji` reports one there;
+a CLI draws a check mark in a string on purpose, so source files are out of
+scope. Text has to be NFC-normalized (`ai-nfc-text`): a decomposed accent looks
+identical to the precomposed letter and is a different byte sequence, so a diff
+or a grep misses it.
+
 Code is exempt. A third-party API is allowed to be named `getColour()`, and an
 identifier is not prose. Fenced blocks, inline spans and URLs are never
 rewritten.

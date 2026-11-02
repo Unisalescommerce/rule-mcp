@@ -13,7 +13,7 @@
  * either a rule bug or a mislabeled snippet, and both need a person.
  */
 import { CORPUS as GUARDRAIL_CORPUS } from "../../../../../scripts/__tests__/fixtures/guardrail-corpus.mjs";
-import { BIDI_CORPUS } from "../../../../../scripts/__tests__/fixtures/bidi-corpus.mjs";
+import { PROSE_CORPUS } from "../../../../../scripts/__tests__/fixtures/prose-corpus.mjs";
 import { checkCode, setSkillGuardrails } from "../index.js";
 import * as DEFS from "../index.js";
 import { loadLayerGuardrails } from "../../layers/_guardrails.js";
@@ -30,7 +30,7 @@ setSkillGuardrails(LAYERED);
  * precision and recall are read from the same place whether its fixture had a
  * line to spare or not.
  */
-export const CORPUS = [...GUARDRAIL_CORPUS, ...BIDI_CORPUS];
+export const CORPUS = [...GUARDRAIL_CORPUS, ...PROSE_CORPUS];
 
 /** Every rule id the checker knows about, across every group. */
 export function allRuleIds() {
