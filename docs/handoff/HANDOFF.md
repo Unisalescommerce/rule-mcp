@@ -8,6 +8,8 @@ them by `handoff doctor`, so editing it by hand is work the next run throws away
 
 | #                                                                  | Title                                                                     | Date       | Branch                    |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------------- | ---------- | ------------------------- |
+| [42](42-scripts-mcp-layout-complete.md)                            | Scripts-mcp-layout complete (WS0–WS7)                                     | 2026-11-01 | rel/v0.1.0                |
+| [41](41-scripts-layout-plan-home-ready.md)                         | Scripts-layout ready — plan home in docs/plans                            | 2026-10-31 | rel/v0.1.0                |
 | [40](40-asd-ste100-workstream-complete.md)                         | ASD-STE100 workstream complete (WS-G)                                     | 2026-10-31 | rel/v0.1.0                |
 | [39](39-asd-ste100-plan-registered.md)                             | ASD-STE100 plan registered (WS-G)                                         | 2026-10-31 | rel/v0.1.0                |
 | [38](38-export-workstream-complete.md)                             | export workstream complete (Steps 0–8)                                    | 2026-10-31 | rel/v0.1.0                |
