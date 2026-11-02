@@ -83,6 +83,28 @@ nothing reads. The contract that stops it, in six lines:
    flags nothing reads, no speculative index.
 6. When in doubt, ship the smaller version and list what you left out.
 
+### The reduction signal
+
+`rule_tool` routes a prompt here when it reads a scope challenge rather than a
+build request. The vocabulary lives in
+`packages/mcp/tools/ai/_reduction-signal.js`, grouped in four families:
+
+- the excess itself: `over engineering`, `over-engineering`, `over engineered`,
+  `over-engineered`, `overengineer`, `unnecessary complexity`, `reduce complexity`,
+  `redundant`, `premature`;
+- the removal: `remove`, `can we avoid`, `do we need`, `is it required`,
+  `not in our scope`, `out of scope`;
+- the size: `too much`, `too many`, `too hard`, `smaller footprint`,
+  `keep it minimal`, `simplify`, `simpler`, `yagni`;
+- the abstraction: `should i extract`, `should i abstract`, `should i split`,
+  `worth extracting`, `into a helper`, `separate module`, `own abstraction`.
+
+The match is a lowercase substring, so the list stays short and literal: a phrase
+common to ordinary build requests would pull those requests here. It is English
+only; the non-English half is DM-04 in `docs/plans/_decision-models.md` and is not
+duplicated. One prompt per family sits in `SCOPE_CHALLENGES` in the routing
+corpus, and the routing suite fails if a phrase stops landing on this skill.
+
 The full over-engineering catalog (extra columns, audit and history tables,
 retry and cache added preemptively, layers that only forward) and the removal
 pass that walks your own diff live in
