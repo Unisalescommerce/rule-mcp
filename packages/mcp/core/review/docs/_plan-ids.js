@@ -2,8 +2,8 @@
 
 import { splitRow } from "./_table.js";
 
-/** One checklist step: `- [ ] **Step 3 - SEC-1, SEC-2 (high)**: ...` (checked or not). */
-const CHECKBOX_STEP = /^- \[( |x|X)\] \*\*Step \d+ - ([^(]+?)\s*\(/;
+/** One checklist step: `- [ ] **WS1-T1 - Step 3 - SEC-1, SEC-2 (high)**: ...` (checked or not). */
+const CHECKBOX_STEP = /^- \[( |x|X)\] \*\*(?:WS\d+-T\d+ - )?Step \d+ - ([^(]+?)\s*\(/;
 
 /** The ids named in one step's bold prefix; a step may close more than one finding. */
 function idsOf(cell) {
@@ -21,16 +21,16 @@ function idsOf(cell) {
 }
 
 /**
- * The finding ids a plan's steps point at, in the order they appear.
- *
- * Reads the checklist form the renderer writes now and the table form older
- * plans still carry, so the gate keeps working across the transition. Anything
- * not shaped like an id, a dash for "nothing" among them, is ignored rather
- * than reported as dangling.
- *
- * @param {string} plan
- * @returns {string[]}
- */
+The finding ids a plan's steps point at, in the order they appear.
+
+Reads the checklist form the renderer writes now and the table form older
+plans still carry, so the gate keeps working across the transition. Anything
+not shaped like an id, a dash for "nothing" among them, is ignored rather
+than reported as dangling.
+
+@param {string} plan
+@returns {string[]}
+*/
 export function planFindingIds(plan) {
   const ids = [];
 
@@ -59,17 +59,17 @@ export function planFindingIds(plan) {
   return ids;
 }
 
-/** One nested sub-step: `  - [ ] **3.2**: ...` (checked or not). */
-const CHECKBOX_SUB = /^ {2}- \[( |x|X)\] \*\*\d+\.(\d+)\*\*: /;
+/** One nested sub-step: `  - [ ] **WS1-T1.2 - 3.2**: ...` (checked or not); the older `**3.2**` still reads. */
+const CHECKBOX_SUB = /^ {2}- \[( |x|X)\] \*\*(?:WS\d+-T\d+\.\d+ - )?\d+\.(\d+)\*\*: /;
 
 /**
- * The marks made on an existing plan, so a sync can re-render without losing
- * what somebody already executed: a finding id for a marked step, `id#M` for
- * its marked M-th sub-step (a sub-step belongs to the step line above it).
- *
- * @param {string} plan
- * @returns {Set<string>}
- */
+The marks made on an existing plan, so a sync can re-render without losing
+what somebody already executed: a finding id for a marked step, `id#M` for
+its marked M-th sub-step (a sub-step belongs to the step line above it).
+
+@param {string} plan
+@returns {Set<string>}
+*/
 export function planCheckedIds(plan) {
   const checked = new Set();
   let parent;

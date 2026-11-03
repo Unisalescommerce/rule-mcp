@@ -1,10 +1,10 @@
 /**
- * @module core/plans/write
- *
- * Materialize a durable development plan under docs/plans/_*.md and register
- * it in plan-of-plans.md (ADR 154). Host CreatePlan session files are not
- * written here.
- */
+@module core/plans/write
+
+Materialize a durable development plan under docs/plans/_*.md and register
+it in plan-of-plans.md (ADR 154). Host CreatePlan session files are not
+written here.
+*/
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -14,11 +14,11 @@ const PLANS_DIR = "docs/plans";
 const INDEX_FILE = "plan-of-plans.md";
 
 /**
- * Force a single-segment `_<slug>` filename stem.
- *
- * @param {unknown} slug
- * @returns {{ ok: true, slug: string, filename: string } | { ok: false, error: string }}
- */
+Force a single-segment `_<slug>` filename stem.
+
+@param {unknown} slug
+@returns {{ ok: true, slug: string, filename: string } | { ok: false, error: string }}
+*/
 export function normalizePlanSlug(slug) {
   const raw = String(slug ?? "").trim();
 
@@ -41,11 +41,11 @@ export function normalizePlanSlug(slug) {
 }
 
 /**
- * Minimal scaffold when the caller passes title/topic but no body.
- *
- * @param {{ title: string, topic?: string }} fields
- * @returns {string}
- */
+Minimal scaffold when the caller passes title/topic but no body.
+
+@param {{ title: string, topic?: string }} fields
+@returns {string}
+*/
 export function buildPlanScaffold({ title, topic }) {
   const heading = title.trim() || "untitled plan";
   const note = topic?.trim() ? `\n\nTopic: ${topic.trim()}\n` : "\n";
@@ -54,7 +54,7 @@ export function buildPlanScaffold({ title, topic }) {
     `# Plan: ${heading}`,
     "",
     "Status: `planned`",
-    `Notes: subordinate plan (leading \`_\`); coordinated by \`docs/plans/${INDEX_FILE}\`.`,
+    `Notes: subordinate plan (leading \`_\`); coordinated by [plan-of-plans](plan-of-plans.md).`,
     note,
     "## Dependency graph",
     "",
@@ -78,12 +78,12 @@ export function buildPlanScaffold({ title, topic }) {
 }
 
 /**
- * Insert a snapshot row and a WS-D checkbox when the filename is new.
- *
- * @param {string} indexText
- * @param {{ filename: string, label: string, status?: string, openWork?: string }} entry
- * @returns {string}
- */
+Insert a snapshot row and a WS-D checkbox when the filename is new.
+
+@param {string} indexText
+@param {{ filename: string, label: string, status?: string, openWork?: string }} entry
+@returns {string}
+*/
 export function patchPlanOfPlans(indexText, { filename, label, status = "planned", openWork = "own graph" }) {
   let next = indexText;
 
@@ -100,9 +100,7 @@ export function patchPlanOfPlans(indexText, { filename, label, status = "planned
     const checkbox = `- [ ] [\`${filename}\`](${filename}) - ${openWork}.`;
 
     if (/###\s+WS-D\b/.test(next)) {
-      next = next.replace(/(###\s+WS-D\b[^\n]*\n(?:.*\n)*?)(?=\n###\s|\n##\s|$)/, (block) =>
-        block.includes(filename) ? block : `${block.trimEnd()}\n${checkbox}\n`,
-      );
+      next = next.replace(/(###\s+WS-D\b[^\n]*\n(?:.*\n)*?)(?=\n###\s|\n##\s|$)/, (block) => (block.includes(filename) ? block : `${block.trimEnd()}\n${checkbox}\n`));
     } else {
       next = `${next.trimEnd()}\n\n### WS-D - Single-document tracks\n\n${checkbox}\n`;
     }
@@ -112,29 +110,29 @@ export function patchPlanOfPlans(indexText, { filename, label, status = "planned
 }
 
 /**
- * Write `docs/plans/_<slug>.md` and register it in `plan-of-plans.md`.
- *
- * @param {{
- *   projectDir?: string,
- *   slug: string,
- *   title: string,
- *   body?: string,
- *   topic?: string,
- *   overwrite?: boolean,
- *   openWork?: string,
- * }} input
- * @returns {{
- *   ok: true,
- *   path: string,
- *   slug: string,
- *   filename: string,
- *   indexPatched: boolean,
- * } | {
- *   ok: false,
- *   error: string,
- *   path?: string,
- * }}
- */
+Write `docs/plans/_<slug>.md` and register it in `plan-of-plans.md`.
+
+@param {{
+  projectDir?: string,
+  slug: string,
+  title: string,
+  body?: string,
+  topic?: string,
+  overwrite?: boolean,
+  openWork?: string,
+}} input
+@returns {{
+  ok: true,
+  path: string,
+  slug: string,
+  filename: string,
+  indexPatched: boolean,
+} | {
+  ok: false,
+  error: string,
+  path?: string,
+}}
+*/
 export function writeDevelopmentPlan(input) {
   const projectDir = input.projectDir || ".";
   const normalized = normalizePlanSlug(input.slug);

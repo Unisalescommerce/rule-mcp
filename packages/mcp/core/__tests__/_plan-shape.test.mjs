@@ -12,10 +12,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
 
-import {
-  DEVELOPMENT_PLAN_SHAPE_GUIDE,
-  scanDevelopmentPlanShape,
-} from "../plans/_shape.js";
+import { DEVELOPMENT_PLAN_SHAPE_GUIDE, scanDevelopmentPlanShape } from "../plans/_shape.js";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..", "..");
 
@@ -68,6 +65,8 @@ test("scanDevelopmentPlanShape passes a WSn plan with edge list and diagram", ()
     "Feeds: none",
     "",
     "Shared files: none",
+    "",
+    "- [plan-of-plans](plan-of-plans.md)",
     "",
     "### WS1 — Setup",
     "",

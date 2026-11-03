@@ -41,7 +41,6 @@ export const FILE_SIZE_RATCHET = new Map([
   ["packages/mcp/cli/setup/opentui/_wizard.js", 509],
   ["packages/mcp/core/__tests__/_prompt-directive.test.mjs", 154],
   ["packages/mcp/core/plans/_write.js", 195],
-  ["packages/mcp/core/plans/__tests__/_write.test.mjs", 182],
   ["packages/mcp/core/decision/__tests__/_lifecycle-branches.test.mjs", 188],
   ["packages/mcp/core/guardrails/project/_checks.js", 182],
   ["packages/mcp/core/self-update/_run.js", 202],

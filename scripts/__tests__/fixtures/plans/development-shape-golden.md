@@ -15,6 +15,8 @@ Feeds: none
 
 Shared files: none
 
+Reference: [plan-of-plans](plan-of-plans.md).
+
 ### WS1 — Setup
 
 - [ ] **WS1-T1** Create the module
