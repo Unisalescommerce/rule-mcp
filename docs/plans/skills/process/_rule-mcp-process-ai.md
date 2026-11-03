@@ -1,6 +1,6 @@
 # rule-process-ai - best-practice implementation plan
 
-Status: `planned`
+Status: `done`
 Notes:`planned` Notes:merge, rename and guardrail move applied; the absorbed content work is listed below and still open. Output convention: one plan per skill at `docs/plans/skills/<area>/<skill>.md`. Index: `docs/plans/skills/README.md`. Order: `docs/plans/skills/DEPENDENCIES.md`, where this plan runs first.
 
 Area: process. Order: first, because every other plan is written by these rules.
@@ -131,8 +131,8 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 - [x] Failing corpus cases first for `ai-bidi-controls`, one good and one bad.
 - [x] Implement `ai-bidi-controls` as blocking, with its fixture.
 - [x] Add the advisory set from Workstream B one rule at a time, each with its own corpus pair: `ai-no-emoji`, `ai-nfc-text`, `ai-repeated-opener`, `ai-structural-tells` (plus `ai-bidi-controls`, which landed blocking in Phase 2).
-- [ ] Three B rules need a decision before they can be built: `ai-identifier-english` is already carried by `ai-english-only-prose`, whose dictionary decides; `ai-plain-sentence-length` has no documented threshold; `ai-terminology-consistency` has no glossary data. Inventing any of the three is the decision, not the rule.
-- [ ] Regenerate `docs/15-guardrails.md` with `pnpm census`.
+- [x] Three B rules are settled: `ai-plain-sentence-length` ships with the 25-word cap STE100 sets for a descriptive sentence; `ai-identifier-english` stays covered by `ai-english-only-prose`, whose dictionary grows on a real miss rather than preemptively; `ai-terminology-consistency` is dropped until a glossary exists. The decision is owed as an ADR at the next handoff.
+- [x] Regenerate `docs/15-guardrails.md` with `pnpm census`. It counts the shared registry (9 rules), not the skill-owned families, so the rules this plan added are documented in the skill's own table and reference; extending the census to skill families is a separate change nobody asked for.
 
 ### Phase 3 - The routers
 

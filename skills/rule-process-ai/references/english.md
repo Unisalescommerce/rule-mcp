@@ -26,7 +26,9 @@ this on every skill with two guardrails you cannot switch off:
 3. **ASCII punctuation.** No em/en dashes, no curly quotes, no ellipsis glyph
    (enforced separately by `fp-no-emdash` / `fp-no-typographic-chars`).
 4. **ASD-STE100 (~80%).** Prefer short sentences, active voice, one idea per
-   sentence, and the same word for the same thing. Keep about 20% natural tone.
+   sentence, and the same word for the same thing. A descriptive sentence stays
+   at or under 25 words, the limit `ai-plain-sentence-length` reads; keep about
+   20% natural tone.
    Canonical string: `STE100_DIRECTIVE` / `STE100_WRITING_LINE` in
    `src/core/directive/_ste100.js`. Do not invent a second wording.
 5. **Non-English content belongs in data files, not prose.** A user-facing

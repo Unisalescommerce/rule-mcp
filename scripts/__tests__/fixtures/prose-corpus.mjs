@@ -81,6 +81,22 @@ export const PROSE_CORPUS = [
     code: `# Notes\n\nPlan the change. Write the tests first.\n\nReview the diff. The build has to stay green.\n\nShip behind a flag. Delete the flag next week.\n\nThe team agrees on the order.\n`,
   },
   {
+    rule: "ai-plain-sentence-length",
+    skill: JS,
+    fileName: "notes.md",
+    label: "bad",
+    why: "one sentence carries five ideas, so a reader loses the thread before the full stop",
+    code: `# Notes\n\nWe ship the change behind a flag, measure it for a week, delete the flag when the numbers hold, write the result down, and tell the team what changed.\n`,
+  },
+  {
+    rule: "ai-plain-sentence-length",
+    skill: JS,
+    fileName: "notes.md",
+    label: "good",
+    why: "the same content in sentences a reader can parse one at a time",
+    code: `# Notes\n\nWe ship the change behind a flag. Measure it for a week. Delete the flag when the numbers hold. Write the result down and tell the team what changed.\n`,
+  },
+  {
     rule: "ai-structural-tells",
     skill: JS,
     fileName: "notes.md",

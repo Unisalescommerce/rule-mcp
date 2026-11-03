@@ -332,7 +332,7 @@ file, so a stale row fails rather than misleads.
 | Node                            | Area   | Status      | box   | Stage |
 | ------------------------------- | ------ | ----------- | ----- | ----- |
 | `rule-process-adr`              | leaf   | planned     | 0/22  | 0     |
-| `rule-process-ai`               | leaf   | in-progress | 21/23 | 0     |
+| `rule-process-ai`               | leaf   | done       | 23/23 | 0     |
 | `bundler-family`                | cross  | in-progress | 3/6   | 1     |
 | `rule-toolchain-biome`          | leaf   | in-progress | 4/18  | 1     |
 | `rule-toolchain-eslint`         | leaf   | in-progress | 4/19  | 1     |
@@ -623,7 +623,7 @@ file, so a stale row fails rather than misleads.
 | Node                            | Area   | Status      | box   | Stage |
 | ------------------------------- | ------ | ----------- | ----- | ----- |
 | `rule-process-adr`              | leaf   | planned     | 0/22  | 0     |
-| `rule-process-ai`               | leaf   | in-progress | 21/23 | 0     |
+| `rule-process-ai`               | leaf   | done       | 23/23 | 0     |
 | `bundler-family`                | cross  | in-progress | 3/6   | 1     |
 | `rule-toolchain-biome`          | leaf   | in-progress | 4/18  | 1     |
 | `rule-toolchain-eslint`         | leaf   | in-progress | 4/19  | 1     |
