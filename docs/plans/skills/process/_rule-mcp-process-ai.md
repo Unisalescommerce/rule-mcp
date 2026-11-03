@@ -130,7 +130,8 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 
 - [x] Failing corpus cases first for `ai-bidi-controls`, one good and one bad.
 - [x] Implement `ai-bidi-controls` as blocking, with its fixture.
-- [ ] Add the advisory set from Workstream B one rule at a time, each with its own corpus pair.
+- [x] Add the advisory set from Workstream B one rule at a time, each with its own corpus pair: `ai-no-emoji`, `ai-nfc-text`, `ai-repeated-opener`, `ai-structural-tells` (plus `ai-bidi-controls`, which landed blocking in Phase 2).
+- [ ] Three B rules need a decision before they can be built: `ai-identifier-english` is already carried by `ai-english-only-prose`, whose dictionary decides; `ai-plain-sentence-length` has no documented threshold; `ai-terminology-consistency` has no glossary data. Inventing any of the three is the decision, not the rule.
 - [ ] Regenerate `docs/15-guardrails.md` with `pnpm census`.
 
 ### Phase 3 - The routers
