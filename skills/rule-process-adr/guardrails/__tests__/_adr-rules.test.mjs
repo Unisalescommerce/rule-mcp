@@ -108,3 +108,26 @@ test("the legacy list only shrinks", () => {
 
   assert.deepEqual(offenders, [], offenders.join("\n"));
 });
+
+test("every record outside the legacy lists passes all six rules", () => {
+  const dir = join(root, "docs", "adr");
+  const files = readdirSync(dir).filter((name) => /^\d{3}-.+\.md$/.test(name));
+  const index = readFileSync(join(dir, "ADR.md"), "utf8");
+  const indexRows = [...index.matchAll(/\]\(([^)]+\.md)\)/g)].map((match) => match[1]);
+  const legacy = new Set(Object.values(ADR_LEGACY).flat());
+  const offenders = [];
+
+  for (const file of files) {
+    if (legacy.has(file.slice(0, 3))) {
+      continue;
+    }
+
+    const failed = checkCode(SKILL, readFileSync(join(dir, file), "utf8"), { fileName: file, fileList: files, indexRows }).failed.filter((item) => RULES.includes(item.id));
+
+    if (failed.length > 0) {
+      offenders.push(`${file}: ${failed.map((item) => item.id).join(", ")}`);
+    }
+  }
+
+  assert.deepEqual(offenders, [], `repair these records:\n  ${offenders.join("\n  ")}`);
+});

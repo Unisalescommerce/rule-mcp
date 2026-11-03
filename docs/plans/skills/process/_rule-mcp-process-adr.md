@@ -1,6 +1,6 @@
 # rule-process-adr - plan
 
-Status: `planned`
+Status: `done`
 Notes:`planned` Notes: plan only, 2026-10-21. Nothing is implemented here: the owner asked for the plan, the code waits for a later pass. Index row `#34`, currently `pending`.
 
 Area: process. Sibling plans: `rule-process-ai` (the prose and scope rules this
@@ -143,20 +143,20 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 
 ### Phase 4 - Align the skill body
 
-- [ ] Rewrite the template to the sections `generateAdr` really writes, author
+- [x] Rewrite the template to the sections `generateAdr` really writes, author
       line included.
-- [ ] Replace the Italian example with an English one the tool would accept.
-- [ ] Restructure around the workflow: when to record, how to write it, how it
+- [x] Replace the Italian example with an English one the tool would accept.
+- [x] Restructure around the workflow: when to record, how to write it, how it
       is superseded, what makes it wrong later.
-- [ ] State the five conventions as rules of the house, not as preferences.
+- [x] State the five conventions as rules of the house, not as preferences.
 
 ### Phase 5 - Verification
 
-- [ ] `node --import ./scripts/alias-hook.mjs --test skills/rule-process-adr/guardrails/`
-- [ ] `node --import ./scripts/alias-hook.mjs --test src/tools/adr/__tests__/`
-- [ ] `_corpus` and `_routing-corpus` suites.
-- [ ] Every ADR outside the legacy lists passes all six rules.
-- [ ] `pnpm census && pnpm census:check`, `pnpm lint`, typecheck.
+- [x] `node --import ./scripts/alias-hook.mjs --test skills/rule-process-adr/guardrails/`
+- [x] `node --import ./scripts/alias-hook.mjs --test packages/mcp/tools/adr/__tests__/`
+- [x] `_corpus` and `_routing-corpus` suites.
+- [x] Every ADR outside the legacy lists passes all six rules.
+- [x] `pnpm census && pnpm census:check` is current. `pnpm lint` is red repo-wide on files this plan never touched, and the repository has no typecheck script; the files this plan touched pass eslint on their own.
 
 ## Model assignment
 

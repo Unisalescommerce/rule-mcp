@@ -6,12 +6,12 @@ export const adrEnglish = {
   description: "The tool refuses a non-English write, so the rule explains a record that arrived another way.",
   check: (code, context) => {
     const { scanDocumentForForeign, scanPathForForeign } = context.helpers;
-    // The tool runs both scanners over the prose fields, never over the header:
-    // an author's email splits into "com" and a path scanner reads that as a
-    // Portuguese word. Strip the metadata lines before scanning, or every
-    // record with a real author fails.
-    const prose = code.replaceAll(/^\s*-?\s*\*{0,2}(?:Author|Date|Status|Tags)\*{0,2}:.*$/gm, "");
-    const hits = [...scanDocumentForForeign(prose), ...scanPathForForeign(prose.replaceAll(/[\\/]+/g, " "))];
+    // The title becomes the file name, so it is read by the path scanner word by
+    // word; the body is read by the document scanner, which sees function words
+    // and accents. Running the path scanner over the body flags ordinary English
+    // words that collide with a loanword ("MIT", "die") and cries wolf.
+    const title = code.match(/^#\s+(.+)$/m)?.[1] ?? "";
+    const hits = [...scanPathForForeign(title), ...scanDocumentForForeign(code)];
 
     return {
       pass: hits.length === 0,
