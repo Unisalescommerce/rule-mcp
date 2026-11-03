@@ -117,20 +117,20 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 
 ### Phase 1 - Fixtures first (red)
 
-- [ ] `tests/fixtures/adr/` trees: `clean/`, `bad-slug/`, `bad-status/`,
+- [x] `tests/fixtures/adr/` trees: `clean/`, `bad-slug/`, `bad-status/`,
       `orphan-superseded/`, `placeholder-ends-when/`, `index-drift/`. Each with
       a one-line `README.md` stating what it proves.
-- [ ] Six `CORPUS` pairs in `tests/fixtures/guardrail-corpus.mjs`, labeled
+- [x] Six `CORPUS` pairs in `tests/fixtures/guardrail-corpus.mjs`, labeled
       good/bad, one per rule.
-- [ ] `scripts/data/adr-legacy.data.mjs` seeded from the measured numbers above.
-- [ ] Suites written and watched to fail with "rule not found".
+- [x] `scripts/data/adr-legacy.data.mjs` seeded from the measured numbers above.
+- [x] Suites written and watched to fail with "rule not found".
 
 ### Phase 2 - The rules
 
-- [ ] `skills/rule-process-adr/guardrails/`: one `_rule-name.js` per rule plus
+- [x] `skills/rule-process-adr/guardrails/`: one `_rule-name.js` per rule plus
       `index.js`, in the `rule-process-ai` shape.
-- [ ] Frontmatter `guardrails: [...]` on `SKILL.md`, ids equal to the exports.
-- [ ] Green the Phase 1 suites; the suite asserts the legacy lists only shrink.
+- [x] Frontmatter `guardrails: [...]` on `SKILL.md`, ids equal to the exports.
+- [x] Green the Phase 1 suites; the suite asserts the legacy lists only shrink.
 
 ### Phase 3 - Close the tool gaps
 

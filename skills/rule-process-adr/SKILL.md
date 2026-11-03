@@ -8,6 +8,13 @@ tags:
   - decisions
   - adr
 frameworks: [all]
+guardrails:
+  - adr-file-naming
+  - adr-status-vocabulary
+  - adr-author-line
+  - adr-ends-when
+  - adr-index-derived
+  - adr-english
 ---
 
 # rule-process-adr - Architecture Decision Records

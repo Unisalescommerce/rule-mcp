@@ -14,6 +14,7 @@
  */
 import { CORPUS as GUARDRAIL_CORPUS } from "../../../../../scripts/__tests__/fixtures/guardrail-corpus.mjs";
 import { PROSE_CORPUS } from "../../../../../scripts/__tests__/fixtures/prose-corpus.mjs";
+import { ADR_CORPUS } from "../../../../../scripts/__tests__/fixtures/adr-corpus.mjs";
 import { checkCode, setSkillGuardrails } from "../index.js";
 import * as DEFS from "../index.js";
 import { loadLayerGuardrails } from "../../layers/_guardrails.js";
@@ -30,7 +31,7 @@ setSkillGuardrails(LAYERED);
  * precision and recall are read from the same place whether its fixture had a
  * line to spare or not.
  */
-export const CORPUS = [...GUARDRAIL_CORPUS, ...PROSE_CORPUS];
+export const CORPUS = [...GUARDRAIL_CORPUS, ...PROSE_CORPUS, ...ADR_CORPUS];
 
 /** Every rule id the checker knows about, across every group. */
 export function allRuleIds() {
@@ -63,6 +64,9 @@ function fired(entry) {
     // The naming rules ask whether the file is a component, and no snippet can
     // answer that on its own: the caller knows, so the entry says so.
     isComponent: entry.isComponent,
+    // The ADR index rule reads a listing and the index rows instead of files.
+    fileList: entry.fileList,
+    indexRows: entry.indexRows,
     // The scaffold rules load only for the styleguide skill in scaffold mode,
     // so an entry that targets one says so.
     mode: entry.mode,
