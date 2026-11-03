@@ -9,14 +9,11 @@ export const ADRSchema = z.object({
   decision: z.string().optional().describe("The decision made and why"),
   consequences: z.string().optional().describe("Consequences: positive and negative outcomes"),
   alternatives: z.array(z.string()).optional().describe("Alternative options considered"),
+  endsWhen: z.string().optional().describe("What would end this: the observation that would make the decision wrong"),
+  supersedes: z.string().optional().describe("The three-digit ADR number this record replaces"),
+  supersededBy: z.string().optional().describe("The three-digit ADR number that replaces this record, required when status is superseded"),
   tags: z.array(z.string()).default(["architecture"]).describe("Tags for categorization (e.g. database, api, frontend)"),
-  category: z
-    .enum(["schema", "dependency", "api", "infra"])
-    .optional()
-    .describe("ADR policy category override (schema, dependency, api, infra)"),
-  moment: z
-    .enum(["task", "handoff"])
-    .default("task")
-    .describe("When the ADR is being written: task (default) or handoff"),
+  category: z.enum(["schema", "dependency", "api", "infra"]).optional().describe("ADR policy category override (schema, dependency, api, infra)"),
+  moment: z.enum(["task", "handoff"]).default("task").describe("When the ADR is being written: task (default) or handoff"),
   projectDir: z.string().optional().default(".").describe("Project root directory"),
 });

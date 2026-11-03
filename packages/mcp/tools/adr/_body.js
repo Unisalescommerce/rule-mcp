@@ -2,15 +2,32 @@
 import { adrAuthor } from "./_author.js";
 
 /** Generate ADR markdown content. Pending (off-trunk) uses `# Pending:` and no number. */
-export function generateAdr({ number, title, status, context, decision, consequences, outcome, alternatives, endsWhen, tags, date, author, pending = false }) {
+export function generateAdr({
+  number,
+  title,
+  status,
+  context,
+  decision,
+  consequences,
+  outcome,
+  alternatives,
+  endsWhen,
+  supersedes,
+  supersededBy,
+  tags,
+  date,
+  author,
+  pending = false,
+}) {
   date ??= new Date().toISOString().slice(0, 10);
   const heading = pending ? `# Pending: ${title}` : `# ${String(number).padStart(3, "0")}: ${title}`;
   const lines = [
-
     heading,
     "",
     `- **Date**: ${date}`,
     `- **Status**: ${status}`,
+    ...(supersededBy ? [`- **Superseded by**: [${supersededBy}]`] : []),
+    ...(supersedes ? [`- **Supersedes**: [${supersedes}]`] : []),
     `- **Tags**: ${tags.join(", ")}`,
     `- **Author**: ${author || adrAuthor()}`,
     "",

@@ -33,7 +33,7 @@ the package version from anywhere. An error exits 1 and prints to stderr;
 | [`feature`](#rule-feature)               | 0       | List or change user-facing feature switches                                               |
 | [`project`](#rule-project)               | 0       | Configure or take back a project-scope install                                            |
 | [`doctor`](#rule-doctor)                 | 4       | Run system health check                                                                   |
-| [`adr`](#rule-adr)                       | 5       | Create a new Architecture Decision Record (ADR)                                           |
+| [`adr`](#rule-adr)                       | 9       | Create a new Architecture Decision Record (ADR)                                           |
 | [`handoff`](#rule-handoff)               | 9       | Generate a compressed LLM context handoff summary                                         |
 | [`skills`](#rule-skills)                 | 4       | Manage the rule-mcp AI skill system                                                       |
 | [`fix`](#rule-fix)                       | 3       | Apply the deterministic guardrail fixes of every skill                                    |
@@ -319,13 +319,17 @@ rule-mcp adr action title
 
 **Options**
 
-| Flag                    | Default | Choices | Description                                  |
-| ----------------------- | ------- | ------- | -------------------------------------------- |
-| `--status <s>`          | -       | -       | proposed \\                                  | accepted (default) \\ | deprecated \\ | superseded |
-| `--context <text>`      | -       | -       | context forcing factors                      |
-| `--decision <text>`     | -       | -       | decision made and why                        |
-| `--consequences <text>` | -       | -       | positive and negative consequences           |
-| `--tags <list>`         | -       | -       | comma-separated tags (default: architecture) |
+| Flag                    | Default | Choices | Description                                                       |
+| ----------------------- | ------- | ------- | ----------------------------------------------------------------- |
+| `--status <s>`          | -       | -       | proposed \\                                                       | accepted (default) \\ | deprecated \\ | superseded |
+| `--context <text>`      | -       | -       | context forcing factors                                           |
+| `--decision <text>`     | -       | -       | decision made and why                                             |
+| `--consequences <text>` | -       | -       | positive and negative consequences                                |
+| `--tags <list>`         | -       | -       | comma-separated tags (default: architecture)                      |
+| `--ends-when <text>`    | -       | -       | what would end this decision: the observation that makes it wrong |
+| `--alternatives <text>` |         | -       | an alternative considered (repeatable)                            |
+| `--supersedes <n>`      | -       | -       | three-digit number of the record this one replaces                |
+| `--superseded-by <n>`   | -       | -       | three-digit number of the record that replaces this one           |
 
 ## rule-mcp handoff
 

@@ -364,18 +364,21 @@ Read last handoff in docs/handoff/ and report which of its claims are still true
 
 Save Architecture Decision Record (ADR) to docs/adr/. Auto-numbers, maintains index, uses Nygard template. Honors RULE_MCP_ADR_POLICY (default: handoff).
 
-| Parameter      | Type                                                     | Required | Default            | Description                                                           |
-| -------------- | -------------------------------------------------------- | -------- | ------------------ | --------------------------------------------------------------------- |
-| `title`        | string                                                   | yes      | -                  | ADR title, in English (e.g. 'Use PostgreSQL as the primary database') |
-| `status`       | `proposed` \| `accepted` \| `deprecated` \| `superseded` | no       | `"accepted"`       | ADR status                                                            |
-| `context`      | string                                                   | no       | -                  | Context: what forcing factors led to this decision                    |
-| `decision`     | string                                                   | no       | -                  | The decision made and why                                             |
-| `consequences` | string                                                   | no       | -                  | Consequences: positive and negative outcomes                          |
-| `alternatives` | array of string                                          | no       | -                  | Alternative options considered                                        |
-| `tags`         | array of string                                          | no       | `["architecture"]` | Tags for categorization (e.g. database, api, frontend)                |
-| `category`     | `schema` \| `dependency` \| `api` \| `infra`             | no       | -                  | ADR policy category override (schema, dependency, api, infra)         |
-| `moment`       | `task` \| `handoff`                                      | no       | `"task"`           | When the ADR is being written: task (default) or handoff              |
-| `projectDir`   | string                                                   | no       | `"."`              | Project root directory                                                |
+| Parameter      | Type                                                     | Required | Default            | Description                                                                              |
+| -------------- | -------------------------------------------------------- | -------- | ------------------ | ---------------------------------------------------------------------------------------- |
+| `title`        | string                                                   | yes      | -                  | ADR title, in English (e.g. 'Use PostgreSQL as the primary database')                    |
+| `status`       | `proposed` \| `accepted` \| `deprecated` \| `superseded` | no       | `"accepted"`       | ADR status                                                                               |
+| `context`      | string                                                   | no       | -                  | Context: what forcing factors led to this decision                                       |
+| `decision`     | string                                                   | no       | -                  | The decision made and why                                                                |
+| `consequences` | string                                                   | no       | -                  | Consequences: positive and negative outcomes                                             |
+| `alternatives` | array of string                                          | no       | -                  | Alternative options considered                                                           |
+| `endsWhen`     | string                                                   | no       | -                  | What would end this: the observation that would make the decision wrong                  |
+| `supersedes`   | string                                                   | no       | -                  | The three-digit ADR number this record replaces                                          |
+| `supersededBy` | string                                                   | no       | -                  | The three-digit ADR number that replaces this record, required when status is superseded |
+| `tags`         | array of string                                          | no       | `["architecture"]` | Tags for categorization (e.g. database, api, frontend)                                   |
+| `category`     | `schema` \| `dependency` \| `api` \| `infra`             | no       | -                  | ADR policy category override (schema, dependency, api, infra)                            |
+| `moment`       | `task` \| `handoff`                                      | no       | `"task"`           | When the ADR is being written: task (default) or handoff                                 |
+| `projectDir`   | string                                                   | no       | `"."`              | Project root directory                                                                   |
 
 ### rule_tool_handoff
 

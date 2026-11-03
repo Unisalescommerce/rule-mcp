@@ -16,13 +16,13 @@ import { scanDocumentForForeign, scanPathForForeign } from "../../core/text/inde
 export function adrEnglishOffenses(fields) {
   const offenses = [];
   const prose = [
-
     ["title", fields.title ?? ""],
     ["context", fields.context ?? ""],
     ["decision", fields.decision ?? ""],
     ["consequences", fields.consequences ?? ""],
     ["outcome", (fields.outcome?.items ?? []).join("\n")],
     ["alternatives", (fields.alternatives ?? []).join("\n")],
+    ["endsWhen", fields.endsWhen ?? ""],
   ];
 
   for (const [field, text] of prose) {

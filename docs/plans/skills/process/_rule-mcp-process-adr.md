@@ -134,12 +134,12 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 
 ### Phase 3 - Close the tool gaps
 
-- [ ] `ADRSchema` and `adr new` gain `endsWhen` (`--ends-when`).
-- [ ] `adr new` gains `--alternatives`, repeatable.
-- [ ] A `superseded` ADR must name its successor, in the tool and in the CLI;
+- [x] `ADRSchema` and `adr new` gain `endsWhen` (`--ends-when`).
+- [x] `adr new` gains `--alternatives`, repeatable.
+- [x] A `superseded` ADR must name its successor, in the tool and in the CLI;
       document the two-way edit (old record gains `by [NNN]`, new gains
       `supersedes [NNN]`).
-- [ ] Tool tests in `src/tools/adr/__tests__/`.
+- [x] Tool tests in `packages/mcp/tools/adr/__tests__/`.
 
 ### Phase 4 - Align the skill body
 

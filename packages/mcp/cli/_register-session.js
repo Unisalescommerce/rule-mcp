@@ -20,6 +20,10 @@ export function registerAdrCommand(program) {
     .option("--decision <text>", "decision made and why")
     .option("--consequences <text>", "positive and negative consequences")
     .option("--tags <list>", "comma-separated tags (default: architecture)")
+    .option("--ends-when <text>", "what would end this decision: the observation that makes it wrong")
+    .option("--alternatives <text>", "an alternative considered (repeatable)", (value, previous) => [...previous, value], [])
+    .option("--supersedes <n>", "three-digit number of the record this one replaces")
+    .option("--superseded-by <n>", "three-digit number of the record that replaces this one")
     .allowExcessArguments(false)
     .action(async function adrAction(action, title, options, command) {
       if (action !== "new" || !title) {
@@ -38,6 +42,10 @@ export function registerAdrCommand(program) {
         decision: options.decision ?? "",
         consequences: options.consequences ?? "",
         tags: (options.tags ?? "architecture").split(","),
+        endsWhen: options.endsWhen,
+        alternatives: options.alternatives,
+        supersedes: options.supersedes,
+        supersededBy: options.supersededBy,
         // CLI `adr new` is an intentional record; default policy is handoff-only.
         moment: "handoff",
       });

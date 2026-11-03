@@ -33,7 +33,7 @@
     {
       "file": "10-tools.md",
       "kind": "document",
-      "sha256": "38b4c0b2a51fc5bb992bfa29cafe0f3b81b6fd930187398a82c822d12de6f9f1"
+      "sha256": "10cd92ba845774ec1585ad2216568f0bda945ac5452940e2eef7d9fd34c21999"
     },
     {
       "file": "11-prompts.md",
@@ -48,7 +48,7 @@
     {
       "file": "13-cli.md",
       "kind": "document",
-      "sha256": "2bff1b074ab01e620618ce1b03ecb1cdcb5fb7df124db09fd837627ed7bed105"
+      "sha256": "deb7376b99f5e00f182f8ff38d8661238345446346bb9943602f5b44986fa48f"
     },
     {
       "file": "14-personas.md",

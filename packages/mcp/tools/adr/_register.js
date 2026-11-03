@@ -9,6 +9,7 @@ import { generateAdr } from "./_body.js";
 import { adrEnglishOffenses } from "./_english.js";
 import { updateAdrIndex } from "./_adr-index.js";
 import { ADRSchema } from "./_schema.js";
+import { supersedeOffense } from "./_validate.js";
 import { registerAutoAdrHook } from "./_auto-log.js";
 import { allowsAdrWrite, adrRule, resolveAdrPolicy } from "../../core/adr-policy/index.js";
 
@@ -20,8 +21,7 @@ export function registerProcessAdrTool() {
   registerTool({
     name: "rule_tool_process_adr",
     entry: "skill",
-    description:
-      "Save an Architecture Decision Record (ADR) to docs/adr/. Auto-numbers, maintains index, uses Nygard template. Honors RULE_MCP_ADR_POLICY (default: handoff).",
+    description: "Save an Architecture Decision Record (ADR) to docs/adr/. Auto-numbers, maintains index, uses Nygard template. Honors RULE_MCP_ADR_POLICY (default: handoff).",
     zodSchema: ADRSchema,
     handler: async (arguments_) => {
       const projectDir = arguments_.projectDir || ".";
@@ -30,8 +30,7 @@ export function registerProcessAdrTool() {
       const category = arguments_.category;
 
       if (!allowsAdrWrite(policy, { category, moment, explicit: true })) {
-        const hint =
-          'Pass moment: "handoff" at session close, set RULE_MCP_ADR_POLICY=full, or override the category.';
+        const hint = 'Pass moment: "handoff" at session close, set RULE_MCP_ADR_POLICY=full, or override the category.';
 
         return {
           content: [
@@ -70,6 +69,12 @@ export function registerProcessAdrTool() {
         };
       }
 
+      const offense = supersedeOffense(arguments_);
+
+      if (offense) {
+        return { isError: true, content: [{ type: "text", text: offense }] };
+      }
+
       const pending = !onTrunk(projectDir);
       const adrDir = join(projectDir, ADR_DIR);
       const writeDir = pending ? join(projectDir, ADR_PENDING_DIR) : adrDir;
@@ -86,6 +91,9 @@ export function registerProcessAdrTool() {
         decision: arguments_.decision || "",
         consequences: arguments_.consequences || "",
         alternatives: arguments_.alternatives || [],
+        endsWhen: arguments_.endsWhen,
+        supersedes: arguments_.supersedes,
+        supersededBy: arguments_.supersededBy,
         tags: arguments_.tags || ["architecture"],
         pending,
       });
