@@ -29,7 +29,7 @@ Node ids in graph lines stay skill names (`rule-process-ai`), not filenames. Fil
 | port / installer scope | _(retired)_ | done → ADR 198 | file gone; HARD edge to host plan satisfied |
 | export | _(retired)_ | done → ADR 199 | Steps 0–8 complete 2026-10-31; review/audit → ADR 202/203 |
 | scripts layout | _(retired)_ | done → ADR 205 | WS0–WS7 closed 2026-11-01; product ADR pending land |
-| decision models | `_decision-models.md` | `planned` | own graph |
+| decision models | _(retired)_ | done → ADR 209 | own graph |
 | ASD-STE100 writing + plan shape | _(retired)_ | done → ADR 204 | WS-G closed 2026-10-31; product pending ADR mcp-authored-markdown-uses-asd-ste100… |
 | area guardrails (`_*-guardrails.md`) | six files | `superseded` | absorbed into leaf plans; no new work |
 | plan-graph audit | `_plan-of-plans-reference.md` | `done` | history (ADR 171) |
@@ -44,7 +44,7 @@ Branch history that motivated stages 1-5 (2026-10-21) lives in git and in ADR 18
 | ----- | ------------ | ----- |
 | skills catalog | `skills/_skills-plan.md` | in progress: npm/uv/cargo-release retired (ADR 206-208) |
 | host + launcher (installer infrastructure) | this file, workstreams A–B | both done |
-| single-document tracks | each plan's `## Dependency graph` | export (ADR 199), asd-ste100 (ADR 204), scripts-layout, decision-models |
+| single-document tracks | each plan's `## Dependency graph` | export (ADR 199), asd-ste100 (ADR 204), scripts-layout, decision-models (ADR 209) |
 | superseded area plans | none (historical) | `_*-guardrails.md` |
 | repository policy / OSS Stage 0 | ADR 135 + handoff 27 | closed |
 
@@ -71,7 +71,7 @@ rel/v0.1.0
 ├── WS-D  single tracks (parallel, no mutual HARD)
 │   ├── export ......................... done → ADR 199
 │   ├── _scripts-mcp-layout.md
-│   └── _decision-models.md
+│   └── decision models ... done → ADR 209
 ├── WS-G  ASD-STE100 writing + plan shape
 │   └── _asd-ste100.md ................. done → ADR 204
 ├── WS-E  superseded / historical ........ no execution
@@ -122,7 +122,7 @@ Run only when WS-A/B/C are idle on the shared files in section 8, or in parallel
 
 - [x] export — Steps 0–8 complete; retired → [ADR 199](../adr/199-close-out-plan-export.md) (review ADR 202, audit ADR 203).
 - [x] scripts-layout — WS0–WS7 complete; retired → [ADR 205](../adr/205-close-out-plan-scripts-mcp-layout.md); product ADR pending `docs/adr/_pending/pnpm-workspace-with-packages-mcp-shared-docs-and-publish-from-packages-mcp.md`.
-- [ ] [`_decision-models.md`](_decision-models.md) — own dependency graph.
+- [x] decision models — DM-04 closed by its kill criterion: the harness and the registry ship, the Italian routing claim is dropped; retired → [ADR 209](../adr/209-close-out-plan-decision-models.md).
 
 ### WS-G — ASD-STE100 writing and AI plan shape
 

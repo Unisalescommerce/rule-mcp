@@ -8,6 +8,7 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [209](209-close-out-plan-decision-models.md)                                                                            | Close out plan _decision-models                                                                           | 2026-11-03 | accepted   | docs, closeout, plan                                                                |
 | [208](208-close-out-plan-rule-mcp-process-uv-release.md)                                                                | Close out plan _rule-mcp-process-uv-release                                                               | 2026-11-02 | accepted   | docs, closeout, plan                                                                |
 | [207](207-close-out-plan-rule-mcp-process-npm-release.md)                                                               | Close out plan _rule-mcp-process-npm-release                                                              | 2026-11-02 | accepted   | docs, closeout, plan                                                                |
 | [206](206-close-out-plan-rule-mcp-process-cargo-release.md)                                                             | Close out plan _rule-mcp-process-cargo-release                                                            | 2026-11-02 | accepted   | docs, closeout, plan                                                                |
@@ -224,6 +225,7 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [209](209-close-out-plan-decision-models.md)                                                                            | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_decision-models.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                                                |
 | [208](208-close-out-plan-rule-mcp-process-uv-release.md)                                                                | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/skills/process/_rule-mcp-process-uv-release.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                     |
 | [207](207-close-out-plan-rule-mcp-process-npm-release.md)                                                               | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/skills/process/_rule-mcp-process-npm-release.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                    |
 | [206](206-close-out-plan-rule-mcp-process-cargo-release.md)                                                             | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/skills/process/_rule-mcp-process-cargo-release.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                  |
@@ -438,6 +440,39 @@ file. Where a line stops short the rest is in the ADR.
 Tags carried by 3 or more decisions. A decision appears under every
 theme it carries, and the early ADRs that predate the tag field are listed last.
 
+### docs
+
+- [209](209-close-out-plan-decision-models.md) Close out plan _decision-models
+- [208](208-close-out-plan-rule-mcp-process-uv-release.md) Close out plan _rule-mcp-process-uv-release
+- [207](207-close-out-plan-rule-mcp-process-npm-release.md) Close out plan _rule-mcp-process-npm-release
+- [206](206-close-out-plan-rule-mcp-process-cargo-release.md) Close out plan _rule-mcp-process-cargo-release
+- [205](205-close-out-plan-scripts-mcp-layout.md) Close out plan _scripts-mcp-layout
+- [204](204-close-out-plan-asd-ste100.md) Close out plan _asd-ste100
+- [203](203-close-out-audit-export.md) Close out audit export
+- [202](202-close-out-review-export.md) Close out review export
+- [201](201-close-out-plan-stable-launcher-outside-the-checkout.md) Close out plan _stable-launcher-outside-the-checkout
+- [200](200-close-out-plan-mcp-host-integration-depth.md) Close out plan _mcp-host-integration-depth
+- [199](199-close-out-plan-export.md) Close out plan _export
+- [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
+- [196](196-number-pending-adrs-when-they-land-on-the-trunk.md) Number pending ADRs when they land on the trunk
+- [194](194-follow-only-real-renames-when-dating-a-numbered-document.md) Follow only real renames when dating a numbered document
+- [172](172-retire-closed-plans-into-adrs-and-one-handoff.md) Retire closed plans into ADRs and one handoff
+- [168](168-insert-a-quick-start-chapter-and-shift-the-handbook-numbering.md) Insert a quick-start chapter and shift the handbook numbering
+- [128](128-consolidate-the-feature-adrs-and-handoffs-into-one-commit-at-the-close-squash.md) Consolidate the feature ADRs and handoffs into one commit at the close squash
+- [119](119-close-out-audit-ui.md) Close out audit ui
+- [118](118-close-out-review-ui.md) Close out review ui
+- [111](111-close-out-audit-security.md) Close out audit security
+- [110](110-close-out-review-security.md) Close out review security
+- [108](108-the-handoff-family-gets-a-generated-index-and-the-root-handoff-summary-retires.md) The handoff family gets a generated index, and the root HANDOFF summary retires
+- [104](104-the-handoff-document-closes-with-the-resume-prompt.md) The handoff document closes with the resume prompt
+- [103](103-every-handoff-mode-sweeps-completed-working-papers-and-closeout-false-is-the-rea.md) Every handoff mode sweeps completed working papers, and closeout false is the read-only run
+- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
+- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
+- [087](087-session-close-archives-completed-audits-reviews-and-plans.md) Session close archives completed audits, reviews and plans
+- [086](086-documentation-site-is-hand-written-static-html-from-docs.md) Documentation site is hand-written static HTML from docs
+- [071](071-the-census-generates-eight-numbered-documents-and-three-fenced-blocks-inside-the-chapters-a-person-writes.md) The census generates eight numbered documents and three fenced blocks inside the chapters a person writes
+- [048](048-v100-release-and-docs-accuracy-guard.md) v1.0.0 release and the docs-accuracy guard
+
 ### installer
 
 - [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
@@ -470,38 +505,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [041](041-lossless-installer-preserve-toolprefix-normalize-rule-blank-lines.md) Lossless installer: preserve toolPrefix and normalize rule blank lines
 - [039](039-fix-vscode-extension-and-derivatives-install-uninstall.md) Fix VS Code extension and derivatives install/uninstall
 - [028](028-clean-rule-mcp-commands-via-user-commands-prompt-suppression-not-a-plugin.md) Clean /rule-mcp-* commands via user commands + prompt suppression, not a plugin
-
-### docs
-
-- [208](208-close-out-plan-rule-mcp-process-uv-release.md) Close out plan _rule-mcp-process-uv-release
-- [207](207-close-out-plan-rule-mcp-process-npm-release.md) Close out plan _rule-mcp-process-npm-release
-- [206](206-close-out-plan-rule-mcp-process-cargo-release.md) Close out plan _rule-mcp-process-cargo-release
-- [205](205-close-out-plan-scripts-mcp-layout.md) Close out plan _scripts-mcp-layout
-- [204](204-close-out-plan-asd-ste100.md) Close out plan _asd-ste100
-- [203](203-close-out-audit-export.md) Close out audit export
-- [202](202-close-out-review-export.md) Close out review export
-- [201](201-close-out-plan-stable-launcher-outside-the-checkout.md) Close out plan _stable-launcher-outside-the-checkout
-- [200](200-close-out-plan-mcp-host-integration-depth.md) Close out plan _mcp-host-integration-depth
-- [199](199-close-out-plan-export.md) Close out plan _export
-- [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
-- [196](196-number-pending-adrs-when-they-land-on-the-trunk.md) Number pending ADRs when they land on the trunk
-- [194](194-follow-only-real-renames-when-dating-a-numbered-document.md) Follow only real renames when dating a numbered document
-- [172](172-retire-closed-plans-into-adrs-and-one-handoff.md) Retire closed plans into ADRs and one handoff
-- [168](168-insert-a-quick-start-chapter-and-shift-the-handbook-numbering.md) Insert a quick-start chapter and shift the handbook numbering
-- [128](128-consolidate-the-feature-adrs-and-handoffs-into-one-commit-at-the-close-squash.md) Consolidate the feature ADRs and handoffs into one commit at the close squash
-- [119](119-close-out-audit-ui.md) Close out audit ui
-- [118](118-close-out-review-ui.md) Close out review ui
-- [111](111-close-out-audit-security.md) Close out audit security
-- [110](110-close-out-review-security.md) Close out review security
-- [108](108-the-handoff-family-gets-a-generated-index-and-the-root-handoff-summary-retires.md) The handoff family gets a generated index, and the root HANDOFF summary retires
-- [104](104-the-handoff-document-closes-with-the-resume-prompt.md) The handoff document closes with the resume prompt
-- [103](103-every-handoff-mode-sweeps-completed-working-papers-and-closeout-false-is-the-rea.md) Every handoff mode sweeps completed working papers, and closeout false is the read-only run
-- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
-- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
-- [087](087-session-close-archives-completed-audits-reviews-and-plans.md) Session close archives completed audits, reviews and plans
-- [086](086-documentation-site-is-hand-written-static-html-from-docs.md) Documentation site is hand-written static HTML from docs
-- [071](071-the-census-generates-eight-numbered-documents-and-three-fenced-blocks-inside-the-chapters-a-person-writes.md) The census generates eight numbered documents and three fenced blocks inside the chapters a person writes
-- [048](048-v100-release-and-docs-accuracy-guard.md) v1.0.0 release and the docs-accuracy guard
 
 ### skills
 
@@ -611,6 +614,29 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [021](021-skill-routing-eslint-flat-config-for-typescript-react-proje.md) Skill routing: ESLint flat config for TypeScript React project
 - [020](020-skill-routing-typescript-tsconfig-strict-mode-configuration.md) Skill routing: TypeScript tsconfig strict mode configuration
 
+### closeout
+
+- [209](209-close-out-plan-decision-models.md) Close out plan _decision-models
+- [208](208-close-out-plan-rule-mcp-process-uv-release.md) Close out plan _rule-mcp-process-uv-release
+- [207](207-close-out-plan-rule-mcp-process-npm-release.md) Close out plan _rule-mcp-process-npm-release
+- [206](206-close-out-plan-rule-mcp-process-cargo-release.md) Close out plan _rule-mcp-process-cargo-release
+- [205](205-close-out-plan-scripts-mcp-layout.md) Close out plan _scripts-mcp-layout
+- [204](204-close-out-plan-asd-ste100.md) Close out plan _asd-ste100
+- [203](203-close-out-audit-export.md) Close out audit export
+- [202](202-close-out-review-export.md) Close out review export
+- [201](201-close-out-plan-stable-launcher-outside-the-checkout.md) Close out plan _stable-launcher-outside-the-checkout
+- [200](200-close-out-plan-mcp-host-integration-depth.md) Close out plan _mcp-host-integration-depth
+- [199](199-close-out-plan-export.md) Close out plan _export
+- [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
+- [119](119-close-out-audit-ui.md) Close out audit ui
+- [118](118-close-out-review-ui.md) Close out review ui
+- [111](111-close-out-audit-security.md) Close out audit security
+- [110](110-close-out-review-security.md) Close out review security
+- [103](103-every-handoff-mode-sweeps-completed-working-papers-and-closeout-false-is-the-rea.md) Every handoff mode sweeps completed working papers, and closeout false is the read-only run
+- [100](100-the-tokensave-integration-closes-out-and-the-adapter-is-the-code-graph-layer.md) The TokenSave integration closes out: the adapter and its graph-backed tools are the code-graph layer
+- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
+- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
+
 ### governance
 
 - [186](186-baseline-the-cli-file-size-debt-in-the-ratchet.md) Baseline the CLI file-size debt in the ratchet
@@ -633,28 +659,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [083](083-governance-is-an-explicit-bdfl-with-a-path-to-co-maintainers.md) Governance is an explicit BDFL with a path to co-maintainers
 - [079](079-add-the-oss-architect-review-persona.md) Add the OSS Architect review persona
 - [066](066-remove-externally-derived-skills-from-the-served-knowledge-base.md) Remove externally derived skills from the served knowledge base
-
-### closeout
-
-- [208](208-close-out-plan-rule-mcp-process-uv-release.md) Close out plan _rule-mcp-process-uv-release
-- [207](207-close-out-plan-rule-mcp-process-npm-release.md) Close out plan _rule-mcp-process-npm-release
-- [206](206-close-out-plan-rule-mcp-process-cargo-release.md) Close out plan _rule-mcp-process-cargo-release
-- [205](205-close-out-plan-scripts-mcp-layout.md) Close out plan _scripts-mcp-layout
-- [204](204-close-out-plan-asd-ste100.md) Close out plan _asd-ste100
-- [203](203-close-out-audit-export.md) Close out audit export
-- [202](202-close-out-review-export.md) Close out review export
-- [201](201-close-out-plan-stable-launcher-outside-the-checkout.md) Close out plan _stable-launcher-outside-the-checkout
-- [200](200-close-out-plan-mcp-host-integration-depth.md) Close out plan _mcp-host-integration-depth
-- [199](199-close-out-plan-export.md) Close out plan _export
-- [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
-- [119](119-close-out-audit-ui.md) Close out audit ui
-- [118](118-close-out-review-ui.md) Close out review ui
-- [111](111-close-out-audit-security.md) Close out audit security
-- [110](110-close-out-review-security.md) Close out review security
-- [103](103-every-handoff-mode-sweeps-completed-working-papers-and-closeout-false-is-the-rea.md) Every handoff mode sweeps completed working papers, and closeout false is the read-only run
-- [100](100-the-tokensave-integration-closes-out-and-the-adapter-is-the-code-graph-layer.md) The TokenSave integration closes out: the adapter and its graph-backed tools are the code-graph layer
-- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
-- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
 
 ### breaking
 
@@ -756,6 +760,21 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [098](098-develop-merges-into-main-by-area-and-stays-as-an-integration-branch.md) develop merges into main by area, and stays as an integration branch
 - [027](027-add-rule-mcp-toolchain-commits-skill-for-atomic-conventional-commits-with-mandatory-s.md) Add rule-toolchain-commits skill for atomic conventional commits with mandatory scope
 
+### plan
+
+- [209](209-close-out-plan-decision-models.md) Close out plan _decision-models
+- [208](208-close-out-plan-rule-mcp-process-uv-release.md) Close out plan _rule-mcp-process-uv-release
+- [207](207-close-out-plan-rule-mcp-process-npm-release.md) Close out plan _rule-mcp-process-npm-release
+- [206](206-close-out-plan-rule-mcp-process-cargo-release.md) Close out plan _rule-mcp-process-cargo-release
+- [205](205-close-out-plan-scripts-mcp-layout.md) Close out plan _scripts-mcp-layout
+- [204](204-close-out-plan-asd-ste100.md) Close out plan _asd-ste100
+- [201](201-close-out-plan-stable-launcher-outside-the-checkout.md) Close out plan _stable-launcher-outside-the-checkout
+- [200](200-close-out-plan-mcp-host-integration-depth.md) Close out plan _mcp-host-integration-depth
+- [199](199-close-out-plan-export.md) Close out plan _export
+- [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
+- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
+- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
+
 ### testing
 
 - [156](156-keep-bm25-and-gate-a-local-decision-model-as-a-second-opinion.md) Keep BM25 and gate a local decision model as a second opinion
@@ -798,20 +817,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [159](159-keep-the-single-batch-decision-cache-shortlist.md) Keep the single-batch decision-cache shortlist
 - [158](158-replay-the-decision-cache-gate-only-behind-a-measured-threshold.md) Replay the decision-cache gate only behind a measured threshold
 - [157](157-shadow-the-decision-cache-gate-before-replaying.md) Shadow the decision-cache gate before replaying
-
-### plan
-
-- [208](208-close-out-plan-rule-mcp-process-uv-release.md) Close out plan _rule-mcp-process-uv-release
-- [207](207-close-out-plan-rule-mcp-process-npm-release.md) Close out plan _rule-mcp-process-npm-release
-- [206](206-close-out-plan-rule-mcp-process-cargo-release.md) Close out plan _rule-mcp-process-cargo-release
-- [205](205-close-out-plan-scripts-mcp-layout.md) Close out plan _scripts-mcp-layout
-- [204](204-close-out-plan-asd-ste100.md) Close out plan _asd-ste100
-- [201](201-close-out-plan-stable-launcher-outside-the-checkout.md) Close out plan _stable-launcher-outside-the-checkout
-- [200](200-close-out-plan-mcp-host-integration-depth.md) Close out plan _mcp-host-integration-depth
-- [199](199-close-out-plan-export.md) Close out plan _export
-- [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
-- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
-- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
 
 ### process
 
