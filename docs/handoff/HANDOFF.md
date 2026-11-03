@@ -8,6 +8,7 @@ them by `handoff doctor`, so editing it by hand is work the next run throws away
 
 | #                                                                  | Title                                                                     | Date       | Branch                    |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------------- | ---------- | ------------------------- |
+| [44](44-plan-audit-and-process-ai-21-of-23.md)                     | Plan audit closed, rule-process-ai at 21 of 23                            | 2026-11-03 | rel/v0.1.0                |
 | [43](43-plan-closeout-automation.md)                               | Plan closeout automation                                                  | 2026-11-02 | rel/v0.1.0                |
 | [42](42-scripts-mcp-layout-complete.md)                            | Scripts-mcp-layout complete (WS0–WS7)                                     | 2026-11-01 | rel/v0.1.0                |
 | [41](41-scripts-layout-plan-home-ready.md)                         | Scripts-layout ready — plan home in docs/plans                            | 2026-10-31 | rel/v0.1.0                |
