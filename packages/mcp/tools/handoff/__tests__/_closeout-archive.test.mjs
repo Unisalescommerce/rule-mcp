@@ -11,7 +11,6 @@ import { AUTHOR, seed } from "./_closeout.fixture.mjs";
 test("archive retires the plan from the indexes before deleting it", () => {
   const dir = seed();
   const index = [
-
     "| Group | Path | Status | Open work |",
     "| ----- | ---- | ------ | --------- |",
     "| done | `done.md` | `planned` | own graph |",
@@ -93,4 +92,42 @@ test("closeout false is a read-only diagnosis in every mode", () => {
     assert.equal(readdirSync(join(root, "docs/adr")).length, 0, `${mode} writes no ADR`);
     rmSync(root, { recursive: true, force: true });
   }
+});
+
+test("a retired plan leaves one handoff of its own", () => {
+  const dir = seed();
+  const { archived } = archiveCompletedDocs(dir, { author: AUTHOR });
+  const plan = archived.find((doc) => doc.kind === "plans");
+
+  assert.ok(plan.handoffPath, "the report names the per-plan handoff");
+  assert.equal(existsSync(join(dir, plan.handoffPath)), true, "the handoff is written");
+
+  const body = readFileSync(join(dir, plan.handoffPath), "utf8");
+
+  assert.match(body, /## Delivered/, "it records what the plan delivered");
+  assert.match(body, new RegExp(`ADR\\*\\*: ${String(plan.adrNumber).padStart(3, "0")}`), "it points at the ADR that holds the decision");
+
+  rmSync(dir, { recursive: true, force: true });
+});
+
+test("preview names the per-plan handoff and writes none", () => {
+  const dir = seed();
+  const { archived } = archiveCompletedDocs(dir, { author: AUTHOR, apply: false });
+  const plan = archived.find((doc) => doc.kind === "plans");
+
+  assert.match(plan.handoffPath, /^docs\/handoff\/plans\/.+\.md$/, "the prospective path is reported");
+  assert.equal(existsSync(join(dir, plan.handoffPath)), false, "preview writes no handoff");
+
+  rmSync(dir, { recursive: true, force: true });
+});
+
+test("the handoff carries the plan graph", () => {
+  const dir = seed();
+  const result = buildHandoff({ projectDir: dir, closeout: false });
+
+  assert.match(result.text, /### Plan graph/, "the section renders on every handoff");
+  assert.match(result.text, /- ready: \d+/, "the cascade is counted");
+  assert.match(result.text, /- cycles: \d+/, "the graph health is stated");
+
+  rmSync(dir, { recursive: true, force: true });
 });

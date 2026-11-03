@@ -1,12 +1,12 @@
 /**
- * @module tools/handoff/closeout-archive
- *
- * Folding a finished record into an ADR, and reporting the sweep.
- *
- * One ADR per doc, the source deleted, the plan indexes retired. `apply: false`
- * reports exactly the same list and writes nothing, so a caller can preview the
- * closeout without a second code path.
- */
+@module tools/handoff/closeout-archive
+
+Folding a finished record into an ADR, and reporting the sweep.
+
+One ADR per doc, the source deleted, the plan indexes retired. `apply: false`
+reports exactly the same list and writes nothing, so a caller can preview the
+closeout without a second code path.
+*/
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -16,6 +16,7 @@ import { generateAdr } from "../adr/_body.js";
 import { adrEnglishOffenses } from "../adr/_english.js";
 import { ADR_DIR, adrFilename, listExistingAdrs, nextAdrNumber } from "../adr/_files.js";
 import { planNodeId, retireFromPlanIndexes } from "./_plan-index.js";
+import { planHandoffName, writePlanHandoff } from "./_closeout-handoff.js";
 import { closedSteps, findCompletedDocs } from "./_closeout-scan.js";
 
 /** Outcome steps an ADR carries before it summarizes the rest. */
@@ -40,10 +41,10 @@ function closeoutFields(doc, text) {
 }
 
 /**
- * Archive every completed doc: one ADR each, a refreshed index, the source
- * deleted, and the plan indexes retired. `apply: false` reports the same list
- * and writes nothing.
- */
+Archive every completed doc: one ADR each, a refreshed index, the source
+deleted, and the plan indexes retired. `apply: false` reports the same list
+and writes nothing.
+*/
 export function archiveCompletedDocs(projectDir, { author, apply = true } = {}) {
   const archived = [];
   const skipped = [];
@@ -62,10 +63,15 @@ export function archiveCompletedDocs(projectDir, { author, apply = true } = {}) 
 
     const number = nextNumber;
     const adrFile = adrFilename(number, fields.title);
+    const handoffPath = doc.kind === "plans" ? `${"docs/handoff/plans"}/${planHandoffName(doc)}` : null;
 
     if (apply) {
       mkdirSync(adrDir, { recursive: true });
       writeFileSync(join(adrDir, adrFile), generateAdr({ number, status: "accepted", author: author || adrAuthor(), ...fields }));
+
+      if (handoffPath) {
+        writePlanHandoff(projectDir, { doc, number, adrFile, steps: fields.outcome?.items ?? [], date: doc.date });
+      }
 
       const filename = doc.path.startsWith("docs/plans/") ? doc.path.slice("docs/plans/".length) : null;
 
@@ -85,7 +91,7 @@ export function archiveCompletedDocs(projectDir, { author, apply = true } = {}) 
     // The number advances in preview too, so the report does not show the same
     // prospective ADR number for every candidate.
     nextNumber = number + 1;
-    archived.push({ ...doc, adrNumber: number, adrFile });
+    archived.push({ ...doc, adrNumber: number, adrFile, handoffPath });
   }
 
   if (apply && archived.length > 0) {
@@ -104,9 +110,10 @@ export function closeoutLines(closeout, { isMinimal, heading = "###" }) {
   const title = closeout.preview ? `${heading} Closeout (preview)` : `${heading} Closeout`;
   const archived = closeout.archived.map((doc) => {
     const label = `\`${doc.path}\` → ADR ${String(doc.adrNumber).padStart(3, "0")} (\`${doc.adrFile}\`)`;
-    const tail = doc.kind === "plans" ? "source file deleted; plan indexes retired." : "source file deleted.";
+    const handoff = doc.handoffPath ? `; handoff \`${doc.handoffPath}\`` : "";
+    const tail = doc.kind === "plans" ? `source file deleted; plan indexes retired${handoff}.` : "source file deleted.";
 
-    return closeout.preview ? `- Would archive ${label}; source kept.` : `- Archived ${label}; ${tail}`;
+    return closeout.preview ? `- Would archive ${label}${handoff}; source kept.` : `- Archived ${label}; ${tail}`;
   });
 
   return [title, "", ...archived, ...closeout.skipped.map((doc) => `- Skipped \`${doc.path}\`: ${doc.reason}; file kept.`), ""];

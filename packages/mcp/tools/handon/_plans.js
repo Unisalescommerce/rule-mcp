@@ -1,9 +1,7 @@
 /** What each plan still wants done, so a resuming session proposes before it starts. */
-import { readdirSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { readFileSync } from "node:fs";
 
-/** Where working plans live, relative to the project root. */
-const PLAN_DIR = "docs/plans";
+import { planGraph } from "./_plan-graph-order.js";
 
 /** How many continuation lines a wrapped step may carry before it is cut. */
 const MAX_CONTINUATION = 6;
@@ -60,32 +58,33 @@ function firstOpenStep(text) {
 const openCount = (text) => (text.match(/^\s*-\s*\[ \]\s+\S/gm) ?? []).length;
 
 /**
- * Every plan with at least one open step, newest date first.
- *
- * A plan with nothing open has been carried into an ADR already and proposes
- * nothing. A queue without checkboxes (the backlog) is not a step list either,
- * so it never appears. The newest date wins because the plan worked most
- * recently is the likeliest one a session resumes; the name breaks a tie.
- *
- * @param {string} projectDir
- * @returns {Array<{ name: string, path: string, date: string, workstream: string, step: string, open: number }>}
- */
+The open plans the cascade allows to start, newest date first.
+
+A plan is proposed only when every HARD edge is met: its prerequisite carries
+no open step, or a closeout ADR retired it. A plan that waits, a superseded
+plan and a plan with nothing open propose nothing. The newest date wins
+because the plan worked most recently is the likeliest one a session resumes;
+the name breaks a tie.
+
+@param {string} projectDir
+@returns {Array<{ name: string, path: string, date: string, workstream: string, step: string, open: number }>}
+*/
 export function nextPlanSteps(projectDir) {
-  let files;
+  let graph;
 
   try {
-    files = readdirSync(join(projectDir, PLAN_DIR)).filter((file) => file.endsWith(".md"));
+    graph = planGraph(projectDir);
   } catch {
     return [];
   }
 
   const plans = [];
 
-  for (const file of files) {
+  for (const plan of graph.ready) {
     let text;
 
     try {
-      text = readFileSync(join(projectDir, PLAN_DIR, file), "utf8");
+      text = readFileSync(plan.file, "utf8");
     } catch {
       continue;
     }
@@ -93,38 +92,12 @@ export function nextPlanSteps(projectDir) {
     const next = firstOpenStep(text);
 
     if (next !== null) {
-      plans.push({ name: file.replace(/\.md$/, ""), path: `${PLAN_DIR}/${file}`, date: dateOf(text), open: openCount(text), ...next });
+      plans.push({ name: plan.id, path: plan.path, date: dateOf(text), open: openCount(text), level: plan.level, ...next });
     }
   }
 
-  return plans.sort((a, b) => b.date.localeCompare(a.date) || a.name.localeCompare(b.name));
-}
-
-/**
- * The report section proposing the next workstream of each open plan.
- *
- * The proposal is the tool's, the decision is the user's: a resume report that
- * started work on its own would be answering a question nobody asked.
- *
- * @param {Array<object>} plans @param {{ isMinimal?: boolean }} [shape]
- * @returns {string[]}
- */
-export function planLines(plans, { isMinimal } = {}) {
-  if (!plans || plans.length === 0 || isMinimal) {
-    return [];
-  }
-
-  return [
-    "## Next from the plans",
-    "",
-    "A proposal, not a decision: confirm the workstream with the user before starting it.",
-    "",
-    ...plans.map((plan) => {
-      const when = plan.date ? ` (${plan.date})` : "";
-      const workstream = plan.workstream ? `${plan.workstream}: ` : "";
-      const rest = plan.open > 1 ? ` (${plan.open - 1} more open step(s) in this plan)` : "";
-
-      return `- **${plan.name}**${when} - ${workstream}${plan.step}${rest}`;
-    }),
-  ];
+  // Prerequisites first: a plan whose dependencies are met but sit deeper in the
+  // graph is offered after the shallower ones, so the cascade is linear in the
+  // report even when many leaves are ready at once.
+  return plans.sort((a, b) => a.level - b.level || b.date.localeCompare(a.date) || a.name.localeCompare(b.name));
 }

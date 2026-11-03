@@ -9,26 +9,27 @@ import { verify } from "./_verify.js";
 import { lines, firstMove } from "./_report.js";
 import { promptToRunLines, resumePrompt } from "./_resume-prompt.js";
 import { ageLabel } from "./_age.js";
-import { nextPlanSteps, planLines } from "./_plans.js";
+import { nextPlanSteps } from "./_plans.js";
+import { graphWarnings, planLines } from "./_plan-report.js";
+import { planGraph } from "./_plan-graph-order.js";
 import { archiveCompletedDocs, closeoutLines } from "../handoff/_closeout.js";
 
 /**
- * Read the last handoff and report what is still true.
- *
- * Resuming is also the moment the working papers are swept: a session that
- * picks the project up is the one that can tell a finished audit from an open
- * one, and it is the moment the docs tree is looked at anyway. `closeout: false`
- * keeps the call a pure read; `"preview"` names the papers and keeps them too.
- *
- * @param {{ projectDir?: string, file?: string, list?: boolean, closeout?: boolean | "preview" }} options
- * @returns {{ source?: string, claims: Array<object>, text: string, parsed?: object }}
- */
+Read the last handoff and report what is still true.
+
+Resuming is also the moment the working papers are swept: a session that
+picks the project up is the one that can tell a finished audit from an open
+one, and it is the moment the docs tree is looked at anyway. `closeout: false`
+keeps the call a pure read; `"preview"` names the papers and keeps them too.
+
+@param {{ projectDir?: string, file?: string, list?: boolean, closeout?: boolean | "preview" }} options
+@returns {{ source?: string, claims: Array<object>, text: string, parsed?: object }}
+*/
 export function handon({ projectDir = ".", file, list = false, closeout = true } = {}) {
   const available = listHandoffs(projectDir);
 
   if (list) {
     const text =
-
       available.length === 0
         ? `No handoff found. \`${HANDOFF_DIR}/\` is missing or holds no \`NN-slug.md\` file.`
         : [`# Handoffs in ${HANDOFF_DIR}/`, "", ...available.map((path) => `- ${path}`)].join("\n");
@@ -91,7 +92,8 @@ export function handon({ projectDir = ".", file, list = false, closeout = true }
     out.push("", "## Could not parse", "", `- ${claimed.missing.join(", ")}`, "", "Reported rather than dropped: what is missing here was never checked.");
   }
 
-  const proposed = planLines(nextPlanSteps(projectDir));
+  const analysis = planGraph(projectDir);
+  const proposed = planLines(nextPlanSteps(projectDir), { warnings: graphWarnings(analysis) });
 
   if (proposed.length > 0) {
     out.push("", ...proposed);

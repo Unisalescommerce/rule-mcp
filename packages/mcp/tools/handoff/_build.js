@@ -8,6 +8,7 @@ import { sessionRecall } from "../../core/tokensave/_memory.js";
 import { scanProjectDocs } from "./_docs-scan.js";
 import { landPendingAdrs, settleDuplicateAdrs, onTrunk } from "../../core/docs/adr-pending/index.js";
 import { archiveCompletedDocs, closeoutLines } from "./_closeout.js";
+import { planGraphLines } from "./_sections-plans.js";
 import { autoRenumber, renumberLines } from "./_renumber.js";
 import { estimateTokens } from "./_format.js";
 import { headerLines, identityLines, adrLines, contextLines } from "./_sections-core.js";
@@ -92,6 +93,7 @@ export function buildHandoff({
     ...docsLines(docsScan, shape),
     ...renumberLines(renumber, shape),
     ...closeoutLines(closeoutResult, shape),
+    ...planGraphLines(projectDir, shape),
     ...footerLines(shape),
   ];
 
