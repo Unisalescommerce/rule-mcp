@@ -110,9 +110,9 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 
 ### Phase 0 - Decisions
 
-- [ ] ADR for the ADR conventions: ends-when mandatory, real author, three
+- [x] ADR for the ADR conventions: ends-when mandatory, real author, three
       digits, explicit supersede, English slug.
-- [ ] ADR for the guardrail design: tier B, dual detection, legacy lists that
+- [x] ADR for the guardrail design: tier B, dual detection, legacy lists that
       only shrink.
 
 ### Phase 1 - Fixtures first (red)
