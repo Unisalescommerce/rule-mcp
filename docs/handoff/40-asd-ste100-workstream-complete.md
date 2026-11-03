@@ -1,7 +1,7 @@
 # 40: ASD-STE100 workstream complete (WS-G)
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `a3ec1ad1`..HEAD (plan → WS1–WS5 → ADR 204)
+- **Commit range**: `5c844053`..HEAD (plan → WS1–WS5 → ADR 204)
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0
 - **Date**: 2026-10-31
 

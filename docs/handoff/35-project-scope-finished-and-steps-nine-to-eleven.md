@@ -1,7 +1,7 @@
 # 35: Project scope finished, interactive questions, steps 9-11
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `dc2abc88..1f9795e1` (11 commits, this handoff excluded)
+- **Commit range**: `35db190c..7ed48ade` (11 commits, this handoff excluded)
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits in the whole feature range: 2
 - **Date**: 2026-10-29
 
@@ -17,7 +17,7 @@
 
 ## Commits this handoff window
 
-`c56cb2ba`, `1738d95b`, `70e513e8`, `0b8cb1af`, `fa654783`, `ed950590`, `3bfc6ff4`, `4657a32c`, `704921fb`, `5bb4e7e5`, `1f9795e1`.
+`7198c64d`, `df4a37fb`, `f366896e`, `46e6d20a`, `8b018dff`, `63ebe5ae`, `811cae95`, `090b846e`, `5162b07c`, `c7be14a6`, `7ed48ade`.
 
 ## ADRs
 

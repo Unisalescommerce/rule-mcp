@@ -1,7 +1,7 @@
 # 45: Decision models retired, rule-process-ai closed
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `fba45c5e`..HEAD (handoff 44 verification → DM-04 → 25-word cap → two closeouts)
+- **Commit range**: `8154b85c`..HEAD (handoff 44 verification → DM-04 → 25-word cap → two closeouts)
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits: 2
 - **Date**: 2026-11-03
 

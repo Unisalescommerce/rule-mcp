@@ -1,7 +1,7 @@
 # 37: plan-of-plans is the sole unprefixed index, with workstreams
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `5828b0e7..071da5c7` (this handoff excluded)
+- **Commit range**: `408da69e..8316b219` (this handoff excluded)
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0
 - **Date**: 2026-10-30
 
@@ -11,7 +11,7 @@
 2. **100 subordinate plans renamed with a leading `_`** (top-level + `skills/**`), including `_skills-plan.md`. `skills/README.md` and `skills/DEPENDENCIES.md` stay unprefixed indexes.
 3. **References retargeted** in ADRs, handoffs, reviews, `@see` comments, and `tests/plans/skills-plan.test.mjs` (`nodeId` strips `_` then `rule-mcp-` → `rule-`; `plan-of-plans.md` excluded from the catalog node set).
 4. **Sub-plans annotated** with Notes pointing at the owning workstream (WS-A host, WS-B launcher, WS-C catalog, WS-D single tracks; superseded guardrails marked no-execution).
-5. **Commit**: `071da5c7` `docs(plans): make plan-of-plans the sole unprefixed index` (122 files). `tests/plans/skills-plan.test.mjs`: 9/9 pass.
+5. **Commit**: `8316b219` `docs(plans): make plan-of-plans the sole unprefixed index` (122 files). `tests/plans/skills-plan.test.mjs`: 9/9 pass.
 
 ## State
 

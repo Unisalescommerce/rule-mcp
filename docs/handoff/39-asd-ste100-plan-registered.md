@@ -1,7 +1,7 @@
 # 39: ASD-STE100 plan registered (WS-G)
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `a3ec1ad1` (plan + plan-of-plans); this handoff excluded until committed
+- **Commit range**: `5c844053` (plan + plan-of-plans); this handoff excluded until committed
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0
 - **Date**: 2026-10-31
 

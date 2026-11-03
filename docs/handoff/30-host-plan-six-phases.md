@@ -1,7 +1,7 @@
 # 30: The host plan in six phases, and the plan-of-plans retired
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `f65a99cb..9c52f950` (27 commits, this one excluded)
+- **Commit range**: `daa1df18..4eed58bd` (27 commits, this one excluded)
 - **Base**: `main` (merge base `325936e6`); 288 feature commits ahead, 0 behind, 0 Conventional Commit violations, 2 merge commits in the whole range
 - **Date**: 2026-10-25
 
@@ -18,7 +18,7 @@
 
 ## Commits this session
 
-The 27 commits are listed by `git log f65a99cb..9c52f950 --oneline`. The shape: one `feat`/`fix` commit per phase, a `docs(plans)` commit recording the phase, and two `docs(adr)` commits (179 amended, 181 created) plus `docs(adr)` for 182-185.
+The 27 commits are listed by `git log daa1df18..4eed58bd --oneline`. The shape: one `feat`/`fix` commit per phase, a `docs(plans)` commit recording the phase, and two `docs(adr)` commits (179 amended, 181 created) plus `docs(adr)` for 182-185.
 
 ## ADRs
 
@@ -35,7 +35,7 @@ The 27 commits are listed by `git log f65a99cb..9c52f950 --oneline`. The shape: 
 - **Four open items in `_mcp-host-integration-depth.md` (33/37)**, each with its reason recorded: `_registry.js`/`_uninstall.js` as lookups over the record (needs the 23 writer bodies to move); `written[]` in the manifest (no reader until project-scope installs land in step 8 of the port plan); the hook's own process cost (1056 ms per prompt against a 1.3-2.4 s spawn floor, so measure the floor on an idle machine first); and the per-host token measurement on claude/codex/pi, not run because nothing in this repository drives those agents end to end.
 - The port plan `installer-scope-adr-policy-features.md` has only step 3 done; steps 1, 2, 4-11 remain (numbering doctor, JetBrains/Junie, ADR policy, features, project scope, path completion, rules refresh, docs).
 - 2 merge commits remain (`e9d29e8e`, `df6ba117`); `rule_tool_git action=linearize force=true` is the proposal and needs the owner's confirmation.
-- Pre-existing red tests, unchanged and counted: at `f65a99cb` the suite was 826/848 with 20 failing; at this commit it is 833/853 with 18 failing, so this session closed two of them (the roundtrip child's relative imports) and added five tests. The rest: the two plan-graph assertions, the GPG release test, handbook numbering and link integrity, the `src/cli/setup/opentui` barrel, the 150-line ratchet offenders, `README advertises the catalog skill count`, `_daemon`, `repository-contract`, and the e2e suites.
+- Pre-existing red tests, unchanged and counted: at `daa1df18` the suite was 826/848 with 20 failing; at this commit it is 833/853 with 18 failing, so this session closed two of them (the roundtrip child's relative imports) and added five tests. The rest: the two plan-graph assertions, the GPG release test, handbook numbering and link integrity, the `src/cli/setup/opentui` barrel, the 150-line ratchet offenders, `README advertises the catalog skill count`, `_daemon`, `repository-contract`, and the e2e suites.
 
 ### Resume Prompt
 

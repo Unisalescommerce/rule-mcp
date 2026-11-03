@@ -1,7 +1,7 @@
 # 29: Three release skills, one workflow reader, and the host-integration plan
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `98560749..f8f729cc` (10 commits this session)
+- **Commit range**: `e38af1e4..436f6b01` (10 commits this session)
 - **Base**: `main` (merge base `325936e6`); 251 feature commits ahead, 0 behind, 0 Conventional Commit violations, 2 merge commits in the whole range
 - **Date**: 2026-10-25
 
@@ -17,16 +17,16 @@
 
 ## Commits this session
 
-1. `5688be5e` feat(guardrails): read GitHub workflows as jobs and steps
-2. `2634277a` test(guardrails): add fixtures for the three release skills
-3. `676a813e` feat(skills): add the npm release rules and cut the skill body
-4. `cd1b5cb2` feat(skills): add the uv release skill
-5. `c2b0585c` feat(skills): add the cargo release skill
-6. `154c2dd6` feat(init): report Python and Rust release tooling
-7. `7906ddaf` feat(skills): list the release skills in the process router
-8. `378ca215` docs(census): regenerate the handbook for the release skills
-9. `1e7a4311` docs(handoff): refresh the handoff index
-10. `f8f729cc` docs(plans): register the release and host-integration plans
+1. `0b687686` feat(guardrails): read GitHub workflows as jobs and steps
+2. `7f71ed10` test(guardrails): add fixtures for the three release skills
+3. `b4798ff3` feat(skills): add the npm release rules and cut the skill body
+4. `4f556953` feat(skills): add the uv release skill
+5. `81a30a7e` feat(skills): add the cargo release skill
+6. `91d1038b` feat(init): report Python and Rust release tooling
+7. `350de4b9` feat(skills): list the release skills in the process router
+8. `1717f03a` docs(census): regenerate the handbook for the release skills
+9. `9b5edec0` docs(handoff): refresh the handoff index
+10. `436f6b01` docs(plans): register the release and host-integration plans
 
 ## ADRs
 

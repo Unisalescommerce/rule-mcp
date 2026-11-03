@@ -1,7 +1,7 @@
 # 44: Plan audit closed, rule-process-ai at 21 of 23
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `e79010ad`..HEAD (reference audit F1-F3 → WS-C node → advisory rules → Phase 4)
+- **Commit range**: `0a70bacd`..HEAD (reference audit F1-F3 → WS-C node → advisory rules → Phase 4)
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits: 2
 - **Date**: 2026-11-03
 

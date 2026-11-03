@@ -1,14 +1,14 @@
 # 38: export workstream complete (Steps 0–8)
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `071da5c7..57510e2e` (this handoff excluded; plus closeout ADRs 199–203)
+- **Commit range**: `8316b219..d0eedb36` (this handoff excluded; plus closeout ADRs 199–203)
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0
 - **Date**: 2026-10-31
 
 ## Done
 
 1. **WS-D export Steps 0–8 shipped on `rel/v0.1.0`.** Session map, idempotent telemetry merge, distill keep-by-default, export-owned decision-cache, `/rule-keep` + heuristics, `/rule-adr` restore, confirm-gated cleanup keep-set, tool-cache promote via existing NON_CACHEABLE rules, docs/privacy/census (EX-10).
-2. **False positive fixed:** `js-*` guardrails skip non-JavaScript `fileName` (commit `f1bfbcbc`).
+2. **False positive fixed:** `js-*` guardrails skip non-JavaScript `fileName` (commit `7d478236`).
 3. **Step 8 docs gate:** `RULE_MCP_EXPORT_KEEP_SESSIONS` documented; `docs/06-privacy.md` covers `/rule-export cleanup` hard-delete + redact alignment; DM plan points durable choices at `decision-cache.json`; README/tool-surface/census counts updated; `pnpm test:foundations` 2931 pass / 0 fail at close.
 4. **Handoff closeout archived** finished plans/review/audit → ADR 199 (export plan), 200 (host), 201 (launcher), 202 (export review), 203 (export audit). `plan-of-plans.md` retargeted to those ADRs.
 5. **Pending ADRs still unnumbered on trunk:** restore-rule-adr-…, host deferral, launcher PATH (land via `rule-mcp handoff land` on trunk).

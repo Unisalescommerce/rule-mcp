@@ -1,7 +1,7 @@
 # 31: Installer-scope features, project installs, and the guard daemon
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `19d3c9c3..1aa25edc` (35 commits, this handoff excluded)
+- **Commit range**: `46f90b65..15341994` (35 commits, this handoff excluded)
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits in whole feature range: 2
 - **Date**: 2026-10-28
 
@@ -18,7 +18,7 @@
 
 ## Commits this handoff window
 
-See `git log 19d3c9c3..1aa25edc --oneline`. Shape: guard/daemon/install → project-scope → ADR policy/pending → `feat(setup)` features + `docs(adr)` 197.
+See `git log 46f90b65..15341994 --oneline`. Shape: guard/daemon/install → project-scope → ADR policy/pending → `feat(setup)` features + `docs(adr)` 197.
 
 ## ADRs
 

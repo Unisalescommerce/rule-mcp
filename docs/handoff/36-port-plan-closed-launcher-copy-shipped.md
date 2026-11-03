@@ -1,7 +1,7 @@
 # 36: Port plan closed, launcher copy shipped, phases 1-3
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `1c484f33..30e2e2cd` (23 commits, this handoff excluded)
+- **Commit range**: `04faad73..94a89860` (23 commits, this handoff excluded)
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits in the whole feature range: 2
 - **Date**: 2026-10-30
 
@@ -15,7 +15,7 @@
 
 ## Commits this handoff window
 
-`a0dec143`, `a51a0a29`, `56950233`, `20429e03`, `9654f15a`, `2b2fa54f`, `6e964c22`, `05e2a8ab`, `4677d030`, `f795f4bf`, `79a73616`, `237fa8e2`, `b9ebba49`, `3d850031`, `e43b6d29`, `2c45ec5d`, `744800b4`, `c415c2a4`, `ee733a43`, `b4fb5b5c`, `e9f7945f`, `8ebe8470`, `30e2e2cd`.
+`a6b61804`, `00ba97b3`, `9cebd163`, `3f2c041c`, `a3b6eaed`, `87ad612c`, `a358641a`, `8e3cd807`, `d0cd5f6b`, `b404b0d3`, `c325712e`, `9d1cf8ce`, `f6c8140a`, `8a298e66`, `eed3f326`, `4d4f8c9a`, `bf18223d`, `1a41b867`, `2b6812ca`, `6a7e4d17`, `89bee39d`, `b9326ac8`, `94a89860`.
 
 ## ADRs
 

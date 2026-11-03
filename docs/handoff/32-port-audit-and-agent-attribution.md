@@ -1,7 +1,7 @@
 # 32: Port audit and attribution as a per-agent table
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `5663098e..a92343f6` (2 commits, this handoff excluded)
+- **Commit range**: `5149982e..4d7bfbc7` (2 commits, this handoff excluded)
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits in the whole feature range: 2
 - **Date**: 2026-10-28
 
@@ -14,8 +14,8 @@
 
 ## Commits this handoff window
 
-- `14e02ba9` `docs(plans): audit the port and make attribution per agent`
-- `a92343f6` `docs(adr): make attribution a per-agent table, not a Claude switch`
+- `738f9ab6` `docs(plans): audit the port and make attribution per agent`
+- `4d7bfbc7` `docs(adr): make attribution a per-agent table, not a Claude switch`
 
 ## ADRs
 

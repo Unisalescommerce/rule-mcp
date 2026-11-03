@@ -1,7 +1,7 @@
 # 34: Green guardrails, per-agent attribution, project membership
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `76893d30..dc2abc88` (31 commits, this handoff excluded)
+- **Commit range**: `f7bb432b..35db190c` (31 commits, this handoff excluded)
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits in the whole feature range: 2
 - **Date**: 2026-10-29
 
@@ -17,7 +17,7 @@
 
 ## Commits this handoff window
 
-`3265ef98`, `90a4cfdb`, `c2c509b6`, `4037c703`, `56156c50`, `a63a8403`, `83ea733b`, `0207ef09`, `f863a08b`, `6f1dd4b0`, `8ad3cf58`, `aa31c6d7`, `57db395a`, `d417a2ac`, `65c5fc15`, `22b22d65`, `38dca3c8`, `bdbd853d`, `c207818b`, `544558a7`, `9691ee4d`, `12f12cd9`, `b0f8e873`, `13d94451`, `96ba7a7a`, `89cd917c`, `d298da8b`, `8a147b5b`, `1e90014c`, `9a4898e7`, `dc2abc88`.
+`f9e88ce8`, `ba53f399`, `51daeaf8`, `f5d04cb3`, `79272e9d`, `1bcbf914`, `fa70fb90`, `d4580c82`, `92a2e656`, `541e3ba9`, `3f71968c`, `ea132e85`, `367a6907`, `e75b11b5`, `529c044c`, `34cbe6e3`, `87b90e04`, `cf4cd2ab`, `54fb776b`, `728b04e2`, `4ff714ff`, `f078fd42`, `86afff4f`, `cf074d59`, `35a02766`, `5205290b`, `0df6fc7f`, `6015b86e`, `96657684`, `7de49e0b`, `35db190c`.
 
 ## ADRs
 

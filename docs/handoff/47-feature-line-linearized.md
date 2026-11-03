@@ -22,7 +22,7 @@
 
 ## Left out / next
 
-- **Every commit hash changed.** The short hashes cited in ADRs, handoffs and docs (`6cda42ea`, `a248ca0`, `3f7eda9`, ...) now point nowhere. Repairing them is a mapping pass over the documents, not a code change.
+- **Every commit hash changed.** The citations in ADRs, handoffs and docs were remapped to the rewritten commits in the same pass; `backup/pre-linearize-46` keeps the old history, so the old and new ids can still be paired with `git range-diff`.
 - `pnpm lint` remains red repo-wide on `unicorn/no-asterisk-prefix-in-documentation-comments`, on files this session never touched.
 - Next WS-C node is a Stage 1 leaf with closed edges; `_skills-plan.md` lists them.
 - No tag or release has been cut.

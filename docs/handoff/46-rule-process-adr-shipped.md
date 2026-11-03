@@ -1,7 +1,7 @@
 # 46: rule-process-adr shipped and retired
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `482d3ff3`..HEAD (WS-C node rule-process-adr, all five phases)
+- **Commit range**: `a1b05103`..HEAD (WS-C node rule-process-adr, all five phases)
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits: 2
 - **Date**: 2026-11-03
 
@@ -9,11 +9,11 @@
 
 1. **Handoff 45 verified** — 2976 tests with 2973 passing, `pnpm census:check` current, two merge commits. One tool bug found: the handon prints a pending ADR path as `_pending/<slug>` without `docs/adr/`, so `git ls-files` reports it untracked; the file exists and is committed.
 2. **WS-C node rule-process-adr, 22 of 22, retired into ADR 211.** Five commits, one per concern:
-   - `97ba3501` the two Phase 0 decision records (ADR conventions, guardrail design), both pending until trunk;
-   - `fbfe7b8f` the six rules, six fixture trees, twelve corpus pairs and the legacy list;
-   - `345b74ca` the tool gaps: `endsWhen`, repeatable `--alternatives`, the two-way supersede with its refusal;
-   - `fd464ab0` the skill body, rewritten around what the tool writes and the five conventions;
-   - `07d36377` the closeout into ADR 211.
+   - `3bad2aec` the two Phase 0 decision records (ADR conventions, guardrail design), both pending until trunk;
+   - `5cd088b8` the six rules, six fixture trees, twelve corpus pairs and the legacy list;
+   - `1acae910` the tool gaps: `endsWhen`, repeatable `--alternatives`, the two-way supersede with its refusal;
+   - `7752aa33` the skill body, rewritten around what the tool writes and the five conventions;
+   - `7b0fb912` the closeout into ADR 211.
 3. **The six rules** — `adr-file-naming`, `adr-status-vocabulary`, `adr-author-line`, `adr-ends-when`, `adr-index-derived`, `adr-english`, all advisory, declared in the skill frontmatter, with the `rule-process-ai` file shape.
 4. **The legacy list is the measurement**, not the plan's estimate: 42 records use `Deciders` instead of `Author`, 153 keep the generated ends-when placeholder, 10 carry a free-form status or a supersede with no successor, 2 trip the English scanner. The suite asserts every entry still fails and that no record outside the list does.
 

@@ -1,7 +1,7 @@
 # 43: Plan closeout automation
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `e414cac0`..HEAD (closeout automation → first live sweep → ADRs 206-208)
+- **Commit range**: `f20e7312`..HEAD (closeout automation → first live sweep → ADRs 206-208)
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits: 2
 - **Date**: 2026-11-02
 

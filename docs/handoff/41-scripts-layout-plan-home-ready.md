@@ -1,7 +1,7 @@
 # 41: Scripts-layout ready — plan home in docs/plans
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `1082c215`..HEAD (no new code this session; planning only)
+- **Commit range**: `a2201510`..HEAD (no new code this session; planning only)
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits in long range: 2
 - **Date**: 2026-10-31
 

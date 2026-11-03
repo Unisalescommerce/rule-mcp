@@ -1,7 +1,7 @@
 # 42: Scripts-mcp-layout complete (WS0–WS7)
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `b6d7bf9f`..HEAD (plan home → WS0–WS7 → ADR 205)
+- **Commit range**: `aca06507`..HEAD (plan home → WS0–WS7 → ADR 205)
 - **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0
 - **Date**: 2026-11-01
 

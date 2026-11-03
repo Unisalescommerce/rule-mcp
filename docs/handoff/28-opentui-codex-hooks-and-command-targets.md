@@ -1,7 +1,7 @@
 # 28: OpenTUI installer, Codex hooks, and command targets
 
 - **Branch**: `rel/v0.1.0`
-- **Commit range**: `0138401b..018bd509` (5 commits this session)
+- **Commit range**: `fde6530b..23187b54` (5 commits this session)
 - **Date**: 2026-10-25
 - **Base**: `main` (merge base `325936e6`); feature has 0 Conventional Commit violations, 2 merge commits in full range (handoff audit; no `--close-feature` / squash this session)
 
@@ -14,11 +14,11 @@
 
 ## Commits this session
 
-1. `04608b15` feat(setup): rework installer wizard on OpenTUI
-2. `a0bad456` feat(commands): add Codex and Copilot command targets
-3. `94acf440` feat(install): name Codex hooks and tag host env
-4. `5cb0fb55` fix(guard): emit Codex-safe PreToolUse answers
-5. `018bd509` docs(adr): record installer and Codex hook ADRs 178-180
+1. `ce3f4643` feat(setup): rework installer wizard on OpenTUI
+2. `e2460540` feat(commands): add Codex and Copilot command targets
+3. `79857612` feat(install): name Codex hooks and tag host env
+4. `a72a7e6d` fix(guard): emit Codex-safe PreToolUse answers
+5. `23187b54` docs(adr): record installer and Codex hook ADRs 178-180
 
 ## Left out / next
 
