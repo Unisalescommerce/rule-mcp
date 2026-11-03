@@ -1,37 +1,25 @@
 /** Guardrail `fp-structural-tells`: the closing paragraph does not restate the opening */
 
-/**
- * A closing paragraph that says what the opening already said is padding, and
- * it is the shape a model reaches for when it has nothing left. The check is a
- * word overlap: both paragraphs have to be long enough for the overlap to mean
- * something, and the shared set is taken against the shorter of the two so a
- * long opening cannot hide a short echo.
- */
+// A closing paragraph that says what the opening already said is padding, and
+// it is the shape a model reaches for when it has nothing left. The check is a
+// word overlap: both paragraphs have to be long enough for the overlap to mean
+// something, and the shared set is taken against the shorter of the two so a
+// long opening cannot hide a short echo.
 const DOCUMENT = /\.(?:md|mdx|txt)$/i;
 const MIN_WORDS = 8;
 const SHARED_RATIO = 0.7;
 
-/** Function words carry no claim, so they do not count as a restatement. */
+// Function words carry no claim, so they do not count as a restatement.
 const STOP = new Set(["this", "that", "with", "from", "have", "will", "they", "them", "their", "when", "what", "which", "into", "then", "than", "also"]);
 
-/**
- * The words a paragraph says, lowercased, without the short ones that any two
- * sentences share.
- *
- * @param {string} paragraph
- * @returns {string[]}
- */
+// The words a paragraph says, lowercased, without the short ones that any two
+// sentences share.
 function wordsOf(paragraph) {
   return (paragraph.toLowerCase().match(/[a-z]{4,}/g) ?? []).filter((word) => !STOP.has(word));
 }
 
-/**
- * The paragraphs that carry prose, in order: fenced blocks, headings, lists
- * and tables are structure, not an opening and a closing.
- *
- * @param {string} text
- * @returns {string[]}
- */
+// The paragraphs that carry prose, in order: fenced blocks, headings, lists
+// and tables are structure, not an opening and a closing.
 function paragraphs(text) {
   const blocks = [];
   let isInFence = false;

@@ -1,22 +1,15 @@
 /** Guardrail `fp-repeated-opener`: no three paragraphs opening the same way */
 
-/**
- * The tell is structural, not lexical: three paragraphs that start with the
- * same word read as a template, which is what generated prose looks like. A
- * heading, a list item and a table row open a block without being a paragraph,
- * so they are skipped, and a block of fewer than four words is too short for
- * its opening to be a pattern.
- */
+// The tell is structural, not lexical: three paragraphs that start with the
+// same word read as a template, which is what generated prose looks like. A
+// heading, a list item and a table row open a block without being a paragraph,
+// so they are skipped, and a block of fewer than four words is too short for
+// its opening to be a pattern.
 const DOCUMENT = /\.(?:md|mdx|txt)$/i;
 const MIN_WORDS = 4;
 const REPEATS = 3;
 
-/**
- * The paragraphs of a document, without the blocks that are not paragraphs.
- *
- * @param {string} text
- * @returns {string[]}
- */
+// The paragraphs of a document, without the blocks that are not paragraphs.
 function paragraphs(text) {
   const blocks = [];
   let isInFence = false;
