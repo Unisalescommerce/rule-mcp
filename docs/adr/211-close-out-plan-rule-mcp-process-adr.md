@@ -36,7 +36,7 @@ The plan record docs/plans/skills/process/_rule-mcp-process-adr.md, "rule-proces
 ## Measurement
 
 - The legacy list is far larger than the plan measured: 42 records use `Deciders` instead of `Author`, 153 keep the generated ends-when placeholder (the plan counted the 56 records with no section at all, not the placeholder), 10 carry a free-form status or a supersede with no successor, and 2 trip the English scanner. The list is seeded from that measurement.
-- Two rules were written once and rewritten once. The status and author regexes backtracked catastrophically on a run of spaces (88 seconds on the adversarial corpus); the single-line form answers in 25 milliseconds. `adr-english` scanned the whole body with the path scanner and flagged ordinary English words ("MIT", "die", "com"); it now scans the title with the path scanner and the body with the document scanner.
+- Two rules were written once and rewritten once. The status and author regexes backtracked catastrophically on a run of spaces (88 seconds on the adversarial corpus); the single-line form answers in 25 milliseconds. `adr-english` scanned the whole body with the path scanner and flagged ordinary English tokens that collide with a loanword (a license acronym, a German article, a domain suffix); it now scans the title with the path scanner and the body with the document scanner.
 - Two records (030, 206) still trip `adr-english` on that scanner's own false positives, and they sit in the legacy list rather than being "fixed": the word is English and the scanner is wrong.
 - The tool now carries `endsWhen`, a repeatable alternatives list and the supersede pair; `_register.js` moved its validation into `_validate.js` to stay under the 150-line cap.
 
