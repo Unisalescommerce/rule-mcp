@@ -4,6 +4,8 @@ import { fpBidiControls } from "./_bidi-controls.js";
 import { fpBoxRectangular } from "./_box-rectangular.js";
 import { fpNfcText } from "./_nfc-text.js";
 import { fpNoEmoji } from "./_no-emoji.js";
+import { fpRepeatedOpener } from "./_repeated-opener.js";
+import { fpStructuralTells } from "./_structural-tells.js";
 import { enEnglishOnlyFilenames } from "./_english-only-filenames.js";
 import { enEnglishOnlyProse } from "./_english-only-prose.js";
 import { fpNoEmdash } from "./_no-emdash.js";
@@ -21,6 +23,8 @@ export const GUARDRAILS = [
   fpBidiControls,
   fpNoEmoji,
   fpNfcText,
+  fpRepeatedOpener,
+  fpStructuralTells,
   fpBoxRectangular,
   noPlaceholderImplementation,
   noSpeculativeAuditTable,

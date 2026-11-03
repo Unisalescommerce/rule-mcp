@@ -48,6 +48,12 @@ scope. Text has to be NFC-normalized (`ai-nfc-text`): a decomposed accent looks
 identical to the precomposed letter and is a different byte sequence, so a diff
 or a grep misses it.
 
+The last two are structural, and they also read documents only. Three paragraphs
+that open on the same word read as a template (`ai-repeated-opener`), and a
+closing paragraph that says what the opening said is padding
+(`ai-structural-tells`, a word overlap against the shorter of the two). Both
+name what to vary or delete; neither rewrites the text.
+
 Code is exempt. A third-party API is allowed to be named `getColour()`, and an
 identifier is not prose. Fenced blocks, inline spans and URLs are never
 rewritten.
