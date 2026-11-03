@@ -231,7 +231,7 @@ Commit messages are not rewritten; run `rule-mcp handoff doctor --fix-commits` t
 ### Resume Prompt
 
 ```prompt
-Resume work on rule-mcp from `docs/handoff/24-main-and-[removed]-commit-split.md` on branch `feat/[removed]`.
+Resume work on rule-mcp from `docs/handoff/26-main-and-[removed]-commit-split.md` on branch `feat/[removed]`.
 Run `rule_tool_handon` first: it checks which claims in this handoff still hold before any of them are trusted.
 First verify the branch split against `main`, the clean working tree, and the nine `pnpm test:all` failures; compare with clean `main` before attributing any failure to [removed].
 The ADR log and the context snapshot capture what has been decided; do not re-ask answered questions.
