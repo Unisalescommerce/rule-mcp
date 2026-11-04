@@ -8,7 +8,7 @@ them by `handoff doctor`, so editing it by hand is work the next run throws away
 
 | #                                                                  | Title                                                                     | Date       | Branch                    |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------------- | ---------- | ------------------------- |
-| [48](48-pi-integration-plan-and-cascade.md)                        | Cascade gate, plan shape, and the debt plan                               | 2026-11-04 | rel/v0.1.0.               |
+| [48](48-pi-integration-plan-and-cascade.md)                        | Cascade gate, plan shape, and the debt plan                               | 2026-11-04 | rel/v0.1.0                |
 | [47](47-feature-line-linearized.md)                                | Feature line linearized and closed                                        | 2026-11-03 | rel/v0.1.0                |
 | [46](46-rule-process-adr-shipped.md)                               | rule-process-adr shipped and retired                                      | 2026-11-03 | rel/v0.1.0                |
 | [45](45-decision-models-and-process-ai-closed.md)                  | Decision models retired, rule-process-ai closed                           | 2026-11-03 | rel/v0.1.0                |

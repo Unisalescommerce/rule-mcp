@@ -1,6 +1,6 @@
 # 48: Cascade gate, plan shape, and the debt plan
 
-- **Branch**: `rel/v0.1.0`.
+- **Branch**: `rel/v0.1.0`
 - **Commit range**: `39fd8624`..HEAD, 5 commits.
 - **Base**: `main` (merge base `325936e6`). Conventional Commit violations: 0.
 - **Date**: 2026-11-04.
