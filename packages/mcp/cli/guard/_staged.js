@@ -2,43 +2,42 @@
 
 import { execFileSync } from "node:child_process";
 import { CHECKABLE, skillForPath } from "./_decide.js";
-import { readFileSync } from "node:fs";
 import { extname } from "node:path";
 import { checkCode } from "../../core/guardrails/index.js";
 
-/** @returns {string[]} staged files worth checking */
-export function stagedFiles() {
+/** @param {{ cwd?: string }} [options] @returns {string[]} staged files worth checking */
+export function stagedFiles({ cwd } = {}) {
   try {
     // Bounded: this runs inside a PreToolUse hook, so a git that blocks - an
     // index lock held by another process, a filesystem that stops answering -
     // would hang the agent's tool call rather than this helper.
-    return execFileSync("git", ["diff", "--cached", "--name-only", "--diff-filter=ACM"], {
+    return execFileSync("git", ["diff", "--cached", "--name-only", "--diff-filter=ACM", "-z", "--"], {
+      cwd,
       encoding: "utf8",
       timeout: 5000,
       killSignal: "SIGKILL",
       maxBuffer: 4 * 1024 * 1024,
     })
-      .split("\n")
-      .map((line) => line.trim())
+      .split("\0")
       .filter((line) => line && CHECKABLE.has(extname(line)));
   } catch {
     return [];
   }
 }
 
-/** @returns {Array<{ file: string, failures: string[] }>} */
-export function stagedFailures() {
+/** @param {{ cwd?: string, check?: Function }} [options] @returns {Array<{ file: string, failures: string[] }>} */
+export function stagedFailures({ cwd, check = checkCode } = {}) {
   const results = [];
 
-  for (const file of stagedFiles()) {
+  for (const file of stagedFiles({ cwd })) {
     let code;
     try {
-      code = readFileSync(file, "utf8");
+      code = execFileSync("git", ["show", `:${file}`], { cwd, encoding: "utf8", timeout: 5000, killSignal: "SIGKILL", maxBuffer: 4 * 1024 * 1024 });
     } catch {
       continue;
     }
 
-    const report = checkCode(skillForPath(file), code, { fileName: file });
+    const report = check(skillForPath(file), code, { fileName: file });
 
     if (!report.allPass) {
       results.push({ file, failures: report.failed.map((f) => f.id) });

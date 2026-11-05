@@ -82,6 +82,21 @@ test("the collector reports the probe answer when the binary cannot be used", ()
   assert.deepEqual(absent, { installed: false, scanned: false, findings: [], reason: "betterleaks is not on PATH" });
 });
 
+test("the collector scans the repository named by the host", () => {
+  let directory;
+
+  secretFailures({
+    cwd: "/example/repository",
+    probe: () => ({ available: true, supported: true, reason: "" }),
+    scan: ({ cwd }) => {
+      directory = cwd;
+
+      return { scanned: true, findings: [], reason: "" };
+    },
+  });
+  assert.equal(directory, "/example/repository");
+});
+
 test("the collector passes a supported binary's answer through", () => {
   const found = secretFailures({
     probe: () => ({ available: true, supported: true, reason: "" }),

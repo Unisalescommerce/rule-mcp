@@ -22,15 +22,15 @@ import { probeBetterleaks, scanStaged } from "@mcp/core/secrets/index.js";
 /**
 The secret scan of the staged patch.
 
-@param {{ probe?: Function, scan?: Function }} [options] - Injected, so a test never spawns
+@param {{ probe?: Function, scan?: Function, cwd?: string }} [options] - Injected dependencies and repository directory
 @returns {{ installed: boolean, scanned: boolean, findings: Array<object>, reason: string }}
 */
-export function secretFailures({ probe = probeBetterleaks, scan = scanStaged } = {}) {
+export function secretFailures({ probe = probeBetterleaks, scan = scanStaged, cwd } = {}) {
   const answer = probe();
 
   if (!answer.available || !answer.supported) {
     return { installed: answer.available, scanned: false, findings: [], reason: answer.reason };
   }
 
-  return { installed: true, ...scan() };
+  return { installed: true, ...scan({ cwd }) };
 }

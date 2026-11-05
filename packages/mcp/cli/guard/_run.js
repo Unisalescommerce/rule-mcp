@@ -119,7 +119,16 @@ export async function runGuard(kind = "bash", io = {}) {
   const command = payload?.tool_input?.command ?? "";
 
   try {
-    reply(write, decide(command, kind, stagedFailures, secretFailures), payload);
+    reply(
+      write,
+      decide(
+        command,
+        kind,
+        () => stagedFailures({ cwd: payload?.cwd }),
+        () => secretFailures({ cwd: payload?.cwd }),
+      ),
+      payload,
+    );
   } catch {
     reply(write, ALLOW, payload);
   }
