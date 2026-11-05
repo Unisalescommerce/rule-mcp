@@ -43,8 +43,7 @@
     "@modelcontextprotocol/sdk": "1.32.2",
     "@opentui/core": "0.6.8",
     "commander": "15.0.0",
-    "nyx-gateway": "workspace:*",
-    "rule-mcp-shared": "workspace:*",
+    "rule-mcp-shared": "workspace:0.1.0",
     "zod": "4.6.7"
   }
 }

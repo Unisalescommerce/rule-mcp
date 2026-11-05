@@ -4,7 +4,7 @@ import { rankCandidates } from "./_decision-ranker.js";
 import { dependenciesHold } from "./_digests.js";
 import { echoesArguments } from "./_echo.js";
 import { stableStringify } from "./_keys.js";
-import { promptOf } from "./_nyx-annotate.js";
+import { promptOf } from "./_prompt.js";
 import { entriesStore } from "./_persistence.js";
 import { NORMALIZABLE } from "./_state.js";
 
@@ -49,7 +49,7 @@ export function buildDecisionCandidates(toolName, args) {
       continue;
     }
 
-    const signature = `${prompt}\u0000${stableStringify(entry.args ?? {})}`;
+    const signature = `${prompt}\0${stableStringify(entry.args ?? {})}`;
 
     if (seen.has(signature)) {
       continue;

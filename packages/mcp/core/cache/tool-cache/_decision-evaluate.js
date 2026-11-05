@@ -4,19 +4,19 @@ import { rerankShortlist } from "../../decision/_rerank.js";
 import { decisionRuntime, resolveRuntimeModel } from "../../decision/_runtime.js";
 import { buildDecisionCandidates, nonPromptArgs } from "./_decision-candidates.js";
 import { buildGateQuestion, buildGateState, decideShadow, GATE_INSTRUCTIONS, NONE_DESCRIPTION, NONE_LABEL, SHADOW_THRESHOLD } from "./_decision-protocol.js";
-import { promptOf } from "./_nyx-annotate.js";
+import { promptOf } from "./_prompt.js";
 import { cacheEnabled } from "./_config.js";
 
 /**
- * Build the candidates, ask the model (or its cache), and return the decision.
- * A miss is a reason, never an exception: the caller decides whether to record
- * it in shadow or to compute.
- *
- * @param {string} toolName
- * @param {object} args
- * @param {number} [threshold]
- * @returns {Promise<object|null>}
- */
+Build the candidates, ask the model (or its cache), and return the decision.
+A miss is a reason, never an exception: the caller decides whether to record
+it in shadow or to compute.
+
+@param {string} toolName
+@param {object} args
+@param {number} [threshold]
+@returns {Promise<object|null>}
+*/
 export async function evaluateDecision(toolName, args, threshold = SHADOW_THRESHOLD) {
   if (!cacheEnabled()) {
     return null;

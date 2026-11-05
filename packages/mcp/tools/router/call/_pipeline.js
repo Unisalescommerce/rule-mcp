@@ -8,17 +8,17 @@ import { resumeAnnouncement } from "@mcp/core/session/resume/index.js";
 import { touchActivity } from "@mcp/core/session/_activity.js";
 import { z } from "zod/v4";
 import { recordCrashed } from "./_telemetry.js";
-import { replayIfCached, replayIfDecisionCached, replayIfSemanticCached, storeAndFinalize } from "./_stages.js";
+import { replayIfCached, replayIfDecisionCached, storeAndFinalize } from "./_stages.js";
 import { observeDecisionShadow, replayEnabled } from "@mcp/core/cache/tool-cache/index.js";
 
 /**
- * Run one tool call end to end: activity, self-update, resume banner, cache
- * replay or fresh compute, telemetry, and the closed-fail envelope.
- *
- * @param {string} name
- * @param {object} args
- * @returns {Promise<{ isError?: boolean, content: Array<{ type: string, text: string }> }>}
- */
+Run one tool call end to end: activity, self-update, resume banner, cache
+replay or fresh compute, telemetry, and the closed-fail envelope.
+
+@param {string} name
+@param {object} args
+@returns {Promise<{ isError?: boolean, content: Array<{ type: string, text: string }> }>}
+*/
 export async function callTool(name, args) {
   // A call is the only evidence that anyone still wants this process's heap.
   try {
@@ -69,14 +69,6 @@ export async function callTool(name, args) {
 
     if (replayed) {
       return withBanner(banner, replayed);
-    }
-
-    // L2 runs only after L1 missed: it costs an embedding, and it falls
-    // through to compute when Nyx is absent, disabled or uncertain.
-    const similar = await replayIfSemanticCached(name, validated, startedAt);
-
-    if (similar) {
-      return withBanner(banner, similar);
     }
 
     // L3 is opt-in. When it is on it must run before compute, because a hit has

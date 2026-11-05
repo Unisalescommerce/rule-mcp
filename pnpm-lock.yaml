@@ -24,10 +24,10 @@ importers:
         specifier: 15.0.0
         version: 15.0.0
       rule-mcp:
-        specifier: workspace:*
+        specifier: workspace:0.1.0
         version: link:packages/mcp
       rule-mcp-shared:
-        specifier: workspace:*
+        specifier: workspace:0.1.0
         version: link:packages/shared
       zod:
         specifier: 4.6.7
@@ -102,11 +102,8 @@ importers:
       commander:
         specifier: 15.0.0
         version: 15.0.0
-      nyx-gateway:
-        specifier: workspace:*
-        version: link:../../../nyx
       rule-mcp-shared:
-        specifier: workspace:*
+        specifier: workspace:0.1.0
         version: link:../shared
       zod:
         specifier: 4.6.7

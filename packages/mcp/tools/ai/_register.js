@@ -7,17 +7,16 @@ import { classifyPromptDomain } from "./_domain.js";
 import { detectFrameworkSkill } from "./_framework.js";
 import { reductionSignal } from "./_reduction-signal.js";
 import { rankSkills } from "./_rank-skills.js";
-import { rerankSkillScores } from "./_nyx-rerank.js";
 import { graphCandidates } from "../../core/tokensave/_routing.js";
 import { docsFollowup } from "./_docs-followup.js";
 import { applyDecision } from "./_decision.js";
 import { SCOPE_CONTRACT, STYLING_CONTRACT, STYLING_ROUTES } from "./_contracts.js";
 
 /**
- * Register the rule-mcp routing tool.
- * Routes a user prompt to the correct rule-mcp skill based on keyword scoring.
- * Returns structured JSON with route, confidence, sections, next_tools.
- */
+Register the rule-mcp routing tool.
+Routes a user prompt to the correct rule-mcp skill based on keyword scoring.
+Returns structured JSON with route, confidence, sections, next_tools.
+*/
 export function registerAiTool() {
   registerTool({
     name: "rule_tool",
@@ -68,7 +67,7 @@ export function registerAiTool() {
       const graph = graphCandidates(process.cwd(), prompt, { skills });
       const isReduction = Boolean(reductionSignal(promptLower));
 
-      let skillScores = rankSkills({
+      const skillScores = rankSkills({
         skills,
         promptWords,
         promptDomain,
@@ -79,8 +78,6 @@ export function registerAiTool() {
         detectedSkillName,
         applyFrameworkBias,
       });
-
-      skillScores = (await rerankSkillScores({ prompt, skillScores, ranked })) ?? skillScores;
 
       const top = skillScores.slice(0, 6);
       const primaryRoute = top[0] ?? {

@@ -1,6 +1,6 @@
 {
   "name": "nyx-gateway",
-  "version": "0.0.0-ci-stub",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Minimal nyx-gateway stub for CI and Docker when the sibling ../nyx checkout is absent",
