@@ -54,20 +54,41 @@ export function planStatus(text) {
 
 /** The closed steps a plan carries, in order, without markers. */
 export function closedSteps(text) {
-  return stripFenced(text)
-    .split("\n")
+  const lines = stripFenced(text).split("\n");
+  const steps = [];
 
-    .filter((line) => /^\s*-\s*\[[xX]\]/.test(line))
+  for (let index = 0; index < lines.length; index += 1) {
+    if (!/^\s*-\s*\[[xX]\]/.test(lines[index])) {
+      continue;
+    }
 
-    .map((line) =>
-      line
-        .replace(/^\s*-\s*\[[xX]\]\s*/, "")
-        .replaceAll("**", "")
-        .replaceAll("`", "")
-        .trim(),
-    )
+    const parts = [lines[index].replace(/^\s*-\s*\[[xX]\]\s*/, "")];
 
-    .filter(Boolean);
+    // A step that wrapped keeps its continuation lines: a checkbox cut at its
+    // first line is a sentence without its object.
+    while (index + 1 < lines.length && /^\s{2,}\S/.test(lines[index + 1]) && !/^\s*-\s*\[/.test(lines[index + 1])) {
+      parts.push(lines[index + 1]);
+      index += 1;
+    }
+
+    const step = parts.join(" ").replaceAll("**", "").replaceAll("`", "").replaceAll(/\s+/g, " ").trim();
+
+    if (step) {
+      steps.push(step);
+    }
+  }
+
+  return steps;
+}
+
+/** The prose a plan carries: paragraphs that are not steps, graph or metadata. */
+export function planProse(text) {
+  const blocks = stripFenced(text)
+    .split(/\n\s*\n/)
+    .map((block) => block.trim())
+    .filter((block) => block !== "" && !block.startsWith("#") && !/^\s*-\s*\[/m.test(block) && !/^Status:/i.test(block));
+
+  return blocks.map((block) => block.replaceAll(/\s+/g, " ").trim());
 }
 
 /** True when a plan is implemented: done status, one closed step, none open. */

@@ -17,7 +17,7 @@ import { adrEnglishOffenses } from "../adr/_english.js";
 import { ADR_DIR, adrFilename, listExistingAdrs, nextAdrNumber } from "../adr/_files.js";
 import { planNodeId, retireFromPlanIndexes } from "./_plan-index.js";
 import { planHandoffName, writePlanHandoff } from "./_closeout-handoff.js";
-import { closedSteps, findCompletedDocs } from "./_closeout-scan.js";
+import { closedSteps, findCompletedDocs, planProse } from "./_closeout-scan.js";
 
 /** Outcome steps an ADR carries before it summarizes the rest. */
 const OUTCOME_LIMIT = 20;
@@ -27,13 +27,14 @@ function closeoutFields(doc, text) {
   const kind = doc.kind.slice(0, -1);
   const when = doc.date ? ` on ${doc.date}` : "";
   const steps = doc.kind === "plans" ? closedSteps(text) : [];
+  const prose = doc.kind === "plans" ? planProse(text) : [];
 
   return {
     title: `Close out ${kind} ${doc.name}`,
     context: `The ${kind} record ${doc.path}, "${doc.title}", finished with ${doc.items} closed items${when}.`,
     decision: "Fold the record into this ADR and the session handoff, then delete the source file. The full text stays in git history.",
     consequences: `${doc.path} is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.`,
-    outcome: steps.length > 0 ? { items: steps.slice(0, OUTCOME_LIMIT), total: steps.length } : null,
+    outcome: steps.length > 0 ? { items: steps.slice(0, OUTCOME_LIMIT), total: steps.length, prose } : null,
     endsWhen: `The work this ${kind} closed returns: a step it dismissed reopens, and this ADR no longer explains why.`,
     alternatives: [],
     tags: ["docs", "closeout", kind],

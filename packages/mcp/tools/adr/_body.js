@@ -42,6 +42,9 @@ export function generateAdr({
           ...outcome.items.map((item) => `- ${item}`),
           ...(outcome.total > outcome.items.length ? [`- ...and ${outcome.total - outcome.items.length} more step(s) in the closed record.`] : []),
           "",
+          // The prose is why the steps exist. A record that keeps the list and
+          // drops the reasoning leaves the next reader with tasks and no case.
+          ...(outcome.prose?.length > 0 ? ["### Plan prose", "", ...outcome.prose.flatMap((line) => [line, ""]), ""] : []),
         ]
       : []),
     "## Decision",
