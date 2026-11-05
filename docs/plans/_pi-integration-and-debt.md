@@ -62,11 +62,21 @@ This workstream does not copy them.
 
 ### WS3 - Known debt
 
-- [ ] **WS3-T1**: Resolve a pending ADR span to its real path before the handon check.
-- [ ] **WS3-T2**: Keep each closed step whole when the closeout writes the Outcome.
-- [ ] **WS3-T3**: Keep plan prose that is not a checkbox in that Outcome.
-- [ ] **WS3-T4**: Close F4, F5, F8, F9, and the stage list in the reference plan.
-- [ ] **WS3-T5**: Clear the documentation comment lint failure, or record why it stays.
+- [x] **WS3-T1**: Resolve a pending ADR span to its real path before the handon check.
+      `parseHandoff` now reads `docs/adr/_pending/<slug>.md`, and `verifyAdr`
+      resolves the slug against that directory before falling back to a number.
+- [x] **WS3-T2**: Keep each closed step whole when the closeout writes the Outcome.
+      `closedSteps` joins a step's continuation lines; the ADR Outcome no longer
+      cuts a wrapped step at its first line.
+- [x] **WS3-T3**: Keep plan prose that is not a checkbox in that Outcome.
+      `planProse` carries the plan's paragraphs into a `### Plan prose` section
+      under the Outcome, and skips fenced blocks, headings and the status line.
+- [x] **WS3-T4**: Close F4, F5, F8, F9, and the stage list in the reference plan.
+      Each is closed on a measurement recorded in that plan, not on assumption.
+- [x] **WS3-T5**: Clear the documentation comment lint failure, or record why it stays.
+      Recorded: the rule fires on the block style the whole repository uses
+      (2013 of 2297 lint problems), so clearing it is a repository-wide decision
+      that needs its own ADR. The measurement is in the reference plan.
 
 See the [closeout archive](../../packages/mcp/tools/handoff/_closeout-archive.js).
 

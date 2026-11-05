@@ -33,7 +33,7 @@ What is already correct and should not be touched:
 | F3  | **blocker** | Two skills are created in Stage 3 (`rule-toolchain-electron`, `rule-toolchain-tauri`, by `rule-platform-desktop#4`) but belong to the toolchain area, whose leaves run in Stage 1. A later stage creates nodes for an area that already closed | section 8, M6 | write their plans first and give them a stage after 3, or state that the toolchain area is not closed until Stage 3 | `ge`                    |
 | F4  | **major**   | Node identity changes mid-flight: the node is `rule-process-bmad` and the resulting skill is `rule-method`. The graph uses both names, so a parser sees two nodes and a human sees one                                                         | section 8, M5 | one id per node (`rule-process-bmad`, with `Produces: rule-method`)                                                 | `ge`                    |
 | F5  | **major**   | Two plan formats. ADR 154 requires `Status:` + `Depends on:` / `Feeds:` / `Shared files:`; `plan-of-plans.md` requires `Branch:` / `Path:` as well. A plan cannot satisfy both without a third amendment                                       | section 8, M3 | add `Branch:` and `Path:` to ADR 154's line set (five lines, one contract), or derive them from the file path       | `ge`                    |
-| F6  | **major**   | The contended-file lists disagree: `_skills-plan.md` names 5 files, `plan-of-plans.md` names 8 (it adds `HANDOFF.md`, `docs/*`, `docs/adr/*`, `skills/rule-mcp/SKILL.md`)                                                                       | section 8, M7 | one list, in `plan-of-plans.md`, referenced by the level-1 file                                                     | `feat/evolution` + `ge` |
+| F6  | **major**   | The contended-file lists disagree: `_skills-plan.md` names 5 files, `plan-of-plans.md` names 8 (it adds `HANDOFF.md`, `docs/*`, `docs/adr/*`, `skills/rule-mcp/SKILL.md`)                                                                      | section 8, M7 | one list, in `plan-of-plans.md`, referenced by the level-1 file                                                     | `feat/evolution` + `ge` |
 | F7  | minor       | the plan said 98 unique plan paths; it is 102 across the five branches                                                                                                                                                                         | section 8, M1 | update the count                                                                                                    | `feat/evolution`        |
 | F8  | minor       | Status vocabulary compliance is 9 of 93. The other 84 say "plan only" or a sentence, which no test can read                                                                                                                                    | section 8, M4 | normalise to the five values as each stage starts                                                                   | `ge`                    |
 | F9  | minor       | One plan file has no checkbox: `installer-scope-adr-policy-features.md`, which this plan declares outside the graph. A test that demands a checkbox in every plan file fails on it                                                             | section 8, M2 | exempt the three non-skill plans by path in the test, or give that file a single box                                | both                    |
@@ -95,7 +95,7 @@ its node ids, and the test sums them.
 | Check                      | Result                                                                                                                    |
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
 | Branches behind each other | 0 for all four: no pre-merge rebase needed                                                                                |
-| Fold correctness           | `dm` = `ge` minus one commit; 29 identical copies, 3 diverged by 1-4 lines, 1 unique plan (`_decision-models.md`)          |
+| Fold correctness           | `dm` = `ge` minus one commit; 29 identical copies, 3 diverged by 1-4 lines, 1 unique plan (`_decision-models.md`)         |
 | Merge order vs edges       | consistent: `ex`, `nyx` before `ge`; `dm` folded into `ge`, never merged                                                  |
 | Contended files            | `ge∩dm` 233 (disappears with the fold), `ge∩ex` 3, `ge∩nyx` 1                                                             |
 | Level-0 test feasibility   | the test reads `git show <branch>:<path>`: feasible, and it is the only way to verify a node that lives on another branch |
@@ -111,19 +111,29 @@ Ordered, and none of it is optional except where marked:
 - [x] F3 - decide the toolchain additions: two toolchain plans exist
       (`_rule-mcp-toolchain-electron.md`, `_rule-mcp-toolchain-tauri.md`) and run in
       Stage 4, after the stage that creates them.
-- [ ] F4 - one id per node: `rule-process-bmad`, with `Produces: rule-method`.
-- [ ] F5 - one format: amend ADR 154 to five lines (`Status`, `Branch`, `Path`,
+- [x] F4 - one id per node: `rule-process-bmad`, with `Produces: rule-method`.
+      Measured 2026-11-05: `rule-method` appears in no plan file, and the Stage 2
+      table names `rule-process-bmad` as producing `rule-mcp-method`.
+- [x] F5 - one format: amend ADR 154 to five lines (`Status`, `Branch`, `Path`,
       `Depends on`, `Feeds`) plus `Shared files`.
+      Measured 2026-11-05: ADR 154 carries both `Branch:` and `Path:`.
 - [x] F1 - apply the contract, stage by stage: 92 plans carry a
       `## Dependency graph` section and 93 carry `Depends on:` / `Feeds:`, asserted
       by `scripts/__tests__/plans/skills-plan.test.mjs`. Status wording stays F8.
 - [x] F6 - align the contended-file lists (fixed in `plan-of-plans.md`; the
       level-1 file must point at it).
 - [x] F7 - correct 98 to 99.
-- [ ] F8 - normalise the status line as each stage starts.
-- [ ] F9 - exempt the three non-skill plans from the checkbox assertion by path.
-- [ ] Add an explicit node list per stage, so the counts can be summed instead of
+- [x] F8 - normalise the status line as each stage starts.
+      Measured 2026-11-05: 93 of 94 plan files carry one of the five values; the
+      exception is `skills/README.md`, an index rather than a plan, and the plan
+      tests exclude indexes by path.
+- [x] F9 - exempt the three non-skill plans from the checkbox assertion by path.
+      Measured 2026-11-05: the named file no longer exists, and the only files
+      without a checkbox are the two indexes the tests already exempt.
+- [x] Add an explicit node list per stage, so the counts can be summed instead of
       asserted (Stage audit).
+      Measured 2026-11-05: every stage 0a to 10 carries a node table, and
+      `skills-plan.test.mjs` asserts each node appears exactly once.
 
 ## Measurements (section 8)
 
@@ -175,6 +185,24 @@ nine assertions pass, `_corpus`, `_router-child-coverage`, `_retired-skills` and
 Not resolved, and deliberately out of scope: the sync banner shifts
 `content[0]`, and six tests read fixed indices. Measured: they pass in a detached
 worktree and fail in the checkout after the base advances by two commits.
+
+## Lint baseline (measured 2026-11-05)
+
+`pnpm exec eslint bin/ packages/ scripts/__tests__/ --max-warnings 50` reports
+2297 problems on `rel/v0.1.0`, of which **2013** are
+`unicorn/no-asterisk-prefix-in-documentation-comments`. The rule fires on the
+`/** ... */` block style every file in this repository uses, including files no
+session touched, so it is a rule-versus-convention mismatch rather than a defect
+introduced by a change. The remaining 284 problems are ordinary findings
+(unused variables, parameter and coercion preferences), and most are
+`--fix`-able.
+
+The rule is left in place on purpose. Disabling it in `eslint.config.mjs` would
+change the documentation contract for the whole repository to make one rule
+quiet, and the gate would still be red on the other 284 problems. Clearing it
+properly means either rewriting every JSDoc block or removing the rule with a
+recorded decision; both are repository-wide changes that need their own ADR, not
+a side effect of closing a plan.
 
 Branch names in this review were updated on 2026-10-21, after `feat/guardrails-evolution`
 was renamed to `feat/guardrails` and `feat/evolution` became the convergence branch.
