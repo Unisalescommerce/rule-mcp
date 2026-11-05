@@ -34,9 +34,9 @@ Node ids in graph lines stay skill names (`rule-process-ai`), not filenames. Fil
 | area guardrails (`_*-guardrails.md`) | six files                     | `superseded`   | absorbed into leaf plans; no new work                                              |
 | plan-graph audit                     | `_plan-of-plans-reference.md` | `done`         | history (ADR 171)                                                                  |
 | Pi integration and catalog debt      | `_pi-integration-and-debt.md` | `planned`      | WS1 tool words first                                                               |
+| Secrets guardrails                   | _(retired)_                   | done → ADR 212 | closeout recorded                                                                  |
 
 Branch history that motivated stages 1-5 (2026-10-21) lives in git and in ADR 181; it is not re-executed. The remote `feat/*` refs carry no content this tree lacks.
-| Secrets guardrails: betterleaks gate + deterministic checks | `_secrets-guardrails.md` | `done` | Closeout at next handoff |
 
 ## 2 - What this file is not
 
@@ -126,7 +126,7 @@ Run only when WS-A/B/C are idle on the shared files in section 8, or in parallel
 - [x] scripts-layout — WS0–WS7 complete; retired → [ADR 205](../adr/205-close-out-plan-scripts-mcp-layout.md); product ADR pending `docs/adr/_pending/pnpm-workspace-with-packages-mcp-shared-docs-and-publish-from-packages-mcp.md`.
 - [x] decision models — DM-04 closed by its kill criterion: the harness and the registry ship, the Italian routing claim is dropped; retired → [ADR 209](../adr/209-close-out-plan-decision-models.md).
 - [ ] [`_pi-integration-and-debt.md`](_pi-integration-and-debt.md) - WS1 tool words first.
-- [x] [`_secrets-guardrails.md`](_secrets-guardrails.md) - WS1-WS3 done; closeout at next handoff.
+- [x] Secret guardrails - WS1-WS3 complete; retired to [ADR 212](../adr/212-close-out-plan-secrets-guardrails.md).
 
 ### WS-G — ASD-STE100 writing and AI plan shape
 

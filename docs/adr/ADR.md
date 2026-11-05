@@ -8,6 +8,7 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [212](212-close-out-plan-secrets-guardrails.md)                                                                         | Close out plan _secrets-guardrails                                                                        | 2026-11-05 | accepted   | docs, closeout, plan                                                                |
 | [211](211-close-out-plan-rule-mcp-process-adr.md)                                                                       | Close out plan _rule-mcp-process-adr                                                                      | 2026-11-03 | accepted   | docs, closeout, plan                                                                |
 | [210](210-close-out-plan-rule-mcp-process-ai.md)                                                                        | Close out plan _rule-mcp-process-ai                                                                       | 2026-11-03 | accepted   | docs, closeout, plan                                                                |
 | [209](209-close-out-plan-decision-models.md)                                                                            | Close out plan _decision-models                                                                           | 2026-11-03 | accepted   | docs, closeout, plan                                                                |
@@ -227,6 +228,7 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [212](212-close-out-plan-secrets-guardrails.md)                                                                         | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_secrets-guardrails.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                                             |
 | [211](211-close-out-plan-rule-mcp-process-adr.md)                                                                       | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/skills/process/_rule-mcp-process-adr.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                            |
 | [210](210-close-out-plan-rule-mcp-process-ai.md)                                                                        | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/skills/process/_rule-mcp-process-ai.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                             |
 | [209](209-close-out-plan-decision-models.md)                                                                            | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_decision-models.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                                                |
@@ -446,6 +448,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### docs
 
+- [212](212-close-out-plan-secrets-guardrails.md) Close out plan _secrets-guardrails
 - [211](211-close-out-plan-rule-mcp-process-adr.md) Close out plan _rule-mcp-process-adr
 - [210](210-close-out-plan-rule-mcp-process-ai.md) Close out plan _rule-mcp-process-ai
 - [209](209-close-out-plan-decision-models.md) Close out plan _decision-models
@@ -573,6 +576,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### closeout
 
+- [212](212-close-out-plan-secrets-guardrails.md) Close out plan _secrets-guardrails
 - [211](211-close-out-plan-rule-mcp-process-adr.md) Close out plan _rule-mcp-process-adr
 - [210](210-close-out-plan-rule-mcp-process-ai.md) Close out plan _rule-mcp-process-ai
 - [209](209-close-out-plan-decision-models.md) Close out plan _decision-models
@@ -687,6 +691,24 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [114](114-flight-is-process-area-guidance-injected-on-every-prompt-not-a-slash-command.md) Flight is process-area guidance injected on every prompt, not a slash command
 - [113](113-rename-the-command-surface-under-process-and-persona-namespaces.md) Rename the command surface under process and persona namespaces
 
+### plan
+
+- [212](212-close-out-plan-secrets-guardrails.md) Close out plan _secrets-guardrails
+- [211](211-close-out-plan-rule-mcp-process-adr.md) Close out plan _rule-mcp-process-adr
+- [210](210-close-out-plan-rule-mcp-process-ai.md) Close out plan _rule-mcp-process-ai
+- [209](209-close-out-plan-decision-models.md) Close out plan _decision-models
+- [208](208-close-out-plan-rule-mcp-process-uv-release.md) Close out plan _rule-mcp-process-uv-release
+- [207](207-close-out-plan-rule-mcp-process-npm-release.md) Close out plan _rule-mcp-process-npm-release
+- [206](206-close-out-plan-rule-mcp-process-cargo-release.md) Close out plan _rule-mcp-process-cargo-release
+- [205](205-close-out-plan-scripts-mcp-layout.md) Close out plan _scripts-mcp-layout
+- [204](204-close-out-plan-asd-ste100.md) Close out plan _asd-ste100
+- [201](201-close-out-plan-stable-launcher-outside-the-checkout.md) Close out plan _stable-launcher-outside-the-checkout
+- [200](200-close-out-plan-mcp-host-integration-depth.md) Close out plan _mcp-host-integration-depth
+- [199](199-close-out-plan-export.md) Close out plan _export
+- [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
+- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
+- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
+
 ### cli
 
 - [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md) Hook install starts the guard daemon and writers use --send
@@ -720,23 +742,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [055](055-restructure-the-command-surface-rule-mcp-router-rule-mcp-area-compression-implicit-rule-mcp-process.md) Restructure the command surface: /rule router, rule-area-*, compression implicit, rule-process-tdd skill
 - [054](054-split-review-personas-into-per-operation-commands-plan-audit-review.md) Split review personas into per-operation commands (plan/audit/review)
 - [028](028-clean-rule-mcp-commands-via-user-commands-prompt-suppression-not-a-plugin.md) Clean /rule-mcp-* commands via user commands + prompt suppression, not a plugin
-
-### plan
-
-- [211](211-close-out-plan-rule-mcp-process-adr.md) Close out plan _rule-mcp-process-adr
-- [210](210-close-out-plan-rule-mcp-process-ai.md) Close out plan _rule-mcp-process-ai
-- [209](209-close-out-plan-decision-models.md) Close out plan _decision-models
-- [208](208-close-out-plan-rule-mcp-process-uv-release.md) Close out plan _rule-mcp-process-uv-release
-- [207](207-close-out-plan-rule-mcp-process-npm-release.md) Close out plan _rule-mcp-process-npm-release
-- [206](206-close-out-plan-rule-mcp-process-cargo-release.md) Close out plan _rule-mcp-process-cargo-release
-- [205](205-close-out-plan-scripts-mcp-layout.md) Close out plan _scripts-mcp-layout
-- [204](204-close-out-plan-asd-ste100.md) Close out plan _asd-ste100
-- [201](201-close-out-plan-stable-launcher-outside-the-checkout.md) Close out plan _stable-launcher-outside-the-checkout
-- [200](200-close-out-plan-mcp-host-integration-depth.md) Close out plan _mcp-host-integration-depth
-- [199](199-close-out-plan-export.md) Close out plan _export
-- [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
-- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
-- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
 
 ### release
 
