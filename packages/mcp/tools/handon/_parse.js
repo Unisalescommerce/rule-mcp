@@ -52,6 +52,12 @@ export function parseHandoff(body) {
     adrs.add(match[1]);
   }
 
+  // A pending ADR is cited by its path, because it has no number yet. Reading
+  // only numbers left the open decisions a handoff names unverified.
+  for (const match of body.matchAll(new RegExp(String.raw`${ADR_DIR}/_pending/([\w.-]+)\.md`, "g"))) {
+    adrs.add(match[1]);
+  }
+
   const open = openItems(body);
 
   const commands = spans.filter((span) => {

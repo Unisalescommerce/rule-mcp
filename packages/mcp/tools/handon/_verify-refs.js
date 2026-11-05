@@ -60,6 +60,29 @@ export function isAncestor(projectDir, a, b) {
 }
 
 /**
+ * The file a claim names: a numbered record in `docs/adr`, or a pending one in
+ * `docs/adr/_pending`, which has no number to match on.
+ *
+ * @param {string} dir @param {string} id
+ * @returns {string|null}
+ */
+function resolveAdrFile(dir, id) {
+  const pendingDir = join(dir, "_pending");
+
+  if (existsSync(pendingDir)) {
+    const pendingFile = readdirSync(pendingDir).find((name) => name === `${id}.md` || name.startsWith(`${id}-`));
+
+    if (pendingFile) {
+      return join(pendingDir, pendingFile);
+    }
+  }
+
+  const numbered = readdirSync(dir).find((name) => name.startsWith(`${id}-`));
+
+  return numbered ? join(dir, numbered) : null;
+}
+
+/**
  * The status of a referenced ADR, read from the file rather than from the index.
  *
  * @param {string} projectDir @param {string} id
@@ -72,13 +95,13 @@ export function verifyAdr(projectDir, id) {
     return "not written";
   }
 
-  const file = readdirSync(dir).find((name) => name.startsWith(`${id}-`));
+  const file = resolveAdrFile(dir, id);
 
   if (!file) {
     return "not written";
   }
 
-  const status = readFileSync(join(dir, file), "utf8")
+  const status = readFileSync(join(file), "utf8")
     .match(/\*\*Status\*\*:\s*(\w+)/)?.[1]
     ?.toLowerCase();
 
