@@ -1,25 +1,25 @@
 /**
- * @module cli/program
- *
- * Commander-backed CLI program for rule-mcp.
- *
- * Commander gives us, for free and in a battle-tested way:
- *   - `--flag value` AND `--flag=value` syntax
- *   - strict rejection of unknown options and commands (non-zero exit)
- *   - repeated-option collection (--set A --set B)
- *   - auto `--help` / `--version` per command, generated from the real option
- *     definitions so the help text can never drift from what actually parses
- *   - option value validation via `.choices(...)` (e.g. install --mode)
- *   - `exitOverride()` so the CLI never hard-exits mid-dispatch: every exit
- *     path flows through the single `runCli` error handler and sets
- *     `process.exitCode`, which keeps tests deterministic.
- *
- * Bare invocation (`rule-mcp` with no arguments, or bin spawn by an
- * agent's mcp.json) starts the STDIO server, exactly like before.
- *
- * @see module:index - thin entry wrapper exported as cli()
- * @see module:cli/commands - the semantic handlers this program dispatches to
- */
+@module cli/program
+
+Commander-backed CLI program for rule-mcp.
+
+Commander gives us, for free and in a battle-tested way:
+  - `--flag value` AND `--flag=value` syntax
+  - strict rejection of unknown options and commands (non-zero exit)
+  - repeated-option collection (--set A --set B)
+  - auto `--help` / `--version` per command, generated from the real option
+    definitions so the help text can never drift from what actually parses
+  - option value validation via `.choices(...)` (e.g. install --mode)
+  - `exitOverride()` so the CLI never hard-exits mid-dispatch: every exit
+    path flows through the single `runCli` error handler and sets
+    `process.exitCode`, which keeps tests deterministic.
+
+Bare invocation (`rule-mcp` with no arguments, or bin spawn by an
+agent's mcp.json) starts the STDIO server, exactly like before.
+
+@see module:index - thin entry wrapper exported as cli()
+@see module:cli/commands - the semantic handlers this program dispatches to
+*/
 import { readFileSync } from "node:fs";
 import { Command, CommanderError } from "commander";
 import { registerServeCommand, registerUpCommand, registerDaemonCommand } from "./_register-server.js";
@@ -34,6 +34,7 @@ export { shouldBootstrapCoreTools } from "./_pre-action.js";
 import { registerAgentCommandsCommand } from "./_register-agent-commands.js";
 import { registerReinstallCommand } from "./_register-reinstall.js";
 import { registerCommitLintCommand } from "./_register-commit.js";
+import { registerSecretsCommand } from "./_register-secrets.js";
 import { registerInitCommand } from "./_register-init.js";
 import { registerHandoffCommand } from "./_register-handoff.js";
 import { registerAdrCommand, registerSkillsCommand, registerFixCommand, registerHandonCommand } from "./_register-session.js";
@@ -49,14 +50,13 @@ import {
 
 const version = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")).version;
 
-
 /**
- * Build the complete commander program. Pure (no argv access, no side
- * effects) so tests can build and inspect it without spawning.
- *
- * The registrars run in the exact order the commands always listed in, so the
- * generated help (and the census CLI doc built from it) does not reorder.
- */
+Build the complete commander program. Pure (no argv access, no side
+effects) so tests can build and inspect it without spawning.
+
+The registrars run in the exact order the commands always listed in, so the
+generated help (and the census CLI doc built from it) does not reorder.
+*/
 export function buildProgram() {
   const program = new Command();
 
@@ -101,15 +101,16 @@ export function buildProgram() {
   registerAgentCommandsCommand(program);
   registerReinstallCommand(program);
   registerCommitLintCommand(program);
+  registerSecretsCommand(program);
   registerInitCommand(program);
 
   return program;
 }
 
 /**
- * Parse and dispatch one CLI invocation, mapping every failure to an exit
- * code instead of a hard exit.
- */
+Parse and dispatch one CLI invocation, mapping every failure to an exit
+code instead of a hard exit.
+*/
 export async function runCli(argv = process.argv.slice(2)) {
   const program = buildProgram();
 

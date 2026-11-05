@@ -3,6 +3,7 @@
 import { ALLOW, decide } from "./_decide.js";
 import { encodeHookAnswer } from "./_encode.js";
 import { inject } from "./_inject.js";
+import { secretFailures } from "./_secrets.js";
 import { stagedFailures } from "./_staged.js";
 import { decideStructure } from "./_structure.js";
 import { startTask } from "./_task.js";
@@ -26,16 +27,16 @@ export function readStdin(stream) {
 }
 
 /**
- * The hook payload, or `{}` when there is none to read.
- *
- * A TTY is not a pipe: reading one waits for a keystroke that never arrives and
- * stalls the session for the whole hook timeout. Anything unparseable is also
- * `{}`, because a session that starts without its directive is worse than a
- * session that starts without its handoff.
- *
- * @param {NodeJS.ReadStream} stream
- * @returns {Promise<object>}
- */
+The hook payload, or `{}` when there is none to read.
+
+A TTY is not a pipe: reading one waits for a keystroke that never arrives and
+stalls the session for the whole hook timeout. Anything unparseable is also
+`{}`, because a session that starts without its directive is worse than a
+session that starts without its handoff.
+
+@param {NodeJS.ReadStream} stream
+@returns {Promise<object>}
+*/
 async function readPayload(stream) {
   if (stream?.isTTY) {
     return {};
@@ -49,16 +50,16 @@ async function readPayload(stream) {
 }
 
 /**
- * Hook entry point. Always exits 0 and answers with JSON: a guard that crashes
- * must not become a guard that blocks every command.
- *
- * @param {"bash"|"structure"|"write"|"migration"|"commit"|"session-start"|"prompt-submit"} kind
- * @param {{
- *   stdin?: NodeJS.ReadStream,
- *   write?: (text: string) => void,
- *   payload?: object,
- * }} [io] - When `payload` is set (loop mode), stdin is not read.
- */
+Hook entry point. Always exits 0 and answers with JSON: a guard that crashes
+must not become a guard that blocks every command.
+
+@param {"bash"|"structure"|"write"|"migration"|"commit"|"session-start"|"prompt-submit"} kind
+@param {{
+  stdin?: NodeJS.ReadStream,
+  write?: (text: string) => void,
+  payload?: object,
+}} [io] - When `payload` is set (loop mode), stdin is not read.
+*/
 export async function runGuard(kind = "bash", io = {}) {
   const { stdin = process.stdin, write = (text) => process.stdout.write(text), payload: given } = io;
 
@@ -81,9 +82,7 @@ export async function runGuard(kind = "bash", io = {}) {
 
   let payload;
 
-  if (given !== undefined) {
-    payload = given;
-  } else {
+  if (given === undefined) {
     try {
       payload = JSON.parse(await readStdin(stdin));
     } catch {
@@ -91,6 +90,8 @@ export async function runGuard(kind = "bash", io = {}) {
 
       return;
     }
+  } else {
+    payload = given;
   }
 
   if (kind === "structure") {
@@ -118,7 +119,7 @@ export async function runGuard(kind = "bash", io = {}) {
   const command = payload?.tool_input?.command ?? "";
 
   try {
-    reply(write, decide(command, kind, stagedFailures), payload);
+    reply(write, decide(command, kind, stagedFailures, secretFailures), payload);
   } catch {
     reply(write, ALLOW, payload);
   }

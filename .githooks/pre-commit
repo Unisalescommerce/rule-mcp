@@ -1,14 +1,51 @@
 #!/bin/sh
-# Regenerate the census and stage what it owns, so every commit ships the docs
-# that match the code. The generator formats its own output, writes only the
-# files that actually changed, and prints them; a changed surface therefore
-# lands in the commit instead of a stale doc. Exits 0 even when nothing changed.
+# rule-mcp: two jobs, in this order.
 #
-# A commit is not the place to fail over a missing dev dependency, so this
-# stops early when prettier is not installed.
+# 1. Scan the patch this commit would add for credentials. The scan is
+#    betterleaks on stdin - offline, redacted, no validation - driven by
+#    `rule-mcp secrets`. Three exits: 0 clean, 1 credentials found, 2 the scan
+#    did not run. Only 1 blocks. A tool that is installed and broken, or a patch
+#    over the 4 MiB cap, is reported and stepped over, because a gate that
+#    blocks every commit until somebody repairs a tool teaches `--no-verify`,
+#    and that habit outlives the tool.
+#
+# 2. Regenerate the census and stage what it owns, so every commit ships the
+#    docs that match the code. The generator formats its own output, writes only
+#    the files that actually changed, and prints them; a changed surface
+#    therefore lands in the commit instead of a stale doc. Exits 0 even when
+#    nothing changed. A commit is not the place to fail over a missing dev
+#    dependency, so this stops early when prettier is not installed.
+#
+# `RULE_MCP_HOOK_NO_SIDE_EFFECTS=1` skips step 2: a test that runs this hook
+# must not rewrite and stage documentation while it measures an exit code.
+#
+# Install: pnpm hooks:install
 set -e
 cd "$(git rev-parse --show-toplevel)" || exit 1
 
+echo "pre-commit: scanning the staged patch for credentials..."
+
+status=0
+
+# The probe, not `command -v`: a launcher whose target moved exists and cannot run.
+if command -v rule-mcp >/dev/null 2>&1 && rule-mcp --version >/dev/null 2>&1; then
+  rule-mcp secrets || status=$?
+else
+  node --import ./scripts/alias-hook.mjs ./bin/rule-mcp.js secrets || status=$?
+fi
+
+if [ "$status" -eq 1 ]; then
+  echo "" >&2
+  echo "pre-commit: rejected - credentials in the staged patch." >&2
+  echo "  Rotate anything that is real, remove it from the commit, stage again." >&2
+  exit 1
+fi
+
+if [ "$status" -ne 0 ]; then
+  echo "pre-commit: the secret scan did not run (exit $status); not blocking." >&2
+fi
+
+[ "${RULE_MCP_HOOK_NO_SIDE_EFFECTS:-}" = "1" ] && exit 0
 [ -d node_modules/prettier ] || exit 0
 
 node --import ./scripts/alias-hook.mjs scripts/reports/census/index.mjs >/dev/null

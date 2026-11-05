@@ -20,7 +20,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 
 const repo = new URL("../../..", import.meta.url).pathname;
-const hooks = ["commit-msg", "pre-push"];
+const hooks = ["commit-msg", "pre-commit", "pre-push"];
 
 /** A launcher that exists, cannot run, and says so the way node does. */
 const brokenLauncher = (dir) => {
@@ -39,12 +39,12 @@ const workingLauncher = (dir) => {
 };
 
 /** Run one hook with a PATH holding only the temp dir and the system. */
-function run(hook, { launcherDir, args = [] }) {
+function run({ launcherDir }) {
   const message = join(launcherDir, "msg.txt");
 
   writeFileSync(message, "feat(hooks): a subject\n");
 
-  return spawnSync("sh", [join(repo, ".githooks", hook), message, ...args], {
+  return spawnSync("sh", [join(repo, ".githooks", "commit-msg"), message], {
     cwd: repo,
     encoding: "utf8",
     input: "",
@@ -65,7 +65,7 @@ test("a broken launcher falls back to the in-repo validator instead of blocking"
 
   brokenLauncher(dir);
 
-  const result = run("commit-msg", { launcherDir: dir });
+  const result = run({ launcherDir: dir });
 
   assert.equal(result.status, 0, `a broken launcher must not block a valid message: ${result.stderr}`);
   assert.doesNotMatch(result.stderr, /Cannot find module/u, "and the reader never sees node's error");
@@ -76,7 +76,7 @@ test("a working launcher is still the one that runs", () => {
 
   workingLauncher(dir);
 
-  const result = run("commit-msg", { launcherDir: dir });
+  const result = run({ launcherDir: dir });
   const calls = readFileSync(join(dir, "calls.log"), "utf8");
 
   assert.equal(result.status, 0);
