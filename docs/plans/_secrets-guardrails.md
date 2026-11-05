@@ -1,6 +1,6 @@
 # Plan: secrets guardrails - betterleaks gate and deterministic checks
 
-Status: `planned`.
+Status: `done`.
 
 Notes: subordinate plan.
 
@@ -78,30 +78,31 @@ guardrail.
       `packages/mcp/core/secrets/_probe.js`: `betterleaks --version` with a 1 s
       timeout and `SIGKILL`, returning `{ available, version, reason }` and
       never throwing.
-- [x] **WS1-T1.1**: Test the probe against a stub binary on `PATH`, an absent
-      binary and a launcher whose target moved.
+- [x] **WS1-T1.1**: Test the probe with injected process responses for a
+      supported version, an absent binary and a broken launcher.
 - [x] **WS1-T2**: Run the scan in `packages/mcp/core/secrets/_betterleaks.js`:
       `git diff --cached --no-ext-diff --no-textconv --no-color` piped into
-      `betterleaks stdin --git-diff --redact --no-banner --output=json`, 10 s
-      timeout, 4 MiB buffer, JSON array parsed into
-      `{ ruleId, file, line, redactedMatch }`. No `-v`, no `-a`, no
-      `revoke`.
+      `betterleaks stdin --git-diff --redact --no-banner --output=-`, with a
+      10 s timeout and a 4 MiB buffer. The parsed result retains rule ID,
+      description, confidence, path and line, but not the secret. Validation
+      and analysis are explicitly disabled; revocation is never invoked.
 - [x] **WS1-T2.1**: Test a recorded findings fixture, and test that a timeout
       and a non-zero exit are reported as "not scanned", never as clean.
-- [x] **WS1-T3**: Add `secretFailures()` to
-      `packages/mcp/cli/guard/_staged.js`, covering every staged file with no
-      extension filter, and merge it into the reason `decide()` asks with.
-- [x] **WS1-T4**: Add the `rule-mcp secrets` CLI (`--staged` default,
-      `--range A..B`, `--repo`, `--json`): exit 1 on findings, exit 0 with a
-      loud skip line when the binary is absent.
+- [x] **WS1-T3**: Add `secretFailures()` in
+      `packages/mcp/cli/guard/_secrets.js`, scanning staged text patches with
+      no extension filter, and merge its findings into the reason `decide()`
+      asks with. Binary patches are not scanned.
+- [x] **WS1-T4**: Add the `rule-mcp secrets` CLI (staged by default,
+      `--range A..B`, `--repo`, `--json`): exit 1 on findings and exit 2 when
+      the scanner is absent, unsupported or cannot complete a scan.
 - [x] **WS1-T5**: Install a `pre-commit` hook in `.githooks/` and in
       `scripts/install/git-hooks/` that runs the staged scan; pre-push keeps
       commit messages and formatting.
 - [x] **WS1-T6**: Add the CI job that runs `rule-mcp secrets --range` over the
       commits a branch adds.
-- [x] **WS1-T7**: Document the policy in `SECURITY.md`: scans are offline,
-      `--redact` is unconditional, the binary version is pinned, the ignore file
-      is versioned and reviewed.
+- [x] **WS1-T7**: Document the offline provider-check policy in `SECURITY.md`:
+      `--redact` is unconditional and the CI binary and checksum are pinned.
+      No reviewed versioned ignore file has been added.
 
 ### WS2 - deterministic checks without the binary
 
@@ -109,37 +110,47 @@ The checks answer the other question: is the code the model is writing right now
 holding a credential. They run inside `rule_tool_check`, offline, with no
 dependency to install.
 
-- [ ] **WS2-T1**: Port `shannonEntropy` into
+- [x] **WS2-T1**: Port `shannonEntropy` into
       `skills/rule-devops/guardrails/_secret-entropy.js`.
-- [ ] **WS2-T2**: Port `internal/tokenizer` and `internal/words` into
+- [x] **WS2-T2**: Port `internal/tokenizer` and `internal/words` into
       `_secret-token-rarity.js`: the cl100k_base counter, the NLTK list and the
       `failsTokenEfficiency` thresholds (reject on a 5-letter dictionary word,
       otherwise `chars/tokens >= 2.5`, or `>= 2.1` under 12 characters with a
       4-letter word). Assets vendored with a `LICENSES/` entry, loaded lazily
-      and cached.
-- [ ] **WS2-T2.1**: Test the port against betterleaks' own vectors
+      and cached. The helper refuses candidates over 4096 UTF-8 bytes; it is
+      not yet connected to a blocking guardrail.
+- [x] **WS2-T2.1**: Test the port against betterleaks' own vectors
       (`internal/tokenizer/tokenizer_test.go`), including the multi-byte and
       repeated-character cases.
-- [ ] **WS2-T3**: Add `_secret-known-pattern.js`: a curated subset of provider
+- [x] **WS2-T3**: Add `_secret-known-pattern.js`: a curated subset of provider
       patterns (regex plus mandatory keyword) transcribed from
       `config/betterleaks.toml`, with the MIT attribution in the file header.
-- [ ] **WS2-T4**: Rebuild `_secret-detection.js` on top of T1 and T3, keeping
-      the rule id: the corpus and the area plan depend on it.
-- [ ] **WS2-T5**: Add the good/bad pairs to the corpus with
-      `skill: "rule-devops"`, and make `_scores.fixture.mjs` report 100%
-      precision and recall for every new rule id before any of them blocks.
-- [ ] **WS2-T6**: Scope the rules to the files that carry credentials
-      (`.env*`, `.yml`, `.json`, `Dockerfile`, `*.pem`, `*.key`) through
-      `fileName`, so the checks fire where the gate cannot look.
+      The initial subset covers GitHub PAT, GitLab PAT and AWS access tokens.
+      Findings carry rule IDs and line numbers, not credential values. WS2-T4
+      connects this subset to the existing blocking guardrail.
+- [x] **WS2-T4**: Rebuild `_secret-detection.js` on top of T1 and T3, keeping
+      the rule id: the corpus and the area plan depend on it. The existing rule
+      remains blocking; its provider findings contain only IDs and line numbers.
+      Generic assignment findings no longer include credential values.
+- [x] **WS2-T5**: Add good/bad pairs to the corpus and verify the existing
+      `secret-detection` rule: seven positives and seven negatives pass, with
+      no false positives or false negatives on this limited corpus. The helper
+      patterns do not introduce separate guardrail IDs.
+- [x] **WS2-T6**: Cover `.env*`, `.yml`, `.json`, `Dockerfile`, `*.pem`,
+      `*.key` and source files. File names enable unquoted dotenv assignments;
+      provider checks remain active for all file types. JSON property names are
+      accepted. The labeled corpus contains nine positives and nine negatives.
 
 ### WS3 - governance and census
 
-- [ ] **WS3-T1**: Record the decision with `rule_tool_process_adr`: the binary
+- [x] **WS3-T1**: Record the decision with `rule_tool_process_adr`: the binary
       dependency, the offline-only policy, the promotion gate and what would end
-      the integration.
-- [ ] **WS3-T2**: Regenerate the census (`pnpm census`) for
-      `docs/15-guardrails.md` and the README counts.
-- [ ] **WS3-T3**: Register the plan row in `plan-of-plans.md` and in the devops
+      the integration. The pending ADR also records the native subset, the
+      limited corpus and the agent hook's extension filter.
+- [x] **WS3-T2**: Regenerate the census (`pnpm census`) for
+      `docs/15-guardrails.md` and the README counts. `pnpm census:check`
+      confirms that the generated output is current.
+- [x] **WS3-T3**: Register the plan row in `plan-of-plans.md` and in the devops
       area plan's evidence.
 
 ## Shipped in WS1-T5 to T7

@@ -8,55 +8,55 @@ Topology: **`rel/v0.1.0` is where the work is.** Every commit lands here. `main`
 
 ## 0 - Naming convention
 
-| Path pattern | Role |
-| ------------ | ---- |
-| `docs/plans/plan-of-plans.md` | level-0 index (this file); the only plan without a leading `_` |
-| `docs/plans/_*.md` | non-skill subordinate plans |
-| `docs/plans/skills/<area>/_*.md` | skill and cross-skill subordinate plans |
-| `docs/plans/skills/_skills-plan.md` | level-1 catalog orchestrator |
-| `docs/plans/skills/README.md`, `docs/plans/skills/DEPENDENCIES.md` | indexes, not executable plans (no `_`) |
+| Path pattern                                                       | Role                                                           |
+| ------------------------------------------------------------------ | -------------------------------------------------------------- |
+| `docs/plans/plan-of-plans.md`                                      | level-0 index (this file); the only plan without a leading `_` |
+| `docs/plans/_*.md`                                                 | non-skill subordinate plans                                    |
+| `docs/plans/skills/<area>/_*.md`                                   | skill and cross-skill subordinate plans                        |
+| `docs/plans/skills/_skills-plan.md`                                | level-1 catalog orchestrator                                   |
+| `docs/plans/skills/README.md`, `docs/plans/skills/DEPENDENCIES.md` | indexes, not executable plans (no `_`)                         |
 
 Node ids in graph lines stay skill names (`rule-process-ai`), not filenames. Filenames carry `_` + the prior stem (`_rule-mcp-process-ai.md`).
 
 ## 1 - Snapshot (2026-10-31)
 
-| Group | Path | Status | Open work |
-| ----- | ---- | ------ | --------- |
-| this index | `plan-of-plans.md` | `in-progress` | workstream ordering + owner merge gate |
-| catalog orchestrator | `skills/_skills-plan.md` | `in-progress` | 3 release nodes done; remaining leaves per its stages |
-| host integration | _(retired)_ | done → ADR 200 | 37/37; per-host tokens deferred (pending ADR close-host-…) |
-| launcher | _(retired)_ | done → ADR 201 | Phase 4 closed 2026-10-30 (pending ADR the-launcher-owns-…) |
-| port / installer scope | _(retired)_ | done → ADR 198 | file gone; HARD edge to host plan satisfied |
-| export | _(retired)_ | done → ADR 199 | Steps 0–8 complete 2026-10-31; review/audit → ADR 202/203 |
-| scripts layout | _(retired)_ | done → ADR 205 | WS0–WS7 closed 2026-11-01; product ADR pending land |
-| decision models | _(retired)_ | done → ADR 209 | own graph |
-| ASD-STE100 writing + plan shape | _(retired)_ | done → ADR 204 | WS-G closed 2026-10-31; product pending ADR mcp-authored-markdown-uses-asd-ste100… |
-| area guardrails (`_*-guardrails.md`) | six files | `superseded` | absorbed into leaf plans; no new work |
-| plan-graph audit | `_plan-of-plans-reference.md` | `done` | history (ADR 171) |
-| Pi integration and catalog debt | `_pi-integration-and-debt.md` | `planned` | WS1 tool words first |
+| Group                                | Path                          | Status         | Open work                                                                          |
+| ------------------------------------ | ----------------------------- | -------------- | ---------------------------------------------------------------------------------- |
+| this index                           | `plan-of-plans.md`            | `in-progress`  | workstream ordering + owner merge gate                                             |
+| catalog orchestrator                 | `skills/_skills-plan.md`      | `in-progress`  | 3 release nodes done; remaining leaves per its stages                              |
+| host integration                     | _(retired)_                   | done → ADR 200 | 37/37; per-host tokens deferred (pending ADR close-host-…)                         |
+| launcher                             | _(retired)_                   | done → ADR 201 | Phase 4 closed 2026-10-30 (pending ADR the-launcher-owns-…)                        |
+| port / installer scope               | _(retired)_                   | done → ADR 198 | file gone; HARD edge to host plan satisfied                                        |
+| export                               | _(retired)_                   | done → ADR 199 | Steps 0–8 complete 2026-10-31; review/audit → ADR 202/203                          |
+| scripts layout                       | _(retired)_                   | done → ADR 205 | WS0–WS7 closed 2026-11-01; product ADR pending land                                |
+| decision models                      | _(retired)_                   | done → ADR 209 | own graph                                                                          |
+| ASD-STE100 writing + plan shape      | _(retired)_                   | done → ADR 204 | WS-G closed 2026-10-31; product pending ADR mcp-authored-markdown-uses-asd-ste100… |
+| area guardrails (`_*-guardrails.md`) | six files                     | `superseded`   | absorbed into leaf plans; no new work                                              |
+| plan-graph audit                     | `_plan-of-plans-reference.md` | `done`         | history (ADR 171)                                                                  |
+| Pi integration and catalog debt      | `_pi-integration-and-debt.md` | `planned`      | WS1 tool words first                                                               |
 
 Branch history that motivated stages 1-5 (2026-10-21) lives in git and in ADR 181; it is not re-executed. The remote `feat/*` refs carry no content this tree lacks.
-| Secrets guardrails: betterleaks gate + deterministic checks | `_secrets-guardrails.md` | `planned` | WS1 gate, WS2 checks, WS3 ADR |
+| Secrets guardrails: betterleaks gate + deterministic checks | `_secrets-guardrails.md` | `done` | Closeout at next handoff |
 
 ## 2 - What this file is not
 
 `docs/plans/skills/_skills-plan.md` is the level-1 orchestrator of the catalog: ~87 nodes, stages 0-10, edge taxonomy, precedence policies, human gates (ADR 153/154/175/181). This file **delegates to it** for skill plans and does not restate its order.
 
-| Group | Orchestrator | State |
-| ----- | ------------ | ----- |
-| skills catalog | `skills/_skills-plan.md` | in progress: npm/uv/cargo-release retired (ADR 206-208) |
-| host + launcher (installer infrastructure) | this file, workstreams A–B | both done |
-| single-document tracks | each plan's `## Dependency graph` | export (ADR 199), asd-ste100 (ADR 204), scripts-layout, decision-models (ADR 209) |
-| superseded area plans | none (historical) | `_*-guardrails.md` |
-| repository policy / OSS Stage 0 | ADR 135 + handoff 27 | closed |
+| Group                                      | Orchestrator                      | State                                                                             |
+| ------------------------------------------ | --------------------------------- | --------------------------------------------------------------------------------- |
+| skills catalog                             | `skills/_skills-plan.md`          | in progress: npm/uv/cargo-release retired (ADR 206-208)                           |
+| host + launcher (installer infrastructure) | this file, workstreams A–B        | both done                                                                         |
+| single-document tracks                     | each plan's `## Dependency graph` | export (ADR 199), asd-ste100 (ADR 204), scripts-layout, decision-models (ADR 209) |
+| superseded area plans                      | none (historical)                 | `_*-guardrails.md`                                                                |
+| repository policy / OSS Stage 0            | ADR 135 + handoff 27              | closed                                                                            |
 
 ## 3 - Edges (in-branch)
 
-| Kind | Meaning | Executor rule |
-| ---- | ------- | ------------- |
-| `HARD` | B cannot start before A is closed | block |
-| `ORDER` | B can start, but after A avoids churn | warn |
-| `CONFLICT` | A and B edit the same shared file | serialize |
+| Kind       | Meaning                                        | Executor rule       |
+| ---------- | ---------------------------------------------- | ------------------- |
+| `HARD`     | B cannot start before A is closed              | block               |
+| `ORDER`    | B can start, but after A avoids churn          | warn                |
+| `CONFLICT` | A and B edit the same shared file              | serialize           |
 | `CONTRACT` | A exports a surface B consumes, named by phase | block on that phase |
 
 Cross-branch kinds (`MERGE`, `REBASE`, `DIVERGENCE`, `SUPERSEDES`) are retired with ADR 181.
@@ -80,13 +80,13 @@ rel/v0.1.0
 └── WS-F  owner merge to main ........... human gate only
 ```
 
-| From | To | Kind | Why |
-| ---- | -- | ---- | --- |
-| installer-scope (ADR 198) | `_mcp-host-integration-depth` | `HARD` | host path table consumed by host Phase 1+; **satisfied** |
-| `skills/_skills-plan` catalog | host / launcher | `ORDER` | avoid re-testing install against a moving catalog |
-| WS-A, WS-B, WS-D | each other | _(none)_ | no shared-file CONFLICT across these tracks today |
-| WS-G (`_asd-ste100`) | WS-D decision-models / scripts-layout | `ORDER` | writing rules land before new prose-heavy plan work when possible |
-| catalog leaves | area routers | `HARD` / `CONTRACT` | owned inside `_skills-plan.md` |
+| From                          | To                                    | Kind                | Why                                                               |
+| ----------------------------- | ------------------------------------- | ------------------- | ----------------------------------------------------------------- |
+| installer-scope (ADR 198)     | `_mcp-host-integration-depth`         | `HARD`              | host path table consumed by host Phase 1+; **satisfied**          |
+| `skills/_skills-plan` catalog | host / launcher                       | `ORDER`             | avoid re-testing install against a moving catalog                 |
+| WS-A, WS-B, WS-D              | each other                            | _(none)_            | no shared-file CONFLICT across these tracks today                 |
+| WS-G (`_asd-ste100`)          | WS-D decision-models / scripts-layout | `ORDER`             | writing rules land before new prose-heavy plan work when possible |
+| catalog leaves                | area routers                          | `HARD` / `CONTRACT` | owned inside `_skills-plan.md`                                    |
 
 ## 5 - Workstreams (linear, conflict-free)
 
@@ -126,7 +126,7 @@ Run only when WS-A/B/C are idle on the shared files in section 8, or in parallel
 - [x] scripts-layout — WS0–WS7 complete; retired → [ADR 205](../adr/205-close-out-plan-scripts-mcp-layout.md); product ADR pending `docs/adr/_pending/pnpm-workspace-with-packages-mcp-shared-docs-and-publish-from-packages-mcp.md`.
 - [x] decision models — DM-04 closed by its kill criterion: the harness and the registry ship, the Italian routing claim is dropped; retired → [ADR 209](../adr/209-close-out-plan-decision-models.md).
 - [ ] [`_pi-integration-and-debt.md`](_pi-integration-and-debt.md) - WS1 tool words first.
-- [ ] [`_secrets-guardrails.md`](_secrets-guardrails.md) - WS1 gate, WS2 checks, WS3 ADR.
+- [x] [`_secrets-guardrails.md`](_secrets-guardrails.md) - WS1-WS3 done; closeout at next handoff.
 
 ### WS-G — ASD-STE100 writing and AI plan shape
 
@@ -194,14 +194,14 @@ Superseded as an execution queue by workstreams A–C above; checkbox progress l
 
 ## 8 - Shared files (serialize)
 
-| File | Who touches it | Resolution |
-| ---- | -------------- | ---------- |
-| `scripts/__tests__/fixtures/guardrail-corpus.mjs` | every plan that adds a rule | append-only, one plan at a time |
-| `scripts/__tests__/fixtures/census.json` | surface changes | `pnpm census`, never by hand |
-| generated `docs/0*.md`, `docs/16-*.md`, `docs/17-*.md`, `README.md` | same | regenerate; README accuracy tests |
-| `docs/adr/ADR.md` and ADR numbering | ADR writers | `rule_tool_process_adr` |
-| `docs/handoff/HANDOFF.md` | handoff writers | regenerate index |
-| `skills/rule-process/SKILL.md` | process skill plans | one row per skill, one plan at a time |
+| File                                                                | Who touches it              | Resolution                            |
+| ------------------------------------------------------------------- | --------------------------- | ------------------------------------- |
+| `scripts/__tests__/fixtures/guardrail-corpus.mjs`                   | every plan that adds a rule | append-only, one plan at a time       |
+| `scripts/__tests__/fixtures/census.json`                            | surface changes             | `pnpm census`, never by hand          |
+| generated `docs/0*.md`, `docs/16-*.md`, `docs/17-*.md`, `README.md` | same                        | regenerate; README accuracy tests     |
+| `docs/adr/ADR.md` and ADR numbering                                 | ADR writers                 | `rule_tool_process_adr`               |
+| `docs/handoff/HANDOFF.md`                                           | handoff writers             | regenerate index                      |
+| `skills/rule-process/SKILL.md`                                      | process skill plans         | one row per skill, one plan at a time |
 
 ## 9 - Gates
 
@@ -209,12 +209,12 @@ Automatic: corpus/router suites, `census:check`, lint, the node's own verificati
 
 Human only:
 
-| Gate | Where | Why |
-| ---- | ----- | --- |
-| Anything that touches `main` | WS-F | owner merge request |
-| Generated documents | census surface | hand-edited generated files fail tests |
-| Destructive skill removals | ADR 151/152 | one-way in review |
-| Changes to this graph | this file | the graph is the contract |
+| Gate                         | Where          | Why                                    |
+| ---------------------------- | -------------- | -------------------------------------- |
+| Anything that touches `main` | WS-F           | owner merge request                    |
+| Generated documents          | census surface | hand-edited generated files fail tests |
+| Destructive skill removals   | ADR 151/152    | one-way in review                      |
+| Changes to this graph        | this file      | the graph is the contract              |
 
 ## 10 - Verification
 
@@ -244,9 +244,9 @@ Shared files: `docs/plans/plan-of-plans.md` only. Generated documents belong to 
 
 Classes and evidence: historical section retained in git history through 2026-10-22. Current default for this file's remaining steps:
 
-| Step | Class | Notes |
-| ---- | ----- | ----- |
-| WS-A / WS-B closeout | `T1-plan` / `T3-rules` | product + installer code |
-| WS-C catalog leaves | per node | see each plan's `## Model assignment` |
-| WS-D single tracks | per plan | see each plan |
-| WS-F owner summary | `T1-plan` | human gate |
+| Step                 | Class                  | Notes                                 |
+| -------------------- | ---------------------- | ------------------------------------- |
+| WS-A / WS-B closeout | `T1-plan` / `T3-rules` | product + installer code              |
+| WS-C catalog leaves  | per node               | see each plan's `## Model assignment` |
+| WS-D single tracks   | per plan               | see each plan                         |
+| WS-F owner summary   | `T1-plan`              | human gate                            |

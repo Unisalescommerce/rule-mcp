@@ -55,6 +55,13 @@ catalog besides `rule-backend`'s. They are the right rules to own at this level:
 leaking a `.env` or a secret is a devops failure, not a framework one. The router
 plan keeps them and adds the shared six beside them.
 
+The secrets guardrails work records its decision in the pending ADR
+`use-offline-betterleaks-scans-for-git-credential-checks`. It retains the
+existing `secret-detection` rule ID. The provider subset blocks through that
+rule; the token-rarity helper is not yet connected. The labeled corpus is
+evidence for its examples, not a claim of complete detection. The agent hook
+still filters staged files by extension.
+
 ### Tags
 
 Nine tags: `devops`, `ci`, `cd`, `docker`, `preview`, `testing`,
