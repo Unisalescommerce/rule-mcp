@@ -1,6 +1,6 @@
 # Plan: Pi integration and catalog debt
 
-Status: `planned`.
+Status: `in-progress`.
 
 Notes: subordinate plan.
 
@@ -42,12 +42,12 @@ Its search ranks a tool name above the description.
 
 A query word still has to appear.
 
-- [ ] **WS1-T1**: Add the query words the descriptions lack.
-- [ ] **WS1-T1.1**: Name session, resume, close, and plan in the handoff and handon descriptions.
-- [ ] **WS1-T1.2**: Name verify, lint, guardrail, and decision in the check and gateway descriptions.
-- [ ] **WS1-T2**: Accept one item where a schema asks for an array.
-- [ ] **WS1-T2.1**: Coerce gateway files when the caller sends one object.
-- [ ] **WS1-T2.2**: Coerce ADR alternatives and tags when the caller sends one string.
+- [x] **WS1-T1**: Add the query words the descriptions lack.
+- [x] **WS1-T1.1**: Name session, resume, close, and plan in the handoff and handon descriptions.
+- [x] **WS1-T1.2**: Name verify, lint, guardrail, and decision in the check and gateway descriptions.
+- [x] **WS1-T2**: Accept one item where a schema asks for an array.
+- [x] **WS1-T2.1**: Coerce gateway files when the caller sends one object.
+- [x] **WS1-T2.2**: Coerce ADR alternatives and tags when the caller sends one string.
 - [ ] **WS1-T3**: Load one installed skill in pi.
 - [ ] **WS1-T3.1**: Record whether a custom frontmatter key raises a skill warning.
 

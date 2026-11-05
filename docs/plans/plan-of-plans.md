@@ -33,7 +33,7 @@ Node ids in graph lines stay skill names (`rule-process-ai`), not filenames. Fil
 | ASD-STE100 writing + plan shape      | _(retired)_                   | done → ADR 204 | WS-G closed 2026-10-31; product pending ADR mcp-authored-markdown-uses-asd-ste100… |
 | area guardrails (`_*-guardrails.md`) | six files                     | `superseded`   | absorbed into leaf plans; no new work                                              |
 | plan-graph audit                     | `_plan-of-plans-reference.md` | `done`         | history (ADR 171)                                                                  |
-| Pi integration and catalog debt      | `_pi-integration-and-debt.md` | `planned`      | WS1 tool words first                                                               |
+| Pi integration and catalog debt      | `_pi-integration-and-debt.md` | `in-progress`  | WS1 schema coercion next                                                           |
 | Secrets guardrails                   | _(retired)_                   | done → ADR 212 | closeout recorded                                                                  |
 
 Branch history that motivated stages 1-5 (2026-10-21) lives in git and in ADR 181; it is not re-executed. The remote `feat/*` refs carry no content this tree lacks.
@@ -125,7 +125,7 @@ Run only when WS-A/B/C are idle on the shared files in section 8, or in parallel
 - [x] export — Steps 0–8 complete; retired → [ADR 199](../adr/199-close-out-plan-export.md) (review ADR 202, audit ADR 203).
 - [x] scripts-layout — WS0–WS7 complete; retired → [ADR 205](../adr/205-close-out-plan-scripts-mcp-layout.md); product ADR pending `docs/adr/_pending/pnpm-workspace-with-packages-mcp-shared-docs-and-publish-from-packages-mcp.md`.
 - [x] decision models — DM-04 closed by its kill criterion: the harness and the registry ship, the Italian routing claim is dropped; retired → [ADR 209](../adr/209-close-out-plan-decision-models.md).
-- [ ] [`_pi-integration-and-debt.md`](_pi-integration-and-debt.md) - WS1 tool words first.
+- [ ] [`_pi-integration-and-debt.md`](_pi-integration-and-debt.md) - WS1 schema coercion next.
 - [x] Secret guardrails - WS1-WS3 complete; retired to [ADR 212](../adr/212-close-out-plan-secrets-guardrails.md).
 
 ### WS-G — ASD-STE100 writing and AI plan shape
