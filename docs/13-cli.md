@@ -7,7 +7,7 @@ a tool, a skill, a prompt, a role, a command or a guardrail;
 `scripts/__tests__/docs/census-generated.test.mjs` compares this file against the live
 registry, so a stale copy fails the build instead of misleading a reader.
 
-## The commands (27)
+## The commands (28)
 
 Every command is listed with the arguments and options it reads, taken from
 the commander definitions that parse them. The same definitions answer
@@ -47,6 +47,7 @@ the package version from anywhere. An error exits 1 and prints to stderr;
 | [`agent-commands`](#rule-agent-commands) | 13      | Registry-driven agent slash-command management                                            |
 | [`reinstall`](#rule-reinstall)           | 0       | Purge node_modules and pnpm-lock.yaml, install again, refresh the global bin              |
 | [`commit-lint`](#rule-commit-lint)       | 6       | Validate commits against type(scope): subject (the git hooks call this)                   |
+| [`secrets`](#rule-secrets)               | 3       | Scan a patch for credentials with betterleaks (offline, redacted)                         |
 | [`init`](#rule-init)                     | 2       | Prepare a project: recorder directory, git hooks, tokensave and the dependency pin report |
 
 ## rule-mcp help
@@ -573,6 +574,22 @@ rule-mcp commit-lint
 | `--head <ref>`      | -       | -       | head ref for the range (default: HEAD)                                  |
 | `--stdin-push`      | -       | -       | validate the refs git is about to push, read from stdin (pre-push hook) |
 | `--dir <path>`      | -       | -       | project directory (default: cwd)                                        |
+
+## rule-mcp secrets
+
+Scan a patch for credentials with betterleaks (offline, redacted)
+
+```sh
+rule-mcp secrets
+```
+
+**Options**
+
+| Flag                | Default | Choices | Description                                       |
+| ------------------- | ------- | ------- | ------------------------------------------------- |
+| `--range <revspec>` | -       | -       | scan a revision range instead of the staged patch |
+| `--repo <path>`     | -       | -       | repository directory (default: cwd)               |
+| `--json`            | -       | -       | print findings as JSON                            |
 
 ## rule-mcp init
 

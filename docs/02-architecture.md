@@ -83,7 +83,7 @@ Live counts and the Command - Tool - Skill table: [Surface map](./17-surface-map
 | Guardrail rules           | 9     | `packages/mcp/core/guardrails/index.js`                         |
 | Agent slash commands      | 44    | `packages/mcp/core/agents/commands/index.js`                    |
 | Agent/IDE command targets | 15    | `packages/mcp/core/agents/command-targets/index.js`             |
-| CLI commands              | 27    | `packages/mcp/cli/_program.js`                                  |
+| CLI commands              | 28    | `packages/mcp/cli/_program.js`                                  |
 | Hook events               | 4     | `packages/mcp/core/agents/_hooks.js`                            |
 | Architecture decisions    | 211   | [`docs/adr/ADR.md`](adr/ADR.md)                                 |
 

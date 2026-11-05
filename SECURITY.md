@@ -29,6 +29,37 @@ its inputs. That is the security posture the whole design leans on.
   atomic-write helpers with backups; the server never writes outside its state
   dir without an explicit tool call.
 
+## Credential scanning (the commit gate)
+
+`.githooks/pre-commit` runs `rule-mcp secrets`, which pipes `git diff --cached`
+into `betterleaks stdin --git-diff` and answers one question: does this patch
+add a credential. Five properties are policy, not defaults.
+
+- **Offline provider checks.** The scan passes `--validate=false` and
+  `--analyze=false`, overriding inherited environment settings. Credential
+  validation, analysis and revocation never run in the gate.
+- **Redacted, always.** `--redact` is unconditional, and the finding the gate
+  carries drops the match value entirely - a hook log is not a place for a
+  secret, redacted or not.
+- **Pinned, always.** The gate speaks the betterleaks v2 command set
+  (`stdin --git-diff`). A v1 install is refused with a reason instead of being
+  run, the version is pinned where it is installed, and CI verifies the release
+  checksum pinned in this repository before using it.
+- **Bounded.** The patch is capped at 4 MiB and the scan at 10 s, both killed on
+  timeout. Git runs with `--no-ext-diff --no-textconv`, so a repository's own
+  diff helpers never execute while the patch is produced.
+- **Fail-soft, and loud about it.** No `betterleaks` on `PATH` means nothing is
+  scanned: the hook says so in one line and lets the commit through, because a
+  gate that blocks every commit until a tool is installed gets switched off.
+  `rule-mcp secrets` exits 2 when an installed binary could not complete the
+  scan, so CI never reads "could not scan" as "clean".
+
+Revision scans use `git log -p`, including root and first-parent merge patches.
+They detect credentials introduced and removed between the selected endpoints.
+CI uses PR base/head SHAs or push before/after SHAs. New branches and manual
+runs scan reachable history; an unavailable old tip also triggers a full scan.
+CI checks the pinned binary version before running the gate.
+
 ## Upstream threat model
 
 The current security posture is documented in this file and enforced by the
