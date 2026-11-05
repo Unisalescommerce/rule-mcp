@@ -27,13 +27,7 @@ const plansRoot = join(root, "docs", "plans");
 const skillsPlans = join(plansRoot, "skills");
 
 /** Files under docs/plans that are not executable plans. */
-const NOT_A_PLAN = new Set([
-  "skills/README.md",
-  "skills/DEPENDENCIES.md",
-  "skills/_skills-plan.md",
-  "_plan-of-plans-reference.md",
-  "plan-of-plans.md",
-]);
+const NOT_A_PLAN = new Set(["skills/README.md", "skills/DEPENDENCIES.md", "skills/_skills-plan.md", "_deepseek-prompts.md", "_plan-of-plans-reference.md", "plan-of-plans.md"]);
 const STATUSES = new Set(["planned", "in-progress", "done", "blocked", "superseded"]);
 const GRAPH_LINES = ["Depends on:", "Feeds:", "Shared files:"];
 
@@ -65,8 +59,15 @@ function planFiles() {
 const files = planFiles();
 const texts = new Map(files.map((path) => [path, readFileSync(join(plansRoot, path), "utf8")]));
 const planText = readFileSync(join(skillsPlans, "_skills-plan.md"), "utf8");
+const levelZeroText = readFileSync(join(plansRoot, "plan-of-plans.md"), "utf8");
 
 const stagesFromPlan = () => stagesFromPlanText(planText);
+
+test("the level-zero index registers every self-registering top-level plan", () => {
+  const missing = files.filter((path) => !path.startsWith("skills/") && texts.get(path).includes("WS0 - Register this plan")).filter((path) => !levelZeroText.includes(path));
+
+  assert.deepEqual(missing, [], `register these plans in plan-of-plans.md: ${missing.join(", ")}`);
+});
 
 test("every plan carries a checkbox step", () => {
   const offenders = files.filter((path) => !/^- \[[ xX]\]/m.test(texts.get(path)));
