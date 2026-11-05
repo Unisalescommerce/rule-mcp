@@ -161,6 +161,14 @@ security, anti-patterns, and pointers. Around 200 lines.
 - [ ] Example checks: lint and guardrails over `skills/**/examples/**`.
 - [ ] `pnpm census && pnpm census:check`, `pnpm lint`, typecheck.
 
+## Retained area guardrail backlog
+
+ADR 140 proposed this rule set before ADR 175 moved area work into skill plans.
+This plan owns: `worker-no-dom`, `worker-transferable`.
+
+The fixtures-first, implementation, and verification phases above include these
+rules. They remain planned until those phase checkboxes close.
+
 ## Model assignment
 
 Classes and evidence: section 14 of `docs/plans/plan-of-plans.md`.

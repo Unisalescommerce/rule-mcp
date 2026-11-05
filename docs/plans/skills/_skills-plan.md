@@ -15,7 +15,7 @@ history and their content is here (ADR 181); a plan that lands later lands here
 too, and this file is its ordering authority. Non-skill tracks (host, launcher,
 export, …) are ordered only by `plan-of-plans.md`.
 
-Decisions recorded: ADR 153 (this model), ADR 154 (the plan format contract),
+Decisions recorded: ADR 175 (this model), ADR 154 (the plan format contract),
 ADR 181 (one branch, and this file as the level-1 orchestrator of it).
 
 ## 1 - The universe
@@ -23,15 +23,15 @@ ADR 181 (one branch, and this file as the level-1 orchestrator of it).
 Measured on 2026-10-21 on this branch: **94 files** under `docs/plans` before this
 file existed, 95 after, 96 after the Stage 1 fold added `_decision-models.md`.
 
-| Kind                                                                                                                                                | Count | In the graph                                                                  |
-| --------------------------------------------------------------------------------------------------------------------------------------------------- | ----- | ----------------------------------------------------------------------------- |
-| Skill plans (`docs/plans/skills/<area>/_*.md`)                                                                                                       | 84    | yes, one node each                                                            |
-| Cross-skill plan (`docs/plans/skills/toolchain/_bundler-family.md`)                                                                                  | 1     | yes: a shared contract for Vite, Rspack and Parcel, owned by `rule-toolchain` |
-| Area / non-skill plans (`docs/plans/_*-guardrails.md`, retired oss/execution/installer-scope, `_mcp-host-integration-depth.md`)                    | 10    | **no**: absorbed or tracked on their own, see section 9                       |
-| Decision-models plan (`docs/plans/_decision-models.md`)                                                                                              | 1     | **no**: outside the skills graph, see `DEPENDENCIES.md`                       |
-| `docs/plans/skills/README.md`                                                                                                                       | 1     | no: it is the index table                                                     |
-| `docs/plans/skills/DEPENDENCIES.md`                                                                                                                 | 1     | no: superseded by section 5, kept as history                                  |
-| `docs/plans/skills/_skills-plan.md`                                                                                                                  | 1     | no: this file orchestrates, it is not work                                    |
+| Kind                                                                                                      | Count | In the graph                                                                  |
+| --------------------------------------------------------------------------------------------------------- | ----- | ----------------------------------------------------------------------------- |
+| Skill plans (`docs/plans/skills/<area>/_*.md`)                                                            | 84    | yes, one node each                                                            |
+| Cross-skill plan (`docs/plans/skills/toolchain/_bundler-family.md`)                                       | 1     | yes: a shared contract for Vite, Rspack and Parcel, owned by `rule-toolchain` |
+| Retired area plans and non-skill tracks (repository policy, execution, installer scope, host integration) | 10    | **no**: retired or tracked on their own, see section 9                        |
+| Decision-models plan (`docs/plans/_decision-models.md`)                                                   | 1     | **no**: outside the skills graph, see `DEPENDENCIES.md`                       |
+| `docs/plans/skills/README.md`                                                                             | 1     | no: it is the index table                                                     |
+| `docs/plans/skills/DEPENDENCIES.md`                                                                       | 1     | no: superseded by section 5, kept as history                                  |
+| `docs/plans/skills/_skills-plan.md`                                                                       | 1     | no: this file orchestrates, it is not work                                    |
 
 **Graph nodes: 83.** Measured baseline for the retrofit: every plan file already
 has `- [ ]` checkboxes except two of the nine area plans; **no plan carries a
@@ -331,8 +331,8 @@ file, so a stale row fails rather than misleads.
 
 | Node                            | Area   | Status      | box   | Stage |
 | ------------------------------- | ------ | ----------- | ----- | ----- |
-| `rule-process-adr`              | leaf   | retired | 22/22  | 0     |
-| `rule-process-ai`               | leaf   | retired | 23/23 | 0     |
+| `rule-process-adr`              | leaf   | retired     | 22/22 | 0     |
+| `rule-process-ai`               | leaf   | retired     | 23/23 | 0     |
 | `bundler-family`                | cross  | in-progress | 3/6   | 1     |
 | `rule-toolchain-biome`          | leaf   | in-progress | 4/18  | 1     |
 | `rule-toolchain-eslint`         | leaf   | in-progress | 4/19  | 1     |
@@ -344,12 +344,12 @@ file, so a stale row fails rather than misleads.
 | `rule-toolchain-vite`           | leaf   | in-progress | 4/19  | 1     |
 | `rule-ui-design-system`         | leaf   | in-progress | 4/21  | 1     |
 | `rule-process-bmad`             | leaf   | in-progress | 4/37  | 2     |
-| `rule-process-cargo-release`    | leaf   | retired | 19/19 | 2     |
+| `rule-process-cargo-release`    | leaf   | retired     | 19/19 | 2     |
 | `rule-process-changelog`        | leaf   | in-progress | 3/18  | 2     |
 | `rule-process-code-review`      | leaf   | in-progress | 3/16  | 2     |
-| `rule-process-npm-release`      | leaf   | retired | 20/20 | 2     |
+| `rule-process-npm-release`      | leaf   | retired     | 20/20 | 2     |
 | `rule-process-readme`           | leaf   | in-progress | 5/17  | 2     |
-| `rule-process-uv-release`       | leaf   | retired | 20/20 | 2     |
+| `rule-process-uv-release`       | leaf   | retired     | 20/20 | 2     |
 | `rule-styleguide-a11y`          | leaf   | in-progress | 4/18  | 2     |
 | `rule-styleguide-baseline`      | leaf   | in-progress | 9/15  | 2     |
 | `rule-styleguide-comments`      | leaf   | in-progress | 8/15  | 2     |
@@ -419,24 +419,17 @@ file, so a stale row fails rather than misleads.
 | `rule-toolchain`                | router | in-progress | 3/18  | 10    |
 | `rule-ui`                       | router | in-progress | 4/19  | 10    |
 
-### The nine area plans are not nodes
+### Plans outside the catalog graph
 
-Six of them are **absorbed**: their scope is "extend the guardrails of the N
-skills of this area", which is exactly what those leaf plans now do one rule set
-at a time. Each file carries `Status: superseded` and names its owner.
+ADR 175 retired six area-level guardrail plans. Their 76 retained rule IDs now
+live in owning skill plans: AI in `rule-ai-agent-architecture`; backend across
+the security, runtime, worker, GraphQL, and framework leaves; data in
+`rule-data`, PostgreSQL, MongoDB, and SQLite; devops across its router and four
+leaves; frontend in its router, template-engine, and workers plans; meta in its
+router, Next, and Astro plans. A regression test keeps this ownership complete.
 
-| Area plan             | Absorbed by                                             |
-| --------------------- | ------------------------------------------------------- |
-| `ai-guardrails`       | `rule-ai-agent-architecture` (ADR 137's rules, P10)     |
-| `backend-guardrails`  | the 8 backend leaves, each owning its framework rules   |
-| `data-guardrails`     | `rule-data` (the four area rules) and the 8 data leaves |
-| `devops-guardrails`   | the 4 devops leaves                                     |
-| `frontend-guardrails` | the 7 frontend leaves, one rule set each                |
-| `meta-guardrails`     | the 4 meta leaves                                       |
-
-The other four are **outside the skills graph**, not absorbed: they plan
-repository policy, the installer and the host integration, not skills, and they
-are tracked on their own. They carry `Status: planned` with a line saying so.
+Four other plans stay outside the skills graph. They cover repository policy,
+execution, installer scope, and host integration. They are tracked on their own.
 
 | Plan                                  | Subject                                                                         |
 | ------------------------------------- | ------------------------------------------------------------------------------- |
@@ -478,7 +471,7 @@ One test, `tests/plans/skills-plan.test.mjs`, parses `docs/plans` and this file:
 
 ### Phase 0 - Decisions
 
-- [x] ADR 153: the orchestration model (nodes, edges, policies, stages, gates).
+- [x] ADR 175: the orchestration model (nodes, edges, policies, stages, gates).
 - [x] ADR 154: the plan format contract (status line, graph section, checkboxes).
 
 ### Phase 1 - This file
@@ -622,8 +615,8 @@ file, so a stale row fails rather than misleads.
 
 | Node                            | Area   | Status      | box   | Stage |
 | ------------------------------- | ------ | ----------- | ----- | ----- |
-| `rule-process-adr`              | leaf   | retired | 22/22  | 0     |
-| `rule-process-ai`               | leaf   | retired | 23/23 | 0     |
+| `rule-process-adr`              | leaf   | retired     | 22/22 | 0     |
+| `rule-process-ai`               | leaf   | retired     | 23/23 | 0     |
 | `bundler-family`                | cross  | in-progress | 3/6   | 1     |
 | `rule-toolchain-biome`          | leaf   | in-progress | 4/18  | 1     |
 | `rule-toolchain-eslint`         | leaf   | in-progress | 4/19  | 1     |
@@ -635,12 +628,12 @@ file, so a stale row fails rather than misleads.
 | `rule-toolchain-vite`           | leaf   | in-progress | 4/19  | 1     |
 | `rule-ui-design-system`         | leaf   | in-progress | 4/21  | 1     |
 | `rule-process-bmad`             | leaf   | in-progress | 4/37  | 2     |
-| `rule-process-cargo-release`    | leaf   | retired | 19/19 | 2     |
+| `rule-process-cargo-release`    | leaf   | retired     | 19/19 | 2     |
 | `rule-process-changelog`        | leaf   | in-progress | 3/18  | 2     |
 | `rule-process-code-review`      | leaf   | in-progress | 3/16  | 2     |
-| `rule-process-npm-release`      | leaf   | retired | 20/20 | 2     |
+| `rule-process-npm-release`      | leaf   | retired     | 20/20 | 2     |
 | `rule-process-readme`           | leaf   | in-progress | 5/17  | 2     |
-| `rule-process-uv-release`       | leaf   | retired | 20/20 | 2     |
+| `rule-process-uv-release`       | leaf   | retired     | 20/20 | 2     |
 | `rule-styleguide-a11y`          | leaf   | in-progress | 4/18  | 2     |
 | `rule-styleguide-baseline`      | leaf   | in-progress | 9/15  | 2     |
 | `rule-styleguide-comments`      | leaf   | in-progress | 8/15  | 2     |
@@ -710,24 +703,17 @@ file, so a stale row fails rather than misleads.
 | `rule-toolchain`                | router | in-progress | 3/18  | 10    |
 | `rule-ui`                       | router | in-progress | 4/19  | 10    |
 
-### The nine area plans are not nodes
+### Plans outside the catalog graph
 
-Six of them are **absorbed**: their scope is "extend the guardrails of the N
-skills of this area", which is exactly what those leaf plans now do one rule set
-at a time. Each file carries `Status: superseded` and names its owner.
+ADR 175 retired six area-level guardrail plans. Their 76 retained rule IDs now
+live in owning skill plans: AI in `rule-ai-agent-architecture`; backend across
+the security, runtime, worker, GraphQL, and framework leaves; data in
+`rule-data`, PostgreSQL, MongoDB, and SQLite; devops across its router and four
+leaves; frontend in its router, template-engine, and workers plans; meta in its
+router, Next, and Astro plans. A regression test keeps this ownership complete.
 
-| Area plan             | Absorbed by                                             |
-| --------------------- | ------------------------------------------------------- |
-| `ai-guardrails`       | `rule-ai-agent-architecture` (ADR 137's rules, P10)     |
-| `backend-guardrails`  | the 8 backend leaves, each owning its framework rules   |
-| `data-guardrails`     | `rule-data` (the four area rules) and the 8 data leaves |
-| `devops-guardrails`   | the 4 devops leaves                                     |
-| `frontend-guardrails` | the 7 frontend leaves, one rule set each                |
-| `meta-guardrails`     | the 4 meta leaves                                       |
-
-The other four are **outside the skills graph**, not absorbed: they plan
-repository policy, the installer and the host integration, not skills, and they
-are tracked on their own. They carry `Status: planned` with a line saying so.
+Four other plans stay outside the skills graph. They cover repository policy,
+execution, installer scope, and host integration. They are tracked on their own.
 
 | Plan                                  | Subject                                                                         |
 | ------------------------------------- | ------------------------------------------------------------------------------- |
@@ -769,7 +755,7 @@ One test, `tests/plans/skills-plan.test.mjs`, parses `docs/plans` and this file:
 
 ### Phase 0 - Decisions
 
-- [x] ADR 153: the orchestration model (nodes, edges, policies, stages, gates).
+- [x] ADR 175: the orchestration model (nodes, edges, policies, stages, gates).
 - [x] ADR 154: the plan format contract (status line, graph section, checkboxes).
 
 ### Phase 1 - This file

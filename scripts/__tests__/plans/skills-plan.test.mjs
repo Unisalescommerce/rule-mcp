@@ -30,7 +30,6 @@ const skillsPlans = join(plansRoot, "skills");
 const NOT_A_PLAN = new Set(["skills/README.md", "skills/DEPENDENCIES.md", "skills/_skills-plan.md", "_deepseek-prompts.md", "_plan-of-plans-reference.md", "plan-of-plans.md"]);
 const STATUSES = new Set(["planned", "in-progress", "done", "blocked", "superseded"]);
 const GRAPH_LINES = ["Depends on:", "Feeds:", "Shared files:"];
-
 /** Every plan file, relative to docs/plans, sorted. */
 function planFiles() {
   const found = [];

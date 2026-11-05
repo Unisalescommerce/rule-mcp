@@ -113,6 +113,14 @@ replace. Otherwise the template silently rots into something that almost works.
 - [ ] Template parse and TODO coverage.
 - [ ] `pnpm census && pnpm census:check`, `pnpm lint`, typecheck.
 
+## Retained area guardrail backlog
+
+ADR 136 proposed this rule set before ADR 175 moved area work into skill plans.
+This plan owns: `preview-on-stop`, `preview-auto-stop`, `preview-no-secrets-spec`, `preview-envsubst-whitelist`.
+
+The fixtures-first, implementation, and verification phases above include these
+rules. They remain planned until those phase checkboxes close.
+
 ## Model assignment
 
 Classes and evidence: section 14 of `docs/plans/plan-of-plans.md`.

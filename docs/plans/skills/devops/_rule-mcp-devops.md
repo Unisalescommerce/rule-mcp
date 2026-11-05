@@ -131,6 +131,14 @@ equally. The same pruning `rule-platform`, `rule-meta` and `rule-frontend` neede
 - [ ] Catalog scan with the eight rules.
 - [ ] `pnpm census && pnpm census:check`, `pnpm lint`, typecheck.
 
+## Retained area guardrail backlog
+
+ADR 136 proposed this rule set before ADR 175 moved area work into skill plans.
+This plan owns: `ci-image-digest-pinned`, `ci-no-secret-echo`, `ci-no-allow-failure`, `ci-protected-deploy`, `ci-provenance`.
+
+The fixtures-first, implementation, and verification phases above include these
+rules. They remain planned until those phase checkboxes close.
+
 ## Model assignment
 
 Classes and evidence: section 14 of `docs/plans/plan-of-plans.md`.

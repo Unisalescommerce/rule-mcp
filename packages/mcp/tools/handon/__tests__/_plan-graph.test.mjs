@@ -48,7 +48,7 @@ function seededGraph() {
 
 test("a plan id is the file stem without the underscore or the rule-mcp prefix", () => {
   assert.equal(planId("/x/docs/plans/_rule-mcp-process-ai.md"), "rule-process-ai");
-  assert.equal(planId("/x/docs/plans/skills/_ai-guardrails.md"), "ai-guardrails");
+  assert.equal(planId("/x/docs/plans/skills/_sample-area.md"), "sample-area");
 });
 
 test("every plan under the tree is read, including the skill plans", () => {

@@ -15,7 +15,7 @@ its own, inherited area rules (`rule-data`, `rule-backend`) or both. The AI area
 neither, which means the one area that describes agent code - the most expensive
 code to get wrong - is the only one nothing checks.
 
-**Where the eight rules land, decided on 2026-10-21 (ADR 153, P10):** in
+**Where the eight rules land, decided on 2026-10-21 (ADR 175, P10):** in
 `rule-ai-agent-architecture`, the leaf that consumes them, not here. This router
 keeps only the six shared router rules. That is the same model `rule-data` and
 `rule-backend` use, moved one level down because AI has exactly one leaf that
@@ -172,7 +172,7 @@ Plan default: `T7-author` - `qwen3.8-max`. Fallback: `step-5-preview` for author
   series that turns a proposed ADR into a plan instead of writing a new one, and
   that is the right order: the decision exists, the execution did not.
 - ADR 137 put the eight rules in this router; the decision of 2026-10-21 moved
-  them to `rule-ai-agent-architecture` (P10, ADR 153). The router keeps the
+  them to `rule-ai-agent-architecture` (P10, ADR 175). The router keeps the
   routing and one rule of its own, which is the same shape `rule-data` and
   `rule-backend` have, one level down.
 - `ai-trace-span` overlaps `observability-behavior-versions`, and ADR 137 itself

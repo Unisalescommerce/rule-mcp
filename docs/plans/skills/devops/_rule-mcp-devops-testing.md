@@ -107,6 +107,14 @@ class of mistake as a rule with no fixture: a claim with nothing behind it.
 - [ ] Catalog scan with the six rules.
 - [ ] `pnpm census && pnpm census:check`, `pnpm lint`, typecheck.
 
+## Retained area guardrail backlog
+
+ADR 136 proposed this rule set before ADR 175 moved area work into skill plans.
+This plan owns: `test-coverage-thresholds`, `test-no-focused`, `test-no-fixed-sleep`, `test-setup-required`.
+
+The fixtures-first, implementation, and verification phases above include these
+rules. They remain planned until those phase checkboxes close.
+
 ## Model assignment
 
 Classes and evidence: section 14 of `docs/plans/plan-of-plans.md`.

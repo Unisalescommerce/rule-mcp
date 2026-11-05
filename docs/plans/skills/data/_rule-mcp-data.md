@@ -120,6 +120,14 @@ Shared files: skills/rule/SKILL.md, scripts/data/router-gaps.data.mjs, tests/fix
       and a new leaf without it fails.
 - [ ] `pnpm census && pnpm census:check`, `pnpm lint`, typecheck.
 
+## Retained area guardrail backlog
+
+ADR 139 proposed this rule set before ADR 175 moved area work into skill plans.
+This plan owns: `no-select-star`, `query-limit`, `query-timeout`, `db-least-privilege`, `migration-down`.
+
+The fixtures-first, implementation, and verification phases above include these
+rules. They remain planned until those phase checkboxes close.
+
 ## Model assignment
 
 Classes and evidence: section 14 of `docs/plans/plan-of-plans.md`.

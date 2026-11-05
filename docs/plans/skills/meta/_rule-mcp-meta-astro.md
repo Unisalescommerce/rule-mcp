@@ -149,6 +149,14 @@ Around 160 lines.
 - [ ] Scaffold extraction check across the catalog.
 - [ ] `pnpm census && pnpm census:check`, `pnpm lint`, typecheck.
 
+## Retained area guardrail backlog
+
+ADR 141 proposed this rule set before ADR 175 moved area work into skill plans.
+This plan owns: `astro-client-directive`.
+
+The fixtures-first, implementation, and verification phases above include these
+rules. They remain planned until those phase checkboxes close.
+
 ## Model assignment
 
 Classes and evidence: section 14 of `docs/plans/plan-of-plans.md`.

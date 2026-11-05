@@ -4,7 +4,7 @@ Status: `planned`.
 
 Notes: subordinate plan; coordinated by [plan-of-plans](plan-of-plans.md).
 
-Source: a read-only audit of 2026-11-05. It read the skill plans in [skills](skills/_skills-plan.md), the six `docs/plans/_*-guardrails.md` files, and [the pi plan](_pi-integration-and-debt.md).
+Source: a read-only audit of 2026-11-05. It read the skill plans in [skills](skills/_skills-plan.md), the retired area guardrail plans, and [the pi plan](_pi-integration-and-debt.md).
 
 The owner made every decision in section 2. No choice stays open.
 
@@ -54,8 +54,7 @@ plan-of-plans.md                      level 0: indexes every plan
   |     +-- skills/README.md          index table of the skill plans
   |     +-- skills/DEPENDENCIES.md    old run order; section 5 of _skills-plan.md supersedes it
   |
-  +-- _{ai,backend,data,devops,       six area plans, each `superseded`
-  |    frontend,meta}-guardrails.md   (ADR 153); the skill plans took their scope
+  +-- retired area guardrail plans    removed after their rule IDs moved to owners
   |
   +-- _pi-integration-and-debt.md     separate track; its WS2 touches the same
                                       orchestrator rows as WS4 and WS5 here
@@ -68,10 +67,10 @@ plan-of-plans.md                      level 0: indexes every plan
 | `skills/<area>/_*.md`    | 82 plan files: 78 for built skills, 3 for skills not built yet (`rule-platform-mobile`, `rule-toolchain-electron`, `rule-toolchain-tauri`), and `_bundler-family.md`. All 82 say `Status: planned`. All 82 mention guardrails. | The plans command. Keep them all.                                                                 |
 | `skills/README.md`       | Index table. Says "81 skills". Lists `cargo-release` and `uv-release` as "planned, do not exist".                                                                                                                              | Stale. Both skills exist.                                                                         |
 | `skills/DEPENDENCIES.md` | Old run order. Says "83 leaves plus one".                                                                                                                                                                                      | Stale counts. The owner keeps the file (D4).                                                      |
-| `_*-guardrails.md` (six) | Area plans: "extend the guardrails of N skills". 1,261 lines.                                                                                                                                                                  | `superseded` by ADR 153. Still in the tree. Their "Evidence base" sections date from 2026-10-17.  |
+| retired area plans       | Former area-level guardrail backlogs, 1,261 lines before retirement.                                                                                                                                                           | Removed after 76 rule IDs were assigned to owning skill plans.                                    |
 | ADR 136-141 and 155      | The reasons behind about 76 planned guardrails.                                                                                                                                                                                | All seven are `proposed`. ADR 136 and ADR 155 are the same text.                                  |
 
-The six area plans and the skill plans plan the same guardrails. The skill plans won (ADR 153). The area plans stayed in the tree as dead text.
+The area plans and the skill plans overlapped. ADR 175 removed the area plans from the execution graph. The owner required every retained rule ID to move to an owning skill plan before deletion.
 
 ## 2 - Decisions
 
@@ -116,7 +115,7 @@ The 24 skills with no guardrail step: `rule-data-validation`, `rule-frontend`, `
 | G1  | Info (strength) | The surface is a clean 1:1. Every skill has one tool. Twenty-two cross-cutting tools have no skill. No orphan. No gap.                                                                 | runtime `listTools()`                       |
 | G2  | Medium          | `CLAUDE.md` says 107 tools, 186 resources, 37 prompts, 89 skills. The real counts are 106, 174, 41, 83. Only `README.md` is under test.                                                | `CLAUDE.md`                                 |
 | G3  | Low             | `CLAUDE.md` says "212 checks". The file count is 120. The unit is not confirmed.                                                                                                       | `CLAUDE.md`                                 |
-| G4  | Medium          | Six area guardrail plans are `superseded` but stay in the tree (1,261 lines). They describe a model that ADR 153 retired.                                                              | `docs/plans/_*-guardrails.md`               |
+| G4  | Resolved        | Six area guardrail plans stayed in the tree after ADR 175 removed them from the graph. Their 76 rule IDs now have owning skill plans, and the files are retired.                       | skill-plan ownership regression test        |
 | G5  | Medium          | `_skills-plan.md` holds sections 6-13 twice. The copies drift (two "Model assignment" tables). The progress table is in both copies, so a test can read the wrong one.                 | `docs/plans/skills/_skills-plan.md:276-864` |
 | G6  | Medium          | Seven ADRs stay `proposed`. ADR 136 and ADR 155 are one text. That is a ninth duplicate pair, outside 001-020.                                                                         | `docs/adr/136-*`, `155-*`                   |
 | G7  | Low             | `skills/README.md` says 81 skills and lists two built skills as "do not exist". `DEPENDENCIES.md` says "83 leaves plus one". The "89" in `CLAUDE.md` most likely came from the README. | `docs/plans/skills/`                        |
@@ -158,14 +157,14 @@ Start after WS2 of the pi plan closes.
 
 ### WS5 - Retire the six superseded area plans (G4, D2)
 
-The files are `docs/plans/_ai-guardrails.md`, `_backend-guardrails.md`, `_data-guardrails.md`, `_devops-guardrails.md`, `_frontend-guardrails.md`, and `_meta-guardrails.md`. Each says "Status: superseded by docs/plans/skills/_skills-plan.md (ADR 153)". The plans in `docs/plans/skills` win. Everything they plan stays planned.
+The owner chose migration before deletion. The check found that AI already kept its eight IDs, while the other five areas were missing 68 IDs. All 76 now have explicit owners in skill plans.
 
-- [ ] **WS5-T1**: Check that no test names the six files. The audit found none. Run `skills-plan.test.mjs` and `scripts/__tests__/plans/development-shape.test.mjs`. Keep the result.
-- [ ] **WS5-T2**: Delete the six files.
-- [ ] **WS5-T3**: In `_skills-plan.md`, turn the "nine area plans are not nodes" table into one short paragraph. Cite ADR 153. Still name which plan took each area: `ai` to `rule-ai-agent-architecture`; `backend` to the 8 backend leaves; `data` to `rule-data` and the 8 data leaves; `devops` to 4 leaves; `frontend` to 7 leaves; `meta` to 4 leaves. Do not drop the mapping.
-- [ ] **WS5-T4**: In [plan-of-plans](plan-of-plans.md), remove the snapshot row "area guardrails ... six files, superseded". In `docs/plans/skills/DEPENDENCIES.md`, remove the `*-guardrails` bullet under "What is not a dependency".
-- [ ] **WS5-T5**: Record the retirement in one ADR (`rule_tool_process_adr`). Do not paste the old plans into it. Git history keeps them.
-- [ ] **WS5-T6**: Run both tests again. They must pass.
+- [x] **WS5-T1**: Run the plan-shape tests before the change and keep the green baseline.
+- [x] **WS5-T2**: Assign every retained rule ID to an owning skill plan, with a regression test over the complete mapping.
+- [x] **WS5-T3**: Delete the six superseded files after the ownership test passes.
+- [x] **WS5-T4**: Remove their active references from the level-0 plan, catalog orchestrator, dependency guide, and execution runbook.
+- [x] **WS5-T5**: Record the retirement through `rule_tool_process_adr`. Git history keeps the detailed source material.
+- [x] **WS5-T6**: Run the plan and handon graph tests after deletion.
 
 ### WS6 - Refresh the catalog docs (G7, G9, D1, D4)
 
@@ -173,7 +172,7 @@ The files are `docs/plans/_ai-guardrails.md`, `_backend-guardrails.md`, `_data-g
 - [ ] **WS6-T2**: In the same file, list as "planned, not yet built" only the three that are still hypothetical: `rule-platform-mobile` (85), `rule-toolchain-electron` (86), and `rule-toolchain-tauri` (87). Their plan files exist (`docs/plans/skills/platform/_rule-mcp-platform-mobile.md` and two under `toolchain/`).
 - [ ] **WS6-T3**: Add one column to the README table: guardrails `has`, `planned`, or `none`. `has` means `skills/<s>/guardrails/` exists (22 skills today). `planned` means no directory, but the skill plan has a step that creates `skills/<s>/guardrails/` (37 today). `none` means neither (24 today). The root skill `rule` has no plan and stays outside the table.
 - [ ] **WS6-T4**: Add two sentences to the README. First: `none` means prose-only unless a plan adds a guardrail step. Second: the progress table in `_skills-plan.md` is the live status, and the `Status:` line inside a skill plan is the status at registration. Do not add a guardrail step to any plan. The owner decided: planned stays planned, and nothing new is imposed.
-- [ ] **WS6-T5**: Fix the counts in `docs/plans/skills/DEPENDENCIES.md` (D4). It says "the 83 leaf plans", "84 plans: the catalog plus the planned mobile skill", and "the 83 leaves plus the one planned leaf (84 plans)". Recount from the tree. Today there are 81 skill plan files (`_rule-mcp-*.md`): 78 for built skills and 3 for skills not built yet. Keep the file. Change counts and the `*-guardrails` bullet (after WS5-T4) only.
+- [ ] **WS6-T5**: Fix the counts in `docs/plans/skills/DEPENDENCIES.md` (D4). It says "the 83 leaf plans", "84 plans: the catalog plus the planned mobile skill", and "the 83 leaves plus the one planned leaf (84 plans)". Recount from the tree. Today there are 81 skill plan files (`_rule-mcp-*.md`): 78 for built skills and 3 for skills not built yet. Keep the file. Change the counts only.
 
 Do not rename the plan files (D5).
 

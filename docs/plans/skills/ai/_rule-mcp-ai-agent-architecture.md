@@ -18,7 +18,7 @@ design, agents in the browser, judging an agent framework.
 This leaf is where ADR 137's rules belong: every one of its eight is a statement
 about agent code - the tool schema, the call timeout, the token cap, output
 validation, secrets in a prompt, the generation span, eval presence, MCP token
-validation. The decision of 2026-10-21 (ADR 153, P10) put them here rather than in
+validation. The decision of 2026-10-21 (ADR 175, P10) put them here rather than in
 the router, so the leaf owns the floor and `rule-ai` stays a list. That is the same
 model `rule-data` and `rule-backend` use, with the rules one level lower because
 this is the leaf that describes the code they check.

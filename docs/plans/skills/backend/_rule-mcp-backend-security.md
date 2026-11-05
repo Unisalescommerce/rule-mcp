@@ -100,6 +100,14 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 - [ ] `_corpus`, `_routing-corpus`, `_router-child-coverage` suites.
 - [ ] `pnpm census && pnpm census:check`, `pnpm lint`, typecheck.
 
+## Retained area guardrail backlog
+
+ADR 137 proposed this rule set before ADR 175 moved area work into skill plans.
+This plan owns: `jwt-verify-not-decode`, `jwt-alg-none-banned`, `cookie-security-flags`, `csrf-state-change`, `auth-log-redaction`, `no-dynamic-code-execution`, `prototype-pollution-guard`, `ssrf-allowlist`, `body-size-limit`, `pagination-max-limit`, `env-validation-at-boot`.
+
+The fixtures-first, implementation, and verification phases above include these
+rules. They remain planned until those phase checkboxes close.
+
 ## Model assignment
 
 Classes and evidence: section 14 of `docs/plans/plan-of-plans.md`.

@@ -19,7 +19,7 @@
 | Reference follow-ups |     - |          8 |
 | **Total**            |    96 |  **1,490** |
 
-Non-skill plans: `_export.md` (39), `_devops-guardrails.md` (24), `_backend-guardrails.md` (23), `_data-guardrails.md` (14), `_frontend-guardrails.md` (13), `_ai-guardrails.md` (10), `_meta-guardrails.md` (10), `_2026-10-01-scripts-mcp-layout.md` (10), `_decision-models.md` (2), `installer-scope-adr-policy-features.md` (1).
+Non-skill plans: `_export.md` (39), six area guardrail plans (94 total), `_2026-10-01-scripts-mcp-layout.md` (10), `_decision-models.md` (2), `installer-scope-adr-policy-features.md` (1).
 
 The 86 skill plans live under `docs/plans/skills/`; `skills/_skills-plan.md` is their index and carries the 1,336 open boxes. `skills/README.md` and `skills/DEPENDENCIES.md` are catalog documents, not plans.
 

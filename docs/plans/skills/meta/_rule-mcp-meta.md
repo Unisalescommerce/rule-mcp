@@ -108,6 +108,14 @@ routing corpus in Phase 4 is the closest thing to a test.
 - [ ] Catalog scan with the seven rules.
 - [ ] `pnpm census && pnpm census:check`, `pnpm lint`, typecheck.
 
+## Retained area guardrail backlog
+
+ADR 141 proposed this rule set before ADR 175 moved area work into skill plans.
+This plan owns: `meta-public-env-secret`, `meta-server-data-leak`, `hydration-safe`, `meta-route-validation`.
+
+The fixtures-first, implementation, and verification phases above include these
+rules. They remain planned until those phase checkboxes close.
+
 ## Model assignment
 
 Classes and evidence: section 14 of `docs/plans/plan-of-plans.md`.

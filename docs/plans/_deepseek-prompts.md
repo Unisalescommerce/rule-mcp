@@ -313,33 +313,12 @@ files_to_change: docs/plans/skills/_skills-plan.md.
 out_of_scope: stages, edges, progress-table values, skill plans.
 ```
 
-### SURF-WS5 - retire the six superseded area guardrail plans
+### SURF-WS5 - retire the superseded area plans
 
-```
-SURF-WS5 - decision made by the owner: delete the six superseded area plans.
-Files: docs/plans/_ai-guardrails.md, _backend-guardrails.md, _data-guardrails.md,
-_devops-guardrails.md, _frontend-guardrails.md, _meta-guardrails.md. Each says
-"Status: superseded by docs/plans/skills/_skills-plan.md (ADR 153)". The plans
-in docs/plans/skills win. Everything they plan stays planned. Do SURF-WS4
-first, so only one copy of the orchestrator exists.
-1. Confirm no test names these files (the audit found none). Run
-   skills-plan.test.mjs and development-shape.test.mjs and keep the result.
-2. Delete the six files.
-3. In docs/plans/skills/_skills-plan.md, turn the "nine area plans are not
-   nodes" table into one short paragraph. Cite ADR 153. Still name which
-   plans took each area: ai -> rule-ai-agent-architecture; backend -> the 8
-   backend leaves; data -> rule-data and the 8 data leaves; devops -> 4
-   leaves; frontend -> 7 leaves; meta -> 4 leaves. Do not drop the mapping.
-4. In docs/plans/plan-of-plans.md remove the snapshot row "area guardrails ...
-   six files, superseded". In docs/plans/skills/DEPENDENCIES.md remove the
-   `*-guardrails` bullet under "What is not a dependency".
-5. Record the retirement in one ADR (rule_tool_process_adr). Do not paste the
-   old plans into it. Git history keeps them.
-6. Run both tests again. They must pass.
-files_to_change: the 6 plan files (delete), _skills-plan.md, plan-of-plans.md,
-DEPENDENCIES.md, one new ADR.
-out_of_scope: any skill plan, any guardrail, ADR 136-141 and 155 (SURF-WS7).
-```
+Completed in the main session after an ownership check found 68 rule IDs that
+were not yet present in skill plans. Those IDs moved to their owning skill
+plans before the retired files were deleted. ADR 175 remains the catalog
+orchestration decision, and the retirement ADR records the final mapping.
 
 ### SURF-WS6 - refresh the catalog docs
 

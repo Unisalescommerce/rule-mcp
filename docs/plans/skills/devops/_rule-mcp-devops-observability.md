@@ -106,6 +106,14 @@ keeps it stated.
 - [ ] Catalog scan with the six rules.
 - [ ] `pnpm census && pnpm census:check`, `pnpm lint`, typecheck.
 
+## Retained area guardrail backlog
+
+ADR 136 proposed this rule set before ADR 175 moved area work into skill plans.
+This plan owns: `obs-health-endpoint`, `obs-structured-logs`, `obs-no-pii-in-logs`, `obs-span-versioning`.
+
+The fixtures-first, implementation, and verification phases above include these
+rules. They remain planned until those phase checkboxes close.
+
 ## Model assignment
 
 Classes and evidence: section 14 of `docs/plans/plan-of-plans.md`.
