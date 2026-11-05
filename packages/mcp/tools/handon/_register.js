@@ -12,7 +12,7 @@ const HandonSchema = z.object({
     .optional()
     .default(true)
     .describe(
-      "Archive completed audits/reviews/plans into ADRs, retire them from the plan indexes and delete the sources (default true). \"preview\" lists what would close out and writes nothing; false skips the sweep entirely",
+      'Archive completed audits/reviews/plans into ADRs, retire them from the plan indexes and delete the sources (default true). "preview" lists what would close out and writes nothing; false skips the sweep entirely',
     ),
 });
 
@@ -22,7 +22,7 @@ export function registerHandonTool() {
     name: "rule_tool_handon",
     entry: "action",
     description:
-      "Read the last handoff in docs/handoff/ and report which of its claims are still true: branch, commit range, files, ADRs, open work. Sweeps completed audits/reviews/plans into ADRs first, then proposes the next workstream each open plan still carries, for the user to confirm. Never re-runs a claimed command.",
+      "Verify the last session handoff before you resume: check its branch, commit range, files, ADRs and open work. Close completed audit, review and plan records first, then propose the next plan workstream for confirmation. Never re-run a claimed command.",
     zodSchema: HandonSchema,
     handler: async (arguments_) => ({
       content: [{ type: "text", text: handon(arguments_ ?? {}).text }],

@@ -3,15 +3,13 @@ import { registerTool } from "../router/index.js";
 import { HandoffSchema } from "./_schema.js";
 import { buildHandoff } from "./_build.js";
 
-/**
- * Register the rule_tool_handoff tool.
- */
+/** Register the rule_tool_handoff tool. */
 export function registerHandoffTool() {
   registerTool({
     name: "rule_tool_handoff",
     entry: "action",
     description:
-      "Generate a compressed LLM handoff summary from ADR logs and project context. Archives completed audits/reviews/plans as ADRs and repairs the ADR numbering first (pass closeout: false to diagnose without writing). Paste the output into a new chat to resume work seamlessly.",
+      "Close a session or generate a compressed handoff from ADRs and project context to resume work. Archive completed audit, review and plan records as ADRs and repair numbering first; pass closeout: false to diagnose without writing.",
     zodSchema: HandoffSchema,
     handler: async (arguments_) => {
       const result = buildHandoff({

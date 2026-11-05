@@ -6,9 +6,7 @@ import { checkCodeGuarded, checkProjectGuarded, checkSemantic } from "../../core
 import { renderProject } from "./_project-report.js";
 import { renderSemantic } from "./_semantic-report.js";
 
-/**
- * Register the rule_tool_check tool for running guardrail checks on code.
- */
+/** Register the rule_tool_check tool for running guardrail checks on code. */
 export function registerCheckTool() {
   const CheckSchema = z.object({
     skill: z.string().describe("Target rule-mcp skill name"),
@@ -25,13 +23,13 @@ export function registerCheckTool() {
     name: "rule_tool_check",
     entry: "action",
     description:
-      "Run guardrail checks on code against any rule-mcp skill. Returns guardrail results with a re-check hint containing the current passing set. Run until allPass: true.",
+      "Verify code with deterministic guardrail checks, like a lint pass, for any rule-mcp skill. Project mode checks graph rules; semantic mode offers an advisory decision-model check. Re-check until allPass: true.",
     zodSchema: CheckSchema,
     handler: async (arguments_) => {
-      const { skill, code, fileName, isComponent, framework, mode, allowedDependencies, projectDir } = arguments_;
+      const { skill, code, fileName, isComponent, framework, mode, allowedDependencies, projectDir = "." } = arguments_;
 
       if (mode === "project") {
-        const project = checkProjectGuarded(projectDir ?? ".", { skill, diagnostics: arguments_.diagnostics === true });
+        const project = checkProjectGuarded(projectDir, { skill, diagnostics: arguments_.diagnostics === true });
 
         return { isError: !project.allPass, content: [{ type: "text", text: renderProject(project) }], _meta: { ruleProjectGuardrails: project } };
       }
