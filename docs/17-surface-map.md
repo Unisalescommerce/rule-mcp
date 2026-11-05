@@ -143,7 +143,7 @@ Regenerate with `pnpm census`.
 | -                           | `rule_tool_toolchain_turborepo`      | -                 | rule-toolchain-turborepo skill.                                                                                                                                               |
 | -                           | `rule_tool_toolchain_vite`           | -                 | rule-toolchain-vite skill.                                                                                                                                                    |
 | -                           | `rule_tool_ui_design_system`         | -                 | rule-ui-design-system skill.                                                                                                                                                  |
-| -                           | `rule_tool_gateway`                  | -                 | Single-entry orchestrator: routes prompt -> loads skill evidence -> checks code against guardrails -> returns receipt.                                                        |
+| -                           | `rule_tool_gateway`                  | -                 | Single-entry orchestrator: make routing decision, load skill evidence, verify code with lint-like guardrail checks, and return receipt.                                       |
 | -                           | `rule_tool_apply`                    | -                 | Write files to disk after rule_tool_gateway validation.                                                                                                                       |
 
 ## The rest of the census

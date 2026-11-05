@@ -33,7 +33,7 @@
     {
       "file": "10-tools.md",
       "kind": "document",
-      "sha256": "10cd92ba845774ec1585ad2216568f0bda945ac5452940e2eef7d9fd34c21999"
+      "sha256": "8ed9f7acb6d5348b05a2c58915530bb12b88a90e9373e3fedbccc5a02e3a459e"
     },
     {
       "file": "11-prompts.md",
@@ -68,7 +68,7 @@
     {
       "file": "17-surface-map.md",
       "kind": "document",
-      "sha256": "b56aa176ed6b152e39610843fa9a61776feaa4db984815468342e2c20c7bb6a2"
+      "sha256": "d85fd20431ff265f2c7753075bddc5715e13a2c38d2d66722f6d2f022a380978"
     }
   ]
 }

@@ -28,6 +28,8 @@ export function registerProcessAdrTool() {
       const policy = resolveAdrPolicy({ projectDir });
       const moment = arguments_.moment || "task";
       const category = arguments_.category;
+      const alternatives = typeof arguments_.alternatives === "string" ? [arguments_.alternatives] : (arguments_.alternatives ?? []);
+      const tags = typeof arguments_.tags === "string" ? [arguments_.tags] : (arguments_.tags ?? ["architecture"]);
 
       if (!allowsAdrWrite(policy, { category, moment, explicit: true })) {
         const hint = 'Pass moment: "handoff" at session close, set RULE_MCP_ADR_POLICY=full, or override the category.';
@@ -49,7 +51,7 @@ export function registerProcessAdrTool() {
         };
       }
 
-      const offenses = adrEnglishOffenses(arguments_);
+      const offenses = adrEnglishOffenses({ ...arguments_, alternatives, tags });
 
       if (offenses.length > 0) {
         return {
@@ -90,11 +92,11 @@ export function registerProcessAdrTool() {
         context: arguments_.context || "",
         decision: arguments_.decision || "",
         consequences: arguments_.consequences || "",
-        alternatives: arguments_.alternatives || [],
+        alternatives,
         endsWhen: arguments_.endsWhen,
         supersedes: arguments_.supersedes,
         supersededBy: arguments_.supersededBy,
-        tags: arguments_.tags || ["architecture"],
+        tags,
         pending,
       });
 
@@ -114,7 +116,7 @@ export function registerProcessAdrTool() {
         text: arguments_.title,
         reason: arguments_.decision || arguments_.context || "",
         files: [filePath],
-        tags: arguments_.tags || ["architecture"],
+        tags,
       });
 
       const label = pending ? `ADR ${slug}` : String(number).padStart(3, "0");
@@ -129,7 +131,7 @@ export function registerProcessAdrTool() {
               `File: ${filePath}`,
               pending ? "Pending: numbers on trunk landing (`rule-mcp handoff land`)." : null,
               `Status: ${arguments_.status || "accepted"}`,
-              `Tags: ${(arguments_.tags || ["architecture"]).join(", ")}`,
+              `Tags: ${tags.join(", ")}`,
               "",
               "```markdown",
               content,

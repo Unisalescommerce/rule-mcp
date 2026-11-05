@@ -4,9 +4,9 @@ import { renderGatewayReply } from "./_render.js";
 import { stripManifestFiles } from "../../core/guardrails/_manifest-strip.js";
 
 /**
- * Register the single-entry orchestrator: route -> evidence -> guardrails ->
- * receipt, with the deterministic core cached and the receipt always fresh.
- */
+Register the single-entry orchestrator: route -> evidence -> guardrails ->
+receipt, with the deterministic core cached and the receipt always fresh.
+*/
 export async function registerGatewayTool() {
   const { registerTool } = await import("../router/index.js");
   const { z } = await import("zod/v4");
@@ -15,12 +15,7 @@ export async function registerGatewayTool() {
     prompt: z.string().describe("Complete coding request"),
     code: z.string().optional().describe("Code to validate against guardrails (single file)"),
     files: z
-      .array(
-        z.object({
-          path: z.string().describe("Relative file path within the project"),
-          content: z.string().describe("File content to validate"),
-        }),
-      )
+      .union([z.array(z.object({ path: z.string(), content: z.string() })), z.object({ path: z.string(), content: z.string() })])
       .optional()
       .describe("Files to validate - yields a path-bound receipt, required for multi-file writes"),
     path: z.string().optional().describe("Project path for framework auto-detection"),
@@ -31,7 +26,7 @@ export async function registerGatewayTool() {
     name: "rule_tool_gateway",
     entry: "gateway",
     description:
-      "Single-entry orchestrator: routes prompt -> loads skill evidence -> checks code against guardrails -> returns receipt. " +
+      "Single-entry orchestrator: make a routing decision, load skill evidence, verify code with lint-like guardrail checks, and return a receipt. " +
       "Use this as the primary entry point instead of calling rule-mcp + skill tools separately. " +
       "The returned receipt must be passed to rule_tool_apply when writing files.",
     zodSchema: GatewaySchema,
@@ -39,7 +34,8 @@ export async function registerGatewayTool() {
       const { code, files, path } = arguments_;
       // A file set yields a path-bound receipt; a bare `code` string cannot name
       // a destination, so it stays limited to the single-file write.
-      const rawFileSet = Array.isArray(files) && files.length > 0 ? files : null;
+      const fileList = files && !Array.isArray(files) ? [files] : files;
+      const rawFileSet = Array.isArray(fileList) && fileList.length > 0 ? fileList : null;
       // The write path is also the repair: a manifest the model wrote with a
       // field the rules forbid is cleaned before it is checked, so the receipt
       // binds the content that gets written and the reply names what was
