@@ -2,7 +2,7 @@
 # Workspace root builds the published packages/mcp server. Skills stay embedded
 # from the repository.
 
-FROM node:22-alpine
+FROM node:26-alpine
 WORKDIR /app
 RUN corepack enable
 

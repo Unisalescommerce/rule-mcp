@@ -64,11 +64,11 @@ test("a piped run still gets the wizard when a terminal is there to draw on", ()
 
 test("node is checked before anything else runs", () => {
   for (const name of POSIX) {
-    assert.match(read(name), /NODE_MIN=20/, `${name} must state the node floor`);
+    assert.match(read(name), /NODE_MIN=26/, `${name} must state the node floor`);
   }
 
   for (const name of WINDOWS) {
-    assert.match(read(name), /\$nodeMin = 20/, `${name} must state the node floor`);
+    assert.match(read(name), /\$nodeMin = 26/, `${name} must state the node floor`);
   }
 });
 

@@ -35,7 +35,7 @@ for (const name of ["install.ps1", "uninstall.ps1"]) {
 
     assert.ok(lines < 120, `${name} is ${lines} lines - logic belongs in packages/mcp/cli/setup/, not here`);
     assert.match(source, /setup/, "the bootstrap must hand over to the setup wizard");
-    assert.match(source, /nodeMin = 20/, "the Node floor must match NODE_MIN in packages/mcp/cli/setup/_preflight.js");
+    assert.match(source, /nodeMin = 26/, "the Node floor must match NODE_MIN in packages/mcp/cli/setup/_preflight.js");
   });
 
   test(`${name} keeps no agent catalog or picker of its own`, () => {

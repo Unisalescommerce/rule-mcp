@@ -28,7 +28,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$nodeMin = 20
+$nodeMin = 26
 
 # Options `rule-mcp setup` accepts - same contract as install.sh (see
 # the install-script-flags test); unknown options fail before any download.

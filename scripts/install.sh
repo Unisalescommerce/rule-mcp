@@ -31,7 +31,7 @@
 
 set -euo pipefail
 
-NODE_MIN=20
+NODE_MIN=26
 
 # Options `rule-mcp setup` accepts. The shell runs before node exists,
 # so it cannot ask: this table is the contract, kept honest by the
