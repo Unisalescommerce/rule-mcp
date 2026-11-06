@@ -33,6 +33,7 @@ _rule_mcp_commands() {
     'init:Prepare a project: recorder directory, git hooks, tokensave and the dependency pin report'
     'reinstall:Purge node_modules and the lockfile, install again, refresh the global bin'
     'commit-lint:Validate commits against type(scope): subject'
+    'secrets:Scan a patch for credentials with betterleaks'
     'completions:Generate shell completion script'
     'help:Show this help message'
   )
