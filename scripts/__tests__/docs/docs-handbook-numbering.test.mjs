@@ -5,9 +5,9 @@
  *
  * A number in a filename is an alias nothing validates, so a chapter removed
  * or a generated document inserted leaves a hole that every later reference
- * then has to remember. The census owns the numbers from `06` up and a person
- * owns the ones below it, which is exactly the seam where the two halves can
- * drift apart without either noticing.
+ * then has to remember. The census owns the last numbers and a person owns the
+ * ones before them, which is exactly the seam where the two halves can drift
+ * apart without either noticing.
  */
 
 import { strict as assert } from "node:assert";

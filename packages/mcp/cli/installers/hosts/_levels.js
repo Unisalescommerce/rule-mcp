@@ -66,7 +66,7 @@ export function ceilingOf(levels) {
  * What each rung writes, in words rather than in codes.
  *
  * `L0..L4` is the vocabulary of `--level` and of the ceiling table in
- * `docs/04-operations.md`, and it stays: a flag needs a short spelling. What a
+ * `docs/06-integration-levels.md`, and it stays: a flag needs a short spelling. What a
  * reader of the wizard needs is the other half - a screen that says "server,
  * rules and commands" instead of asking them to remember what `L2` was.
  *

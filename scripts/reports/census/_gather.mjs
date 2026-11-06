@@ -11,13 +11,14 @@
 import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
+import { guardrailFamilies } from "./_families.mjs";
 import { areaOf, toolOf } from "./_format.mjs";
 import {
+  BASELINE_SKILLS,
   ROOT,
   allRoles,
   bootstrapCoreTools,
   commandNames,
-  guardrailFamilies,
   listExistingAdrs,
   listPrompts,
   listResources,
@@ -48,9 +49,9 @@ export async function gather() {
     .filter((entry) => entry.isDirectory() && existsSync(join(ROOT, "skills", entry.name, "SKILL.md")))
     .map((entry) => entry.name)
     .sort((a, b) => a.localeCompare(b));
-  const catalog = skillDirs.filter((name) => name.startsWith("rule-mcp-"));
+  const catalog = skillDirs.filter((name) => name.startsWith("rule-"));
   const skillToolNames = new Set(catalog.map((name) => toolOf(name)));
-  const families = guardrailFamilies();
+  const families = await guardrailFamilies();
   const areas = new Map();
 
   for (const name of catalog) {
@@ -61,6 +62,7 @@ export async function gather() {
   return {
     adrs,
     areas,
+    baselineSkills: new Set(BASELINE_SKILLS),
     catalog,
     commands,
     families,

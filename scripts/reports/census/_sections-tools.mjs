@@ -12,7 +12,7 @@
 import { cell, firstSentence, table, toolOf } from "./_format.mjs";
 
 /** A markdown anchor for the heading the tool section writes. */
-const anchor = (name) => `#${name.replaceAll("_", "")}`;
+const anchor = (name) => `#${name}`;
 
 /** `string`, `"a" | "b"`, `array of string`: what the schema says, in one cell. */
 function typeOf(schema) {
@@ -69,16 +69,15 @@ export function actionToolSection(data) {
   return [
     `## Action tools (${data.actionTools.length})`,
     "",
-    "The tools that do something rather than serve a skill. Every one is",
-    "deterministic: none of them calls a model, so the same arguments return the",
-    "same result behind any client.",
+    "These tools do work and do not serve a skill. No tool calls a model.",
+    "The same arguments give the same result with any client.",
     "",
     ...table(
       ["Tool", "What it does"],
       data.actionTools.map((tool) => [`[\`${tool.name}\`](${anchor(tool.name)})`, firstSentence(tool.description)]),
     ),
     "",
-    "Call any of them from a shell with `rule-mcp tools call <name> --json '{...}'`.",
+    "To call a tool from a shell, use `rule-mcp tools call <name> --json '{...}'`.",
     "",
     ...data.actionTools.flatMap((tool) => [`### ${tool.name}`, "", cell(tool.description), "", ...parameters(tool.inputSchema)]),
   ];
@@ -91,11 +90,9 @@ export function skillToolSection(data) {
   return [
     `## Skill tools (${data.skillTools.length})`,
     "",
-    "One per catalog skill, generated from the directory. Each serves its",
-    "`SKILL.md` and the sections a route selected, and every one takes the same",
-    "arguments, so they are listed by area rather than one heading at a time.",
-    "The catalog itself, with what each skill covers, is",
-    "[`09-skills.md`](09-skills.md).",
+    "Each catalog skill has one tool. The tool serves the `SKILL.md` file and the",
+    "sections that a route selects. All skill tools take the same arguments, so this",
+    "page groups them by area. [The skills page](13-skills.md) tells what each skill covers.",
     "",
     ...table(
       ["Area", "Tools"],

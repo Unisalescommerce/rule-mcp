@@ -37,15 +37,13 @@ export function readSnapshot() {
  * The snapshot's content: one entry per owned file, sorted and stamped with no
  * clock, so a run that changes nothing leaves the file byte-identical.
  *
- * @param {Array<{file: string, kind: string, marker?: string, content: string}>} outputs
+ * @param {Array<{file: string, content: string}>} outputs
  * @returns {string}
  */
 export function snapshotText(outputs) {
   const files = outputs
     .map((output) => ({
       file: output.file,
-      kind: output.kind,
-      ...(output.marker ? { marker: output.marker } : {}),
       sha256: createHash("sha256").update(output.content).digest("hex"),
     }))
     .sort((a, b) => a.file.localeCompare(b.file));

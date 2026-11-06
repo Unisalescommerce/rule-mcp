@@ -1,7 +1,7 @@
 /**
  * @module test/docs/integration-levels
  *
- * The ceiling table in `docs/04-operations.md` is data the installer already
+ * The ceiling table in `docs/22-install-targets.md` is data the installer already
  * knows, so it is recomputed here rather than trusted.
  *
  * A hand-written table of 23 hosts drifts the first time a hook row or a command
@@ -17,18 +17,19 @@ import test from "node:test";
 import { allAgents } from "../../../packages/mcp/cli/installers/index.js";
 import { hostRecord } from "../../../packages/mcp/cli/installers/hosts/index.js";
 
-const DOC = fileURLToPath(new URL("../../../docs/04-operations.md", import.meta.url));
+const TABLE = fileURLToPath(new URL("../../../docs/22-install-targets.md", import.meta.url));
+const PROSE = fileURLToPath(new URL("../../../docs/06-integration-levels.md", import.meta.url));
 
-/** The rows between the markers, as `{ host: [ceiling, ...] }`. */
+/** The rows under the ceiling heading, as `{ host: [ceiling, ...] }`. */
 function documentedRows() {
-  const body = readFileSync(DOC, "utf8").split("<!-- levels:start -->", 2)[1]?.split("<!-- levels:end -->", 1)[0] ?? "";
+  const body = readFileSync(TABLE, "utf8").split("## Integration ceiling per host", 2)[1]?.split("\n## ", 1)[0] ?? "";
   const rows = new Map();
 
   for (const line of body.split("\n")) {
     const cells = line.split("|").map((cell) => cell.trim());
     const host = cells[1]?.replaceAll("`", "");
 
-    if (!host || host === "Host" || host.startsWith("-")) {
+    if (cells.length < 7 || !host || host === "Host" || host.startsWith("-")) {
       continue;
     }
 
@@ -68,7 +69,7 @@ test("every documented rung matches the record it claims to describe", () => {
 });
 
 test("the four levels the table cannot show are the ones with prose instead", () => {
-  const text = readFileSync(DOC, "utf8");
+  const text = readFileSync(PROSE, "utf8");
 
   assert.match(text, /install --agent <id> --level <Lx>/u, "the flag is documented where the levels are");
   assert.match(text, /`cursor-cli` is covered by `cursor`/u, "a covered product says so");

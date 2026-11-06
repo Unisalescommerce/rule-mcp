@@ -5,7 +5,7 @@
  * that read it.
  *
  * The alternative was a second hand-kept list beside the hand-written table in
- * `docs/05-env-variables.md`, which is two copies of one fact and the copy
+ * `docs/10-env-variables.md`, which is two copies of one fact and the copy
  * without a generator behind it goes stale first. Scanning `packages/mcp/` and `bin/`
  * makes the generated half derived, and a variable the code reads but the table
  * never documents shows up as a count that disagrees.
@@ -83,17 +83,11 @@ export function envVarsInCode() {
 }
 
 /**
- * The variables one document names outside a generated block, which is what
- * "documented" means: the hand-written table, not the census restating itself.
+ * The variables the hand-written table names.
  *
  * @param {string} text - the document
- * @param {string} marker - the census marker whose block is excluded
  * @returns {Set<string>}
  */
-export function documentedEnvVars(text, marker) {
-  const begin = text.indexOf(`<!-- census:begin:${marker} -->`);
-  const end = text.indexOf(`<!-- census:end:${marker} -->`);
-  const prose = begin !== -1 && end > begin ? text.slice(0, begin) + text.slice(end) : text;
-
-  return new Set(prose.match(NAME) ?? []);
+export function documentedEnvVars(text) {
+  return new Set(text.match(NAME) ?? []);
 }

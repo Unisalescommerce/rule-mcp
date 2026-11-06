@@ -14,8 +14,8 @@ export function personaSection(data) {
   return [
     "## Review personas",
     "",
-    "One role owns one axis, and no lens belongs to two roles. The lifecycle has",
-    "two states, `active` and `proposed`; there is no `deprecated`.",
+    "One role owns one axis. No lens belongs to two roles. A role is `active` or",
+    "`proposed`.",
     "",
     ...table(
       ["Role", "Title", "Years", "Lenses", "Status", "Evidence skills"],
@@ -31,8 +31,8 @@ export function personaSection(data) {
     "",
     "## Lenses and aliases",
     "",
-    "A lens is what the role looks through; an alias is what a request may call",
-    "it, and resolving one is how a free-text ask reaches the right persona.",
+    "A lens is one thing that the role examines. An alias is a word that a request",
+    "can use to reach the role.",
     "",
     ...data.roles.flatMap((role) => [
       `### ${role.role} (\`${role.id}\`)`,
@@ -54,18 +54,20 @@ export function guardrailSection(data) {
     }
   }
 
+  const baseline = new Set(data.families.filter(([name]) => data.baselineSkills?.has(name)).flatMap(([, list]) => list.map((rule) => rule.id)));
+  const scope = (name) => (data.baselineSkills?.has(name) ? "Every check" : (FAMILY_SCOPE[name] ?? (name.startsWith("rule-") ? "A check for this skill" : "")));
+
   return [
     `## Guardrail rules (${data.guardrailIds.size} distinct)`,
     "",
-    "Deterministic and advisory checks, run by `rule_tool_check` and by the",
-    "repository against itself. An advisory rule reports and never fails. A rule",
-    "can belong to more than one family, so the family counts sum to more than the",
-    "distinct total, and a check names the skill it runs for: the shared rules",
-    "always, plus whatever that skill's area adds.",
+    "`rule_tool_check` runs these rules. The repository also runs them on itself.",
+    "An advisory rule reports a finding and does not fail the check.",
+    `${baseline.size} rules run on every check. The other rules run when the check names their skill.`,
+    "One rule can be in two families, so the family counts add up to more than the total.",
     "",
     ...table(
       ["Family", "Rules", "Applies to"],
-      data.families.map(([name, list]) => [`[\`${name}\`](#${name.replace(":", "")})`, list.length, FAMILY_SCOPE[name] ?? ""]),
+      data.families.map(([name, list]) => [`[\`${name}\`](#${name.replace(":", "")})`, list.length, scope(name)]),
     ),
     "",
     ...data.families.flatMap(([family, list]) => [
@@ -87,8 +89,8 @@ export function resourceSection(data) {
   return [
     `## MCP resources (${data.resources.length})`,
     "",
-    "A resource is read with `resources/read`, and every one is JSON or markdown",
-    "a client can cache: no call runs a model, and none of them writes.",
+    "A client reads a resource with `resources/read`. Each resource is JSON or Markdown.",
+    "A read does not call a model and does not write.",
     "",
     "### The fixed indexes",
     "",
@@ -99,12 +101,12 @@ export function resourceSection(data) {
     "",
     "### Per skill",
     "",
-    `${kinds.perSkill} more, two for each skill that mints them:`,
+    `There are ${kinds.perSkill} more resources, two for each skill:`,
     "",
     "- `rule://<skill>` - the whole `SKILL.md`",
-    "- `rule://<skill>/summary` - the condensed form a router hands back",
+    "- `rule://<skill>/summary` - the short form that the router returns",
     "",
-    "Listing them one row at a time would restate [`09-skills.md`](09-skills.md).",
+    "[The skills page](13-skills.md) lists the skills.",
     "",
   ];
 }

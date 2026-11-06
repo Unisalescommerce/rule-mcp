@@ -3,14 +3,12 @@
 /**
  * @module scripts/reports/census
  *
- * Generate the census: eight numbered documents under `docs/`, plus the three
- * fenced blocks the handbook keeps inside chapters a person writes.
+ * Generate the census: the numbered documents at the end of `docs/`.
  *
  * A census written by hand is a census that is wrong by the next commit. This
  * repository has already paid for that once - count claims in the docs that
  * disagreed with the runtime surface (ADR 041). So the inventory is derived,
- * and `docs/09-skills.md` through `docs/16-resources.md` are outputs rather
- * than documents.
+ * and every file in `GENERATED_DOCS` is an output rather than a document.
  *
  * Everything is formatted here, with the repository's own prettier settings,
  * so the writer and `scripts/__tests__/docs/census-generated.test.mjs` compare the same
@@ -26,7 +24,6 @@ import { join } from "node:path";
 
 import { GENERATED_DOCS } from "./_docs.mjs";
 import { gather } from "./_gather.mjs";
-import { MARKER_TARGETS, upsertBlock } from "./_markers.mjs";
 import { DOCS } from "./_registries.mjs";
 import { SNAPSHOT, readSnapshot, snapshotText } from "./_snapshot.mjs";
 
@@ -57,23 +54,14 @@ async function format(text) {
 /**
  * Every file the census owns, with the content it should hold.
  *
- * @returns {Promise<Array<{file: string, kind: string, marker?: string, content: string}>>}
+ * @returns {Promise<Array<{file: string, content: string}>>}
  */
 export async function censusOutputs() {
   const data = await gather();
   const outputs = [];
 
   for (const doc of GENERATED_DOCS) {
-    outputs.push({ file: doc.file, kind: "document", content: await format(doc.build(data).join("\n")) });
-  }
-
-  for (const target of MARKER_TARGETS) {
-    outputs.push({
-      file: target.file,
-      kind: "block",
-      marker: target.marker,
-      content: await format(upsertBlock(read(target.file), target.marker, target.build(data))),
-    });
+    outputs.push({ file: doc.file, content: await format(doc.build(data).join("\n")) });
   }
 
   return outputs;

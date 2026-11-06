@@ -8,9 +8,22 @@
  * cell twice would only make the two disagree.
  */
 
-/** A markdown table cell cannot carry a raw pipe or a newline. */
+/**
+ * A bare `<word>` is a tag to the renderer and disappears from the page, so it
+ * goes in a code span. Text already in a code span stays as it is.
+ *
+ * @param {string} text
+ * @returns {string}
+ */
+export const spanPlaceholders = (text) =>
+  text
+    .split(/(`[^`]*`)/u)
+    .map((part, index) => (index % 2 === 1 ? part : part.replaceAll(/<[a-zA-Z][\w-]*>/gu, (placeholder) => `\`${placeholder}\``)))
+    .join("");
+
+/** A markdown table cell cannot carry a raw pipe, a newline or a bare placeholder. */
 export const cell = (value) =>
-  String(value ?? "")
+  spanPlaceholders(String(value ?? ""))
     .replaceAll("|", String.raw`\|`)
     .replaceAll(/\s*\n\s*/g, " ")
     .trim();
@@ -48,10 +61,7 @@ export const toolOf = (name) => {
   if (name === "rule") {
     return "rule_tool";
   }
-  // The prefix is `rule-`, not `rule-mcp-`: the catalog was renamed (ADR 160) and
-  // this slice kept the old length, so `rule-platform` became `rule_tool_form` -
-  // `platform` cut at index 4. Both forms are accepted because a stale plan or doc
-  // may still name the old one.
+  // A plan or a document can still name a skill with the long prefix.
   const bare = name.replace(/^rule-mcp-/u, "rule-").slice("rule-".length);
 
   return `rule_tool_${bare.replaceAll("-", "_")}`;

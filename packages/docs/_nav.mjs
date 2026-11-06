@@ -21,6 +21,9 @@ export const PRIMARY_NAV = [
 export const REFERENCE_NAV = [
   { out: "docs/README.html", title: "Overview" },
   { out: "docs/architecture.html", title: "Architecture" },
+  { out: "docs/install.html", title: "Install" },
+  { out: "docs/release.html", title: "Release" },
+  { out: "docs/troubleshooting.html", title: "Troubleshooting" },
   { out: "docs/surface-map.html", title: "Surface map" },
   { out: "docs/instructions.html", title: "Instructions" },
   { out: "docs/prompts.html", title: "Prompts" },

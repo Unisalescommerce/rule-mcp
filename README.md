@@ -1,42 +1,40 @@
 # RuleMCP
 
-<section data-part="hero">
-<p><strong>Deterministic skills for every AI coding agent, without calling an LLM.</strong></p>
-<p>An MCP server that routes free-text requests to the right skill, serves styleguides and templates as tools and resources, and validates generated code with guardrails. Same behavior behind Claude, GPT, Gemini, Llama, or Qwen. Local-first. Model-agnostic.</p>
-<ul data-part="stats">
-<li><strong>Node 26.4+</strong></li>
-<li><strong>82 skills</strong></li>
-<li><strong>105 tools</strong></li>
-<li><strong>172 resources</strong></li>
-<li><strong>41 prompts</strong></li>
-<li><strong>44 slash commands</strong></li>
-</ul>
-<p data-part="cta"><a href="docs/01-getting-started.md">Get started</a> <a href="docs/README.md">Browse reference</a></p>
-</section>
+**Deterministic skills for every AI coding agent, without calling an LLM.**
 
-<section data-part="flow">
-<h2>How it works</h2>
-<ol>
-<li><strong>Route.</strong> A free-text request reaches the router, which picks the matching skill or area hub.</li>
-<li><strong>Serve.</strong> Skills arrive as MCP tools, resources, and prompts as evidence, not opinions.</li>
-<li><strong>Validate.</strong> Deterministic guardrails check generated code before it lands.</li>
-</ol>
-</section>
+RuleMCP is an MCP server. It sends a free-text request to the correct skill. It serves styleguides and templates as tools and resources. It checks generated code with guardrails. It runs on your machine and works with any model.
 
-<section data-part="cards">
-<h2>Start here</h2>
-<article>
-<h3><a href="docs/01-getting-started.md">Getting Started</a></h3>
-<p>What it is, how to install it, and which agents, IDEs, and models it works with.</p>
-</article>
-<article>
-<h3><a href="docs/README.md">Reference</a></h3>
-<p>Architecture, surface map, prompts, guardrails, personas, CLI, and env vars.</p>
-</article>
-<article>
-<h3><a href="docs/17-surface-map.md">Surface map</a></h3>
-<p>Every command, tool, and skill in one generated table: Command - Tool - Skill.</p>
-</article>
-</section>
+- **Node 26.4+**
+- **82 skills**
+- **105 tools**
+- **172 resources**
+- **41 prompts**
+- **44 slash commands**
 
-Workspace root `rule-mcp-workspace` (private); published package `packages/mcp` (`rule-mcp`). Node >= 20 - [MIT](LICENSE) - [Contributing](CONTRIBUTING.md) - [Governance](GOVERNANCE.md) - [Code of Conduct](CODE_OF_CONDUCT.md) - [Maintainers](MAINTAINERS.md) - [Security](SECURITY.md) - runtime deps: `@modelcontextprotocol/sdk` + `zod` only.
+[Get started](docs/01-getting-started.md) [Browse reference](docs/README.md)
+
+## How it works
+
+1. **Route.** The router reads a free-text request and selects a skill or an area hub.
+2. **Serve.** The skill gives its evidence as MCP tools, resources, and prompts.
+3. **Validate.** Deterministic guardrails check the generated code before you keep it.
+
+## Start here
+
+### [Getting started](docs/01-getting-started.md)
+
+Install the server and connect your agent.
+
+### [Reference](docs/README.md)
+
+Read about the architecture, the guardrails, the CLI, and the environment variables.
+
+### [Surface map](docs/21-surface-map.md)
+
+Find every command, tool, and skill in one generated table.
+
+## Project
+
+The workspace root is `rule-mcp-workspace` and it is private. There is no npm package. The documentation site comes from these Markdown files. The server has no LLM dependency.
+
+[MIT](LICENSE) - [Contributing](CONTRIBUTING.md) - [Governance](GOVERNANCE.md) - [Code of Conduct](CODE_OF_CONDUCT.md) - [Maintainers](MAINTAINERS.md) - [Security](SECURITY.md)

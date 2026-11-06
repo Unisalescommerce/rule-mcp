@@ -40,11 +40,11 @@ export function commandKinds(data) {
   }
 
   return [
-    { kind: "router", what: "Routes a free-text request to the skill that answers it", commands: kinds.router },
-    { kind: "area", what: "Area hub: free text routes to leaf skills/tools (ADR 109)", commands: kinds.area },
-    { kind: "workflow", what: "Runs a named workflow (e.g. /rule-check auto-detects guardrails)", commands: kinds.workflow },
-    { kind: "session", what: "Carries a session across a context boundary", commands: kinds.session },
-    { kind: "persona", what: "Runs one review role at one operation, and writes its documents", commands: kinds.persona },
+    { kind: "router", what: "Send a free-text request to the skill that answers it", commands: kinds.router },
+    { kind: "area", what: "Send free text to the skills of one area", commands: kinds.area },
+    { kind: "workflow", what: "Run a named workflow", commands: kinds.workflow },
+    { kind: "session", what: "Close, resume or measure a session", commands: kinds.session },
+    { kind: "persona", what: "Run one review role and write its documents", commands: kinds.persona },
   ];
 }
 
@@ -57,8 +57,8 @@ export function commandKindsSection(data) {
     `### The kinds (${data.commands.length} commands)`,
     "",
     ...table(
-      ["Kind", "Count", "What it is for"],
-      kinds.map((entry) => [`\`${entry.kind}\``, entry.commands.length, entry.what]),
+      ["Kind", "Count", "Example", "Use it to"],
+      kinds.map((entry) => [`\`${entry.kind}\``, entry.commands.length, `\`/${entry.commands[0] ?? "-"}\``, entry.what]),
     ),
     "",
     ...kinds.flatMap((entry) => {
@@ -72,47 +72,7 @@ export function commandKindsSection(data) {
 
       return [`**${entry.kind}**: ${entry.commands.map((name) => `\`/${name}\``).join(", ")}`, ""];
     }),
-    `The ${named("persona").commands.length} persona commands are one per role and operation`,
-    "([`14-personas.md`](14-personas.md)).",
-    "",
-  ];
-}
-
-/**
- * The block the workflow chapter carries: what a developer types, and the
- * counts behind each kind. Written into `docs/08-engineering-guides.md`.
- */
-export function commandSurfaceBlock(data) {
-  const kinds = commandKinds(data);
-  const named = (kind) => kinds.find((entry) => entry.kind === kind);
-
-  return [
-    "",
-    `### The command surface today (${data.commands.length})`,
-    "",
-    ...table(
-      ["Kind", "Count", "Example", "Reach for it when"],
-      kinds.map((entry) => [`\`${entry.kind}\``, entry.commands.length, `\`/${entry.commands[0] ?? "-"}\``, entry.what]),
-    ),
-    "",
-    `**Areas**: ${named("area")
-      .commands.map((name) => `\`/${name}\``)
-      .join(", ")}`,
-    "",
-    ...(named("workflow").commands.length > 0
-      ? [
-          `**Workflows**: ${named("workflow")
-            .commands.map((name) => `\`/${name}\``)
-            .join(", ")}`,
-          "",
-        ]
-      : ["**Workflows**: none", ""]),
-    `**Sessions**: ${named("session")
-      .commands.map((name) => `\`/${name}\``)
-      .join(", ")}`,
-    "",
-    "Every command, with its description and its install target, is in",
-    "[`12-instructions.md`](12-instructions.md). Regenerate this block with `pnpm census`.",
+    `There is one persona command per role. There are ${named("persona").commands.length}. [The personas page](18-personas.md) lists them.`,
     "",
   ];
 }

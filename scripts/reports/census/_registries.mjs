@@ -29,12 +29,12 @@ export const { allRoles, activeRoles, parsePersonaCommand, personaCommandName } 
 export const { commandNames, commandDefinition, listAgentCommands, ROUTER_COMMAND } = await import("../../../packages/mcp/core/agents/commands/index.js");
 export const { listAreaPrompts } = await import("../../../packages/mcp/prompts/_areas.js");
 export const { allAgents, remoteModeAgents } = await import("../../../packages/mcp/cli/installers/_catalog.js");
+export const { hostRecord } = await import("../../../packages/mcp/cli/installers/hosts/index.js");
+export const { BASELINE_SKILLS } = await import("../../../packages/mcp/core/guardrails/engine/_registry.js");
 export const { COMMAND_TARGETS, AGENTS_WITHOUT_COMMAND_SURFACE } = await import("../../../packages/mcp/core/agents/command-targets/index.js");
 export const { HOOK_EVENTS, hookEntries } = await import("../../../packages/mcp/core/agents/index.js");
 export const { listExistingAdrs } = await import("../../../packages/mcp/tools/adr/index.js");
 export const { buildProgram } = await import("../../../packages/mcp/cli/index.js");
-
-const guardrails = await import("../../../packages/mcp/core/guardrails/index.js");
 
 /**
  * The role a persona name addresses, or nothing when the name is not one.
@@ -47,25 +47,6 @@ export function parsePersonaName(name) {
   const found = parsePersonaCommand(name);
 
   return found ? { role: found.roleId } : undefined;
-}
-
-/** Every guardrail id, with the families that carry it. */
-export function guardrailFamilies() {
-  const families = [];
-
-  for (const [key, value] of Object.entries(guardrails)) {
-    if (key.endsWith("GUARDRAILS") && Array.isArray(value)) {
-      families.push([key.replace("_GUARDRAILS", "").toLowerCase(), value]);
-    }
-  }
-
-  for (const [framework, rules] of Object.entries(guardrails.FRAMEWORK_GUARDRAILS ?? {})) {
-    if (families.every(([name]) => name !== framework)) {
-      families.push([`framework:${framework}`, rules]);
-    }
-  }
-
-  return families.sort(([left], [right]) => left.localeCompare(right));
 }
 
 /**

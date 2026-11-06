@@ -95,7 +95,7 @@ test("the resource section separates the fixed indexes from the per-skill pair",
 
   assert.match(out, /## MCP resources \(3\)/);
   assert.match(out, /\| `rule:\/\/skills` +\| All rule-mcp skills index +\| `application\/json` \|/);
-  assert.match(out, /^2 more, two for each skill that mints them:$/m, "the per-skill pair is counted, not listed");
+  assert.match(out, /^There are 2 more resources, two for each skill:$/m, "the per-skill pair is counted, not listed");
   assert.doesNotMatch(out, /\| `rulemcp:\/\/rule-styleguide-css` /, "a skill resource is not in the fixed table");
 });
 
@@ -104,4 +104,16 @@ test("a fixed resource with no name or media type renders dashes", () => {
 
   assert.match(out, /\| `rule:\/\/bare` +\| - +\| `-` \|/);
   assert.doesNotMatch(out, /undefined/);
+});
+
+test("the gathered catalog is every rule-* skill, and the guardrails are the ones skills own", async () => {
+  const { gather } = await import("../_gather.mjs");
+  const data = await gather();
+
+  assert.equal(data.catalog.length, data.skillDirs.length - 1, "only the router directory stays out of the catalog");
+  assert.ok(data.skillTools.length > 0, "a catalog skill mints a tool");
+  assert.ok(
+    data.families.some(([name]) => name === "rule-backend"),
+    "a skill-owned rule is a guardrail the server checks",
+  );
 });

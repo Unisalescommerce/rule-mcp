@@ -1,137 +1,75 @@
-# Agent Instructions for rule-mcp
+# Agent instructions
 
-Use the rule-mcp workflow for every coding task.
+This chapter tells what an agent receives from an install, and how an agent must work with RuleMCP.
 
 ## Where the rules live
 
-An install writes two marked blocks into an agent's instruction file: the short
-routing block (`<!-- rule-mcp -->`) and the enforced workflow
-(`<!-- rule-mcp-rules -->`). A global install writes them into every agent it
-configures. A project keeps its own copy: the project install writes them into
-the project's `CLAUDE.md`, and `rule-mcp init` and every project install
-**refresh** a block the project already carries - replacing the marked block and
-keeping the rest of the file. A project without a block is left alone, and no
-file is created for it.
+An install writes two marked blocks into the instruction file of an agent: the routing block (`<!-- rule-mcp -->`) and the workflow block (`<!-- rule-mcp-rules -->`).
 
-The refresh is why a committed block does not rot: without it, the text a project
-pinned at install time stays pinned while the server's rules move on.
+- A global install writes the blocks for each agent that it configures.
+- A project install writes the blocks into the `CLAUDE.md` file of the project.
+- `rule-mcp init` and each project install refresh a block that is already in the file. They keep the rest of the file. They create no block in a file that has none.
 
-## ADR policy
+The refresh keeps a committed block current with the server.
 
-Which decisions get an ADR, and when, is one switch: `RULE_MCP_ADR_POLICY`.
+## The rules on each prompt
 
-| Level       | When the ADR is written                                     |
-| ----------- | ----------------------------------------------------------- |
-| `full`      | As the decision is made, inside the task                    |
-| `handoff`   | At the handoff, from the session's own record (the default) |
-| `on-demand` | Only when the caller asks with `rule_tool_process_adr`      |
+The guard hooks add three rules to each session. `SessionStart` gives them in full. `UserPromptSubmit` gives a one-line reminder.
 
-`RULE_MCP_NO_ADR` is the blunt instrument: no ADR tool is exposed at all. The
-`adr` feature level writes the same key.
+1. Call `rule_tool` or `rule_tool_gateway` before you implement anything.
+2. Do not start subagents for research or implementation. Use the rule-mcp tools and TokenSave.
+3. Keep the output short. Keep all facts and remove filler.
 
-## Prompts in a project
-
-A shared `.mcp.json` is one file that several clients read, so a switch written
-there applies to all of them. The server's MCP prompts stay out of a client's `/`
-menu when the client is named in `RULE_MCP_NO_MCP_PROMPTS`; the shared entry does
-not set it today, because the server cannot tell which client it is serving.
-
-## Every prompt
-
-Three rules ride on every prompt, injected by the harness hooks the installer writes
-(`SessionStart` states them in full once, `UserPromptSubmit` re-anchors them in one line):
-
-1. Call `rule-mcp` (or `rule_tool_gateway`) **before any implementation**.
-2. **NEVER spawn subagents for research or implementation - they burn tokens.** Use rule-mcp tools
-   (deterministic, LLM-free) and tokensave (code graph) instead.
-3. Keep the output compression-referenceed: substance verbatim, filler gone.
-
-> Every token saved is a token earned.
-
-Agents without hook support (Gemini CLI, Windsurf, Cline, Devin) carry the same rules in the body of
-every generated `/rule-mcp-*` command. Opt out with `RULE_MCP_NO_PROMPT_DIRECTIVE=1`.
-
-## Resuming a session
-
-`SessionStart` fires with `source: "resume"` when the user reopens the agent (`claude --resume`,
-`claude --continue`). If `docs/handoff/` holds a handoff, the hook runs `rule_tool_handon` and
-injects the **verified** result before the first prompt: each claim from the handoff arrives labeled
-still true, changed, or unverified, so a merged branch or a landed ADR is not restated as fact.
-
-Nothing is injected on `startup`, `clear` or `fork`, and nothing is injected when there is no
-handoff. Opt out with `RULE_MCP_NO_RESUME_HANDON=1`.
-
-Not every harness spells resume as a session event. `pi resume` turns the word into the user's
-first message, and no hook fires at all. So the prompt is the second signal: when the prompt is a
-bare resume request and nothing else (`resume`, `riprendi`, `continue where we left off`, ...), the
-first tool call of the process carries the same verified handoff, prepended beside the self-update
-banner. It fires once per process, and it is applied outside the result cache, so a stored answer
-never replays a snapshot of a repository that has moved.
-
-A prompt that asks for real work is not a resume signal: the whole prompt has to be one of the
-resume phrasings, so "continue implementing the parser" routes normally.
-
-The two doors never both open. The hook records what it injected in the state directory, keyed by
-project; the tool path stays quiet when that record was written after the server process started,
-which for a stdio server means during this session. A record from a previous session suppresses
-nothing, so resuming twice from the same handoff works twice.
+Agents with no hooks get the same rules in the body of each `/rule-*` command. Set `RULE_MCP_NO_PROMPT_DIRECTIVE=1` to stop the rules.
 
 ## Recommended workflow
 
-1. Call `rule-mcp` or `rule_tool_gateway` with full request plus known framework/project path.
-2. `rule_tool_gateway` routes, loads evidence, and checks guardrails in a single call.
-3. Treat repository/tool evidence as source of truth. Never invent APIs, files, dependencies, tools, requirements, or successful checks.
-4. If evidence missing, call `rule_tool_search`; if still absent, state uncertainty.
-5. Write failing tests before implementation changes.
-6. Use `/rule-area-styleguide` (name leaves like file-tree in the request) for templates and project tree work (ADR 107/117).
-7. Run `rule_tool_check`. Failed guardrails are blocking; fix and rerun until all pass.
-8. Run project tests/typecheck and report only commands actually executed.
-9. Record structural decisions with `rule_tool_process_adr` (disabled by default, enable with `RULE_MCP_AUTO_ADR=1`).
-10. Before writing files, run `rule_tool_gateway` to get a receipt; use `rule_tool_apply` with the receipt for writes.
-11. After `rule_tool_apply` writes files, Prettier + blank-line fixer + block-spacing fixer run automatically as post-processing.
-12. Compress prose / preprocess prompts with `rule_tool_compress` / `/rule-compress`. Close/resume sessions with `/rule-handoff` and `/rule-handon`.
+1. Call `rule_tool_gateway` with the full request and the project path. It routes the request, loads the evidence, and runs the guardrails in one call.
+2. Use the tool evidence as the source of truth. Do not invent APIs, files, dependencies, or passed checks.
+3. If evidence is missing, call `rule_tool_search`. If it is still missing, state that you do not know.
+4. Write a failing test before you change the implementation.
+5. Run `rule_tool_check`. A failed guardrail blocks the work. Fix the code and run the check again.
+6. Run the tests of the project. Report only the commands that you ran.
+7. To write files, get a receipt from `rule_tool_gateway`, and then call `rule_tool_apply` with it.
+8. Record structural decisions with `rule_tool_process_adr` when the ADR policy allows it.
+9. Use `/rule-handoff` to close a session. Use `/rule-handon` to continue it.
 
-## Advisory boundaries
+The server can reject bad input and validate output shape. MCP cannot force the order of tool calls, so these steps are advisory. See `packages/mcp/core/enforcement/`.
 
-The server applies preprocessing (rejects malformed/unsafe input) and postprocessing (validates output shape).
-These are **advisory** - they improve reliability but MCP protocol cannot enforce tool call ordering.
-See `src/core/enforcement.js` for details.
+## Resume a session
 
-## Frontend principles
+When you reopen an agent with a resume command, `SessionStart` fires with `source: "resume"`. If `docs/handoff/` holds a handoff, the hook runs `rule_tool_handon` and adds the result before the first prompt. Each claim has a label: still true, changed, or unverified.
 
-- **Zero CSS classes** - element and `[data-part]`/`[data-*]` selectors only.
-- **Zero inline styles** - external CSS or framework-native external loading.
-- **Flex first** - `display: grid` only for named areas, subgrid, explicit placement or overlap, and auto-fit tracks; anything a flex row or column can do is flex, and a legitimate grid says which case it is in a `/* grid: why */` comment.
-- **Semantic HTML mandatory** - use semantic element instead of generic `<div>` where available.
-- **Barrel pattern** - component folder has `index.js`; implementation files use `_PascalCase.ext`.
-- **No unapproved CSS frameworks** - no Tailwind, Bootstrap, or CSS-in-JS.
+The hook adds nothing on `startup`, `clear`, or `fork`. Set `RULE_MCP_NO_RESUME_HANDON=1` to stop this feature.
 
-## Reusable entry points
+Some agents have no resume event. So a prompt that is only a resume request also works, for example `resume` or `riprendi`. The first tool call then carries the same result. This happens once for each process. A prompt that asks for real work does not trigger it.
 
-Every agent receives the same **registry-driven** clean command set - the `/rule` router pinned first, then one `/rule-mcp-*` command per MCP prompt in alphabetical order (`/rule-mcp-a11y-audit` ... `/rule-update`). Regenerate or list it with `rule-mcp agent-commands`.
+## Frontend rules
 
-- Pi, Claude Code, Gemini CLI, Cursor, Windsurf, Cline: `/rule <request>` plus the full `/rule-mcp-*` set.
-- Claude Code: the clean `/rule-mcp-*` commands replace the MCP prompts - the install sets `RULE_MCP_NO_PROMPTS=1`, so the prefixed `/rule:... (MCP)` duplicates are hidden.
-- `/rule-handoff` also commits pending work as atomic, scoped conventional commits (plus one separate `docs(adr):`/`docs(handoff):` commit for pending decision docs), writes the generated handoff to `docs/handoff/<NN>-<slug>.md` and commits it alone as `chore(handoff): ...`, and never pushes.
-- GitHub Copilot CLI: `/agent`, select `rule-mcp`.
-- Codex CLI: invoke globally installed `rule-mcp` skill; exact custom prompt support varies by version.
+- **No CSS classes.** Use element selectors and `[data-part]` or `[data-*]` selectors.
+- **No inline styles.** Use external CSS.
+- **Flex first.** Use `display: grid` only for named areas, subgrid, explicit placement, overlap, and auto-fit tracks. Give the reason in a `/* grid: why */` comment.
+- **Semantic HTML.** Use a semantic element in place of a generic `<div>`.
+- **Barrel pattern.** A component folder has `index.js`. Implementation files use `_PascalCase.ext`.
+- **No unapproved CSS frameworks.** Do not use Tailwind, Bootstrap, or CSS-in-JS.
+
+## Commands in each agent
+
+Each agent gets the same command set: the `/rule` router first, then the other commands in alphabetical order. Use `rule-mcp agent-commands` to list or write them again.
+
+- The commands are in the native format of each agent. [The instructions page](./16-instructions.md) lists the formats.
+- Claude Code gets command files, and the install sets `RULE_MCP_NO_PROMPTS=1`. This hides the MCP prompts with the same names.
+- GitHub Copilot CLI uses `/agent` and then `rule-mcp`.
+- Codex CLI uses the installed skill.
+
+`/rule-handoff` also commits pending work as scoped commits. It writes the handoff to `docs/handoff/` and commits it. It does not push.
+
+## Prompts in a shared configuration
+
+Several clients read one shared `.mcp.json` file, so a switch in that file applies to all of them. `RULE_MCP_NO_MCP_PROMPTS` hides the MCP prompts for the clients that it names. The shared entry does not set it, because the server cannot tell which client it serves.
 
 ## Minimal tool surface
 
-Set `RULE_MCP_MINIMAL_TOOLS=1` (off by default) to expose only the fixed dispatcher/action
-allowlist (ADR 107) instead of the full per-skill surface (fits clients that cap or truncate the
-tool list, and costs less context on every turn): `rule_tool`, `rule_tool_meta`, `rule_tool_update`,
-`rule_tool_init`, `rule_tool_gateway`, `rule_tool_apply`, `rule_tool_search`, `rule_tool_check`,
-`rule_tool_compress`, `rule_tool_detect`, `rule_tool_handoff`, `rule_tool_handon`, `rule_tool_stats`,
-`rule_tool_usage`.
+Set `RULE_MCP_MINIMAL_TOOLS=1` to expose a short list of tools in place of the full surface. Use this for a client that limits the tool list. The list has `rule_tool`, `rule_tool_meta`, `rule_tool_update`, `rule_tool_init`, `rule_tool_gateway`, `rule_tool_apply`, `rule_tool_search`, `rule_tool_check`, `rule_tool_compress`, `rule_tool_detect`, `rule_tool_handoff`, `rule_tool_handon`, `rule_tool_keep`, `rule_tool_stats`, and `rule_tool_usage`.
 
-## Environment variables
-
-See [05-env-variables.md](05-env-variables.md) for the complete reference table, persistence, and configuration.
-
-## Layout default
-
-Flex first is the default layout: `display: flex` for rows and columns.
-`display: grid` only for named template areas, subgrid, explicit item placement
-or overlap, and auto-fit/auto-fill tracks, justified with a `/* grid: why */`
-comment (see rule-styleguide-css).
+[Environment variables](./10-env-variables.md) lists all settings.

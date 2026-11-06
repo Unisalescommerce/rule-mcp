@@ -1,16 +1,28 @@
 /**
  * @module scripts/reports/census/_sections-install
  *
- * The install targets, and which of them also get slash-command files.
+ * The install targets, the files each one gets, and how deep each host can go.
  *
  * `allAgents` is the list `install --agent <name>` and the setup wizard accept;
  * `COMMAND_TARGETS` and `AGENTS_WITHOUT_COMMAND_SURFACE` decide whether a host
- * also receives per-command files. Reading all three means the chapter cannot
- * promise a host the installer does not have, or miss one it gained.
+ * also receives per-command files; `hostRecord` holds the integration ceiling.
+ * Reading all of them means the page cannot promise a host the installer does
+ * not have, or miss one it gained.
  */
 
 import { table } from "./_format.mjs";
-import { AGENTS_WITHOUT_COMMAND_SURFACE, COMMAND_TARGETS, allAgents, remoteModeAgents } from "./_registries.mjs";
+import { AGENTS_WITHOUT_COMMAND_SURFACE, COMMAND_TARGETS, allAgents, hostRecord, remoteModeAgents } from "./_registries.mjs";
+
+const yes = (flag) => (flag ? "yes" : "-");
+
+/** One row per host: the ceiling, then each rung above the MCP entry. */
+export function ceilingRows() {
+  return allAgents.map((host) => {
+    const { ceiling, levels } = hostRecord(host);
+
+    return [`\`${host}\``, ceiling, yes(levels.L1.supported), yes(levels.L2.supported), yes(levels.L3.supported), levels.L4.supported ? (levels.L4.status ?? "yes") : "-"];
+  });
+}
 
 /**
  * @param {object} _data - the gathered surface (this section reads the registries directly)
@@ -41,10 +53,9 @@ export function agentTargetSection(_data) {
   return [
     `## Install targets (${allAgents.length})`,
     "",
-    "`rule-mcp install --agent <name>` and the setup wizard accept exactly",
-    "these names. A host listed with command files also gets the slash commands in",
-    "its own format; the others receive the MCP configuration and reach the same",
-    "prompts through the server.",
+    "`rule-mcp install --agent <name>` and the setup wizard accept these names.",
+    "A host with command files also gets the slash commands in its own format.",
+    "The other hosts get the MCP configuration and use the same prompts through the server.",
     "",
     ...table(["`--agent`", "Command files", "Transport", "Notes"], rows),
     "",
@@ -52,14 +63,15 @@ export function agentTargetSection(_data) {
     // real gap: the files exist for a host that cannot be asked for by that
     // name. Naming it here beats leaving the reader to infer it from a "no".
     ...(legacy.length > 0
-      ? [
-          `Command files are also registered under ${legacy.map((name) => `\`${name}\``).join(", ")}, which the installer no longer accepts as an agent name (a deprecated alias): installing the host under its current name writes no command files.`,
-          "",
-        ]
+      ? [`Command files also exist under ${legacy.map((name) => `\`${name}\``).join(", ")}. The installer does not accept this name, so no install writes these files.`, ""]
       : []),
-    "Regenerate with `pnpm census`.",
+    `There are ${COMMAND_TARGETS.length} slash-command targets for ${commands.size} hosts. [The instructions page](16-instructions.md) lists the formats.`,
     "",
-    `Per-host formats and the command surface itself: [\`12-instructions.md\`](12-instructions.md). Slash-command targets: ${COMMAND_TARGETS.length} across ${commands.size} hosts.`,
+    "## Integration ceiling per host",
+    "",
+    "The ceiling is the deepest level that a host supports. [Integration levels](06-integration-levels.md) tells what each level writes.",
+    "",
+    ...table(["Host", "Ceiling", "Rules", "Commands", "Hooks", "Handler"], ceilingRows()),
     "",
   ];
 }

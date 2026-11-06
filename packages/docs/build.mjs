@@ -18,6 +18,7 @@ import { marked } from "marked";
 
 import { copyAssets } from "./_assets.mjs";
 import { collectPages, posix, root } from "./_collect.mjs";
+import { addHeadingIds, decorate } from "./_decorate.mjs";
 import { sourceMap } from "./_pages.mjs";
 import { dropLeadingHeading, repoBase, rewriteLinks, stripHeadingNumber, unwrapDeadLinks, wrapTables } from "./_rewrite.mjs";
 import { layout, titleOf } from "./_shell.mjs";
@@ -65,7 +66,7 @@ export function buildSite({ projectDir = root, outDir = join(root, "site-dist") 
   for (const page of pages) {
     const { title, body } = renderPage(page, projectDir);
     const dir = posix(dirname(page.src) === "." ? "" : dirname(page.src));
-    const html = unwrapDeadLinks(rewriteLinks(stripHeadingNumber(wrapTables(body)), { dir, out: page.out, routes, base }));
+    const html = unwrapDeadLinks(rewriteLinks(addHeadingIds(decorate(stripHeadingNumber(wrapTables(body)), page.out)), { dir, out: page.out, routes, base }));
     const file = join(outDir, page.out);
 
     mkdirSync(dirname(file), { recursive: true });

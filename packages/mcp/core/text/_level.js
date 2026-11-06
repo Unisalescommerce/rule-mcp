@@ -9,7 +9,7 @@
  * than once per line, and an unknown value warns once instead of silently
  * turning compression off.
  *
- * Which rule table each level owns is documented in `docs/05-env-variables.md`
+ * Which rule table each level owns is documented in `docs/10-env-variables.md`
  * and enforced by the `level` tag on every vocabulary entry.
  */
 

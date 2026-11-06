@@ -2,73 +2,48 @@
   "version": 1,
   "files": [
     {
-      "file": "01-getting-started.md",
-      "kind": "block",
-      "marker": "agent-targets",
-      "sha256": "772a6cbc88a9b4a8ba7131e9f890c9334263d32ef02b8be6e071b8c3bb980149"
+      "file": "13-skills.md",
+      "sha256": "8465dd865aaff3eb854dd656f78b11b14bdbfffdbd0bc466e9086571f0920cca"
     },
     {
-      "file": "02-architecture.md",
-      "kind": "block",
-      "marker": "surface-counts",
-      "sha256": "2e987d738d4e4d4b99bdbcbec550e58aa1199b0ac92cb5b877e7c2e97321c512"
+      "file": "14-tools.md",
+      "sha256": "9e31c912ea8b3d75e63912a2e87b5934720fcedc24e851aec855e78e954bd2bf"
     },
     {
-      "file": "05-env-variables.md",
-      "kind": "block",
-      "marker": "env-registry",
-      "sha256": "ec27a9356d32a93dd43fce6b6fb4f8c8ff663c4c89ce9b7b2576ae4288210620"
+      "file": "15-prompts.md",
+      "sha256": "a636e67aaedd0494f3a753a17f15795329249fbb426d24ea5c3cd88996684377"
     },
     {
-      "file": "08-engineering-guides.md",
-      "kind": "block",
-      "marker": "command-surface",
-      "sha256": "567d0365336adbc31d70af6302fe5c572e06af8eeb4c5ca6de721e8ea344d393"
+      "file": "16-instructions.md",
+      "sha256": "751aab4324cd1a1fccaf6dd8cbb6e240f9555babc926746ad62b67f4748cb54d"
     },
     {
-      "file": "09-skills.md",
-      "kind": "document",
-      "sha256": "564bd4b906885ef254a9fa90666bb70daa6142e68e2134f019b493b22d51019f"
+      "file": "17-cli.md",
+      "sha256": "e59f5f522b1ff9e6f4adae2632ade8805f4b6045350765a0ee442ecdf0a45b13"
     },
     {
-      "file": "10-tools.md",
-      "kind": "document",
-      "sha256": "97364583f79a60828a44b27bfd6515545c129c9f235839019a07ee5f6dbca293"
+      "file": "18-personas.md",
+      "sha256": "dcdfaf291b6cae94bcda0d23bf0e753843403814542c470ef25b774e3a735200"
     },
     {
-      "file": "11-prompts.md",
-      "kind": "document",
-      "sha256": "8686aa7fcdcb4fae36542cb50b7906b8f701db26b057b43f356119d089328a57"
+      "file": "19-guardrails.md",
+      "sha256": "8676346403733dbb61c6bd27053021359f1f00aa9487736d8976e603aab94b55"
     },
     {
-      "file": "12-instructions.md",
-      "kind": "document",
-      "sha256": "347e78f8ea713ac373483a7485a07d06dbc0b6226f3944f7047b4d65a920cc54"
+      "file": "20-resources.md",
+      "sha256": "b288f4f84667257ce4a2629189d701c4c2da7219df05887d92dcb625f50cde59"
     },
     {
-      "file": "13-cli.md",
-      "kind": "document",
-      "sha256": "f2d88688440bceb35d5db0ab12ce2f4762375df5e43238e8e55129597a077db6"
+      "file": "21-surface-map.md",
+      "sha256": "eefae5a159ecbfd87984ce9715ef793b601370229f522a7e76003e26478e9593"
     },
     {
-      "file": "14-personas.md",
-      "kind": "document",
-      "sha256": "3bf526415d2d103d5420144e88437f69bec44752c887cf1c806094bdcceddd1f"
+      "file": "22-install-targets.md",
+      "sha256": "6851845ddeb52c3850428850631e6393b9d783fee93bd30525d0b5047c640e82"
     },
     {
-      "file": "15-guardrails.md",
-      "kind": "document",
-      "sha256": "912dfd1b701c5f3313b00ffac2e3d2655b27a46861c20de93e593ae6d61a6421"
-    },
-    {
-      "file": "16-resources.md",
-      "kind": "document",
-      "sha256": "3e9ab3ec0b7593239f8341c3ea5cc1a3897583ef886d013524bda4f26602baa5"
-    },
-    {
-      "file": "17-surface-map.md",
-      "kind": "document",
-      "sha256": "e6bfabfa8f51121cc9bbfdad7ecd93066067e68464f5a5144bedba8103aef536"
+      "file": "23-env-readers.md",
+      "sha256": "7857be84d66c14e504a92351367f87ce652744aba612586811613975133dc53f"
     }
   ]
 }

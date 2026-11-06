@@ -1,107 +1,75 @@
-# Getting Started
+# Getting started
 
-Install RuleMCP once, wire your agent, and route the first request in under five minutes.
+This chapter tells you how to install RuleMCP and connect your agent.
 
-## What it is
+## What RuleMCP does
 
-**RuleMCP** is an [MCP](https://modelcontextprotocol.io) server for the rule-mcp skill catalog. It:
+RuleMCP is an [MCP](https://modelcontextprotocol.io) server. It does three things:
 
-1. **Routes** free-text requests to the matching skill (or area hub).
-2. **Serves** skills as MCP tools, resources, and prompts, no LLM inside the server.
-3. **Validates** generated code with deterministic guardrails before you keep it.
+1. It routes a free-text request to the skill that owns it.
+2. It serves skills as MCP tools, resources, and prompts.
+3. It checks generated code with deterministic guardrails.
 
-Identical behavior behind any model. Everything runs on your machine.
+No model runs inside the server. Any agent that speaks MCP can use it. The tools and the guardrails give the same result with any model.
+
+## Requirements
+
+| Item    | Version       | Check            |
+| ------- | ------------- | ---------------- |
+| Node.js | 26.4 or newer | `node --version` |
+| pnpm    | 11 or newer   | `pnpm --version` |
+
+The server stops at start if the Node.js version is too old. There is no npm package, so you install from a clone or from a release tarball.
 
 ## Install
-
-### Prerequisites
-
-| Requirement        | Minimum | Check            |
-| ------------------ | ------- | ---------------- |
-| Node.js            | >= 20   | `node --version` |
-| pnpm (recommended) | any     | `pnpm --version` |
-
-### From a clone (current path)
-
-The package is not on the npm registry yet. Install from a clone:
 
 ```bash
 git clone https://github.com/pixu1980/rule-mcp.git
 cd rule-mcp
-pnpm install
-./scripts/install.sh
+pnpm setup
+```
+
+`pnpm setup` deletes `node_modules` and `pnpm-lock.yaml`, installs again, adds the global `rule-mcp` command, and starts the setup wizard. The wizard needs a terminal. In a pipe, the plain runner uses the same defaults.
+
+The wizard finds your agents, writes their MCP configuration, and runs the health check. [Install and uninstall](./04-install.md) lists each step.
+
+To keep the lockfile, run `pnpm install --frozen-lockfile` and then `./scripts/install.sh`.
+
+## Do a check of the install
+
+```bash
 rule-mcp doctor
 ```
 
-Expected: health report with `ok: true`, tools registered, detected agents.
+The report shows the registered tools, the detected agents, and the state of the hooks. Restart your agent after the install. The agent reads MCP entries only when it starts.
 
-### Verify
+## Prepare a project
+
+Do this step in your own project, not in this repository:
 
 ```bash
-rule-mcp tools list
-rule-mcp serve
+cd ~/my-project
 ```
 
-Wire `rule-mcp serve` into your agent's MCP config (the installer writes common targets for you via `rule-mcp setup`).
+```bash
+rule-mcp init
+```
 
-## Compatibility
+`rule-mcp init` creates the recorder directory, installs the `commit-msg` and `pre-push` git hooks, refreshes the rules block, and reports the dependency pins. It also indexes the project with TokenSave. Use `--no-tokensave` to skip the index.
 
-### Agents and IDEs
+## The main flows
 
-The list below is generated from the installer's agent catalog and the
-command-target registry, so it cannot promise a host the installer does not
-have or miss one it gained.
-
-<!-- census:begin:agent-targets -->
-
-## Install targets (23)
-
-`rule-mcp install --agent <name>` and the setup wizard accept exactly
-these names. A host listed with command files also gets the slash commands in
-its own format; the others receive the MCP configuration and reach the same
-prompts through the server.
-
-| `--agent`     | Command files                   | Transport             | Notes                                                                                                                     |
-| ------------- | ------------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `claude`      | yes: args (global)              | stdio                 |                                                                                                                           |
-| `codex`       | yes: skill (global)             | stdio                 |                                                                                                                           |
-| `cursor`      | yes: args (project)             | stdio                 |                                                                                                                           |
-| `copilot`     | yes: skill (global)             | stdio                 |                                                                                                                           |
-| `gemini`      | yes: gemini (global)            | stdio                 |                                                                                                                           |
-| `cline`       | yes: workflow (global, project) | stdio                 |                                                                                                                           |
-| `roo`         | yes: plain (global, project)    | stdio                 |                                                                                                                           |
-| `zed`         | no                              | stdio                 | Zed stores its rules/prompt library in profile storage, not in discoverable per-command files.                            |
-| `opencode`    | yes: args (global, project)     | stdio                 |                                                                                                                           |
-| `antigravity` | no                              | stdio                 | No published custom-command file location; MCP prompts remain the entry point.                                            |
-| `devin`       | no                              | stdio                 | Devin runs commands in its own workspace runtime, not from local slash-command files; MCP prompts remain the entry point. |
-| `pi`          | yes: args (global)              | stdio, daemon, docker |                                                                                                                           |
-| `kilo`        | no                              | stdio                 | Kilo CLI command directory is not verified against a published spec.                                                      |
-| `kimi`        | no                              | stdio                 | Kimi CLI command directory is not verified against a published spec.                                                      |
-| `vibe`        | no                              | stdio                 | Mistral Vibe command directory is not verified against a published spec.                                                  |
-| `grok`        | no                              | stdio                 | Grok Build command directory is not verified against a published spec.                                                    |
-| `droid`       | no                              | stdio                 | Factory Droid command directory is not verified against a published spec.                                                 |
-| `kiro`        | no                              | stdio                 | AWS Kiro command directory is not verified against a published spec.                                                      |
-| `qwen`        | no                              | stdio                 | Qwen Code command directory is not verified against a published spec.                                                     |
-| `vscode`      | yes: prompt (global)            | stdio, daemon, docker |                                                                                                                           |
-| `jetbrains`   | no                              | stdio                 | JetBrains AI Assistant has no user-authored slash-command files; MCP prompts are the only entry point.                    |
-| `neovim`      | no                              | stdio                 | Editor-level MCP plugins expose prompts directly; there is no command-file convention to write to.                        |
-| `emacs`       | no                              | stdio                 | mcp.el exposes prompts directly; there is no command-file convention to write to.                                         |
-
-Command files are also registered under `windsurf`, which the installer no longer accepts as an agent name (a deprecated alias): installing the host under its current name writes no command files.
-
-Regenerate with `pnpm census`.
-
-Per-host formats and the command surface itself: [`12-instructions.md`](12-instructions.md). Slash-command targets: 15 across 11 hosts.
-
-<!-- census:end:agent-targets -->
-
-### Models
-
-The server never calls a model. Any agent that speaks MCP works: Claude, GPT, Gemini, Llama, Qwen, and local models. Deterministic tools and guardrails behave the same regardless of which model the host uses.
+- **Route.** `rule_tool` names the skill and loads its evidence. For a broad request, it returns the area hub. A narrower call then selects the leaf skill.
+- **Check.** `rule_tool_check` runs the guardrails of the skill. A failure blocks the work. `mode: "project"` also runs the graph checks.
+- **Fix.** `rule_tool_fix` applies the deterministic fixes. In a shell, use `rule-mcp fix --no-dry-run`.
+- **Handoff.** `rule-mcp handoff` writes a handoff before you stop. `rule-mcp handon` compares the last handoff with the repository.
+- **Personas.** A persona is a review role. Use `rule_tool_plan`, `rule_tool_audit`, or `rule_tool_review`.
+- **Cache.** `rule-mcp cache stats` shows the tool cache. Set `RULE_MCP_NO_CACHE=1` to stop the cache for a run.
+- **Decision layer.** This layer is off by default. Set `RULE_MCP_DECISION_CACHE_SHADOW=1` to measure it, and then read `pnpm report:decision-cache`. Turn on replay only when the report shows zero false replays.
 
 ## Next steps
 
-- [Quick start](./07-quick-start.md): the main flows in short examples
-- [Reference overview](./README.md): map of architecture, surface table, and inventories
-- [Architecture](./02-architecture.md): the request path
-- [Surface map](./17-surface-map.md): the Command - Tool - Skill table
+- [Install targets](./22-install-targets.md): the agents that the installer supports
+- [Engineering guides](./12-engineering-guides.md): how to work on this repository
+- [Architecture](./02-architecture.md): the path of a request
+- [CLI](./17-cli.md) and [environment variables](./10-env-variables.md): each flag and setting

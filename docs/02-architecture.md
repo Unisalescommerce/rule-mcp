@@ -1,93 +1,61 @@
 # Architecture
 
-How a request moves through rule-mcp, simplified and product-facing. The
-decision log behind it is not part of this site.
+This chapter tells how a request moves through RuleMCP.
 
-The git checkout is a private pnpm workspace (`rule-mcp-workspace`). The
-published product package is `packages/mcp` (`rule-mcp`); shared helpers live
-in `packages/shared`, and the docs site in `packages/docs`. Every workspace
-member is inside the checkout, so the tree builds without a sibling project.
+## Workspace
+
+The repository is a private pnpm workspace with the name `rule-mcp-workspace`. It has three packages:
+
+| Package           | Name              | Content                        |
+| ----------------- | ----------------- | ------------------------------ |
+| `packages/mcp`    | `rule-mcp`        | The server, the CLI, the tools |
+| `packages/shared` | `rule-mcp-shared` | Helpers that packages share    |
+| `packages/docs`   | `rule-mcp-docs`   | The documentation site builder |
+
+The root also holds `bin/`, `skills/`, `personas/`, `prompts/`, and `scripts/`. The server needs all of them at run time. All workspace packages are in the repository, so a clone builds with no other project.
 
 ## Request path
 
-The flow graph below is the same path an agent takes, top to bottom.
+An agent request follows these steps.
 
-<ol data-part="architecture-diagram" aria-label="Request path, from the agent to the response">
-<li data-part="step">
-<h3>Agent</h3>
-<p>Sends a prompt, a slash command, or a direct tool call.</p>
-</li>
-<li data-part="step">
-<h3>MCP transport</h3>
-<p>stdio by default; HTTP+SSE for a long-running local server.</p>
-</li>
-<li data-part="step">
-<h3>Router</h3>
-<p><code>rule_tool</code> scores the request and picks the skill or the area hub.</p>
-</li>
-<li data-part="step">
-<h3>Skill or tool</h3>
-<p>The chosen skill serves its evidence: styleguide, template, or pattern.</p>
-</li>
-<li data-part="step">
-<h3>Guardrails</h3>
-<p>Deterministic checks run against the proposed code before anything is written.</p>
-</li>
-<li data-part="step">
-<h3>Response</h3>
-<p>Structured content returns to the agent. The server never calls a model.</p>
-</li>
-</ol>
+1. **Agent.** The agent sends a prompt, a slash command, or a tool call.
+2. **Transport.** The default transport is stdio. A long-running local server uses HTTP and SSE.
+3. **Router.** `rule_tool` gives a score to the request and selects a skill or an area hub.
+4. **Skill or tool.** The skill serves its evidence: a styleguide, a template, or a pattern.
+5. **Guardrails.** Deterministic checks read the proposed code.
+6. **Response.** The agent receives structured content. The server does not call a model.
 
 ## Surfaces
 
-| Surface        | Role                                                                                |
-| -------------- | ----------------------------------------------------------------------------------- |
-| Slash commands | Same set installed into each agent/IDE (`/rule`, `/rule-area-*`, personas, session) |
-| MCP tools      | Action tools + one tool per catalog skill                                           |
-| MCP prompts    | Workflow, area, and persona prompts                                                 |
-| MCP resources  | `rule://` indexes and summaries                                                     |
-| Guardrails     | Deterministic checks by family / framework                                          |
-| CLI            | Install, doctor, serve, setup, tools                                                |
+| Surface        | Purpose                                                       |
+| -------------- | ------------------------------------------------------------- |
+| Slash commands | The same set in each agent: router, areas, sessions, personas |
+| MCP tools      | Action tools, and one tool for each catalog skill             |
+| MCP prompts    | Workflow, area, and persona prompts                           |
+| MCP resources  | `rule://` indexes and summaries                               |
+| Guardrails     | Deterministic checks, owned by skills                         |
+| CLI            | Install, health check, server, tools                          |
 
-Live counts and the Command - Tool - Skill table: [Surface map](./17-surface-map.md). Full inventories: [09-17](./README.md).
+[The surface map](./21-surface-map.md) gives the live counts.
 
-## Design constraints
+## Skill layers
 
-- **Local-first**: skills on disk; no required network for core use.
-- **Model-agnostic**: no LLM inside the server.
-- **Registry-driven**: census and agent commands derive from the same registries.
-- **ADR 109**: leaf skills have no slash; area hubs collect them.
+The server reads skills from three layers. The last layer that defines a name wins.
 
-## Related
+1. **Native.** The `skills/` directory of the server.
+2. **Project.** `.rule-mcp/skills/` in the project.
+3. **User.** `skills/` in the runtime home, `~/.rule-mcp/skills/` by default.
 
-- [Getting Started](./01-getting-started.md)
-- [Env vars](./05-env-variables.md)
-- [Surface map](./17-surface-map.md)
+[Custom skills](./07-custom-skills.md) tells how to use these layers.
 
-<!-- census:begin:surface-counts -->
+## Design rules
 
-## Surface at a glance
+- **Local first.** Skills are on disk. The core features need no network.
+- **Model-agnostic.** There is no LLM inside the server.
+- **Registry-driven.** The census and the agent commands read the same registries.
+- **Area hubs.** A leaf skill has no slash command. An area hub reaches it.
 
-| Surface                   | Count | Defined in                                                      |
-| ------------------------- | ----- | --------------------------------------------------------------- |
-| MCP tools                 | 105   | `packages/mcp/tools/*` via `packages/mcp/tools/router/index.js` |
-| - action tools            | 105   | one per module, registered explicitly                           |
-| - skill tools             | 0     | one per catalog skill, generated                                |
-| MCP resources             | 172   | `packages/mcp/resources/index.js`                               |
-| MCP prompts               | 41    | `packages/mcp/prompts/index.js`                                 |
-| - reusable                | 22    | workflow and area prompts                                       |
-| - persona                 | 19    | 19 active roles, one command each                               |
-| Skills                    | 0     | `skills/rule-*/SKILL.md`                                        |
-| Review personas           | 19    | `packages/mcp/core/review/roles/index.js`                       |
-| Guardrail rules           | 9     | `packages/mcp/core/guardrails/index.js`                         |
-| Agent slash commands      | 44    | `packages/mcp/core/agents/commands/index.js`                    |
-| Agent/IDE command targets | 15    | `packages/mcp/core/agents/command-targets/index.js`             |
-| CLI commands              | 28    | `packages/mcp/cli/_program.js`                                  |
-| Hook events               | 4     | `packages/mcp/core/agents/_hooks.js`                            |
-| Architecture decisions    | 243   | [`docs/adr/ADR.md`](adr/ADR.md)                                 |
+## Related pages
 
-Regenerate with `pnpm census`. The inventories themselves are
-[`09-skills.md`](09-skills.md) through [`16-resources.md`](16-resources.md).
-
-<!-- census:end:surface-counts -->
+- [Getting started](./01-getting-started.md)
+- [Environment variables](./10-env-variables.md)

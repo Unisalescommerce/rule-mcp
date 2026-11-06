@@ -13,7 +13,7 @@ import { cell, table } from "./_format.mjs";
 import { cliCommands } from "./_registries.mjs";
 
 /** A markdown anchor for the heading this section writes. */
-const anchor = (name) => `#rule-${name.replaceAll(".", "")}`;
+const anchor = (name) => `#rule-mcp-${name.replaceAll(/[^\w-]/gu, "")}`;
 
 /** An empty cell reads better as a dash than as nothing. */
 const orDash = (value) => (value === undefined || value === null || value === "" ? "-" : cell(String(value)));
@@ -65,13 +65,10 @@ export function cliSection() {
   return [
     `## The commands (${commands.length})`,
     "",
-    "Every command is listed with the arguments and options it reads, taken from",
-    "the commander definitions that parse them. The same definitions answer",
-    "`rule-mcp <command> --help`, so nothing here is a promise the binary",
-    "does not keep.",
+    "This page lists each command with its arguments and options. The text comes",
+    "from the definitions that parse them. `rule-mcp <command> --help` prints the same data.",
     "",
-    "`rule-mcp` with no command starts the stdio server, which is how an",
-    "agent spawns it. `-h, --help` works on every command; `-v, --version` prints",
+    "`rule-mcp` with no command starts the stdio server. An agent starts it this way. `-h, --help` works on every command; `-v, --version` prints",
     "the package version from anywhere. An error exits 1 and prints to stderr;",
     "`--help` exits 0.",
     "",

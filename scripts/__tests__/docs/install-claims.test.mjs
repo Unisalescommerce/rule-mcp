@@ -9,10 +9,7 @@ import test from "node:test";
  *
  * The package is not published, so every `pnpm add -g rule-mcp`
  * or `npm install -g rule-mcp` instruction is a 404. The supported
- * route is a clone plus the installer launcher, with exactly one
- * allow-listed compatibility note (fenced by the markers below in
- * docs/01-getting-started.md) stating that a registry install applies
- * only once the package is published.
+ * route is a clone plus the installer launcher.
  *
  * Frozen evidence (audits, reviews, plans, handoffs) is out of scope:
  * those documents record the finding itself and must not be rewritten.
@@ -20,35 +17,7 @@ import test from "node:test";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 const CLAIM = /(?:pnpm add -g|npm install -g)\s+rule-mcp/u;
-const ALLOW_START = "<!-- install-claims:allow-start -->";
-const ALLOW_END = "<!-- install-claims:allow-end -->";
 const FROZEN = new Set(["audits", "reviews", "plans", "handoff"]);
-
-function stripAllowed(text) {
-  const lines = text.split("\n");
-  const kept = [];
-  let inside = false;
-
-  for (const line of lines) {
-    if (line.includes(ALLOW_START)) {
-      inside = true;
-
-      continue;
-    }
-
-    if (line.includes(ALLOW_END)) {
-      inside = false;
-
-      continue;
-    }
-
-    if (!inside) {
-      kept.push(line);
-    }
-  }
-
-  return kept;
-}
 
 function docFiles() {
   const files = ["README.md"];
@@ -89,7 +58,7 @@ test("no registry install claims outside the allow-listed note", () => {
   const hits = [];
 
   for (const file of [...docFiles(), ...scriptFiles()]) {
-    const lines = stripAllowed(readFileSync(join(root, file), "utf8"));
+    const lines = readFileSync(join(root, file), "utf8").split("\n");
 
     for (const [index, line] of lines.entries()) {
       if (CLAIM.test(line)) {

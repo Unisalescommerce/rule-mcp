@@ -95,7 +95,7 @@ check(`T6 no source file reads an old name (${stragglers.length} found)`, stragg
 
 // ── And it is documented under the name it has ──
 
-const envDoc = readFileSync(new URL("../../../../../docs/05-env-variables.md", import.meta.url), "utf8");
+const envDoc = readFileSync(new URL("../../../../../docs/10-env-variables.md", import.meta.url), "utf8");
 check("T7 the flag is documented", envDoc.includes(FLAG));
 check("T8 and the names it replaced are not", !envDoc.includes(RETIRED_DISABLE) && !envDoc.includes(`\`${RETIRED_ENABLE}\``));
 

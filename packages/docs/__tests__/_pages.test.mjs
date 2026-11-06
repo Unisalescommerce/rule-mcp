@@ -40,11 +40,11 @@ test("primary nav is Home / Getting Started / Reference", () => {
   );
 });
 
-test("reference TOC has the fixed ten entries", () => {
-  assert.equal(REFERENCE_NAV.length, 10);
+test("reference TOC has the fixed thirteen entries", () => {
+  assert.equal(REFERENCE_NAV.length, 13);
   assert.deepEqual(
     REFERENCE_NAV.map((item) => item.title),
-    ["Overview", "Architecture", "Surface map", "Instructions", "Prompts", "Guardrails", "Personas", "Resources", "CLI", "Env vars"],
+    ["Overview", "Architecture", "Install", "Release", "Troubleshooting", "Surface map", "Instructions", "Prompts", "Guardrails", "Personas", "Resources", "CLI", "Env vars"],
   );
   assert.deepEqual(
     REFERENCE_NAV.filter((item) => /(?:^|\/)\d\d-/u.test(item.out)),
@@ -56,6 +56,6 @@ test("reference TOC has the fixed ten entries", () => {
 test("handbook numbered chapters include the surface map", () => {
   const chapters = readdirSync(join(root, "docs")).filter((name) => /^\d\d-.*\.md$/u.test(name));
 
-  assert.ok(chapters.includes("17-surface-map.md"));
-  assert.ok(chapters.length >= 17);
+  assert.ok(chapters.includes("21-surface-map.md"));
+  assert.ok(chapters.length >= 23);
 });

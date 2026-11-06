@@ -8,7 +8,7 @@
  * always: a word table that fires first eats the head of a phrase and inverts
  * it - "Quite a few things changed." became "few things changed." that way.
  * Articles, synonyms and abbreviations follow, each gated by the level that
- * owns it (see `./_level.js` and `docs/05-env-variables.md`).
+ * owns it (see `./_level.js` and `docs/10-env-variables.md`).
  */
 
 import { atLeast, compressionLevel } from "./_level.js";

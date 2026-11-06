@@ -13,10 +13,8 @@ import test from "node:test";
 const root = fileURLToPath(new URL("../../..", import.meta.url));
 const read = (rel) => readFileSync(new URL(rel, import.meta.url), "utf8");
 
-test("env table documents RULE_MCP_EXPORT_KEEP_SESSIONS outside the census block", () => {
-  const text = read("../../../docs/05-env-variables.md");
-  const begin = text.indexOf("<!-- census:begin:env-registry -->");
-  const prose = begin === -1 ? text : text.slice(0, begin);
+test("env table documents RULE_MCP_EXPORT_KEEP_SESSIONS", () => {
+  const prose = read("../../../docs/10-env-variables.md");
 
   assert.match(prose, /RULE_MCP_EXPORT_KEEP_SESSIONS/);
   assert.match(prose, /newest|keep-set|session/i);
@@ -24,7 +22,7 @@ test("env table documents RULE_MCP_EXPORT_KEEP_SESSIONS outside the census block
 });
 
 test("privacy documents confirm-gated hard-delete for /rule-export cleanup", () => {
-  const privacy = read("../../../docs/06-privacy.md");
+  const privacy = read("../../../docs/11-privacy.md");
 
   assert.match(privacy, /rule-export\s+cleanup|\/rule-export\s+cleanup/i);
   assert.match(privacy, /hard.?delete|delete.*session/i);
@@ -33,8 +31,8 @@ test("privacy documents confirm-gated hard-delete for /rule-export cleanup", () 
   assert.match(privacy, /redact/i);
 });
 
-test("surface map lists export prompts on docs/17-surface-map.md", () => {
-  const map = read("../../../docs/17-surface-map.md");
+test("surface map lists export prompts on docs/21-surface-map.md", () => {
+  const map = read("../../../docs/21-surface-map.md");
 
   assert.match(map, /rule-export/);
   assert.match(map, /rule-keep/);
