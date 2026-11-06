@@ -67,21 +67,34 @@ export function rewriteLinks(html, { dir, out, routes, base }) {
       return `${attribute}="${posix(relative(from, resolved))}${fragment}"`;
     }
 
-    // Not a page. A path that climbs out of the tree stays as the author wrote
-    // it; anything inside the repository becomes a GitHub URL, so the site
-    // never serves a navigation dead end.
-    if (joined.startsWith("..")) {
-      return whole;
-    }
-
-    if (base) {
+    // Not a page. Anything inside the repository becomes a GitHub URL, so the
+    // site never serves a navigation dead end. A path that climbs out of the
+    // tree, or a build with no GitHub remote to point at, marks the link
+    // instead: `unwrapDeadLinks` turns it back into its own text, because a
+    // page that emits a relative link to a file it never wrote is a dead end
+    // whatever the reason.
+    if (!joined.startsWith("..") && base) {
       const external = ` ${attribute}="${base}${joined}${fragment}"`;
 
       return attribute === "href" ? `${external} target="_blank" rel="noopener noreferrer"` : external;
     }
 
-    return whole;
+    return `${attribute}="__unresolved__${target}"`;
   });
+}
+
+/**
+ * Turn a link the site cannot serve back into its own text.
+ *
+ * The alternative is a relative href pointing at a file that is not in the
+ * output, which is a 404 the reader discovers and the build does not. The text
+ * stays, so the sentence still reads; only the promise of a destination goes.
+ *
+ * @param {string} html
+ * @returns {string}
+ */
+export function unwrapDeadLinks(html) {
+  return html.replaceAll(/<a\s[^>]*href="__unresolved__[^"]*"[^>]*>([\s\S]*?)<\/a>/gu, "$1").replaceAll(/\s(?:href|src)="__unresolved__[^"]*"/gu, "");
 }
 
 /**
