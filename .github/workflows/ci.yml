@@ -132,7 +132,6 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: "pnpm"
-        shell: bash
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Embed skills
