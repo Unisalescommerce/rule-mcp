@@ -1,6 +1,6 @@
 # Plan: Pi integration and catalog debt
 
-Status: `in-progress`.
+Status: `done`.
 
 Notes: subordinate plan.
 
@@ -48,8 +48,8 @@ A query word still has to appear.
 - [x] **WS1-T2**: Accept one item where a schema asks for an array.
 - [x] **WS1-T2.1**: Coerce gateway files when the caller sends one object.
 - [x] **WS1-T2.2**: Coerce ADR alternatives and tags when the caller sends one string.
-- [ ] **WS1-T3**: Load one installed skill in pi.
-- [ ] **WS1-T3.1**: Record whether a custom frontmatter key raises a skill warning.
+- [x] **WS1-T3**: Load one installed skill in pi. Done 2026-11-06: `~/.agents/skills/` holds 24 skills (`rule-adr` … `rule-usage`) and the same 24 arrive in this session's `available_skills` prompt block, so pi discovers and loads the installed catalog. The installer writes only `name` and `description`, which is the spec subset pi reads.
+- [x] **WS1-T3.1**: Record whether a custom frontmatter key raises a skill warning. Done 2026-11-06: it does not. `loadSkillFromFile` in pi 1.5.0 validates `name` and `description` only; a warning is raised for a read or parse failure, a bad description, a bad name, and a name collision. The skill object keeps `name`, `description`, `filePath`, `baseDir`, `sourceInfo` and `disable-model-invocation`, so `tags`, `frameworks`, `inherits` and `guardrails` are dropped silently. Probe: `pi -p … --skill ./custom/SKILL.md` with those four keys exited 0 with an empty stderr, and a two-skill name collision behaved the same, because `-p` renders no startup diagnostics. The source is the evidence; `-p` is not.
 
 ### WS2 - Bundler family node
 
