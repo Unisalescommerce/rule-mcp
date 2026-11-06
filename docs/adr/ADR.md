@@ -66,7 +66,6 @@ this directory are the source of truth; this index is generated from them by
 | [158](158-replay-the-decision-cache-gate-only-behind-a-measured-threshold.md)                                           | Replay the decision-cache gate only behind a measured threshold                                           | 2026-10-23 | accepted   | decision-models, cache, routing, observability                                      |
 | [157](157-shadow-the-decision-cache-gate-before-replaying.md)                                                           | Shadow the decision-cache gate before replaying                                                           | 2026-10-23 | accepted   | decision-models, cache, routing, observability                                      |
 | [156](156-keep-bm25-and-gate-a-local-decision-model-as-a-second-opinion.md)                                             | Keep BM25 and gate a local decision model as a second opinion                                             | 2026-10-22 | accepted   | routing, decision-models, architecture, security, testing                           |
-| [155](155-extend-the-devops-guardrail-family-with-file-scoped-source-cited-rules.md)                                    | Extend the devops guardrail family with file-scoped, source-cited rules                                   | 2026-10-17 | proposed   | guardrails, devops, quality-gate                                                    |
 | [154](154-every-plan-carries-a-status-line-a-dependency-graph-and-checkbox-steps.md)                                    | Every plan carries a status line, a dependency graph and checkbox steps                                   | 2026-10-21 | accepted   | plans, convention, format, governance, testing                                      |
 | [153](153-retire-the-rule-mcp-platform-agent-skill.md)                                                                  | Retire the rule-platform-agent skill                                                                      | 2026-10-21 | accepted   | skills, platform, removal, breaking, guardrails                                     |
 | [152](152-retire-rule-mcp-frontend-vanilla-reactive-and-rule-mcp-frontend-custom-element.md)                            | Retire rule-frontend-vanilla-reactive and rule-frontend-custom-element                                    | 2026-10-21 | accepted   | skills, frontend, removal, breaking, detector, guardrails                           |
@@ -204,17 +203,9 @@ this directory are the source of truth; this index is generated from them by
 | [020](020-skill-routing-typescript-tsconfig-strict-mode-configuration.md)                                               | Skill routing: TypeScript tsconfig strict mode configuration                                              | 2026-07-11 | accepted   | tool, auto-log, routing                                                             |
 | [019](019-use-a-persistent-local-bearer-token-for-daemon-transport.md)                                                  | use a persistent local bearer token for daemon transport                                                  | 2026-07-16 | accepted   | architecture, security, mcp, daemon                                                 |
 | [018](018-fail-closed-mcp-enforcement-and-reusable-agent-commands.md)                                                   | fail closed mcp enforcement and reusable agent commands                                                   | 2026-07-11 | accepted   | architecture, security, mcp, guardrails, agents                                     |
-| [017](017-forms-per-framework-merger-and-distribution.md)                                                               | forms per framework merger and distribution                                                               | 2026-07-11 | accepted   | architecture, forms, frontend, refactoring, solid                                   |
-| [016](016-file-based-skill-loading.md)                                                                                  | File-Based Skill Loading over Database                                                                    | 2026-06-20 | Accepted   | -                                                                                   |
-| [015](015-toolchain-skill-isolation-vite.md)                                                                            | toolchain skill isolation vite                                                                            | 2026-07-10 | accepted   | skills, toolchain, vite, build                                                      |
-| [014](014-sdk-over-handrolled-protocol.md)                                                                              | Official MCP SDK over Hand-Rolled Protocol                                                                | 2026-06-23 | Accepted   | -                                                                                   |
-| [013](013-vanilla-js-over-typescript.md)                                                                                | Vanilla JS over TypeScript                                                                                | 2026-06-20 | Accepted   | -                                                                                   |
 | [012](012-database-skills.md)                                                                                           | Database Skills                                                                                           | 2026-07-10 | accepted   | skills, database, sql, nosql, new                                                   |
 | [011](011-forms-per-framework.md)                                                                                       | Forms per Framework - Merger & Distribution                                                               | 2026-07-11 | accepted   | architecture, forms, frontend, refactoring, solid                                   |
-| [010](010-backend-framework-skills.md)                                                                                  | backend framework skills                                                                                  | 2026-07-10 | accepted   | skills, backend, frameworks, new                                                    |
 | [009](009-toolchain-vite.md)                                                                                            | Toolchain Skill Isolation (Vite)                                                                          | 2026-07-10 | accepted   | skills, toolchain, vite, build                                                      |
-| [008](008-scaffold-skill-consolidation.md)                                                                              | scaffold skill consolidation                                                                              | 2026-07-10 | accepted   | infrastructure, skills, scaffolding, merge                                          |
-| [007](007-thematic-skill-taxonomy-rename.md)                                                                            | thematic skill taxonomy rename                                                                            | 2026-07-10 | accepted   | infrastructure, naming, taxonomy, breaking-change                                   |
 | [006](006-file-based-skill-loading-over-database.md)                                                                    | file based skill loading over database                                                                    | 2026-06-20 | Accepted   | -                                                                                   |
 | [005](005-backend-framework-skills.md)                                                                                  | Backend Framework Skills                                                                                  | 2026-07-10 | accepted   | skills, backend, frameworks, new                                                    |
 | [004](004-scaffold-consolidation.md)                                                                                    | Scaffold Skill Consolidation                                                                              | 2026-07-10 | accepted   | infrastructure, skills, scaffolding, merge                                          |
@@ -287,7 +278,6 @@ file. Where a line stops short the rest is in the ADR.
 | [158](158-replay-the-decision-cache-gate-only-behind-a-measured-threshold.md)                                           | Add an opt-in replay behind RULE_MCP_DECISION_CACHE_REPLAY=1, off by default.                                                                                                                                                   | A wrong replay is silent, so the default remains off.                                                                                                                                                                           |
 | [157](157-shadow-the-decision-cache-gate-before-replaying.md)                                                           | Add an opt-in L3 gate built from deterministic parts: same-tool, same non-prompt args, fresh and non-echoing candidates; IDF-weighted overlap top five plus none; a redacted state and stable candidate descriptions; a...      | No response changes in phase 1; an opt-in model call runs after the response on a cache miss; the report is local.                                                                                                              |
 | [156](156-keep-bm25-and-gate-a-local-decision-model-as-a-second-opinion.md)                                             | 1. BM25 remains the router.                                                                                                                                                                                                     | Positive: the baseline is a file and a command, not a memory; a model or router change is compared against the same 95 prompts; the model cannot send prompt text off the machine; the ranker cannot be silently replaced by... |
-| [155](155-extend-the-devops-guardrail-family-with-file-scoped-source-cited-rules.md)                                    | Add twenty guardrails across the five devops skills, each scoped to its target file name (Dockerfile, .dockerignore, docker-compose.autodeploy.yml, .gitlab-ci.yml, vitest.config.*, _.test._, server entry,...                 | Positive: the devops skills stop being narrative only; every rule is traceable to a public source; the engine stays predictable because triggers are file-scoped.                                                               |
 | [154](154-every-plan-carries-a-status-line-a-dependency-graph-and-checkbox-steps.md)                                    | A plan file carries, in this order: an H1; a status line with one of five values (planned, in-progress, done, blocked, superseded) plus a reason when it is blocked or superseded; a '## Dependency graph' section with free... | The verification test can assert the format, so a plan written next month fails instead of drifting.                                                                                                                            |
 | [153](153-retire-the-rule-mcp-platform-agent-skill.md)                                                                  | Delete skills/rule-platform-agent and every live trace of it: the two router rows, the three dispatcher references, the rule-ai table row and quick-selection line, the cross-reference in rule-ai-agent-architecture, the...   | The catalog drops from 84 to 83 skills, 105 to 104 tools and 176 to 174 resources, all enforced by the docs-accuracy test.                                                                                                      |
 | [152](152-retire-rule-mcp-frontend-vanilla-reactive-and-rule-mcp-frontend-custom-element.md)                            | Delete both skills and every live trace: 107 files, the 9 vanilla rules and their tests, the demo spec exclusion in the suites data, the two router-gap entries, the persona evidence entry, the template-engine...             | The catalog drops from 83 to 81 skills, 105 to 102 tools and 174 to 170 resources.                                                                                                                                              |
@@ -425,17 +415,9 @@ file. Where a line stops short the rest is in the ADR.
 | [020](020-skill-routing-typescript-tsconfig-strict-mode-configuration.md)                                               | Use `rule-toolchain-typescript` for this task.                                                                                                                                                                                  | None - informational entry.                                                                                                                                                                                                     |
 | [019](019-use-a-persistent-local-bearer-token-for-daemon-transport.md)                                                  | Store one 256-bit token at ~/.rule-mcp/state/sse-token with owner-only permissions.                                                                                                                                             | Daemon clients remain connected across LaunchAgent/systemd restarts; secrets are no longer emitted in logs.                                                                                                                     |
 | [018](018-fail-closed-mcp-enforcement-and-reusable-agent-commands.md)                                                   | Wrap every MCP handler with mandatory preprocessing and postprocessing.                                                                                                                                                         | Positive: deterministic fail-closed behavior, visible audit contract, fewer hallucinated dependencies and completion claims, consistent cross-agent workflow.                                                                   |
-| [017](017-forms-per-framework-merger-and-distribution.md)                                                               | ### 1. Merge React forms into `rule-frontend-react`.                                                                                                                                                                            | **Positive:**.                                                                                                                                                                                                                  |
-| [016](016-file-based-skill-loading.md)                                                                                  | Use **file-based skill loading** with an in-memory LRU cache.                                                                                                                                                                   | - Cross-skill queries require scanning all SKILL.md files at startup (∼20ms for 17 skills, negligible).                                                                                                                         |
-| [015](015-toolchain-skill-isolation-vite.md)                                                                            | Extract all Vite-related content from `rule-mcp-scaffold-frontend-react-vite` into a new `rule-toolchain-vite` skill covering:.                                                                                                 | **Positive:**.                                                                                                                                                                                                                  |
-| [014](014-sdk-over-handrolled-protocol.md)                                                                              | Replace the hand-rolled protocol with `@modelcontextprotocol/sdk` v1.29.0.                                                                                                                                                      | - SDK is a runtime dependency (`@modelcontextprotocol/sdk` 1.29.0).                                                                                                                                                             |
-| [013](013-vanilla-js-over-typescript.md)                                                                                | Use **Vanilla JavaScript (ESM)** throughout.                                                                                                                                                                                    | - No compile-time type checking.                                                                                                                                                                                                |
 | [012](012-database-skills.md)                                                                                           | Create four database skills spanning relational and document databases:.                                                                                                                                                        | **Positive:**.                                                                                                                                                                                                                  |
 | [011](011-forms-per-framework.md)                                                                                       | ### 1. Merge React forms into `rule-frontend-react`.                                                                                                                                                                            | **Positive:**.                                                                                                                                                                                                                  |
-| [010](010-backend-framework-skills.md)                                                                                  | Add four backend framework skills covering the major Node.js HTTP framework ecosystems:.                                                                                                                                        | **Positive:**.                                                                                                                                                                                                                  |
 | [009](009-toolchain-vite.md)                                                                                            | Extract all Vite-related content from `rule-mcp-scaffold-frontend-react-vite` into a new `rule-toolchain-vite` skill covering:.                                                                                                 | **Positive:**.                                                                                                                                                                                                                  |
-| [008](008-scaffold-skill-consolidation.md)                                                                              | ### 1. Rename and absorb `scaffold-backend-node` -> `backend-node`.                                                                                                                                                             | **Positive:**.                                                                                                                                                                                                                  |
-| [007](007-thematic-skill-taxonomy-rename.md)                                                                            | Adopt a prefix-based thematic taxonomy with the following categories:.                                                                                                                                                          | **Positive:**.                                                                                                                                                                                                                  |
 | [006](006-file-based-skill-loading-over-database.md)                                                                    | Use **file-based skill loading** with an in-memory LRU cache.                                                                                                                                                                   | - Cross-skill queries require scanning all SKILL.md files at startup (∼20ms for 17 skills, negligible).                                                                                                                         |
 | [005](005-backend-framework-skills.md)                                                                                  | Add four backend framework skills covering the major Node.js HTTP framework ecosystems:.                                                                                                                                        | **Positive:**.                                                                                                                                                                                                                  |
 | [004](004-scaffold-consolidation.md)                                                                                    | ### 1. Rename and absorb `scaffold-backend-node` -> `backend-node`.                                                                                                                                                             | **Positive:**.                                                                                                                                                                                                                  |
@@ -541,11 +523,8 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [055](055-restructure-the-command-surface-rule-mcp-router-rule-mcp-area-compression-implicit-rule-mcp-process.md) Restructure the command surface: /rule router, rule-area-*, compression implicit, rule-process-tdd skill
 - [027](027-add-rule-mcp-toolchain-commits-skill-for-atomic-conventional-commits-with-mandatory-s.md) Add rule-toolchain-commits skill for atomic conventional commits with mandatory scope
 - [026](026-rename-rule-mcp-agents-to-rule-mcp-ai-agents-and-add-rule-mcp-ai-collector-skill.md) Rename rule-mcp-agents to rule-ai-agents and add rule-ai collector skill
-- [015](015-toolchain-skill-isolation-vite.md) toolchain skill isolation vite
 - [012](012-database-skills.md) Database Skills
-- [010](010-backend-framework-skills.md) backend framework skills
 - [009](009-toolchain-vite.md) Toolchain Skill Isolation (Vite)
-- [008](008-scaffold-skill-consolidation.md) scaffold skill consolidation
 - [005](005-backend-framework-skills.md) Backend Framework Skills
 - [004](004-scaffold-consolidation.md) Scaffold Skill Consolidation
 
@@ -574,7 +553,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [029](029-bind-write-authorization-to-destinations-not-just-content.md) Bind write authorization to destinations, not just content
 - [019](019-use-a-persistent-local-bearer-token-for-daemon-transport.md) use a persistent local bearer token for daemon transport
 - [018](018-fail-closed-mcp-enforcement-and-reusable-agent-commands.md) fail closed mcp enforcement and reusable agent commands
-- [017](017-forms-per-framework-merger-and-distribution.md) forms per framework merger and distribution
 - [011](011-forms-per-framework.md) Forms per Framework - Merger & Distribution
 
 ### closeout
@@ -606,7 +584,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### guardrails
 
-- [155](155-extend-the-devops-guardrail-family-with-file-scoped-source-cited-rules.md) Extend the devops guardrail family with file-scoped, source-cited rules
 - [153](153-retire-the-rule-mcp-platform-agent-skill.md) Retire the rule-platform-agent skill
 - [152](152-retire-rule-mcp-frontend-vanilla-reactive-and-rule-mcp-frontend-custom-element.md) Retire rule-frontend-vanilla-reactive and rule-frontend-custom-element
 - [149](149-choose-one-sdd-framework-per-repository-instead-of-peer-methodology-skills.md) Choose one SDD framework per repository instead of peer methodology skills
@@ -879,19 +856,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [059](059-persona-plans-are-checklists-with-marks-that-survive-the-sync.md) Persona plans are checklists with marks that survive the sync
 - [054](054-split-review-personas-into-per-operation-commands-plan-audit-review.md) Split review personas into per-operation commands (plan/audit/review)
 
-### toolchain
-
-- [146](146-merge-the-typescript-compiler-skill-into-rule-mcp-styleguide-typescript.md) Merge the TypeScript compiler skill into rule-styleguide-typescript
-- [143](143-rename-rule-mcp-toolchain-commits-to-rule-mcp-styleguide-git.md) Rename rule-toolchain-commits to rule-styleguide-git
-- [142](142-rename-rule-mcp-toolchain-project-to-rule-mcp-styleguide-configuration.md) Rename rule-toolchain-project to rule-styleguide-configuration
-- [109](109-no-corepack-activation-and-no-engines-field-in-a-generated-package-json.md) No corepack activation and no engines field in a generated package.json
-- [045](045-migrate-repo-tooling-to-eslint-10-flat-config-with-eslint-plugin-unicorn.md) Migrate repo tooling to ESLint 10 flat config with eslint-plugin-unicorn
-- [044](044-adopt-eslint-plugin-unicorn-for-js-ts-quality.md) Adopt eslint-plugin-unicorn for JS/TS quality
-- [043](043-strengthen-typescript-discipline-for-large-codebases.md) Strengthen TypeScript discipline for large codebases
-- [027](027-add-rule-mcp-toolchain-commits-skill-for-atomic-conventional-commits-with-mandatory-s.md) Add rule-toolchain-commits skill for atomic conventional commits with mandatory scope
-- [015](015-toolchain-skill-isolation-vite.md) toolchain skill isolation vite
-- [009](009-toolchain-vite.md) Toolchain Skill Isolation (Vite)
-
 ### security
 
 - [174](174-retire-the-codeql-workflow-until-code-scanning-is-available.md) Retire the CodeQL workflow until code scanning is available
@@ -903,6 +867,18 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [045](045-migrate-repo-tooling-to-eslint-10-flat-config-with-eslint-plugin-unicorn.md) Migrate repo tooling to ESLint 10 flat config with eslint-plugin-unicorn
 - [019](019-use-a-persistent-local-bearer-token-for-daemon-transport.md) use a persistent local bearer token for daemon transport
 - [018](018-fail-closed-mcp-enforcement-and-reusable-agent-commands.md) fail closed mcp enforcement and reusable agent commands
+
+### toolchain
+
+- [146](146-merge-the-typescript-compiler-skill-into-rule-mcp-styleguide-typescript.md) Merge the TypeScript compiler skill into rule-styleguide-typescript
+- [143](143-rename-rule-mcp-toolchain-commits-to-rule-mcp-styleguide-git.md) Rename rule-toolchain-commits to rule-styleguide-git
+- [142](142-rename-rule-mcp-toolchain-project-to-rule-mcp-styleguide-configuration.md) Rename rule-toolchain-project to rule-styleguide-configuration
+- [109](109-no-corepack-activation-and-no-engines-field-in-a-generated-package-json.md) No corepack activation and no engines field in a generated package.json
+- [045](045-migrate-repo-tooling-to-eslint-10-flat-config-with-eslint-plugin-unicorn.md) Migrate repo tooling to ESLint 10 flat config with eslint-plugin-unicorn
+- [044](044-adopt-eslint-plugin-unicorn-for-js-ts-quality.md) Adopt eslint-plugin-unicorn for JS/TS quality
+- [043](043-strengthen-typescript-discipline-for-large-codebases.md) Strengthen TypeScript discipline for large codebases
+- [027](027-add-rule-mcp-toolchain-commits-skill-for-atomic-conventional-commits-with-mandatory-s.md) Add rule-toolchain-commits skill for atomic conventional commits with mandatory scope
+- [009](009-toolchain-vite.md) Toolchain Skill Isolation (Vite)
 
 ### ci
 
@@ -939,7 +915,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### quality-gate
 
-- [155](155-extend-the-devops-guardrail-family-with-file-scoped-source-cited-rules.md) Extend the devops guardrail family with file-scoped, source-cited rules
 - [141](141-give-the-meta-framework-area-its-first-server-and-client-boundary-guardrails.md) Give the meta-framework area its first server and client boundary guardrails
 - [140](140-add-a-shared-frontend-guardrail-family-for-xss-lists-and-workers.md) Add a shared frontend guardrail family for XSS, lists and workers
 - [139](139-extend-the-data-guardrail-family-with-shared-and-per-engine-rules.md) Extend the data guardrail family with shared and per-engine rules
@@ -994,15 +969,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [183](183-integration-depth-is-the-second-install-axis-capped-by-a-measured-ceiling.md) Integration depth is the second install axis, capped by a measured ceiling
 - [182](182-one-host-record-answers-for-every-catalog-host.md) One host record answers for every catalog host
 
-### naming
-
-- [169](169-rename-the-server-to-rulemcp.md) Rename the server to RuleMCP
-- [148](148-merge-simplicity-english-and-fingerprint-into-rule-mcp-process-ai.md) Merge simplicity, English and fingerprint into rule-process-ai
-- [132](132-rename-rule-mcp-tool-plan-docs-to-rule-mcp-tool-impersonation.md) Rename rule_tool_plan_docs to rule_tool_impersonation
-- [084](084-keep-the-name-with-a-written-posture-no-npm-placeholder-yet.md) Keep the name with a written posture, no npm placeholder yet
-- [007](007-thematic-skill-taxonomy-rename.md) thematic skill taxonomy rename
-- [001](001-thematic-skill-rename.md) Thematic Skill Taxonomy Rename
-
 ### tool
 
 - [025](025-skill-routing-pnpm-package-manager-workspace-monorepo-setup.md) Skill routing: pnpm package manager workspace monorepo setup
@@ -1038,14 +1004,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [077](077-compress-every-server-model-list-surface-prompts-list-tools-list-resources-list.md) Compress every server->model list surface (prompts/list, tools/list, resources/list)
 - [073](073-compression-has-four-levels-and-no-llm-in-the-output-path.md) Compression has four levels and no LLM in the output path
 
-### frontend
-
-- [152](152-retire-rule-mcp-frontend-vanilla-reactive-and-rule-mcp-frontend-custom-element.md) Retire rule-frontend-vanilla-reactive and rule-frontend-custom-element
-- [141](141-give-the-meta-framework-area-its-first-server-and-client-boundary-guardrails.md) Give the meta-framework area its first server and client boundary guardrails
-- [140](140-add-a-shared-frontend-guardrail-family-for-xss-lists-and-workers.md) Add a shared frontend guardrail family for XSS, lists and workers
-- [017](017-forms-per-framework-merger-and-distribution.md) forms per framework merger and distribution
-- [011](011-forms-per-framework.md) Forms per Framework - Merger & Distribution
-
 ### mcp
 
 - [124](124-make-the-tool-call-host-a-list-so-invocation-hosts-coexist.md) Make the tool-call host a list so invocation hosts coexist
@@ -1053,6 +1011,14 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [028](028-clean-rule-mcp-commands-via-user-commands-prompt-suppression-not-a-plugin.md) Clean /rule-mcp-* commands via user commands + prompt suppression, not a plugin
 - [019](019-use-a-persistent-local-bearer-token-for-daemon-transport.md) use a persistent local bearer token for daemon transport
 - [018](018-fail-closed-mcp-enforcement-and-reusable-agent-commands.md) fail closed mcp enforcement and reusable agent commands
+
+### naming
+
+- [169](169-rename-the-server-to-rulemcp.md) Rename the server to RuleMCP
+- [148](148-merge-simplicity-english-and-fingerprint-into-rule-mcp-process-ai.md) Merge simplicity, English and fingerprint into rule-process-ai
+- [132](132-rename-rule-mcp-tool-plan-docs-to-rule-mcp-tool-impersonation.md) Rename rule_tool_plan_docs to rule_tool_impersonation
+- [084](084-keep-the-name-with-a-written-posture-no-npm-placeholder-yet.md) Keep the name with a written posture, no npm placeholder yet
+- [001](001-thematic-skill-rename.md) Thematic Skill Taxonomy Rename
 
 ### performance
 
@@ -1070,14 +1036,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [107](107-the-design-system-persona-becomes-the-ui-ux-lead.md) The design-system persona becomes the UI/UX lead
 - [088](088-a-persona-topic-is-the-binding-scope-of-the-run.md) A persona topic is the binding scope of the run
 
-### taxonomy
-
-- [075](075-meta-frameworks-get-their-own-namespace-and-a-narrow-dispatcher.md) Meta-frameworks get their own namespace and a narrow dispatcher
-- [027](027-add-rule-mcp-toolchain-commits-skill-for-atomic-conventional-commits-with-mandatory-s.md) Add rule-toolchain-commits skill for atomic conventional commits with mandatory scope
-- [026](026-rename-rule-mcp-agents-to-rule-mcp-ai-agents-and-add-rule-mcp-ai-collector-skill.md) Rename rule-mcp-agents to rule-ai-agents and add rule-ai collector skill
-- [007](007-thematic-skill-taxonomy-rename.md) thematic skill taxonomy rename
-- [001](001-thematic-skill-rename.md) Thematic Skill Taxonomy Rename
-
 ### tools
 
 - [132](132-rename-rule-mcp-tool-plan-docs-to-rule-mcp-tool-impersonation.md) Rename rule_tool_plan_docs to rule_tool_impersonation
@@ -1093,19 +1051,12 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [119](119-close-out-audit-ui.md) Close out audit ui
 - [111](111-close-out-audit-security.md) Close out audit security
 
-### backend
+### frontend
 
-- [137](137-add-a-source-cited-backend-guardrail-family-and-fix-the-six-existing-rules.md) Add a source-cited backend guardrail family and fix the six existing rules
-- [053](053-gateway-as-the-single-entrypoint-with-server-side-receipts-backend-data-devops-g.md) Gateway as the single entrypoint with server-side receipts; backend/data/devops guardrail families
-- [010](010-backend-framework-skills.md) backend framework skills
-- [005](005-backend-framework-skills.md) Backend Framework Skills
-
-### infrastructure
-
-- [008](008-scaffold-skill-consolidation.md) scaffold skill consolidation
-- [007](007-thematic-skill-taxonomy-rename.md) thematic skill taxonomy rename
-- [004](004-scaffold-consolidation.md) Scaffold Skill Consolidation
-- [001](001-thematic-skill-rename.md) Thematic Skill Taxonomy Rename
+- [152](152-retire-rule-mcp-frontend-vanilla-reactive-and-rule-mcp-frontend-custom-element.md) Retire rule-frontend-vanilla-reactive and rule-frontend-custom-element
+- [141](141-give-the-meta-framework-area-its-first-server-and-client-boundary-guardrails.md) Give the meta-framework area its first server and client boundary guardrails
+- [140](140-add-a-shared-frontend-guardrail-family-for-xss-lists-and-workers.md) Add a shared frontend guardrail family for XSS, lists and workers
+- [011](011-forms-per-framework.md) Forms per Framework - Merger & Distribution
 
 ### install
 
@@ -1127,6 +1078,13 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [057](057-reorganize-scripts-src-tests-with-150-line-code-splitting.md) Reorganize scripts, src and tests with 150-line code splitting
 - [050](050-round-two-hardening-cycles-daemon-cleanup-diagnostics.md) Round-2 hardening - cycles, daemon/commands split, diagnostics, HTTP verification
 - [049](049-split-hotspot-modules.md) Split the hotspot modules (guardrails + installer)
+
+### taxonomy
+
+- [075](075-meta-frameworks-get-their-own-namespace-and-a-narrow-dispatcher.md) Meta-frameworks get their own namespace and a narrow dispatcher
+- [027](027-add-rule-mcp-toolchain-commits-skill-for-atomic-conventional-commits-with-mandatory-s.md) Add rule-toolchain-commits skill for atomic conventional commits with mandatory scope
+- [026](026-rename-rule-mcp-agents-to-rule-mcp-ai-agents-and-add-rule-mcp-ai-collector-skill.md) Rename rule-mcp-agents to rule-ai-agents and add rule-ai collector skill
+- [001](001-thematic-skill-rename.md) Thematic Skill Taxonomy Rename
 
 ### tokensave
 
@@ -1153,6 +1111,12 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [138](138-give-the-ai-area-its-first-source-cited-guardrail-family.md) Give the AI area its first source-cited guardrail family
 - [033](033-registry-driven-clean-slash-commands-for-every-agent-and-ide.md) Registry-driven clean slash commands for every agent and IDE
 - [018](018-fail-closed-mcp-enforcement-and-reusable-agent-commands.md) fail closed mcp enforcement and reusable agent commands
+
+### backend
+
+- [137](137-add-a-source-cited-backend-guardrail-family-and-fix-the-six-existing-rules.md) Add a source-cited backend guardrail family and fix the six existing rules
+- [053](053-gateway-as-the-single-entrypoint-with-server-side-receipts-backend-data-devops-g.md) Gateway as the single entrypoint with server-side receipts; backend/data/devops guardrail families
+- [005](005-backend-framework-skills.md) Backend Framework Skills
 
 ### code-graph
 
@@ -1195,18 +1159,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [192](192-project-scope-host-table-and-manifest-written-paths.md) Project-scope host table and manifest written paths
 - [184](184-the-install-manifest-records-a-level-per-host.md) The install manifest records a level per host
 - [109](109-no-corepack-activation-and-no-engines-field-in-a-generated-package-json.md) No corepack activation and no engines field in a generated package.json
-
-### merge
-
-- [098](098-develop-merges-into-main-by-area-and-stays-as-an-integration-branch.md) develop merges into main by area, and stays as an integration branch
-- [008](008-scaffold-skill-consolidation.md) scaffold skill consolidation
-- [004](004-scaffold-consolidation.md) Scaffold Skill Consolidation
-
-### new
-
-- [012](012-database-skills.md) Database Skills
-- [010](010-backend-framework-skills.md) backend framework skills
-- [005](005-backend-framework-skills.md) Backend Framework Skills
 
 ### orchestration
 
@@ -1265,9 +1217,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [036](036-lossless-idempotent-installer.md) lossless idempotent installer
 - [035](035-sandbox-timeout-with-abortcontroller.md) sandbox timeout with abortcontroller
 - [034](034-sse-server-with-bearer-auth.md) sse server with bearer auth
-- [016](016-file-based-skill-loading.md) File-Based Skill Loading over Database
-- [014](014-sdk-over-handrolled-protocol.md) Official MCP SDK over Hand-Rolled Protocol
-- [013](013-vanilla-js-over-typescript.md) Vanilla JS over TypeScript
 - [006](006-file-based-skill-loading-over-database.md) file based skill loading over database
 - [003](003-official-mcp-sdk-over-hand-rolled-protocol.md) official mcp sdk over hand rolled protocol
 - [002](002-vanilla-js-over-typescript.md) vanilla js over typescript

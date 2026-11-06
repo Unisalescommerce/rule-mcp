@@ -1,4 +1,4 @@
-# 013: Vanilla JS over TypeScript
+# Pending: Vanilla JS over TypeScript
 
 **Status**: Accepted  
 **Date**: 2026-06-20  
