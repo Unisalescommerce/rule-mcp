@@ -35,7 +35,6 @@ jobs:
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        env:
       - name: Embed skills
         run: node scripts/build/embed-skills/index.mjs
       - name: Check syntax (all source files)
@@ -70,7 +69,6 @@ jobs:
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        env:
       # Pinned and checksum-verified, because this binary decides whether a
       # commit carries a credential: an unverified download would move the
       # trust boundary from the lockfile to whoever answers the release URL.
@@ -137,12 +135,10 @@ jobs:
         shell: bash
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        env:
       - name: Embed skills
         run: node scripts/build/embed-skills/index.mjs
       - name: Run the quick suite (glob runner)
         run: node scripts/ci/run-tests/index.mjs quick
-        env:
 
   coverage:
     name: Coverage gate (branch ratchet)
@@ -160,12 +156,10 @@ jobs:
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        env:
       - name: Embed skills
         run: node scripts/build/embed-skills/index.mjs
       - name: Coverage over the full suite (fails under the branch floor)
         run: pnpm test:coverage
-        env:
 
   commit-lint:
     name: Commit lint
@@ -218,6 +212,5 @@ jobs:
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        env:
       - name: Dependency audit gate
         run: pnpm audit:gate
