@@ -1,7 +1,7 @@
 ---
 name: rule-ai
 description: >-
-  Use when building AI Agent applications to route to the correct skill. Covers agent scaffolding on @rule-mcp/rule-mcp-core and framework-agnostic agent guidance.
+  Use when building an AI agent or an AI feature, to route to the right ai-* skill. Covers evals, context engineering, agent architecture, prompting, and where a model belongs in a product.
 tags:
   - "ai"
   - "agents"
@@ -12,56 +12,57 @@ frameworks: [all]
 
 # rule-ai - AI Agent Skills Index
 
-## AI Agent Skills
+Four skills cover the path from "should a model do this" to "is it still working
+in production". Route on the question the request asks, not on the technology it
+names.
 
-| Skill                                                                  | Core Library                                                                                                 | Use when                                        |
-| ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ | ----------------------------------------------- |
-| [rule-ai-evals](../rule-ai-evals/SKILL.md)                             | Error analysis, LLM-as-judge, judge calibration, RAG evals                                                   | Measuring whether an AI feature works           |
-| [rule-ai-context-engineering](../rule-ai-context-engineering/SKILL.md) | The window as a budget, less-beats-more, delegation levels, compaction and handoff, usage limits             | A session is getting expensive, slow or worse   |
-| [rule-ai-agent-architecture](../rule-ai-agent-architecture/SKILL.md)   | What happens at the API boundary, the harness over the model, loops against graphs, MCP, tool surface design | Building or reviewing an agent or an MCP server |
-| [rule-ai-prompting](../rule-ai-prompting/SKILL.md)                     | Prompt anatomy, context engineering, learning mode                                                           | Working with an agent, or teaching someone to   |
+## Route the request
+
+| The request asks                                   | Skill                                                                  | That skill answers                                                               |
+| -------------------------------------------------- | ---------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Is this good enough to ship?                       | [rule-ai-evals](../rule-ai-evals/SKILL.md)                             | Error analysis, LLM-as-judge, judge calibration, RAG evals                       |
+| Why is the session slow, expensive, or forgetful?  | [rule-ai-context-engineering](../rule-ai-context-engineering/SKILL.md) | The window as a budget, compaction and handoff, delegation levels, usage limits  |
+| How do I build or review this agent or MCP server? | [rule-ai-agent-architecture](../rule-ai-agent-architecture/SKILL.md)   | The API boundary, the harness over the model, loops against graphs, tool surface |
+| What do I tell the model to do?                    | [rule-ai-prompting](../rule-ai-prompting/SKILL.md)                     | Prompt anatomy, context engineering, learning mode                               |
 
 ## Quick Selection Guide
 
-```
+- "Add an AI feature" → start at **Where a model belongs**, below. The answer is
+  rarely a chat box.
+- "The agent calls the wrong tool" → `rule-ai-agent-architecture`: the tool
+  surface is the contract.
+- "The prompt works once and then drifts" → `rule-ai-prompting`, then
+  `rule-ai-evals` to hold the result.
+- "The context window is full" → `rule-ai-context-engineering`.
+- "Two answers to the same question" → `rule-ai-evals`: a judge you have not
+  calibrated is a coin.
 
-```
+## Where a model belongs in a product
 
-## AI features to build that are not another chatbot
+A chat box makes the user describe what they want in prose, wait, then read prose
+back. These put the same capability where the work already happens.
 
-A chat box is the least imaginative place to put a model: it makes the user
-describe what they want in prose, wait, then read prose back. These put the same
-capability where the work already happens.
+| Feature                      | Replaces                             | Watch for                                        |
+| ---------------------------- | ------------------------------------ | ------------------------------------------------ |
+| Smart form autofill          | Typing what a paste already contains | Show what was filled; never submit it silently   |
+| Intent-aware search          | Exact match that fails on a synonym  | Keep keyword search as the floor                 |
+| Content tagging              | A taxonomy nobody maintains          | Suggest, do not assign; track acceptance         |
+| In-place writing help        | Copying into another tool and back   | Edit the text, do not replace the voice          |
+| Moderation triage            | Reading everything by hand           | A model triages, a person decides the borderline |
+| Insight lines on a dashboard | A chart the reader must interpret    | State the change, link to the rows behind it     |
 
-| Feature                           | What it replaces                                                             | Watch for                                                                   |
-| --------------------------------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| Smart form autofill               | Typing what the app could infer from a paste, an upload, or a previous entry | Always show what was filled and let it be corrected, never submit silently  |
-| Search that understands intent    | Exact-match search that fails on a synonym                                   | Keep keyword search as the floor; embeddings on top, not instead            |
-| Automatic content tagging         | A taxonomy nobody maintains                                                  | Suggest, do not assign. Track acceptance rate as the quality metric         |
-| Writing assistance in place       | Copying into another tool and back                                           | Edit the user's text, do not replace their voice                            |
-| Suggested replies in the workflow | A separate assistant window                                                  | Three short options beat one long draft                                     |
-| Feedback and sentiment rollups    | Reading every review by hand                                                 | Report counts and examples, never a single sentiment score                  |
-| Moderation and safety checks      | Manual review of everything                                                  | A model triages, a person decides on the borderline cases                   |
-| Voice notes turned into work      | A recording nobody can search                                                | Transcribe, then extract the actions; keep the audio                        |
-| Recommendations with a reason     | "You may also like" with no explanation                                      | Show why it was recommended; it is the difference between useful and creepy |
-| Insight lines on dashboards       | A chart the reader has to interpret                                          | State the change and the likely cause, link to the underlying rows          |
+## Rules that hold for every AI feature
 
-Common rules for all of them:
-
-- **Put it where the work is.** A feature the user has to go somewhere to use is
-  a feature they forget.
-- **Suggest, do not act.** Anything irreversible needs a human confirmation step.
-- **Show the source.** A recommendation, a tag or an insight with no visible
-  reason cannot be trusted or debugged.
+- **Put it where the work is.** A feature the user must visit is a feature they
+  forget.
+- **Suggest, do not act.** Anything irreversible needs a human confirmation.
+- **Show the source.** A recommendation with no visible reason cannot be
+  debugged or trusted.
 - **Degrade cleanly.** The model is a dependency with latency and an error rate:
-  design the version of the screen where it is unavailable.
+  design the screen where it is unavailable.
 - **Measure acceptance, not output.** How often a suggestion is kept unedited is
-  the only quality signal that matters.
+  the quality signal.
 
 ## See also
 
-- [rule-mcp](../rule/SKILL.md) - Central skill index and dispatcher
-- [rule-devops-testing](../rule-devops-testing/SKILL.md) - Test coverage thresholds for agent code
-- [rule-devops-docker](../rule-devops-docker/SKILL.md) - Containerizing agent services
-
----
+- [rule](../rule/SKILL.md) - Central skill index and dispatcher
