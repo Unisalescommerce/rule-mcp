@@ -64,8 +64,7 @@ export function check() {
  * @param {string} version - `x.y.z`, optionally with a prerelease suffix
  */
 export function apply(version) {
-  // A prerelease suffix is part of the version this project ships next, and
-  // the release workflow already reads the hyphen to mark the GitHub release.
+  // A prerelease suffix is valid: the workflow reads the hyphen.
   if (!/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/u.test(version ?? "")) {
     process.stderr.write("usage: version/index.mjs --apply <x.y.z[-prerelease]>\n");
     process.exitCode = 1;
@@ -74,6 +73,14 @@ export function apply(version) {
   }
 
   const versions = readVersions();
+
+  // The first release forces the version already in place.
+  if (versions.every(([, current]) => current === version)) {
+    process.stdout.write(`version ${version} is already in place.\n`);
+
+    return;
+  }
+
   const oldPkg = versions[0][1];
   const stamp = (file, old) => {
     const text = read(file);

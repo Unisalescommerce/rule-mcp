@@ -14,7 +14,7 @@ Commits without a scope (e.g. `docs: ...`) are rejected by the `commit-msg` hook
 ## Repository state
 
 - **Two repos**: `rule-mcp` (this - MCP server, 105 tools / 172 resources / 41 prompts / 82 skills, 115 guardrail rules owned by 23 of the 83 skill directories, plus 67 baseline rules every check runs) and `rule-mcp-architect` (standalone web app + SDK; former architect wizard lives there).
-- **Release**: next is v0.1.0-beta (v1.0.0 tag deleted); `git tag v0.1.0-beta` pushes a GitHub Release via `.github/workflows/release.yml`. No npm publish yet.
+- **Release**: first tag is v0.1.0, cut with `pnpm release --version 0.1.0`; the tag push makes a GitHub Release via `.github/workflows/release.yml`, and a push to `main` publishes the docs site via `.github/workflows/pages.yml`. No npm publish: CI builds with pnpm and the workspace.
 - **Docs accuracy**: `test/docs-accuracy.test.mjs` enforces that README counts match the runtime surface - update both together.
 - **ADR**: decisions in `docs/adr/` (001-040).
 

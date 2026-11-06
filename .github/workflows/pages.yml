@@ -8,6 +8,11 @@ on:
 permissions:
   contents: read
 
+# Two pushes in a row publish in order, and the second one does not stop the first.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 env:
   PNPM_VERSION: "11.25.0"
 
@@ -24,7 +29,7 @@ jobs:
           version: ${{ env.PNPM_VERSION }}
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: "22"
+          node-version: "26"
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm install --frozen-lockfile

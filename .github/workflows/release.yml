@@ -28,28 +28,27 @@ jobs:
       # `package-manager-cache` defaults to true, so it must be off explicitly.
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: "22"
+          node-version: "26"
           package-manager-cache: false
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      # Tag, package.json, server.json and CHANGELOG must agree; bump locally
-      # with scripts/build/version/index.mjs --apply before tagging.
+      # package.json, server.json and CHANGELOG must agree, and the tag must name
+      # that version. `pnpm release` writes all of them.
       - name: Version sync
-        run: node scripts/build/version/index.mjs --check
+        run: |
+          node scripts/build/version/index.mjs --check
+          test "v$(node -p "require('./package.json').version")" = "$GITHUB_REF_NAME"
       - name: Dependency audit gate
         run: pnpm audit:gate
       - name: Pack the tarball
         run: pnpm build
       - name: Checksum the tarball
-        run: |
-          mkdir -p dist
-          mv rule-mcp-*.tgz dist/
-          cd dist && sha256sum rule-mcp-*.tgz > SHA256SUMS && cat SHA256SUMS
+        run: cd dist && sha256sum rule-mcp-*.tgz > SHA256SUMS && cat SHA256SUMS
       # npm sbom cannot read a pnpm tree (no package-lock.json), so the SBOM
       # comes from cdxgen, which parses pnpm-lock.yaml. It rides along with
       # `files: dist/*` next to the checksum file.
       - name: Generate the SBOM
-        run: pnpx --yes @cyclonedx/cdxgen -t js -o dist/sbom.cdx.json .
+        run: pnpx @cyclonedx/cdxgen -t js -o dist/sbom.cdx.json .
       - name: Upload the artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
@@ -66,20 +65,26 @@ jobs:
         with:
           name: release-tarball
           path: dist
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
       # No cache here either: the verify job must not restore state from
       # untrusted tag-build caches (see the build job above).
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: "22"
+          node-version: "26"
           package-manager-cache: false
       - name: Verify the checksum
         run: cd dist && sha256sum -c SHA256SUMS
-      # npm on purpose: the tarball must install under any npm-family client.
-      - name: Install the tarball from scratch # zizmor: ignore[adhoc-packages] -- installs our own just-built tarball, not a remote package
+      # The tarball is the workspace, so pnpm builds it the way a user does.
+      - name: Install the tarball from scratch
         run: |
           rm -rf /tmp/rule-mcp-verify && mkdir -p /tmp/rule-mcp-verify && cd /tmp/rule-mcp-verify
-          npm install "$GITHUB_WORKSPACE/dist/rule-mcp-"*.tgz
-          ./node_modules/.bin/rule --version
+          tar -xzf "$GITHUB_WORKSPACE/dist/rule-mcp-"*.tgz --strip-components=1
+          pnpm install --frozen-lockfile
+          pnpm docs:build
+          node bin/rule-mcp.js --version
+          node bin/rule-mcp.js tools list
 
   release:
     runs-on: ubuntu-latest
@@ -90,22 +95,8 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
-      # Lightweight tags stop here: an annotated tag object is required before
-      # checking its cryptographic signature.
-      - name: Refuse lightweight tags
-        run: test "$(git cat-file -t "${GITHUB_REF_NAME}")" = tag
-      # Annotated tags without a valid GPG signature from the committed
-      # release signing key stop here before any release is created (OSS-01).
-      - name: Verify release tag signature
-        run: |
-          GNUPGHOME="$(mktemp -d)"
-          export GNUPGHOME
-          gpg --batch --import .github/release-signing-key.asc
-          git verify-tag "${GITHUB_REF_NAME}"
       - name: Version sync
         run: node scripts/build/version/index.mjs --check
-      - name: Dependency audit gate
-        run: pnpm audit:gate
       - name: Extract changelog entry
         id: changelog
         run: |

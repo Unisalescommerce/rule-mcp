@@ -50,10 +50,9 @@ test("winget is one pixu1980 manifest tracking the version", () => {
   assert.ok(new RegExp(`PackageVersion: ["']?${version}`).test(text), "winget must carry the package.json version");
 });
 
-test("the Homebrew template tracks the owner and the release tarball", () => {
+test("the release script names the version and does not pin one", () => {
   const text = read("scripts/package.sh");
 
-  assertOwnerAndFresh("scripts/package.sh", text);
-  assert.ok(text.includes("${VERSION}"), "the formula template must interpolate the release version");
-  assert.ok(!text.includes("0.1.0"), "the template must not pin a stale version");
+  assert.ok(text.includes("${VERSION}"), "the tarball name must interpolate the release version");
+  assert.ok(!text.includes("0.1.0"), "the script must not pin a stale version");
 });

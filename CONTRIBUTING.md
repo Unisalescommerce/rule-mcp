@@ -44,7 +44,7 @@ rule-mcp doctor # health report for your machine
 ## How to contribute
 
 1. Read `docs/README.md`, then the numbered handbook chapters relevant to
-   your change (`docs/08-engineering-guides.md` first for process).
+   your change (`docs/12-engineering-guides.md` first for process).
 2. Open work is tracked in the issue tracker; plans inside the repo are
    deleted when fully executed or obsolete.
 3. Small fixes: open the pull request directly.
@@ -60,20 +60,8 @@ subjects. The allowed types live in one place,
 check and the commit-lint CI job all follow it. There is no `release`
 type: version bumps use the `chore(release)` scope instead.
 
-Maintainers sign commits and tags. Once, per machine:
-
-```bash
-git config commit.gpgsign true
-git config user.signingkey <your-key-id>
-```
-
-Then tag releases signed: `git tag -s v0.1.1`. The public release-signing GPG
-key (fingerprint `37D68446F3ADCF1C8C37C07A15571530D4B63084`) is committed at
-`.github/release-signing-key.asc`; `.github/workflows/release.yml` refuses both
-lightweight tags and unsigned annotated tags by running `git verify-tag`
-against that key before creating a release, and Vigilant Mode marks unsigned
-commits visibly on GitHub. Historical tag `v0.1.0` predates this gate and is
-not rewritten.
+Use `pnpm release` to publish a version. It makes the annotated tag and pushes
+it with `main`. [The release chapter](docs/08-release.md) tells each step.
 
 There is no CLA and no DCO sign-off requirement. Inbound contributions are
 licensed under the MIT License (`inbound = outbound MIT`, matching `LICENSE`
