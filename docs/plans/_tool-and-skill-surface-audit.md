@@ -151,9 +151,9 @@ A static count finds 120 guardrail files: `find skills -path "*/guardrails/_*.js
 
 Start after WS2 of the pi plan closes.
 
-- [ ] **WS4-T1**: Run `node --import ./scripts/alias-hook.mjs --test scripts/__tests__/plans/skills-plan.test.mjs`. Keep the result.
-- [ ] **WS4-T2**: Diff the two copies of sections 6-13. Keep the copy that the test and `git log -p` show as current. Keep the newer "Model assignment" table. Remove the other copy. If the copies disagree on a fact, report it. Do not pick silently.
-- [ ] **WS4-T3**: Run the test again. It must pass. The file must end near 575 lines.
+- [x] **WS4-T1**: Run `node --import ./scripts/alias-hook.mjs --test scripts/__tests__/plans/skills-plan.test.mjs`. Keep the result.
+- [x] **WS4-T2**: Diff the two copies of sections 6-13. Keep the copy that the test and `git log -p` show as current. Keep the newer "Model assignment" table. Remove the other copy. If the copies disagree on a fact, report it. Do not pick silently. The only disagreement was the model assignment table: the kept one names the split stages 0a to 10 and the plan's own phases, the removed one still described stages 1-9 as a single block. Sections 6-13 were byte-identical.
+- [x] **WS4-T3**: Run the test again. It must pass. The file must end near 575 lines. Measured 2026-11-06: 568 lines, and the plan tests pass.
 
 ### WS5 - Retire the six superseded area plans (G4, D2)
 
