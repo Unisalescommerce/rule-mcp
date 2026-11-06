@@ -164,9 +164,9 @@ The file `ci.yml` runs on push only for `main` and `master`, and on `pull_reques
 
 No secret scan has ever run on this history. Betterleaks is not on `PATH` (`which betterleaks` fails). The pre-commit hook skips without blocking, by ADR. The owner keeps the hook advisory.
 
-- [ ] **WS4-T1**: Install Betterleaks at the version and checksum that the CI workflow pins. Verify the checksum before you run the binary.
-- [ ] **WS4-T2**: Run the full-history scan with the project command (`rule-mcp secrets`, see `docs/13-cli.md`). Provider validation and analysis stay off. Write the report outside the repo. Never print a secret value in chat, in a shared log, or in a commit.
-- [ ] **WS4-T3**: Report the count, and for each finding the file path, the commit, and the rule id. The owner decides which findings are real. Fix real findings with the rewrite in WS5, and rotate the credential too.
+- [x] **WS4-T1**: Install Betterleaks at the version and checksum that the CI workflow pins. Verify the checksum before you run the binary. Done 2026-11-06: the release checksums file lists `betterleaks_2.0.0-rc.7_linux_x64.tar.gz` with `230ef42d...`, which is the digest the workflow pins, so the pin matches upstream. The local run used the `darwin_arm64` asset, verified against the same file, and `--version` reported `2.0.0-rc.7`.
+- [x] **WS4-T2**: Run the full-history scan with the project command (`rule-mcp secrets`, see `docs/13-cli.md`). Provider validation and analysis stay off. Write the report outside the repo. Never print a secret value in chat, in a shared log, or in a commit. Done 2026-11-06: the report is `/tmp/credential-scan-report.md`. The project command scanned 1392 of 1403 commits; 11 windows exceed its 4 MiB cap, so each commit in them was scanned with the same flags and no value left the scan.
+- [x] **WS4-T3**: Report the count, and for each finding the file path, the commit, and the rule id. The owner decides which findings are real. Fix real findings with the rewrite in WS5, and rotate the credential too. Reported 2026-11-06: 23 history findings, all in paths that no longer exist at HEAD (`skills/pix-*`, `test/`, `src/`), and 7 in tracked files today. Every one is a documentation example or a test fixture with a placeholder value: `user:pass@` inside a URL parser test, `IDENTIFIED BY 'strong_password'`, a `DATABASE_URL` example, and an Apple app-specific password placeholder. The owner decides whether any counts as real.
 
 ### WS5 - Delete the case-study code and cut over (F3, F6, D1, D3)
 
