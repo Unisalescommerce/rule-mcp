@@ -34,7 +34,7 @@ The shift needed repair in the same commit:
 - Two tests cite real ADR files by name. The fixture exclusion leaves them
   alone, so the paths were updated by hand.
 - `_citations.js` and `_register-handoff.js` passed the 150-line cap, so the
-  compact command moved to `cli/commands/_handoff-compact.js`.
+  compact command moved to `packages/mcp/cli/commands/_handoff-compact.js`.
 
 ## Plans closed
 
