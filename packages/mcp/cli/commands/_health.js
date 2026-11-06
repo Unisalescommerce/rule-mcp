@@ -45,7 +45,8 @@ async function skillsReloadCommand() {
  */
 async function updateCommand() {
   const { runSelfUpdate, buildBanner, scheduleRestartIfNeeded } = await import("../../core/self-update/index.js");
-  const result = await runSelfUpdate({ reloadSkills: false, explicit: true });
+  const { explicitMode } = await import("../../core/self-update/_explicit.js");
+  const result = await runSelfUpdate({ reloadSkills: false, explicit: true, mode: explicitMode() });
   const banner = buildBanner(result);
 
   if (banner) {

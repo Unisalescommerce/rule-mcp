@@ -19,7 +19,7 @@ console.log("self-update throttle test: interval and non-blocking");
     await new Promise((r) => setTimeout(r, 150));
     process.stdout.write(JSON.stringify({ done: true }));
   `,
-    { RULE_MCP_AUTO_UPDATE_INTERVAL_SECONDS: "0.1", RULE_MCP_UPDATE_REMOTE: upstream },
+    { RULE_MCP_AUTO_UPDATE_INTERVAL_SECONDS: "0.1", RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: upstream },
   );
   const fetches = fetchCount(logPath);
   assert.equal(fetches, 2, `interval elapsed => a second invocation must fetch again (got ${fetches})`);
@@ -40,7 +40,7 @@ console.log("self-update throttle test: interval and non-blocking");
     process.stdout.write(JSON.stringify({ returnedMs: t1 - t0 }));
     await p;
   `,
-    { RULE_MCP_GIT_SLEEP: "2", RULE_MCP_UPDATE_REMOTE: upstream }, // every git call takes 2s
+    { RULE_MCP_GIT_SLEEP: "2", RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: upstream }, // every git call takes 2s
   );
   assert.ok(out.returnedMs < 1500, `fire-and-forget: call returned in ${out.returnedMs}ms, must not block on the fetch`);
   rmSync(base, { recursive: true, force: true });

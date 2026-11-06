@@ -8,7 +8,7 @@ import { makeClonePair, runUpdateIn } from "./_pin.fixture.mjs";
 test("an upstream on the allowed remote fast-forwards", () => {
   const { base, upstream, clone } = makeClonePair();
   try {
-    const result = runUpdateIn(clone, { RULE_MCP_UPDATE_REMOTE: upstream });
+    const result = runUpdateIn(clone, { RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: upstream });
     assert.equal(result.updated, true, "the declared remote is trusted");
   } finally {
     rmSync(base, { recursive: true, force: true });
@@ -18,7 +18,7 @@ test("an upstream on the allowed remote fast-forwards", () => {
 test("a repointed remote is refused instead of executed", () => {
   const { base, clone } = makeClonePair();
   try {
-    const result = runUpdateIn(clone, { RULE_MCP_UPDATE_REMOTE: "https://github.com/rule/other" });
+    const result = runUpdateIn(clone, { RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: "https://github.com/rule/other" });
     assert.equal(result.updated, false, "an unrecognized remote must never be merged");
     assert.equal(result.reason, "remote-not-allowed");
   } finally {
@@ -43,6 +43,7 @@ test("requiring signatures blocks an unsigned upstream", () => {
   const { base, upstream, clone } = makeClonePair();
   try {
     const result = runUpdateIn(clone, {
+      RULE_MCP_AUTO_UPDATE: "upgrade",
       RULE_MCP_UPDATE_REMOTE: upstream,
       RULE_MCP_UPDATE_REQUIRE_SIGNATURE: "1",
     });

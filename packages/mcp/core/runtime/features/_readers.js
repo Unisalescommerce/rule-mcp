@@ -53,7 +53,7 @@ function readUpdate(env) {
     return "off";
   }
 
-  return get(env, "RULE_MCP_AUTO_UPDATE") === "merge" ? "auto" : "notify";
+  return get(env, "RULE_MCP_AUTO_UPDATE") === "upgrade" ? "auto" : "notify";
 }
 
 /**

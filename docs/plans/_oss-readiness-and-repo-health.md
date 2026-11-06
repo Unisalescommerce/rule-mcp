@@ -171,11 +171,11 @@ Facts, all verified on 2026-11-05:
 - The notify mode already exists and works. The banner shows on the next tool result (`consumeUpdateBanner` in `_schedule.js`).
 - `docs/05-env-variables.md` line 6 already says "default notify-only" and names a value `merge`. The code does not read `merge`. Docs and code disagree.
 
-- [ ] **WS3-T1**: Write the test first. `updateMode()` returns `notify` when `RULE_MCP_AUTO_UPDATE` is unset. It returns `upgrade` only when the variable says `upgrade`.
-- [ ] **WS3-T2**: Change the default in `_config.js`. Check every caller of `updateMode()`.
-- [ ] **WS3-T3**: Change the banner in `_banner.js`. It now says "On main it applies itself". It must say: an update exists, run `/rule-update` in chat or `rule-mcp update` in a shell, and set `RULE_MCP_AUTO_UPDATE=upgrade` to apply updates automatically.
-- [ ] **WS3-T4**: Align `docs/05-env-variables.md` (lines 6 and 156) with the code. The code reads `notify` and `upgrade`. The docs name `merge` and `auto`.
-- [ ] **WS3-T5**: Add no new command name. `/rule-update` exists (D11). Check that the prompt `rule-update` in `packages/mcp/prompts/_task-prompts.js` applies the update, as its description says. Report if it does not.
+- [x] **WS3-T1**: Write the test first. `updateMode()` returns `notify` when `RULE_MCP_AUTO_UPDATE` is unset. It returns `upgrade` only when the variable says `upgrade`. Done 2026-11-06 in `packages/mcp/core/self-update/__tests__/_update-mode.test.mjs`, seen red first.
+- [x] **WS3-T2**: Change the default in `_config.js`. Check every caller of `updateMode()`. Done 2026-11-06: the two callers in `_run.js` read the default, so the automatic path now announces. The explicit tool and CLI pass `explicitMode()`, because asking for the update is the opt-in.
+- [x] **WS3-T3**: Change the banner in `_banner.js`. It now says "On main it applies itself". It must say: an update exists, run `/rule-update` in chat or `rule-mcp update` in a shell, and set `RULE_MCP_AUTO_UPDATE=upgrade` to apply updates automatically. Done 2026-11-06, with a test that reads the banner.
+- [x] **WS3-T4**: Align `docs/05-env-variables.md` (lines 6 and 156) with the code. The code reads `notify` and `upgrade`. The docs name `merge` and `auto`. Aligned 2026-11-06 in the variable table, in the feature catalog and in its reader.
+- [x] **WS3-T5**: Add no new command name. `/rule-update` exists (D11). Check that the prompt `rule-update` in `packages/mcp/prompts/_task-prompts.js` applies the update, as its description says. Report if it does not. Checked 2026-11-06: it did not, because the tool and the CLI both took the ambient default and would only announce. Both now pass an explicit upgrade mode.
 
 Do not change `RULE_MCP_NO_AUTOUPDATE`, the behavior of `rule_tool_update`, or the restart logic.
 

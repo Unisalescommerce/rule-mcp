@@ -17,7 +17,7 @@ console.log("self-update throttle test: interval parsing");
     await maybeSelfUpdate();
     process.stdout.write(JSON.stringify({ done: true }));
   `,
-    { RULE_MCP_AUTO_UPDATE_INTERVAL_SECONDS: "0", RULE_MCP_UPDATE_REMOTE: upstream },
+    { RULE_MCP_AUTO_UPDATE_INTERVAL_SECONDS: "0", RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: upstream },
   );
   const fetches = fetchCount(logPath);
   assert.equal(fetches, 2, `interval 0 => every invocation fetches (got ${fetches})`);
@@ -36,7 +36,7 @@ console.log("self-update throttle test: interval parsing");
     await maybeSelfUpdate();
     process.stdout.write(JSON.stringify({ done: true }));
   `,
-    { RULE_MCP_AUTO_UPDATE_INTERVAL_SECONDS: "abc", RULE_MCP_UPDATE_REMOTE: upstream },
+    { RULE_MCP_AUTO_UPDATE_INTERVAL_SECONDS: "abc", RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: upstream },
   );
   const fetches = fetchCount(logPath);
   assert.equal(fetches, 1, `invalid interval => default throttle, single fetch (got ${fetches})`);
@@ -55,7 +55,7 @@ console.log("self-update throttle test: interval parsing");
     await maybeSelfUpdate();
     process.stdout.write(JSON.stringify({ done: true }));
   `,
-    { RULE_MCP_AUTO_UPDATE_INTERVAL_SECONDS: "-5", RULE_MCP_UPDATE_REMOTE: upstream },
+    { RULE_MCP_AUTO_UPDATE_INTERVAL_SECONDS: "-5", RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: upstream },
   );
   const fetches = fetchCount(logPath);
   assert.equal(fetches, 1, `negative interval => default throttle, single fetch (got ${fetches})`);

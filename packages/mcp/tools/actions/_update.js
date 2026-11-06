@@ -11,6 +11,7 @@
 import { z } from "zod/v4";
 import { registerTool } from "../router/index.js";
 import { runSelfUpdate, buildBanner, scheduleRestartIfNeeded } from "../../core/self-update/index.js";
+import { explicitMode } from "../../core/self-update/_explicit.js";
 import { detectInstallType } from "../../cli/paths/index.js";
 
 /**
@@ -26,7 +27,7 @@ export function registerUpdateTool() {
       "(throttled, in the background) on tool calls; call directly to update on demand.",
     zodSchema: z.object({}),
     handler: async () => {
-      const result = await runSelfUpdate({ explicit: true });
+      const result = await runSelfUpdate({ explicit: true, mode: explicitMode() });
       const restartNote = scheduleRestartIfNeeded(result);
 
       const lines = [];

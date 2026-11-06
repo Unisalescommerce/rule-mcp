@@ -10,14 +10,18 @@ export function autoUpdateEnabled() {
 }
 
 /**
- * How an available update is applied. The default applies it (ADR 131): a
- * newer release tag is checked out, pulled and reinstalled without asking.
- * `RULE_MCP_AUTO_UPDATE=notify` returns to announcing only.
+ * How an available update is applied. The default announces it and leaves the
+ * decision to the reader: a server that replaces itself mid-session, and for a
+ * stdio install exits its own process, is a surprise the reader did not ask
+ * for. `RULE_MCP_AUTO_UPDATE=upgrade` opts into applying it.
+ *
+ * Any other value, including one nobody documented, keeps the safe default
+ * rather than turning an upgrade on by accident.
  *
  * @returns {"notify"|"upgrade"}
  */
 export function updateMode() {
-  return process.env.RULE_MCP_AUTO_UPDATE === "notify" ? "notify" : "upgrade";
+  return process.env.RULE_MCP_AUTO_UPDATE === "upgrade" ? "upgrade" : "notify";
 }
 
 /**

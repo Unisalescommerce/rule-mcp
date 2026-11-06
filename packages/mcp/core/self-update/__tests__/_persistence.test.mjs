@@ -13,7 +13,7 @@ console.log("self-update persistence test: the throttle survives a restart");
   const { clone, base } = makeClonePair();
   const upstream = upstreamOf(clone);
   const home = mkdtempSync(join(tmpdir(), "rule-mcp-sut-shared-home-"));
-  const environment = { RULE_MCP_AUTO_UPDATE_INTERVAL_SECONDS: "60", RULE_MCP_UPDATE_REMOTE: upstream, RULE_MCP_HOME: home };
+  const environment = { RULE_MCP_AUTO_UPDATE_INTERVAL_SECONDS: "60", RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: upstream, RULE_MCP_HOME: home };
 
   // First "process": nothing persisted yet, so this checks and writes the state.
   const first = runScenario(clone, `await maybeSelfUpdate();\nprocess.stdout.write(JSON.stringify({ done: true }));`, environment);
@@ -38,6 +38,7 @@ console.log("self-update persistence test: the throttle survives a restart");
   const upstream = upstreamOf(clone);
   const { logPath } = runScenario(clone, `await maybeSelfUpdate();\nprocess.stdout.write(JSON.stringify({ done: true }));`, {
     RULE_MCP_AUTO_UPDATE_INTERVAL_SECONDS: "60",
+    RULE_MCP_AUTO_UPDATE: "upgrade",
     RULE_MCP_UPDATE_REMOTE: upstream,
   });
 

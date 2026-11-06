@@ -20,7 +20,7 @@ test("readers honor legacy opt-out keys", () => {
   assert.equal(readLevel("adr", { RULE_MCP_NO_ADR: "1" }), "off");
   assert.equal(readLevel("telemetry", { RULE_MCP_NO_TELEMETRY: "1" }), "off");
   assert.equal(readLevel("telemetry", { RULE_MCP_NO_PROMPTS: "1" }), "anonymous");
-  assert.equal(readLevel("update", { RULE_MCP_AUTO_UPDATE: "merge" }), "auto");
+  assert.equal(readLevel("update", { RULE_MCP_AUTO_UPDATE: "upgrade" }), "auto");
   assert.equal(readLevel("tokensave", { RULE_MCP_TOKENSAVE_AUTOTRACK: "1" }), "autotrack");
   assert.equal(readLevel("minimal-tools", { RULE_MCP_MINIMAL_TOOLS: "1" }), "on");
 });

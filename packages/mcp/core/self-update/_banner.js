@@ -29,7 +29,7 @@ export function buildBanner(r) {
   }
 
   if (r.available && r.release) {
-    return `ℹ️ rule-mcp ${r.to} (${r.release}) is available. On main it applies itself; elsewhere run \`rule-mcp update\`, or set RULE_MCP_AUTO_UPDATE=notify to only hear about it.`;
+    return `ℹ️ rule-mcp ${r.to} (${r.release}) is available. Run /rule-update in chat, or \`rule-mcp update\` in a shell, to apply it. Set RULE_MCP_AUTO_UPDATE=upgrade to apply updates automatically.`;
   }
 
   if (r.reason === "not-on-main") {

@@ -14,7 +14,7 @@ import "../../../../../scripts/__tests__/fixtures/git-hermetic.mjs";
 {
   const { clone, base, upstream } = makeClonePair();
   g(["checkout", "--detach"], clone);
-  const r = runUpdateIn(clone, { RULE_MCP_UPDATE_REMOTE: upstream });
+  const r = runUpdateIn(clone, { RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: upstream });
   assert.equal(r.reason, "detached-head", "detached HEAD is skipped");
   rmSync(base, { recursive: true, force: true });
   console.log("  ✅ detached HEAD is reported and skipped");
@@ -24,7 +24,7 @@ import "../../../../../scripts/__tests__/fixtures/git-hermetic.mjs";
 {
   const { clone, base, upstream } = makeClonePair();
   g(["branch", "--unset-upstream"], clone);
-  const r = runUpdateIn(clone, { RULE_MCP_UPDATE_REMOTE: upstream });
+  const r = runUpdateIn(clone, { RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: upstream });
   assert.equal(r.reason, "no-upstream", "no @{u} is reported");
   rmSync(base, { recursive: true, force: true });
   console.log("  ✅ a branch without upstream is reported and skipped");
@@ -33,10 +33,10 @@ import "../../../../../scripts/__tests__/fixtures/git-hermetic.mjs";
 // ── T9: the allowlist gates the remote identity in both directions ──
 {
   const { clone, base, upstream } = makeClonePair();
-  const denied = runUpdateIn(clone, { RULE_MCP_UPDATE_REMOTE: "/tmp/some-other-repo.git" });
+  const denied = runUpdateIn(clone, { RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: "/tmp/some-other-repo.git" });
   assert.equal(denied.reason, "remote-not-allowed", "an unlisted remote is refused");
 
-  const none = runUpdateIn(clone, { RULE_MCP_UPDATE_REMOTE: "  " });
+  const none = runUpdateIn(clone, { RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: "  " });
   assert.equal(none.reason, "no-allowed-remote", "an empty allowlist is refused");
 
   rmSync(base, { recursive: true, force: true });
@@ -47,7 +47,7 @@ import "../../../../../scripts/__tests__/fixtures/git-hermetic.mjs";
 {
   const { clone, base, upstream } = makeClonePair();
   g(["remote", "set-url", "origin", "/nonexistent/upstream.git"], clone);
-  const r = runUpdateIn(clone, { RULE_MCP_UPDATE_REMOTE: upstream });
+  const r = runUpdateIn(clone, { RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: upstream });
   assert.equal(r.reason, "remote-not-allowed", "the rewritten remote is refused");
   rmSync(base, { recursive: true, force: true });
   console.log("  ✅ an unlisted origin URL is refused before fetch");
@@ -57,7 +57,7 @@ import "../../../../../scripts/__tests__/fixtures/git-hermetic.mjs";
 {
   const { clone, base, upstream } = makeClonePair();
   writeFileSync(join(clone, ".git", "index"), "corrupt index", "utf8");
-  const r = runUpdateIn(clone, { RULE_MCP_UPDATE_REMOTE: upstream });
+  const r = runUpdateIn(clone, { RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: upstream });
   assert.equal(r.reason, "git-error", "a corrupt index surfaces as git-error");
   rmSync(base, { recursive: true, force: true });
   console.log("  ✅ a corrupt index fails safe with git-error");
@@ -67,7 +67,7 @@ import "../../../../../scripts/__tests__/fixtures/git-hermetic.mjs";
 {
   const { clone, base, upstream } = makeClonePair();
   g(["remote", "set-url", "origin", "/nonexistent/upstream.git"], clone);
-  const r = runUpdateIn(clone, { RULE_MCP_UPDATE_REMOTE: "/nonexistent/upstream.git" });
+  const r = runUpdateIn(clone, { RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: "/nonexistent/upstream.git" });
   assert.equal(r.reason, "fetch-failed", "an unreachable remote reports fetch-failed");
   rmSync(base, { recursive: true, force: true });
   console.log("  ✅ an unreachable origin fails open with fetch-failed");
@@ -77,7 +77,7 @@ import "../../../../../scripts/__tests__/fixtures/git-hermetic.mjs";
 {
   const { clone, seed, base, upstream } = makeClonePair();
   pushUpstreamChange(seed, { "src/server/index.js": "// v2\n" });
-  const r = runUpdateIn(clone, { RULE_MCP_UPDATE_REMOTE: upstream, RULE_MCP_UPDATE_REQUIRE_SIGNATURE: "1" });
+  const r = runUpdateIn(clone, { RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: upstream, RULE_MCP_UPDATE_REQUIRE_SIGNATURE: "1" });
   assert.equal(r.reason, "unsigned-upstream", "an unsigned upstream commit is refused");
   rmSync(base, { recursive: true, force: true });
   console.log("  ✅ unsigned upstream is refused under REQUIRE_SIGNATURE");
@@ -87,7 +87,7 @@ import "../../../../../scripts/__tests__/fixtures/git-hermetic.mjs";
 {
   // Already up to date: no upstream change.
   const { clone, base, upstream } = makeClonePair();
-  const same = runUpdateIn(clone, { RULE_MCP_UPDATE_REMOTE: upstream });
+  const same = runUpdateIn(clone, { RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: upstream });
   assert.deepEqual(same, { checked: true, updated: false }, "up-to-date reports no update and no reason");
   rmSync(base, { recursive: true, force: true });
 
@@ -99,7 +99,7 @@ import "../../../../../scripts/__tests__/fixtures/git-hermetic.mjs";
   g(["add", "-A"], clone2);
   g(["commit", "-m", "local ahead"], clone2);
   const before2 = g(["rev-parse", "HEAD"], clone2).trim();
-  const ahead = runUpdateIn(clone2, { RULE_MCP_UPDATE_REMOTE: upstream2 });
+  const ahead = runUpdateIn(clone2, { RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: upstream2 });
   assert.equal(ahead.updated, false, "ahead of upstream never claims an update");
   const after2 = g(["rev-parse", "HEAD"], clone2).trim();
   assert.equal(before2, after2, "HEAD is untouched by the no-op merge");
@@ -113,7 +113,7 @@ import "../../../../../scripts/__tests__/fixtures/git-hermetic.mjs";
   g(["add", "-A"], clone3);
   g(["commit", "-m", "local commit"], clone3);
   pushUpstreamChange(seed3, { "src/server/index.js": "// v2\n" });
-  const divergent = runUpdateIn(clone3, { RULE_MCP_UPDATE_REMOTE: upstream3 });
+  const divergent = runUpdateIn(clone3, { RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: upstream3 });
   assert.equal(divergent.reason, "not-fast-forward", "divergent history is refused");
   rmSync(base3, { recursive: true, force: true });
   console.log("  ✅ up-to-date, ahead, and divergent histories each decide correctly");
@@ -123,7 +123,7 @@ import "../../../../../scripts/__tests__/fixtures/git-hermetic.mjs";
 {
   const { clone, seed, base, upstream } = makeClonePair();
   pushUpstreamChange(seed, { "skills/rule/SKILL.md": "v2\n" });
-  const r = runUpdateIn(clone, { RULE_MCP_UPDATE_REMOTE: upstream }, true);
+  const r = runUpdateIn(clone, { RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: upstream }, true);
   assert.equal(r.updated, true, "skills change still fast-forwards with reload enabled");
   assert.equal(r.changedSkills, true, "skills change classified");
   rmSync(base, { recursive: true, force: true });

@@ -11,7 +11,7 @@ console.log("self-update engine test: pull and guards");
 {
   const { clone, seed, base, upstream } = makeClonePair();
   pushUpstreamChange(seed, { "skills/rule/SKILL.md": "v2\n" });
-  const r = runUpdateIn(clone, { RULE_MCP_UPDATE_REMOTE: upstream });
+  const r = runUpdateIn(clone, { RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: upstream });
   assert.equal(r.updated, true, "should fast-forward a skills-only change");
   assert.equal(r.changedSkills, true, "skills change detected");
   assert.equal(r.changedCode, false, "no code change");
@@ -23,7 +23,7 @@ console.log("self-update engine test: pull and guards");
 {
   const { clone, seed, base, upstream } = makeClonePair();
   pushUpstreamChange(seed, { "src/server/index.js": "// v2\n" });
-  const r = runUpdateIn(clone, { RULE_MCP_UPDATE_REMOTE: upstream });
+  const r = runUpdateIn(clone, { RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: upstream });
   assert.equal(r.updated, true, "should fast-forward a code change");
   assert.equal(r.changedCode, true, "code change detected");
   rmSync(base, { recursive: true, force: true });
@@ -35,7 +35,7 @@ console.log("self-update engine test: pull and guards");
   const { clone, seed, base, upstream } = makeClonePair();
   pushUpstreamChange(seed, { "skills/rule/SKILL.md": "v2\n" });
   writeFileSync(join(clone, "skills", "rule-mcp", "SKILL.md"), "local edit\n");
-  const r = runUpdateIn(clone, { RULE_MCP_UPDATE_REMOTE: upstream });
+  const r = runUpdateIn(clone, { RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: upstream });
   assert.equal(r.updated, false, "must not update a dirty tree");
   assert.equal(r.reason, "dirty-tree", "reports dirty-tree");
   rmSync(base, { recursive: true, force: true });
@@ -46,7 +46,7 @@ console.log("self-update engine test: pull and guards");
 {
   const { clone, seed, base, upstream } = makeClonePair();
   pushUpstreamChange(seed, { "skills/rule/SKILL.md": "v2\n" });
-  const r = runUpdateIn(clone, { RULE_MCP_NO_AUTOUPDATE: "1", RULE_MCP_UPDATE_REMOTE: upstream });
+  const r = runUpdateIn(clone, { RULE_MCP_NO_AUTOUPDATE: "1", RULE_MCP_AUTO_UPDATE: "upgrade", RULE_MCP_UPDATE_REMOTE: upstream });
   assert.equal(r.skipped, true, "opt-out skips");
   assert.equal(r.reason, "disabled", "reports disabled");
   rmSync(base, { recursive: true, force: true });

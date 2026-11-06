@@ -51,7 +51,7 @@ export const FEATURES = {
   update: {
     label: "Self-update checks",
     levels: {
-      auto: { RULE_MCP_NO_AUTOUPDATE: null, RULE_MCP_AUTO_UPDATE: "merge" },
+      auto: { RULE_MCP_NO_AUTOUPDATE: null, RULE_MCP_AUTO_UPDATE: "upgrade" },
       notify: { RULE_MCP_NO_AUTOUPDATE: null, RULE_MCP_AUTO_UPDATE: null },
       off: { RULE_MCP_NO_AUTOUPDATE: "1", RULE_MCP_AUTO_UPDATE: null },
     },

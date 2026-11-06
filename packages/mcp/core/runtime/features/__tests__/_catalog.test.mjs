@@ -50,7 +50,7 @@ test("telemetry anonymous drops prompt text and marks anonymous; off kills telem
 test("update / tokensave / minimal-tools map to the existing opt-out keys", () => {
   assert.deepEqual(envPatchFor("update", "off"), { RULE_MCP_NO_AUTOUPDATE: "1", RULE_MCP_AUTO_UPDATE: null });
   assert.deepEqual(envPatchFor("update", "notify"), { RULE_MCP_NO_AUTOUPDATE: null, RULE_MCP_AUTO_UPDATE: null });
-  assert.deepEqual(envPatchFor("update", "auto"), { RULE_MCP_NO_AUTOUPDATE: null, RULE_MCP_AUTO_UPDATE: "merge" });
+  assert.deepEqual(envPatchFor("update", "auto"), { RULE_MCP_NO_AUTOUPDATE: null, RULE_MCP_AUTO_UPDATE: "upgrade" });
 
   assert.deepEqual(envPatchFor("tokensave", "off"), {
     RULE_MCP_NO_TOKENSAVE: "1",
