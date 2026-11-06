@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { countTokens, tokenRatio, failsTokenEfficiency } from "../_secret-token-rarity.js";
+import { countTokens, tokenRatio, failsTokenEfficiency } from "../../tokenizer/_token-rarity.js";
 
 // Vectors from betterleaks internal/tokenizer/tokenizer_test.go.
 for (const [input, expected] of [

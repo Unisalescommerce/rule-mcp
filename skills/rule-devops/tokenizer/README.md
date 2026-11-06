@@ -1,9 +1,9 @@
-# Secret detection assets
+# Token rarity helper
 
-Both gzip files are copied unchanged from Betterleaks commit
+The helper reads both gzip files. They are copied unchanged from Betterleaks commit
 `6cd808f299a81b19fdbd196b04a64e63565c8c5c`.
 
-- `cl100k_base.tiktoken.gz`: Betterleaks tokenizer merge ranks. SHA-256:
+- `cl100k_base.tiktoken.gz`: Betterleaks tokenizer merge ranks, read by `_token-rarity.js`. SHA-256:
   `4414e3fb432aa5c4a9a19d5b91fe5ab27fecb8f5347208696a01bc507e093696`.
   The upstream tokenizer identifies these as `cl100k_base` ranks. See the
   Betterleaks and OpenAI tiktoken MIT notices in this directory.

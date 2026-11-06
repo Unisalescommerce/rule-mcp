@@ -12,7 +12,7 @@ function tokenRanks() {
     return ranks;
   }
 
-  const data = gunzipSync(readFileSync(new URL("assets/cl100k_base.tiktoken.gz", import.meta.url))).toString("utf8");
+  const data = gunzipSync(readFileSync(new URL("cl100k_base.tiktoken.gz", import.meta.url))).toString("utf8");
   const loaded = new Map();
 
   for (const line of data.trimEnd().split("\n")) {
@@ -86,7 +86,7 @@ export function countTokens(value) {
 /** Search the upstream word list without requiring word boundaries. */
 function containsWord(value, minimum) {
   words ??= new Set(
-    gunzipSync(readFileSync(new URL("assets/words.txt.gz", import.meta.url)))
+    gunzipSync(readFileSync(new URL("words.txt.gz", import.meta.url)))
       .toString("utf8")
       .split("\n"),
   );

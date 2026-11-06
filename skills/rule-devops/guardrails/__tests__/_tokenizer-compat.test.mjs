@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { countTokens } from "../_secret-token-rarity.js";
+import { countTokens } from "../../tokenizer/_token-rarity.js";
 
 // Reproduce math/rand/v2 PCG and FNV-1a used by Betterleaks' compatibility test.
 const MASK = (1n << 64n) - 1n;
