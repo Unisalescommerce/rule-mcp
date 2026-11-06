@@ -28,10 +28,10 @@ Handoff and ADR commits in the same window: `79272e9d`, `1bcbf914`, `d4580c82`, 
 
 ## ADRs
 
-- pending: `docs/adr/_pending/attribution-is-one-table-row-per-agent-and-an-undocumented-agent-is-left-alone.md`
-- pending: `docs/adr/_pending/derive-the-tokensave-switch-from-the-project-and-accept-on-autotrack-as-its-name.md`
-- pending: `docs/adr/_pending/uninstall-reclaims-the-configuration-it-wrote-after-asking.md`
-- pending: `docs/adr/_pending/split-the-files-the-size-ratchet-named-and-baseline-the-eight-that-were-never-re.md`
+- pending: `docs/adr/229-attribution-is-one-table-row-per-agent-and-an-undocumented-agent-is-left-alone.md`
+- pending: `docs/adr/230-derive-the-tokensave-switch-from-the-project-and-accept-on-autotrack-as-its-name.md`
+- pending: `docs/adr/231-uninstall-reclaims-the-configuration-it-wrote-after-asking.md`
+- pending: `docs/adr/232-split-the-files-the-size-ratchet-named-and-baseline-the-eight-that-were-never-re.md`
 - both land with numbers on trunk (`rule-mcp handoff land`); do not cite a number for either before that.
 
 ## Left out / next

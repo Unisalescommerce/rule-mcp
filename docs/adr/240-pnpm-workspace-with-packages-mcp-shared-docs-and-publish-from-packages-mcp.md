@@ -1,4 +1,4 @@
-# Pending: pnpm workspace with packages mcp shared docs and publish from packages/mcp
+# 240: pnpm workspace with packages mcp shared docs and publish from packages/mcp
 
 - **Date**: 2026-11-01
 - **Status**: accepted

@@ -1,4 +1,4 @@
-# Pending: MCP-authored Markdown uses ASD-STE100 at about 80 percent
+# 239: MCP-authored Markdown uses ASD-STE100 at about 80 percent
 
 - **Date**: 2026-10-31
 - **Status**: accepted

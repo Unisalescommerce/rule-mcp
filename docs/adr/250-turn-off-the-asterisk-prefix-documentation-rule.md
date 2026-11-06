@@ -1,4 +1,4 @@
-# Pending: Turn off the asterisk-prefix documentation rule
+# 250: Turn off the asterisk-prefix documentation rule
 
 - **Date**: 2026-11-06
 - **Status**: accepted

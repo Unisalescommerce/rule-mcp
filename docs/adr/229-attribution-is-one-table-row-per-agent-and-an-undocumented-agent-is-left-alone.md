@@ -1,4 +1,4 @@
-# Pending: Attribution is one table row per agent, and an undocumented agent is left alone
+# 229: Attribution is one table row per agent, and an undocumented agent is left alone
 
 - **Date**: 2026-10-28
 - **Status**: proposed

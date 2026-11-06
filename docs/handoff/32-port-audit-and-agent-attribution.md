@@ -19,7 +19,7 @@
 
 ## ADRs
 
-- pending: `docs/adr/_pending/attribution-is-one-table-row-per-agent-and-an-undocumented-agent-is-left-alone.md` (numbers on trunk landing)
+- pending: `docs/adr/229-attribution-is-one-table-row-per-agent-and-an-undocumented-agent-is-left-alone.md` (numbers on trunk landing)
 
 ## Left out / next
 

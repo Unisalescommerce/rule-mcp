@@ -1,4 +1,4 @@
-# Pending: Uninstall reclaims the configuration it wrote, after asking
+# 231: Uninstall reclaims the configuration it wrote, after asking
 
 - **Date**: 2026-10-29
 - **Status**: proposed

@@ -1,4 +1,4 @@
-# Pending: The ADR guardrails are advisory with dual detection and a shrinking legacy list
+# 243: The ADR guardrails are advisory with dual detection and a shrinking legacy list
 
 - **Date**: 2026-11-03
 - **Status**: accepted

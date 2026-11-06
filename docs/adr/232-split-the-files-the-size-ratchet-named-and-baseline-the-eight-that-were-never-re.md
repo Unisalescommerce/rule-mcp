@@ -1,4 +1,4 @@
-# Pending: Split the files the size ratchet named, and baseline the eight that were never recorded
+# 232: Split the files the size ratchet named, and baseline the eight that were never recorded
 
 - **Date**: 2026-10-29
 - **Status**: proposed

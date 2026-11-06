@@ -1,4 +1,4 @@
-# Pending: Publish an npm placeholder to reserve the rule-mcp name
+# 248: Publish an npm placeholder to reserve the rule-mcp name
 
 - **Date**: 2026-11-06
 - **Status**: accepted

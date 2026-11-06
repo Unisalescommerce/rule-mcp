@@ -1,4 +1,4 @@
-# Pending: Project membership is a command, and an update re-applies what it moved
+# 233: Project membership is a command, and an update re-applies what it moved
 
 - **Date**: 2026-10-29
 - **Status**: proposed

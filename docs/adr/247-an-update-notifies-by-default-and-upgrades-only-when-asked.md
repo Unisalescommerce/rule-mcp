@@ -1,4 +1,4 @@
-# Pending: An update notifies by default and upgrades only when asked
+# 247: An update notifies by default and upgrades only when asked
 
 - **Date**: 2026-11-06
 - **Status**: accepted

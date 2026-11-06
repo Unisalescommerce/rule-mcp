@@ -8,6 +8,38 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [251](251-close-out-plan-pi-integration-and-debt.md)                                                                    | Close out plan _pi-integration-and-debt                                                                   | 2026-11-06 | accepted   | docs, closeout, plan                                                                |
+| [250](250-turn-off-the-asterisk-prefix-documentation-rule.md)                                                           | Turn off the asterisk-prefix documentation rule                                                           | 2026-11-06 | accepted   | lint, governance, comments                                                          |
+| [249](249-the-repository-stays-pixu1980-rule-mcp-and-the-registry-name-is-io-github-pixu19.md)                          | The repository stays pixu1980/rule-mcp and the registry name is io.github.pixu1980/rule-mcp               | 2026-11-06 | accepted   | naming, release, repository                                                         |
+| [248](248-publish-an-npm-placeholder-to-reserve-the-rule-mcp-name.md)                                                   | Publish an npm placeholder to reserve the rule-mcp name                                                   | 2026-11-06 | accepted   | naming, legal, release                                                              |
+| [247](247-an-update-notifies-by-default-and-upgrades-only-when-asked.md)                                                | An update notifies by default and upgrades only when asked                                                | 2026-11-06 | accepted   | update, release, install                                                            |
+| [246](246-retire-area-guardrail-plans-after-assigning-every-retained-rule.md)                                           | Retire area guardrail plans after assigning every retained rule                                           | 2026-11-05 | accepted   | plans, guardrails, catalog                                                          |
+| [245](245-use-offline-betterleaks-scans-for-git-credential-checks.md)                                                   | Use offline Betterleaks scans for Git credential checks                                                   | 2026-11-05 | accepted   | security, git, guardrails                                                           |
+| [244](244-handoff-proposes-only-the-plan-cascade-and-every-plan-carries-workstreams-checkb.md)                          | Handoff proposes only the plan cascade, and every plan carries workstreams, checkboxes and a graph        | 2026-11-03 | accepted   | plans, handoff, dependency-graph, conventions                                       |
+| [243](243-the-adr-guardrails-are-advisory-with-dual-detection-and-a-shrinking-legacy-list.md)                           | The ADR guardrails are advisory with dual detection and a shrinking legacy list                           | 2026-11-03 | accepted   | adr, guardrails, design, ai                                                         |
+| [242](242-adr-conventions-real-author-mandatory-ends-when-three-digits-explicit-supersede.md)                           | ADR conventions: real author, mandatory ends-when, three digits, explicit supersede                       | 2026-11-03 | accepted   | adr, conventions, docs, governance                                                  |
+| [241](241-cap-prose-sentences-at-25-words-and-keep-identifiers-dictionary-driven.md)                                    | Cap prose sentences at 25 words and keep identifiers dictionary-driven                                    | 2026-11-03 | accepted   | guardrails, prose, ai, policy                                                       |
+| [240](240-pnpm-workspace-with-packages-mcp-shared-docs-and-publish-from-packages-mcp.md)                                | pnpm workspace with packages mcp shared docs and publish from packages/mcp                                | 2026-11-01 | accepted   | architecture, workspace, packages, publish, [removed]                               |
+| [239](239-mcp-authored-markdown-uses-asd-ste100-at-about-80-percent.md)                                                 | MCP-authored Markdown uses ASD-STE100 at about 80 percent                                                 | 2026-10-31 | accepted   | writing, ste100, plans, directive, documentation                                    |
+| [238](238-restore-rule-adr-because-it-binds-adr-write-to-decision-cache-keep.md)                                        | Restore rule-adr because it binds ADR write to decision-cache keep                                        | 2026-10-30 | accepted   | export, adr, prompts, decision-cache                                                |
+| [237](237-the-launcher-owns-a-copy-outside-the-checkout.md)                                                             | The launcher owns a copy outside the checkout                                                             | 2026-10-30 | accepted   | architecture, installer, cli, launcher                                              |
+| [236](236-close-host-integration-depth-with-deferred-per-host-token-measurement.md)                                     | Close host integration depth with deferred per-host token measurement                                     | 2026-10-30 | accepted   | architecture, installer, hooks, measurement                                         |
+| [235](235-let-the-environment-name-the-client-and-the-handshake-answer-when-it-does-not.md)                             | let the environment name the client and the handshake answer when it does not                             | 2026-10-29 | accepted   | -                                                                                   |
+| [234](234-count-the-cycles-and-the-dead-symbols-the-graph-can-prove-and-break-the-cycles-t.md)                          | Count the cycles and the dead symbols the graph can prove, and break the cycles that are real             | 2026-10-29 | proposed   | guardrails, tokensave, imports, file-tree                                           |
+| [233](233-project-membership-is-a-command-and-an-update-re-applies-what-it-moved.md)                                    | Project membership is a command, and an update re-applies what it moved                                   | 2026-10-29 | proposed   | installer, project-scope, update, uninstall                                         |
+| [232](232-split-the-files-the-size-ratchet-named-and-baseline-the-eight-that-were-never-re.md)                          | Split the files the size ratchet named, and baseline the eight that were never recorded                   | 2026-10-29 | proposed   | file-tree, tests, ratchet, architecture                                             |
+| [231](231-uninstall-reclaims-the-configuration-it-wrote-after-asking.md)                                                | Uninstall reclaims the configuration it wrote, after asking                                               | 2026-10-29 | proposed   | installer, uninstall, privacy, configuration                                        |
+| [230](230-derive-the-tokensave-switch-from-the-project-and-accept-on-autotrack-as-its-name.md)                          | Derive the tokensave switch from the project and accept on+autotrack as its name                          | 2026-10-28 | proposed   | installer, feature, tokensave, agents                                               |
+| [229](229-attribution-is-one-table-row-per-agent-and-an-undocumented-agent-is-left-alone.md)                            | Attribution is one table row per agent, and an undocumented agent is left alone                           | 2026-10-28 | proposed   | installer, hosts, attribution, agents                                               |
+| [228](228-extend-the-devops-guardrail-family-with-file-scoped-source-cited-rules.md)                                    | Extend the devops guardrail family with file-scoped, source-cited rules                                   | 2026-10-17 | proposed   | guardrails, devops, quality-gate                                                    |
+| [227](227-vanilla-js-over-typescript.md)                                                                                | Vanilla JS over TypeScript                                                                                | 2026-06-20 | Accepted   | -                                                                                   |
+| [226](226-toolchain-skill-isolation-vite.md)                                                                            | toolchain skill isolation vite                                                                            | 2026-07-10 | accepted   | skills, toolchain, vite, build                                                      |
+| [225](225-thematic-skill-taxonomy-rename.md)                                                                            | thematic skill taxonomy rename                                                                            | 2026-07-10 | accepted   | infrastructure, naming, taxonomy, breaking-change                                   |
+| [224](224-sdk-over-handrolled-protocol.md)                                                                              | Official MCP SDK over Hand-Rolled Protocol                                                                | 2026-06-23 | Accepted   | -                                                                                   |
+| [223](223-scaffold-skill-consolidation.md)                                                                              | scaffold skill consolidation                                                                              | 2026-07-10 | accepted   | infrastructure, skills, scaffolding, merge                                          |
+| [222](222-forms-per-framework-merger-and-distribution.md)                                                               | forms per framework merger and distribution                                                               | 2026-07-11 | accepted   | architecture, forms, frontend, refactoring, solid                                   |
+| [221](221-file-based-skill-loading.md)                                                                                  | File-Based Skill Loading over Database                                                                    | 2026-06-20 | Accepted   | -                                                                                   |
+| [220](220-backend-framework-skills.md)                                                                                  | backend framework skills                                                                                  | 2026-07-10 | accepted   | skills, backend, frameworks, new                                                    |
 | [219](219-keep-adr-numbers-stable-and-move-gap-closing-to-its-own-command.md)                                           | Keep ADR numbers stable and move gap-closing to its own command                                           | 2026-11-06 | accepted   | adr, numbering, handoff, docs                                                       |
 | [218](218-close-out-plan-tool-and-skill-surface-audit.md)                                                               | Close out plan _tool-and-skill-surface-audit                                                              | 2026-11-06 | accepted   | docs, closeout, plan                                                                |
 | [217](217-close-out-plan-oss-readiness-and-repo-health.md)                                                              | Close out plan _oss-readiness-and-repo-health                                                             | 2026-11-06 | accepted   | docs, closeout, plan                                                                |
@@ -226,6 +258,38 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [251](251-close-out-plan-pi-integration-and-debt.md)                                                                    | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_pi-integration-and-debt.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                                        |
+| [250](250-turn-off-the-asterisk-prefix-documentation-rule.md)                                                           | Set `unicorn/no-asterisk-prefix-in-documentation-comments` to `off` in `eslint.config.mjs`, with a one-line reason beside it.                                                                                                   | Positive: the lint gate measures defects again instead of the comment style.                                                                                                                                                    |
+| [249](249-the-repository-stays-pixu1980-rule-mcp-and-the-registry-name-is-io-github-pixu19.md)                          | The repository stays `pixu1980/rule-mcp`. The registry name in `server.json` becomes `io.github.pixu1980/rule-mcp`. RuleMCP stays a display name only, so the package, the binary and the environment prefix do not move.       | Positive: every current link, install instruction and registry entry names a repository that exists.                                                                                                                            |
+| [248](248-publish-an-npm-placeholder-to-reserve-the-rule-mcp-name.md)                                                   | Publish a placeholder package named `rule-mcp` that does nothing: no scripts, no dependencies, no binary, no postinstall.                                                                                                       | Positive: the name is held by the project that documents it.                                                                                                                                                                    |
+| [247](247-an-update-notifies-by-default-and-upgrades-only-when-asked.md)                                                | The default update mode becomes notify.                                                                                                                                                                                         | Positive: a running server no longer replaces itself under a session, and a stdio client stops losing its process mid-task.                                                                                                     |
+| [246](246-retire-area-guardrail-plans-after-assigning-every-retained-rule.md)                                           | Assign all 76 retained rule IDs to explicit owning skill plans, guard the mapping with a plan test, then delete the six area-level plan files and remove their references from the catalog.                                     | Positive: deletion no longer loses executable backlog, and each retained rule has one skill-plan owner.                                                                                                                         |
+| [245](245-use-offline-betterleaks-scans-for-git-credential-checks.md)                                                   | Use Betterleaks v2 through a bounded subprocess.                                                                                                                                                                                | Credential findings block the tracked pre-commit hook.                                                                                                                                                                          |
+| [244](244-handoff-proposes-only-the-plan-cascade-and-every-plan-carries-workstreams-checkb.md)                          | 1. Every handoff and handon reads the plan graph deterministically: all plans recursively, edges parsed from `Depends on:`, a dependency satisfied only when its plan has no open step or a closeout ADR retired it.            | A handoff can no longer propose work out of order, and a plan that cannot be marked or does not point at its references is refused at write time.                                                                               |
+| [243](243-the-adr-guardrails-are-advisory-with-dual-detection-and-a-shrinking-legacy-list.md)                           | 1. Six rules, all Tier B (advisory): naming, status vocabulary, author line, ends-when, derived index and English.                                                                                                              | The rules land with their corpus and a red-first suite.                                                                                                                                                                         |
+| [242](242-adr-conventions-real-author-mandatory-ends-when-three-digits-explicit-supersede.md)                           | Five conventions, all rules of the house and not preferences:.                                                                                                                                                                  | The six guardrails read fields instead of prose: status, author, slug, ends-when, the supersede pair and the derived index.                                                                                                     |
+| [241](241-cap-prose-sentences-at-25-words-and-keep-identifiers-dictionary-driven.md)                                    | 1. ai-plain-sentence-length ships with a 25-word cap.                                                                                                                                                                           | rule-process-ai closes at 23 of 23 and retires into an ADR at the next closeout sweep.                                                                                                                                          |
+| [240](240-pnpm-workspace-with-packages-mcp-shared-docs-and-publish-from-packages-mcp.md)                                | Keep the git root as the private facade rule-mcp-workspace.                                                                                                                                                                     | Positive: clear publish boundary, workspace members match ownership, CI works without a real [removed] checkout, Docker and pack target the product package.                                                                    |
+| [239](239-mcp-authored-markdown-uses-asd-ste100-at-about-80-percent.md)                                                 | Adopt ASD-STE100 style at about 80 percent for MCP-authored technical Markdown.                                                                                                                                                 | Generators share one directive string; contract tests can reject banned patterns.                                                                                                                                               |
+| [238](238-restore-rule-adr-because-it-binds-adr-write-to-decision-cache-keep.md)                                        | Restore /rule-adr as a session prompt whose body drives rule_tool_process_adr and then offers /rule-keep (rule_tool_keep) so the accepted choice is stored confirmed in decision-cache.json.                                    | Positive: one command teaches the ADR+keep coupling; export interview and keep share one cache.                                                                                                                                 |
+| [237](237-the-launcher-owns-a-copy-outside-the-checkout.md)                                                             | The tool on PATH is an installed copy under ~/.rule-mcp/launcher/, not a path into any checkout. setup writes the copy, the current pointer, installed.json, and a resolution shim.                                             | Positive: branch switches no longer disable every gate that calls rule-mcp by name; doctor can name the live target; uninstall cannot leave a shim aimed at a deleted directory.                                                |
+| [236](236-close-host-integration-depth-with-deferred-per-host-token-measurement.md)                                     | Mark mcp-host-integration-depth done at 37/37. Treat the hook-cost checkbox as closed by the daemon path already accepted in ADR 187-189. Explicitly defer per-host token measurement on claude, codex and pi until an...       | Positive: WS-A can finish; plan-of-plans can advance to WS-B without a forever-open host checkbox; readers see the deferral as an ADR decision rather than unfinished work.                                                     |
+| [235](235-let-the-environment-name-the-client-and-the-handshake-answer-when-it-does-not.md)                             | The client is `RULE_MCP_CLIENT` when the environment sets it, and the handshake's `clientInfo.name` otherwise.                                                                                                                  | - A shared project entry can hide prompts for one client without hiding them for its neighbors.                                                                                                                                 |
+| [234](234-count-the-cycles-and-the-dead-symbols-the-graph-can-prove-and-break-the-cycles-t.md)                          | Both checks now decide from the source before they fail.                                                                                                                                                                        | Positive: the two checks answer zero on this tree and mean something when they answer more; the four module cycles a reader could actually hit are gone, and each new module has one name for one fact.                         |
+| [233](233-project-membership-is-a-command-and-an-update-re-applies-what-it-moved.md)                                    | Add `rule-mcp project add [path]` and `rule-mcp project remove [path]`. Add reuses the agents and the config kind of the most recently recorded project, so the second checkout is one command and an empty store falls back... | Positive: membership is one command with a dry run and json output, a project tree does not keep empty config files, and an update leaves the installs matching the code it fetched.                                            |
+| [232](232-split-the-files-the-size-ratchet-named-and-baseline-the-eight-that-were-never-re.md)                          | Split every file that had grown past its ceiling rather than raising one: _register-setup.js (the wizard-only flag table), _agent-ops.js (the removal path), _hook-writers.js (the guard command line), _manifest.js (the...    | Positive: the two size tests pass, so the gate is meaningful again; the entries for five files that now fit the cap are deleted, and four ceilings came down to the size the split reached; each new module has one concern...  |
+| [231](231-uninstall-reclaims-the-configuration-it-wrote-after-asking.md)                                                | Uninstall gains a config step after the agent cleanup: reclaimTargets() names the four files rule-mcp owns - switches, legacy switches, manifest, projects store - listing the absent ones too, and reclaimConfig() deletes...  | Positive: the 'never chose' state is reachable again, so the derived tokensave default applies; a reinstall no longer inherits records of installs that are gone; deletion is announced in the uninstall report with one row... |
+| [230](230-derive-the-tokensave-switch-from-the-project-and-accept-on-autotrack-as-its-name.md)                          | Keep one canonical level list (on, autotrack, off) and treat `on+autotrack` as an input alias resolved by canonicalLevel(), so levelsFor() lists a level once and envPatchFor() stays the only source of the env patch.         | Positive: the switch states what the project can use instead of claiming an integration with nothing to read; one name resolves to one level, so the written patch and the reported level cannot disagree; `on` is a...         |
+| [229](229-attribution-is-one-table-row-per-agent-and-an-undocumented-agent-is-left-alone.md)                            | Model attribution as _attribution.data.js: one row per agent in allAgents() (23 today) carrying { agent, mechanism, file, key, keep, hide, evidence }. mechanism is one of commit-trailer, pr-body, tool-signature, none.       | Positive: the writer, the wizard, --dry-run and the tests read one table, so they cannot disagree; an agent with no documented control is visibly unsupported instead of silently misconfigured; a new agent is a row plus a... |
+| [228](228-extend-the-devops-guardrail-family-with-file-scoped-source-cited-rules.md)                                    | Add twenty guardrails across the five devops skills, each scoped to its target file name (Dockerfile, .dockerignore, docker-compose.autodeploy.yml, .gitlab-ci.yml, vitest.config.*, _.test._, server entry,...                 | Positive: the devops skills stop being narrative only; every rule is traceable to a public source; the engine stays predictable because triggers are file-scoped.                                                               |
+| [227](227-vanilla-js-over-typescript.md)                                                                                | Use **Vanilla JavaScript (ESM)** throughout.                                                                                                                                                                                    | - No compile-time type checking.                                                                                                                                                                                                |
+| [226](226-toolchain-skill-isolation-vite.md)                                                                            | Extract all Vite-related content from `rule-mcp-scaffold-frontend-react-vite` into a new `rule-toolchain-vite` skill covering:.                                                                                                 | **Positive:**.                                                                                                                                                                                                                  |
+| [225](225-thematic-skill-taxonomy-rename.md)                                                                            | Adopt a prefix-based thematic taxonomy with the following categories:.                                                                                                                                                          | **Positive:**.                                                                                                                                                                                                                  |
+| [224](224-sdk-over-handrolled-protocol.md)                                                                              | Replace the hand-rolled protocol with `@modelcontextprotocol/sdk` v1.29.0.                                                                                                                                                      | - SDK is a runtime dependency (`@modelcontextprotocol/sdk` 1.29.0).                                                                                                                                                             |
+| [223](223-scaffold-skill-consolidation.md)                                                                              | ### 1. Rename and absorb `scaffold-backend-node` -> `backend-node`.                                                                                                                                                             | **Positive:**.                                                                                                                                                                                                                  |
+| [222](222-forms-per-framework-merger-and-distribution.md)                                                               | ### 1. Merge React forms into `rule-frontend-react`.                                                                                                                                                                            | **Positive:**.                                                                                                                                                                                                                  |
+| [221](221-file-based-skill-loading.md)                                                                                  | Use **file-based skill loading** with an in-memory LRU cache.                                                                                                                                                                   | - Cross-skill queries require scanning all SKILL.md files at startup (∼20ms for 17 skills, negligible).                                                                                                                         |
+| [220](220-backend-framework-skills.md)                                                                                  | Add four backend framework skills covering the major Node.js HTTP framework ecosystems:.                                                                                                                                        | **Positive:**.                                                                                                                                                                                                                  |
 | [219](219-keep-adr-numbers-stable-and-move-gap-closing-to-its-own-command.md)                                           | Two rules.                                                                                                                                                                                                                      | Positive: a sweep stays additive, so a handoff can archive a plan without rewriting the corpus.                                                                                                                                 |
 | [218](218-close-out-plan-tool-and-skill-surface-audit.md)                                                               | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_tool-and-skill-surface-audit.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                                   |
 | [217](217-close-out-plan-oss-readiness-and-repo-health.md)                                                              | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_oss-readiness-and-repo-health.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                                  |
@@ -444,6 +508,8 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### docs
 
+- [251](251-close-out-plan-pi-integration-and-debt.md) Close out plan _pi-integration-and-debt
+- [242](242-adr-conventions-real-author-mandatory-ends-when-three-digits-explicit-supersede.md) ADR conventions: real author, mandatory ends-when, three digits, explicit supersede
 - [219](219-keep-adr-numbers-stable-and-move-gap-closing-to-its-own-command.md) Keep ADR numbers stable and move gap-closing to its own command
 - [218](218-close-out-plan-tool-and-skill-surface-audit.md) Close out plan _tool-and-skill-surface-audit
 - [217](217-close-out-plan-oss-readiness-and-repo-health.md) Close out plan _oss-readiness-and-repo-health
@@ -485,6 +551,12 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### installer
 
+- [237](237-the-launcher-owns-a-copy-outside-the-checkout.md) The launcher owns a copy outside the checkout
+- [236](236-close-host-integration-depth-with-deferred-per-host-token-measurement.md) Close host integration depth with deferred per-host token measurement
+- [233](233-project-membership-is-a-command-and-an-update-re-applies-what-it-moved.md) Project membership is a command, and an update re-applies what it moved
+- [231](231-uninstall-reclaims-the-configuration-it-wrote-after-asking.md) Uninstall reclaims the configuration it wrote, after asking
+- [230](230-derive-the-tokensave-switch-from-the-project-and-accept-on-autotrack-as-its-name.md) Derive the tokensave switch from the project and accept on+autotrack as its name
+- [229](229-attribution-is-one-table-row-per-agent-and-an-undocumented-agent-is-left-alone.md) Attribution is one table row per agent, and an undocumented agent is left alone
 - [215](215-the-uninstall-drops-the-pnpm-global-link-and-the-launcher-deploys-one-project.md) The uninstall drops the pnpm global link, and the launcher deploys one project
 - [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
 - [197](197-own-every-user-facing-switch-as-a-feature.md) Own every user-facing switch as a feature
@@ -517,8 +589,41 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [039](039-fix-vscode-extension-and-derivatives-install-uninstall.md) Fix VS Code extension and derivatives install/uninstall
 - [028](028-clean-rule-mcp-commands-via-user-commands-prompt-suppression-not-a-plugin.md) Clean /rule-mcp-* commands via user commands + prompt suppression, not a plugin
 
+### architecture
+
+- [240](240-pnpm-workspace-with-packages-mcp-shared-docs-and-publish-from-packages-mcp.md) pnpm workspace with packages mcp shared docs and publish from packages/mcp
+- [237](237-the-launcher-owns-a-copy-outside-the-checkout.md) The launcher owns a copy outside the checkout
+- [236](236-close-host-integration-depth-with-deferred-per-host-token-measurement.md) Close host integration depth with deferred per-host token measurement
+- [232](232-split-the-files-the-size-ratchet-named-and-baseline-the-eight-that-were-never-re.md) Split the files the size ratchet named, and baseline the eight that were never recorded
+- [222](222-forms-per-framework-merger-and-distribution.md) forms per framework merger and distribution
+- [196](196-number-pending-adrs-when-they-land-on-the-trunk.md) Number pending ADRs when they land on the trunk
+- [195](195-write-adrs-when-a-policy-says-so-at-handoff-by-default.md) Write ADRs when a policy says so at handoff by default
+- [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md) Host install and uninstall maps are lookups on the host record
+- [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md) Guard daemon on a Unix socket with a thin --send client
+- [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md) Guard skips core-tool bootstrap; optional persistent --loop
+- [169](169-rename-the-server-to-rulemcp.md) Rename the server to RuleMCP
+- [156](156-keep-bm25-and-gate-a-local-decision-model-as-a-second-opinion.md) Keep BM25 and gate a local decision model as a second opinion
+- [124](124-make-the-tool-call-host-a-list-so-invocation-hosts-coexist.md) Make the tool-call host a list so invocation hosts coexist
+- [112](112-extend-the-file-size-cap-to-the-shipped-skill-trees.md) Extend the file-size cap to the shipped skill trees
+- [100](100-the-tokensave-integration-closes-out-and-the-adapter-is-the-code-graph-layer.md) The TokenSave integration closes out: the adapter and its graph-backed tools are the code-graph layer
+- [096](096-tokensave-is-the-primary-code-graph-javascript-is-the-fallback.md) TokenSave is the primary code graph, JavaScript is the fallback
+- [092](092-surface-selection-amends-the-install-stack-freeze-with-an-additive-loader-filter.md) Surface selection amends the install stack freeze with an additive loader filter
+- [091](091-install-uninstall-rework-keeps-current-stack-steps-and-contents-only.md) Install/uninstall rework keeps current stack, steps and contents only
+- [089](089-skills-own-their-guardrails-and-three-layers-resolve-both-skills-and-personas.md) Skills own their guardrails, and three layers resolve both skills and personas
+- [058](058-one-file-per-rule-with-underscore-barrel-folders-and-a-size-ratchet.md) One file per rule with underscore-barrel folders and a size ratchet
+- [057](057-reorganize-scripts-src-tests-with-150-line-code-splitting.md) Reorganize scripts, src and tests with 150-line code splitting
+- [033](033-registry-driven-clean-slash-commands-for-every-agent-and-ide.md) Registry-driven clean slash commands for every agent and IDE
+- [032](032-the-tool-surface-is-skills-and-nothing-else.md) The tool surface is ./skills and nothing else
+- [031](031-pin-the-self-update-remote-and-drop-root-in-the-container.md) Pin the self-update remote and drop root in the container
+- [030](030-interview-servers-enforce-same-origin-and-own-their-process-lifecycle.md) Interview servers enforce same-origin and own their process lifecycle
+- [029](029-bind-write-authorization-to-destinations-not-just-content.md) Bind write authorization to destinations, not just content
+- [019](019-use-a-persistent-local-bearer-token-for-daemon-transport.md) use a persistent local bearer token for daemon transport
+- [018](018-fail-closed-mcp-enforcement-and-reusable-agent-commands.md) fail closed mcp enforcement and reusable agent commands
+- [011](011-forms-per-framework.md) Forms per Framework - Merger & Distribution
+
 ### closeout
 
+- [251](251-close-out-plan-pi-integration-and-debt.md) Close out plan _pi-integration-and-debt
 - [218](218-close-out-plan-tool-and-skill-surface-audit.md) Close out plan _tool-and-skill-surface-audit
 - [217](217-close-out-plan-oss-readiness-and-repo-health.md) Close out plan _oss-readiness-and-repo-health
 - [216](216-close-out-plan-installer-global-link-and-launcher-deploy.md) Close out plan _installer-global-link-and-launcher-deploy
@@ -549,6 +654,9 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### skills
 
+- [226](226-toolchain-skill-isolation-vite.md) toolchain skill isolation vite
+- [223](223-scaffold-skill-consolidation.md) scaffold skill consolidation
+- [220](220-backend-framework-skills.md) backend framework skills
 - [153](153-retire-the-rule-mcp-platform-agent-skill.md) Retire the rule-platform-agent skill
 - [152](152-retire-rule-mcp-frontend-vanilla-reactive-and-rule-mcp-frontend-custom-element.md) Retire rule-frontend-vanilla-reactive and rule-frontend-custom-element
 - [151](151-open-a-rule-mcp-method-area-with-one-skill-per-methodology-framework.md) Open a rule-mcp-method area with one skill per methodology framework
@@ -575,59 +683,14 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [005](005-backend-framework-skills.md) Backend Framework Skills
 - [004](004-scaffold-consolidation.md) Scaffold Skill Consolidation
 
-### architecture
-
-- [196](196-number-pending-adrs-when-they-land-on-the-trunk.md) Number pending ADRs when they land on the trunk
-- [195](195-write-adrs-when-a-policy-says-so-at-handoff-by-default.md) Write ADRs when a policy says so at handoff by default
-- [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md) Host install and uninstall maps are lookups on the host record
-- [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md) Guard daemon on a Unix socket with a thin --send client
-- [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md) Guard skips core-tool bootstrap; optional persistent --loop
-- [169](169-rename-the-server-to-rulemcp.md) Rename the server to RuleMCP
-- [156](156-keep-bm25-and-gate-a-local-decision-model-as-a-second-opinion.md) Keep BM25 and gate a local decision model as a second opinion
-- [124](124-make-the-tool-call-host-a-list-so-invocation-hosts-coexist.md) Make the tool-call host a list so invocation hosts coexist
-- [112](112-extend-the-file-size-cap-to-the-shipped-skill-trees.md) Extend the file-size cap to the shipped skill trees
-- [100](100-the-tokensave-integration-closes-out-and-the-adapter-is-the-code-graph-layer.md) The TokenSave integration closes out: the adapter and its graph-backed tools are the code-graph layer
-- [096](096-tokensave-is-the-primary-code-graph-javascript-is-the-fallback.md) TokenSave is the primary code graph, JavaScript is the fallback
-- [092](092-surface-selection-amends-the-install-stack-freeze-with-an-additive-loader-filter.md) Surface selection amends the install stack freeze with an additive loader filter
-- [091](091-install-uninstall-rework-keeps-current-stack-steps-and-contents-only.md) Install/uninstall rework keeps current stack, steps and contents only
-- [089](089-skills-own-their-guardrails-and-three-layers-resolve-both-skills-and-personas.md) Skills own their guardrails, and three layers resolve both skills and personas
-- [058](058-one-file-per-rule-with-underscore-barrel-folders-and-a-size-ratchet.md) One file per rule with underscore-barrel folders and a size ratchet
-- [057](057-reorganize-scripts-src-tests-with-150-line-code-splitting.md) Reorganize scripts, src and tests with 150-line code splitting
-- [033](033-registry-driven-clean-slash-commands-for-every-agent-and-ide.md) Registry-driven clean slash commands for every agent and IDE
-- [032](032-the-tool-surface-is-skills-and-nothing-else.md) The tool surface is ./skills and nothing else
-- [031](031-pin-the-self-update-remote-and-drop-root-in-the-container.md) Pin the self-update remote and drop root in the container
-- [030](030-interview-servers-enforce-same-origin-and-own-their-process-lifecycle.md) Interview servers enforce same-origin and own their process lifecycle
-- [029](029-bind-write-authorization-to-destinations-not-just-content.md) Bind write authorization to destinations, not just content
-- [019](019-use-a-persistent-local-bearer-token-for-daemon-transport.md) use a persistent local bearer token for daemon transport
-- [018](018-fail-closed-mcp-enforcement-and-reusable-agent-commands.md) fail closed mcp enforcement and reusable agent commands
-- [011](011-forms-per-framework.md) Forms per Framework - Merger & Distribution
-
-### governance
-
-- [214](214-main-is-the-only-branch-after-one-final-history-rewrite.md) main is the only branch after one final history rewrite
-- [186](186-baseline-the-cli-file-size-debt-in-the-ratchet.md) Baseline the CLI file-size debt in the ratchet
-- [182](182-one-host-record-answers-for-every-catalog-host.md) One host record answers for every catalog host
-- [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md) Retire the cross-branch plan graph and orchestrate from rel/v0.1.0
-- [178](178-surface-is-the-only-tier-picker-slash-commands-follow-it.md) Surface is the only tier picker; slash commands follow it
-- [177](177-rework-the-installer-around-one-profile-a-manifest-and-opentui.md) Rework the installer around one profile, a manifest and OpenTUI
-- [176](176-drop-the-spdx-file-headers.md) Drop the SPDX file headers
-- [175](175-orchestrate-the-plan-catalog-with-a-staged-dependency-graph.md) Orchestrate the plan catalog with a staged dependency graph
-- [174](174-retire-the-codeql-workflow-until-code-scanning-is-available.md) Retire the CodeQL workflow until code scanning is available
-- [173](173-drop-the-dco-sign-off-requirement.md) Drop the DCO sign-off requirement
-- [172](172-retire-closed-plans-into-adrs-and-one-handoff.md) Retire closed plans into ADRs and one handoff
-- [171](171-retire-the-plan-graph-audit-reference-into-an-adr-and-a-handoff.md) Retire the plan-graph audit reference into an ADR and a handoff
-- [170](170-retire-the-plan-of-plans-into-an-adr-and-a-handoff.md) Retire the plan-of-plans into an ADR and a handoff
-- [154](154-every-plan-carries-a-status-line-a-dependency-graph-and-checkbox-steps.md) Every plan carries a status line, a dependency graph and checkbox steps
-- [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
-- [135](135-codify-stage-0-oss-governance-signing-support-and-licensing-policies.md) Codify Stage 0 OSS governance, signing, support, and licensing policies
-- [098](098-develop-merges-into-main-by-area-and-stays-as-an-integration-branch.md) develop merges into main by area, and stays as an integration branch
-- [093](093-add-an-open-source-steward-persona-for-governance-contributors-and-donors.md) Add an Open Source Steward persona for governance, contributors and donors
-- [083](083-governance-is-an-explicit-bdfl-with-a-path-to-co-maintainers.md) Governance is an explicit BDFL with a path to co-maintainers
-- [079](079-add-the-oss-architect-review-persona.md) Add the OSS Architect review persona
-- [066](066-remove-externally-derived-skills-from-the-served-knowledge-base.md) Remove externally derived skills from the served knowledge base
-
 ### guardrails
 
+- [246](246-retire-area-guardrail-plans-after-assigning-every-retained-rule.md) Retire area guardrail plans after assigning every retained rule
+- [245](245-use-offline-betterleaks-scans-for-git-credential-checks.md) Use offline Betterleaks scans for Git credential checks
+- [243](243-the-adr-guardrails-are-advisory-with-dual-detection-and-a-shrinking-legacy-list.md) The ADR guardrails are advisory with dual detection and a shrinking legacy list
+- [241](241-cap-prose-sentences-at-25-words-and-keep-identifiers-dictionary-driven.md) Cap prose sentences at 25 words and keep identifiers dictionary-driven
+- [234](234-count-the-cycles-and-the-dead-symbols-the-graph-can-prove-and-break-the-cycles-t.md) Count the cycles and the dead symbols the graph can prove, and break the cycles that are real
+- [228](228-extend-the-devops-guardrail-family-with-file-scoped-source-cited-rules.md) Extend the devops guardrail family with file-scoped, source-cited rules
 - [153](153-retire-the-rule-mcp-platform-agent-skill.md) Retire the rule-platform-agent skill
 - [152](152-retire-rule-mcp-frontend-vanilla-reactive-and-rule-mcp-frontend-custom-element.md) Retire rule-frontend-vanilla-reactive and rule-frontend-custom-element
 - [149](149-choose-one-sdd-framework-per-repository-instead-of-peer-methodology-skills.md) Choose one SDD framework per repository instead of peer methodology skills
@@ -649,6 +712,32 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [049](049-split-hotspot-modules.md) Split the hotspot modules (guardrails + installer)
 - [044](044-adopt-eslint-plugin-unicorn-for-js-ts-quality.md) Adopt eslint-plugin-unicorn for JS/TS quality
 - [018](018-fail-closed-mcp-enforcement-and-reusable-agent-commands.md) fail closed mcp enforcement and reusable agent commands
+
+### governance
+
+- [250](250-turn-off-the-asterisk-prefix-documentation-rule.md) Turn off the asterisk-prefix documentation rule
+- [242](242-adr-conventions-real-author-mandatory-ends-when-three-digits-explicit-supersede.md) ADR conventions: real author, mandatory ends-when, three digits, explicit supersede
+- [214](214-main-is-the-only-branch-after-one-final-history-rewrite.md) main is the only branch after one final history rewrite
+- [186](186-baseline-the-cli-file-size-debt-in-the-ratchet.md) Baseline the CLI file-size debt in the ratchet
+- [182](182-one-host-record-answers-for-every-catalog-host.md) One host record answers for every catalog host
+- [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md) Retire the cross-branch plan graph and orchestrate from rel/v0.1.0
+- [178](178-surface-is-the-only-tier-picker-slash-commands-follow-it.md) Surface is the only tier picker; slash commands follow it
+- [177](177-rework-the-installer-around-one-profile-a-manifest-and-opentui.md) Rework the installer around one profile, a manifest and OpenTUI
+- [176](176-drop-the-spdx-file-headers.md) Drop the SPDX file headers
+- [175](175-orchestrate-the-plan-catalog-with-a-staged-dependency-graph.md) Orchestrate the plan catalog with a staged dependency graph
+- [174](174-retire-the-codeql-workflow-until-code-scanning-is-available.md) Retire the CodeQL workflow until code scanning is available
+- [173](173-drop-the-dco-sign-off-requirement.md) Drop the DCO sign-off requirement
+- [172](172-retire-closed-plans-into-adrs-and-one-handoff.md) Retire closed plans into ADRs and one handoff
+- [171](171-retire-the-plan-graph-audit-reference-into-an-adr-and-a-handoff.md) Retire the plan-graph audit reference into an ADR and a handoff
+- [170](170-retire-the-plan-of-plans-into-an-adr-and-a-handoff.md) Retire the plan-of-plans into an ADR and a handoff
+- [154](154-every-plan-carries-a-status-line-a-dependency-graph-and-checkbox-steps.md) Every plan carries a status line, a dependency graph and checkbox steps
+- [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
+- [135](135-codify-stage-0-oss-governance-signing-support-and-licensing-policies.md) Codify Stage 0 OSS governance, signing, support, and licensing policies
+- [098](098-develop-merges-into-main-by-area-and-stays-as-an-integration-branch.md) develop merges into main by area, and stays as an integration branch
+- [093](093-add-an-open-source-steward-persona-for-governance-contributors-and-donors.md) Add an Open Source Steward persona for governance, contributors and donors
+- [083](083-governance-is-an-explicit-bdfl-with-a-path-to-co-maintainers.md) Governance is an explicit BDFL with a path to co-maintainers
+- [079](079-add-the-oss-architect-review-persona.md) Add the OSS Architect review persona
+- [066](066-remove-externally-derived-skills-from-the-served-knowledge-base.md) Remove externally derived skills from the served knowledge base
 
 ### routing
 
@@ -676,6 +765,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### plan
 
+- [251](251-close-out-plan-pi-integration-and-debt.md) Close out plan _pi-integration-and-debt
 - [218](218-close-out-plan-tool-and-skill-surface-audit.md) Close out plan _tool-and-skill-surface-audit
 - [217](217-close-out-plan-oss-readiness-and-repo-health.md) Close out plan _oss-readiness-and-repo-health
 - [216](216-close-out-plan-installer-global-link-and-launcher-deploy.md) Close out plan _installer-global-link-and-launcher-deploy
@@ -696,6 +786,27 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
 - [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
 
+### release
+
+- [249](249-the-repository-stays-pixu1980-rule-mcp-and-the-registry-name-is-io-github-pixu19.md) The repository stays pixu1980/rule-mcp and the registry name is io.github.pixu1980/rule-mcp
+- [248](248-publish-an-npm-placeholder-to-reserve-the-rule-mcp-name.md) Publish an npm placeholder to reserve the rule-mcp name
+- [247](247-an-update-notifies-by-default-and-upgrades-only-when-asked.md) An update notifies by default and upgrades only when asked
+- [214](214-main-is-the-only-branch-after-one-final-history-rewrite.md) main is the only branch after one final history rewrite
+- [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md) Retire the cross-branch plan graph and orchestrate from rel/v0.1.0
+- [170](170-retire-the-plan-of-plans-into-an-adr-and-a-handoff.md) Retire the plan-of-plans into an ADR and a handoff
+- [169](169-rename-the-server-to-rulemcp.md) Rename the server to RuleMCP
+- [135](135-codify-stage-0-oss-governance-signing-support-and-licensing-policies.md) Codify Stage 0 OSS governance, signing, support, and licensing policies
+- [133](133-first-release-is-v0-1-0-then-semver-from-commits.md) First release is v0.1.0, then SemVer from commits
+- [131](131-an-update-moves-a-git-clone-install-to-the-newest-release-tag-unasked.md) An update moves a git-clone install to the newest release tag, unasked
+- [130](130-this-server-releases-itself-with-pnpm-release-and-the-push-is-the-release.md) This server releases itself with pnpm release, and the push is the release
+- [127](127-derive-the-next-version-and-the-changelog-from-the-commit-rule.md) Derive the next version and the changelog from the commit rule
+- [113](113-rename-the-command-surface-under-process-and-persona-namespaces.md) Rename the command surface under process and persona namespaces
+- [097](097-the-release-target-is-v0-1-0-beta-and-the-version-tooling-accepts-a-prerelease.md) The release target is v0.1.0-beta, and the version tooling accepts a prerelease
+- [085](085-reset-the-project-version-to-0-1-0-first-release-will-be-v0-1-0.md) Reset the project version to 0.1.0, first release will be v0.1.0
+- [082](082-release-artifacts-are-github-tarballs-not-registry-packages.md) Release artifacts are GitHub tarballs, not registry packages
+- [081](081-mcp-registry-identity-is-the-github-owner-not-a-claimed-brand.md) MCP registry identity is the GitHub owner, not a claimed brand
+- [048](048-v100-release-and-docs-accuracy-guard.md) v1.0.0 release and the docs-accuracy guard
+
 ### breaking
 
 - [153](153-retire-the-rule-mcp-platform-agent-skill.md) Retire the rule-platform-agent skill
@@ -715,26 +826,9 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [114](114-flight-is-process-area-guidance-injected-on-every-prompt-not-a-slash-command.md) Flight is process-area guidance injected on every prompt, not a slash command
 - [113](113-rename-the-command-surface-under-process-and-persona-namespaces.md) Rename the command surface under process and persona namespaces
 
-### release
-
-- [214](214-main-is-the-only-branch-after-one-final-history-rewrite.md) main is the only branch after one final history rewrite
-- [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md) Retire the cross-branch plan graph and orchestrate from rel/v0.1.0
-- [170](170-retire-the-plan-of-plans-into-an-adr-and-a-handoff.md) Retire the plan-of-plans into an ADR and a handoff
-- [169](169-rename-the-server-to-rulemcp.md) Rename the server to RuleMCP
-- [135](135-codify-stage-0-oss-governance-signing-support-and-licensing-policies.md) Codify Stage 0 OSS governance, signing, support, and licensing policies
-- [133](133-first-release-is-v0-1-0-then-semver-from-commits.md) First release is v0.1.0, then SemVer from commits
-- [131](131-an-update-moves-a-git-clone-install-to-the-newest-release-tag-unasked.md) An update moves a git-clone install to the newest release tag, unasked
-- [130](130-this-server-releases-itself-with-pnpm-release-and-the-push-is-the-release.md) This server releases itself with pnpm release, and the push is the release
-- [127](127-derive-the-next-version-and-the-changelog-from-the-commit-rule.md) Derive the next version and the changelog from the commit rule
-- [113](113-rename-the-command-surface-under-process-and-persona-namespaces.md) Rename the command surface under process and persona namespaces
-- [097](097-the-release-target-is-v0-1-0-beta-and-the-version-tooling-accepts-a-prerelease.md) The release target is v0.1.0-beta, and the version tooling accepts a prerelease
-- [085](085-reset-the-project-version-to-0-1-0-first-release-will-be-v0-1-0.md) Reset the project version to 0.1.0, first release will be v0.1.0
-- [082](082-release-artifacts-are-github-tarballs-not-registry-packages.md) Release artifacts are GitHub tarballs, not registry packages
-- [081](081-mcp-registry-identity-is-the-github-owner-not-a-claimed-brand.md) MCP registry identity is the GitHub owner, not a claimed brand
-- [048](048-v100-release-and-docs-accuracy-guard.md) v1.0.0 release and the docs-accuracy guard
-
 ### cli
 
+- [237](237-the-launcher-owns-a-copy-outside-the-checkout.md) The launcher owns a copy outside the checkout
 - [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md) Hook install starts the guard daemon and writers use --send
 - [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md) Guard daemon on a Unix socket with a thin --send client
 - [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md) Guard skips core-tool bootstrap; optional persistent --loop
@@ -769,6 +863,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### git
 
+- [245](245-use-offline-betterleaks-scans-for-git-credential-checks.md) Use offline Betterleaks scans for Git credential checks
 - [214](214-main-is-the-only-branch-after-one-final-history-rewrite.md) main is the only branch after one final history rewrite
 - [194](194-follow-only-real-renames-when-dating-a-numbered-document.md) Follow only real renames when dating a numbered document
 - [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
@@ -797,6 +892,21 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [158](158-replay-the-decision-cache-gate-only-behind-a-measured-threshold.md) Replay the decision-cache gate only behind a measured threshold
 - [157](157-shadow-the-decision-cache-gate-before-replaying.md) Shadow the decision-cache gate before replaying
 - [156](156-keep-bm25-and-gate-a-local-decision-model-as-a-second-opinion.md) Keep BM25 and gate a local decision model as a second opinion
+
+### prompts
+
+- [238](238-restore-rule-adr-because-it-binds-adr-write-to-decision-cache-keep.md) Restore rule-adr because it binds ADR write to decision-cache keep
+- [120](120-fold-the-per-operation-persona-commands-into-one-per-role-with-the-depth-read-fr.md) Fold the per-operation persona commands into one per role, with the depth read from the request
+- [117](117-area-slash-commands-are-collectors-only-leaves-route-from-the-prompt.md) Area slash commands are collectors only; leaves route from the prompt
+- [114](114-flight-is-process-area-guidance-injected-on-every-prompt-not-a-slash-command.md) Flight is process-area guidance injected on every prompt, not a slash command
+- [113](113-rename-the-command-surface-under-process-and-persona-namespaces.md) Rename the command surface under process and persona namespaces
+- [106](106-check-runs-per-area-and-the-general-check-auto-detects-it.md) Check runs per area, and the general check auto-detects it
+- [104](104-the-handoff-document-closes-with-the-resume-prompt.md) The handoff document closes with the resume prompt
+- [088](088-a-persona-topic-is-the-binding-scope-of-the-run.md) A persona topic is the binding scope of the run
+- [077](077-compress-every-server-model-list-surface-prompts-list-tools-list-resources-list.md) Compress every server->model list surface (prompts/list, tools/list, resources/list)
+- [055](055-restructure-the-command-surface-rule-mcp-router-rule-mcp-area-compression-implicit-rule-mcp-process.md) Restructure the command surface: /rule router, rule-area-*, compression implicit, rule-process-tdd skill
+- [054](054-split-review-personas-into-per-operation-commands-plan-audit-review.md) Split review personas into per-operation commands (plan/audit/review)
+- [052](052-pre-packaged-mcp-prompt-registry-26-prompts-strict-schemas-commit-scope-closer.md) Pre-packaged MCP prompt registry (26 prompts, strict schemas, commit-scope closer)
 
 ### testing
 
@@ -841,6 +951,20 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [158](158-replay-the-decision-cache-gate-only-behind-a-measured-threshold.md) Replay the decision-cache gate only behind a measured threshold
 - [157](157-shadow-the-decision-cache-gate-before-replaying.md) Shadow the decision-cache gate before replaying
 
+### plans
+
+- [246](246-retire-area-guardrail-plans-after-assigning-every-retained-rule.md) Retire area guardrail plans after assigning every retained rule
+- [244](244-handoff-proposes-only-the-plan-cascade-and-every-plan-carries-workstreams-checkb.md) Handoff proposes only the plan cascade, and every plan carries workstreams, checkboxes and a graph
+- [239](239-mcp-authored-markdown-uses-asd-ste100-at-about-80-percent.md) MCP-authored Markdown uses ASD-STE100 at about 80 percent
+- [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md) Retire the cross-branch plan graph and orchestrate from rel/v0.1.0
+- [175](175-orchestrate-the-plan-catalog-with-a-staged-dependency-graph.md) Orchestrate the plan catalog with a staged dependency graph
+- [172](172-retire-closed-plans-into-adrs-and-one-handoff.md) Retire closed plans into ADRs and one handoff
+- [171](171-retire-the-plan-graph-audit-reference-into-an-adr-and-a-handoff.md) Retire the plan-graph audit reference into an ADR and a handoff
+- [170](170-retire-the-plan-of-plans-into-an-adr-and-a-handoff.md) Retire the plan-of-plans into an ADR and a handoff
+- [154](154-every-plan-carries-a-status-line-a-dependency-graph-and-checkbox-steps.md) Every plan carries a status line, a dependency graph and checkbox steps
+- [060](060-plans-carry-nested-sub-steps-and-an-exhaustiveness-mandate.md) Plans carry nested sub-steps and an exhaustiveness mandate
+- [059](059-persona-plans-are-checklists-with-marks-that-survive-the-sync.md) Persona plans are checklists with marks that survive the sync
+
 ### process
 
 - [176](176-drop-the-spdx-file-headers.md) Drop the SPDX file headers
@@ -854,20 +978,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [103](103-every-handoff-mode-sweeps-completed-working-papers-and-closeout-false-is-the-rea.md) Every handoff mode sweeps completed working papers, and closeout false is the read-only run
 - [098](098-develop-merges-into-main-by-area-and-stays-as-an-integration-branch.md) develop merges into main by area, and stays as an integration branch
 - [087](087-session-close-archives-completed-audits-reviews-and-plans.md) Session close archives completed audits, reviews and plans
-
-### prompts
-
-- [120](120-fold-the-per-operation-persona-commands-into-one-per-role-with-the-depth-read-fr.md) Fold the per-operation persona commands into one per role, with the depth read from the request
-- [117](117-area-slash-commands-are-collectors-only-leaves-route-from-the-prompt.md) Area slash commands are collectors only; leaves route from the prompt
-- [114](114-flight-is-process-area-guidance-injected-on-every-prompt-not-a-slash-command.md) Flight is process-area guidance injected on every prompt, not a slash command
-- [113](113-rename-the-command-surface-under-process-and-persona-namespaces.md) Rename the command surface under process and persona namespaces
-- [106](106-check-runs-per-area-and-the-general-check-auto-detects-it.md) Check runs per area, and the general check auto-detects it
-- [104](104-the-handoff-document-closes-with-the-resume-prompt.md) The handoff document closes with the resume prompt
-- [088](088-a-persona-topic-is-the-binding-scope-of-the-run.md) A persona topic is the binding scope of the run
-- [077](077-compress-every-server-model-list-surface-prompts-list-tools-list-resources-list.md) Compress every server->model list surface (prompts/list, tools/list, resources/list)
-- [055](055-restructure-the-command-surface-rule-mcp-router-rule-mcp-area-compression-implicit-rule-mcp-process.md) Restructure the command surface: /rule router, rule-area-*, compression implicit, rule-process-tdd skill
-- [054](054-split-review-personas-into-per-operation-commands-plan-audit-review.md) Split review personas into per-operation commands (plan/audit/review)
-- [052](052-pre-packaged-mcp-prompt-registry-26-prompts-strict-schemas-commit-scope-closer.md) Pre-packaged MCP prompt registry (26 prompts, strict schemas, commit-scope closer)
 
 ### personas
 
@@ -884,6 +994,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### security
 
+- [245](245-use-offline-betterleaks-scans-for-git-credential-checks.md) Use offline Betterleaks scans for Git credential checks
 - [174](174-retire-the-codeql-workflow-until-code-scanning-is-available.md) Retire the CodeQL workflow until code scanning is available
 - [156](156-keep-bm25-and-gate-a-local-decision-model-as-a-second-opinion.md) Keep BM25 and gate a local decision model as a second opinion
 - [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
@@ -896,6 +1007,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### toolchain
 
+- [226](226-toolchain-skill-isolation-vite.md) toolchain skill isolation vite
 - [146](146-merge-the-typescript-compiler-skill-into-rule-mcp-styleguide-typescript.md) Merge the TypeScript compiler skill into rule-styleguide-typescript
 - [143](143-rename-rule-mcp-toolchain-commits-to-rule-mcp-styleguide-git.md) Rename rule-toolchain-commits to rule-styleguide-git
 - [142](142-rename-rule-mcp-toolchain-project-to-rule-mcp-styleguide-configuration.md) Rename rule-toolchain-project to rule-styleguide-configuration
@@ -905,6 +1017,18 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [043](043-strengthen-typescript-discipline-for-large-codebases.md) Strengthen TypeScript discipline for large codebases
 - [027](027-add-rule-mcp-toolchain-commits-skill-for-atomic-conventional-commits-with-mandatory-s.md) Add rule-toolchain-commits skill for atomic conventional commits with mandatory scope
 - [009](009-toolchain-vite.md) Toolchain Skill Isolation (Vite)
+
+### hooks
+
+- [236](236-close-host-integration-depth-with-deferred-per-host-token-measurement.md) Close host integration depth with deferred per-host token measurement
+- [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md) Hook install starts the guard daemon and writers use --send
+- [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md) Guard daemon on a Unix socket with a thin --send client
+- [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md) Guard skips core-tool bootstrap; optional persistent --loop
+- [185](185-lifecycle-wiring-ships-only-where-a-measurement-moves.md) Lifecycle wiring ships only where a measurement moves
+- [180](180-codex-pretooluse-silent-allow-and-ask-as-block.md) Codex PreToolUse silent allow and ask as block
+- [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md) Codex named hooks and Codex/Copilot command file targets
+- [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
+- [129](129-a-file-is-reported-on-a-task-is-confirmed.md) A file is reported on, a task is confirmed
 
 ### ci
 
@@ -917,30 +1041,9 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [063](063-coverage-floor-raised-to-87-95-remains-the-ratchet-endpoint.md) Coverage floor raised to 87; 95 remains the ratchet endpoint
 - [062](062-glob-suite-runner-colocated-tests-and-a-branch-coverage-ratchet.md) Glob suite runner, co-located tests, and a branch-coverage ratchet
 
-### hooks
-
-- [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md) Hook install starts the guard daemon and writers use --send
-- [188](188-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md) Guard daemon on a Unix socket with a thin --send client
-- [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md) Guard skips core-tool bootstrap; optional persistent --loop
-- [185](185-lifecycle-wiring-ships-only-where-a-measurement-moves.md) Lifecycle wiring ships only where a measurement moves
-- [180](180-codex-pretooluse-silent-allow-and-ask-as-block.md) Codex PreToolUse silent allow and ask as block
-- [179](179-codex-named-hooks-and-codex-copilot-command-file-targets.md) Codex named hooks and Codex/Copilot command file targets
-- [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
-- [129](129-a-file-is-reported-on-a-task-is-confirmed.md) A file is reported on, a task is confirmed
-
-### plans
-
-- [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md) Retire the cross-branch plan graph and orchestrate from rel/v0.1.0
-- [175](175-orchestrate-the-plan-catalog-with-a-staged-dependency-graph.md) Orchestrate the plan catalog with a staged dependency graph
-- [172](172-retire-closed-plans-into-adrs-and-one-handoff.md) Retire closed plans into ADRs and one handoff
-- [171](171-retire-the-plan-graph-audit-reference-into-an-adr-and-a-handoff.md) Retire the plan-graph audit reference into an ADR and a handoff
-- [170](170-retire-the-plan-of-plans-into-an-adr-and-a-handoff.md) Retire the plan-of-plans into an ADR and a handoff
-- [154](154-every-plan-carries-a-status-line-a-dependency-graph-and-checkbox-steps.md) Every plan carries a status line, a dependency graph and checkbox steps
-- [060](060-plans-carry-nested-sub-steps-and-an-exhaustiveness-mandate.md) Plans carry nested sub-steps and an exhaustiveness mandate
-- [059](059-persona-plans-are-checklists-with-marks-that-survive-the-sync.md) Persona plans are checklists with marks that survive the sync
-
 ### handoff
 
+- [244](244-handoff-proposes-only-the-plan-cascade-and-every-plan-carries-workstreams-checkb.md) Handoff proposes only the plan cascade, and every plan carries workstreams, checkboxes and a graph
 - [219](219-keep-adr-numbers-stable-and-move-gap-closing-to-its-own-command.md) Keep ADR numbers stable and move gap-closing to its own command
 - [134](134-close-features-only-after-persisting-the-final-handoff-and-consolidate-the-featu.md) Close features only after persisting the final handoff and consolidate the feature by default
 - [115](115-map-tools-slash-commands-and-skills-into-one-surface.md) Map tools, slash commands, and skills into one surface
@@ -949,8 +1052,20 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [103](103-every-handoff-mode-sweeps-completed-working-papers-and-closeout-false-is-the-rea.md) Every handoff mode sweeps completed working papers, and closeout false is the read-only run
 - [087](087-session-close-archives-completed-audits-reviews-and-plans.md) Session close archives completed audits, reviews and plans
 
+### naming
+
+- [249](249-the-repository-stays-pixu1980-rule-mcp-and-the-registry-name-is-io-github-pixu19.md) The repository stays pixu1980/rule-mcp and the registry name is io.github.pixu1980/rule-mcp
+- [248](248-publish-an-npm-placeholder-to-reserve-the-rule-mcp-name.md) Publish an npm placeholder to reserve the rule-mcp name
+- [225](225-thematic-skill-taxonomy-rename.md) thematic skill taxonomy rename
+- [169](169-rename-the-server-to-rulemcp.md) Rename the server to RuleMCP
+- [148](148-merge-simplicity-english-and-fingerprint-into-rule-mcp-process-ai.md) Merge simplicity, English and fingerprint into rule-process-ai
+- [132](132-rename-rule-mcp-tool-plan-docs-to-rule-mcp-tool-impersonation.md) Rename rule_tool_plan_docs to rule_tool_impersonation
+- [084](084-keep-the-name-with-a-written-posture-no-npm-placeholder-yet.md) Keep the name with a written posture, no npm placeholder yet
+- [001](001-thematic-skill-rename.md) Thematic Skill Taxonomy Rename
+
 ### quality-gate
 
+- [228](228-extend-the-devops-guardrail-family-with-file-scoped-source-cited-rules.md) Extend the devops guardrail family with file-scoped, source-cited rules
 - [141](141-give-the-meta-framework-area-its-first-server-and-client-boundary-guardrails.md) Give the meta-framework area its first server and client boundary guardrails
 - [140](140-add-a-shared-frontend-guardrail-family-for-xss-lists-and-workers.md) Add a shared frontend guardrail family for XSS, lists and workers
 - [139](139-extend-the-data-guardrail-family-with-shared-and-per-engine-rules.md) Extend the data guardrail family with shared and per-engine rules
@@ -958,6 +1073,26 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [137](137-add-a-source-cited-backend-guardrail-family-and-fix-the-six-existing-rules.md) Add a source-cited backend guardrail family and fix the six existing rules
 - [136](136-extend-the-devops-guardrail-family-with-file-scoped-source-cited-rules.md) Extend the devops guardrail family with file-scoped, source-cited rules
 - [112](112-extend-the-file-size-cap-to-the-shipped-skill-trees.md) Extend the file-size cap to the shipped skill trees
+
+### adr
+
+- [243](243-the-adr-guardrails-are-advisory-with-dual-detection-and-a-shrinking-legacy-list.md) The ADR guardrails are advisory with dual detection and a shrinking legacy list
+- [242](242-adr-conventions-real-author-mandatory-ends-when-three-digits-explicit-supersede.md) ADR conventions: real author, mandatory ends-when, three digits, explicit supersede
+- [238](238-restore-rule-adr-because-it-binds-adr-write-to-decision-cache-keep.md) Restore rule-adr because it binds ADR write to decision-cache keep
+- [219](219-keep-adr-numbers-stable-and-move-gap-closing-to-its-own-command.md) Keep ADR numbers stable and move gap-closing to its own command
+- [196](196-number-pending-adrs-when-they-land-on-the-trunk.md) Number pending ADRs when they land on the trunk
+- [195](195-write-adrs-when-a-policy-says-so-at-handoff-by-default.md) Write ADRs when a policy says so at handoff by default
+- [134](134-close-features-only-after-persisting-the-final-handoff-and-consolidate-the-featu.md) Close features only after persisting the final handoff and consolidate the feature by default
+
+### hosts
+
+- [229](229-attribution-is-one-table-row-per-agent-and-an-undocumented-agent-is-left-alone.md) Attribution is one table row per agent, and an undocumented agent is left alone
+- [192](192-project-scope-host-table-and-manifest-written-paths.md) Project-scope host table and manifest written paths
+- [191](191-jetbrains-mcp-config-installs-into-junie-s-user-file.md) JetBrains MCP config installs into Junie's user file
+- [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md) Host install and uninstall maps are lookups on the host record
+- [184](184-the-install-manifest-records-a-level-per-host.md) The install manifest records a level per host
+- [183](183-integration-depth-is-the-second-install-axis-capped-by-a-measured-ceiling.md) Integration depth is the second install axis, capped by a measured ceiling
+- [182](182-one-host-record-answers-for-every-catalog-host.md) One host record answers for every catalog host
 
 ### styleguide
 
@@ -987,14 +1122,14 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [063](063-coverage-floor-raised-to-87-95-remains-the-ratchet-endpoint.md) Coverage floor raised to 87; 95 remains the ratchet endpoint
 - [062](062-glob-suite-runner-colocated-tests-and-a-branch-coverage-ratchet.md) Glob suite runner, co-located tests, and a branch-coverage ratchet
 
-### hosts
+### tokensave
 
-- [192](192-project-scope-host-table-and-manifest-written-paths.md) Project-scope host table and manifest written paths
-- [191](191-jetbrains-mcp-config-installs-into-junie-s-user-file.md) JetBrains MCP config installs into Junie's user file
-- [190](190-host-install-and-uninstall-maps-are-lookups-on-the-host-record.md) Host install and uninstall maps are lookups on the host record
-- [184](184-the-install-manifest-records-a-level-per-host.md) The install manifest records a level per host
-- [183](183-integration-depth-is-the-second-install-axis-capped-by-a-measured-ceiling.md) Integration depth is the second install axis, capped by a measured ceiling
-- [182](182-one-host-record-answers-for-every-catalog-host.md) One host record answers for every catalog host
+- [234](234-count-the-cycles-and-the-dead-symbols-the-graph-can-prove-and-break-the-cycles-t.md) Count the cycles and the dead symbols the graph can prove, and break the cycles that are real
+- [230](230-derive-the-tokensave-switch-from-the-project-and-accept-on-autotrack-as-its-name.md) Derive the tokensave switch from the project and accept on+autotrack as its name
+- [100](100-the-tokensave-integration-closes-out-and-the-adapter-is-the-code-graph-layer.md) The TokenSave integration closes out: the adapter and its graph-backed tools are the code-graph layer
+- [096](096-tokensave-is-the-primary-code-graph-javascript-is-the-fallback.md) TokenSave is the primary code graph, JavaScript is the fallback
+- [088](088-a-persona-topic-is-the-binding-scope-of-the-run.md) A persona topic is the binding scope of the run
+- [051](051-token-efficiency-pipeline.md) Token-efficiency pipeline (caveman aggressive + tokensave-aware decoration)
 
 ### tool
 
@@ -1023,6 +1158,14 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [124](124-make-the-tool-call-host-a-list-so-invocation-hosts-coexist.md) Make the tool-call host a list so invocation hosts coexist
 - [097](097-the-release-target-is-v0-1-0-beta-and-the-version-tooling-accepts-a-prerelease.md) The release target is v0.1.0-beta, and the version tooling accepts a prerelease
 
+### agents
+
+- [230](230-derive-the-tokensave-switch-from-the-project-and-accept-on-autotrack-as-its-name.md) Derive the tokensave switch from the project and accept on+autotrack as its name
+- [229](229-attribution-is-one-table-row-per-agent-and-an-undocumented-agent-is-left-alone.md) Attribution is one table row per agent, and an undocumented agent is left alone
+- [138](138-give-the-ai-area-its-first-source-cited-guardrail-family.md) Give the AI area its first source-cited guardrail family
+- [033](033-registry-driven-clean-slash-commands-for-every-agent-and-ide.md) Registry-driven clean slash commands for every agent and IDE
+- [018](018-fail-closed-mcp-enforcement-and-reusable-agent-commands.md) fail closed mcp enforcement and reusable agent commands
+
 ### compression
 
 - [113](113-rename-the-command-surface-under-process-and-persona-namespaces.md) Rename the command surface under process and persona namespaces
@@ -1030,6 +1173,22 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [078](078-compress-agent-command-files-at-write-time.md) Compress agent command files at write time
 - [077](077-compress-every-server-model-list-surface-prompts-list-tools-list-resources-list.md) Compress every server->model list surface (prompts/list, tools/list, resources/list)
 - [073](073-compression-has-four-levels-and-no-llm-in-the-output-path.md) Compression has four levels and no LLM in the output path
+
+### frontend
+
+- [222](222-forms-per-framework-merger-and-distribution.md) forms per framework merger and distribution
+- [152](152-retire-rule-mcp-frontend-vanilla-reactive-and-rule-mcp-frontend-custom-element.md) Retire rule-frontend-vanilla-reactive and rule-frontend-custom-element
+- [141](141-give-the-meta-framework-area-its-first-server-and-client-boundary-guardrails.md) Give the meta-framework area its first server and client boundary guardrails
+- [140](140-add-a-shared-frontend-guardrail-family-for-xss-lists-and-workers.md) Add a shared frontend guardrail family for XSS, lists and workers
+- [011](011-forms-per-framework.md) Forms per Framework - Merger & Distribution
+
+### install
+
+- [247](247-an-update-notifies-by-default-and-upgrades-only-when-asked.md) An update notifies by default and upgrades only when asked
+- [131](131-an-update-moves-a-git-clone-install-to-the-newest-release-tag-unasked.md) An update moves a git-clone install to the newest release tag, unasked
+- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
+- [092](092-surface-selection-amends-the-install-stack-freeze-with-an-additive-loader-filter.md) Surface selection amends the install stack freeze with an additive loader filter
+- [091](091-install-uninstall-rework-keeps-current-stack-steps-and-contents-only.md) Install/uninstall rework keeps current stack, steps and contents only
 
 ### mcp
 
@@ -1039,14 +1198,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [019](019-use-a-persistent-local-bearer-token-for-daemon-transport.md) use a persistent local bearer token for daemon transport
 - [018](018-fail-closed-mcp-enforcement-and-reusable-agent-commands.md) fail closed mcp enforcement and reusable agent commands
 
-### naming
-
-- [169](169-rename-the-server-to-rulemcp.md) Rename the server to RuleMCP
-- [148](148-merge-simplicity-english-and-fingerprint-into-rule-mcp-process-ai.md) Merge simplicity, English and fingerprint into rule-process-ai
-- [132](132-rename-rule-mcp-tool-plan-docs-to-rule-mcp-tool-impersonation.md) Rename rule_tool_plan_docs to rule_tool_impersonation
-- [084](084-keep-the-name-with-a-written-posture-no-npm-placeholder-yet.md) Keep the name with a written posture, no npm placeholder yet
-- [001](001-thematic-skill-rename.md) Thematic Skill Taxonomy Rename
-
 ### performance
 
 - [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md) Hook install starts the guard daemon and writers use --send
@@ -1054,6 +1205,14 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [187](187-guard-skips-core-tool-bootstrap-optional-persistent-loop.md) Guard skips core-tool bootstrap; optional persistent --loop
 - [185](185-lifecycle-wiring-ships-only-where-a-measurement-moves.md) Lifecycle wiring ships only where a measurement moves
 - [074](074-the-cli-entry-point-loads-no-command-handler-it-has-not-been-asked-for.md) The CLI entry point loads no command handler it has not been asked for
+
+### ratchet
+
+- [232](232-split-the-files-the-size-ratchet-named-and-baseline-the-eight-that-were-never-re.md) Split the files the size ratchet named, and baseline the eight that were never recorded
+- [069](069-coverage-wave-four-holds-the-floor-at-90-and-fixes-the-daemon-status-platform-de.md) Coverage wave four holds the floor at 90 and fixes the daemon status platform defect
+- [065](065-coverage-floor-raised-to-90.md) Coverage floor raised to 90
+- [064](064-coverage-floor-raised-to-89-toward-the-95-endpoint.md) Coverage floor raised to 89 toward the 95 endpoint
+- [063](063-coverage-floor-raised-to-87-95-remains-the-ratchet-endpoint.md) Coverage floor raised to 87; 95 remains the ratchet endpoint
 
 ### review
 
@@ -1063,6 +1222,14 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [107](107-the-design-system-persona-becomes-the-ui-ux-lead.md) The design-system persona becomes the UI/UX lead
 - [088](088-a-persona-topic-is-the-binding-scope-of-the-run.md) A persona topic is the binding scope of the run
 
+### taxonomy
+
+- [225](225-thematic-skill-taxonomy-rename.md) thematic skill taxonomy rename
+- [075](075-meta-frameworks-get-their-own-namespace-and-a-narrow-dispatcher.md) Meta-frameworks get their own namespace and a narrow dispatcher
+- [027](027-add-rule-mcp-toolchain-commits-skill-for-atomic-conventional-commits-with-mandatory-s.md) Add rule-toolchain-commits skill for atomic conventional commits with mandatory scope
+- [026](026-rename-rule-mcp-agents-to-rule-mcp-ai-agents-and-add-rule-mcp-ai-collector-skill.md) Rename rule-mcp-agents to rule-ai-agents and add rule-ai collector skill
+- [001](001-thematic-skill-rename.md) Thematic Skill Taxonomy Rename
+
 ### tools
 
 - [132](132-rename-rule-mcp-tool-plan-docs-to-rule-mcp-tool-impersonation.md) Rename rule_tool_plan_docs to rule_tool_impersonation
@@ -1071,12 +1238,12 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [077](077-compress-every-server-model-list-surface-prompts-list-tools-list-resources-list.md) Compress every server->model list surface (prompts/list, tools/list, resources/list)
 - [075](075-meta-frameworks-get-their-own-namespace-and-a-narrow-dispatcher.md) Meta-frameworks get their own namespace and a narrow dispatcher
 
-### adr
+### ai
 
-- [219](219-keep-adr-numbers-stable-and-move-gap-closing-to-its-own-command.md) Keep ADR numbers stable and move gap-closing to its own command
-- [196](196-number-pending-adrs-when-they-land-on-the-trunk.md) Number pending ADRs when they land on the trunk
-- [195](195-write-adrs-when-a-policy-says-so-at-handoff-by-default.md) Write ADRs when a policy says so at handoff by default
-- [134](134-close-features-only-after-persisting-the-final-handoff-and-consolidate-the-featu.md) Close features only after persisting the final handoff and consolidate the feature by default
+- [243](243-the-adr-guardrails-are-advisory-with-dual-detection-and-a-shrinking-legacy-list.md) The ADR guardrails are advisory with dual detection and a shrinking legacy list
+- [241](241-cap-prose-sentences-at-25-words-and-keep-identifiers-dictionary-driven.md) Cap prose sentences at 25 words and keep identifiers dictionary-driven
+- [138](138-give-the-ai-area-its-first-source-cited-guardrail-family.md) Give the AI area its first source-cited guardrail family
+- [026](026-rename-rule-mcp-agents-to-rule-mcp-ai-agents-and-add-rule-mcp-ai-collector-skill.md) Rename rule-mcp-agents to rule-ai-agents and add rule-ai collector skill
 
 ### audit
 
@@ -1085,12 +1252,19 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [119](119-close-out-audit-ui.md) Close out audit ui
 - [111](111-close-out-audit-security.md) Close out audit security
 
-### frontend
+### backend
 
-- [152](152-retire-rule-mcp-frontend-vanilla-reactive-and-rule-mcp-frontend-custom-element.md) Retire rule-frontend-vanilla-reactive and rule-frontend-custom-element
-- [141](141-give-the-meta-framework-area-its-first-server-and-client-boundary-guardrails.md) Give the meta-framework area its first server and client boundary guardrails
-- [140](140-add-a-shared-frontend-guardrail-family-for-xss-lists-and-workers.md) Add a shared frontend guardrail family for XSS, lists and workers
-- [011](011-forms-per-framework.md) Forms per Framework - Merger & Distribution
+- [220](220-backend-framework-skills.md) backend framework skills
+- [137](137-add-a-source-cited-backend-guardrail-family-and-fix-the-six-existing-rules.md) Add a source-cited backend guardrail family and fix the six existing rules
+- [053](053-gateway-as-the-single-entrypoint-with-server-side-receipts-backend-data-devops-g.md) Gateway as the single entrypoint with server-side receipts; backend/data/devops guardrail families
+- [005](005-backend-framework-skills.md) Backend Framework Skills
+
+### documentation
+
+- [239](239-mcp-authored-markdown-uses-asd-ste100-at-about-80-percent.md) MCP-authored Markdown uses ASD-STE100 at about 80 percent
+- [145](145-move-the-readme-skill-from-styleguide-to-process.md) Move the README skill from styleguide to process
+- [060](060-plans-carry-nested-sub-steps-and-an-exhaustiveness-mandate.md) Plans carry nested sub-steps and an exhaustiveness mandate
+- [059](059-persona-plans-are-checklists-with-marks-that-survive-the-sync.md) Persona plans are checklists with marks that survive the sync
 
 ### history
 
@@ -1099,19 +1273,12 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [126](126-close-a-feature-with-reset-soft-onto-the-merge-base-and-one-validated-commit.md) Close a feature with reset --soft onto the merge base and one validated commit
 - [125](125-normalize-history-on-the-merge-base-and-hold-every-rewrite-to-a-tree-invariant.md) Normalize history on the merge base and hold every rewrite to a tree invariant
 
-### install
+### infrastructure
 
-- [131](131-an-update-moves-a-git-clone-install-to-the-newest-release-tag-unasked.md) An update moves a git-clone install to the newest release tag, unasked
-- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
-- [092](092-surface-selection-amends-the-install-stack-freeze-with-an-additive-loader-filter.md) Surface selection amends the install stack freeze with an additive loader filter
-- [091](091-install-uninstall-rework-keeps-current-stack-steps-and-contents-only.md) Install/uninstall rework keeps current stack, steps and contents only
-
-### ratchet
-
-- [069](069-coverage-wave-four-holds-the-floor-at-90-and-fixes-the-daemon-status-platform-de.md) Coverage wave four holds the floor at 90 and fixes the daemon status platform defect
-- [065](065-coverage-floor-raised-to-90.md) Coverage floor raised to 90
-- [064](064-coverage-floor-raised-to-89-toward-the-95-endpoint.md) Coverage floor raised to 89 toward the 95 endpoint
-- [063](063-coverage-floor-raised-to-87-95-remains-the-ratchet-endpoint.md) Coverage floor raised to 87; 95 remains the ratchet endpoint
+- [225](225-thematic-skill-taxonomy-rename.md) thematic skill taxonomy rename
+- [223](223-scaffold-skill-consolidation.md) scaffold skill consolidation
+- [004](004-scaffold-consolidation.md) Scaffold Skill Consolidation
+- [001](001-thematic-skill-rename.md) Thematic Skill Taxonomy Rename
 
 ### refactor
 
@@ -1120,38 +1287,12 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [050](050-round-two-hardening-cycles-daemon-cleanup-diagnostics.md) Round-2 hardening - cycles, daemon/commands split, diagnostics, HTTP verification
 - [049](049-split-hotspot-modules.md) Split the hotspot modules (guardrails + installer)
 
-### taxonomy
-
-- [075](075-meta-frameworks-get-their-own-namespace-and-a-narrow-dispatcher.md) Meta-frameworks get their own namespace and a narrow dispatcher
-- [027](027-add-rule-mcp-toolchain-commits-skill-for-atomic-conventional-commits-with-mandatory-s.md) Add rule-toolchain-commits skill for atomic conventional commits with mandatory scope
-- [026](026-rename-rule-mcp-agents-to-rule-mcp-ai-agents-and-add-rule-mcp-ai-collector-skill.md) Rename rule-mcp-agents to rule-ai-agents and add rule-ai collector skill
-- [001](001-thematic-skill-rename.md) Thematic Skill Taxonomy Rename
-
-### tokensave
-
-- [100](100-the-tokensave-integration-closes-out-and-the-adapter-is-the-code-graph-layer.md) The TokenSave integration closes out: the adapter and its graph-backed tools are the code-graph layer
-- [096](096-tokensave-is-the-primary-code-graph-javascript-is-the-fallback.md) TokenSave is the primary code graph, JavaScript is the fallback
-- [088](088-a-persona-topic-is-the-binding-scope-of-the-run.md) A persona topic is the binding scope of the run
-- [051](051-token-efficiency-pipeline.md) Token-efficiency pipeline (caveman aggressive + tokensave-aware decoration)
-
 ### versioning
 
 - [133](133-first-release-is-v0-1-0-then-semver-from-commits.md) First release is v0.1.0, then SemVer from commits
 - [130](130-this-server-releases-itself-with-pnpm-release-and-the-push-is-the-release.md) This server releases itself with pnpm release, and the push is the release
 - [097](097-the-release-target-is-v0-1-0-beta-and-the-version-tooling-accepts-a-prerelease.md) The release target is v0.1.0-beta, and the version tooling accepts a prerelease
 - [085](085-reset-the-project-version-to-0-1-0-first-release-will-be-v0-1-0.md) Reset the project version to 0.1.0, first release will be v0.1.0
-
-### agents
-
-- [138](138-give-the-ai-area-its-first-source-cited-guardrail-family.md) Give the AI area its first source-cited guardrail family
-- [033](033-registry-driven-clean-slash-commands-for-every-agent-and-ide.md) Registry-driven clean slash commands for every agent and IDE
-- [018](018-fail-closed-mcp-enforcement-and-reusable-agent-commands.md) fail closed mcp enforcement and reusable agent commands
-
-### backend
-
-- [137](137-add-a-source-cited-backend-guardrail-family-and-fix-the-six-existing-rules.md) Add a source-cited backend guardrail family and fix the six existing rules
-- [053](053-gateway-as-the-single-entrypoint-with-server-side-receipts-backend-data-devops-g.md) Gateway as the single entrypoint with server-side receipts; backend/data/devops guardrail families
-- [005](005-backend-framework-skills.md) Backend Framework Skills
 
 ### code-graph
 
@@ -1177,17 +1318,29 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [072](072-the-installer-asks-before-copying-bundled-skills-to-the-central-agents-directory.md) The installer asks before copying bundled skills to the central agents directory
 - [070](070-installer-mode-step-replaces-the-agent-picker-instead-of-stacking-under-it.md) Installer mode step replaces the agent picker instead of stacking under it
 
-### documentation
+### legal
 
-- [145](145-move-the-readme-skill-from-styleguide-to-process.md) Move the README skill from styleguide to process
-- [060](060-plans-carry-nested-sub-steps-and-an-exhaustiveness-mandate.md) Plans carry nested sub-steps and an exhaustiveness mandate
-- [059](059-persona-plans-are-checklists-with-marks-that-survive-the-sync.md) Persona plans are checklists with marks that survive the sync
+- [248](248-publish-an-npm-placeholder-to-reserve-the-rule-mcp-name.md) Publish an npm placeholder to reserve the rule-mcp name
+- [176](176-drop-the-spdx-file-headers.md) Drop the SPDX file headers
+- [084](084-keep-the-name-with-a-written-posture-no-npm-placeholder-yet.md) Keep the name with a written posture, no npm placeholder yet
 
 ### manifest
 
 - [192](192-project-scope-host-table-and-manifest-written-paths.md) Project-scope host table and manifest written paths
 - [184](184-the-install-manifest-records-a-level-per-host.md) The install manifest records a level per host
 - [109](109-no-corepack-activation-and-no-engines-field-in-a-generated-package-json.md) No corepack activation and no engines field in a generated package.json
+
+### merge
+
+- [223](223-scaffold-skill-consolidation.md) scaffold skill consolidation
+- [098](098-develop-merges-into-main-by-area-and-stays-as-an-integration-branch.md) develop merges into main by area, and stays as an integration branch
+- [004](004-scaffold-consolidation.md) Scaffold Skill Consolidation
+
+### new
+
+- [220](220-backend-framework-skills.md) backend framework skills
+- [012](012-database-skills.md) Database Skills
+- [005](005-backend-framework-skills.md) Backend Framework Skills
 
 ### orchestration
 
@@ -1231,6 +1384,12 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [044](044-adopt-eslint-plugin-unicorn-for-js-ts-quality.md) Adopt eslint-plugin-unicorn for JS/TS quality
 - [043](043-strengthen-typescript-discipline-for-large-codebases.md) Strengthen TypeScript discipline for large codebases
 
+### update
+
+- [247](247-an-update-notifies-by-default-and-upgrades-only-when-asked.md) An update notifies by default and upgrades only when asked
+- [233](233-project-membership-is-a-command-and-an-update-re-applies-what-it-moved.md) Project membership is a command, and an update re-applies what it moved
+- [131](131-an-update-moves-a-git-clone-install-to-the-newest-release-tag-unasked.md) An update moves a git-clone install to the newest release tag, unasked
+
 ### vscode
 
 - [056](056-drop-the-vs-code-extension-and-its-installers.md) Drop the VS Code extension and its installers
@@ -1245,6 +1404,10 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### no tags
 
+- [235](235-let-the-environment-name-the-client-and-the-handshake-answer-when-it-does-not.md) let the environment name the client and the handshake answer when it does not
+- [227](227-vanilla-js-over-typescript.md) Vanilla JS over TypeScript
+- [224](224-sdk-over-handrolled-protocol.md) Official MCP SDK over Hand-Rolled Protocol
+- [221](221-file-based-skill-loading.md) File-Based Skill Loading over Database
 - [068](068-src-shared-for-every-shareable-helper.md) src shared for every shareable helper
 - [067](067-co-locate-every-test-with-its-module.md) co locate every test with its module
 - [038](038-native-claude-skills-integration.md) native claude skills integration

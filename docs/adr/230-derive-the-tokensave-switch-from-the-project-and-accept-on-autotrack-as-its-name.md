@@ -1,4 +1,4 @@
-# Pending: Derive the tokensave switch from the project and accept on+autotrack as its name
+# 230: Derive the tokensave switch from the project and accept on+autotrack as its name
 
 - **Date**: 2026-10-28
 - **Status**: proposed

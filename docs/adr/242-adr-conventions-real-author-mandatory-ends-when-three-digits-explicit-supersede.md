@@ -1,4 +1,4 @@
-# Pending: ADR conventions: real author, mandatory ends-when, three digits, explicit supersede
+# 242: ADR conventions: real author, mandatory ends-when, three digits, explicit supersede
 
 - **Date**: 2026-11-03
 - **Status**: accepted

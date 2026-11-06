@@ -1,4 +1,4 @@
-# Pending: Close host integration depth with deferred per-host token measurement
+# 236: Close host integration depth with deferred per-host token measurement
 
 - **Date**: 2026-10-30
 - **Status**: accepted

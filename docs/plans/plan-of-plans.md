@@ -33,7 +33,7 @@ Node ids in graph lines stay skill names (`rule-process-ai`), not filenames. Fil
 | decision models                 | _(retired)_                   | done → ADR 209 | own graph                                                                           |
 | ASD-STE100 writing + plan shape | _(retired)_                   | done → ADR 204 | WS-G closed 2026-10-31; product pending ADR mcp-authored-markdown-uses-asd-ste100…  |
 | plan-graph audit                | _(retired)_                   | done → ADR 213 | history (ADR 171)                                                                   |
-| Pi integration and catalog debt | `_pi-integration-and-debt.md` | `in-progress`  | WS1 installed-skill verification; WS2 catalog debt                                  |
+| Pi integration and catalog debt | _(retired)_ | done → ADR 251 | WS1 installed-skill verification; WS2 catalog debt                                  |
 | OSS readiness and repo health   | _(retired)_                   | done → ADR 217 | WS1 records four decisions; serialize ADR writes with the surface audit             |
 | tool and skill surface audit    | _(retired)_                   | done → ADR 218 | closed 2026-11-06: counts guarded, catalog refreshed, ADRs decided                  |
 | publication cutover             | `_publication-cutover.md`     | `planned`      | HARD-waits for the OSS and surface plans, then fixes tests, CI, secrets and cutover |
@@ -136,9 +136,9 @@ Orchestrator: [`skills/_skills-plan.md`](skills/_skills-plan.md)
 Run only when WS-A/B/C are idle on the shared files in section 8. The OSS and surface plans can advance independently, but serialize their ADR and repository-document writes. The publication cutover cannot start until both close.
 
 - [x] export — Steps 0–8 complete; retired → [ADR 199](../adr/199-close-out-plan-export.md) (review ADR 202, audit ADR 203).
-- [x] scripts-layout — WS0–WS7 complete; retired → [ADR 205](../adr/205-close-out-plan-scripts-mcp-layout.md); product ADR pending `docs/adr/_pending/pnpm-workspace-with-packages-mcp-shared-docs-and-publish-from-packages-mcp.md`.
+- [x] scripts-layout — WS0–WS7 complete; retired → [ADR 205](../adr/205-close-out-plan-scripts-mcp-layout.md); product ADR pending `docs/adr/240-pnpm-workspace-with-packages-mcp-shared-docs-and-publish-from-packages-mcp.md`.
 - [x] decision models — DM-04 closed by its kill criterion: the harness and the registry ship, the Italian routing claim is dropped; retired → [ADR 209](../adr/209-close-out-plan-decision-models.md).
-- [ ] [`_pi-integration-and-debt.md`](_pi-integration-and-debt.md) - WS1 installed-skill verification and WS2 catalog debt remain.
+- [x] [`_pi-integration-and-debt.md`](_pi-integration-and-debt.md) - WS1 installed-skill verification and WS2 catalog debt remain; retired → [ADR 251](../adr/251-close-out-plan-pi-integration-and-debt.md).
 - [x] [`_oss-readiness-and-repo-health.md`](_oss-readiness-and-repo-health.md) - registration is complete. WS1 records the four repository decisions; retired → [ADR 217](../adr/217-close-out-plan-oss-readiness-and-repo-health.md).
 - [x] [`_tool-and-skill-surface-audit.md`](_tool-and-skill-surface-audit.md) - closed 2026-11-06: counts guarded by a test, catalog documents refreshed, proposed ADRs decided, orchestrator deduplicated.
 - [ ] [`_publication-cutover.md`](_publication-cutover.md) - the history rewrite and the branch cutover landed 2026-11-06; the lint and coverage debt it records stays open.
@@ -148,7 +148,7 @@ Run only when WS-A/B/C are idle on the shared files in section 8. The OSS and su
 
 ### WS-G — ASD-STE100 writing and AI plan shape
 
-Retired → [ADR 204](../adr/204-close-out-plan-asd-ste100.md). Product decision pending: `docs/adr/_pending/mcp-authored-markdown-uses-asd-ste100-at-about-80-percent.md`.
+Retired → [ADR 204](../adr/204-close-out-plan-asd-ste100.md). Product decision pending: `docs/adr/239-mcp-authored-markdown-uses-asd-ste100-at-about-80-percent.md`.
 
 - [x] WS1 writing standard (STE100~80 profile + shared directive).
 - [x] WS2 generators + impersonation (ADR, handoff, review/audit, personas).

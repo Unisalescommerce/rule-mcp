@@ -1,4 +1,4 @@
-# Pending: File-Based Skill Loading over Database
+# 221: File-Based Skill Loading over Database
 
 **Status**: Accepted  
 **Date**: 2026-06-20  

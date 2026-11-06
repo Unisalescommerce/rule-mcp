@@ -1,4 +1,4 @@
-# Pending: Cap prose sentences at 25 words and keep identifiers dictionary-driven
+# 241: Cap prose sentences at 25 words and keep identifiers dictionary-driven
 
 - **Date**: 2026-11-03
 - **Status**: accepted

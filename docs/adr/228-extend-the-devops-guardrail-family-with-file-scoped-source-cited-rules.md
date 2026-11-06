@@ -1,4 +1,4 @@
-# Pending: Extend the devops guardrail family with file-scoped, source-cited rules
+# 228: Extend the devops guardrail family with file-scoped, source-cited rules
 
 - **Date**: 2026-10-17
 - **Status**: proposed

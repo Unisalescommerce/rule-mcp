@@ -10,7 +10,7 @@
 1. **Cascade gate.** `c08ee095` makes handoff and handon read every plan. A proposal is an open plan whose hard edges are met. A superseded plan is not offered. Unknown edges and cycles are named.
 2. **Plan shape.** `27cba829` requires workstreams, checkbox tasks, one file link, and a dependency graph. The graph needs a fenced diagram. The writer refuses a body that misses a part.
 3. **Hash remap.** `e88bc8e1` rewrites 150 citations in 20 files. They now name the commits after the rebase. `backup/pre-linearize-46` (`c7fe22b6`) still holds the old history.
-4. **Decision record.** The pending file is `docs/adr/_pending/handoff-proposes-only-the-plan-cascade-and-every-plan-carries-workstreams-checkb.md`. It gets a number when it lands on the trunk.
+4. **Decision record.** The pending file is `docs/adr/244-handoff-proposes-only-the-plan-cascade-and-every-plan-carries-workstreams-checkb.md`. It gets a number when it lands on the trunk.
 5. **Debt plan.** `7e503811` adds `docs/plans/_pi-integration-and-debt.md`. The graph lists it ready, at level 1, with 15 open steps. It does not copy the bundler family steps.
 
 ## State

@@ -1,4 +1,4 @@
-# Pending: The repository stays pixu1980/rule-mcp and the registry name is io.github.pixu1980/rule-mcp
+# 249: The repository stays pixu1980/rule-mcp and the registry name is io.github.pixu1980/rule-mcp
 
 - **Date**: 2026-11-06
 - **Status**: accepted

@@ -1,4 +1,4 @@
-# Pending: Official MCP SDK over Hand-Rolled Protocol
+# 224: Official MCP SDK over Hand-Rolled Protocol
 
 **Status**: Accepted  
 **Date**: 2026-06-23  

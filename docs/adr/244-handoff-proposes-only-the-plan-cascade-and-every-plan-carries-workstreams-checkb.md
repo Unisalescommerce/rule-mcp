@@ -1,4 +1,4 @@
-# Pending: Handoff proposes only the plan cascade, and every plan carries workstreams, checkboxes and a graph
+# 244: Handoff proposes only the plan cascade, and every plan carries workstreams, checkboxes and a graph
 
 - **Date**: 2026-11-03
 - **Status**: accepted

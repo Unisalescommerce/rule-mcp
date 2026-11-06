@@ -12,7 +12,7 @@
 3. **WS2–WS3** — `packages/shared` (`rule-mcp-shared`) + `packages/mcp` (`rule-mcp`); root facade `rule-mcp-workspace`; `@mcp/*` alias; [removed] via `[removed]-gateway` workspace.
 4. **WS4–WS5** — `packages/docs` (`rule-mcp-docs`); `tests/` → `scripts/__tests__/`; `case-studies/` → `docs/case-studies/`; foundations path/entrypoint fixes.
 5. **WS6** — Dockerfile/compose `COPY packages/` + `bin/rule-mcp.js`; CI [removed] stub (`scripts/ci/ensure-[removed]-stub.sh`) + `RULE_MCP_NO_[removed]=1`; `pnpm pack --filter rule-mcp`; docs sweep.
-6. **WS7** — Product ADR pending `docs/adr/_pending/pnpm-workspace-with-packages-mcp-shared-docs-and-publish-from-packages-mcp.md` (does not amend ADR 134); plan archived → [ADR 205](../adr/205-close-out-plan-scripts-mcp-layout.md); `pnpm census:check` + `pnpm test:all` green.
+6. **WS7** — Product ADR pending `docs/adr/240-pnpm-workspace-with-packages-mcp-shared-docs-and-publish-from-packages-mcp.md` (does not amend ADR 134); plan archived → [ADR 205](../adr/205-close-out-plan-scripts-mcp-layout.md); `pnpm census:check` + `pnpm test:all` green.
 
 ## State
 

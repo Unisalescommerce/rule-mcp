@@ -1,4 +1,4 @@
-# Pending: Retire area guardrail plans after assigning every retained rule
+# 246: Retire area guardrail plans after assigning every retained rule
 
 - **Date**: 2026-11-05
 - **Status**: accepted

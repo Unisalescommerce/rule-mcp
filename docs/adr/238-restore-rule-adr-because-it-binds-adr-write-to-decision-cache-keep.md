@@ -1,4 +1,4 @@
-# Pending: Restore rule-adr because it binds ADR write to decision-cache keep
+# 238: Restore rule-adr because it binds ADR write to decision-cache keep
 
 - **Date**: 2026-10-30
 - **Status**: accepted

@@ -1,4 +1,4 @@
-# Pending: Use offline Betterleaks scans for Git credential checks
+# 245: Use offline Betterleaks scans for Git credential checks
 
 - **Date**: 2026-11-05
 - **Status**: accepted

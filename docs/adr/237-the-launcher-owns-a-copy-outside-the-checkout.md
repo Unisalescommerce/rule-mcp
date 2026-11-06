@@ -1,4 +1,4 @@
-# Pending: The launcher owns a copy outside the checkout
+# 237: The launcher owns a copy outside the checkout
 
 - **Date**: 2026-10-30
 - **Status**: accepted

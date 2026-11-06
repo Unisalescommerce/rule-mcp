@@ -1,4 +1,4 @@
-# Pending: Count the cycles and the dead symbols the graph can prove, and break the cycles that are real
+# 234: Count the cycles and the dead symbols the graph can prove, and break the cycles that are real
 
 - **Date**: 2026-10-29
 - **Status**: proposed

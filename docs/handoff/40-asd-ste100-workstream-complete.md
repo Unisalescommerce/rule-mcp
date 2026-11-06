@@ -11,7 +11,7 @@
 2. **WS2** — Wired into impersonation, personas, ADR/handoff writers, and related skill surfaces.
 3. **WS3** — Development-plan shape `WSn` / `WSn-Tx.y` + dual dependency graph; ADR 154 amended; scanner in `src/core/plans/_shape.js`.
 4. **WS4** — Gitignore matrix in the retired plan; `src/core/ignore` + file-tree honors `.gitignore` via `git check-ignore`. Tokensave / census / security deferred or must-not.
-5. **WS5** — Census current; product ADR pending `docs/adr/_pending/mcp-authored-markdown-uses-asd-ste100-at-about-80-percent.md`; plan archived → [ADR 204](../adr/204-close-out-plan-asd-ste100.md).
+5. **WS5** — Census current; product ADR pending `docs/adr/239-mcp-authored-markdown-uses-asd-ste100-at-about-80-percent.md`; plan archived → [ADR 204](../adr/204-close-out-plan-asd-ste100.md).
 6. Golden shape fixture moved to `tests/fixtures/plans/development-shape-golden.md` (live plan file deleted by closeout).
 
 ## State
