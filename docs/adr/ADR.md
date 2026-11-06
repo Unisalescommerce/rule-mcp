@@ -8,6 +8,7 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [219](219-keep-adr-numbers-stable-and-move-gap-closing-to-its-own-command.md)                                           | Keep ADR numbers stable and move gap-closing to its own command                                           | 2026-11-06 | accepted   | adr, numbering, handoff, docs                                                       |
 | [218](218-close-out-plan-tool-and-skill-surface-audit.md)                                                               | Close out plan _tool-and-skill-surface-audit                                                              | 2026-11-06 | accepted   | docs, closeout, plan                                                                |
 | [217](217-close-out-plan-oss-readiness-and-repo-health.md)                                                              | Close out plan _oss-readiness-and-repo-health                                                             | 2026-11-06 | accepted   | docs, closeout, plan                                                                |
 | [216](216-close-out-plan-installer-global-link-and-launcher-deploy.md)                                                  | Close out plan _installer-global-link-and-launcher-deploy                                                 | 2026-11-06 | accepted   | docs, closeout, plan                                                                |
@@ -225,6 +226,7 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [219](219-keep-adr-numbers-stable-and-move-gap-closing-to-its-own-command.md)                                           | Two rules.                                                                                                                                                                                                                      | Positive: a sweep stays additive, so a handoff can archive a plan without rewriting the corpus.                                                                                                                                 |
 | [218](218-close-out-plan-tool-and-skill-surface-audit.md)                                                               | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_tool-and-skill-surface-audit.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                                   |
 | [217](217-close-out-plan-oss-readiness-and-repo-health.md)                                                              | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_oss-readiness-and-repo-health.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                                  |
 | [216](216-close-out-plan-installer-global-link-and-launcher-deploy.md)                                                  | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_installer-global-link-and-launcher-deploy.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                      |
@@ -442,6 +444,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### docs
 
+- [219](219-keep-adr-numbers-stable-and-move-gap-closing-to-its-own-command.md) Keep ADR numbers stable and move gap-closing to its own command
 - [218](218-close-out-plan-tool-and-skill-surface-audit.md) Close out plan _tool-and-skill-surface-audit
 - [217](217-close-out-plan-oss-readiness-and-repo-health.md) Close out plan _oss-readiness-and-repo-health
 - [216](216-close-out-plan-installer-global-link-and-launcher-deploy.md) Close out plan _installer-global-link-and-launcher-deploy
@@ -936,6 +939,16 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [060](060-plans-carry-nested-sub-steps-and-an-exhaustiveness-mandate.md) Plans carry nested sub-steps and an exhaustiveness mandate
 - [059](059-persona-plans-are-checklists-with-marks-that-survive-the-sync.md) Persona plans are checklists with marks that survive the sync
 
+### handoff
+
+- [219](219-keep-adr-numbers-stable-and-move-gap-closing-to-its-own-command.md) Keep ADR numbers stable and move gap-closing to its own command
+- [134](134-close-features-only-after-persisting-the-final-handoff-and-consolidate-the-featu.md) Close features only after persisting the final handoff and consolidate the feature by default
+- [115](115-map-tools-slash-commands-and-skills-into-one-surface.md) Map tools, slash commands, and skills into one surface
+- [108](108-the-handoff-family-gets-a-generated-index-and-the-root-handoff-summary-retires.md) The handoff family gets a generated index, and the root HANDOFF summary retires
+- [104](104-the-handoff-document-closes-with-the-resume-prompt.md) The handoff document closes with the resume prompt
+- [103](103-every-handoff-mode-sweeps-completed-working-papers-and-closeout-false-is-the-rea.md) Every handoff mode sweeps completed working papers, and closeout false is the read-only run
+- [087](087-session-close-archives-completed-audits-reviews-and-plans.md) Session close archives completed audits, reviews and plans
+
 ### quality-gate
 
 - [141](141-give-the-meta-framework-area-its-first-server-and-client-boundary-guardrails.md) Give the meta-framework area its first server and client boundary guardrails
@@ -973,15 +986,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [064](064-coverage-floor-raised-to-89-toward-the-95-endpoint.md) Coverage floor raised to 89 toward the 95 endpoint
 - [063](063-coverage-floor-raised-to-87-95-remains-the-ratchet-endpoint.md) Coverage floor raised to 87; 95 remains the ratchet endpoint
 - [062](062-glob-suite-runner-colocated-tests-and-a-branch-coverage-ratchet.md) Glob suite runner, co-located tests, and a branch-coverage ratchet
-
-### handoff
-
-- [134](134-close-features-only-after-persisting-the-final-handoff-and-consolidate-the-featu.md) Close features only after persisting the final handoff and consolidate the feature by default
-- [115](115-map-tools-slash-commands-and-skills-into-one-surface.md) Map tools, slash commands, and skills into one surface
-- [108](108-the-handoff-family-gets-a-generated-index-and-the-root-handoff-summary-retires.md) The handoff family gets a generated index, and the root HANDOFF summary retires
-- [104](104-the-handoff-document-closes-with-the-resume-prompt.md) The handoff document closes with the resume prompt
-- [103](103-every-handoff-mode-sweeps-completed-working-papers-and-closeout-false-is-the-rea.md) Every handoff mode sweeps completed working papers, and closeout false is the read-only run
-- [087](087-session-close-archives-completed-audits-reviews-and-plans.md) Session close archives completed audits, reviews and plans
 
 ### hosts
 
@@ -1067,6 +1071,13 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [077](077-compress-every-server-model-list-surface-prompts-list-tools-list-resources-list.md) Compress every server->model list surface (prompts/list, tools/list, resources/list)
 - [075](075-meta-frameworks-get-their-own-namespace-and-a-narrow-dispatcher.md) Meta-frameworks get their own namespace and a narrow dispatcher
 
+### adr
+
+- [219](219-keep-adr-numbers-stable-and-move-gap-closing-to-its-own-command.md) Keep ADR numbers stable and move gap-closing to its own command
+- [196](196-number-pending-adrs-when-they-land-on-the-trunk.md) Number pending ADRs when they land on the trunk
+- [195](195-write-adrs-when-a-policy-says-so-at-handoff-by-default.md) Write ADRs when a policy says so at handoff by default
+- [134](134-close-features-only-after-persisting-the-final-handoff-and-consolidate-the-featu.md) Close features only after persisting the final handoff and consolidate the feature by default
+
 ### audit
 
 - [203](203-close-out-audit-export.md) Close out audit export
@@ -1129,12 +1140,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [130](130-this-server-releases-itself-with-pnpm-release-and-the-push-is-the-release.md) This server releases itself with pnpm release, and the push is the release
 - [097](097-the-release-target-is-v0-1-0-beta-and-the-version-tooling-accepts-a-prerelease.md) The release target is v0.1.0-beta, and the version tooling accepts a prerelease
 - [085](085-reset-the-project-version-to-0-1-0-first-release-will-be-v0-1-0.md) Reset the project version to 0.1.0, first release will be v0.1.0
-
-### adr
-
-- [196](196-number-pending-adrs-when-they-land-on-the-trunk.md) Number pending ADRs when they land on the trunk
-- [195](195-write-adrs-when-a-policy-says-so-at-handoff-by-default.md) Write ADRs when a policy says so at handoff by default
-- [134](134-close-features-only-after-persisting-the-final-handoff-and-consolidate-the-featu.md) Close features only after persisting the final handoff and consolidate the feature by default
 
 ### agents
 
