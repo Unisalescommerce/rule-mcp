@@ -32,7 +32,7 @@ Node ids in graph lines stay skill names (`rule-process-ai`), not filenames. Fil
 | scripts layout                  | _(retired)_                         | done → ADR 205 | WS0–WS7 closed 2026-11-01; product ADR pending land                                 |
 | decision models                 | _(retired)_                         | done → ADR 209 | own graph                                                                           |
 | ASD-STE100 writing + plan shape | _(retired)_                         | done → ADR 204 | WS-G closed 2026-10-31; product pending ADR mcp-authored-markdown-uses-asd-ste100…  |
-| plan-graph audit                | `_plan-of-plans-reference.md`       | `done`         | history (ADR 171)                                                                   |
+| plan-graph audit                | _(retired)_ | done → ADR 213 | history (ADR 171)                                                                   |
 | Pi integration and catalog debt | `_pi-integration-and-debt.md`       | `in-progress`  | WS1 installed-skill verification; WS2 catalog debt                                  |
 | OSS readiness and repo health   | `_oss-readiness-and-repo-health.md` | `planned`      | WS1 records four decisions; serialize ADR writes with the surface audit             |
 | tool and skill surface audit    | `_tool-and-skill-surface-audit.md`  | `planned`      | WS1/WS2 verify counts; later catalog cleanup waits for Pi WS2                       |

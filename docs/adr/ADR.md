@@ -8,6 +8,7 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [213](213-close-out-plan-plan-of-plans-reference.md)                                                                    | Close out plan _plan-of-plans-reference                                                                   | 2026-11-06 | accepted   | docs, closeout, plan                                                                |
 | [212](212-close-out-plan-secrets-guardrails.md)                                                                         | Close out plan _secrets-guardrails                                                                        | 2026-11-05 | accepted   | docs, closeout, plan                                                                |
 | [211](211-close-out-plan-rule-mcp-process-adr.md)                                                                       | Close out plan _rule-mcp-process-adr                                                                      | 2026-11-03 | accepted   | docs, closeout, plan                                                                |
 | [210](210-close-out-plan-rule-mcp-process-ai.md)                                                                        | Close out plan _rule-mcp-process-ai                                                                       | 2026-11-03 | accepted   | docs, closeout, plan                                                                |
@@ -228,6 +229,7 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [213](213-close-out-plan-plan-of-plans-reference.md)                                                                    | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_plan-of-plans-reference.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                                        |
 | [212](212-close-out-plan-secrets-guardrails.md)                                                                         | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_secrets-guardrails.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                                             |
 | [211](211-close-out-plan-rule-mcp-process-adr.md)                                                                       | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/skills/process/_rule-mcp-process-adr.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                            |
 | [210](210-close-out-plan-rule-mcp-process-ai.md)                                                                        | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/skills/process/_rule-mcp-process-ai.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                             |
@@ -448,6 +450,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### docs
 
+- [213](213-close-out-plan-plan-of-plans-reference.md) Close out plan _plan-of-plans-reference
 - [212](212-close-out-plan-secrets-guardrails.md) Close out plan _secrets-guardrails
 - [211](211-close-out-plan-rule-mcp-process-adr.md) Close out plan _rule-mcp-process-adr
 - [210](210-close-out-plan-rule-mcp-process-ai.md) Close out plan _rule-mcp-process-ai
@@ -576,6 +579,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### closeout
 
+- [213](213-close-out-plan-plan-of-plans-reference.md) Close out plan _plan-of-plans-reference
 - [212](212-close-out-plan-secrets-guardrails.md) Close out plan _secrets-guardrails
 - [211](211-close-out-plan-rule-mcp-process-adr.md) Close out plan _rule-mcp-process-adr
 - [210](210-close-out-plan-rule-mcp-process-ai.md) Close out plan _rule-mcp-process-ai
@@ -693,6 +697,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### plan
 
+- [213](213-close-out-plan-plan-of-plans-reference.md) Close out plan _plan-of-plans-reference
 - [212](212-close-out-plan-secrets-guardrails.md) Close out plan _secrets-guardrails
 - [211](211-close-out-plan-rule-mcp-process-adr.md) Close out plan _rule-mcp-process-adr
 - [210](210-close-out-plan-rule-mcp-process-ai.md) Close out plan _rule-mcp-process-ai
