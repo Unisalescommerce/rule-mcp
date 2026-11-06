@@ -1,0 +1,38 @@
+#!/bin/sh
+# rule-mcp: keep CHANGELOG.md current once a release tag exists.
+#
+# Every changelog entry carries the sha of its commit, so a commit cannot hold
+# its own entry. This hook adds the entry in a second commit. That commit is a
+# `chore`, which makes no entry, so the chain ends there. The release commit is
+# a `chore` too, because `pnpm release` writes its own changelog heading.
+#
+# It stays out of the way in a history with no tag (the changelog has no
+# boundary yet) and in a rebase, merge, cherry-pick or revert (the history is
+# moving). The commit takes CHANGELOG.md alone, so other staged work stays
+# staged. A failure here cannot undo the commit that ran it.
+#
+# `RULE_MCP_HOOK_NO_SIDE_EFFECTS=1` skips it: a test that commits must not add
+# commits of its own.
+#
+# Install: pnpm hooks:install
+[ "${RULE_MCP_HOOK_NO_SIDE_EFFECTS:-}" = "1" ] && exit 0
+cd "$(git rev-parse --show-toplevel)" || exit 0
+[ -f scripts/build/changelog/index.mjs ] || exit 0
+
+case "$(git log -1 --format=%s)" in
+  chore*) exit 0 ;;
+esac
+
+[ -n "$(git tag --list | head -n 1)" ] || exit 0
+
+for state in rebase-merge rebase-apply MERGE_HEAD CHERRY_PICK_HEAD REVERT_HEAD; do
+  [ -e "$(git rev-parse --git-path "$state")" ] && exit 0
+done
+
+changelog() {
+  node --import ./scripts/alias-hook.mjs scripts/build/changelog/index.mjs "$@" >/dev/null 2>&1
+}
+
+changelog --check && exit 0
+changelog --apply || exit 0
+git commit --quiet --no-verify -m "chore(changelog): refresh" -- CHANGELOG.md || exit 0

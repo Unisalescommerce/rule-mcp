@@ -27,6 +27,13 @@ export function toEntry(commit) {
   return { section, scope, subject: stripFingerprint(description), hash: commit.hash, breaking: isBreaking };
 }
 
+/** A `__word__` goes in a code span, because Prettier reads it as bold and rewrites it. */
+const spanDunders = (subject) =>
+  subject
+    .split(/(`[^`]*`)/u)
+    .map((part, index) => (index % 2 === 1 ? part : part.replaceAll(/__\w+__/gu, (word) => `\`${word}\``)))
+    .join("");
+
 /** Render one release's entries, grouped by section. */
 export function renderRelease(heading, entries) {
   const bySection = new Map();
@@ -49,7 +56,7 @@ export function renderRelease(heading, entries) {
     lines.push(`### ${section}`, "");
     for (const row of rows) {
       const mark = row.breaking ? "**BREAKING** " : "";
-      lines.push(`- ${mark}**${row.scope}**: ${row.subject} (\`${row.hash}\`)`);
+      lines.push(`- ${mark}**${row.scope}**: ${spanDunders(row.subject)} (\`${row.hash}\`)`);
     }
     lines.push("");
   }
