@@ -85,3 +85,12 @@ test("package.json exposes the setup script that reinstalls and runs the wizard"
   assert.match(manifest.scripts?.setup ?? "", /rule-mcp\.js setup/, "and then the wizard");
   assert.equal(manifest.scripts?.reinstall, undefined, "the old name is gone");
 });
+
+test("package.json does not install the global bin behind the script's back", () => {
+  const manifest = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
+
+  // A postinstall running `pnpm install -g .` made every `pnpm install` claim the
+  // global bin a second time, with stderr dropped so only reinstall.sh's copy of
+  // the failure was ever visible.
+  assert.equal(manifest.scripts?.postinstall, undefined, "reinstall.sh is the one place that installs the global bin");
+});

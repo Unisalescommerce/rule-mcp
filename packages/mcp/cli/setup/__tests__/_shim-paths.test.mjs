@@ -1,7 +1,7 @@
 /** Shim path questions that do not touch the machine: candidates and trust. */
 import { strict as assert } from "node:assert";
 import { execFileSync } from "node:child_process";
-import { mkdtempSync, rmSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync } from "node:fs";
 import { homedir, platform, tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { test } from "node:test";
@@ -41,6 +41,50 @@ test("globalBinDir prefers PNPM_HOME when it is set", () => {
 
 test("linkCandidates ignores missing global stores", () => {
   assert.deepEqual(linkCandidates("/fake/home-without-stores"), [], "absent stores yield no candidates");
+});
+
+test("linkCandidates sweeps both store layouts and both package names", () => {
+  const home = mkdtempSync(join(tmpdir(), "rule-mcp-store-"));
+  // pnpm 10+ writes one project directory per install, named by a hash; the
+  // symlink inside it is named after the dependency, not after this checkout.
+  const project = join(home, "Library", "pnpm", "bin", "global", "v11", "56af-18e56ecb617b80d8-0", "node_modules");
+  // pnpm 5/6 wrote the package straight into the layout directory.
+  const flat = join(home, "Library", "pnpm", "global", "5", "node_modules");
+
+  mkdirSync(project, { recursive: true });
+  mkdirSync(flat, { recursive: true });
+
+  try {
+    const found = linkCandidates(home);
+
+    assert.ok(found.includes(join(project, "rule-mcp-workspace")), "the hashed per-project layout is swept");
+    assert.ok(found.includes(join(project, "rule-mcp")), "and the name this package had before 2026-11-01");
+    assert.ok(found.includes(join(flat, "rule-mcp-workspace")), "the flat pre-pnpm-10 layout is swept");
+    assert.ok(found.includes(join(flat, "rule-mcp")), "under both names as well");
+  } finally {
+    rmSync(home, { recursive: true, force: true });
+  }
+});
+
+test("linkCandidates only trusts a PNPM_HOME inside the home it was given", () => {
+  const home = mkdtempSync(join(tmpdir(), "rule-mcp-store-"));
+  const custom = join(home, "custom-pnpm", "global", "v11", "abc-0", "node_modules");
+
+  mkdirSync(custom, { recursive: true });
+
+  try {
+    const inside = withEnv({ PNPM_HOME: join(home, "custom-pnpm") }, () => linkCandidates(home));
+
+    assert.ok(inside.includes(join(custom, "rule-mcp-workspace")), "a PNPM_HOME under this home is swept");
+
+    // This machine's real PNPM_HOME lives in another home as far as a sandbox
+    // is concerned: reading it would make the uninstall sweep real paths.
+    const outside = withEnv({ PNPM_HOME: "/fake/pnpm-elsewhere" }, () => linkCandidates(home));
+
+    assert.ok(outside.every((path) => path.startsWith(home)), `no path outside the home: ${outside.join(", ")}`);
+  } finally {
+    rmSync(home, { recursive: true, force: true });
+  }
 });
 
 test("globalBinDir falls back to the platform default without pnpm", () => {

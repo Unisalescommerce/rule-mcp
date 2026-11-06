@@ -7,64 +7,16 @@
  * bash in install.sh; the bash is a bootstrap now (ADR 090), so the same
  * contract is asserted against the node that replaced it.
  *
- * Every case runs in a child process with its own HOME, PATH and PNPM_HOME:
- * the module reads the real PATH to find the shim, and a test that let it see
- * this machine's would depend on this machine.
+ * Every case runs in a child process with its own HOME, PATH and PNPM_HOME: the
+ * module reads the real PATH to find the shim, and a test that let it see this
+ * machine's would depend on this machine. The harness is `_shim-apply-child.fixture.mjs`.
  */
 import { strict as assert } from "node:assert";
-import { execFileSync } from "node:child_process";
-import { chmodSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 import { test } from "node:test";
 
-const here = dirname(fileURLToPath(import.meta.url));
-const applyModule = join(here, "..", "..", "setup", "_shim-apply.js");
-const localBin = join(here, "..", "..", "..", "..", "bin", "rule-mcp.js");
-
-/** Whether one swept entry actually went. */
-const isRemoved = (entry) => entry.status === "removed";
-
-/** A HOME with its own bin dir, and optionally a shim that does not launch. */
-function sandbox({ brokenShim = false } = {}) {
-  const home = mkdtempSync(join(tmpdir(), "rule-mcp-shim-"));
-  const bin = join(home, "bin");
-
-  mkdirSync(bin, { recursive: true });
-
-  if (brokenShim) {
-    writeFileSync(join(bin, "rule-mcp"), "#!/bin/sh\nexit 3\n");
-    chmodSync(join(bin, "rule-mcp"), 0o755);
-  }
-
-  return { home, bin };
-}
-
-/**
- * Run one call against the module in a child process, and return its JSON.
- *
- * @param {string} call - an expression over the module's exports
- * @param {{ home: string, bin: string, skip?: boolean }} env
- */
-function run(call, { home, bin, skip = false }) {
-  const source = `
-    const mod = await import(${JSON.stringify(applyModule)});
-    const { ensureGlobalShim, removeGlobalShims } = mod;
-    process.stdout.write(JSON.stringify(${call}));
-  `;
-  const out = execFileSync(process.execPath, ["--input-type=module", "-e", source], {
-    encoding: "utf8",
-    env: {
-      PATH: [bin, dirname(process.execPath), "/usr/bin", "/bin"].join(":"),
-      HOME: home,
-      PNPM_HOME: join(home, ".pnpm"),
-      ...(skip && { RULE_MCP_SKIP_GLOBAL_LINK: "1" }),
-    },
-  });
-
-  return JSON.parse(out);
-}
+import { isRemoved, localBin, run, sandbox } from "./_shim-apply-child.fixture.mjs";
 
 test("a shim that does not launch is rewritten, not trusted", () => {
   const box = sandbox({ brokenShim: true });

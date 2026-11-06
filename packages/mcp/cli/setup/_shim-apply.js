@@ -11,6 +11,9 @@
  */
 
 import { chmodSync, existsSync, lstatSync, mkdirSync, readFileSync, rmSync, unlinkSync, writeFileSync } from "node:fs";
+import { basename } from "node:path";
+
+import { tryExecFile } from "rule-mcp-shared";
 
 import { launcher as renderLauncher } from "./_launcher-script.js";
 import { getRuntimePaths } from "../paths/index.js";
@@ -104,26 +107,43 @@ export function removeGlobalShims({ dryRun = false } = {}) {
     return [{ path: "(all)", kind: "shim", status: "skipped" }];
   }
 
-  const entries = [...shimCandidates().map((path) => ({ path, kind: "shim" })), ...linkCandidates().map((path) => ({ path, kind: "link" }))];
+  const shims = shimCandidates()
+    .filter((path) => present(path))
+    .map((path) => ({ path, kind: "shim" }));
+  const links = linkCandidates()
+    .filter((path) => present(path))
+    .map((path) => ({ path, kind: "link" }));
 
-  return entries
+  if (dryRun) {
+    return [...shims, ...links].map((entry) => ({ ...entry, status: "planned" }));
+  }
 
-    .filter((entry) => present(entry.path))
+  const removed = shims.map((entry) => {
+    unlinkSync(entry.path);
 
-    .map((entry) => {
-      if (dryRun) {
-        return { ...entry, status: "planned" };
-      }
+    return { ...entry, status: "removed" };
+  });
 
-      if (entry.kind === "link") {
+  // pnpm owns its store: asking it to drop the package also clears the manifest
+  // entry the bin conflict is reported against. A raw unlink leaves pnpm
+  // believing the bin is still spoken for, which is the same failure again.
+  for (const name of new Set(links.map((entry) => basename(entry.path)))) {
+    tryExecFile("pnpm", ["remove", "-g", name]);
+  }
+
+  // Whatever pnpm could not drop -- no pnpm on PATH, or a dangling link whose
+  // package is already gone -- goes by hand.
+  return [
+    ...removed,
+    ...links.map((entry) => {
+      if (present(entry.path)) {
         rmSync(entry.path, { recursive: true, force: true });
-      } else {
-        unlinkSync(entry.path);
       }
 
       return { ...entry, status: "removed" };
-    });
+    }),
+  ];
 }
 
 /** Whether anything global is still installed, for the uninstall scan. */
-export const globalShimPresent = () => shimCandidates().some((path) => existsSync(path)) || Boolean(shimPath());
+export const globalShimPresent = () => shimCandidates().some((path) => existsSync(path)) || Boolean(shimPath()) || linkCandidates().some(present);

@@ -19,35 +19,16 @@
  * @see docs/plans/_stable-launcher-outside-the-checkout.md - Phase 1, and the measurement
  */
 
-import { existsSync, mkdirSync, rmSync } from "node:fs";
+import { existsSync, rmSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { join } from "node:path";
 
 import { currentVersion, installedVersions, launcherRoot, recordVersion, setCurrent } from "./_launcher-store.js";
 import { pruneVersions, recordPrune } from "./_launcher-prune.js";
+import { deployCopy } from "./_launcher-deploy.js";
 
 export { currentVersion, installedVersions, launcherRoot, setCurrent } from "./_launcher-store.js";
-
-/** The package manager command, and why the legacy flag: pnpm 10+ needs it for a non-workspace deploy. */
-const DEPLOY = ["deploy", "--prod", "--legacy"];
-
-/**
- * Run `pnpm deploy` for one checkout into one directory.
- *
- * @param {{ checkout: string, target: string, run?: Function }} options
- * @returns {{ status: string, stdout?: string }}
- */
-export function deployCopy({ checkout, target, run = defaultRun }) {
-  mkdirSync(target, { recursive: true });
-  const result = run("pnpm", [...DEPLOY, target], { cwd: checkout, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
-
-  return { status: "deployed", stdout: result?.stdout };
-}
-
-/** The default runner: an argument array, never a shell string. */
-function defaultRun(command, args, options = {}) {
-  return { stdout: execFileSync(command, args, options) };
-}
+export { deployArgs, deployCopy } from "./_launcher-deploy.js";
 
 /**
  * Whether a copy answers `--version`.
@@ -98,7 +79,7 @@ export function installLauncher({ checkout, version, root, run, now = () => new 
   try {
     deployCopy({ checkout, target: dir, run });
   } catch (error) {
-    return { status: "failed", dir, version, reason: String(error?.message ?? error).split("\n")[0] };
+    return { status: "failed", dir, version, reason: String(error?.message ?? error).split("\n", 1)[0] };
   }
 
   const check = (probe ?? probeCopy)({ dir });

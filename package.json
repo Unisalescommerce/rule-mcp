@@ -22,7 +22,6 @@
     "dev:daemon": "node ./bin/rule-mcp.js daemon start",
     "inspector": "node ./node_modules/@modelcontextprotocol/inspector/cli/build/cli.js node ./bin/rule-mcp.js serve",
     "doctor": "node ./bin/rule-mcp.js doctor",
-    "postinstall": "pnpm install -g . 2>/dev/null || true",
     "prepare": "node scripts/install/git-hooks/index.mjs",
     "hooks:install": "node scripts/install/git-hooks/index.mjs",
     "hooks:check": "node scripts/install/git-hooks/index.mjs --check",

@@ -10,7 +10,7 @@
  * before it is run.
  */
 
-import { existsSync, readdirSync, readFileSync, realpathSync } from "node:fs";
+import { readFileSync, realpathSync } from "node:fs";
 import { homedir, platform } from "node:os";
 import { join } from "node:path";
 
@@ -130,9 +130,5 @@ export function shimCandidates(home = homedir()) {
   return [...new Set(dirs.flatMap((dir) => ["rule-mcp", "rule-mcpd"].map((name) => join(dir, name))))];
 }
 
-/** Linked package entries inside pnpm's per-user global store. */
-export function linkCandidates(home = homedir()) {
-  const roots = [join(home, "Library", "pnpm", "global"), join(home, ".local", "share", "pnpm", "global")];
-
-  return roots.filter((root) => existsSync(root)).flatMap((root) => readdirSync(root).map((version) => join(root, version, "node_modules", "rule-mcp")));
-}
+/** Linked package entries inside pnpm's per-user global store. Re-exported: the shim stays the one import surface. */
+export { linkCandidates } from "./_shim-store.js";
