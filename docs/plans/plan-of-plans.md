@@ -20,24 +20,24 @@ Node ids in graph lines stay skill names (`rule-process-ai`), not filenames. Fil
 
 ## 1 - Snapshot (2026-11-05)
 
-| Group                           | Path                          | Status         | Open work                                                                           |
-| ------------------------------- | ----------------------------- | -------------- | ----------------------------------------------------------------------------------- |
-| this index                      | `plan-of-plans.md`            | `in-progress`  | workstream ordering + owner merge gate                                              |
-| catalog orchestrator            | `skills/_skills-plan.md`      | `in-progress`  | 3 release nodes done; remaining leaves per its stages                               |
-| host integration                | _(retired)_                   | done → ADR 191 | 37/37; per-host tokens deferred (pending ADR close-host-…)                          |
-| launcher                        | _(retired)_                   | done → ADR 192 | Phase 4 closed 2026-10-30 (pending ADR the-launcher-owns-…)                         |
-| port / installer scope          | _(retired)_                   | done → ADR 189 | file gone; HARD edge to host plan satisfied                                         |
-| export                          | _(retired)_                   | done → ADR 190 | Steps 0–8 complete 2026-10-31; review/audit → ADR 193/203                           |
-| scripts layout                  | _(retired)_                   | done → ADR 196 | WS0–WS7 closed 2026-11-01; product ADR pending land                                 |
-| decision models                 | _(retired)_                   | done → ADR 200 | own graph                                                                           |
-| ASD-STE100 writing + plan shape | _(retired)_                   | done → ADR 195 | WS-G closed 2026-10-31; product pending ADR mcp-authored-markdown-uses-asd-ste100…  |
-| plan-graph audit                | _(retired)_                   | done → ADR 204 | history (ADR 162)                                                                   |
-| Pi integration and catalog debt | _(retired)_ | done → ADR 242 | WS1 installed-skill verification; WS2 catalog debt                                  |
-| OSS readiness and repo health   | _(retired)_                   | done → ADR 208 | WS1 records four decisions; serialize ADR writes with the surface audit             |
-| tool and skill surface audit    | _(retired)_                   | done → ADR 209 | closed 2026-11-06: counts guarded, catalog refreshed, ADRs decided                  |
-| publication cutover             | _(retired)_ | done → ADR 243 | HARD-waits for the OSS and surface plans, then fixes tests, CI, secrets and cutover |
-| Deepseek audit runbook          | _(retired)_                   | done 2026-11-06 | served OSS (ADR 208) and surface (ADR 209); file deleted                            |
-| Secrets guardrails              | _(retired)_                   | done → ADR 203 | closeout recorded                                                                   |
+| Group                           | Path                     | Status          | Open work                                                                           |
+| ------------------------------- | ------------------------ | --------------- | ----------------------------------------------------------------------------------- |
+| this index                      | `plan-of-plans.md`       | `in-progress`   | workstream ordering + owner merge gate                                              |
+| catalog orchestrator            | `skills/_skills-plan.md` | `in-progress`   | 3 release nodes done; remaining leaves per its stages                               |
+| host integration                | _(retired)_              | done → ADR 191  | 37/37; per-host tokens deferred (pending ADR close-host-…)                          |
+| launcher                        | _(retired)_              | done → ADR 192  | Phase 4 closed 2026-10-30 (pending ADR the-launcher-owns-…)                         |
+| port / installer scope          | _(retired)_              | done → ADR 189  | file gone; HARD edge to host plan satisfied                                         |
+| export                          | _(retired)_              | done → ADR 190  | Steps 0–8 complete 2026-10-31; review/audit → ADR 193/203                           |
+| scripts layout                  | _(retired)_              | done → ADR 196  | WS0–WS7 closed 2026-11-01; product ADR pending land                                 |
+| decision models                 | _(retired)_              | done → ADR 200  | own graph                                                                           |
+| ASD-STE100 writing + plan shape | _(retired)_              | done → ADR 195  | WS-G closed 2026-10-31; product pending ADR mcp-authored-markdown-uses-asd-ste100…  |
+| plan-graph audit                | _(retired)_              | done → ADR 204  | history (ADR 162)                                                                   |
+| Pi integration and catalog debt | _(retired)_              | done → ADR 242  | WS1 installed-skill verification; WS2 catalog debt                                  |
+| OSS readiness and repo health   | _(retired)_              | done → ADR 208  | WS1 records four decisions; serialize ADR writes with the surface audit             |
+| tool and skill surface audit    | _(retired)_              | done → ADR 209  | closed 2026-11-06: counts guarded, catalog refreshed, ADRs decided                  |
+| publication cutover             | _(retired)_              | done → ADR 243  | HARD-waits for the OSS and surface plans, then fixes tests, CI, secrets and cutover |
+| Deepseek audit runbook          | _(retired)_              | done 2026-11-06 | served OSS (ADR 208) and surface (ADR 209); file deleted                            |
+| Secrets guardrails              | _(retired)_              | done → ADR 203  | closeout recorded                                                                   |
 
 Branch history that motivated stages 1-5 (2026-10-21) lives in git and in ADR 172; it is not re-executed. The remote `feat/*` refs carry no content this tree lacks.
 | Installer: remove the pnpm global link, fix the launcher deploy | _(retired)_ | done → ADR 207 | scaffold shape check |
@@ -78,11 +78,11 @@ main
 │   ├── export ........................ done → ADR 190
 │   ├── scripts layout ................ done → ADR 196
 │   ├── decision models ............... done → ADR 200
-│   ├── Pi integration ................ in progress
-│   ├── OSS readiness ................. planned
-│   ├── tool and skill surface audit .. done (ORDER <- Pi; CONFLICT <-> OSS)
-│   ├── publication cutover ........... in progress (cutover done)
-│   └── Deepseek prompts .............. support runbook, not a node
+│   ├── Pi integration ................ done → ADR 242
+│   ├── OSS readiness ................. done → ADR 208
+│   ├── tool and skill surface audit .. done → ADR 209
+│   ├── publication cutover ........... done → ADR 243
+│   └── Deepseek prompts .............. retired 2026-11-06, file deleted
 ├── WS-G  ASD-STE100 writing + plan shape
 │   └── _asd-ste100.md ................. done → ADR 195
 ├── WS-E  superseded / historical ........ no execution
