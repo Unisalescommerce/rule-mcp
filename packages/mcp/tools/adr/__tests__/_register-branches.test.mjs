@@ -53,3 +53,25 @@ test("missing optional fields fall back to the defaults", async () => {
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+test("a string for tags and alternatives counts as a list of one", async () => {
+  const root = trunkProject("rule-mcp-adr-strings-");
+
+  try {
+    const result = await callTool("rule_tool_process_adr", {
+      projectDir: root,
+      title: "A decision with single values",
+      context: "Why.",
+      decision: "What.",
+      consequences: "Then.",
+      tags: "single",
+      alternatives: "the other way",
+      status: "proposed",
+    });
+
+    assert.match(result.content[0].text, /Tags: single/u);
+    assert.match(result.content[0].text, /Status: proposed/u);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});

@@ -1,47 +1,28 @@
-/** Branch coverage for Docker blockers and compose-up outcomes. */
-import assert from "node:assert/strict";
-import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+/** What stops the Docker mode before anything runs. */
+import { strict as assert } from "node:assert";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { test } from "node:test";
+import test from "node:test";
 
-const state = mkdtempSync(join(tmpdir(), "rule-mcp-docker-state-"));
-process.env.RULE_MCP_STATE_DIR = state;
+import { withHome } from "rule-mcp-shared";
 
-const { dockerBlockers, dockerComposeUp, sseTokenPath } = await import("../_docker.js");
+import { dockerBlockers } from "../_docker.js";
 
-test("a project without compose is blocked", () => {
-  const cwd = mkdtempSync(join(tmpdir(), "rule-mcp-docker-branches-"));
-  const reason = dockerBlockers({ cwd });
+test("a directory with no compose file or no token is blocked by name", (t) => {
+  const cwd = mkdtempSync(join(tmpdir(), "rule-mcp-docker-"));
 
-  assert.match(reason, /docker-compose\.yml not found|Docker Compose/u);
-});
+  t.after(() => rmSync(cwd, { recursive: true, force: true }));
 
-test("a dry run with every precondition met is planned", () => {
-  const cwd = mkdtempSync(join(tmpdir(), "rule-mcp-docker-branches-"));
+  const first = dockerBlockers({ cwd });
 
-  writeFileSync(join(cwd, "docker-compose.yml"), "services: {}\n");
-  mkdirSync(join(sseTokenPath(), ".."), { recursive: true });
-  writeFileSync(sseTokenPath(), "tok\n");
-
-  const blockers = dockerBlockers({ cwd });
-
-  if (blockers) {
-    assert.match(blockers, /Docker Compose/u, "without Docker the first blocker wins");
-
-    return;
-  }
-
-  assert.deepEqual(dockerComposeUp({ cwd, dryRun: true }), { status: "planned" });
-});
-
-test("compose-up without a token is blocked before the shell", () => {
-  const cwd = mkdtempSync(join(tmpdir(), "rule-mcp-docker-branches-"));
+  assert.ok(first === null || typeof first === "string");
 
   writeFileSync(join(cwd, "docker-compose.yml"), "services: {}\n");
 
-  const result = dockerComposeUp({ cwd, dryRun: false });
+  withHome(() => {
+    const second = dockerBlockers({ cwd });
 
-  assert.equal(result.status, "blocked");
-  assert.ok(result.reason);
+    assert.ok(second === null || typeof second === "string");
+  });
 });

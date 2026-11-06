@@ -1,47 +1,30 @@
-/** Branch coverage for the renumber report's clean, author and index-only arms. */
-import assert from "node:assert/strict";
-import { test } from "node:test";
+/** The report for a tree with no collisions, in each way it can still be wrong. */
+import { strict as assert } from "node:assert";
+import test from "node:test";
 
 import { renderRenumberPlan } from "../_render.js";
 
-const plan = (overrides = {}) => ({
-  collisions: [],
-  gaps: [],
-  renames: [],
-  authors: [],
-  indexUnordered: false,
-  indexStale: false,
-  handoffIndexUnordered: false,
-  handoffIndexStale: false,
-  projectDir: process.cwd(),
-  ...overrides,
-});
+const plan = (over = {}) => ({ renames: [], collisions: [], ...over });
+const author = { file: "docs/adr/001-x.md", author: "A Person" };
 
-test("a clean tree with no authors is one sentence", () => {
+test("a clean tree says so, with or without an author to fix", () => {
   assert.match(renderRenumberPlan(plan()), /Numbering is clean/u);
-});
 
-test("a clean tree with authors appends the author lines", () => {
-  const text = renderRenumberPlan(plan({ authors: [{ file: "docs/adr/001-x.md", current: "", author: "Ada" }] }));
+  const text = renderRenumberPlan(plan({ authors: [author] }));
 
-  assert.match(text, /Numbering is clean/u);
-  assert.match(text, /1 ADR\(s\) name a tool or nobody/u);
-  assert.match(text, /Ada/u);
+  assert.match(text, /no author line -> A Person/u);
   assert.match(text, /Run with --fix/u);
+  assert.doesNotMatch(renderRenumberPlan(plan({ authors: [author] }), { fix: true }), /Run with --fix/u);
 });
 
-test("an index-only repair names the file and can suppress the fix hint", () => {
-  const behind = renderRenumberPlan(plan({ indexStale: true }));
+test("holes alone are named and carry the authors along", () => {
+  assert.match(renderRenumberPlan(plan({ gaps: [{ family: "adr", number: 7 }] })), /sequence has holes/u);
+  assert.match(renderRenumberPlan(plan({ gaps: [{ family: "adr", number: 7 }], authors: [author] })), /A Person/u);
+});
 
-  assert.match(behind, /generated index is behind/u);
-  assert.match(behind, /docs\/adr\/ADR\.md/u);
-  assert.match(behind, /Run with --fix/u);
-
-  const ordered = renderRenumberPlan(plan({ indexUnordered: true, handoffIndexUnordered: true, authors: [{ file: "x", current: "", author: "Ada" }], projectDir: process.cwd() }), {
-    fix: true,
-  });
-
-  assert.match(ordered, /runs out of order/u);
-  assert.match(ordered, /docs\/handoff\/HANDOFF\.md/u);
-  assert.doesNotMatch(ordered, /Run with --fix/u);
+test("a stale or unordered index is reported by file", () => {
+  assert.match(renderRenumberPlan(plan({ indexStale: true })), /docs\/adr\/ADR\.md/u);
+  assert.match(renderRenumberPlan(plan({ handoffIndexStale: true })), /docs\/handoff\/HANDOFF\.md/u);
+  assert.match(renderRenumberPlan(plan({ indexUnordered: true })), /out of order/u);
+  assert.match(renderRenumberPlan(plan({ handoffIndexUnordered: true })), /out of order/u);
 });
