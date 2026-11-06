@@ -63,6 +63,8 @@ export default defineConfig([
       "unicorn/prefer-simple-condition-first": "off",
       "unicorn/no-computed-property-existence-check": "off",
       "unicorn/no-declarations-before-early-exit": "off",
+      // The rule rejects the `/** ... */` block every file here uses: 2015 of 2297 findings (ADR 213 family).
+      "unicorn/no-asterisk-prefix-in-documentation-comments": "off",
       "unicorn/prefer-await": "off", // .then() chains are idiomatic in this codebase
       "unicorn/max-nested-calls": "off",
       "unicorn/no-unreadable-for-of-expression": "off",
