@@ -9,6 +9,7 @@ tags:
   - "toolchain"
   - "frontend"
 frameworks: [all]
+inherits: [rule-toolchain]
 ---
 
 # rule-toolchain-rspack - Rspack Build Toolchain

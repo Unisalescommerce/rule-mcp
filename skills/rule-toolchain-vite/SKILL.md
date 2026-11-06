@@ -9,6 +9,7 @@ tags:
   - "toolchain"
   - "frontend"
 frameworks: [all]
+inherits: [rule-toolchain]
 ---
 
 # rule-toolchain-vite - Vite Build Toolchain

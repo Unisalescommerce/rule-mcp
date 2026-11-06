@@ -10,6 +10,7 @@ tags:
   - "toolchain"
   - "frontend"
 frameworks: [all]
+inherits: [rule-toolchain]
 ---
 
 # rule-toolchain-parcel - Parcel Bundler

@@ -15,6 +15,7 @@ tags:
   - "husky"
   - "index"
 frameworks: [all]
+guardrails: [bundler-no-public-secret, bundler-dev-not-exposed, bundler-target-declared, bundler-io-declared, bundler-sourcemap-policy]
 ---
 
 # rule-toolchain - Toolchain Skills Index
