@@ -7,11 +7,11 @@
 
 ## Context
 
-Phase 7's ratchet continued past ADR 055: a second wave of ~30 co-located suites landed - SSE transport handler, tokensave decoration pipeline, the handoff builder/sections/sources/format, export retention, tool-cache persistence edge cases, session lifecycle and resume announce, CLI registrar arms (doctor/skills/agent-commands/handoff doctor via subprocesses), roles CLI edges, the guard hook, skills install flows, installer path helpers and agent dispatch, bm25 scoring on a hand-built index, review findings merge, the vanilla template-load guardrail, daemon process lifecycle and report. Local branch coverage measured 89.27% (multiple measures 88.9-89.3 across a moving census). CI runs ubuntu/Node22 so the floor is set to 89, below the local measure, for headroom.
+Phase 7's ratchet continued past ADR 055: second wave of ~30 co-located suites landed - SSE transport handler, tokensave decoration pipeline, handoff builder/sections/sources/format, export retention, tool-cache persistence edge cases, session lifecycle and resume announce, CLI registrar arms (doctor/skills/agent-commands/handoff doctor via subprocesses), roles CLI edges, guard hook, skills install flows, installer path helpers and agent dispatch, bm25 scoring on hand-built index, review findings merge, vanilla template-load guardrail, daemon process lifecycle and report. Local branch coverage measured 89.27% (multiple measures 88.9-89.3 across moving census). CI runs ubuntu/Node22 so floor is set to 89, below local measure, for headroom.
 
 ## Decision
 
-Raise BRANCH_FLOOR in scripts/reports/coverage/_threshold.data.mjs from 87 to 89. The ratchet mechanics are unchanged: pnpm test:coverage fails below the floor, the floor may only rise, and 95 stays where the phase closes. All suites landed co-located (src/**/**tests**) or as repo-level folder tests, picked up by the glob runner without package.json edits.
+Raise BRANCH_FLOOR in scripts/reports/coverage/_threshold.data.mjs from 87 to 89. ratchet mechanics are unchanged: pnpm test:coverage fails below floor, floor may only rise, and 95 stays where phase closes. All suites landed co-located (src/**/**tests**) or as repo-level folder tests, picked up by glob runner without package.json edits.
 
 ## Consequences
 

@@ -7,11 +7,11 @@
 
 ## Context
 
-Phase 7 of the plan (ADR 049/061/065) gates CI on a rising branch-coverage floor. Landed targeted suites across the darkest modules - doctor rendering, self-update gates, telemetry store I/O, HTTP transport, gateway core/render, transcripts, cache catalog verify, handon verification, project snapshot, role templates, terminal helpers, and more - taking the measured floor from 83 to 87.88 on the local full-suite run (multiple measures: 87.1-87.9; CI runs ubuntu/Node22 so the floor is set below the local measure for headroom). The 95 target stays the ratchet's endpoint; the floor keeps rising as suites land.
+Phase 7 of plan (ADR 049/061/065) gates CI on rising branch-coverage floor. Landed targeted suites across darkest modules - doctor rendering, self-update gates, telemetry store I/O, HTTP transport, gateway core/render, transcripts, cache catalog verify, handon verification, project snapshot, role templates, terminal helpers, and more - taking measured floor from 83 to 87.88 on local full-suite run (multiple measures: 87.1-87.9; CI runs ubuntu/Node22 so floor is set below local measure for headroom). 95 target stays ratchet's endpoint; floor keeps rising as suites land.
 
 ## Decision
 
-Raise BRANCH_FLOOR in scripts/reports/coverage/_threshold.data.mjs from 83 to 87. The gate and the ratchet mechanics are unchanged: pnpm test:coverage fails below the floor, the floor may only rise, and 95 is when the phase closes. Every suite landed in this pass is co-located src/**/**tests** or folder-split repo-level tests, so the glob runner picked them up with no package.json edits.
+Raise BRANCH_FLOOR in scripts/reports/coverage/_threshold.data.mjs from 83 to 87. gate and ratchet mechanics are unchanged: pnpm test:coverage fails below floor, floor may only rise, and 95 is when phase closes. Every suite landed in this pass is co-located src/**/**tests** or folder-split repo-level tests, so glob runner picked them up with no package.json edits.
 
 ## Consequences
 

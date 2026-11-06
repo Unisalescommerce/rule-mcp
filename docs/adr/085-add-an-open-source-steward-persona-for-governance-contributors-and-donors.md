@@ -11,11 +11,11 @@ The review catalog covers every engineering axis except the one that keeps an op
 
 ## Decision
 
-Add `personas/oss.md` as an active persona named `Open Source Steward` with id `oss`. Its skills cover open source governance, contributor management, donor and funding management, release management, and community building and engagement. Its evidence skills point at the process skills that already exist (`rule-process-adr`, `rule-process-changelog`, `rule-process-npm-release`). Because the catalog is read from the `personas/` folder at startup, the role gains its MCP prompt, its slash commands (`rule-persona-oss-plan`, `rule-persona-oss-audit`, `rule-persona-oss-review`) and its tool surfaces with no code change.
+Add `personas/oss.md` as active persona named `Open Source Steward` with id `oss`. Its skills cover open source governance, contributor management, donor and funding management, release management, and community building and engagement. Its evidence skills point at process skills that already exist (`rule-process-adr`, `rule-process-changelog`, `rule-process-npm-release`). Because catalog is read from `personas/` folder at startup, role gains its MCP prompt, its slash commands (`rule-persona-oss-plan`, `rule-persona-oss-audit`, `rule-persona-oss-review`) and its tool surfaces with no code change.
 
 ## Consequences
 
-A free-text request about governance, contributors, donors or community now resolves to a role that owns those lenses. The persona is data, so editing the file edits every surface. Stale `rule-mcp-*-oss.md` command files in `.roo/commands/` now have a matching role and a real body rather than a fallback. The catalog census (`docs/11-personas.md`) must be regenerated with `pnpm census`.
+free-text request about governance, contributors, donors or community now resolves to role that owns those lenses. persona is data, so editing file edits every surface. Stale `rule-mcp-*-oss.md` command files in `.roo/commands/` now have matching role and real body rather than fallback. catalog census (`docs/11-personas.md`) must be regenerated with `pnpm census`.
 
 ## What would end this
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Extend the docs persona with open source lenses
-1. Fold open source governance into the devops persona
-1. Leave the role proposed until a full OSS skill ships
+1. Extend docs persona with open source lenses
+1. Fold open source governance into devops persona
+1. Leave role proposed until full OSS skill ships

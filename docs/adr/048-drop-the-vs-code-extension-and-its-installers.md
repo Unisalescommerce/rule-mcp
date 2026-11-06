@@ -7,11 +7,11 @@
 
 ## Context
 
-The rule-mcp-vanilla-reactive VS Code extension (syntax highlighting, autocomplete for HTML templates) and its build/install machinery were the last remnant of the no-framework editor-integration path. The upstream repo already removed extensions/ on the owner decision (upstream handoff 07, ADR 080): "the installers now write agent configuration and nothing else". The extension served only syntax highlighting; the styleguides and framework skills cover the same ground, and the lean-web direction (0 runtime deps, all-vanilla) does not need editor plugins to teach it. Keeping extensions/ forced every installer (CLI, install.sh, install.ps1, uninstall.sh, uninstall.ps1) to build or bundle a .vsix and probe six editor CLIs, with no test coverage. This decision matches the upstream evolution and removes the last dependency on @vscode/vsce.
+rule-mcp-vanilla-reactive VS Code extension (syntax highlighting, autocomplete for HTML templates) and its build/install machinery were last remnant of no-framework editor-integration path. upstream repo already removed extensions/ on owner decision (upstream handoff 07, ADR 080): "installers now write agent configuration and nothing else". extension served only syntax highlighting; styleguides and framework skills cover same ground, and lean-web direction (0 runtime deps, all-vanilla) does not need editor plugins to teach it. Keeping extensions/ forced every installer (CLI, install.sh, install.ps1, uninstall.sh, uninstall.ps1) to build or bundle a.vsix and probe six editor CLIs, with no test coverage. This decision matches upstream evolution and removes last dependency on @vscode/vsce.
 
 ## Decision
 
-Delete extensions/ (vscode-rule-mcp source + rule-mcp-vanilla-reactive.vsix). Remove the five extension functions from src/cli/agent-installers.js (vscodeExtensionDirectories, removeVscodeExtensionDirectories, tryInstallExtension, installVscodeExtension, uninstallVscodeExtension) and their call sites in installVscode/uninstallVscode. Remove Phase 4 (install) and Phase 3b (uninstall) from scripts/install.sh, uninstall.sh, install.ps1, uninstall.ps1. Drop extensions from test/repository-contract.test.mjs sourceDirectories and from the rule-mcp-porting-baseline preservedRoots. ADR 017 is superseded.
+Delete extensions/ (vscode-rule-mcp source + rule-mcp-vanilla-reactive.vsix). Remove five extension functions from src/cli/agent-installers.js (vscodeExtensionDirectories, removeVscodeExtensionDirectories, tryInstallExtension, installVscodeExtension, uninstallVscodeExtension) and their call sites in installVscode/uninstallVscode. Remove Phase 4 (install) and Phase 3b (uninstall) from scripts/install.sh, uninstall.sh, install.ps1, uninstall.ps1. Drop extensions from test/repository-contract.test.mjs sourceDirectories and from rule-mcp-porting-baseline preservedRoots. ADR 017 is superseded.
 
 ## Consequences
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Keep the extension but build it lazily on demand
-1. Externalize the extension into its own repo
-1. Keep the VSIX committed but stop building it
+1. Keep extension but build it lazily on demand
+1. Externalize extension into its own repo
+1. Keep VSIX committed but stop building it

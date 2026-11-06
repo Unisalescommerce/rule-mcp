@@ -7,11 +7,11 @@
 
 ## Context
 
-ADR 053 caps a file at 150 lines and the ratchet exempts only pre-existing offenders. The cap had been red for a while without anyone noticing: 33 files exceed it, the largest at 556 lines (src/cli/setup/opentui/_wizard.js), and none of them was recorded, so the budget test failed on every run and the failure became background noise. The measurement that matters: none of the 33 is a file this session created - the five that were pushed over the cap were split instead (hosts/index.js, _manifest.js, _uninstall.js, doctor/_sections.js, _targets-sync.js).
+ADR 053 caps file at 150 lines and ratchet exempts only pre-existing offenders. cap had been red for while without anyone noticing: 33 files exceed it, largest at 556 lines (src/cli/setup/opentui/_wizard.js), and none of them was recorded, so budget test failed on every run and failure became background noise. measurement that matters: none of 33 is file this session created - five that were pushed over cap were split instead (hosts/index.js, _manifest.js, _uninstall.js, doctor/_sections.js, _targets-sync.js).
 
 ## Decision
 
-Record the 33 offenders in FILE_SIZE_RATCHET with the line count the cap measures, and document the adoption baseline here, which is the mechanism the data file's own header describes: an entry is added only as the baseline for a root the cap has just reached. A row may only shrink; a file that reaches 150 loses its row, and a file that grows fails the build.
+Record 33 offenders in FILE_SIZE_RATCHET with line count cap measures, and document adoption baseline here, which is mechanism data file's own header describes: entry is added only as baseline for root cap has reached. row may only shrink; file that reaches 150 loses its row, and file that grows fails build.
 
 ## Consequences
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Split all 33 now: rejected as a single change, because it is a refactor of the whole CLI layer with no behavioral goal, and a mechanical split of a 556-line wizard nobody is touching is churn that review cannot verify
-1. Raise the cap to cope: rejected, because the cap is the rule and 150 is what ADR 053 chose
-1. Leave the test red and call it pre-existing: rejected, and that is exactly the state this ADR ends - a red test that everybody learns to ignore is worse than a recorded debt
+1. Split all 33 now: rejected as single change, because it is refactor of whole CLI layer with no behavioral goal, and mechanical split of 556-line wizard nobody is touching is churn that review cannot verify
+1. Raise cap to cope: rejected, because cap is rule and 150 is what ADR 053 chose
+1. Leave test red and call it pre-existing: rejected, and that is exactly state this ADR ends - red test that everybody learns to ignore is worse than recorded debt

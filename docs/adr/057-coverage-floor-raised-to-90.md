@@ -7,11 +7,11 @@
 
 ## Context
 
-The coverage ratchet (ADRs 062-067) kept rising through the long-tail sweep: English-only scanners, tool surface annotations, cache replay tiers, agent-commands target flows, review overlays/validate/persona parsing, check/search tool verdicts, handon verification buckets, handoff git reads, plan reporter variants, project detection edges, flight renderer, a11y evaluate, and more. Local branch coverage passed 90% (measured 90.08; census 6523). CI runs ubuntu/Node22, so the floor is kept a hair below the local measure.
+coverage ratchet (ADRs 062-067) kept rising through long-tail sweep: English-only scanners, tool surface annotations, cache replay tiers, agent-commands target flows, review overlays/validate/persona parsing, check/search tool verdicts, handon verification buckets, handoff git reads, plan reporter variants, project detection edges, flight renderer, a11y evaluate, and more. Local branch coverage passed 90% (measured 90.08; census 6523). CI runs ubuntu/Node22, so floor is kept hair below local measure.
 
 ## Decision
 
-Raise BRANCH_FLOOR from 89 to 90 in scripts/reports/coverage/_threshold.data.mjs. Ratchet mechanics unchanged; 95 remains the endpoint. All suites remain glob-runner picked up (src/**/**tests** or repo-level folders), no package.json edits.
+Raise BRANCH_FLOOR from 89 to 90 in scripts/reports/coverage/_threshold.data.mjs. Ratchet mechanics unchanged; 95 remains endpoint. All suites remain glob-runner picked up (src/**/**tests** or repo-level folders), no package.json edits.
 
 ## Consequences
 

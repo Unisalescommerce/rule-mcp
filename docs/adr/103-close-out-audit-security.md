@@ -7,15 +7,15 @@
 
 ## Context
 
-The audit record docs/audits/security.md, "security audit", finished with 8 resolved items on 2026-09-15.
+audit record docs/audits/security.md, "security audit", finished with 8 resolved items on 2026-09-15.
 
 ## Decision
 
-Fold the record into this ADR and the session handoff, then delete the source file. The full text stays in git history.
+Fold record into this ADR and session handoff, then delete source file. full text stays in git history.
 
 ## Consequences
 
-docs/audits/security.md is gone from the tree; the handoff of this session names what it carried.
+docs/audits/security.md is gone from tree; handoff of this session names what it carried.
 
 ## What would end this
 

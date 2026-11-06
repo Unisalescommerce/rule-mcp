@@ -15,10 +15,10 @@ Update rule-toolchain-typescript with exactOptionalPropertyTypes, verbatimModule
 
 ## Consequences
 
-The skill provides a safer baseline for large codebases and makes explicit the difference between compile-time and runtime guarantees; enabling exactOptionalPropertyTypes may require call site migration.
+skill provides safer baseline for large codebases and makes explicit difference between compile-time and runtime guarantees; enabling exactOptionalPropertyTypes may need call site migration.
 
 ## Alternatives Considered
 
-1. Limit to adding the two missing strict flags
-1. Create a separate skill for TypeScript large projects
-1. Adopt future versions and defaults from the article without qualifications
+1. Limit to adding two missing strict flags
+1. Create separate skill for TypeScript large projects
+1. Adopt future versions and defaults from article without qualifications

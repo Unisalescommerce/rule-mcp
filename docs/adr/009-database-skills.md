@@ -7,7 +7,7 @@
 
 ## Context
 
-Database expertise is required in most projects but was absent from the skill taxonomy. Different databases have fundamentally different patterns - PostgreSQL indexing strategies differ from MongoDB schema design differ from MySQL InnoDB tuning. A single "database" skill would be too shallow.
+Database expertise is needed in most projects but was absent from skill taxonomy. Different databases have fundamentally different patterns - PostgreSQL indexing strategies differ from MongoDB schema design differ from MySQL InnoDB tuning. single "database" skill would be too shallow.
 
 ## Decision
 

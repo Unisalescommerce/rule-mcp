@@ -7,7 +7,7 @@
 
 ## Context
 
-While completing the persona split (ADR 037), the user asked for a second, larger surface restructure: the /rule router becomes /rule; area prompts move under /rule-area-* ; the standalone `/rule-compression` command is removed and compression becomes implicit in every other command; /rule-mcp-code-review is superseded by the persona review commands (then `rule-mcp-review-*`, later `rule-persona-*-review` per ADR 105); the legacy one-shots /rule-mcp-a11y-audit, /rule-mcp-new-feature, /rule-mcp-pull-request, /rule-mcp-setup-project, /rule-mcp-write-tests and /rule-mcp-tdd are removed (write-tests and setup-project content merged into rule-process-tdd / rule-init); and at the time `/rule-check` was renamed toward a process-check one-shot (superseded by ADR 098 + ADR 105: `/rule-check` auto-detects, `/rule-area-*-check` per area). Deleted or renamed commands must be purged from every surface, including installers and uninstallers, and stale files removed from the local pi agent.
+While completing persona split (ADR 037), user asked for second, larger surface restructure: /rule router becomes /rule; area prompts move under /rule-area-*; standalone `/rule-compression` command is removed and compression becomes implicit in every other command; /rule-mcp-code-review is superseded by persona review commands (then `rule-mcp-review-*`, later `rule-persona-*-review` per ADR 105); legacy one-shots /rule-mcp-a11y-audit, /rule-mcp-new-feature, /rule-mcp-pull-request, /rule-mcp-setup-project, /rule-mcp-write-tests and /rule-mcp-tdd are removed (write-tests and setup-project content merged into rule-process-tdd / rule-init); and at time `/rule-check` was renamed toward process-check one-shot (superseded by ADR 098 + ADR 105: `/rule-check` auto-detects, `/rule-area-*-check` per area). Deleted or renamed commands must be purged from every surface, including installers and uninstallers, and stale files removed from local pi agent.
 
 ## Decision
 
@@ -19,13 +19,13 @@ Positive: one namespace per concern (rule-area-* for areas, rule-process-* for t
 
 ## What would end this
 
-The assumption this leans on is that the rule-mcp-* namespace is the whole command story and that
-one-shot, hand-curated workflows (setup/project, pull request) belong outside it. If a new
-feature ships a hand-written one-shot command next to the registry again, this restructure
+assumption this leans on is that rule-mcp-* namespace is whole command story and that
+one-shot, hand-curated workflows (setup/project, pull request) belong outside it. If new
+feature ships hand-written one-shot command next to registry again, this restructure
 is reversed per-name rather than preserved.
 
 ## Alternatives Considered
 
-1. Keep the old names and just add the new area/review commands (leaves standalone compression and one-shot legacy commands active)
-1. Rename only the router and area prefixes, keep legacy one-shots (larger surface, more drift)
-1. Fold tdd under the existing rule-process skill instead of a dedicated rule-process-tdd skill dir
+1. Keep old names and add new area/review commands (leaves standalone compression and one-shot legacy commands active)
+1. Rename only router and area prefixes, keep legacy one-shots (larger surface, more drift)
+1. Fold tdd under existing rule-process skill instead of dedicated rule-process-tdd skill dir

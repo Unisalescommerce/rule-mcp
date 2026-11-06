@@ -7,11 +7,11 @@
 
 ## Context
 
-The rule-mcp installers (scripts/install.sh and scripts/install.ps1) configured agents, rules, commands and services, but never touched the bundled rule-mcp-* skills: the MCP server serves them directly from its embedded catalog. Users who wanted their agent to see the skills natively (agents such as Pi read ~/.agents/skills) had to run scripts/install-skills.sh or the CLI skills installer separately, both of which copy the whole 89-skill catalog to the central ~/.agents/skills location without asking. A user installing with install.sh reported ending up with the full skill catalog centralized with no step that offered a choice.
+rule-mcp installers (scripts/install.sh and scripts/install.ps1) configured agents, rules, commands and services, but never touched bundled rule-mcp-* skills: MCP server serves them directly from its embedded catalog. Users who wanted their agent to see skills natively (agents such as Pi read ~/.agents/skills) had to run scripts/install-skills.sh or CLI skills installer separately, both of which copy whole 89-skill catalog to central ~/.agents/skills location without asking. user installing with install.sh reported ending up with full skill catalog centralized with no step that offered choice.
 
 ## Decision
 
-Add a skills step to both installers that asks before copying. install.sh gains Phase 6c "Bundled Skills" and install.ps1 gains Phase 4: in interactive TTY runs it prompts "Install bundled rule-mcp-* skills to ~/.agents/skills? [y/N]" defaulting to No, so a plain Enter or EOF never centralizes the catalog; the copy itself runs through the argv-safe CLI (rule-mcp skills install --all) which works for both local-repo and curl-piped installs and uses the embedded catalog. New flags --skills/-Skills force the copy and --no-skills/-NoSkills skip the step for non-interactive and CI runs, where the installer otherwise prints a skip hint instead of prompting. The PTY acceptance test now feeds a No answer and asserts the prompt/skip; a static selection test asserts non-interactive runs never prompt; the PowerShell contract test asserts the skills helper and prompt.
+Add skills step to both installers that asks before copying. install.sh gains Phase 6c "Bundled Skills" and install.ps1 gains Phase 4: in interactive TTY runs it prompts "Install bundled rule-mcp-* skills to ~/.agents/skills? [y/N]" defaulting to No, so plain Enter or EOF never centralizes catalog; copy itself runs through argv-safe CLI (rule-mcp skills install --all) which works for both local-repo and curl-piped installs and uses embedded catalog. New flags --skills/-Skills force copy and --no-skills/-NoSkills skip step for non-interactive and CI runs, where installer otherwise prints skip hint instead of prompting. PTY acceptance test now feeds No answer and asserts prompt/skip; static selection test asserts non-interactive runs never prompt; PowerShell contract test asserts skills helper and prompt.
 
 ## Consequences
 
@@ -19,10 +19,10 @@ Positive: installing now asks before centralizing any skill; non-interactive run
 
 ## What would end this
 
-The assumption this leans on is that copying skills to ~/.agents/skills is an optional extra that deserves an explicit yes. It would be wrong if native ~/.agents/skills loading became the only way agents receive rule-mcp-* skills (MCP delivery removed), or if a curated subset rather than the full catalog became the normal install target - each would change the default, and the per-skill picker would then have to move into the wizard step itself.
+assumption this leans on is that copying skills to ~/.agents/skills is optional extra that deserves explicit yes. It would be wrong if native ~/.agents/skills loading became only way agents receive rule-mcp-* skills (MCP delivery removed), or if curated subset rather than full catalog became normal install target - each would change default, and per-skill picker would then have to move into wizard step itself.
 
 ## Alternatives Considered
 
-1. Default the skills step to Yes so agents get native skills by default - rejected: it re-centers 89 skills on a plain Enter, the exact surprise being reported
-1. Reuse scripts/install-skills.sh from the installer - rejected: it resolves ../skills relative to the script, which breaks curl-piped installs, while the CLI uses the embedded catalog and single-binary form
-1. Add a third full-screen TUI step with per-skill checkboxes - rejected: ADR 062 keeps the wizard a two-step alt-screen TUI; the CLI already ships the checkbox picker (rule-mcp skills install) for granular selection
+1. Default skills step to Yes so agents get native skills by default - rejected: it re-centers 89 skills on plain Enter, exact surprise being reported
+1. Reuse scripts/install-skills.sh from installer - rejected: it resolves ../skills relative to script, which breaks curl-piped installs, while CLI uses embedded catalog and single-binary form
+1. Add third full-screen TUI step with per-skill checkboxes - rejected: ADR 062 keeps wizard two-step alt-screen TUI; CLI already ships checkbox picker (rule-mcp skills install) for granular selection

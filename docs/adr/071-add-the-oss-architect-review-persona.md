@@ -9,11 +9,11 @@
 
 ## Context
 
-The persona catalog is filesystem-driven (src/roles/*.md): adding a persona is adding one file with frontmatter and a lenses list in the body; the server loads it at startup and generates the plan/audit/review prompts, the slash commands, and the census rows. An interview with the developer defined the persona: id oss, title OSS Architect, 25 years of experience, layer process, status active, standalone; lenses covering licensing (SPDX conformance, stack compatibility, dual licensing, headers), governance (decision model, documented process, maintainer roles, independence), contributing (guides and triage, CI gates, CLA/DCO, review process), funding (platforms, transparency, sustainability, alternatives), plus security disclosure, release process, community health, and contributor onboarding; deliverables mix checklists, gap analysis, prioritized roadmap, and a maturity score.
+persona catalog is filesystem-driven (src/roles/*.md): adding persona is adding one file with frontmatter and lenses list in body; server loads it at startup and generates plan/audit/review prompts, slash commands, and census rows. interview with developer defined persona: id oss, title OSS Architect, 25 years of experience, layer process, status active, standalone; lenses covering licensing (SPDX conformance, stack compatibility, dual licensing, headers), governance (decision model, documented process, maintainer roles, independence), contributing (guides and triage, CI gates, CLA/DCO, review process), funding (platforms, transparency, sustainability, alternatives), plus security disclosure, release process, community health, and contributor onboarding; deliverables mix checklists, gap analysis, prioritized roadmap, and maturity score.
 
 ## Decision
 
-Add the OSS Architect persona (id: oss) as src/roles/oss.md, status active, layer process, 25 years, 12 lenses focused on the project itself (own license, governance, contributing, funding, disclosure, release, community health). Standard schema: no code change; registry tests and census updated to the new counts (76 prompts, 57 persona prompts, 77 commands).
+Add OSS Architect persona (id: oss) as src/roles/oss.md, status active, layer process, 25 years, 12 lenses focused on project itself (own license, governance, contributing, funding, disclosure, release, community health). Standard schema: no code change; registry tests and census updated to new counts (76 prompts, 57 persona prompts, 77 commands).
 
 ## Consequences
 
@@ -25,6 +25,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Extend supply-chain (dependency licensing): rejected. The supply-chain axis is the dependency chain; the OSS persona looks at the project itself (its own license, governance, community, funding)
-1. Extend devx (contributing/onboarding): rejected. Contributing is one lens, not the axis; the OSS Architect is a project and ecosystem perspective
-1. Add the persona as proposed (no prompts generated): rejected. The interview asked for active, with the three plan/audit/review operations
+1. Extend supply-chain (dependency licensing): rejected. supply-chain axis is dependency chain; OSS persona looks at project itself (its own license, governance, community, funding)
+1. Extend devx (contributing/onboarding): rejected. Contributing is one lens, not axis; OSS Architect is project and ecosystem perspective
+1. Add persona as proposed (no prompts generated): rejected. interview asked for active, with three plan/audit/review operations

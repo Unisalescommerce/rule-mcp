@@ -7,11 +7,11 @@
 
 ## Context
 
-The `rule-backend-*` category had only `api-design` and `security` as dedicated skills, plus the umbrella `rule-backend`. Development teams use a variety of Node.js backend frameworks, each with distinct patterns, tooling, and best practices. Without dedicated skills, agents had no framework-specific guidance.
+`rule-backend-*` category had only `api-design` and `security` as dedicated skills, plus umbrella `rule-backend`. Development teams use various Node.js backend frameworks, each with distinct patterns, tooling, and best practices. Without dedicated skills, agents had no framework-specific guidance.
 
 ## Decision
 
-Add four backend framework skills covering the major Node.js HTTP framework ecosystems:
+Add four backend framework skills covering major Node.js HTTP framework ecosystems:
 
 | Skill                  | Framework     | Focus                                                                                          |
 | ---------------------- | ------------- | ---------------------------------------------------------------------------------------------- |
@@ -39,8 +39,8 @@ Each skill covers:
 **Negative:**
 
 - Four new skills to maintain as frameworks evolve
-- Routing may sometimes hit the umbrella `rule-backend` instead of framework-specific skills
+- Routing may sometimes hit umbrella `rule-backend` instead of framework-specific skills
 
 ## Routing
 
-Section headings include the framework name (e.g. "NestJS Architecture", "Express Middleware Pipeline") to improve keyword matching in the rule-mcp router.
+Section headings include framework name (e.g. "NestJS Architecture", "Express Middleware Pipeline") to improve keyword matching in rule-mcp router.

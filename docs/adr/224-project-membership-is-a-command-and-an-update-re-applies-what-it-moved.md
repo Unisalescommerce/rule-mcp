@@ -7,11 +7,11 @@
 
 ## Context
 
-A project-scope install was only reachable through `setup --scope project --project <path>`, and an uninstall left the project's store entry and an empty config file behind. A third checkout meant repeating every flag, because the store recorded what a project got but nothing read it back. Separately, `rule-mcp update` replaced the code under every install and re-applied none of them, so the commands, skills and env each host carried described a server that no longer existed.
+project-scope install was only reachable through `setup --scope project --project <path>`, and uninstall left project's store entry and empty config file behind. third checkout meant repeating every flag, because store recorded what project got but nothing read it back. Separately, `rule-mcp update` replaced code under every install and re-applied none of them, so commands, skills and env each host carried described server that no longer existed.
 
 ## Decision
 
-Add `rule-mcp project add [path]` and `rule-mcp project remove [path]`. Add reuses the agents and the config kind of the most recently recorded project, so the second checkout is one command and an empty store falls back to every project-capable host; remove writes nothing new and takes back every config the install wrote, then forgets the root. An uninstall that leaves an entry as the whole file now removes the file instead of writing an empty document, in both dry-run and real runs. A successful self-update calls reapplyRememberedInstalls(), which walks the manifest and projects.json through the same tasks the feature switches already used; the count it reports skips the empty-store placeholder, and the runPlan call it depends on takes the plan as its first argument again.
+Add `rule-mcp project add [path]` and `rule-mcp project remove [path]`. Add reuses agents and config most recently recorded project, so second checkout is one command and empty store falls back to every project-capable host; remove writes nothing new and takes back every config install wrote, then forgets root. uninstall that leaves entry as whole file now removes file instead of writing empty document, in both dry-run and real runs. successful self-update calls reapplyRememberedInstalls(), which walks manifest and projects.json through same tasks feature switches already used; count it reports skips empty-store placeholder, and runPlan call it depends on takes plan as its first argument again.
 
 ## Consequences
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Leave membership to setup flags: every new checkout repeats --scope, --project and --project-config, which is what the store exists to avoid.
-1. Delete an empty config file in every uninstall path: a host's user-level config may be expected by the client even when empty, so only a project file is removed.
-1. Skip the update walk and document it: each update silently leaves every install one version behind, which is the failure the manifest was added to make visible.
+1. Leave membership to setup flags: every new checkout repeats --scope, --project and --project-config, which is what store exists to avoid.
+1. Delete empty config file in every uninstall path: host's user-level config may be expected by client even when empty, so only project file is removed.
+1. Skip update walk and document it: each update silently leaves every install one version behind, which is failure manifest was added to make visible.

@@ -7,15 +7,15 @@
 
 ## Context
 
-The execution plan's last open step is the branch ratchet: 90 measured, 95 the target. The named remainder was platform-locked daemon arms, dead domain ternaries and a long tail of 2-4 branch chips. The compression and startup work of the previous session also added modules, and a new module lands in the denominator uncovered.
+execution plan's last open step is branch ratchet: 90 measured, 95 target. named remainder was platform-locked daemon arms, dead domain ternaries and long tail of 2-4 branch chips. compression and startup work of previous session also added modules, and new module lands in denominator uncovered.
 
 ## Decision
 
-Cover the three biggest clusters that are not platform-locked and raise the floor to the measured integer. generateMultiFile had 2 of 12 branches visited, the rule:// reader 15 of 26, and the command-target context none of its injection arms despite existing to be injectable. The compression pipeline's own refusals - a non-string, a JSON body, level off, an unknown level - and the catalog's local-path gate close the rest. The daemon platform arms stay uncovered on purpose: reaching a linux arm from a darwin box needs module mocking, which measures the mock rather than the code, and the ubuntu CI run already walks that half.
+Cover three biggest clusters that are not platform-locked and raise floor to measured integer. generateMultiFile had 2 of 12 branches visited, rule:// reader 15 of 26, and command-target context none of its injection arms despite existing to be injectable. compression pipeline's own refusals - non-string, JSON body, level off, unknown level - and catalog's local-path gate close rest. daemon platform arms stay uncovered on purpose: reaching linux arm from darwin box needs module mocking, which measures mock rather than code, and ubuntu CI run already walks that half.
 
 ## Consequences
 
-91.17 percent branches (6375/6992), floor raised 90 to 91 with 12 branches of margin. Two real defects surfaced and were fixed: the rule-meta rename had dropped Astro out of the rule-frontend prefix so detectFrameworkSkill returned no domain and the router stopped applying its framework bias; and generateMultiFile read a file template's string vanilla field as a component, emitting a custom element wrapping an empty template. The domain ternary chain became a prefix table, which also deletes three arms FRAMEWORK_SKILL_MAP can never reach. Risk: 12 branches of margin is thinner than wave four's, and the platform arms swing between the darwin dev box and the ubuntu CI runner, so a red coverage job means re-measuring on CI rather than assuming a regression.
+91.17 percent branches (6375/6992), floor raised 90 to 91 with 12 branches of margin. Two real defects surfaced and were fixed: rule-meta rename had dropped Astro out of rule-frontend prefix so detectFrameworkSkill returned no domain and router stopped applying its framework bias; and generateMultiFile read file template's string vanilla field as component, emitting custom element wrapping empty template. domain ternary chain became prefix table, which also deletes three arms FRAMEWORK_SKILL_MAP can never reach. Risk: 12 branches of margin is thinner than wave four's, and platform arms swing between darwin dev box and ubuntu CI runner, so red coverage job means re-measuring on CI rather than assuming regression.
 
 ## What would end this
 

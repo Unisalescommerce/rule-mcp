@@ -7,15 +7,15 @@
 
 ## Context
 
-The plan record docs/plans/_mcp-host-integration-depth.md, "mcp-host-integration-depth - per-host install/uninstall, integration levels, and the server-side wiring", finished with 37 resolved items.
+plan record docs/plans/_mcp-host-integration-depth.md, "mcp-host-integration-depth - per-host install/uninstall, integration levels, and server-side wiring", finished with 37 resolved items.
 
 ## Decision
 
-Fold the record into this ADR and the session handoff, then delete the source file. The full text stays in git history.
+Fold record into this ADR and session handoff, then delete source file. full text stays in git history.
 
 ## Consequences
 
-docs/plans/_mcp-host-integration-depth.md is gone from the tree; the handoff of this session names what it carried.
+docs/plans/_mcp-host-integration-depth.md is gone from tree; handoff of this session names what it carried.
 
 ## What would end this
 

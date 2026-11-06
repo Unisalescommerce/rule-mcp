@@ -7,24 +7,24 @@
 
 ## Context
 
-`rule_tool_plan_docs` was the bookkeeping half of a persona run: write the
-audit/review/plan trio after `rule_tool_plan` handed the agent the operation.
-The name described the files, not the act. Callers already treat the tool as
+`rule_tool_plan_docs` was bookkeeping half of persona run: write the
+audit/review/plan trio after `rule_tool_plan` handed agent operation.
+name described files, not act. Callers already treat tool as
 "impersonate this role and keep its documents".
 
 ## Decision
 
-Rename the tool to `rule_tool_impersonation`. The module moves to
-`src/tools/actions/_impersonation.js`. Persona command bodies, the operation
-contract, install instruction text and the surface map follow the new name.
-Historical ADRs keep the old name as the decision they recorded.
+Rename tool to `rule_tool_impersonation`. module moves to
+`src/tools/actions/_impersonation.js`. Persona command bodies, operation
+contract, install instruction text and surface map follow new name.
+Historical ADRs keep old name as decision they recorded.
 
 ## Consequences
 
 `DEPRECATIONS` keeps `rule_tool_plan_docs` answering as `rule_tool_impersonation`
-until 0.3.0, with one stderr warning on first use. After that the old name is
-gone. The census regenerates `docs/09-tools.md` and `docs/16-surface-map.md`.
+until 0.3.0, with one stderr warning on first use. After that old name is
+gone. census regenerates `docs/09-tools.md` and `docs/16-surface-map.md`.
 
 ## What would end this
 
-Nothing short of a further rename; the previous name is retired.
+Nothing short of further rename; previous name is retired.

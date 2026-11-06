@@ -1,14 +1,14 @@
 # Session handoff: session close after the cutover
 
-- **Branch**: `main`. It is the only branch.
+- **Branch**: `main`. It is only branch.
 - **Commit range**: `f8acbf16..f8acbf16`. Nothing changed after handoff 52.
 - **Date**: `2026-11-06`.
 
 ## What this record adds
 
-Nothing to the tree. Handoff 52 already carries the session: the publication cutover, the history rewrite, ADR 205, and the trap in the handoff tool. This file exists because a session closes with its own record, and it says so rather than repeating 52.
+Nothing to tree. Handoff 52 already carries session: publication cutover, history rewrite, ADR 205, and trap in handoff tool. This file exists because session closes with its own record, and it says so rather than repeating 52.
 
-Read [handoff 52](52-publication-cutover-and-the-branch-it-leaves.md) for the substance.
+Read [handoff 52](52-publication-cutover-and-the-branch-it-leaves.md) for substance.
 
 ## State at close
 
@@ -23,16 +23,16 @@ Read [handoff 52](52-publication-cutover-and-the-branch-it-leaves.md) for the su
 
 ## The one thing that happened after 52
 
-The handoff tool, run without `--no-archive` on this trunk, numbered the 31 pending ADRs and closed the numbering gaps: 232 records renamed, 229 new files, and `docs/plans` left citing the old numbers because the tool does not rewrite references there. It was reverted before any commit: `git checkout`, the 229 untracked files removed, ADR 205 and `_pending/` verified back in place.
+handoff tool, run without `--no-archive` on this trunk, numbered 31 pending ADRs and closed numbering gaps: 232 records renamed, 229 new files, and `docs/plans` left citing old numbers because tool does not rewrite references there. It was reverted before any commit: `git checkout`, 229 untracked files removed, ADR 205 and `_pending/` verified back in place.
 
 This handoff was generated with `--no-archive` for that reason.
 
 ## Open work
 
-- Lint debt: 193 errors, 88 of them `no-unused-vars`. Needs its ADR before the sweep.
-- Coverage: branch coverage 90.7 percent against a 92 percent floor.
-- The seven example credentials the credential scan reports on every push to `main`. The owner kept them; changing them needs a decision.
-- Owner actions: publish the prepared npm placeholder, make the repository public, turn on branch protection, restore the CodeQL workflow, check Dependabot, and decide whether to keep the pre-rewrite bundle.
+- Lint debt: 193 errors, 88 of them `no-unused-vars`. Needs its ADR before sweep.
+- Coverage: branch coverage 90.7 percent against 92 percent floor.
+- seven example credentials credential scan reports on every push to `main`. owner kept them; changing them needs decision.
+- Owner actions: publish prepared npm placeholder, make repository public, turn on branch protection, restore CodeQL workflow, check Dependabot, and decide whether to keep pre-rewrite bundle.
 
 ### Resume Prompt
 

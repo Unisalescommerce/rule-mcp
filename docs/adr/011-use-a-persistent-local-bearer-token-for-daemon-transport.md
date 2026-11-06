@@ -7,7 +7,7 @@
 
 ## Context
 
-The daemon's old per-start random SSE token made client configuration stale after service restarts. Pi and VS Code need a stable authenticated localhost URL.
+daemon's old per-start random SSE token made client configuration stale after service restarts. Pi and VS Code need stable authenticated localhost URL.
 
 ## Decision
 
@@ -19,6 +19,6 @@ Daemon clients remain connected across LaunchAgent/systemd restarts; secrets are
 
 ## Alternatives Considered
 
-1. Regenerate a token at every daemon start and require manual client edits
+1. Regenerate token at every daemon start and need manual client edits
 1. Disable authentication for loopback SSE
-1. Use an environment-only token without persistent local state
+1. Use environment-only token without persistent local state

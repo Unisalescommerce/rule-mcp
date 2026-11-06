@@ -7,15 +7,15 @@
 
 ## Context
 
-Closing a feature with `/rule-handoff --close-feature --squash` left the feature's ADRs and handoff documents as their own commits - `docs(adr): ...` and `chore(handoff): ...` - so the "single commit for the feature" existed only for the code. The developer wants the close to fold those documents too, verify which commits are involved, and rewrite the result coherently without losing any detail. The server must not decide the boundary semantically, and must not lose a decision in a synthesized summary.
+Closing feature with `/rule-handoff --close-feature --squash` left feature's ADRs and handoff documents as their own commits - `docs(adr): ...` and `chore(handoff): ...` - so the "single commit for feature" existed only for code. developer wants close to fold those documents too, verify which commits are involved, and rewrite result coherently without losing any detail. server must not decide boundary semantically, and must not lose decision in synthesized summary.
 
 ## Decision
 
-`rule_tool_git action=squash` consolidates the feature's documents before the squash, behind the same single confirmation. Relevance is the deterministic union of three signals: a commit in `merge-base..HEAD` that touched `docs/adr` or `docs/handoff`; a document cited by a commit message in the range or by a handoff in the range; a document whose filename carries the branch slug. The merged ADR and the merged handoff are deterministic concatenations - a header, then every original reproduced verbatim in order - and the originals are deleted; a document matched by citation or name but committed outside the range is cited inside the merged document and never touched. The merged files keep the lowest retired number and the branch slug (`feat/git-workflow` -> `git-workflow`), and `docs/adr/ADR.md` and `docs/handoff/HANDOFF.md` are rebuilt from the files on disk. The order is: consolidate the documents and stage them, `git reset --soft <merge-base>`, one commit, verify that the only paths differing from the pre-squash tree are the planned document paths. The final feature handoff is written after the squash and committed on its own as `chore(handoff): ...`. Consolidation runs only with `--squash`.
+`rule_tool_git action=squash` consolidates feature's documents before squash, behind same single confirmation. Relevance is deterministic union of three signals: commit in `merge-base..HEAD` that touched `docs/adr` or `docs/handoff`; document cited by commit message in range or by handoff in range; document whose filename carries branch slug. merged ADR and merged handoff are deterministic concatenations - header, then every original reproduced verbatim in order - and originals are deleted; document matched by citation or name but committed outside range is cited inside merged document and never touched. merged files keep lowest retired number and branch slug (`feat/git-workflow` -> `git-workflow`), and `docs/adr/ADR.md` and `docs/handoff/HANDOFF.md` are rebuilt from files on disk. order is: consolidate documents and stage them, `git reset --soft <merge-base>`, one commit, verify that only paths differing from pre-squash tree are planned document paths. final feature handoff is written after squash and committed on its own as `chore(handoff): ...`. Consolidation runs only with `--squash`.
 
 ## Consequences
 
-The closed feature is one commit holding the code and the consolidated ADR and handoff, and the two indexes. The tree invariant becomes narrower and stronger at once: only the planned document paths may differ from the pre-squash tree, and a single non-document change fails the verification and rolls the branch back with `git reset --hard`. Detail is never summarized away, because the merged file reproduces each original verbatim; the cost is a longer file and a retired set of paths whose numbers external links may still name. A document relevant to the feature but committed outside the range is the one case the operator has to resolve by hand.
+closed feature is one commit holding code and consolidated ADR and handoff, and two indexes. tree invariant becomes narrower and stronger at once: only planned document paths may differ from pre-squash tree, and single non-document change fails verification and rolls branch back with `git reset --hard`. Detail is never summarized away, because merged file reproduces each original verbatim; cost is longer file and retired set of paths whose numbers external links may still name. document relevant to feature but committed outside range is one case operator has to resolve by hand.
 
 ## What would end this
 
@@ -23,8 +23,8 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Keep every ADR and handoff as its own commit and only squash the code - the feature closes with N+1 commits and the docs and the code can describe different feature boundaries
-1. Let the model rewrite the merged documents - a synthesized summary is exactly where a decision detail gets lost, and it cannot be tested
-1. Archive the originals under docs/*/archive/<feature>/ - keeps two copies of the same decision, and the next reader has to know which one is live
-1. Merge only the handoffs and leave the ADRs separate - an accepted ADR is a record; one feature would still leave its decisions scattered across commits that no longer exist
-1. Match documents by name only - a document renamed or created under another branch would be missed, and a shared document could be pulled in by accident
+1. Keep every ADR and handoff as its own commit and only squash code - feature closes with N+1 commits and docs and code can describe different feature boundaries
+1. Let model rewrite merged documents - synthesized summary is exactly where decision detail gets lost, and it cannot be tested
+1. Archive originals under docs/*/archive/`<feature>`/ - keeps two copies of same decision, and next reader has to know which one is live
+1. Merge only handoffs and leave ADRs separate - accepted ADR is record; one feature would still leave its decisions scattered across commits that no longer exist
+1. Match documents by name only - document renamed or created under another branch would be missed, and shared document could be pulled in by accident

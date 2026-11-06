@@ -15,7 +15,7 @@ The manifest is v2: a hosts map carrying the level each host was installed at, b
 
 ## Consequences
 
-doctor reports L2 of L3, next L3 for a host installed at a level, and the roundtrip leaves a temporary HOME with nothing but the writers' .bak backups. Deferred with the reason recorded: the written[] file list the plan also wanted, because with the uninstall deriving from one host record the only thing it would add is project-scope installs, which the port plan has not written yet - a field no reader consumes is decoration.
+doctor reports L2 of L3, next L3 for host installed at level, and roundtrip leaves temporary HOME with nothing but writers'.bak backups. Deferred with reason recorded: written[] file list plan also wanted, because with uninstall deriving from one host record only thing it would add is project-scope installs, which port plan has not written yet - field no reader consumes is decoration.
 
 ## What would end this
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Read the level from the host record instead of the manifest: rejected, because the record says what a host can reach, not what this machine installed
-1. Migrate the file to v2 on read: rejected, because a read that writes surprises a dry run
-1. Keep v1 and re-detect on uninstall: rejected, and it is the behaviour that left the leftovers the roundtrip test found
+1. Read level from host record instead of manifest: rejected, because record says what host can reach, not what this machine installed
+1. Migrate file to v2 on read: rejected, because read that writes surprises dry run
+1. Keep v1 and re-detect on uninstall: rejected, and it is behaviour that left leftovers roundtrip test found

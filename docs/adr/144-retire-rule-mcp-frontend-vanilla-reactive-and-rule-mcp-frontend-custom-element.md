@@ -7,7 +7,7 @@
 
 ## Context
 
-rule-frontend-vanilla-reactive (696 lines, 9 guardrails, 4 rule tests, a demo spec and an examples tree) and rule-frontend-custom-element (350 lines, an examples tree and a scaffolder test) were the two heaviest frontend leaves and the two the catalog never exposed: both were missing from the rule-frontend router table (recorded in router-gaps) and from the dispatcher, so no reader could reach them. The owner decided on 2026-10-21 that the frontend area should not carry them.
+rule-frontend-vanilla-reactive (696 lines, 9 guardrails, 4 rule tests, demo spec and examples tree) and rule-frontend-custom-element (350 lines, examples tree and scaffolder test) were two heaviest frontend leaves and two catalog never exposed: both were missing from rule-frontend router table (recorded in router-gaps) and from dispatcher, so no reader could reach them. owner decided on 2026-10-21 that frontend area should not carry them.
 
 ## Decision
 
@@ -15,7 +15,7 @@ Delete both skills and every live trace: 107 files, the 9 vanilla rules and thei
 
 ## Consequences
 
-The catalog drops from 83 to 81 skills, 105 to 102 tools and 174 to 170 resources. Nine guardrails leave with them, so the frontend area keeps five framework rules (react 2, vue 1, svelte 1, angular 1). The detector fallback changes from a leaf to an area router: an unknown framework now suggests rule-frontend, which is honest but less specific, and the router's own rules decide the next step. The plan index retires numbers 49 and 54 and keeps every other number stable.
+catalog drops from 83 to 81 skills, 105 to 102 tools and 174 to 170 resources. Nine guardrails leave with them, so frontend area keeps five framework rules (react 2, vue 1, svelte 1, angular 1). detector fallback changes from leaf to area router: unknown framework now suggests rule-frontend, which is honest but less specific, and router's own rules decide next step. plan index retires numbers 49 and 54 and keeps every other number stable.
 
 ## What would end this
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Merge vanilla-reactive into the template-engine skill (rejected: the owner wants the surface smaller, not renamed, and the 9 rules would have moved with the body)
-1. Keep custom-element because it is the only zero-dependency component skill (rejected: nothing routed to it, and the markup rules live in rule-styleguide-html)
-1. Keep both and only open their doors (rejected: the doors were open-able, but the owner's call is removal, and ADR 144 records it rather than hiding it)
+1. Merge vanilla-reactive into template-engine skill (rejected: owner wants surface smaller, not renamed, and 9 rules would have moved with body)
+1. Keep custom-element because it is only zero-dependency component skill (rejected: nothing routed to it, and markup rules live in rule-styleguide-html)
+1. Keep both and only open their doors (rejected: doors were open-able, but owner's call is removal, and ADR 144 records it rather than hiding it)

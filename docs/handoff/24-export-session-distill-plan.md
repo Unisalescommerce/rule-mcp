@@ -17,7 +17,7 @@ export track.
 
 - `2be3d8b9` docs(plans): add export audit review and plan
 - `11c2854b` chore(census): refresh architecture surface-counts digest
-- `50f664cd` docs(handoff): include session 23 in the generated index
+- `50f664cd` docs(handoff): include session 23 in generated index
 
 ### Locked decisions
 
@@ -38,14 +38,14 @@ EX-05..EX-08 medium. EX-09..EX-10 low. See `docs/reviews/export.md`.
 
 ## What not to undo
 
-- Do not implement hook short-circuit on this branch before `feat/decision-models` consumes the decision-cache.
+- Do not implement hook short-circuit on this branch before `feat/decision-models` consumes decision-cache.
 - Do not expand cleanup/usage to unsupported agents in v1.
 - Do not soft-delete sessions; policy is hard delete after confirm.
 
 ## Next session first step
 
 Start **Step 0** of `docs/plans/_export.md`: session map API + current-session
-detection tests for the four supported agents (no deletes yet).
+detection tests for four supported agents (no deletes yet).
 
 ### Resume Prompt
 

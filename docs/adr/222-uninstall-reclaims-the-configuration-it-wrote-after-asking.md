@@ -7,7 +7,7 @@
 
 ## Context
 
-Uninstall removed the rule-mcp entry from each agent's config and stopped there. Everything else the installer had written stayed on disk: the switches file (~/.rule-mcp/config/env.json), the legacy ~/.config/rule-mcp/env.json, the install manifest and projects.json. A later install then read decisions nobody had made - a tokensave 0 that the installer itself had written was indistinguishable from a choice - and the two record files kept pointing at installs that no longer existed. --purge deleted the whole runtime home, but it was the only path that cleaned anything, and it also deletes state a user may want to keep for a reinstall.
+Uninstall removed rule-mcp entry from each agent's config and stopped there. Everything else installer had written stayed on disk: switches file (~/.rule-mcp/config/env.json), legacy ~/.config/rule-mcp/env.json, install manifest and projects.json. later install then read decisions nobody had made - tokensave 0 that installer itself had written was indistinguishable from choice - and two record files kept pointing at installs that no longer existed. --purge deleted whole runtime home, but it was only path that cleaned anything, and it also deletes state user may want to keep for reinstall.
 
 ## Decision
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Clean only under --purge: leaves the stale switches and records in the default path, which is where they were found.
-1. Never clean and document the paths: the derived default stays unreachable for every existing user and the report keeps citing dead installs.
-1. Clean the switches only: the record files would still name installs that are gone, and forgetInstall would keep rewriting a manifest nobody owns.
+1. Clean only under --purge: leaves stale switches and records in default path, which is where they were found.
+1. Never clean and document paths: derived default stays unreachable for every existing user and report keeps citing dead installs.
+1. Clean switches only: record files would still name installs that are gone, and forgetInstall would keep rewriting manifest nobody owns.

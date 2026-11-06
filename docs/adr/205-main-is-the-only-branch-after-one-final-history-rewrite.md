@@ -7,11 +7,11 @@
 
 ## Context
 
-main and rel/v0.1.0 shared no commit, so a pull request between them was impossible and a visitor met a two-week-old main with the old layout. The tree also carried two paths that history did not need: docs/case-studies, whose 386 files live in the talk repository, and coverage/tmp, whose JSON blobs were the largest in the repository. Separately, one commit message used a type the linter rejects, and a credential scan had never run over the history.
+main and rel/v0.1.0 shared no commit, so pull request between them was impossible and visitor met two-week-old main with old layout. tree also carried two paths that history did not need: docs/case-studies, whose 386 files live in talk repository, and coverage/tmp, whose JSON blobs were largest in repository. Separately, one commit message used type linter rejects, and credential scan had never run over history.
 
 ## Decision
 
-Rewrite the history once, then make rel/v0.1.0 the new main. filter-repo drops docs/case-studies and coverage/tmp from every commit and rewrites `clean(core):` to `refactor(core):`. The push is a lease over the old main sha, and rel/v0.1.0 is deleted from the remote afterwards. Local refs/original and the reflog are purged. After this, no rewrite and no force-push: main is the only branch and the freeze holds.
+Rewrite history once, then make rel/v0.1.0 new main. filter-repo drops docs/case-studies and coverage/tmp from every commit and rewrites `clean(core):` to `refactor(core):`. push is lease over old main sha, and rel/v0.1.0 is deleted from remote afterwards. Local refs/original and reflog are purged. After this, no rewrite and no force-push: main is only branch and freeze holds.
 
 ## Consequences
 
@@ -19,10 +19,10 @@ Positive: one branch, one linear history, and the repository is 32 MB instead of
 
 ## What would end this
 
-A credential is found in main that was written after the freeze, which reopens the question of what the history may contain.
+credential is found in main that was written after freeze, which reopens question of what history may contain.
 
 ## Alternatives Considered
 
 1. Merge main into rel/v0.1.0 and keep two branches
-1. Keep the case-study code in this repository and never rewrite
-1. Rewrite only the paths and leave the commit message alone
+1. Keep case-study code in this repository and never rewrite
+1. Rewrite only paths and leave commit message alone

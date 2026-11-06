@@ -7,11 +7,11 @@
 
 ## Context
 
-Five meta-framework skills exist (rule-meta plus next, astro, nuxt and remix) and none owns a guardrail or declares inherits. The recurring failures in this area are at the server and client boundary: a public environment variable that carries a secret, a loader that serializes a secret field to the client, a render that reads the clock and breaks hydration, and a route that trusts unvalidated input.
+Five meta-framework skills exist (rule-meta plus next, astro, nuxt and remix) and none owns guardrail or declares inherits. recurring failures in this area are at server and client boundary: public environment variable that carries secret, loader that serializes secret field to client, render that reads clock and breaks hydration, and route that trusts unvalidated input.
 
 ## Decision
 
-Create rule-meta/guardrails with seven rules. Tier A: meta-public-env-secret, meta-server-data-leak, hydration-safe, meta-route-validation. Tier B: meta-client-directive, astro-client-directive, meta-cache-explicit. Rules ship advisory and are promoted to blocking after the corpus gate reports full precision and recall. One question stays open: whether the four children add inherits: [rule-meta] so the shared rules reach them.
+Create rule-meta/guardrails with seven rules. Tier A: meta-public-env-secret, meta-server-data-leak, hydration-safe, meta-route-validation. Tier B: meta-client-directive, astro-client-directive, meta-cache-explicit. Rules ship advisory and are promoted to blocking after corpus gate reports full precision and recall. One question stays open: whether four children add inherits: [rule-meta] so shared rules reach them.
 
 ## Consequences
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Leave the meta area narrative and rely on the frontend rules only
+1. Leave meta area narrative and rely on frontend rules only
 1. Create guards in each meta-framework skill with no shared family
-1. Make the advisory rules blocking from the start
+1. Make advisory rules blocking from start

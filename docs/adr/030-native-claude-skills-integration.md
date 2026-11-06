@@ -7,11 +7,11 @@
 
 ## Context
 
-rule-mcp skills were only accessible via MCP tools. Claude Code has a native auto-discovery mechanism in .claude/skills/ that wasn't being used.
+rule-mcp skills were only accessible via MCP tools. Claude Code has native auto-discovery mechanism in .claude/skills/ that wasn't being used.
 
 ## Decision
 
-installNativeSkills() now copies skills to ~/.claude/skills/<name>/ with Claude-compatible YARD frontmatter. Non-destructive: skips already-installed skills.
+installNativeSkills() now copies skills to ~/.claude/skills/`<name>`/ with Claude-compatible YARD frontmatter. Non-destructive: skips already-installed skills.
 
 ## Consequences
 

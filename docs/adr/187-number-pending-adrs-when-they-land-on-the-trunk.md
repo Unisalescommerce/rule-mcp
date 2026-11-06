@@ -7,11 +7,11 @@
 
 ## Context
 
-Feature branches writing immediately-numbered ADRs collide when two people land the same pull. Mid-task spam was already gated by ADR policy (handoff default); numbering still raced on merge.
+Feature branches writing immediately-numbered ADRs collide when two people land same pull. Mid-task spam was already gated by ADR policy (handoff default); numbering still raced on merge.
 
 ## Decision
 
-Off trunk, rule_tool_process_adr writes docs/adr/_pending/<slug>.md referred to as ADR <slug>. On trunk, rule-mcp handoff land (also post-merge/post-rewrite and handoff closeout) assigns the next free numbers in first-add order (slug tie-break), rewrites references, and regenerates ADR.md. Off trunk, settle pulls duplicate numbers back to _pending. Generated indexes use a merge driver that regenerates instead of merging.
+Off trunk, rule_tool_process_adr writes docs/adr/_pending/`<slug>`.md referred to as ADR `<slug>`. On trunk, rule-mcp handoff land (also post-merge/post-rewrite and handoff closeout) assigns next free numbers in first-add order (slug tie-break), rewrites references, and regenerates ADR.md. Off trunk, settle pulls duplicate numbers back to _pending. Generated indexes use merge driver that regenerates instead of merging.
 
 ## Consequences
 

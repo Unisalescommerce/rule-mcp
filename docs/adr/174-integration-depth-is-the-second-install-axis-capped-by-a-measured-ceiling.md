@@ -11,7 +11,7 @@ The installer had one dimension of choice: the profile, which says how much of t
 
 ## Decision
 
-Every host carries levels L0..L4 - server, rules, commands, hooks, native handler - each rung supported or not with the reason, and a ceiling computed as the highest supported rung rather than stated twice. install --agent <id> --level <Lx> enforces it: a named host above its ceiling exits 1 and prints each unreachable rung with its reason, and --agent all is not refused because there the level is a cap and every host installs what it supports. The wizard asks the same question on a Depth screen, with each selected host's ceiling named in the row. The ladder is cumulative in intent, not in shape: a rung a host cannot reach is skipped, because Kiro writes a hook file and has no command files, and a strict ladder would report L0 and hide a surface the study measured.
+Every host carries levels L0..L4 - server, rules, commands, hooks, native handler - each rung supported or not with reason, and ceiling computed as highest supported rung rather than stated twice. install --agent `<id>` --level `<Lx>` enforces it: named host above its ceiling exits 1 and prints each unreachable rung with its reason, and --agent all is not refused because there level is cap and every host installs what it supports. wizard asks same question on Depth screen, with each selected host's ceiling named in row. ladder is cumulative in intent, not in shape: rung host cannot reach is skipped, because Kiro writes hook file and has no command files, and strict ladder would report L0 and hide surface study measured.
 
 ## Consequences
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. A per-host widget in the agents screen: rejected, because it needs a third list mode for 23 rows and the cap plus the printed ceiling answers the same question
-1. Derive the level from which files happen to exist: rejected, because a host with a config file and no rules file would report L1 as unsupported and the reader would have no sentence to explain it
-1. Make the ladder strict, so a host capped at L2 cannot take L3: rejected, because Kiro's hook file is real and a strict ladder would hide it
+1. per-host widget in agents screen: rejected, because it needs third list mode for 23 rows and cap plus printed ceiling answers same question
+1. Derive level from which files happen to exist: rejected, because host with config file and no rules file would report L1 as unsupported and reader would have no sentence to explain it
+1. Make ladder strict, so host capped at L2 cannot take L3: rejected, because Kiro's hook file is real and strict ladder would hide it

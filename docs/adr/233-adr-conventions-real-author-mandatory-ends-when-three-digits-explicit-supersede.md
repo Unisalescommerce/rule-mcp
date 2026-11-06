@@ -7,17 +7,17 @@
 
 ## Context
 
-The ADR tool writes the header and the index, but hand-written and pasted ADRs drift from what the tool accepts. rule-process-adr needs a written convention set before its six guardrails can enforce one: the plan measured placeholder authors, free-form status values, missing ends-when sections and supersede links that point one way only.
+ADR tool writes header and index, but hand-written and pasted ADRs drift from what tool accepts. rule-process-adr needs written convention set before its six guardrails can enforce one: plan measured placeholder authors, free-form status values, missing ends-when sections and supersede links that point one way only.
 
 ## Decision
 
-Five conventions, all rules of the house and not preferences:
+Five conventions, all rules of house and not preferences:
 
-1. Every ADR ends with a `## What would end this` section: the observation that would make the decision wrong.
-2. The author is a person or a team. The server name is never the author, because a tool cannot be asked why.
-3. Numbering is three digits, allocated at write time; a pending record carries a slug and is numbered when it lands on the trunk (ADR 187).
-4. A supersede is explicit in both directions: the old record gains `by [NNN]`, the new one gains `supersedes [NNN]`.
-5. Title and slug are English, in American spelling; the body follows the language rules rule-process-ai already owns.
+1. Every ADR ends with `## What would end this` section: observation that would make decision wrong.
+2. author is person or team. server name is never author, because tool cannot be asked why.
+3. Numbering is three digits, allocated at write time; pending record carries slug and is numbered when it lands on trunk (ADR 187).
+4. supersede is explicit in both directions: old record gains `by [NNN]`, new one gains `supersedes [NNN]`.
+5. Title and slug are English, in American spelling; body follows language rules rule-process-ai already owns.
 
 ## Consequences
 
@@ -25,11 +25,11 @@ The six guardrails read fields instead of prose: status, author, slug, ends-when
 
 ## What would end this
 
-A hand-written ADR corpus where a field-based rule cannot separate a right record from a wrong one, or tool support that makes a convention unenforceable without a second copy of the parser.
+hand-written ADR corpus where field-based rule cannot separate right record from wrong one, or tool support that makes convention unenforceable without second copy of parser.
 
 ## Alternatives Considered
 
-1. Keep the conventions as prose in the skill body: a rule cannot read prose, and the six rules need fields to parse.
-1. Let the server name itself as author: an ADR whose author is the tool has no one to ask when the decision is wrong.
-1. Allow two-digit numbering: the corpus already passed 99 records, so the width changes anyway.
-1. One-way supersede: the old record then points nowhere and a reader cannot follow the chain.
+1. Keep conventions as prose in skill body: rule cannot read prose, and six rules need fields to parse.
+1. Let server name itself as author: ADR whose author is tool has no one to ask when decision is wrong.
+1. Allow two-digit numbering: corpus already passed 99 records, so width changes anyway.
+1. One-way supersede: old record then points nowhere and reader cannot follow chain.

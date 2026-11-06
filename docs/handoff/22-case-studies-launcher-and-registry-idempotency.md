@@ -12,11 +12,11 @@
 
 ### Shipped this session
 
-**One command starts the six case-study apps (ADR 115).** The three bookmarks web apps and three phonebook Electron apps each hardcoded dev ports, and the Electron mains hardcoded their renderer URL, so six terminals collided. `pnpm case-studies` (`scripts/case-studies/index.mjs`) allocates one Vite port and one API port per app from per-app bases, exports them as `VITE_PORT`, `PORT`, `VITE_API_ORIGIN`, `VITE_API_URL`, CORS origins and `ELECTRON_RENDERER_URL`, starts the six in parallel with app-prefixed logs, and kills every process group on Ctrl-C. The apps read their ports from the environment and keep the old defaults for standalone runs. `phonebook-ds4-flash` gained `electron/package.json` with `"type": "commonjs"` so its CommonJS main loads despite the app's `type: module`. `case-studies/**` is now tracked (six apps plus the two benchmark reports).
+**One command starts six case-study apps (ADR 115).** three bookmarks web apps and three phonebook Electron apps each hardcoded dev ports, and Electron mains hardcoded their renderer URL, so six terminals collided. `pnpm case-studies` (`scripts/case-studies/index.mjs`) allocates one Vite port and one API port per app from per-app bases, exports them as `VITE_PORT`, `PORT`, `VITE_API_ORIGIN`, `VITE_API_URL`, CORS origins and `ELECTRON_RENDERER_URL`, starts six in parallel with app-prefixed logs, and kills every process group on Ctrl-C. apps read their ports from environment and keep old defaults for standalone runs. `phonebook-ds4-flash` gained `electron/package.json` with `"type": "commonjs"` so its CommonJS main loads despite app's `type: module`. `case-studies/**` is now tracked (six apps plus two benchmark reports).
 
-**Tool registration is idempotent by name.** The core tools are registered from two entry points in one process (the CLI `preAction` hook and `startServer`), so a blind push advertised `rule_tool_gateway` and `rule_tool_apply` twice and every MCP client had to dedupe them. `registerTool` now replaces an existing name in place, preserving registry order, and `resetTools` owns the generation bump. The registry state moved to `src/tools/router/_registry.js`; `src/tools/router/_hooks.js` re-exports its public surface. New test `src/tools/router/__tests__/_registry-idempotency.test.mjs` covers duplicate-name, order and `bootstrapCoreTools`. Verified: 3/3 pass under `node --import ./scripts/alias-hook.mjs --test`.
+**Tool registration is idempotent by name.** core tools are registered from two entry points in one process (CLI `preAction` hook and `startServer`), so blind push advertised `rule_tool_gateway` and `rule_tool_apply` twice and every MCP client had to dedupe them. `registerTool` now replaces existing name in place, preserving registry order, and `resetTools` owns generation bump. registry state moved to `src/tools/router/_registry.js`; `src/tools/router/_hooks.js` re-exports its public surface. New test `src/tools/router/__tests__/_registry-idempotency.test.mjs` covers duplicate-name, order and `bootstrapCoreTools`. Verified: 3/3 pass under `node --import ./scripts/alias-hook.mjs --test`.
 
-**Generated docs refreshed.** ADR 115 recorded and indexed; `docs/02-architecture.md` decision count 122 -> 123; `tests/fixtures/census.json` hash regenerated; `site-dist/index.html` rebuilt to the live surface (107 tools, 37 prompts, 40 slash commands).
+**Generated docs refreshed.** ADR 115 recorded and indexed; `docs/02-architecture.md` decision count 122 -> 123; `tests/fixtures/census.json` hash regenerated; `site-dist/index.html` rebuilt to live surface (107 tools, 37 prompts, 40 slash commands).
 
 Surface unchanged this session: 107 tools, 40 commands, 37 prompts, 89 skills.
 
@@ -47,11 +47,11 @@ a9333f14 docs(adr): record 122 and regenerate the census for the fix tool
 ### Flagged, not fixed
 
 - `main` is 30 commits ahead of `origin/main`; never pushed.
-- The census pre-commit hook (`.githooks/pre-commit`) regenerates and stages `docs/02-architecture.md` on every commit, so the 122 -> 123 count landed in `fix(router)` rather than the `docs(adr)` commit. Same hook keeps the other generated docs current.
+- census pre-commit hook (`.githooks/pre-commit`) regenerates and stages `docs/02-architecture.md` on every commit, so 122 -> 123 count landed in `fix(router)` rather than `docs(adr)` commit. Same hook keeps other generated docs current.
 - Backlog Step 4 (ARCH-10) is open: no `Transport` interface and no `ToolPolicy` type (`docs/plans/backlog.md`).
-- The owner actions in `docs/plans/backlog.md` (GitHub vulnerability reporting, branch protection, Pages URL, labels, sponsors, Vigilant Mode, stale `v1.0.0` tag) are unchanged.
-- The docs site and the presentation deck remain the agreed next workstream; the deck artifact (new or existing) is still not confirmed.
-- `case-studies/**/tsconfig.tsbuildinfo` is a build artifact that is now tracked (it was staged by the earlier session); consider ignoring `*.tsbuildinfo`.
+- owner actions in `docs/plans/backlog.md` (GitHub vulnerability reporting, branch protection, Pages URL, labels, sponsors, Vigilant Mode, stale `v1.0.0` tag) are unchanged.
+- docs site and presentation deck remain agreed next workstream; deck artifact (new or existing) is still not confirmed.
+- `case-studies/**/tsconfig.tsbuildinfo` is build artifact that is now tracked (it was staged by earlier session); consider ignoring `*.tsbuildinfo`.
 
 ### Resume Prompt
 

@@ -7,11 +7,11 @@
 
 ## Context
 
-`updateMode()` in `packages/mcp/core/self-update/_config.js` returns `upgrade` unless `RULE_MCP_AUTO_UPDATE` says `notify`. Upgrade means checkout `main`, pull, reinstall, and for a stdio install the server then exits its own process. `docs/05-env-variables.md` already describes a notify-only default and names a value the code never reads, so the documentation and the behavior disagree.
+`updateMode()` in `packages/mcp/core/self-update/_config.js` returns `upgrade` unless `RULE_MCP_AUTO_UPDATE` says `notify`. Upgrade means checkout `main`, pull, reinstall, and for stdio install server then exits its own process. `docs/05-env-variables.md` already describes notify-only default and names value code never reads, so documentation and behavior disagree.
 
 ## Decision
 
-The default update mode becomes notify. The tool reports the available update on the next tool result and names the command to run. Automatic upgrade becomes opt-in with `RULE_MCP_AUTO_UPDATE=upgrade`, and no new command name is added: `/rule-update` in chat and `rule-mcp update` in a shell already exist.
+default update mode becomes notify. tool reports available update on next tool result and names command to run. Automatic upgrade becomes opt-in with `RULE_MCP_AUTO_UPDATE=upgrade`, and no new command name is added: `/rule-update` in chat and `rule-mcp update` in shell already exist.
 
 ## Consequences
 
@@ -19,9 +19,9 @@ Positive: a running server no longer replaces itself under a session, and a stdi
 
 ## What would end this
 
-A measured install failure caused by a stale server outweighs the cost of a surprise restart, and the default flips back.
+measured install failure caused by stale server outweighs cost of surprise restart, and default flips back.
 
 ## Alternatives Considered
 
-1. Keep auto-upgrade as the default
-1. Disable updates entirely until a release is declared stable
+1. Keep auto-upgrade as default
+1. Disable updates entirely until release is declared stable

@@ -13,7 +13,7 @@ The live surface mixed three naming systems that looked alike but meant differen
 
 ### Keep
 
-1. Skill-backed tool↔skill 1:1: `rule_tool_<x>` ↔ skill `rule-mcp-<x>`. Area slash is hub-only `/rule-area-<area>` (ADR 109); leaves route from free text on the collector.
+1. Skill-backed tool↔skill 1:1: `rule_tool_<x>` ↔ skill `rule-mcp-<x>`. Area slash is hub-only `/rule-area-<area>` (ADR 109); leaves route from free text on collector.
 2. Check forms: `rule_tool_check`, `/rule-check`, and keyword intent on `/rule-area-*` hubs (ADR 108).
 3. Personas: 57 `/rule-persona-*-{plan|audit|review}` -> `rule_tool_plan` / `rule_tool_audit` / `rule_tool_review` (+ `rule_tool_plan_docs` tool-only).
 4. Router: `rule_tool` and `/rule`. Update: `rule_tool_update` and `/rule-update`. ADR area: `rule_tool_process_adr` + skill + `/rule-area-process-adr*`.
@@ -24,18 +24,18 @@ The live surface mixed three naming systems that looked alike but meant differen
 
 1. **Handoff**: only `/rule-handoff` + `rule_tool_handoff`. Drop skill `rule-process-handoff`, `/rule-area-process-handoff*`, and `rule_tool_process_handoff`.
 2. **Handon**: `/rule-handon` + `rule_tool_handon` (rename from `rule_tool_process_handon`). No skill.
-3. **Compress**: `/rule-compress` + `rule_tool_compress` is the sole compression engine (prompt/context preprocessing and prose postprocessing). Drop skill/tool/area `rule-process-compression`.
+3. **Compress**: `/rule-compress` + `rule_tool_compress` is sole compression engine (prompt/context preprocessing and prose postprocessing). Drop skill/tool/area `rule-process-compression`.
 4. **Init**: add `rule_tool_init` aligned with `/rule-init`.
 5. **Stats / usage**: keep tools; add `/rule-stats` and `/rule-usage`.
 6. **Remove tools** (use slash/skill styleguide or persona a11y instead): `rule_tool_form`, `rule_tool_scaffold`, `rule_tool_component`, `rule_tool_a11y_report`.
 
 ## Consequences
 
-MCP tool count falls (removed form/scaffold/component/a11y_report/process-compression skill-tool; renames handoff/handon; add init). Agent slash count drops by the process-handoff and process-compression area(+check) commands, gains `/rule-compress`, `/rule-stats`, `/rule-usage`. Callers of removed names must switch with no aliases.
+MCP tool count falls (removed form/scaffold/component/a11y_report/process-compression skill-tool; renames handoff/handon; add init). Agent slash count drops by process-handoff and process-compression area(+check) commands, gains `/rule-compress`, `/rule-stats`, `/rule-usage`. Callers of removed names must switch with no aliases.
 
 ## What would end this
 
-Evidence that styleguide/persona surfaces cannot replace form/scaffold/component/a11y_report, or that prompt/context compression needs a separate skill again.
+Evidence that styleguide/persona surfaces cannot replace form/scaffold/component/a11y_report, or that prompt/context compression needs separate skill again.
 
 ## Alternatives Considered
 

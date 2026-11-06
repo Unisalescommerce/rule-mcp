@@ -7,15 +7,15 @@
 
 ## What this session did
 
-Executed the OSS remediation roadmap code-first across all phases, plus
+Executed OSS remediation roadmap code-first across all phases, plus
 owner-directed extras. Every step ran TDD (failing test first, true red
 verified), `rule-mcp` routing before implementation, `rule_tool_check` before
 committing, and Conventional Commits with mandatory scope plus DCO
-`Signed-off-by` trailers (active since the Step 5 commit).
+`Signed-off-by` trailers (active since Step 5 commit).
 
 - **Setup wizard** (`829c368`, ADR 072): Node/Ink wizard behind
   `rule-mcp setup`, four shell scripts shrunk to bootstraps.
-  Closed the earlier install/uninstall complaint: each agent's
+  Closed earlier install/uninstall complaint: each agent's
   install/uninstall is scoped to that agent only.
 - **Phase 1**: Step 12 (drop self `link:` dep), Step 4 (registry install
   claims -> clone path), Step 3 (server.json `io.github.pixu1980`, ADR 073),
@@ -49,7 +49,7 @@ committing, and Conventional Commits with mandatory scope plus DCO
   Release v1.0.0 page delete, npm/registry v0.1.0 publish, Pages enable.
 - **CI-observed on push**: 6.6, 7.6, 8.5, 9.5, 10.5, 16.6, 22.4/22.5,
   27.4/27.6, 29.4, 31.3 (server reload re-verify).
-- **Uncommitted**: `MAINTAINERS.md` response-time tweak is the owner's
+- **Uncommitted**: `MAINTAINERS.md` response-time tweak is owner's
   own edit - left untouched, commit or drop it explicitly.
 - **Nothing pushed**: all 42 commits are local on `perf/meta-surface`.
 
@@ -74,7 +74,7 @@ committing, and Conventional Commits with mandatory scope plus DCO
 | 085 | Reset the project version to 0.1.0, first release is v0.1.0  | release, versioning   |
 | 086 | Documentation site is hand-written static HTML from docs     | docs, site            |
 
-Full ADR table (86 records) is in the tool output above and in
+Full ADR table (86 records) is in tool output above and in
 `docs/adr/ADR.md`; only session decisions are summarized here.
 
 ### Working Tree Changes (uncommitted)
@@ -143,13 +143,13 @@ f3d1827 fix(changelog): sync the generator preamble with the header
 - Conventional Commits WITH mandatory scope plus DCO `Signed-off-by`
   trailer on every commit (`git commit -s`). Hook enforces both.
 - Nothing pushed. `test:all` green at last full run (1214/0);
-  `MAINTAINERS.md` fails `prettier --check` due to the owner's own edit.
+  `MAINTAINERS.md` fails `prettier --check` due to owner's own edit.
 - `pnpm config get` is blind to project `.npmrc` keys in this env
-  (even pre-existing `save-exact`); the npmrc test reads the file back.
-- `pnpx reuse` does not exist (Python tool); a pip venv was used
-  ephemerally and removed. `npm sbom` cannot read a pnpm tree -
+  (even pre-existing `save-exact`); npmrc test reads file back.
+- `pnpx reuse` does not exist (Python tool); pip venv was used
+  ephemerally and removed. `npm sbom` cannot read pnpm tree -
   cdxgen is wired instead. No `gh` CLI here; no docker daemon.
-- The rule-mcp MCP tool serves stale code until the server reloads: 31.3
-  tool-level re-verification belongs to the next session.
-- rule-mcp `a11y-test-required` guardrail is a systematic false positive on
+- rule-mcp MCP tool serves stale code until server reloads: 31.3
+  tool-level re-verification belongs to next session.
+- rule-mcp `a11y-test-required` guardrail is systematic false positive on
   Node contract tests; `en-english-only-prose` flags `com` inside URLs.

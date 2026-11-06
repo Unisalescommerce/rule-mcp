@@ -8,44 +8,44 @@
 ## What this session did
 
 Three skills folded into `rule-process-ai`, with their nine guardrails, their plans
-and their index rows collapsing into one, and a dependency graph that puts that
-skill first. Before that, twelve red gates were closed: the tracked governance
-hooks were restored, `site-dist` stopped being tracked, and a machine-wide
-`core.hooksPath` can no longer be adopted by the installer. One gate remains
-red, the 150-line ratchet over five pre-existing files.
+and their index rows collapsing into one, and dependency graph that puts that
+skill first. Before that, twelve red gates were closed: tracked governance
+hooks were restored, `site-dist` stopped being tracked, and machine-wide
+`core.hooksPath` can no longer be adopted by installer. One gate remains
+red, 150-line ratchet over five pre-existing files.
 
-The decision-models audit, review, plan and probe harness moved to
-`feat/decision-models` so this branch keeps the guardrails and skill-plan track.
+decision-models audit, review, plan and probe harness moved to
+`feat/decision-models` so this branch keeps guardrails and skill-plan track.
 
 ### What the merge cost
 
-Moving a body into `references/` removes it from the text the ranker indexes. The
-routing corpus fell from 77 to 71 exact and a scope prompt lost its top route
-until the scope contract and the house language were restated in `SKILL.md`. The
+Moving body into `references/` removes it from text ranker indexes. The
+routing corpus fell from 77 to 71 exact and scope prompt lost its top route
+until scope contract and house language were restated in `SKILL.md`. The
 corpus is back to 76 exact and 89 top-or-alternative, above its floors.
 
 ### Commits (merge thread)
 
-- `605f6f15` docs(plans): add the rule-process-tdd implementation plan
-- `bca072ab` chore(docs): stop tracking the generated site
-- `2956e5c3` fix(commit): never adopt a machine-wide core.hooksPath
-- `e05fb191` fix(hooks): restore the tracked governance hooks
+- `605f6f15` docs(plans): add rule-process-tdd implementation plan
+- `bca072ab` chore(docs): stop tracking generated site
+- `2956e5c3` fix(commit): never adopt machine-wide core.hooksPath
+- `e05fb191` fix(hooks): restore tracked governance hooks
 - `d1c34b8f` feat(skills): merge simplicity, English and fingerprint into rule-process-ai
 - `7ad3a593` test(skills): guard that every area router lists its children
-- `e9d4c945` docs(plans): one plan for rule-process-ai and the next two skills
-- `71a3d906` docs(adr): record the merge into rule-process-ai
+- `e9d4c945` docs(plans): one plan for rule-process-ai and next two skills
+- `71a3d906` docs(adr): record merge into rule-process-ai
 
 ### Open, recorded in the plans
 
-- `rule-process-ai` Phase 1-4: the eight guardrails the absorbed plans promised and
-  never built (`ai-bidi-controls` blocking, seven advisory), the `-ogue` stem fix,
-  the spelling-map gaps, and the reduction signal still undocumented.
-- `rule-process-npm-release`: eight rules planned, none written, and the cooldown
+- `rule-process-ai` Phase 1-4: eight guardrails absorbed plans promised and
+  never built (`ai-bidi-controls` blocking, seven advisory), `-ogue` stem fix,
+  spelling-map gaps, and reduction signal still undocumented.
+- `rule-process-npm-release`: eight rules planned, none written, and cooldown
   handed to `rule-toolchain-pnpm` beside `pkg-*`.
 - `rule-process-code-review`: four rules planned, and three of them overlap what
   `validateTrio` already checks in this repository.
 - Eight router rows are missing and recorded in `scripts/data/router-gaps.data.mjs`;
-  the ratchet only shrinks.
+  ratchet only shrinks.
 - Decision-models workstreams: resume on `feat/decision-models`.
 
 ### Resume Prompt

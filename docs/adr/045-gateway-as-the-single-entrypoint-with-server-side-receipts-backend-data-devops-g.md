@@ -7,11 +7,11 @@
 
 ## Context
 
-The determinism+backend/data/devops guardrails plan (2026-07-15, from the post mega-review) argued MCP cannot enforce tool call order: the model can skip the router, call skill tools directly, or misreport check results. Axis A delivered rule_tool_gateway as the single orchestrating entrypoint (server-side routing, evidence, guardrail check, receipt) and Axis B delivered the backend, database, devops and security guardrail families plus the guardrail-to-skill mapping. All deliverables are live; the checklist file was never ticked and is now redundant.
+determinism+backend/data/devops guardrails plan (2026-07-15, from post mega-review) argued MCP cannot enforce tool call order: model can skip router, call skill tools directly, or misreport check results. Axis delivered rule_tool_gateway as single orchestrating entrypoint (server-side routing, evidence, guardrail check, receipt) and Axis B delivered backend, database, devops and security guardrail families plus guardrail-to-skill mapping. All deliverables are live; checklist file was never ticked and is now redundant.
 
 ## Decision
 
-Gateway is the single server-side orchestrating entrypoint for every implementation flow; it issues a bound receipt the write path must present; backend/database/devops/security guardrails are first-class families mapped to their skills, not frontend annexes.
+Gateway is single server-side orchestrating entrypoint for every implementation flow; it issues bound receipt write path must present; backend/database/devops/security guardrails are first-class families mapped to their skills, not frontend annexes.
 
 ## Consequences
 
@@ -19,5 +19,5 @@ Positive: unvalidated code cannot be delivered (fail-closed at a single server-s
 
 ## Alternatives Considered
 
-1. Model-first enforcement alone: rely on the model to call tools in order and respect gateway results
-1. Per-call CLI verification wrapper around the model's writes
+1. Model-first enforcement alone: rely on model to call tools in order and respect gateway results
+1. Per-call CLI verification wrapper around model's writes

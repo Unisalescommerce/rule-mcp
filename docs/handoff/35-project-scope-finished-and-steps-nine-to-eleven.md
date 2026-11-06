@@ -2,18 +2,18 @@
 
 - **Branch**: `rel/v0.1.0`
 - **Commit range**: `35db190c..7ed48ade` (11 commits, this handoff excluded)
-- **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits in the whole feature range: 2
+- **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits in whole feature range: 2
 - **Date**: 2026-10-29
 
 ## Done
 
-1. **Interactive questions are now a rule both surfaces carry** — the RULES block an install writes into every agent's instruction file, and the workflow reminder the server prepends to tool results (full contract and the terse re-anchor), both say that a decision, preference or confirmation goes to the host's question UI with options instead of prose the user has to answer in chat. The prompt-budget test pins the sentence.
-2. **The Claude project extras** — a project-scope Claude install now writes what a global one writes, cut down to the project root: the rules block in `CLAUDE.md`, the `/rule-*` commands in `.claude/commands/`, and the guard hooks in `.claude/settings.json` (`.claude/settings.local.json` for a local config). The removal takes the same three back.
-3. **The git side of a project** — `.githooks/post-merge` and `post-rewrite` run `rule-mcp handoff land --quiet --commit`, the `rule-mcp-index` driver is configured, and the attributes are tracked for a shared install or private for a local one. One task per checkout, in the install, uninstall and `project add|remove` plans; a root that is not a repository is reported, not failed.
-4. **The wizard asks where the install writes** — a Scope step after Agents: global costs one radio, project asks for the roots (the current directory offered, `p` for a typed path) and the kind, and the plan switches to the project plan.
-5. **Path suggestions** — `_path-complete.js` expands `~`, keeps credentials directories out of every list, and returns folders only (dot folders once a dot is typed, control-character names skipped, values ending in `/`). The Scope prompt refuses a path that is not an existing directory and quotes the suggestions.
-6. **A project's rules block is refreshed** — `refreshProjectRules` replaces the marked block in `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` and `.cursorrules`, keeps the rest of the file, and touches only files that already carry the marker. A `project-rules` step runs before the git step in every project install, and `init` calls it and prints a `Rules block:` line.
-7. **Documentation** — `03` gains where the rules live, the ADR policy table and the shared-entry prompt limit; `04` gains project installs, features and agent attribution; `08` gains the table of what `init` and a project install write into a checkout, and how a pending ADR lands.
+1. **Interactive questions are now rule both surfaces carry** — RULES block install writes into every agent's instruction file, and workflow reminder server prepends to tool results (full contract and terse re-anchor), both say that decision, preference or confirmation goes to host's question UI with options instead of prose user has to answer in chat. prompt-budget test pins sentence.
+2. **Claude project extras** — project-scope Claude install now writes what global one writes, cut down to project root: rules block in `CLAUDE.md`, `/rule-*` commands in `.claude/commands/`, and guard hooks in `.claude/settings.json` (`.claude/settings.local.json` for local config). removal takes same three back.
+3. **git side of project** — `.githooks/post-merge` and `post-rewrite` run `rule-mcp handoff land --quiet --commit`, `rule-mcp-index` driver is configured, and attributes are tracked for shared install or private for local one. One task per checkout, in install, uninstall and `project add|remove` plans; root that is not repository is reported, not failed.
+4. **wizard asks where install writes** — Scope step after Agents: global costs one radio, project asks for roots (current directory offered, `p` for typed path) and kind, and plan switches to project plan.
+5. **Path suggestions** — `_path-complete.js` expands `~`, keeps credentials directories out of every list, and returns folders only (dot folders once dot is typed, control-character names skipped, values ending in `/`). Scope prompt refuses path that is not existing directory and quotes suggestions.
+6. **project's rules block is refreshed** — `refreshProjectRules` replaces marked block in `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` and `.cursorrules`, keeps rest of file, and touches only files that already carry marker. `project-rules` step runs before git step in every project install, and `init` calls it and prints `Rules block:` line.
+7. **Documentation** — `03` gains where rules live, ADR policy table and shared-entry prompt limit; `04` gains project installs, features and agent attribution; `08` gains table of what `init` and project install write into checkout, and how pending ADR lands.
 
 ## Commits this handoff window
 
@@ -30,7 +30,7 @@ Six pending in `docs/adr/_pending/`, all numbered on trunk landing (`rule-mcp ha
 - `project-membership-is-a-command-and-an-update-re-applies-what-it-moved.md`
 - `count-the-cycles-and-the-dead-symbols-the-graph-can-prove-and-break-the-cycles-t.md`
 
-Do not cite a number for any of them before `rule-mcp handoff land`.
+Do not cite number for any of them before `rule-mcp handoff land`.
 
 ## State
 
@@ -40,13 +40,13 @@ Do not cite a number for any of them before `rule-mcp handoff land`.
 
 ## Left out / next
 
-- **Plan `installer-scope-adr-policy-features` is complete except item 4**: per-client prompt suppression. `RULE_MCP_NO_MCP_PROMPTS` has **no consumer** in the server, so writing it into a shared `.mcp.json` would ship an inert env; it was written, caught by the census, and removed. The consumer comes first: the server has to be able to answer "which client is this".
-- **The scrollable path menu (step 9 item 2) is not built.** `suggestPaths` and `expandPath` exist and the Scope prompt uses them, but the keystroke widget (`Tab` opens a menu, arrows wrap, `Esc` closes) needs the renderer's key loop. The plan's step 9 item 1 is done; item 3's widget half is not.
-- **Attribution rows for 21 agents** need a cited vendor page each. Filling one from memory is what the ADR forbids.
-- **Two merge commits** (`e9d29e8e`, `df6ba117`) remain in the 374-commit feature range; linearize only with owner confirmation.
-- **`main` is 870 commits behind this line**; the merge is a review question.
+- **Plan `installer-scope-adr-policy-features` is complete except item 4**: per-client prompt suppression. `RULE_MCP_NO_MCP_PROMPTS` has **no consumer** in server, so writing it into shared `.mcp.json` would ship inert env; it was written, caught by census, and removed. consumer comes first: server has to be able to answer "which client is this".
+- **scrollable path menu (step 9 item 2) is not built.** `suggestPaths` and `expandPath` exist and Scope prompt uses them, but keystroke widget (`Tab` opens menu, arrows wrap, `Esc` closes) needs renderer's key loop. plan's step 9 item 1 is done; item 3's widget half is not.
+- **Attribution rows for 21 agents** need cited vendor page each. Filling one from memory is what ADR forbids.
+- **Two merge commits** (`e9d29e8e`, `df6ba117`) remain in 374-commit feature range; linearize only with owner confirmation.
+- **`main` is 870 commits behind this line**; merge is review question.
 - `unicorn/no-asterisk-prefix-in-documentation-comments` still fires on files this session did not rewrite.
-- The MCP server in the session that produced this handoff served an older build than the checkout; `rule_tool_check`, `rule_tool_structural` and `rule_tool_handon` answered stale or refused, and the CLI path was used instead. Restart the server before trusting those tools.
+- MCP server in session that produced this handoff served older build than checkout; `rule_tool_check`, `rule_tool_structural` and `rule_tool_handon` answered stale or refused, and CLI path was used instead. Restart server before trusting those tools.
 
 ### Resume Prompt
 

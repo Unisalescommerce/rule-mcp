@@ -7,8 +7,8 @@
 
 ### Retired
 
-- `docs/plans/plan-of-plans.md` - the level-0 orchestrator, stages 0-8 complete, `Status: done`, zero real open checkboxes. Retired into ADR 161; file deleted.
-- `docs/plans/_plan-of-plans-reference.md` - the plan-graph audit, `Status: done` with eight follow-ups. Retired into ADR 162; file deleted.
+- `docs/plans/plan-of-plans.md` - level-0 orchestrator, stages 0-8 complete, `Status: done`, zero real open checkboxes. Retired into ADR 161; file deleted.
+- `docs/plans/_plan-of-plans-reference.md` - plan-graph audit, `Status: done` with eight follow-ups. Retired into ADR 162; file deleted.
 
 ### Open plans (96 files, 1,490 open items)
 
@@ -21,18 +21,18 @@
 
 Non-skill plans: `_export.md` (39), six area guardrail plans (94 total), `_2026-10-01-scripts-mcp-layout.md` (10), `_decision-models.md` (2), `installer-scope-adr-policy-features.md` (1).
 
-The 86 skill plans live under `docs/plans/skills/`; `skills/_skills-plan.md` is their index and carries the 1,336 open boxes. `skills/README.md` and `skills/DEPENDENCIES.md` are catalog documents, not plans.
+86 skill plans live under `docs/plans/skills/`; `skills/_skills-plan.md` is their index and carries 1,336 open boxes. `skills/README.md` and `skills/DEPENDENCIES.md` are catalog documents, not plans.
 
 ### Reference follow-ups (8)
 
-F1 apply the contract stage by stage; F2 decide the Stage 3 order; F3 decide the toolchain additions; F4 one id per node; F5 the five-line format; F8 normalize the status line as each stage starts; F9 exempt the three non-skill plans from the checkbox assertion by path; the per-stage node list.
+F1 apply contract stage by stage; F2 decide Stage 3 order; F3 decide toolchain additions; F4 one id per node; F5 five-line format; F8 normalize status line as each stage starts; F9 exempt three non-skill plans from checkbox assertion by path; per-stage node list.
 
 ### ADRs
 
-- ADR 161 - retire the plan-of-plans into an ADR and a handoff.
-- ADR 162 - retire the plan-graph audit reference into an ADR and a handoff.
+- ADR 161 - retire plan-of-plans into ADR and handoff.
+- ADR 162 - retire plan-graph audit reference into ADR and handoff.
 - ADR 163 - retire closed plans into ADRs and one handoff.
 
 ### Next
 
-The open plans are the roadmap; they stay in `docs/plans` and are indexed here. The next session opens the area it needs from this table, not from the retired level-0 file. The release PR #9 is a separate line: coverage gate and Code scanning remain its blockers.
+open plans are roadmap; they stay in `docs/plans` and are indexed here. next session opens area it needs from this table, not from retired level-0 file. release PR #9 is separate line: coverage gate and Code scanning remain its blockers.

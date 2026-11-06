@@ -11,7 +11,7 @@ The skill holds international business data rules: email, phone, VAT, tax IDs, p
 
 ## Decision
 
-Rename rule-styleguide-validation to rule-data-validation, change the tool to rule_tool_data_validation, move its rows from the styleguide tables into the data tables in rule-mcp and rule-data, update the personas that name it, the framework map in the guardrail registry, the tool-surface snapshot and the census, and broaden the data area description to include the shape and validation of the data that reaches the database.
+Rename rule-styleguide-validation to rule-data-validation, change tool to rule_tool_data_validation, move its rows from styleguide tables into data tables in rule-mcp and rule-data, update personas that name it, framework map in guardrail registry, tool-surface snapshot and census, and broaden data area description to include shape and validation of data that reaches database.
 
 ## Consequences
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Keep the skill in the styleguide area as a cross-cutting concern
-1. Create a new validation area with its own router
-1. Move it to the backend area, where input validation at the boundary lives
+1. Keep skill in styleguide area as cross-cutting concern
+1. Create new validation area with its own router
+1. Move it to backend area, where input validation at boundary lives

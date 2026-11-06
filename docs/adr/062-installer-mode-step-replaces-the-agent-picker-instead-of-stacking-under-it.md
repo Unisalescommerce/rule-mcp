@@ -7,7 +7,7 @@
 
 ## Context
 
-The interactive install.sh TUI drew step 2 (install mode radio) below the still-visible step 1 agent picker, reusing step 1's footer as its status bar. Users could not tell which step was active. The Phase 3 banner was also misaligned (55 vs 56 columns on one row) and box_banner content rows never closed the right border, so both boxes rendered broken. install.ps1 already cleared and re-titled the banner between steps.
+interactive install.sh TUI drew step 2 (install mode radio) below still-visible step 1 agent picker, reusing step 1's footer as its status bar. Users could not tell which step was active. Phase 3 banner was also misaligned (55 vs 56 columns on one row) and box_banner content rows never closed right border, so both boxes rendered broken. install.ps1 already cleared and re-titled banner between steps.
 
 ## Decision
 
@@ -23,6 +23,6 @@ Assumption: the installer wizard stays a two-step alt-screen TUI with a fixed 56
 
 ## Alternatives Considered
 
-1. Keep stacking but visually separate step 2 with a divider - still leaves two hint lines and a stale footer on screen
-1. Full-screen clear and redraw per step - throws away the differential renderer and reintroduces flicker
-1. Reuse the step 1 footer as a shared status bar - the footer's selection counter is meaningless during mode selection
+1. Keep stacking but visually separate step 2 with divider - still leaves two hint lines and stale footer on screen
+1. Full-screen clear and redraw per step - throws away differential renderer and reintroduces flicker
+1. Reuse step 1 footer as shared status bar - footer's selection counter is meaningless during mode selection

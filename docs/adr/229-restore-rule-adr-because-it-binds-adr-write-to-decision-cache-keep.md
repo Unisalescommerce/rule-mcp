@@ -7,11 +7,11 @@
 
 ## Context
 
-Handoff 13 removed /rule-adr as a duplicate of rule_tool_process_adr / rule-process-adr. Export v1 needs a durable choice in the export-owned decision-cache after an ADR is written. Bare rule_tool_process_adr only records the ADR file; it does not call keepDecision. Without a product prompt that sequences both, agents either skip the keep or invent a second path.
+Handoff 13 removed /rule-adr as duplicate of rule_tool_process_adr / rule-process-adr. Export v1 needs durable choice in export-owned decision-cache after ADR is written. Bare rule_tool_process_adr only records ADR file; it does not call keepDecision. Without product prompt that sequences both, agents either skip keep or invent second path.
 
 ## Decision
 
-Restore /rule-adr as a session prompt whose body drives rule_tool_process_adr and then offers /rule-keep (rule_tool_keep) so the accepted choice is stored confirmed in decision-cache.json. This is not a duplicate of the ADR engine: the product value is the bind to the export decision-cache. Hook short-circuit from that cache remains out of scope.
+Restore /rule-adr as session prompt whose body drives rule_tool_process_adr and then offers /rule-keep (rule_tool_keep) so accepted choice is stored confirmed in decision-cache.json. This is not duplicate of ADR engine: product value is bind to export decision-cache. Hook short-circuit from that cache remains out of scope.
 
 ## Consequences
 
@@ -25,4 +25,4 @@ The assumption this leans on, and the observation that would make it wrong.
 
 1. Keep /rule-adr removed and document that agents must chain process_adr + rule_tool_keep manually
 1. Fold keep into rule_tool_process_adr itself
-1. Invent a separate rule_tool_adr_keep tool
+1. Invent separate rule_tool_adr_keep tool

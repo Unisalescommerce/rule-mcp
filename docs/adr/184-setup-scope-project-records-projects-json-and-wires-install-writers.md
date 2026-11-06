@@ -7,11 +7,11 @@
 
 ## Context
 
-Slice A (ADR 183) added project host writers and hosts[].written but left CLI --scope / projects.json unwired. Installer-scope step 8 items 5–6 require flag-driven project installs that write only into chosen trees and a state store for refresh/uninstall walks.
+Slice A (ADR 183) added project host writers and hosts[].written but left CLI --scope / projects.json unwired. Installer-scope step 8 items 5–6 need flag-driven project installs that write only into chosen trees and state store for refresh/uninstall walks.
 
 ## Decision
 
-Add state/projects.json (record/forget/list). Expose setup --scope project, repeatable --project, --project-config, and --refresh-projects. Project plans call installProjectHost, merge written into the install manifest, and skip global shim/skills/service. Uninstall prepends a walk of projects.json. Wizard Scope UI and project add/remove stay deferred.
+Add state/projects.json (record/forget/list). Expose setup --scope project, repeatable --project, --project-config, and --refresh-projects. Project plans call installProjectHost, merge written into install manifest, and skip global shim/skills/service. Uninstall prepends walk of projects.json. Wizard Scope UI and project add/remove stay deferred.
 
 ## Consequences
 
@@ -23,5 +23,5 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Reuse only hosts[].written without projects.json (rejected: refresh/uninstall need project roots and projectConfig, not just paths)
-1. Ship wizard Scope UI in the same slice (rejected: plan separates flag path from UI; keep slice small)
+1. Reuse only hosts[].written without projects.json (rejected: refresh/uninstall need project roots and projectConfig, not paths)
+1. Ship wizard Scope UI in same slice (rejected: plan separates flag path from UI; keep slice small)

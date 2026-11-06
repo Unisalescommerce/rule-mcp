@@ -30,7 +30,7 @@ Added automatic global CLI registration on `pnpm install` postinstall hook to en
 - `src/core/agents/commands/` - command template generation
 - `server.json` - MCP server metadata (check for skill shortcut definitions)
 
-**Next steps:** Audit how skills are registered in Claude Code during the setup wizard. Check if `commandShortcut` or similar field controls the displayed name.
+**Next steps:** Audit how skills are registered in Claude Code during setup wizard. Check if `commandShortcut` or similar field controls displayed name.
 
 ## Testing Status
 
@@ -38,7 +38,7 @@ postinstall hook tested with fresh `pnpm i`. CLI registers but needs TTY-safe im
 
 ## ADR Reference
 
-- ADR 082: setup wizard is the installer
+- ADR 082: setup wizard is installer
 - ADR 025: registry-driven clean slash commands for every agent and IDE
 - ADR 020: clean /rule-mcp-* commands via user commands and prompt suppression
 

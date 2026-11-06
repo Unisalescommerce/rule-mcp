@@ -7,11 +7,11 @@
 
 ## Context
 
-The commit-governance installer detects a project's hook mechanism. It read `core.hooksPath` with `git config --get`, which also returns a value set in the user's global or system config. On a machine whose `~/.config/git/config` sets `core.hooksPath = ~/.config/git/hooks`, installing governance in any repository without its own `.githooks/` therefore wrote the `commit-msg` and `pre-push` shims into that shared directory and kept `.rule-mcp-backup` copies of whatever was there. The effect was observed on 2026-10-18: the shared hooks were rewritten, and every commit in every unrelated repository started going through this project's `commit-lint`, which rejects any subject that is not `type(scope): subject`. A second, quieter symptom was that the docs-numbering-doctor fixtures committed with `git commit -m first` in a temp repository and so passed inside the suite while failing on their own, because they inherited the user's hooks path instead of a private config.
+commit-governance installer detects project's hook mechanism. It read `core.hooksPath` with `git config --get`, which also returns value set in user's global or system config. On machine whose `~/.config/git/config` sets `core.hooksPath = ~/.config/git/hooks`, installing governance in any repository without its own `.githooks/` so wrote `commit-msg` and `pre-push` shims into that shared directory and kept `.rule-mcp-backup` copies of whatever was there. effect was observed on 2026-10-18: shared hooks were rewritten, and every commit in every unrelated repository started going through this project's `commit-lint`, which rejects any subject that is not `type(scope): subject`. second, quieter symptom was that docs-numbering-doctor fixtures committed with `git commit -m first` in temp repository and so passed inside suite while failing on their own, because they inherited user's hooks path instead of private config.
 
 ## Decision
 
-The installer reads `core.hooksPath` with `--local`, so only a setting the repository itself carries is treated as that project's mechanism. A global or system value is ignored and the installer falls back to git's own hooks directory, which `git rev-parse --absolute-git-dir` resolves per repository. Hooks a project owns live in `.githooks/` or in the directory it configured itself; the user's shared directory is never a target. Fixtures that create a repository set a private global config (`GIT_CONFIG_GLOBAL` pointing at an empty file, `GIT_CONFIG_NOSYSTEM=1`) so an ambient setting cannot decide whether a test passes.
+installer reads `core.hooksPath` with `--local`, so only setting repository itself carries is treated as that project's mechanism. global or system value is ignored and installer falls back to git's own hooks directory, which `git rev-parse --absolute-git-dir` resolves per repository. Hooks project owns live in `.githooks/` or in directory it configured itself; user's shared directory is never target. Fixtures that create repository set private global config (`GIT_CONFIG_GLOBAL` pointing at empty file, `GIT_CONFIG_NOSYSTEM=1`) so ambient setting cannot decide whether test passes.
 
 ## Consequences
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Keep `--get` and add a containment check that refuses any target outside the repository's git directory, as `scripts/install/git-hooks/index.mjs` does. Rejected as the primary rule because it still reads the machine's setting and would move a global hooks path into an error the user cannot act on.
-1. Keep `--get` and refuse to install anything when the resolved path is outside the repository. Rejected for the same reason, with the added cost of leaving a project with no gate at all.
-1. Ask the user at install time whether to adopt the global directory. Rejected: an installer that needs an answer for a case the user never intended is a worse default than ignoring a machine-wide setting.
+1. Keep `--get` and add containment check that refuses any target outside repository's git directory, as `scripts/install/git-hooks/index.mjs` does. Rejected as primary rule because it still reads machine's setting and would move global hooks path into error user cannot act on.
+1. Keep `--get` and refuse to install anything when resolved path is outside repository. Rejected for same reason, with added cost of leaving project with no gate at all.
+1. Ask user at install time whether to adopt global directory. Rejected: installer that needs answer for case user never intended is worse default than ignoring machine-wide setting.

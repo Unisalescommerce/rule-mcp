@@ -8,15 +8,15 @@
 
 ## Context
 
-The MCP prompt registry carried `/rule-process-check` (validate code against the rule-mcp guardrails) and `/rule-mcp-adr` (record a decision), while the agent command surface already had a `/rule-check`. The two check names spoke for the same work, the ADR prompt duplicated the rule-process-adr skill, and a single generic check gave no way to ask for one area's guardrails.
+MCP prompt registry carried `/rule-process-check` (validate code against rule-mcp guardrails) and `/rule-mcp-adr` (record decision), while agent command surface already had `/rule-check`. two check names spoke for same work, ADR prompt duplicated rule-process-adr skill, and single generic check gave no way to ask for one area's guardrails.
 
 ## Decision
 
-Remove `/rule-mcp-adr` and `/rule-process-check` from the MCP prompt registry. Give the agent command surface one check command per area prompt, `/rule-area-<area>-check` (91 commands), each validating against that area's skill guardrails, plus a general `/rule-check` that auto-detects the area from the git diff, the chat context, or the codebase. `commandDefinition` resolves the `-check` suffix to its area prompt; `commandNames` appends the derived names and sorts them with the rest.
+Remove `/rule-mcp-adr` and `/rule-process-check` from MCP prompt registry. Give agent command surface one check command per area prompt, `/rule-area-<area>-check` (91 commands), each validating against that area's skill guardrails, plus general `/rule-check` that auto-detects area from git diff, chat context, or codebase. `commandDefinition` resolves `-check` suffix to its area prompt; `commandNames` appends derived names and sorts them with rest.
 
 ## Consequences
 
-MCP prompts fall 155 to 153; reusable prompts 98 to 96. Agent slash commands rise 156 to 246, since one command per area now has a check sibling. A check is reachable both per area and generically, and the two-name collision around `rule-check` is gone. The persona and session families are untouched. ADR 105 later hard-deletes any leftover `rule-mcp-adr` / `rule-process-check` task-prompt cases and documents `/rule-area-process-adr` / `/rule-area-process-check` as the only ADR/check entry points beside `/rule-check`.
+MCP prompts fall 155 to 153; reusable prompts 98 to 96. Agent slash commands rise 156 to 246, since one command per area now has check sibling. check is reachable both per area and generically, and two-name collision around `rule-check` is gone. persona and session families are untouched. ADR 105 later hard-deletes any leftover `rule-mcp-adr` / `rule-process-check` task-prompt cases and documents `/rule-area-process-adr` / `/rule-area-process-check` as only ADR/check entry points beside `/rule-check`.
 
 ## What would end this
 
@@ -24,6 +24,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Keep `/rule-process-check` as the only MCP check prompt
-1. Add `/rule-check` as an MCP prompt instead of an agent command
-1. Give each area a check prompt rather than an agent command
+1. Keep `/rule-process-check` as only MCP check prompt
+1. Add `/rule-check` as MCP prompt instead of agent command
+1. Give each area check prompt rather than agent command

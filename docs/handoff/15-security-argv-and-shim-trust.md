@@ -6,11 +6,11 @@
 
 ## Session Summary
 
-Three threads, in this order. First, a mandatory guardrail: a generated
-`package.json` must carry neither the corepack activation fields nor `engines`,
-and the write path strips them before checking. Second, the roadmap, which
-named three horizons and none of the queues that carry them, was completed and
-linked to `docs/plans/` and `docs/reviews/`. Third, the security plan was
+Three threads, in this order. First, mandatory guardrail: generated
+`package.json` must carry neither corepack activation fields nor `engines`,
+and write path strips them before checking. Second, roadmap, which
+named three horizons and none of queues that carry them, was completed and
+linked to `docs/plans/` and `docs/reviews/`. Third, security plan was
 worked from the top: six of its eight steps are done.
 
 ## Work Completed
@@ -18,42 +18,42 @@ worked from the top: six of its eight steps are done.
 ### 1. No corepack, no engines (ADR 101)
 
 - `skills/rule-toolchain-pnpm/guardrails/_no-engines.js` (new): `pkg-no-engines`
-  forbids `engines` in a `package.json`, next to `pkg-no-corepack`. Both are in
-  the baseline, so every skill applies them. The front matter of
-  `rule-toolchain-pnpm/SKILL.md` declares the new rule.
-- `src/core/guardrails/_manifest-strip.js` (new): the write path removes
-  `packageManager`, `engines` and `devEngines.packageManager` from a manifest
-  before the gateway checks it, so the receipt binds the cleaned content and the
-  reply carries it back. The path decides, not the content.
-- `package.json` drops `engines`; the Node floor lives in `.nvmrc`, the
+  forbids `engines` in `package.json`, next to `pkg-no-corepack`. Both are in
+  baseline, so every skill applies them. front matter of
+  `rule-toolchain-pnpm/SKILL.md` declares new rule.
+- `src/core/guardrails/_manifest-strip.js` (new): write path removes
+  `packageManager`, `engines` and `devEngines.packageManager` from manifest
+  before gateway checks it, so receipt binds cleaned content and the
+  reply carries it back. path decides, not content.
+- `package.json` drops `engines`; Node floor lives in `.nvmrc`, the
   installers (`NODE_MIN=20`) and CI.
-- Documentation: the policy section in `rule-toolchain-pnpm`, `rule-styleguide-json`
+- Documentation: policy section in `rule-toolchain-pnpm`, `rule-styleguide-json`
   and `rule-toolchain-project` says rule-mcp does not support corepack.
 
 ### 2. The roadmap
 
-`ROADMAP.md` now links `docs/plans/` and `docs/reviews/`, adds the security
-surface and the architecture debt, names the v0.1.0-beta release target, lists
-the six owner-only actions that block three phases, and corrects two stale
+`ROADMAP.md` now links `docs/plans/` and `docs/reviews/`, adds security
+surface and architecture debt, names v0.1.0-beta release target, lists
+six owner-only actions that block three phases, and corrects two stale
 claims: the PowerShell bootstraps are read by a test, never executed in CI, and
-the documentation site is built, only undeployed.
+documentation site is built, only undeployed.
 
 ### 3. Security, SEC-1 through SEC-6 (docs/plans/security.md)
 
-- SEC-1 (high): `tryExecFile(file, args)` runs an argv array, so no shell parses
-  a path. The launchd, systemd and Windows adapters use it. A test drives all
-  three against a HOME whose name carries `$(touch INJECTED)`, a quote, a
-  semicolon and a space, and asserts the path arrives whole and the payload
+- SEC-1 (high): `tryExecFile(file, args)` runs argv array, so no shell parses
+  path. launchd, systemd and Windows adapters use it. test drives all
+  three against HOME whose name carries `$(touch INJECTED)`, quote, a
+  semicolon and space, and asserts path arrives whole and payload
   never runs.
-- SEC-2: the launchd wrapper single-quotes its paths instead of XML-escaping
+- SEC-2: launchd wrapper single-quotes its paths instead of XML-escaping
   them.
-- SEC-3: the PowerShell fallback launches with an argv array, not `shell: true`.
-- SEC-4: a failed install reports the exit code, never the command line or
+- SEC-3: PowerShell fallback launches with argv array, not `shell: true`.
+- SEC-4: failed install reports exit code, never command line or
   stderr.
-- SEC-5: `shimWorks()` resolves the shim to this checkout's entrypoint before
-  running it. A symlink or a launcher that names the entrypoint is trusted;
+- SEC-5: `shimWorks()` resolves shim to this checkout's entrypoint before
+  running it. symlink or launcher that names entrypoint is trusted;
   anything else is refused without being executed.
-- SEC-6: the Windows `binPath` and the systemd `ExecStart` are built from the
+- SEC-6: Windows `binPath` and systemd `ExecStart` are built from the
   argv array, each element escaped by its own tool's rules.
 
 ## Verification
@@ -69,31 +69,31 @@ the documentation site is built, only undeployed.
 | `handoff doctor` at the tip          | clean: 109 ADRs, 15 handoffs, both indexes current                      |
 
 Two tests fail, neither from this work:
-`src/cli/install/__tests__/_installer-stdio-path.test.mjs` hardcodes the checkout
-at `~/Projects/rule` and the global shim at
+`src/cli/install/__tests__/_installer-stdio-path.test.mjs` hardcodes checkout
+at `~/Projects/rule` and global shim at
 `~/Library/pnpm/bin/rule`, while this machine has them elsewhere; and
-`src/cli/commands/__tests__/_daemon.test.mjs` binds a fixed port, so it loses a
-race when the whole suite runs in parallel. It passes alone and in the
+`src/cli/commands/__tests__/_daemon.test.mjs` binds fixed port, so it loses a
+race when whole suite runs in parallel. It passes alone and in the
 `installer` suite.
 
 ## Next Session
 
-Resume the security plan from **SEC-7** in `docs/plans/security.md`.
+Resume security plan from **SEC-7** in `docs/plans/security.md`.
 
-- SEC-7 (low): `tryExec` collapses every failure, including the output cap, into
-  `""`, so "died" and "printed nothing" are one value. Return a discriminated
-  result and update the callers that compare against `""`. Roughly 20 callers.
-- SEC-8 (low): the daemon shell-out surface exists twice, in `src/cli/daemon/`
-  and `src/cli/commands/daemon/`. Point one at the other and assert one owner
-  per platform command in the repository-contract test.
+- SEC-7 (low): `tryExec` collapses every failure, including output cap, into
+  `""`, so "died" and "printed nothing" are one value. Return discriminated
+  result and update callers that compare against `""`. Roughly 20 callers.
+- SEC-8 (low): daemon shell-out surface exists twice, in `src/cli/daemon/`
+  and `src/cli/commands/daemon/`. Point one at other and assert one owner
+  per platform command in repository-contract test.
 
-After the security plan closes, the next block is **ARCH-1** in
-`docs/plans/architect.md`: break the eight-module cycle that ties tool
-invocation to skill loading, self-update and the gateway.
+After security plan closes, next block is **ARCH-1** in
+`docs/plans/architect.md`: break eight-module cycle that ties tool
+invocation to skill loading, self-update and gateway.
 
-Owner-only and network work cannot be done from a session: the six GitHub
-clicks in `docs/plans/github.md`, the signed tag and release, the MCP registry
-publish, and the Pages deploy.
+Owner-only and network work cannot be done from session: six GitHub
+clicks in `docs/plans/github.md`, signed tag and release, MCP registry
+publish, and Pages deploy.
 
 ### Resume Prompt
 

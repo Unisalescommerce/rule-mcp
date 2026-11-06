@@ -7,11 +7,11 @@
 
 ## Context
 
-Ten rule-frontend skills exist. Five own rules (react, vue, svelte, angular and vanilla-reactive, fourteen rules total) and none declares inherits, so a rule owned by one skill never reaches another. The router rule-frontend owns nothing. The checkable gaps that are not style or accessibility, which the styleguide area already covers, are the XSS sinks, the list key, the effect cleanup, the custom element shape, the template escaping and the worker boundary.
+Ten rule-frontend skills exist. Five own rules (react, vue, svelte, angular and vanilla-reactive, fourteen rules total) and none declares inherits, so rule owned by one skill never reaches another. router rule-frontend owns nothing. checkable gaps that are not style or accessibility, which styleguide area already covers, are XSS sinks, list key, effect cleanup, custom element shape, template escaping and worker boundary.
 
 ## Decision
 
-Create rule-frontend/guardrails with seven rules. Tier A: xss-sink-sanitized, fe-list-key, fe-effect-cleanup, ce-valid, template-escape, worker-no-dom. Tier B: worker-transferable. Rules ship advisory and are promoted to blocking after the corpus gate reports full precision and recall. Two questions stay open: whether the framework skills add inherits: [rule-frontend], and whether custom-element and template-engine join the target list for ce-valid and template-escape.
+Create rule-frontend/guardrails with seven rules. Tier A: xss-sink-sanitized, fe-list-key, fe-effect-cleanup, ce-valid, template-escape, worker-no-dom. Tier B: worker-transferable. Rules ship advisory and are promoted to blocking after corpus gate reports full precision and recall. Two questions stay open: whether framework skills add inherits: [rule-frontend], and whether custom-element and template-engine join target list for ce-valid and template-escape.
 
 ## Consequences
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Leave the frontend area to the per-framework rules it already has
+1. Leave frontend area to per-framework rules it already has
 1. Put every rule in each framework skill instead of one shared family
-1. Reuse the styleguide CSS and HTML rules for the template escaping claim
+1. Reuse styleguide CSS and HTML rules for template escaping claim

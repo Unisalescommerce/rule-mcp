@@ -7,16 +7,16 @@
 
 ## Delivered
 
-- Added Betterleaks-backed Git secret scanning and deterministic provider checks. The scanner is offline, bounded, and redacts values.
-- Fixed the Git guard to inspect staged index bytes and preserve unusual paths.
+- Added Betterleaks-backed Git secret scanning and deterministic provider checks. scanner is offline, bounded, and redacts values.
+- Fixed Git guard to inspect staged index bytes and preserve unusual paths.
 - Added Pi discovery words and single-item schema coercion for gateway and ADR tools.
-- Fixed closeout archival so wrapped checkbox text and plan prose survive in the ADR.
+- Fixed closeout archival so wrapped checkbox text and plan prose survive in ADR.
 - Fixed handon verification of pending ADR paths.
-- Registered the OSS readiness, tool and skill surface, and publication cutover plans in the level-zero dependency graph.
-- Verified that the six area guardrail plans were not fully absorbed. AI already retained 8 rule IDs; the other areas lacked 68 IDs.
-- Assigned all 76 retained rule IDs to explicit skill-plan owners, added regression coverage, deleted the six superseded files, and removed their references.
+- Registered OSS readiness, tool and skill surface, and publication cutover plans in level-zero dependency graph.
+- Verified that six area guardrail plans were not fully absorbed. AI already retained 8 rule IDs; other areas lacked 68 IDs.
+- Assigned all 76 retained rule IDs to explicit skill-plan owners, added regression coverage, deleted six superseded files, and removed their references.
 - Corrected catalog-orchestration citations from ADR 145 to ADR 166.
-- Recorded the retirement decision in `docs/adr/237-retire-area-guardrail-plans-after-assigning-every-retained-rule.md`.
+- Recorded retirement decision in `docs/adr/237-retire-area-guardrail-plans-after-assigning-every-retained-rule.md`.
 - Closed `docs/plans/_plan-of-plans-reference.md` into ADR 204 and `docs/handoff/plans/plan-of-plans-reference.md`.
 
 ## Commits since handoff 50
@@ -45,23 +45,23 @@
 - Remaining failures:
   - shell completion does not include `secrets`;
   - `_secret-token-rarity.js` imports outside its portable rule folder;
-  - `rule_tool_keep` reads an undefined decision-cache status.
+  - `rule_tool_keep` reads undefined decision-cache status.
 - Working tree was clean before this handoff file.
 - No push was performed.
 
 ## Open work
 
-- `_oss-readiness-and-repo-health.md`: registration is done. WS1 must record four accepted repository decisions as ADRs. WS2 then fixes the dead repository slug. WS3 changes self-update to notify by default. WS4 holds the smaller cleanup tasks.
-- `_tool-and-skill-surface-audit.md`: WS5 is complete. WS1 and WS2 must verify the current surface and check counts. WS4 still removes duplicated orchestrator prose after Pi WS2 closes.
-- `_pi-integration-and-debt.md`: WS1-T3 and WS1-T3.1 require a real Pi environment. WS2 catalog debt remains open.
-- `_publication-cutover.md`: execution has HARD dependencies on the OSS and surface plans. Its WS1 owns the three current full-suite failures.
-- The area-plan retirement ADR remains pending because this branch is not the numbering trunk.
+- `_oss-readiness-and-repo-health.md`: registration is done. WS1 must record four accepted repository decisions as ADRs. WS2 then fixes dead repository slug. WS3 changes self-update to notify by default. WS4 holds smaller cleanup tasks.
+- `_tool-and-skill-surface-audit.md`: WS5 is complete. WS1 and WS2 must verify current surface and check counts. WS4 still removes duplicated orchestrator prose after Pi WS2 closes.
+- `_pi-integration-and-debt.md`: WS1-T3 and WS1-T3.1 need real Pi environment. WS2 catalog debt remains open.
+- `_publication-cutover.md`: execution has HARD dependencies on OSS and surface plans. Its WS1 owns three current full-suite failures.
+- area-plan retirement ADR remains pending because this branch is not numbering trunk.
 
 ## Decisions and constraints
 
-- Do not restore the retired area guardrail plans. Change the ownership map and its regression test if a retained rule moves or is intentionally removed.
-- ADR 166, not ADR 145, is the catalog-orchestration decision.
-- Run one ADR-writing session at a time because `docs/adr/ADR.md` and numbering are shared.
+- Do not restore retired area guardrail plans. Change ownership map and its regression test if retained rule moves or is intentionally removed.
+- ADR 166, not ADR 145, is catalog-orchestration decision.
+- Run one ADR-writing session at time because `docs/adr/ADR.md` and numbering are shared.
 - Keep dependencies exact. Use `pnpm` and `pnpx`.
 - Never push without explicit authorization.
 

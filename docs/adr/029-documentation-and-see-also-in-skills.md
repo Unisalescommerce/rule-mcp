@@ -19,4 +19,4 @@ Docs tests pass. Skills correctly cross-linked.
 
 ## Alternatives Considered
 
-- Remove the test (rejected: lowers quality)
+- Remove test (rejected: lowers quality)

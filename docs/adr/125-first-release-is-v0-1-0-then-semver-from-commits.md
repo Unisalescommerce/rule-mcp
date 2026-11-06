@@ -8,30 +8,30 @@
 ## Context
 
 Manifests said `0.2.0-rc` and ADR 089 named `v0.1.0-beta`, but no release
-tag ever shipped. Deriving the next version from the whole untagged history
-jumps to `1.0.0` because of accumulated `feat` and breaking commits. The owner
-wants the first published tag to be `v0.1.0`, then ordinary Semantic Versioning
+tag ever shipped. Deriving next version from whole untagged history
+jumps to `1.0.0` because of accumulated `feat` and breaking commits. owner
+wants first published tag to be `v0.1.0`, then ordinary Semantic Versioning
 from that tag onward. Manifests are parked on `0.1.0-beta` until that cut.
 
 ## Decision
 
-1. The first cut is forced: `pnpm release --version 0.1.0` (and the matching
-   tag `v0.1.0`). The empty `0.2.0-rc` changelog heading is removed; historical
+1. first cut is forced: `pnpm release --version 0.1.0` (and matching
+   tag `v0.1.0`). empty `0.2.0-rc` changelog heading is removed; historical
    `0.1.0-beta` entries stay as history only.
-2. `scripts/release` accepts `--version <x.y.z[-prerelease]>` so a plan can
-   override the derived bump once. Without the flag, the version stays a
+2. `scripts/release` accepts `--version <x.y.z[-prerelease]>` so plan can
+   override derived bump once. Without flag, version stays a
    function of the commits since the newest tag (ADR 119 / ADR 122).
 3. After `v0.1.0` exists, every later release is derived: `fix` -> patch,
    `feat` -> minor, `!` / `BREAKING CHANGE` -> major.
-4. ADR 089 is superseded on the release target it named.
+4. ADR 089 is superseded on release target it named.
 
 ## Consequences
 
-`rule_tool_update` follows release tags; the first tag clients can land on is
-`v0.1.0`. Forcing a version is an explicit escape hatch for the first cut, not
-the default path.
+`rule_tool_update` follows release tags; first tag clients can land on is
+`v0.1.0`. Forcing version is explicit escape hatch for first cut, not
+default path.
 
 ## What would end this
 
-Shipping a different first tag, or moving releases to a pipeline that never
-accepts an override.
+Shipping different first tag, or moving releases to pipeline that never
+accepts override.

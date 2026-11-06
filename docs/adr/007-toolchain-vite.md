@@ -7,15 +7,15 @@
 
 ## Context
 
-Build tool configuration was embedded inside `rule-mcp-scaffold-frontend-react-vite`, coupling Vite-specific settings with React scaffolding. This created a dependency where:
+Build tool configuration was embedded inside `rule-mcp-scaffold-frontend-react-vite`, coupling Vite-specific settings with React scaffolding. This created dependency where:
 
 - Non-React projects (Vue + Vite, Svelte + Vite, Astro) had no access to Vite best practices
 - React scaffolding was cluttered with build-tool configuration
-- The `rule-toolchain-*` category provides a home for any build tool, linter, or formatter skill
+- `rule-toolchain-*` category provides home for any build tool, linter, or formatter skill
 
 ## Decision
 
-Extract all Vite-related content from `rule-mcp-scaffold-frontend-react-vite` into a new `rule-toolchain-vite` skill covering:
+Extract all Vite-related content from `rule-mcp-scaffold-frontend-react-vite` into new `rule-toolchain-vite` skill covering:
 
 - `vite.config.ts` configuration (plugins, server, build)
 - `vitest.config.ts` test configuration
@@ -23,7 +23,7 @@ Extract all Vite-related content from `rule-mcp-scaffold-frontend-react-vite` in
 - Build optimization (code splitting, minification, target)
 - Test setup (jsdom, testing-library)
 
-The `rule-frontend-react` skill now references `rule-toolchain-vite` for build configuration, keeping the React skill focused on React-specific patterns.
+`rule-frontend-react` skill now references `rule-toolchain-vite` for build configuration, keeping React skill focused on React-specific patterns.
 
 ## Consequences
 

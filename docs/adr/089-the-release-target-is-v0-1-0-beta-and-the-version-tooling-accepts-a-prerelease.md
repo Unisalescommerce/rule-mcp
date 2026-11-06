@@ -11,21 +11,21 @@
 
 ## Context
 
-ADR 077 reset the version to 0.1.0 and named v0.1.0 as the first release. The develop branch retargeted the same release to v0.1.0-beta and taught the release workflow to publish a hyphenated tag as a prerelease. Both are now in one tree, and the manifests, the changelog heading and the release workflow have to agree on one answer. Two pieces of tooling assumed the plain form: scripts/build/version/index.mjs validated --apply against /^\d+\.\d+\.\d+$/ and refused 0.1.0-beta, and the changelog generator groups commits by git tag, so with no tag it writes only an [Unreleased] section and the version gate finds no release heading to compare.
+ADR 077 reset version to 0.1.0 and named v0.1.0 as first release. develop branch retargeted same release to v0.1.0-beta and taught release workflow to publish hyphenated tag as prerelease. Both are now in one tree, and manifests, changelog heading and release workflow have to agree on one answer. Two pieces of tooling assumed plain form: scripts/build/version/index.mjs validated --apply against /^\d+\.\d+\.\d+$/ and refused 0.1.0-beta, and changelog generator groups commits by git tag, so with no tag it writes only an [Unreleased] section and version gate finds no release heading to compare.
 
 ## Decision
 
-The version is 0.1.0-beta in package.json, server.json, both packaging manifests and the newest CHANGELOG heading. The release workflow marks a tag containing a hyphen as a prerelease and a plain tag as a stable release. scripts/build/version/index.mjs accepts an optional prerelease suffix in --apply. The changelog section carries the release name rather than [Unreleased], because the version gate reads the newest release heading and the generator only writes one once the tag exists.
+version is 0.1.0-beta in package.json, server.json, both packaging manifests and newest CHANGELOG heading. release workflow marks tag containing hyphen as prerelease and plain tag as stable release. scripts/build/version/index.mjs accepts optional prerelease suffix in --apply. changelog section carries release name rather than [Unreleased], because version gate reads newest release heading and generator only writes one once tag exists.
 
 ## Consequences
 
-ADR 077 is superseded on the version it names; its reasoning about resetting away from v1.0.0 stands. Running `pnpm changelog` before a tag exists rewrites the heading back to [Unreleased], so the release procedure is changelog first, then version --apply, then tag - the order the workflow already uses. A future stable release needs no tooling change: a plain tag validates and publishes as latest.
+ADR 077 is superseded on version it names; its reasoning about resetting away from v1.0.0 stands. Running `pnpm changelog` before tag exists rewrites heading back to [Unreleased], so release procedure is changelog first, then version --apply, then tag - order workflow already uses. future stable release needs no tooling change: plain tag validates and publishes as latest.
 
 ## What would end this
 
-Publishing to a registry that rejects prerelease identifiers, or a decision to cut v0.1.0 directly without a beta.
+Publishing to registry that rejects prerelease identifiers, or decision to cut v0.1.0 directly without beta.
 
 ## Alternatives Considered
 
-1. Keep 0.1.0 and drop the prerelease workflow (rejected: the beta is the release the project is actually cutting, and the workflow change is three lines)
-1. Leave the changelog on [Unreleased] and relax the version gate (rejected: the gate is what catches a manifest that drifted, and weakening it to fit one release costs more than naming the section)
+1. Keep 0.1.0 and drop prerelease workflow (rejected: beta is release project is cutting, and workflow change is three lines)
+1. Leave changelog on [Unreleased] and relax version gate (rejected: gate is what catches manifest that drifted, and weakening it to fit one release costs more than naming section)

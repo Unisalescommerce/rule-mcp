@@ -7,11 +7,11 @@
 
 ## Context
 
-ADR 166 removed six area-level guardrail plans from the executable catalog, but verification found that only the AI rule set had moved into skill plans. The backend, data, devops, frontend, and meta plans still held 68 rule IDs with no explicit owner in the replacement plans.
+ADR 166 removed six area-level guardrail plans from executable catalog, but verification found that only AI rule set had moved into skill plans. backend, data, devops, frontend, and meta plans still held 68 rule IDs with no explicit owner in replacement plans.
 
 ## Decision
 
-Assign all 76 retained rule IDs to explicit owning skill plans, guard the mapping with a plan test, then delete the six area-level plan files and remove their references from the catalog. ADRs 136 through 141 remain the rationale records for the proposed rule families.
+Assign all 76 retained rule IDs to explicit owning skill plans, guard mapping with plan test, then delete six area-level plan files and remove their references from catalog. ADRs 136 through 141 remain rationale records for proposed rule families.
 
 ## Consequences
 
@@ -19,10 +19,10 @@ Positive: deletion no longer loses executable backlog, and each retained rule ha
 
 ## What would end this
 
-A retained rule ID is intentionally removed or reassigned through a later accepted decision, and the ownership regression test changes with that decision.
+retained rule ID is intentionally removed or reassigned through later accepted decision, and ownership regression test changes with that decision.
 
 ## Alternatives Considered
 
 1. Delete all six plans immediately and accept losing 68 unassigned rule IDs.
 1. Keep all six superseded plans indefinitely as duplicate executable backlogs.
-1. Delete only the AI plan and postpone the other five.
+1. Delete only AI plan and postpone other five.

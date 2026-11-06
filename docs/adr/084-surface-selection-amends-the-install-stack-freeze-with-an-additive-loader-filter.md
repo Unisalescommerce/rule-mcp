@@ -7,7 +7,7 @@
 
 ## Context
 
-Step 2 of the install rework adds a dedicated Surface question (preset, areas, skills) for the MCP tool surface, separate from the command files question. ADR 073 froze the rework to wizard steps and contents; enforcing the answer needs the server to read it, which is runtime behavior beyond that freeze.
+Step 2 of install rework adds dedicated Surface question (preset, areas, skills) for MCP tool surface, separate from command files question. ADR 073 froze rework to wizard steps and contents; enforcing answer needs server to read it, which is runtime behavior beyond that freeze.
 
 ## Decision
 
@@ -23,5 +23,5 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Keep the surface choice files-only and leave MCP at full/minimal
+1. Keep surface choice files-only and leave MCP at full/minimal
 1. Allowlist of tool names written at install time (brittle against renames)

@@ -11,7 +11,7 @@ ADR 160 renamed the project and named a repository that no longer answers: the o
 
 ## Decision
 
-The repository stays `pixu1980/rule-mcp`. The registry name in `server.json` becomes `io.github.pixu1980/rule-mcp`. RuleMCP stays a display name only, so the package, the binary and the environment prefix do not move. No file may name another repository as a current fact.
+repository stays `pixu1980/rule-mcp`. registry name in `server.json` becomes `io.github.pixu1980/rule-mcp`. RuleMCP stays display name only, so package, binary and environment prefix do not move. No file may name another repository as current fact.
 
 ## Consequences
 
@@ -19,9 +19,9 @@ Positive: every current link, install instruction and registry entry names a rep
 
 ## What would end this
 
-The repository moves to another owner or name, and the files that name it change in the same commit.
+repository moves to another owner or name, and files that name it change in same commit.
 
 ## Alternatives Considered
 
-1. Keep the old slug and create a repository under it as an alias
-1. Rename the repository again to match the display name
+1. Keep old slug and create repository under it as alias
+1. Rename repository again to match display name

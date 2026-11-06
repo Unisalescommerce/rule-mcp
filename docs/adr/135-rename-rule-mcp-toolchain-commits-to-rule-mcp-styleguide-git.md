@@ -11,7 +11,7 @@ The skill owns the git commit rule: atomic Conventional Commits with a mandatory
 
 ## Decision
 
-Rename the directory and the skill to rule-styleguide-git, change the generated tool to rule_tool_styleguide_git, move its rows from the toolchain tables into the styleguide tables in rule-mcp and rule-styleguide, update every cross-reference and the deterministic git-domain boost in the skill ranker, and regenerate the census.
+Rename directory and skill to rule-styleguide-git, change generated tool to rule_tool_styleguide_git, move its rows from toolchain tables into styleguide tables in rule-mcp and rule-styleguide, update every cross-reference and deterministic git-domain boost in skill ranker, and regenerate census.
 
 ## Consequences
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Keep the skill in the toolchain area and change only its title
-1. Leave the commit rule in the husky skill and delete this one
-1. Split the branch naming and the commit rule into two skills
+1. Keep skill in toolchain area and change only its title
+1. Leave commit rule in husky skill and delete this one
+1. Split branch naming and commit rule into two skills

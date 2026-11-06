@@ -16,7 +16,7 @@
 ## State
 
 - Index: `docs/plans/plan-of-plans.md` (export / host / launcher rows → retired ADRs)
-- Decision-models still open: `docs/plans/_decision-models.md` (durable cache = export-owned store; DM-07 must not invent a second one)
+- Decision-models still open: `docs/plans/_decision-models.md` (durable cache = export-owned store; DM-07 must not invent second one)
 - Catalog: `docs/plans/skills/_skills-plan.md` (WS-C)
 - Branch ahead of origin ~98+ (do not push unless asked)
 

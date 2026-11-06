@@ -7,12 +7,12 @@
 ## Session Summary
 
 The command surface spoke with two check names for one job: the MCP prompt
-registry carried `/rule-process-check`, the agent command surface carried
-`/rule-check`, and `/rule-mcp-adr` duplicated the process-adr skill. A single generic
+registry carried `/rule-process-check`, agent command surface carried
+`/rule-check`, and `/rule-mcp-adr` duplicated process-adr skill. single generic
 check also gave no way to ask for one area's guardrails. This session removed
-`/rule-mcp-adr` and `/rule-process-check` from the MCP registry, added a check command
-per area prompt (91 of them) and a general `/rule-check` that auto-detects the
-area, and renamed the `design-system` persona to the wider `ui` (UI/UX Lead).
+`/rule-mcp-adr` and `/rule-process-check` from MCP registry, added check command
+per area prompt (91 of them) and general `/rule-check` that auto-detects the
+area, and renamed `design-system` persona to wider `ui` (UI/UX Lead).
 Two ADRs record both decisions.
 
 ## Work Completed
@@ -20,28 +20,28 @@ Two ADRs record both decisions.
 ### 1. Check commands (`src/core/agents/commands/`)
 
 - `_names.js`: added `CHECK_COMMAND = "rule-check"`; `commandNames()` now derives
-  one `<area>-check` name per area prompt and sorts them with the rest, after the
+  one `<area>-check` name per area prompt and sorts them with rest, after the
   pinned router.
-- `_definitions.js`: `commandDefinition` resolves a `-check` suffix back to its
-  area prompt and returns a guardrail-validation definition; `rule-check` returns
-  the general auto-detecting definition.
+- `_definitions.js`: `commandDefinition` resolves `-check` suffix back to its
+  area prompt and returns guardrail-validation definition; `rule-check` returns
+  general auto-detecting definition.
 - `_bodies.js`: added `checkBody(area, skill)` and `generalCheckBody`.
-- `src/prompts/_defs.data.js`: removed the `rule-mcp-adr` and `rule-process-check`
-  prompt definitions and the `rule-process-check` example.
+- `src/prompts/_defs.data.js`: removed `rule-mcp-adr` and `rule-process-check`
+  prompt definitions and `rule-process-check` example.
 
 ### 2. Persona rename (`personas/`)
 
 - `personas/design-system.md` deleted; `personas/ui.md` added with id `ui`,
   title "UI/UX Lead", and lenses widened from five to ten.
 - Evidence skills grow from four to thirteen: `rule-ui`, `rule-styleguide-a11y`
-  and every frontend framework skill join the original four.
-- `src/core/review/personas/__tests__/_registry.test.mjs` follows: the active
+  and every frontend framework skill join original four.
+- `src/core/review/personas/__tests__/_registry.test.mjs` follows: active
   catalog ships `ui` in place of `design-system` (still 19 roles).
 
 ### 3. Tests and fixtures
 
 - `src/prompts/__tests__/_contract.test.mjs`, `_prompts.fixture.mjs`,
-  `_registry.test.mjs`, `_agent-commands-generator.test.mjs` follow the new
+  `_registry.test.mjs`, `_agent-commands-generator.test.mjs` follow new
   counts: prompts 155 to 153, one-shot prompts 6 to 4, agent commands
   156 to 246.
 - `src/cli/install/__tests__/_selection.test.mjs` expects `rule-check` in the
@@ -50,37 +50,37 @@ Two ADRs record both decisions.
 
 ### 4. Docs, census and ADRs
 
-- The census pre-commit hook regenerated `docs/02`, `07`, `10`, `11`, `13`,
-  so the committed inventories match the code (command surface 156 to 246,
+- census pre-commit hook regenerated `docs/02`, `07`, `10`, `11`, `13`,
+  so committed inventories match code (command surface 156 to 246,
   MCP prompts 155 to 153).
-- ADR 098 records per-area check commands and the auto-detecting general check;
-  ADR 099 records the `design-system` to `ui` rename. The ADR index follows.
+- ADR 098 records per-area check commands and auto-detecting general check;
+  ADR 099 records `design-system` to `ui` rename. ADR index follows.
 - `README.md` prompt count updated 155 to 153.
 
 ## Verification
 
 - `pnpm test:all`: 1799 tests, 1796 pass, 0 fail, 3 skipped (exit 0).
 - Isolated run of `src/cli/commands/__tests__/_daemon.test.mjs`: 9 pass, 0 fail.
-  It failed once under parallel load in an earlier full run and passed on both
-  the isolated run and the rerun; treat it as load-flaky, not a regression.
-- Targeted run of the prompts registry, contract and ADR-reference suites:
+  It failed once under parallel load in earlier full run and passed on both
+  isolated run and rerun; treat it as load-flaky, not regression.
+- Targeted run of prompts registry, contract and ADR-reference suites:
   11 pass, 0 fail.
 
 ## Open Items
 
-- The new commands were verified through the registry and the installer tests,
-  not against a live client. A real install (opencode, Claude Code) and a check
+- new commands were verified through registry and installer tests,
+  not against live client. real install (opencode, Claude Code) and check
   that `/rule-area-<area>-check` and `/rule-check` appear is still worth doing.
-- The census hook staged `docs/13-personas.md` into the `feat(commands)` commit
-  rather than the `refactor(personas)` commit: the hook regenerates all census
-  files at once from the working tree, so they cannot be split by commit.
+- census hook staged `docs/13-personas.md` into `feat(commands)` commit
+  rather than `refactor(personas)` commit: hook regenerates all census
+  files at once from working tree, so they cannot be split by commit.
 - Open plan boxes remain in `docs/plans/architect.md`, `docs/plans/oss.md`,
   `docs/plans/security.md` and `docs/plans/github.md`.
 
 ## ADR Reference
 
-- ADR 098: Check runs per area, and the general check auto-detects it.
-- ADR 099: The design-system persona becomes the UI/UX lead.
+- ADR 098: Check runs per area, and general check auto-detects it.
+- ADR 099: design-system persona becomes UI/UX lead.
 
 ## References
 
@@ -92,7 +92,7 @@ Two ADRs record both decisions.
 
 ### Resume Prompt
 
-The next session opens with this block. Add the path of this document and the first step of the next session before saving it.
+next session opens with this block. Add path of this document and first step of next session before saving it.
 
 ```prompt
 Resume work on rule-mcp. Run `rule_tool_process_handon` first: it checks which claims in this handoff still hold before any of them is trusted.

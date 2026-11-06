@@ -7,7 +7,7 @@
 
 ## Context
 
-The MCP server self-update (src/core/self-update.js) currently runs once per process, on the first tool call of the session (_checked guard). A long-lived daemon or extended stdio session goes days without rechecking upstream. The user wants the check to happen on every tool invocation. Fetching on every call would be wasteful (network latency per call, hammering the remote).
+MCP server self-update (src/core/self-update.js) now runs once per process, on first tool call of session (_checked guard). long-lived daemon or extended stdio session goes days without rechecking upstream. user wants check to happen on every tool invocation. Fetching on every call would be wasteful (network latency per call, hammering remote).
 
 ## Decision
 

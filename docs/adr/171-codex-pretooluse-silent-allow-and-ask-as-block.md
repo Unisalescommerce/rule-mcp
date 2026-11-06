@@ -7,11 +7,11 @@
 
 ## Context
 
-Codex PreToolUse fails any hook that prints permissionDecision:allow without updatedInput, and rejects permissionDecision:ask. rule-mcp guard always emitted Claude-shaped allow JSON, so every successful Bash/structure pass showed Hook failed: unsupported permissionDecision:allow and interrupted the agent turn.
+Codex PreToolUse fails any hook that prints permissionDecision:allow without updatedInput, and rejects permissionDecision:ask. rule-mcp guard always emitted Claude-shaped allow JSON, so every successful Bash/structure pass showed Hook failed: unsupported permissionDecision:allow and interrupted agent turn.
 
 ## Decision
 
-Make ALLOW a silent {} for every host. Encode Codex answers at the write boundary: allow stays silent; ask becomes decision:block with the reason; deny keeps permissionDecision:deny. Tag Codex installed hook commands with RULE_MCP_HOOK_HOST=codex so encoding works without turn_id. neverBlocks strips decision fields instead of rewriting them to allow.
+Make ALLOW silent {} for every host. Encode Codex answers at write boundary: allow stays silent; ask becomes decision:block with reason; deny keeps permissionDecision:deny. Tag Codex installed hook commands with RULE_MCP_HOOK_HOST=codex so encoding works without turn_id. neverBlocks strips decision fields instead of rewriting them to allow.
 
 ## Consequences
 

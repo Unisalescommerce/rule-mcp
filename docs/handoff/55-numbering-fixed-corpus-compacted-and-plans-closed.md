@@ -1,39 +1,39 @@
 # Session handoff: ADR numbering fixed, corpus compacted, two plans closed
 
-- Branch: `main` (the only branch).
+- Branch: `main` (only branch).
 - Covers: `0b0bfec9..44f17bf4`, nine commits.
 - Date: 2026-11-06.
 
 ## The numbering defect is closed
 
 ADR 210 records the rule: a sweep numbers a pending ADR at max+1 and never moves
-a document that already has a number. Closing the holes is a separate command.
+document that already has number. Closing holes is separate command.
 
-The code follows the ADR:
+code follows ADR:
 
-- `planRenumber` takes `compact`, off by default. A sweep reports the holes and
+- `planRenumber` takes `compact`, off by default. sweep reports holes and
   moves nothing.
-- `rewriteCitations` rewrites the link, the path and the prose form across
+- `rewriteCitations` rewrites link, path and prose form across
   `docs/`, `packages/`, `skills/` and `scripts/`. It skips test fixtures, whose
   numbers are arranged rather than cited.
-- `rule-mcp handoff compact --fix` closes the holes, rewrites the citations, and
-  exits 1 while a mention of a moved number survives in a form it does not own.
+- `rule-mcp handoff compact --fix` closes holes, rewrites citations, and
+  exits 1 while mention of moved number survives in form it does not own.
 
 ## What the corpus looks like now
 
-`handoff compact --fix` closed the nine holes (007, 008, 010, 013 to 017, 155),
-moved 236 documents and rewrote 2032 citations in 313 files. The sequence runs
+`handoff compact --fix` closed nine holes (007, 008, 010, 013 to 017, 155),
+moved 236 documents and rewrote 2032 citations in 313 files. sequence runs
 001 to 242 with no hole and no duplicate.
 
-The shift needed repair in the same commit:
+shift needed repair in same commit:
 
 - `scripts/data/adr-legacy.data.mjs` holds ADR numbers. 140 tokens were
-  remapped, and the 22 records that landed from `_pending/` joined the ends-when
+  remapped, and 22 records that landed from `_pending/` joined ends-when
   list, which is what that list measures.
-- Four ADRs named a tool as author, or named nobody. They name the person now.
-- Two tests cite real ADR files by name. The fixture exclusion leaves them
-  alone, so the paths were updated by hand.
-- `_citations.js` and `_register-handoff.js` passed the 150-line cap, so the
+- Four ADRs named tool as author, or named nobody. They name person now.
+- Two tests cite real ADR files by name. fixture exclusion leaves them
+  alone, so paths were updated by hand.
+- `_citations.js` and `_register-handoff.js` passed 150-line cap, so the
   compact command moved to `packages/mcp/cli/commands/_handoff-compact.js`.
 
 ## Plans closed
@@ -43,39 +43,39 @@ The shift needed repair in the same commit:
 | `_publication-cutover.md` | ADR 243. WS3 closed on the local equivalent, not on a remote run.  |
 | `_deepseek-prompts.md`    | Deleted. Support runbook, not a graph node, so the sweep skips it. |
 
-WS3 asked for a CI dispatch on `rel/v0.1.0`, a branch ADR 205 removed. The
+WS3 asked for CI dispatch on `rel/v0.1.0`, branch ADR 205 removed. The
 evidence it closed on: `pnpm run ci` reports 3135 tests, 3132 pass, 0 fail, 3
 skipped; `pnpm audit:gate` finds no known vulnerability; `pnpm docs:build`
-writes 58 pages; a secret scan of the 14 commits a push would add finds no
+writes 58 pages; secret scan of 14 commits push would add finds no
 credential.
 
-`docs/plans/` now holds only `plan-of-plans.md`. 69 plans are ready in the graph.
+`docs/plans/` now holds only `plan-of-plans.md`. 69 plans are ready in graph.
 
 ## Two repairs outside the numbering work
 
-- Betterleaks 2.0.0-rc.7 sits in `~/.local/bin`, checked against the release
-  `checksums.txt`. The pre-commit gate scans now: every commit prints
+- Betterleaks 2.0.0-rc.7 sits in `~/.local/bin`, checked against release
+  `checksums.txt`. pre-commit gate scans now: every commit prints
   `no credentials found`.
-- The census hook stages `docs/01-getting-started.md` and
-  `scripts/__tests__/fixtures/census.json`. Both were missing, so an ADR commit
-  left the snapshot modified. The five hook tests now run in the foundation
+- census hook stages `docs/01-getting-started.md` and
+  `scripts/__tests__/fixtures/census.json`. Both were missing, so ADR commit
+  left snapshot modified. five hook tests now run in foundation
   suite, which went from 716 to 721 files.
 
 ## Read this before running a tool that writes
 
-The MCP server this session talks to was started before the numbering fix, so it
-holds the old code in memory. The launcher copy on disk is current.
+MCP server this session talks to was started before numbering fix, so it
+holds old code in memory. launcher copy on disk is current.
 
-- Use `rule-mcp <command>` from a shell for anything that writes.
-- A new session gets a fresh server and needs no workaround.
+- Use `rule-mcp <command>` from shell for anything that writes.
+- new session gets fresh server and needs no workaround.
 
 ## Open work
 
-- One remote run of `ci.yml` on `main`, once a push is authorized. The workflow's
+- One remote run of `ci.yml` on `main`, once push is authorized. workflow's
   own environment stays unobserved until then.
-- The seven example credentials the owner kept. A push to `main` scans only the
+- seven example credentials owner kept. push to `main` scans only the
   new commits, so they do not block it.
-- 69 plans are ready; the graph lists them by level.
+- 69 plans are ready; graph lists them by level.
 
 ### Resume Prompt
 

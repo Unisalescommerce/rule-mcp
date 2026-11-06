@@ -15,7 +15,7 @@ This session planned **scripts-layout** (full monorepo) and fixed where durable 
 
 1. **Full monorepo now** on `rel/v0.1.0` (ADR 172). Do not create `refactor/packages-mcp-[removed]-workspace`.
 2. **Rename/replace** `docs/plans/_2026-10-01-scripts-mcp-layout.md` → `docs/plans/_scripts-mcp-layout.md` with executable WS0–WS7 body; update `plan-of-plans.md`.
-3. **Plan home**: host CreatePlan writes only to `~/.local/share/opencode/plans/` (session UI). Source of truth for this repo is `docs/plans/_*.md` registered in `plan-of-plans.md`. MCP cannot patch Cursor CreatePlan; ship an MCP plan-writer that materializes `_*.md` + index rows, and instruct agents to use it (CreatePlan host file is not durable).
+3. **Plan home**: host CreatePlan writes only to `~/.local/share/opencode/plans/` (session UI). Source of truth for this repo is `docs/plans/_*.md` registered in `plan-of-plans.md`. MCP cannot patch Cursor CreatePlan; ship MCP plan-writer that materializes `_*.md` + index rows, and instruct agents to use it (CreatePlan host file is not durable).
 4. Structural task already declared via `rule_tool_structural` (first write asks one confirmation).
 
 ### Monorepo shape (unchanged from product plan)
@@ -44,7 +44,7 @@ Host session plans (ephemeral, not source of truth):
 ## State
 
 - Working tree clean at handoff start; branch ahead of `origin/rel/v0.1.0` (~108). Do not push.
-- Open single tracks also include `_decision-models.md` and skills catalog leaves — scripts-layout is the chosen next track.
+- Open single tracks also include `_decision-models.md` and skills catalog leaves — scripts-layout is chosen next track.
 - Pending STE100 product ADR still under `docs/adr/_pending/` until trunk land.
 
 ### Resume Prompt

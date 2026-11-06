@@ -7,15 +7,15 @@
 
 ## Context
 
-opencode was handled by the generic installer, which wrote `~/.config/opencode/mcp.json` in the `mcpServers` shape. opencode never reads that file: its global config is `~/.config/opencode/opencode.json` (and `opencode.jsonc`; the two are merged), servers live under `mcp`, a local server is `{ type: "local", command: [bin, ...args], enabled, environment }`, and a remote one is `{ type: "remote", url, headers }`. A hand-edit that moved the `mcpServers` shape into `opencode.json` - `command` as a string with `args` beside it - is not schema-valid and stopped the client from loading its config at all. The visible symptom was `/mcps` never listing the server.
+opencode was handled by generic installer, which wrote `~/.config/opencode/mcp.json` in `mcpServers` shape. opencode never reads that file: its global config is `~/.config/opencode/opencode.json` (and `opencode.jsonc`; two are merged), servers live under `mcp`, local server is `{ type: "local", command: [bin, ...args], enabled, environment }`, and remote one is `{ type: "remote", url, headers }`. hand-edit that moved `mcpServers` shape into `opencode.json` - `command` as string with `args` beside it - is not schema-valid and stopped client from loading its config at all. visible symptom was `/mcps` never listing server.
 
 ## Decision
 
-opencode gets a dedicated installer, like Pi: `upsertOpencode`/`removeOpencode` in the JSON writers translate the shared config into opencode's dialect (`command` array, `environment`, `type: remote` when a url is present), `installOpencode` is registered in the installer registry, `uninstallOpencode` reverses it, and `detectInstalledAgents` reads `opencode.json`. The instruction file is registered in the config's `instructions` array, because opencode only reads files that array names. A legacy sweep removes our entry from the `mcp.json` the generic installer used to write, deleting the file when it empties.
+opencode gets dedicated installer, like Pi: `upsertOpencode`/`removeOpencode` in JSON writers translate shared config into opencode's dialect (`command` array, `environment`, `type: remote` when url is present), `installOpencode` is registered in installer registry, `uninstallOpencode` reverses it, and `detectInstalledAgents` reads `opencode.json`. instruction file is registered in config's `instructions` array, because opencode only reads files that array names. legacy sweep removes our entry from `mcp.json` generic installer used to write, deleting file when it empties.
 
 ## Consequences
 
-One writer owns opencode's dialect next to the VS Code one, and both the wizard and `install --agent opencode` write a config opencode actually loads. The uninstall drops the entry and the instruction registration together, so an install and an uninstall are symmetric. Cost: the writers file now knows a third local-server dialect, and the legacy sweep keeps a path the old installer owned in the code for a while longer.
+One writer owns opencode's dialect next to VS Code one, and both wizard and `install --agent opencode` write config opencode loads. uninstall drops entry and instruction registration together, so install and uninstall are symmetric. Cost: writers file now knows third local-server dialect, and legacy sweep keeps path old installer owned in code for while longer.
 
 ## What would end this
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Keep the generic installer and accept `mcp.json`: opencode reads nothing there, which is the defect this record replaces.
-1. Write the `mcp` entry only and leave `instructions.md` unregistered: the file would be written and never read, a dead copy of the rules.
-1. Force daemon/remote for opencode: opencode speaks remote servers, but only Pi and VS Code are interop-verified (`remoteModeAgents` in the catalog), so stdio stays the default.
+1. Keep generic installer and accept `mcp.json`: opencode reads nothing there, which is defect this record replaces.
+1. Write `mcp` entry only and leave `instructions.md` unregistered: file would be written and never read, dead copy of rules.
+1. Force daemon/remote for opencode: opencode speaks remote servers, but only Pi and VS Code are interop-verified (`remoteModeAgents` in catalog), so stdio stays default.

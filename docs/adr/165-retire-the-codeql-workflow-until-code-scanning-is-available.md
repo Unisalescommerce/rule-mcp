@@ -7,22 +7,22 @@
 
 ## Context
 
-The `Analyze` check failed on every pull request with "Code scanning is not enabled for this repository". The repository is private, `security_and_analysis` is null, and the default-setup API answers 403; enabling advanced security answers 422, "Advanced security has not been purchased." Without GitHub Advanced Security a private repository cannot store code-scanning results, so the CodeQL job has nowhere to upload the SARIF it produces.
+`Analyze` check failed on every pull request with "Code scanning is not enabled for this repository". repository is private, `security_and_analysis` is null, and default-setup API answers 403; enabling advanced security answers 422, "Advanced security has not been purchased." Without GitHub Advanced Security private repository cannot store code-scanning results, so CodeQL job has nowhere to upload SARIF it produces.
 
 ## Decision
 
-Delete `.github/workflows/codeql.yml`. The security surface keeps the dependency audit gate, Dependabot, zizmor and the license-header check; code scanning returns only when the repository can store its results.
+Delete `.github/workflows/codeql.yml`. security surface keeps dependency audit gate, Dependabot, zizmor and license-header check; code scanning returns only when repository can store its results.
 
 ## Consequences
 
-No CodeQL alerts are produced. The `Analyze` check disappears from pull requests instead of failing forever, and the CI no longer pays a job that always ends in a configuration error. The workflow is in the git history and is restored verbatim when the capability exists.
+No CodeQL alerts are produced. `Analyze` check disappears from pull requests instead of failing forever, and CI no longer pays job that always ends in configuration error. workflow is in git history and is restored verbatim when capability exists.
 
 ## What would end this
 
-Purchasing GitHub Advanced Security, or making the repository public, would let code scanning accept uploads; the workflow and its pinned action SHAs are restored then.
+Purchasing GitHub Advanced Security, or making repository public, would let code scanning accept uploads; workflow and its pinned action SHAs are restored then.
 
 ## Alternatives Considered
 
-1. Buy GitHub Advanced Security (a cost decision outside the release)
-1. Make the repository public (changes the distribution and support model)
-1. Run CodeQL with `upload: false` (the analysis would run and its findings be discarded, which is the same security value as deleting the job)
+1. Buy GitHub Advanced Security (cost decision outside release)
+1. Make repository public (changes distribution and support model)
+1. Run CodeQL with `upload: false` (analysis would run and its findings be discarded, which is same security value as deleting job)

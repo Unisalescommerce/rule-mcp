@@ -7,26 +7,26 @@
 
 ## Context
 
-The decision-models audit measured a local llama.cpp `/v1/systemone` endpoint against the 95-prompt routing corpus. The first ruler was broken: three corpus `expect` values named skills that no longer exist (`backend-api-design`, `ai-agents`, `devops-gitlab-ci`), covering five prompts. This ADR is written after repointing those prompts at the surviving owners: idempotency to `backend-node`, the error contract to `backend-security`, retrieval to `ai-context-engineering`, and CI merge blocking to `devops-testing`; a structural test now fails if any `expect` names a skill the catalog does not carry.
+decision-models audit measured local llama.cpp `/v1/systemone` endpoint against 95-prompt routing corpus. first ruler was broken: three corpus `expect` values named skills that no longer exist (`backend-api-design`, `ai-agents`, `devops-gitlab-ci`), covering five prompts. This ADR is written after repointing those prompts at surviving owners: idempotency to `backend-node`, error contract to `backend-security`, retrieval to `ai-context-engineering`, and CI merge blocking to `devops-testing`; structural test now fails if any `expect` names skill catalog does not carry.
 
 Measured numbers:
 
-- Audit baseline before the repair: 77/95 exact, 90/95 top-or-alternative, 3/13 fixed on a five-option shortlist, 1/13 on the 83-skill catalog.
+- Audit baseline before repair: 77/95 exact, 90/95 top-or-alternative, 3/13 fixed on five-option shortlist, 1/13 on 83-skill catalog.
 - Live pre-repair on this checkout: 76/95 exact, 89/95 top-or-alternative.
-- Corrected ruler after the repair: 77/95 exact (81.1%), 91/95 top-or-alternative (95.8%), recorded in `tests/fixtures/decision-models/corpus-baseline.json`.
+- Corrected ruler after repair: 77/95 exact (81.1%), 91/95 top-or-alternative (95.8%), recorded in `tests/fixtures/decision-models/corpus-baseline.json`.
 
-The model is deterministic and loopback-only, but its `confidence` is a score, not a calibrated probability, and an unbounded option set made it confidently wrong (0.999 for a wrong catalog pick).
+model is deterministic and loopback-only, but its `confidence` is score, not calibrated probability, and unbounded option set made it confidently wrong (0.999 for wrong catalog pick).
 
 ## Decision
 
-1. BM25 remains the router. No generative model is in the request path and no endpoint but loopback is reachable: `createDecisionClient` refuses every non-loopback host by construction.
-2. The model may only rerank the BM25 shortlist, capped at six options. Its pick replaces the BM25 pick only when the model's probability clears a per-model threshold recorded in the registry; otherwise BM25 wins. Laya's floor is 0.05 in `src/core/decision/_registry.js`, below the audit's 0.067-0.332 correct picks, so the three fixes the prototype found are not filtered out. The registry carries each model's size, context, languages and shortlist cap; `auto` selects by the prompt's detected language and unloads the previous model before switching, so a one-slot router never carries two. The reranker ships off until the Step 4 gate passes.
-3. The measurement command `scripts/audits/decision-models/corpus.mjs` runs the corpus with the model off and on, prints exact, top-or-alternative, per-model mean latency and input tokens, writes the run to `tests/fixtures/decision-models/corpus-baseline.json`, and `--check` compares a live model-off run with the committed numbers.
-4. Step 4 kill criterion: the corpus exact rate must exceed 77/95 and top-or-alternative must stay at or above 91/95. If either regresses, the feature ships off and Step 4 is reopened as rejected rather than tuned until it passes.
-5. The catalog experiment is measurement-only: 83 options are never a production option set.
-6. The corpus names only current skills; the structural test is the guard against a retired name returning.
-7. Cache the model's answer under a SHA-256 digest of the model id, the prompt and the questions, with the shortlist folded into the questions. `RULE_MCP_NO_CACHE=1` bypasses it, and the cache is consulted before the supervisor so a hit never loads, unloads or swaps a model. The audit's determinism is what makes the cache safe; the digest is what makes a model or shortlist change miss it.
-8. A semantic rule ships as advisory in a new `semantic` family: `semantic-error-message-actionable` extracts the literal error messages, asks one `noul` question about them, reports the model's probability, and never fails a check. No endpoint means the rule is skipped, not failed. Its live precision on the pair corpus is unmeasured; the rule is advisory because of that.
+1. BM25 remains router. No generative model is in request path and no endpoint but loopback is reachable: `createDecisionClient` refuses every non-loopback host by construction.
+2. model may only rerank BM25 shortlist, capped at six options. Its pick replaces BM25 pick only when model's probability clears per-model threshold recorded in registry; otherwise BM25 wins. Laya's floor is 0.05 in `src/core/decision/_registry.js`, below audit's 0.067-0.332 correct picks, so three fixes prototype found are not filtered out. registry carries each model's size, context, languages and shortlist cap; `auto` selects by prompt's detected language and unloads previous model before switching, so one-slot router never carries two. reranker ships off until Step 4 gate passes.
+3. measurement command `scripts/audits/decision-models/corpus.mjs` runs corpus with model off and on, prints exact, top-or-alternative, per-model mean latency and input tokens, writes run to `tests/fixtures/decision-models/corpus-baseline.json`, and `--check` compares live model-off run with committed numbers.
+4. Step 4 kill criterion: corpus exact rate must exceed 77/95 and top-or-alternative must stay at or above 91/95. If either regresses, feature ships off and Step 4 is reopened as rejected rather than tuned until it passes.
+5. catalog experiment is measurement-only: 83 options are never production option set.
+6. corpus names only current skills; structural test is guard against retired name returning.
+7. Cache model's answer under SHA-256 digest of model id, prompt and questions, with shortlist folded into questions. `RULE_MCP_NO_CACHE=1` bypasses it, and cache is consulted before supervisor so hit never loads, unloads or swaps model. audit's determinism is what makes cache safe; digest is what makes model or shortlist change miss it.
+8. semantic rule ships as advisory in new `semantic` family: `semantic-error-message-actionable` extracts literal error messages, asks one `noul` question about them, reports model's probability, and never fails check. No endpoint means rule is skipped, not failed. Its live precision on pair corpus is unmeasured; rule is advisory because of that.
 
 ## Consequences
 
@@ -36,11 +36,11 @@ Negative: the model-on measurement needs a loopback router and a loaded model, s
 
 ## What would end this
 
-If Step 4 cannot raise exact above 77/95 while keeping top-or-alternative at or above 91/95, the model is not worth the request-path cost and the feature is removed. If a deployment needs a remote endpoint, the decision layer is dropped rather than weakened: loopback is a construction rule, not a configuration default. If the installed model is not a decision model, the client falls back to BM25 instead of guessing from a successful load. If the multilingual model is not installed, the language path stays off and the Italian claim is dropped rather than faked. If the endpoint stops returning the same probabilities for the same state and questions, the cache is removed rather than trusted. If the live semantic rule's precision on its pair corpus is below 100%, it stays advisory or leaves the family; it never blocks. If an independent human-labeled severity set appears, the normalizer can be measured and reconsidered; without it, it stays out.
+If Step 4 cannot raise exact above 77/95 while keeping top-or-alternative at or above 91/95, model is not worth request-path cost and feature is removed. If deployment needs remote endpoint, decision layer is dropped rather than weakened: loopback is construction rule, not configuration default. If installed model is not decision model, client falls back to BM25 instead of guessing from successful load. If multilingual model is not installed, language path stays off and Italian claim is dropped rather than faked. If endpoint stops returning same probabilities for same state and questions, cache is removed rather than trusted. If live semantic rule's precision on its pair corpus is below 100%, it stays advisory or leaves family; it never blocks. If independent human-labeled severity set appears, normalizer can be measured and reconsidered; without it, it stays out.
 
 ## Alternatives Considered
 
-1. Replace BM25 with the model over the whole catalog. Rejected: 1/13 fixed, confidently wrong (0.999 on a wrong pick), and 83 options per request.
-1. Use the model's confidence as a probability without a threshold or a shortlist. Rejected: the audit measured 0.067-0.332 on correct picks and 0.999 on wrong catalog picks; it is a score.
-1. Ship the reranker without repairing the ruler. Rejected: five prompts named skills that no longer exist, so the 81% baseline was measured on an unaddressable target.
-1. Use a remote hosted model. Rejected: privacy, latency and the non-goal of a network path.
+1. Replace BM25 with model over whole catalog. Rejected: 1/13 fixed, confidently wrong (0.999 on wrong pick), and 83 options per request.
+1. Use model's confidence as probability without threshold or shortlist. Rejected: audit measured 0.067-0.332 on correct picks and 0.999 on wrong catalog picks; it is score.
+1. Ship reranker without repairing ruler. Rejected: five prompts named skills that no longer exist, so 81% baseline was measured on unaddressable target.
+1. Use remote hosted model. Rejected: privacy, latency and non-goal of network path.

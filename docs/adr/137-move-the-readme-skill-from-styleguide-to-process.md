@@ -11,7 +11,7 @@ The skill owns the structure of a project README: the opening block, the facts, 
 
 ## Decision
 
-Rename rule-styleguide-readme to rule-process-readme, change the tool to rule_tool_process_readme, move its row from the styleguide tables into the process tables in rule-mcp and rule-process, update the docs persona, add the skill to the Open Source Steward evidence skills with a lens about the README as the first contact, and regenerate the census.
+Rename rule-styleguide-readme to rule-process-readme, change tool to rule_tool_process_readme, move its row from styleguide tables into process tables in rule-mcp and rule-process, update docs persona, add skill to Open Source Steward evidence skills with lens about README as first contact, and regenerate census.
 
 ## Consequences
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Keep the skill in the styleguide area beside the markdown conventions
-1. Move it to the platform area as part of library authoring
-1. Split the open source structure from the internal repository structure
+1. Keep skill in styleguide area beside markdown conventions
+1. Move it to platform area as part of library authoring
+1. Split open source structure from internal repository structure

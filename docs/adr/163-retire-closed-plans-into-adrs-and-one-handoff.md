@@ -7,7 +7,7 @@
 
 ## Context
 
-`docs/plans` holds 100 Markdown files: two closed plans (`plan-of-plans.md`, `_plan-of-plans-reference.md`), two catalog documents (`skills/README.md`, `skills/DEPENDENCIES.md`), 10 open non-skill plans (146 open boxes) and 86 open skill plans (1,336 open boxes). The reference carries eight more follow-ups. The plan-of-plans is `Status: done`; the other 98 plan files are not. The user chose to retire only the closed plans and keep the open roadmap.
+`docs/plans` holds 100 Markdown files: two closed plans (`plan-of-plans.md`, `_plan-of-plans-reference.md`), two catalog documents (`skills/README.md`, `skills/DEPENDENCIES.md`), 10 open non-skill plans (146 open boxes) and 86 open skill plans (1,336 open boxes). reference carries eight more follow-ups. plan-of-plans is `Status: done`; other 98 plan files are not. user chose to retire only closed plans and keep open roadmap.
 
 ## Decision
 
@@ -15,14 +15,14 @@ Turn each closed plan into an ADR: 170 for the plan-of-plans, 171 for the refere
 
 ## Consequences
 
-The closed decisions are durable ADRs; the open roadmap stays in place with 1,490 open items (146 non-skill, 1,336 skill, 8 reference follow-ups), indexed by handoff 27. The plan-of-plans and reference paths disappear from `feat/evolution`; their links in historical reviews, ADRs and open plans remain as historical text, which the release tree already tolerated. The five pre-existing file-size offenders remain, including `tests/plans/skills-plan.test.mjs`.
+closed decisions are durable ADRs; open roadmap stays in place with 1,490 open items (146 non-skill, 1,336 skill, 8 reference follow-ups), indexed by handoff 27. plan-of-plans and reference paths disappear from `feat/evolution`; their links in historical reviews, ADRs and open plans remain as historical text, which release tree already tolerated. five pre-existing file-size offenders remain, including `tests/plans/skills-plan.test.mjs`.
 
 ## What would end this
 
-The policy would change if a closed plan could not be compressed into an ADR without losing a decision, or if an open plan had to be deleted before its work shipped. The observation is an ADR that cannot state the plan's context, decision and consequences.
+policy would change if closed plan could not be compressed into ADR without losing decision, or if open plan had to be deleted before its work shipped. observation is ADR that cannot state plan's context, decision and consequences.
 
 ## Alternatives Considered
 
 1. Delete every plan (1,490 open items would lose their detail)
-1. Keep every plan (the closed files would stay as stale competition for the handoff)
-1. Delete only the closed files without ADRs (the decisions would be lost)
+1. Keep every plan (closed files would stay as stale competition for handoff)
+1. Delete only closed files without ADRs (decisions would be lost)

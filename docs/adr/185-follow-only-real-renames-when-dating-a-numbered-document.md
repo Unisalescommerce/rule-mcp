@@ -7,11 +7,11 @@
 
 ## Context
 
-git log --follow defaults to -M50%, so a new ADR built on the same template can inherit the deleted file's date and author. Distinct ADRs measure at most ~32% similar; real renames at least ~85%.
+git log --follow defaults to -M50%, so new ADR built on same template can inherit deleted file's date and author. Distinct ADRs measure at most ~32% similar; real renames at least ~85%.
 
 ## Decision
 
-Pass -M70% (RENAME_SIMILARITY) before --follow in createdAt and addedBy in docs-numbering/_git.js. Calibrated fixtures: ~59% stays a new file; ~81% still follows as a rename.
+Pass -M70% (RENAME_SIMILARITY) before --follow in createdAt and addedBy in docs-numbering/_git.js. Calibrated fixtures: ~59% stays new file; ~81% still follows as rename.
 
 ## Consequences
 

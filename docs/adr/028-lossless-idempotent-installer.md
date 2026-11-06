@@ -7,7 +7,7 @@
 
 ## Context
 
-The security audit revealed that parseJson() transformed malformed JSON into {}, silently wiping user configuration. backupFile() existed but was never called.
+security audit revealed that parseJson() transformed malformed JSON into {}, silently wiping user configuration. backupFile() existed but was never called.
 
 ## Decision
 

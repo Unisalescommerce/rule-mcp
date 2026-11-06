@@ -7,11 +7,11 @@
 
 ## Context
 
-Commit/push prompts had no dedicated skill: the router sent them to rule-devops-version (version automation) or rule-toolchain-husky (hooks tooling), and the mandatory "atomic conventional commits with scope" rule existed only as a mention inside rule-process-feature-workflow and as a repo-local hook in rule-mcp. The taxonomy groups mechanical repo conventions under rule-toolchain (husky/commitlint, project config), so the convention itself belongs there.
+Commit/push prompts had no dedicated skill: router sent them to rule-devops-version (version automation) or rule-toolchain-husky (hooks tooling), and mandatory "atomic conventional commits with scope" rule existed only as mention inside rule-process-feature-workflow and as repo-local hook in rule-mcp. taxonomy groups mechanical repo conventions under rule-toolchain (husky/commitlint, project config), so convention itself belongs there.
 
 ## Decision
 
-Add a dedicated skill `rule-toolchain-commits` (tool `rule_tool_toolchain_commits`) in the rule-toolchain group that enforces atomic Conventional Commits with a MANDATORY scope on every commit/push, and add a git domain classification to the router so any prompt mentioning commit/push/conventional deterministically routes to it. Enforcement is made mechanical via commit-msg/commitlint hooks documented in the skill.
+Add dedicated skill `rule-toolchain-commits` (tool `rule_tool_toolchain_commits`) in rule-toolchain group that enforces atomic Conventional Commits with MANDATORY scope on every commit/push, and add git domain classification to router so any prompt mentioning commit/push/conventional deterministically routes to it. Enforcement is made mechanical via commit-msg/commitlint hooks documented in skill.
 
 ## Consequences
 
@@ -19,6 +19,6 @@ Positive: commit/push prompts now deterministically route to rule-toolchain-comm
 
 ## Alternatives Considered
 
-1. rule-process group (rejected: process skills are lifecycle procedures - ADR/review/docs/handoff - not mechanical repo rules; a blocking convention would only apply if the workflow skill is read)
-1. rule-devops group (rejected: devops-version consumes commit messages for bumps; the convention is upstream of that automation)
-1. No new skill, only routing tweak to rule-toolchain-husky (rejected: husky covers hook tooling, not the convention/atomicity/push discipline itself)
+1. rule-process group (rejected: process skills are lifecycle procedures - ADR/review/docs/handoff - not mechanical repo rules; blocking convention would only apply if workflow skill is read)
+1. rule-devops group (rejected: devops-version consumes commit messages for bumps; convention is upstream of that automation)
+1. No new skill, only routing tweak to rule-toolchain-husky (rejected: husky covers hook tooling, not convention/atomicity/push discipline itself)

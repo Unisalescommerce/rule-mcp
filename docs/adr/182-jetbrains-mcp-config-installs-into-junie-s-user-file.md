@@ -7,11 +7,11 @@
 
 ## Context
 
-installJetbrains wrote process.cwd()/.idea/mcp.json, an undocumented project path. Junie documents ~/.junie/mcp/mcp.json for user-level mcpServers. Uninstall must never sweep project directories.
+installJetbrains wrote process.cwd()/.idea/mcp.json, undocumented project path. Junie documents ~/.junie/mcp/mcp.json for user-level mcpServers. Uninstall must never sweep project directories.
 
 ## Decision
 
-Export junieConfigPath as ~/.junie/mcp/mcp.json and use it for installJetbrains and hostRecord(jetbrains). Uninstall and detect follow the host record. Do not delete or rewrite legacy .idea/mcp.json.
+Export junieConfigPath as ~/.junie/mcp/mcp.json and use it for installJetbrains and hostRecord(jetbrains). Uninstall and detect follow host record. Do not delete or rewrite legacy .idea/mcp.json.
 
 ## Consequences
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Keep writing .idea/mcp.json until JetBrains documents a path
+1. Keep writing .idea/mcp.json until JetBrains documents path
 1. Sweep .idea/mcp.json on uninstall (rejected: must never touch project dirs)
 1. Write only project .junie/mcp/mcp.json (rejected: this step is user-level global install)

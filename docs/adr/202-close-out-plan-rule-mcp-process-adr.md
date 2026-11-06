@@ -7,46 +7,46 @@
 
 ## Context
 
-The plan record docs/plans/skills/process/_rule-mcp-process-adr.md, "rule-process-adr - plan", finished with 22 closed items.
+plan record docs/plans/skills/process/_rule-mcp-process-adr.md, "rule-process-adr - plan", finished with 22 closed items.
 
 ## Outcome
 
-- ADR for the ADR conventions: ends-when mandatory, real author, three
-- ADR for the guardrail design: tier B, dual detection, legacy lists that
+- ADR for ADR conventions: ends-when mandatory, real author, three
+- ADR for guardrail design: tier B, dual detection, legacy lists that
 - tests/fixtures/adr/ trees: clean/, bad-slug/, bad-status/,
 - Six CORPUS pairs in tests/fixtures/guardrail-corpus.mjs, labeled
-- scripts/data/adr-legacy.data.mjs seeded from the measured numbers above.
+- scripts/data/adr-legacy.data.mjs seeded from measured numbers above.
 - Suites written and watched to fail with "rule not found".
 - skills/rule-process-adr/guardrails/: one _rule-name.js per rule plus
-- Frontmatter guardrails: [...] on SKILL.md, ids equal to the exports.
-- Green the Phase 1 suites; the suite asserts the legacy lists only shrink.
+- Frontmatter guardrails: [...] on SKILL.md, ids equal to exports.
+- Green Phase 1 suites; suite asserts legacy lists only shrink.
 - ADRSchema and adr new gain endsWhen (--ends-when).
 - adr new gains --alternatives, repeatable.
-- A superseded ADR must name its successor, in the tool and in the CLI;
+- superseded ADR must name its successor, in tool and in CLI;
 - Tool tests in packages/mcp/tools/adr/**tests**/.
-- Rewrite the template to the sections generateAdr really writes, author
-- Replace the Italian example with an English one the tool would accept.
-- Restructure around the workflow: when to record, how to write it, how it
-- State the five conventions as rules of the house, not as preferences.
+- Rewrite template to sections generateAdr writes, author
+- Replace Italian example with English one tool would accept.
+- Restructure around workflow: when to record, how to write it, how it
+- State five conventions as rules of house, not as preferences.
 - node --import ./scripts/alias-hook.mjs --test skills/rule-process-adr/guardrails/
 - node --import ./scripts/alias-hook.mjs --test packages/mcp/tools/adr/**tests**/
 - _corpus and _routing-corpus suites.
-- ...and 2 more step(s) in the closed record.
+  -...and 2 more step(s) in closed record.
 
 ## Measurement
 
-- The legacy list is far larger than the plan measured: 42 records use `Deciders` instead of `Author`, 153 keep the generated ends-when placeholder (the plan counted the 56 records with no section at all, not the placeholder), 10 carry a free-form status or a supersede with no successor, and 2 trip the English scanner. The list is seeded from that measurement.
-- Two rules were written once and rewritten once. The status and author regexes backtracked catastrophically on a run of spaces (88 seconds on the adversarial corpus); the single-line form answers in 25 milliseconds. `adr-english` scanned the whole body with the path scanner and flagged ordinary English tokens that collide with a loanword (a license acronym, a German article, a domain suffix); it now scans the title with the path scanner and the body with the document scanner.
-- Two records (030, 206) still trip `adr-english` on that scanner's own false positives, and they sit in the legacy list rather than being "fixed": the word is English and the scanner is wrong.
-- The tool now carries `endsWhen`, a repeatable alternatives list and the supersede pair; `_register.js` moved its validation into `_validate.js` to stay under the 150-line cap.
+- legacy list is far larger than plan measured: 42 records use `Deciders` instead of `Author`, 153 keep generated ends-when placeholder (plan counted 56 records with no section at all, not placeholder), 10 carry free-form status or supersede with no successor, and 2 trip English scanner. list is seeded from that measurement.
+- Two rules were written once and rewritten once. status and author regexes backtracked catastrophically on run of spaces (88 seconds on adversarial corpus); single-line form answers in 25 milliseconds. `adr-english` scanned whole body with path scanner and flagged ordinary English tokens that collide with loanword (license acronym, German article, domain suffix); it now scans title with path scanner and body with document scanner.
+- Two records (030, 206) still trip `adr-english` on that scanner's own false positives, and they sit in legacy list rather than being "fixed": word is English and scanner is wrong.
+- tool now carries `endsWhen`, repeatable alternatives list and supersede pair; `_register.js` moved its validation into `_validate.js` to stay under 150-line cap.
 
 ## Decision
 
-Fold the record into this ADR and the session handoff, then delete the source file. The full text stays in git history.
+Fold record into this ADR and session handoff, then delete source file. full text stays in git history.
 
 ## Consequences
 
-docs/plans/skills/process/_rule-mcp-process-adr.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.
+docs/plans/skills/process/_rule-mcp-process-adr.md is gone from tree; this ADR keeps what it delivered and handoff of this session names it.
 
 ## What would end this
 

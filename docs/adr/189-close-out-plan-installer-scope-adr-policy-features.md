@@ -7,11 +7,11 @@
 
 ## Context
 
-`docs/plans/installer-scope-adr-policy-features.md` replayed eleven steps of installer and documentation work that a sibling project shipped on 2026-10-18, adapted to this tree's names (`rule-mcp`, `RULE_MCP_*`, `rule_tool_process_adr`, `~/.rule-mcp/`). Every step is closed and verified against the code, not against the plan's own claims. The record is 418 lines of narration; what matters after it closes is what landed, what changed while landing, and what is still open.
+`docs/plans/installer-scope-adr-policy-features.md` replayed eleven steps of installer and documentation work that sibling project shipped on 2026-10-18, adapted to this tree's names (`rule-mcp`, `RULE_MCP_*`, `rule_tool_process_adr`, `~/.rule-mcp/`). Every step is closed and verified against code, not against plan's own claims. record is 418 lines of narration; what matters after it closes is what landed, what changed while landing, and what is still open.
 
 ## Decision
 
-Fold the record into this ADR and delete the source file. What each step landed:
+Fold record into this ADR and delete source file. What each step landed:
 
 | Step | What landed                                                                                                                                                                                                                                                |
 | ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -27,15 +27,15 @@ Fold the record into this ADR and delete the source file. What each step landed:
 | 10   | `_rules-project.js` refreshes a rules block a project already carries; a step in every project install and a line in `init`                                                                                                                                |
 | 11   | `03`, `04`, `05`, `08` sections; `13-cli.md` and the census regenerated; 66 variables read, 66 documented                                                                                                                                                  |
 
-Four items changed while landing, and the plan now says so: per-client prompt suppression was not blocked on a consumer (the consumer was `promptsSuppressed`; the missing piece was the client's identity), the rules task id is `project-rules:<root>`, no documented attribution row lives in TOML so no TOML writer exists to test, and the Scope prompt's typed path called a screen mode the renderer never implemented.
+Four items changed while landing, and plan now says so: per-client prompt suppression was not blocked on consumer (consumer was `promptsSuppressed`; missing piece was client's identity), rules task id is `project-rules:<root>`, no documented attribution row lives in TOML so no TOML writer exists to test, and Scope prompt's typed path called screen mode renderer never implemented.
 
 ## Consequences
 
-- The installer writes into a project only when asked, and the project keeps the git side of ADR numbering whether or not anyone remembers to wire it.
-- Three defects surfaced through the port and were fixed with it: the telemetry level wrote the slash-menu key (`RULE_MCP_NO_PROMPTS`), the style fixer inserted a blank the guardrail forbids and so reported a file done forever, and a handon unit test swept this repository's own completed plans.
-- Six ADRs stay pending in `docs/adr/_pending/` and take numbers when they land on the trunk.
-- The plan file is gone from the tree; this ADR is what a later reader gets without `git log`.
+- installer writes into project only when asked, and project keeps git side of ADR numbering whether anyone remembers to wire it.
+- Three defects surfaced through port and were fixed with it: telemetry level wrote slash-menu key (`RULE_MCP_NO_PROMPTS`), style fixer inserted blank guardrail forbids and so reported file done forever, and handon unit test swept this repository's own completed plans.
+- Six ADRs stay pending in `docs/adr/_pending/` and take numbers when they land on trunk.
+- plan file is gone from tree; this ADR is what later reader gets without `git log`.
 
 ## What would end this
 
-The list form of `RULE_MCP_NO_MCP_PROMPTS` is worth its complexity only if clients send a usable `clientInfo.name` or a deployment sets `RULE_MCP_CLIENT`. If a survey of real entries finds neither, the key collapses back to the global `1` and this ADR is superseded rather than amended.
+list form of `RULE_MCP_NO_MCP_PROMPTS` is worth its complexity only if clients send usable `clientInfo.name` or deployment sets `RULE_MCP_CLIENT`. If survey of real entries finds neither, key collapses back to global `1` and this ADR is superseded rather than amended.

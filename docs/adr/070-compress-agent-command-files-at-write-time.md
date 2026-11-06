@@ -7,7 +7,7 @@
 
 ## Context
 
-The compression-surface manifest (ADR 069) covers everything the server emits toward a model at runtime, but agent command files are emitted once at install time and then read by the agent on every session (Claude Code, Pi, Cursor, Roo, Windsurf, Cline, Devin). They are instructions in context; on the shipped bodies the caveman pass measures ~6%. The low-level renderer (renderAgentCommand) is canonical and pinned by several test suites, so write-time compression belongs in the files-emitting layer (renderAgentCommandFiles), gated by the same opt-outs as every other surface. Plan item 4a (handoff files) needs no server change: rule_tool_process_handoff returns already-compressed text via finalize and the agent writes that text to docs/handoff/.
+compression-surface manifest (ADR 069) covers everything server emits toward model at runtime, but agent command files are emitted once at install time and then read by agent on every session (Claude Code, Pi, Cursor, Roo, Windsurf, Cline, Devin). They are instructions in context; on shipped bodies caveman pass measures ~6%. low-level renderer (renderAgentCommand) is canonical and pinned by several test suites, so write-time compression belongs in files-emitting layer (renderAgentCommandFiles), gated by same opt-outs as every other surface. Plan item 4a (handoff files) needs no server change: rule_tool_process_handoff returns already-compressed text via finalize and agent writes that text to docs/handoff/.
 
 ## Decision
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Compress bodies in renderAgentCommand itself: rejected - the canonical renderer is also the test/parity surface; write-time emission stays an explicit layer
-1. Skip write-time compression: rejected - command files are read by the agent every session (measured ~6% on the shipped bodies), which is exactly the recurring-context case
-1. Compress only 'workflow' format: rejected - every installed format is read by an agent
+1. Compress bodies in renderAgentCommand itself: rejected - canonical renderer is also test/parity surface; write-time emission stays explicit layer
+1. Skip write-time compression: rejected - command files are read by agent every session (measured ~6% on shipped bodies), which is exactly recurring-context case
+1. Compress only 'workflow' format: rejected - every installed format is read by agent

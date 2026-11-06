@@ -7,11 +7,11 @@
 
 ## Context
 
-Installer-scope step 6 needed a single catalog for ADR, telemetry, update, tokensave and minimal-tools instead of raw env toggles scattered across setup flags.
+Installer-scope step 6 needed single catalog for ADR, telemetry, update, tokensave and minimal-tools instead of raw env toggles scattered across setup flags.
 
 ## Decision
 
-Add src/core/runtime/features with level→env writers, persist under RULE_MCP_HOME/config/env.json, expose feature list/enable/disable plus setup --feature/--adr-policy and a wizard Features step. RULE_MCP_NO_ADR hides ADR tools and prompts; telemetry=anonymous drops prompt text, client name and installation id.
+Add src/core/runtime/features with level→env writers, persist under RULE_MCP_HOME/config/env.json, expose feature list/enable/disable plus setup --feature/--adr-policy and wizard Features step. RULE_MCP_NO_ADR hides ADR tools and prompts; telemetry=anonymous drops prompt text, client name and installation id.
 
 ## Consequences
 

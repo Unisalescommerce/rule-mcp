@@ -7,38 +7,38 @@
 
 ## Context
 
-`rule_tool_plan_docs` rendered `docs/plans/<role>.md` as a markdown table (Step, Finding,
-Severity, What it takes). A table cannot record execution: nothing marks a step as done, so
-progress lived only in the reader's head, while the hand-maintained
+`rule_tool_plan_docs` rendered `docs/plans/<role>.md` as markdown table (Step, Finding,
+Severity, What it takes). table cannot record execution: nothing marks step as done, so
+progress lived only in reader's head, while hand-maintained
 `docs/plans/execution-plan.md` already tracked its phases with `- [ ]` checkboxes and proved
-the affordance works. Worse, the plan is re-derived from open findings on every sync, so any
-ad-hoc mark someone added would have been erased by the next run.
+affordance works. Worse, plan is re-derived from open findings on every sync, so any
+ad-hoc mark someone added would have been erased by next run.
 
 ## Decision
 
 The plan renderer emits a checklist instead of a table: one
 `- [ ] **Step N - <finding-id> (<severity>)**: <what it takes>` item per open finding, worst
-first, under a `## Steps` heading - the metadata of the old table folded into the item's bold
-prefix. `planFindingIds` reads both the checklist and the legacy table so the validateTrio
-gate keeps working across the transition, and a new `planCheckedIds` feeds the sync: a step
-marked `[x]` stays marked while its finding is open, and disappears with the finding. The
+first, under `## Steps` heading - metadata of old table folded into item's bold
+prefix. `planFindingIds` reads both checklist and legacy table so validateTrio
+gate keeps working across transition, and new `planCheckedIds` feeds sync: step
+marked `[x]` stays marked while its finding is open, and disappears with finding. The
 audit and review keep their tables - they are data, not work to tick off.
 
 ## Consequences
 
 Positive: executed steps are markable in place, the mark survives re-syncs, and every
 persona plan reads like execution-plan.md. Negative: one more parser shape to maintain, and
-a hand-combined step (`**Step 1 - DOC-1, DOC-2 (high)**`) must keep the id list inside the
-bold prefix for the gate to see it.
+hand-combined step (`**Step 1 - DOC-1, DOC-2 (high)**`) must keep id list inside the
+bold prefix for gate to see it.
 
 ## What would end this
 
-A plan surface that tracks execution outside the file (issues, tasks), making in-file marks
+plan surface that tracks execution outside file (issues, tasks), making in-file marks
 redundant.
 
 ## Alternatives Considered
 
-1. Keep the table and add a Status column - not clickable in editors and previews, and the
+1. Keep table and add Status column - not clickable in editors and previews, and the
    sync would still have to parse cell text to preserve it.
-1. A separate checklist file beside the plan - two files to drift apart instead of one that
+1. separate checklist file beside plan - two files to drift apart instead of one that
    cannot.

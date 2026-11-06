@@ -10,7 +10,7 @@
 1. **WS1** — Shared STE100~80 profile in `src/core/directive` (`WRITING_DIRECTIVE` / `STE100_ANCHOR`).
 2. **WS2** — Wired into impersonation, personas, ADR/handoff writers, and related skill surfaces.
 3. **WS3** — Development-plan shape `WSn` / `WSn-Tx.y` + dual dependency graph; ADR 146 amended; scanner in `src/core/plans/_shape.js`.
-4. **WS4** — Gitignore matrix in the retired plan; `src/core/ignore` + file-tree honors `.gitignore` via `git check-ignore`. Tokensave / census / security deferred or must-not.
+4. **WS4** — Gitignore matrix in retired plan; `src/core/ignore` + file-tree honors `.gitignore` via `git check-ignore`. Tokensave / census / security deferred or must-not.
 5. **WS5** — Census current; product ADR pending `docs/adr/230-mcp-authored-markdown-uses-asd-ste100-at-about-80-percent.md`; plan archived → [ADR 195](../adr/195-close-out-plan-asd-ste100.md).
 6. Golden shape fixture moved to `tests/fixtures/plans/development-shape-golden.md` (live plan file deleted by closeout).
 
@@ -22,7 +22,7 @@
 
 ## Left out / next
 
-- Number the pending STE100 product ADR on trunk land (`rule-mcp handoff land`).
+- Number pending STE100 product ADR on trunk land (`rule-mcp handoff land`).
 - Do not fork tokensave ignore policy here; revisit when graph ownership allows.
 - Next open single tracks: `_2026-10-01-scripts-mcp-layout.md`, `_decision-models.md`, or skills catalog leaves.
 

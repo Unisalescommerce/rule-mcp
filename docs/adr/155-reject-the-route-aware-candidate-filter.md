@@ -7,11 +7,11 @@
 
 ## Context
 
-The wide leave-one-out corpus measured the BM25 single-batch gate at 78/105 Laya coverage (74.3%). The route-aware experiment computed the router's BM25 top skill and used it to filter the cached candidates, with a fallback to the full set when no candidate matched. The cached entries carry the post-decision route, so the BM25 hint and the cache route disagree on ten cases and the filter drops the correct seed. Coverage fell to 68/105 (64.8%), predictions to 58, wrong at 0.30 to 19; no floor emerged.
+wide leave-one-out corpus measured BM25 single-batch gate at 78/105 Laya coverage (74.3%). route-aware experiment computed router's BM25 top skill and used it to filter cached candidates, with fallback to full set when no candidate matched. cached entries carry post-decision route, so BM25 hint and cache route disagree on ten cases and filter drops correct seed. Coverage fell to 68/105 (64.8%), predictions to 58, wrong at 0.30 to 19; no floor emerged.
 
 ## Decision
 
-Reject the route-aware candidate filter. Keep the BM25 ranker, the single batch and the replay off. The hint and its plumbing are reverted; the next recall experiment is seeding the corpus with the group's historical paraphrases, or improving the model, not another route filter.
+Reject route-aware candidate filter. Keep BM25 ranker, single batch and replay off. hint and its plumbing are reverted; next recall experiment is seeding corpus with group's historical paraphrases, or improving model, not another route filter.
 
 ## Consequences
 
@@ -21,10 +21,10 @@ The BM25 route is not the cache route: filtering by it removes correct seeds whe
 
 The assumption this leans on, and the observation that would make it wrong.
 
-A route hint that matches the cached post-decision route on every covered sample, or a cache whose entries are stored with the BM25 route, would make the filter worth re-testing. The Laya 74.3% single-batch remains the baseline it would have to beat.
+route hint that matches cached post-decision route on every covered sample, or cache whose entries are stored with BM25 route, would make filter worth re-testing. Laya 74.3% single-batch remains baseline it would have to beat.
 
 ## Alternatives Considered
 
-1. Filter by the post-decision route: deferred because that route is what computeCore produces, so the gate would need the compute it is trying to avoid.
-1. Seed the corpus with the group's historical paraphrases: the next experiment, because it tests the production cache without changing the gate.
-1. Improve the model: the other next experiment; the route hint is measured and rejected.
+1. Filter by post-decision route: deferred because that route is what computeCore produces, so gate would need compute it is trying to avoid.
+1. Seed corpus with group's historical paraphrases: next experiment, because it tests production cache without changing gate.
+1. Improve model: other next experiment; route hint is measured and rejected.

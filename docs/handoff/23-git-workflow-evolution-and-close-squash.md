@@ -7,65 +7,65 @@
 
 ## What this session did
 
-Implemented the plan end to end (WS0 through WS9 plus section 20), then closed
+Implemented plan end to end (WS0 through WS9 plus section 20), then closed
 the gap the developer raised in an interview: the close squash was leaving the
 feature's ADRs and handoffs as their own commits.
 
 ### Commits
 
-- `1c6dca49` docs(plan): the plan and the WS0 architecture map
-- `b47261c1` refactor(case-studies): split the launcher under the file-size cap
-- `4935cc40` fix(docs-site): tolerate a directory that vanishes while collecting markdown
-- `58a17859` feat(git): the shared git foundation (WS1)
-- `9b1a7cca` feat(commit): the one Conventional Commit rule and init git governance (WS3)
-- `a369c236` feat(sync): the base-branch guard and the confirmed rebase (WS2)
+- `1c6dca49` docs(plan): plan and WS0 architecture map
+- `b47261c1` refactor(case-studies): split launcher under file-size cap
+- `4935cc40` fix(docs-site): tolerate directory that vanishes while collecting markdown
+- `58a17859` feat(git): shared git foundation (WS1)
+- `9b1a7cca` feat(commit): one Conventional Commit rule and init git governance (WS3)
+- `a369c236` feat(sync): base-branch guard and confirmed rebase (WS2)
 - `eaa98508` feat(git): `/rule-git` audit, reword and linearize (WS4)
-- `2a344c7e` feat(handoff): feature close and the range in the handoff (WS5 + WS6)
-- `4b448c08` feat(release): derive the next version and gate the changelog (WS7 + WS8 + WS9)
+- `2a344c7e` feat(handoff): feature close and range in handoff (WS5 + WS6)
+- `4b448c08` feat(release): derive next version and gate changelog (WS7 + WS8 + WS9)
 - `42be49f7` feat(init): exact dependency pins (plan section 20)
-- `be87ab1b` style(version): lint fixes in the version entry and its test
-- `71fbaf32` feat(handoff): consolidate the feature ADRs and handoffs at the close squash
+- `be87ab1b` style(version): lint fixes in version entry and its test
+- `71fbaf32` feat(handoff): consolidate feature ADRs and handoffs at close squash
 - `5de53654` chore(case-studies): app bookmark and architect artifacts (data, not code)
 
 ### Decisions (ADR 116-128)
 
-- **124** - the tool-call host is a list, so self-update and the sync guard coexist.
-- **125** - normalize the feature history on the merge base, and hold every rewrite to the tree invariant.
-- **126** - close a feature with `reset --soft` onto the merge base and one validated commit.
-- **127** - derive the next version and the changelog from the commit rule.
-- **128** - the close squash consolidates the feature ADRs and handoffs into one document each.
+- **124** - tool-call host is list, so self-update and sync guard coexist.
+- **125** - normalize feature history on merge base, and hold every rewrite to tree invariant.
+- **126** - close feature with `reset --soft` onto merge base and one validated commit.
+- **127** - derive next version and changelog from commit rule.
+- **128** - close squash consolidates feature ADRs and handoffs into one document each.
 
 ### Surfaces added
 
 - `src/core/git/` - runner, repository state, base-branch detection, feature range, freshness, working-tree safety.
-- `src/core/commit/` - the one rule, the linter, the hook writer and the idempotent governance installer; CLI `commit-lint`.
-- `src/core/sync/` - the branch-sync guard and `rule_tool_sync` (confirmed rebase only).
-- `src/core/history/` - audit, reword, linearize, squash, and the document consolidation.
-- `src/core/release/` - release-tooling detection and the exact-pin check.
+- `src/core/commit/` - one rule, linter, hook writer and idempotent governance installer; CLI `commit-lint`.
+- `src/core/sync/` - branch-sync guard and `rule_tool_sync` (confirmed rebase only).
+- `src/core/history/` - audit, reword, linearize, squash, and document consolidation.
+- `src/core/release/` - release-tooling detection and exact-pin check.
 - `rule_tool_git`, `/rule-git`, `/rule-handoff --close-feature --squash`.
-- `scripts/build/version/index.mjs --next` / `--apply-next`; `scripts/build/changelog/index.mjs --check`; a CI `release-preview` job.
+- `scripts/build/version/index.mjs --next` / `--apply-next`; `scripts/build/changelog/index.mjs --check`; CI `release-preview` job.
 
 ## Verification
 
-- `pnpm test:all` -> exit 0, 2141 pass, 0 fail, 3 skip (the CI-equivalent suite).
+- `pnpm test:all` -> exit 0, 2141 pass, 0 fail, 3 skip (CI-equivalent suite).
 - `pnpm census:check` current; `pnpm hooks:check` 3 installed and current; `version --check` in sync; `pnpm audit:gate` clean.
-- End-to-end smoke of the close squash: 5 commits become 1, the merged ADR and
+- End-to-end smoke of close squash: 5 commits become 1, merged ADR and
   handoff reproduce every original verbatim, both indexes are rebuilt, and only
-  the planned document paths differ from the pre-squash tree.
+  planned document paths differ from pre-squash tree.
 
 ## Known state, not fixed in this session
 
 - `pnpm lint` is red with 22 errors and `pnpm format` with about 30 files. All
-  are pre-existing and untouched here: the counts match `1704a0b4`.
-- `changelog --check` reports stale in a clone with no tags; CI runs that gate
-  only when tags define the boundary.
-- The base-branch guard reads local refs. Remote updates need `rule_tool_sync fetch=true`.
-- The handoff index `docs/handoff/HANDOFF.md` does not list this file yet; the
+  are pre-existing and untouched here: counts match `1704a0b4`.
+- `changelog --check` reports stale in clone with no tags; CI runs that gate
+  only when tags define boundary.
+- base-branch guard reads local refs. Remote updates need `rule_tool_sync fetch=true`.
+- handoff index `docs/handoff/HANDOFF.md` does not list this file yet; the
   next `handoff doctor` or `rule_tool_handoff` run rebuilds it.
 
 ## Continuation context
 
-Nothing is blocked, and the plan has no open workstream. The natural next moves,
+Nothing is blocked, and plan has no open workstream. natural next moves,
 in order: fix the two pre-existing red gates (lint and format) or leave them by
 decision; then decide whether WS9 should tag automatically, which was left
 manual on purpose.

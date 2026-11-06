@@ -7,11 +7,11 @@
 
 ## Context
 
-Host hooks spawn one process per event and close stdin, so guard --loop in the hook command cannot keep a warm process. Per-spawn exits cleanly (exit 0, no lingering). Latency remains ~100 ms for a full CLI guard. A shared stdio pipe across agents is not available from host contracts.
+Host hooks spawn one process per event and close stdin, so guard --loop in hook command cannot keep warm process. Per-spawn exits cleanly (exit 0, no lingering). Latency remains ~100 ms for full CLI guard. shared stdio pipe across agents is not available from host contracts.
 
 ## Decision
 
-Add guard --daemon listening on $RULE_MCP_HOME/state/guard.sock and guard --send which forwards one stdin payload over that socket. bin/rule-mcp.js early-dispatches guard --send before loading Commander so the client stays near the Node spawn floor. Host hook writers are not rewired yet: install still uses per-spawn guard until a later change starts the daemon and points commands at --send. Measured (scripts/bench/guard-daemon-spike.mjs): full guard ~115 ms; bin --send with warm daemon ~near thin client after dropping the accidental _run.js import; thin sendGuardRequest alone ~spawn+5 ms.
+Add guard --daemon listening on $RULE_MCP_HOME/state/guard.sock and guard --send which forwards one stdin payload over that socket. bin/rule-mcp.js early-dispatches guard --send before loading Commander so client stays near Node spawn floor. Host hook writers are not rewired yet: install still uses per-spawn guard until later change starts daemon and points commands at --send. Measured (scripts/bench/guard-daemon-spike.mjs): full guard ~115 ms; bin --send with warm daemon ~near thin client after dropping accidental _run.js import; thin sendGuardRequest alone ~spawn+5 ms.
 
 ## Consequences
 

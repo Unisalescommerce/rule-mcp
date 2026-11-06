@@ -22,7 +22,7 @@
 
 ## Left out / next
 
-- Number the pending workspace product ADR on trunk land (`rule-mcp handoff land`).
+- Number pending workspace product ADR on trunk land (`rule-mcp handoff land`).
 - Other pending ADRs under `docs/adr/_pending/` stay until trunk.
 - Next open single tracks: `_decision-models.md`, or skills catalog leaves.
 

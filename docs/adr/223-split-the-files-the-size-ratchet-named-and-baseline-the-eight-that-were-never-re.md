@@ -7,7 +7,7 @@
 
 ## Context
 
-ADR 053 splits one concern per file into underscore-barrel folders, and tests/docs/file-size-budget.test.mjs enforces it with two rules: a file outside the ratchet stays at 150 lines or less, and a grandfathered file may only shrink. Two sets of files broke that: nine that had grown past their recorded ceiling, and eight that were above 150 and had never been recorded at all, so the gate was red for both reasons and had been for several commits. Some of the growth in this window was mine - the tokensave switch, the uninstall reclaim, and the tests that pin them.
+ADR 053 splits one concern per file into underscore-barrel folders, and tests/docs/file-size-budget.test.mjs enforces it with two rules: file outside ratchet stays at 150 lines or less, and grandfathered file may only shrink. Two sets of files broke that: nine that had grown past their recorded ceiling, and eight that were above 150 and had never been recorded at all, so gate was red for both reasons and had been for several commits. Some of growth in this window was mine - tokensave switch, uninstall reclaim, and tests that pin them.
 
 ## Decision
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Raise the ceilings of the eight files: the gate would then permit growth and stop being a ratchet.
-1. Split all seventeen in one pass: the eight baselined files are large multi-concern modules whose split needs its own review, and doing it here would have buried the work this window actually did.
-1. Leave the two tests red and document the debt: a gate that is always red teaches everyone to ignore it, which is the failure ADR 177 exists to answer.
+1. Raise ceilings of eight files: gate would then permit growth and stop being ratchet.
+1. Split all seventeen in one pass: eight baselined files are large multi-concern modules whose split needs its own review, and doing it here would have buried work this window did.
+1. Leave two tests red and document debt: gate that is always red teaches everyone to ignore it, which is failure ADR 177 exists to answer.

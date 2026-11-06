@@ -19,18 +19,18 @@ per-agent installer/uninstaller definitions).
    `database.js`, `devops.js`, `util.js`, with `guardrail-defs.js` kept as a
    one-line re-export (`export * from "./guardrails/index.js"`) so historical
    import paths and the public export names never change.
-2. **Installer**: the per-agent domain (file helpers, command builders,
-   installers/uninstallers, env/command config) moves to a self-contained
-   `src/cli/agent-installers.js`; `install.js` keeps the orchestrators
+2. **Installer**: per-agent domain (file helpers, command builders,
+   installers/uninstallers, env/command config) moves to self-contained
+   `src/cli/agent-installers.js`; `install.js` keeps orchestrators
    (`installAgent`, `uninstallAgent`, `detectInstalledAgents`,
-   `getAllAgents`) and re-exports the agent module so `new
+   `getAllAgents`) and re-exports agent module so `new
 URL(../src/cli/install.js)` imports in tests keep working.
 
 ## Consequences
 
-**Positive**: each guardrail domain is a standalone reviewable file; the
+**Positive**: each guardrail domain is standalone reviewable file; the
 installer's agent surface is decoupled from its orchestration; no public
 import path or export name changed (full installer suite + guardrail coverage
 stay green, 212 checks).
 **Negative**: two new indirection layers to navigate when tracing (mitigated by
-the re-export entry points).
+re-export entry points).

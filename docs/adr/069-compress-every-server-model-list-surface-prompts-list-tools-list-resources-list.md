@@ -7,7 +7,7 @@
 
 ## Context
 
-The standing mandate is that every interaction where the MCP server hands text to a model is compressed with the deterministic caveman pipeline. Tool results, resource bodies and prompt bodies already were; the three list surfaces were not. prompts/list had an explicit comment rejecting compression ("its descriptions are the schema clients render, not prose to shorten"), yet a prompt description is prose the model reads to pick one. tools/list descriptions are paid on every model turn (~24,301 tokens/turn surface; ~3,512 of them descriptions). resources/list labels are terse by design (measured ~0% saving).
+standing mandate is that every interaction where MCP server hands text to model is compressed with deterministic caveman pipeline. Tool results, resource bodies and prompt bodies already were; three list surfaces were not. prompts/list had explicit comment rejecting compression ("its descriptions are schema clients render, not prose to shorten"), yet prompt description is prose model reads to pick one. tools/list descriptions are paid on every model turn (~24,301 tokens/turn surface; ~3,512 of them descriptions). resources/list labels are terse by design (measured ~0% saving).
 
 ## Decision
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Compress in the registry (listPrompts/listTools producers): rejected - it would leak compressed prose into prompts/get help text, agent-command file generation and the CLI listing, and double-compress downstream
-1. Keep prompts/list uncompressed (the pre-Phase-2 decision): rejected under the compress-every-surface mandate - the description is read by the model every session start
+1. Compress in registry (listPrompts/listTools producers): rejected - it would leak compressed prose into prompts/get help text, agent-command file generation and CLI listing, and double-compress downstream
+1. Keep prompts/list uncompressed (pre-Phase-2 decision): rejected under compress-every-surface mandate - description is read by model every session start
 1. Compress entire tools/list JSON including schemas: rejected - schemas are machine-parsed data and compression corrupts them

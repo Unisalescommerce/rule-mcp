@@ -7,11 +7,11 @@
 
 ## Context
 
-Four skills described one body of rules. rule-process-ai-sdlc carried the lifecycle and owned no guardrail; rule-process-simplicity carried the scope contract and three rules; rule-styleguide-english and rule-styleguide-fingerprint both documented the British to American spelling map and both claimed fp-american-english. The same rule in two documents is the drift ADR 050 exists to prevent, and four index rows and three plans meant four places to keep in step. The English and fingerprint skills also sat in the styleguide area while describing prose that applies to every output, not to a code style.
+Four skills described one body of rules. rule-process-ai-sdlc carried lifecycle and owned no guardrail; rule-process-simplicity carried scope contract and three rules; rule-styleguide-english and rule-styleguide-fingerprint both documented British to American spelling map and both claimed fp-american-english. same rule in two documents is drift ADR 050 exists to prevent, and four index rows and three plans meant four places to keep in step. English and fingerprint skills also sat in styleguide area while describing prose that applies to every output, not to code style.
 
 ## Decision
 
-One skill, rule-process-ai, owns the four bodies: SKILL.md keeps the lifecycle, the scope contract and the reference table, and references/simplicity.md, references/english.md and references/fingerprint.md hold the detail, the shape rule-styleguide-a11y already uses. The nine guardrails move into one family under the ai- prefix. The name changes from rule-process-ai-sdlc, and because the tool id is derived from the skill name, the tool becomes rule_tool_process_ai. The three absorbed directories are deleted rather than tombstoned: their names join removedSkillNames in the skill corpus test, so a surviving reference fails the suite instead of rotting. The four plan rows collapse into one, docs/plans/skills/DEPENDENCIES.md records the run order, and this plan runs first because every other plan is written by these rules.
+One skill, rule-process-ai, owns four bodies: SKILL.md keeps lifecycle, scope contract and reference table, and references/simplicity.md, references/english.md and references/fingerprint.md hold detail, shape rule-styleguide-a11y already uses. nine guardrails move into one family under ai- prefix. name changes from rule-process-ai-sdlc, and because tool id is derived from skill name, tool becomes rule_tool_process_ai. three absorbed directories are deleted rather than tombstoned: their names join removedSkillNames in skill corpus test, so surviving reference fails suite instead of rotting. four plan rows collapse into one, docs/plans/skills/DEPENDENCIES.md records run order, and this plan runs first because every other plan is written by these rules.
 
 ## Consequences
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Keep the three as thin tombstones that point at the merged skill. Rejected: an index row and a directory that carry no content are exactly the two things that go stale, and the corpus test can already name a removed skill.
-1. Merge the content but keep the four guardrail prefixes (en-, fp-, no-) so nothing has to be renamed. Rejected: a family whose ids name three different former owners is a family nobody can enumerate.
-1. Rename the skill and keep rule_tool_process_ai_sdlc as an alias. Rejected: the tool registry derives the id from the name, and a hand-maintained alias is a second name to keep in step, which is the problem this ADR removes.
+1. Keep three as thin tombstones that point at merged skill. Rejected: index row and directory that carry no content are exactly two things that go stale, and corpus test can already name removed skill.
+1. Merge content but keep four guardrail prefixes (en-, fp-, no-) so nothing has to be renamed. Rejected: family whose ids name three different former owners is family nobody can enumerate.
+1. Rename skill and keep rule_tool_process_ai_sdlc as alias. Rejected: tool registry derives id from name, and hand-maintained alias is second name to keep in step, which is problem this ADR removes.

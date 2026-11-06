@@ -8,7 +8,7 @@
 ## What happened this session
 
 Working tree held an uncommitted release rollback: v1.0.0 -> v0.1.0-beta
-across version files, docs, changelog, and the release workflow.
+across version files, docs, changelog, and release workflow.
 Per `/rule-handoff` Step 1, grouped by concern and committed atomically
 with mandatory scopes (commit-msg hook rejects scope-less messages).
 No push, commits are local for review.
@@ -91,16 +91,16 @@ d8788ed feat(census): eight generated inventories, three fenced blocks, one form
   all current as of 2026-09-11. Census docs 06-13 are generated files.
 - `docs/adr/`: 74 records (001-077 with gaps at 007, 053-055).
 - Convention reminder: Conventional Commits WITH mandatory scope,
-  `type(scope): subject`. The `commit-msg` hook rejects scope-less subjects.
+  `type(scope): subject`. `commit-msg` hook rejects scope-less subjects.
 
 ### Open work / next session
 
 - `site-dist/` build output is untracked, decide whether to add it to
   `.gitignore` or leave as-is (no action taken this session).
-- ADR 041 still records the v1.0.0 release; consider a follow-up ADR or
-  amendment recording the v0.1.0-beta retarget rationale.
-- The `v0.1.0-beta` tag itself has not been cut yet (`git tag v0.1.0-beta`);
-  tagging triggers the GitHub Release workflow. Tags were left uncut
+- ADR 041 still records v1.0.0 release; consider follow-up ADR or
+  amendment recording v0.1.0-beta retarget rationale.
+- `v0.1.0-beta` tag itself has not been cut yet (`git tag v0.1.0-beta`);
+  tagging triggers GitHub Release workflow. Tags were left uncut
   deliberately, cut only on explicit request.
 - Resume guidance: ADRs + snapshot above capture all decisions; continue
   without re-asking answered questions. Use tokensave graph tools for code

@@ -34,7 +34,7 @@
 | 123 | accepted   | Start the six case-study apps with one port-allocating co...      | tooling, case-studies, dev-server          | Add `pnpm case-studies` (scripts/case-studies/index.mjs) as the single entry point. The script al...           |
 | 122 | accepted   | The fix tool and command apply the deterministic guardrai...      | tools, commands, guardrails                | 1. rule_tool_fix is registered again, through registerActionTools, with a new job: apply the deter...          |
 | 121 | accepted   | The install reconciles the bundled skills when the step i...      | installer, skills, commands                | 1. skills uninstall is a real CLI action, with --scope and --dry-run, that removes only the names...           |
-| 120 | accepted   | Fold the per-operation persona commands into one per role...      | commands, personas, prompts                | 1. One prompt, one slash command and one skill per role: rule-persona-<role> (57 to 19 on each sur...          |
+| 120 | accepted   | Fold the per-operation persona commands into one per role...      | commands, personas, prompts                | 1. One prompt, one slash command and one skill per role: rule-persona-role (57 to 19 on each sur...            |
 | 119 | accepted   | Close out audit ui                                                | docs, closeout, audit                      | Fold the record into this ADR and the session handoff, then delete the source file. The full text...           |
 | 118 | accepted   | Close out review ui                                               | docs, closeout, review                     | Fold the record into this ADR and the session handoff, then delete the source file. The full text...           |
 | 117 | accepted   | Area slash commands are collectors only; leaves route fro...      | commands, prompts, areas                   | 1. **Slash and MCP area prompts**: emit only hub collectors (`/rule-area-ai`, `/rule-area-backend`,...         |
@@ -65,7 +65,7 @@
 | 092 | accepted   | Surface selection amends the install stack freeze with an...      | install, wizard, architecture              | Amend ADR 073 narrowly: the installer writes one grammar string (RULE_MCP_SURFACE) and the ...                 |
 | 091 | accepted   | Install/uninstall rework keeps current stack, steps and c...      | install, wizard, architecture              | The install/uninstall rework changes wizard steps and contents only (order, copy, offered choices...           |
 | 090 | accepted   | The setup wizard is the installer, and it asks which comm...      | installer, cli, wizard                     | The wizard is the installer. `src/cli/setup/` holds the whole flow - preflight, agents, mode, opt...           |
-| 089 | accepted   | Skills own their guardrails, and three layers resolve bot...      | architecture, skills, guardrails           | A skill owns the rules that judge its subject. Guardrails move into skills/<name>/guardrails/*.js...           |
+| 089 | accepted   | Skills own their guardrails, and three layers resolve bot...      | architecture, skills, guardrails           | A skill owns the rules that judge its subject. Guardrails move into skills/`<name>`/guardrails/*.js...         |
 | 088 | accepted   | A persona topic is the binding scope of the run                   | personas, prompts, review                  | The topic becomes the binding scope everywhere the template speaks: the action line names the sco...           |
 | 087 | superseded | Session close archives completed audits, reviews and plans        | process, handoff, docs                     | In close-session mode only, rule_tool_process_handoff folds each completed doc into one Nygard ADR...          |
 | 086 | accepted   | Documentation site is hand-written static HTML from docs          | docs, site                                 | The documentation site is hand-written: a small Node generator in scripts/docs-site/ renders docs...           |
@@ -87,7 +87,7 @@
 | 070 | accepted   | Installer mode step replaces the agent picker instead of ...      | installer, tui, devx                       | Bring bash to parity with PowerShell: on entering step 2, draw_mode_panel retitles the banner to ...           |
 | 069 | accepted   | Coverage wave four holds the floor at 90 and fixes the da...      | testing, coverage, ci                      | Hold BRANCH_FLOOR at 90: the local measure (90.74) is below 91, so a raise would gate above what ...           |
 | 068 | accepted   | src shared for every shareable helper                             |                                            | All cross-cutting helpers with more than one caller live in `src/shared/` with a barrel (`index.j...           |
-| 067 | accepted   | co locate every test with its module                              |                                            | Move every unit and integration suite from `tests/<area>/...` into `src/<area                                  | <module>>/**tests**... |
+| 067 | accepted   | co locate every test with its module                              |                                            | Move every unit and integration suite from `tests/<area>/...` into `src/<area                                  | `<module>`>/**tests**... |
 | 066 | accepted   | Remove externally derived skills from the served knowledg...      | skills, knowledge-base, attribution        | Remove all externally derived content from the served knowledge base. Permanently deleted 8 skill...           |
 | 065 | accepted   | Coverage floor raised to 90                                       | testing, coverage, ci                      | Raise BRANCH_FLOOR from 89 to 90 in scripts/reports/coverage/_threshold.data.mjs. Ratchet mechani...           |
 | 064 | accepted   | Coverage floor raised to 89 toward the 95 endpoint                | testing, coverage, ci                      | Raise BRANCH_FLOOR in scripts/reports/coverage/_threshold.data.mjs from 87 to 89. The ratchet mec...           |
@@ -95,12 +95,12 @@
 | 062 | accepted   | Glob suite runner, co-located tests, and a branch-coverag...      | testing, ci, coverage                      | Four pieces. (1) `scripts/ci/run-tests/index.mjs` resolves a suite from glob patterns in `_suites...           |
 | 061 | accepted   | One global shim, and hermetic PNPM_HOME in script tests           | installer, cli, shim                       | Three layers. (1) Every test that spawns the shell scripts sets `env.PNPM_HOME` to a sandbox dire...           |
 | 060 | accepted   | Plans carry nested sub-steps and an exhaustiveness mandate        | documentation, personas, plans             | A finding passed to `rule_tool_plan_docs` may carry a `steps` array; the renderer nests each entry...          |
-| 059 | accepted   | Persona plans are checklists with marks that survive the ...      | documentation, personas, plans             | The plan renderer emits a checklist instead of a table: one `- [ ] **Step N - <finding-id> (<seve...           |
+| 059 | accepted   | Persona plans are checklists with marks that survive the ...      | documentation, personas, plans             | The plan renderer emits a checklist instead of a table: one - [ ] **Step N - finding-id (<seve...              |
 | 058 | accepted   | One file per rule with underscore-barrel folders and a si...      | architecture, refactor, structure          | Split rule catalogs one file per rule under family folders (framework/js, framework/vanilla, qual...           |
 | 057 | accepted   | Reorganize scripts, src and tests with 150-line code spli...      | architecture, refactor, testing            | Reorganize scripts/, src/ and test/ (renamed to tests/) into thematic subfolders by feature; appl...           |
 | 056 | accepted   | Drop the VS Code extension and its installers                     | vscode, extension, installer               | Delete extensions/ (vscode-rule-mcp source + rule-mcp-vanilla-reactive.vsix). Remove the five extension fun... |
 | 055 | accepted   | Restructure the command surface: /rule router, rule-area-*,...    | commands, prompts, surface                 | Restructure the command surface: router rule-mcp -> rule-mcp; area prompts become rule-area-_; de...           |
-| 054 | accepted   | Split review personas into per-operation commands (plan/a...      | personas, commands, prompts                | Give each active role three slash commands - `rule-persona-<role>-plan`, `rule-persona-<role>-audit...         |
+| 054 | accepted   | Split review personas into per-operation commands (plan/a...      | personas, commands, prompts                | Give each active role three slash commands - rule-persona-role-plan, rule-persona-role-audit...                |
 | 053 | accepted   | Gateway as the single entrypoint with server-side receipt...      | gateway, guardrails, determinism           | Gateway is the single server-side orchestrating entrypoint for every implementation flow; it issu...           |
 | 052 | accepted   | Pre-packaged MCP prompt registry (26 prompts, strict sche...      | prompts, registry, tdd                     | Adopt the 26-prompt pre-packaged registry in src/prompts/index.js with strict argument schemas, t...           |
 | 051 | accepted   | Token-efficiency pipeline (caveman aggressive + tokensave...      | token-efficiency, caveman, tokensave       | 1. **Decoration lives at the MCP boundary** (`src/server.js` CallToolRequestSchema handler), n...              |
@@ -116,7 +116,7 @@
 | 041 | accepted   | Lossless installer: preserve toolPrefix and normalize rul...      | installer, idempotency, toolPrefix         | upsertJsonServer/upsertVscode merge the existing entry with the new config, preserving user keys ...           |
 | 040 | accepted   | Per-invocation self-update with temporal throttle and fir...      | self-update, mcp-server, operational       | The check fires on every tool invocation but the actual git fetch is throttled: at most every PIX...           |
 | 039 | superseded | Fix VS Code extension and derivatives install/uninstall           | vscode, extension, installer               | Add `installVscodeExtension` and `uninstallVscodeExtension` functions in install.js that install/...           |
-| 038 | proposed   | native claude skills integration                                  |                                            | installNativeSkills() now copies skills to ~/.claude/skills/<name>/ with Claude-compatible YARD f...           |
+| 038 | proposed   | native claude skills integration                                  |                                            | installNativeSkills() now copies skills to ~/.claude/skills/`<name>`/ with Claude-compatible YARD f...         |
 | 037 | proposed   | documentation and see also in skills                              |                                            | Added ## See also section with links to related skills in all missing skills.                                  |
 | 036 | proposed   | lossless idempotent installer                                     |                                            | parseJson() now returns null on error, not {}. JSON file writes use atomicWrite with preventive b...           |
 | 035 | proposed   | sandbox timeout with abortcontroller                              |                                            | withTimeout() now uses AbortController to actually cancel the ongoing operation when the timeout ...           |
@@ -157,7 +157,7 @@
 
 ### Snapshot at Handoff Generation
 
-The commit split was complete; the only pending generated file was `docs/handoff/HANDOFF.md`. This index and the new handoff are committed separately.
+commit split was complete; only pending generated file was `docs/handoff/HANDOFF.md`. This index and new handoff are committed separately.
 
 ### Recent Commits
 
@@ -221,12 +221,12 @@ Commit messages are not rewritten; run `rule-mcp handoff doctor --fix-commits` t
 
 ### Session Split and Verification
 
-- `main`: six scoped, signed-off commits for handoff squashing, dependency and project metadata, the rendered site, superseded plans, and ADR/OSS/UI decision documents (`3967fd82` through `6967ac02`).
-- `feat/[removed]`: four scoped, signed-off commits for the adapter/rerank, label-gated cache, measurement scripts, and the proposed workspace plan (`94ca6127` through `1a611c83`). This branch starts from the committed `main` state; no history was rewritten or pushed.
+- `main`: six scoped, signed-off commits for handoff squashing, dependency and project metadata, rendered site, superseded plans, and ADR/OSS/UI decision documents (`3967fd82` through `6967ac02`).
+- `feat/[removed]`: four scoped, signed-off commits for adapter/rerank, label-gated cache, measurement scripts, and proposed workspace plan (`94ca6127` through `1a611c83`). This branch starts from committed `main` state; no history was rewritten or pushed.
 - Verification passed: `pnpm test`, 19 focused [removed]/handoff tests, focused ESLint, and `pnpm test:e2e:docs-site` (11 tests).
-- Verification still failing: `pnpm test:all` (2,167 passed, nine failed, including install integrity, README tool count, and the file-size ratchet); `pnpm lint` (21 errors, 36 warnings); `pnpm census:check` (stale `docs/02-architecture.md`, `docs/05-env-variables.md`, and `tests/fixtures/census.json`). Do not attribute all failures to [removed] without a clean-main comparison.
-- OSS and UI review findings remain open in `docs/reviews/oss.md` and `docs/reviews/ui.md`; OSS remediation requires the owner decisions in `docs/plans/oss.md`.
-- The single documentation preview is available at `http://localhost:3001/`. Do not start a duplicate server.
+- Verification still failing: `pnpm test:all` (2,167 passed, nine failed, including install integrity, README tool count, and file-size ratchet); `pnpm lint` (21 errors, 36 warnings); `pnpm census:check` (stale `docs/02-architecture.md`, `docs/05-env-variables.md`, and `tests/fixtures/census.json`). Do not attribute all failures to [removed] without clean-main comparison.
+- OSS and UI review findings remain open in `docs/reviews/oss.md` and `docs/reviews/ui.md`; OSS remediation needs owner decisions in `docs/plans/oss.md`.
+- single documentation preview is available at `http://localhost:3001/`. Do not start duplicate server.
 
 ### Resume Prompt
 

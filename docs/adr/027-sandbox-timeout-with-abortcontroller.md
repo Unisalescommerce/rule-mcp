@@ -7,11 +7,11 @@
 
 ## Context
 
-withTimeout() returned an error to the caller but the underlying Promise continued execution. Possible completion after timeout.
+withTimeout() returned error to caller but underlying Promise continued execution. Possible completion after timeout.
 
 ## Decision
 
-withTimeout() now uses AbortController to actually cancel the ongoing operation when the timeout fires.
+withTimeout() now uses AbortController to cancel ongoing operation when timeout fires.
 
 ## Consequences
 
@@ -19,5 +19,5 @@ No pending operations after timeout. Resources properly freed.
 
 ## Alternatives Considered
 
-- Ignore the problem (rejected)
+- Ignore problem (rejected)
 - Use clearTimeout without abort (insufficient)

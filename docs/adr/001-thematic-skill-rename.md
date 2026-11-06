@@ -15,7 +15,7 @@ The original skill naming was flat: all skills lived under `rule-mcp-*` without 
 
 ## Decision
 
-Adopt a prefix-based thematic taxonomy with the following categories:
+Adopt prefix-based thematic taxonomy with following categories:
 
 | Prefix              | Category   | Skills                                                                    |
 | ------------------- | ---------- | ------------------------------------------------------------------------- |
@@ -42,7 +42,7 @@ Three skills keep their names (they are already correctly categorized or would l
 
 - Clear visual grouping when listing skills (alphabetically sorted, skills cluster by prefix)
 - Easy to discover related skills (`rule-frontend-*` lists all UI frameworks)
-- Self-documenting taxonomy: the name tells you the category
+- Self-documenting taxonomy: name tells you category
 - Scalable: new skills slot naturally into existing prefixes
 
 **Negative:**
@@ -54,10 +54,10 @@ Three skills keep their names (they are already correctly categorized or would l
 
 **Migration:**
 
-- The rename is performed atomically in a single commit
-- All 35 skill directories, all SKILL.md files, all docs, and the README are updated together
-- The MCP tool names change automatically (derived from directory names)
-- No code changes needed in the router or skill loader - tool names are derived from directory basenames
+- rename is performed atomically in single commit
+- All 35 skill directories, all SKILL.md files, all docs, and README are updated together
+- MCP tool names change automatically (derived from directory names)
+- No code changes needed in router or skill loader - tool names are derived from directory basenames
 
 ## Subsequent Updates (2026-07-10)
 

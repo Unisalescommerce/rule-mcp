@@ -7,11 +7,11 @@
 
 ## Context
 
-The project guardrails reported five circular imports and forty-nine dead symbols on a tree where both numbers were mostly artefacts. A JSDoc type reference (`{import("./x.js").T}`) is a module name in a comment, and the graph counts it as an import: a file that only documented its argument was reported as depending on it, and two of those closed a cycle nobody had. Dead symbols had the same shape from the other side: the graph has no edge for a function reached through a table (the feature readers), a run-time import (every command handler), or a test that is its only reader, so it called live code dead. A guardrail that reports work nobody can do teaches everyone to ignore its output.
+project guardrails reported five circular imports and forty-nine dead symbols on tree where both numbers were mostly artefacts. JSDoc type reference (`{import("./x.js").T}`) is module name in comment, and graph counts it as import: file that only documented its argument was reported as depending on it, and two of those closed cycle nobody had. Dead symbols had same shape from other side: graph has no edge for function reached through table (feature readers), run-time import (every command handler), or test that is its only reader, so it called live code dead. guardrail that reports work nobody can do teaches everyone to ignore its output.
 
 ## Decision
 
-Both checks now decide from the source before they fail. `_circular.js` strips comments (keeping string literals, so an import specifier survives) and a cycle counts only when every edge is a real import; `_dead-code.js` counts a reported symbol only when no file exports it, its own file never mentions it again, it is not in a test, and the disk has the file the graph named. Both filters take the project root, so `_run.js` now passes it to `evaluate`. The modules behind the reported cycles were split where the cycle was real: `_manifest-store.js` holds the manifest's own read/write primitives so `_manifest.js` and `_manifest-hosts.js` both depend on it instead of each other, `_launchd-label.js` holds the label both launchd modules need, `_announced.js` holds the on-disk record `_context` and `_announce` share, `_targets-resolve.js` holds the target resolution `_targets` and `_targets-sync` both call, and the barrel re-exports that closed three more (env, tui, agents) moved to the barrel that owns them.
+Both checks now decide from source before they fail. `_circular.js` strips comments (keeping string literals, so import specifier survives) and cycle counts only when every edge is real import; `_dead-code.js` counts reported symbol only when no file exports it, its own file never mentions it again, it is not in test, and disk has file graph named. Both filters take project root, so `_run.js` now passes it to `evaluate`. modules behind reported cycles were split where cycle was real: `_manifest-store.js` holds manifest's own read/write primitives so `_manifest.js` and `_manifest-hosts.js` both depend on it instead of each other, `_launchd-label.js` holds label both launchd modules need, `_announced.js` holds on-disk record `_context` and `_announce` share, `_targets-resolve.js` holds target resolution `_targets` and `_targets-sync` both call, and barrel re-exports that closed three more (env, tui, agents) moved to barrel that owns them.
 
 ## Consequences
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Keep the raw counts and document them as noise: a permanently red gate is the failure ADR 177 already answered.
-1. Delete every symbol the graph names: it would delete command handlers, table entries and test helpers, which is the opposite of dead-code removal.
-1. Drop the JSDoc type references so the graph stops seeing them: it removes a working type hint from every signature to satisfy a tool that reads comments as code.
+1. Keep raw counts and document them as noise: permanently red gate is failure ADR 177 already answered.
+1. Delete every symbol graph names: it would delete command handlers, table entries and test helpers, which is opposite of dead-code removal.
+1. Drop JSDoc type references so graph stops seeing them: it removes working type hint from every signature to satisfy tool that reads comments as code.

@@ -11,11 +11,11 @@ Language models write deployment boilerplate into generated manifests: `packageM
 
 ## Decision
 
-rule-mcp does not support either kind of field. Two guardrails own it: `pkg-no-corepack` for `packageManager` and `devEngines.packageManager`, `pkg-no-engines` for `engines`. The path-bound write path strips them from a generated manifest before it checks, so the guardrail runs on what would be written, the receipt binds the cleaned content, and the reply carries it back for the caller to apply. The repository drops `engines` from its own package.json: the Node floor lives in `.nvmrc`, in the installers (`NODE_MIN=20`) and in CI, where a person reads it and nothing acts on it during an install.
+rule-mcp does not support either field. Two guardrails own it: `pkg-no-corepack` for `packageManager` and `devEngines.packageManager`, `pkg-no-engines` for `engines`. path-bound write path strips them from generated manifest before it checks, so guardrail runs on what would be written, receipt binds cleaned content, and reply carries it back for caller to apply. repository drops `engines` from its own package.json: Node floor lives in `.nvmrc`, in installers (`NODE_MIN=20`) and in CI, where person reads it and nothing acts on it during install.
 
 ## Consequences
 
-rule-mcp's own package.json no longer declares `engines`, so consumers no longer get npm's version warning; the Node floor is enforced by the installers (`NODE_MIN=20`) and stated where a person reads it. A model that writes the fields through the path-bound gateway flow gets a receipt for the cleaned manifest and must apply what the reply returns; the original content is refused by hash. A bare `code` string carries no path and so is neither checked nor cleaned, which is why a manifest is written through `files`.
+rule-mcp's own package.json no longer declares `engines`, so consumers no longer get npm's version warning; Node floor is enforced by installers (`NODE_MIN=20`) and stated where person reads it. model that writes fields through path-bound gateway flow gets receipt for cleaned manifest and must apply what reply returns; original content is refused by hash. bare `code` string carries no path and so is neither checked nor cleaned, which is why manifest is written through `files`.
 
 ## What would end this
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Keep `engines` legal (assert a version, fetch nothing) and ban only the corepack fields.
-1. Let the guardrail report and leave the fix to the model: two round trips and a model that can still ship the field if it ignores the failure.
-1. Strip the fields in rule_tool_apply only: the receipt would bind content that was never checked, so the check and the write would describe different files.
+1. Keep `engines` legal (assert version, fetch nothing) and ban only corepack fields.
+1. Let guardrail report and leave fix to model: two round trips and model that can still ship field if it ignores failure.
+1. Strip fields in rule_tool_apply only: receipt would bind content that was never checked, so check and write would describe different files.

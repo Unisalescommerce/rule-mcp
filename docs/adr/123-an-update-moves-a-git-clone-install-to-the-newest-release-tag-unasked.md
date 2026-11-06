@@ -7,29 +7,29 @@
 
 ## Context
 
-With `pnpm release` cutting tags (ADR 122) there is a better unit than a
-commit for what an update moves to. A development machine left on an old
-release is the failure this removes.
+With `pnpm release` cutting tags (ADR 122) there is better unit than a
+commit for what update moves to. development machine left on old
+release is failure this removes.
 
 ## Decision
 
-After the fetch (now `-p -P`, so a withdrawn tag is never read as newest),
-`releaseState` compares the highest `v*` tag merged into `origin/main` with
-the highest merged into HEAD, the manifest standing in before the first tag.
-A newer one is applied by `applyUpgrade`: checkout main, pull `--rebase`, then
-`scripts/reinstall.sh --keep-lock`. The default mode is upgrade;
-`RULE_MCP_AUTO_UPDATE=notify` announces only. The automatic check applies
+After fetch (now `-p -P`, so withdrawn tag is never read as newest),
+`releaseState` compares highest `v*` tag merged into `origin/main` with
+highest merged into HEAD, manifest standing in before first tag.
+newer one is applied by `applyUpgrade`: checkout main, pull `--rebase`, then
+`scripts/reinstall.sh --keep-lock`. default mode is upgrade;
+`RULE_MCP_AUTO_UPDATE=notify` announces only. automatic check applies
 only on main and reports `not-on-main` otherwise; `rule_tool_update` and the
-`update` CLI pass `explicit` and may switch the branch. Before a remote has
-any tag, the upstream branch is still fast-forwarded.
+`update` CLI pass `explicit` and may switch branch. Before remote has
+any tag, upstream branch is still fast-forwarded.
 
 ## Consequences
 
-A git-clone install follows release tags. The lock is kept so a release
-installs what it pinned. A pull that stops on a conflict is left for a person.
+git-clone install follows release tags. lock is kept so release
+installs what it pinned. pull that stops on conflict is left for person.
 npm and docker installs are unchanged.
 
 ## What would end this
 
-If an automatic reinstall breaks a machine that a person then has to repair,
-the default returns to notify and the upgrade stays one command away.
+If automatic reinstall breaks machine that person then has to repair,
+default returns to notify and upgrade stays one command away.

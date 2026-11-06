@@ -8,8 +8,8 @@
 ## Done
 
 1. **New track** [`docs/plans/_asd-ste100.md`](../plans/_asd-ste100.md) registered in [`plan-of-plans.md`](../plans/plan-of-plans.md) as **WS-G**.
-2. **Scope of the plan:** ASD-STE100 writing at ~80% for every markdown surface this MCP helps create (plans, reviews, audits, ADR, handoff, newsletter/release notes, comments, impersonation); development-plan shape `WSn` / `WSn-Tx.y` with edge list **and** diagram; evaluate which tools/skills must honor `.gitignore`.
-3. **Canonical directive (to implement next):** write in ASD-STE100 style at about 80%. Prefer short sentences, active voice, one idea per sentence, and the same word for the same thing. Keep ~20% natural tone. Prefer concrete verbs and named artifacts over abstract nouns.
+2. **Scope of plan:** ASD-STE100 writing at ~80% for every markdown surface this MCP helps create (plans, reviews, audits, ADR, handoff, newsletter/release notes, comments, impersonation); development-plan shape `WSn` / `WSn-Tx.y` with edge list **and** diagram; evaluate which tools/skills must honor `.gitignore`.
+3. **Canonical directive (to implement next):** write in ASD-STE100 style at about 80%. Prefer short sentences, active voice, one idea per sentence, and same word for same thing. Keep ~20% natural tone. Prefer concrete verbs and named artifacts over abstract nouns.
 4. Export / host / launcher remain closed (ADR 190–203). Handoff 38 still accurate for that closeout.
 
 ## State
@@ -22,8 +22,8 @@
 ## Left out / next
 
 - Implement WS1 first (profile module + failing contract tests), then WS2 generators, WS3 plan shape, WS4 gitignore evaluation.
-- Do not rewrite the whole historical docs tree in one pass.
-- Do not invent a licensed STE dictionary product.
+- Do not rewrite whole historical docs tree in one pass.
+- Do not invent licensed STE dictionary product.
 
 ### Resume Prompt
 

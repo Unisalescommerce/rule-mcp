@@ -7,7 +7,7 @@
 
 ## Context
 
-Phase 7's ratchet (ADRs 062-068) continued with a fourth wave of ~20 co-located suites over the named tail: daemon command arms (status, logs, dry-run install/uninstall, enable/disable, unknown action), skills-install catalog, IDE installer path and writer arms (vscode/devin paths per platform, emacs append-once, generic installer, devin slash commands), handoff sources (ADR edge shapes, project identity), skill tool mode arms, search tool empty arm, component tool arms, the claude transcript reader (window, tool results, sparse usage), orphaned-path references over a seeded git repo, doctor run (telemetry arm, live and stale pid), detect-env, findings merge (prune, defaults, steps, severity ranking), persona catalog edges (missing dir, unreadable dir, id mismatch), persona file parsing (nullable fields, frameless bodies), guardrails CSS util, snapshot sizes, and router compute. The wave surfaced one real defect: checkDaemonService's macos arm omitted the platform key while the linux, windows and default arms carried it, so `daemon status` printed `Platform: undefined` on macOS and the plist detail line (gated on platform === "macos") never rendered. Fixed test-first. Local measure after the wave: 90.74% branches (6057/6675) across 981 tests, up from 90.33% - the wave covered ~155 branches while the newly-loaded modules added ~140 uncovered ones (mostly platform-locked daemon arms) to the denominator.
+Phase 7's ratchet (ADRs 062-068) continued with fourth wave of ~20 co-located suites over named tail: daemon command arms (status, logs, dry-run install/uninstall, enable/disable, unknown action), skills-install catalog, IDE installer path and writer arms (vscode/devin paths per platform, emacs append-once, generic installer, devin slash commands), handoff sources (ADR edge shapes, project identity), skill tool mode arms, search tool empty arm, component tool arms, claude transcript reader (window, tool results, sparse usage), orphaned-path references over seeded git repo, doctor run (telemetry arm, live and stale pid), detect-env, findings merge (prune, defaults, steps, severity ranking), persona catalog edges (missing dir, unreadable dir, id mismatch), persona file parsing (nullable fields, frameless bodies), guardrails CSS util, snapshot sizes, and router compute. wave surfaced one real defect: checkDaemonService's macos arm omitted platform key while linux, windows and default arms carried it, so `daemon status` printed `Platform: undefined` on macOS and plist detail line (gated on platform === "macos") never rendered. Fixed test-first. Local measure after wave: 90.74% branches (6057/6675) across 981 tests, up from 90.33% - wave covered ~155 branches while newly-loaded modules added ~140 uncovered ones (mostly platform-locked daemon arms) to denominator.
 
 ## Decision
 
@@ -23,6 +23,6 @@ The assumption this leans on, and the observation that would make it wrong.
 
 ## Alternatives Considered
 
-1. Raise the floor to 91 anyway - rejected: the local measure is 90.74, the gate would be red on landing
-1. Add /* c8 ignore */ to the platform-locked daemon arms - rejected for now: excluding code from the census is a structural decision this wave was not asked to make
-1. Refactor detectPlatform for dependency injection so linux/windows arms run on darwin - proposed in prose, out of scope for a coverage wave
+1. Raise floor to 91 anyway - rejected: local measure is 90.74, gate would be red on landing
+1. Add /* c8 ignore */ to platform-locked daemon arms - rejected for now: excluding code from census is structural decision this wave was not asked to make
+1. Refactor detectPlatform for dependency injection so linux/windows arms run on darwin - proposed in prose, out of scope for coverage wave

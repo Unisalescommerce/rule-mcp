@@ -8,15 +8,15 @@ date: 2026-09-21
 
 ## Completed
 
-- ARCH-7.1 is complete. Six pre-existing `skills/` size-ratchet offenders were split using the ADR 053 folder/barrel pattern.
+- ARCH-7.1 is complete. Six pre-existing `skills/` size-ratchet offenders were split using ADR 053 folder/barrel pattern.
 - Template-engine assets now use `filters/`, `expression-parser/`, and `renderer/` responsibility folders.
 - Vanilla-reactive template instance code is split into markup, descriptors, template lookup, node paths, and instance lifecycle modules.
 - Custom-element scaffolding is split under `scripts/scaffold/`.
 - Worker-pool code is split into public, internal, and size helpers.
 - `FILE_SIZE_RATCHET` is empty; all shipped source files are at or below 150 lines.
 - `skills` CI coverage is wired and green: 111 tests passed.
-- The file-size budget gate is green: 3 tests passed.
-- The ARCH-7.1 plan annotation is committed.
+- file-size budget gate is green: 3 tests passed.
+- ARCH-7.1 plan annotation is committed.
 
 ## Commits
 
@@ -27,13 +27,13 @@ date: 2026-09-21
 
 - `skills` suite: 111 passed.
 - File-size budget: 3 passed.
-- Full suite previously measured 1986 tests: 1982 passed, 1 known unrelated installer failure, 3 skipped.
-- Lint previously measured 0 errors and 36 baseline warnings.
-- `rule_tool_process_handoff` was not available in this session; the repository handoff builder was invoked with all default inclusions and reported 112 ADRs, 0 archived documents, 189 lines, and approximately 6606 tokens.
+- Full suite before measured 1986 tests: 1982 passed, 1 known unrelated installer failure, 3 skipped.
+- Lint before measured 0 errors and 36 baseline warnings.
+- `rule_tool_process_handoff` was not available in this session; repository handoff builder was invoked with all default inclusions and reported 112 ADRs, 0 archived documents, 189 lines, and about 6606 tokens.
 
 ## Known failure
 
-`src/cli/install/__tests__/_installer-stdio-path.test.mjs` expects the checkout path `~/Projects/rule` and fails when a global binary is present. It predates ARCH-7.1 and was not changed.
+`src/cli/install/__tests__/_installer-stdio-path.test.mjs` expects checkout path `~/Projects/rule` and fails when global binary is present. It predates ARCH-7.1 and was not changed.
 
 ## Next work
 

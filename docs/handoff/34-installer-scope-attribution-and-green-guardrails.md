@@ -2,18 +2,18 @@
 
 - **Branch**: `rel/v0.1.0`
 - **Commit range**: `f7bb432b..35db190c` (31 commits, this handoff excluded)
-- **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits in the whole feature range: 2
+- **Base**: `main` (merge base `325936e6`); Conventional Commit violations: 0; merge commits in whole feature range: 2
 - **Date**: 2026-10-29
 
 ## Done
 
-1. **Handon, three defects, each test-first** — `parseHandoff` accepted only `**Branch:**` while every handoff here writes `**Branch**:`, so the declared branch was never read and the trunk under `**Base**:` became "the branch this work was on"; both forms are read, the base is excluded, and `firstMove` proposes only the declared branch. Named files were compared from the range _start_, so every file the handoff had just committed came back "modified since"; the comparison base is now the one the commit count uses. Suite: 48/48.
-2. **Tokensave is a three-level switch with a derived default** — `on` writes `RULE_MCP_NO_TOKENSAVE=0` (a decision, not an erasure), `on+autotrack` resolves to the canonical `autotrack`, and with no choice recorded `readLevel` follows `.tokensave/` in the project. A project-scope install pins off for a graphless project; the constant an earlier install wrote is pruned once by the setup path.
-3. **Uninstall reclaims what it wrote** — a `config` step lists and removes `env.json` (canonical and legacy), the manifest and `projects.json`, asks before deleting, keeps the switches under `--keep-config`, and an entry that was the whole file now takes the file with it.
-4. **Attribution is a table, one row per agent** — 23 rows, 2 documented (Claude Code from its settings reference, Gemini as `none`), 21 `unverified` with no values and no writer. `applyAttribution` keeps the user's value, `hide` writes only the documented marker, `keep` removes only that, an unparseable file is refused. `setup --attribution <keep|hide>`, `--attribution-agent`, one wizard question.
-5. **Project membership is a command** — `rule-mcp project add|remove` reuse the last recorded project's agents and config kind; a successful self-update re-applies the recorded installs and projects. Two paths that could not run are fixed: `runPlan` was handed an object, and the count included the empty-store placeholder.
-6. **The style fixer settles** — three defects: a multi-line block whose body was one line was split and given a second `;`; `function`/`class` counted as `const`, inserting a blank line inside functions; and the chain ran once, so a pass fed the next round text it would change again. It now iterates to stability and skips string and comment ranges.
-7. **Guardrails green** — the five cycles and forty-nine dead symbols were mostly artefacts: a JSDoc type reference is read as an import, and a symbol reached through a table, a run-time import or a test has no edge. Both checks now decide from the source; the cycles that were real were split into leaf modules.
+1. **Handon, three defects, each test-first** — `parseHandoff` accepted only `**Branch:**` while every handoff here writes `**Branch**:`, so declared branch was never read and trunk under `**Base**:` became "branch this work was on"; both forms are read, base is excluded, and `firstMove` proposes only declared branch. Named files were compared from range _start_, so every file handoff had committed came back "modified since"; comparison base is now one commit count uses. Suite: 48/48.
+2. **Tokensave is three-level switch with derived default** — `on` writes `RULE_MCP_NO_TOKENSAVE=0` (decision, not erasure), `on+autotrack` resolves to canonical `autotrack`, and with no choice recorded `readLevel` follows `.tokensave/` in project. project-scope install pins off for graphless project; constant earlier install wrote is pruned once by setup path.
+3. **Uninstall reclaims what it wrote** — `config` step lists and removes `env.json` (canonical and legacy), manifest and `projects.json`, asks before deleting, keeps switches under `--keep-config`, and entry that was whole file now takes file with it.
+4. **Attribution is table, one row per agent** — 23 rows, 2 documented (Claude Code from its settings reference, Gemini as `none`), 21 `unverified` with no values and no writer. `applyAttribution` keeps user's value, `hide` writes only documented marker, `keep` removes only that, unparseable file is refused. `setup --attribution <keep|hide>`, `--attribution-agent`, one wizard question.
+5. **Project membership is command** — `rule-mcp project add|remove` reuse last recorded project's agents and config kind; successful self-update re-applies recorded installs and projects. Two paths that could not run are fixed: `runPlan` was handed object, and count included empty-store placeholder.
+6. **style fixer settles** — three defects: multi-line block whose body was one line was split and given second `;`; `function`/`class` counted as `const`, inserting blank line inside functions; and chain ran once, so pass fed next round text it would change again. It now iterates to stability and skips string and comment ranges.
+7. **Guardrails green** — five cycles and forty-nine dead symbols were mostly artefacts: JSDoc type reference is read as import, and symbol reached through table, run-time import or test has no edge. Both checks now decide from source; cycles that were real were split into leaf modules.
 
 ## Commits this handoff window
 
@@ -30,7 +30,7 @@ Six pending, all in `docs/adr/_pending/`, all numbered on trunk landing (`rule-m
 - `project-membership-is-a-command-and-an-update-re-applies-what-it-moved.md`
 - `count-the-cycles-and-the-dead-symbols-the-graph-can-prove-and-break-the-cycles-t.md`
 
-Do not cite a number for any of them before `rule-mcp handoff land`.
+Do not cite number for any of them before `rule-mcp handoff land`.
 
 ## State
 
@@ -41,13 +41,13 @@ Do not cite a number for any of them before `rule-mcp handoff land`.
 
 ## Left out / next
 
-- **Plan step 8 is half done.** Open: the Claude extras in project scope (`CLAUDE.md`, `.claude/commands/`, hooks and attribution in `.claude/settings.json`), per-client prompt suppression (`RULE_MCP_NO_MCP_PROMPTS` as a client list), the numbering hooks per project, and the wizard Scope UI. Steps 9–11 (path completion, project rules block, docs) are untouched.
-- **Attribution rows for 21 agents**: each needs a cited vendor page. The table states that nobody read one; filling a row from memory is the failure the ADR forbids.
-- **No TOML attribution row exists**, so `_attribution.js` has no TOML writer: a document naming one is what would justify it.
-- **Two merge commits** (`e9d29e8e`, `df6ba117`) remain in the 363-commit feature range; linearize only with owner confirmation.
-- **`main` is 870 commits behind this line**; the merge is a review question, not a cherry-pick.
+- **Plan step 8 is half done.** Open: Claude extras in project scope (`CLAUDE.md`, `.claude/commands/`, hooks and attribution in `.claude/settings.json`), per-client prompt suppression (`RULE_MCP_NO_MCP_PROMPTS` as client list), numbering hooks per project, and wizard Scope UI. Steps 9–11 (path completion, project rules block, docs) are untouched.
+- **Attribution rows for 21 agents**: each needs cited vendor page. table states that nobody read one; filling row from memory is failure ADR forbids.
+- **No TOML attribution row exists**, so `_attribution.js` has no TOML writer: document naming one is what would justify it.
+- **Two merge commits** (`e9d29e8e`, `df6ba117`) remain in 363-commit feature range; linearize only with owner confirmation.
+- **`main` is 870 commits behind this line**; merge is review question, not cherry-pick.
 - `unicorn/no-asterisk-prefix-in-documentation-comments` still fires on files this session did not rewrite; every new comment here is written without asterisk prefixes.
-- The MCP server in the session that produced this handoff served an older build than the checkout, so `rule_tool_check`, `rule_tool_structural` and `rule_tool_handon` answered stale or refused. The CLI path (`node bin/rule-mcp.js …`) was used instead; restart the server before trusting those tools on this tree.
+- MCP server in session that produced this handoff served older build than checkout, so `rule_tool_check`, `rule_tool_structural` and `rule_tool_handon` answered stale or refused. CLI path (`node bin/rule-mcp.js …`) was used instead; restart server before trusting those tools on this tree.
 
 ### Resume Prompt
 
