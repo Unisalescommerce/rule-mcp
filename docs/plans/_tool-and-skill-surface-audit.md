@@ -143,7 +143,7 @@ A static count finds 120 guardrail files: `find skills -path "*/guardrails/_*.js
 
 ### WS3 - Stop the drift (G2, G3)
 
-- [ ] **WS3-T1**: Extend `scripts/__tests__/docs/docs-accuracy.test.mjs`. It must assert the `CLAUDE.md` counts against the runtime values it already computes for `README.md`. Write the failing assertion first. Run it before WS1 and WS2 land, or against a wrong number. Then confirm it passes after.
+- [x] **WS3-T1**: Extend `scripts/__tests__/docs/docs-accuracy.test.mjs`. It must assert the `CLAUDE.md` counts against the runtime values it already computes for `README.md`. Write the failing assertion first. Run it before WS1 and WS2 land, or against a wrong number. Then confirm it passes after. Verified 2026-11-06: against the previous `CLAUDE.md` the new assertion fails and names all seven stale claims; against the current file it passes.
 
 ### WS4 - Remove the duplicate text in the orchestrator (G5)
 
