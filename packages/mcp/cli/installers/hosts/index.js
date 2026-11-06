@@ -21,7 +21,7 @@
  * install. A host that never moved has an empty list.
  */
 
-import { hostRecord as hostRecordCore, catalogHosts, serverPaths, levelSupport, hostLabel } from "./_core.js";
+import { hostRecord as hostRecordCore,     } from "./_core.js";
 import { writerPair } from "./_writers.js";
 
 /**
@@ -46,4 +46,6 @@ export function hostRecord(id) {
   return { ...core, install: writers.install, uninstall: writers.uninstall };
 }
 
-export { catalogHosts, serverPaths, levelSupport, hostLabel };
+
+
+export {catalogHosts, serverPaths, levelSupport, hostLabel} from "./_core.js";

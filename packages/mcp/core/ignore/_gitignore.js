@@ -27,7 +27,7 @@ export function isGitIgnored(projectDir, relativePath) {
     return false;
   }
 
-  const normalized = String(relativePath).split(/[\\/]+/).filter(Boolean).join("/");
+  const normalized = relativePath.split(/[\\/]+/).filter(Boolean).join("/");
 
   if (!normalized) {
     return false;

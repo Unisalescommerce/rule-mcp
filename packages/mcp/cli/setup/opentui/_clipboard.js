@@ -66,8 +66,10 @@ export async function toast(renderer, message, ms = 2000) {
 
   // The wizard can be closed while the toast is still on screen; a remove on a
   // destroyed root would throw inside a promise nobody awaits.
-  if (!renderer.isDestroyed) {
-    renderer.root.remove(box);
-    box.destroyRecursively();
+  if (renderer.isDestroyed) {
+    return;
   }
+
+  renderer.root.remove(box);
+  box.destroyRecursively();
 }

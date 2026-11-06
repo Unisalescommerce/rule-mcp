@@ -79,7 +79,7 @@ test("an unreadable pointer is the same as no pointer", () => {
 
   writeFileSync(entry, 'console.log("checkout ran");\n');
   mkdirSync(join(root, "launcher"), { recursive: true });
-  writeFileSync(join(root, "launcher", "current"), "\u0000 not a version\n");
+  writeFileSync(join(root, "launcher", "current"), "\0 not a version\n");
 
   const result = run({ root, checkout: entry });
 

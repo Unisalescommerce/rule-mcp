@@ -18,7 +18,7 @@ const VERSION = /^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$/;
  * @returns {{ major: number, minor: number, patch: number }|null}
  */
 export function parseVersion(text) {
-  const match = VERSION.exec(String(text ?? "").trim());
+  const match = VERSION.exec((text ?? "").trim());
 
   if (!match) {
     return null;

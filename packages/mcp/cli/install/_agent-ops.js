@@ -1,14 +1,14 @@
 /** @module cli/install/agent-ops - install into and remove from one agent config */
 
-import { allAgents, normalizeInstallMode, remoteModeAgents, installers, uninstallers } from "../installers/index.js";
+import { allAgents, normalizeInstallMode, remoteModeAgents, installers } from "../installers/index.js";
 
 export * from "../installers/index.js";
 import { deprecatedAgents } from "../installers/index.js";
-import { installHookFile, removeHookFile } from "./_hook-files.js";
-import { forgetHost, readManifest } from "./_manifest.js";
+import { installHookFile } from "./_hook-files.js";
+
 import { writeInstalledManifest } from "./_manifest-write.js";
 import { nonInstallable } from "../installers/hosts/_evidence.data.js";
-import { startGuardDaemonProcess, stopGuardDaemonProcess } from "../guard/_process.js";
+import { startGuardDaemonProcess } from "../guard/_process.js";
 
 /**
  * Whether an agent can be reached in a mode, before anything is written.

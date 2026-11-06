@@ -17,8 +17,8 @@ test("every active role has one persona prompt", () => {
 });
 
 test("the request decides how deep the run goes", () => {
-  const sectionOf = (name, topic) => {
-    const prompt = getPrompt(name, topic === undefined ? {} : { topic });
+  const sectionOf = (topic) => {
+    const prompt = getPrompt("rule-persona-security", topic === undefined ? {} : { topic });
     const text = prompt.messages.map((message) => message.content.text).join("\n");
 
     assert.ok(!text.includes("{{"), "no placeholder reaches the client");
@@ -27,14 +27,14 @@ test("the request decides how deep the run goes", () => {
     return text;
   };
 
-  const audit = sectionOf("rule-persona-security", "the auth flow");
+  const audit = sectionOf("the auth flow");
 
   assert.match(audit, /## The operation: audit$/m, "no stage keyword runs the audit alone");
   assert.match(audit, /docs\/audits\/security\.md/);
   assert.ok(!audit.includes("docs/plans/security.md"), "an audit run does not promise the plan");
   assert.ok(!audit.includes("docs/reviews/security.md"), "nor the review");
 
-  const review = sectionOf("rule-persona-security", "review the auth flow");
+  const review = sectionOf("review the auth flow");
 
   assert.match(review, /## The operation: audit, then review/);
   assert.match(review, /docs\/audits\/security\.md/);
@@ -42,7 +42,7 @@ test("the request decides how deep the run goes", () => {
   assert.match(review, /distilled from the audit/, "the review points back at the audit");
   assert.ok(!review.includes("docs/plans/security.md"), "a review does not promise the plan");
 
-  const plan = sectionOf("rule-persona-security", "plan the auth fix");
+  const plan = sectionOf("plan the auth fix");
 
   assert.match(plan, /## The operation: audit, review, plan/);
   assert.match(plan, /docs\/audits\/security\.md/);

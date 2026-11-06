@@ -44,7 +44,7 @@ const FILTER = [
  * @returns {string}
  */
 function quote(value) {
-  return `'${String(value).replaceAll("'", String.raw`'\''`)}'`;
+  return `'${value.replaceAll("'", String.raw`'\''`)}'`;
 }
 
 /**

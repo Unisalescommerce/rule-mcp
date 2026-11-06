@@ -12,20 +12,20 @@ export function top(counts, limit) {
 }
 
 /** @param {number} n @param {number} [digits] @returns {string} */
-export const pct = (n, digits = 1) => `${((Number(n) || 0) * 100).toFixed(digits)}%`;
+export const pct = (n, digits = 1) => `${((n || 0) * 100).toFixed(digits)}%`;
 
 /** @param {number} n @returns {string} thousands separated, so long numbers stay readable */
-export const num = (n) => (Number(n) || 0).toLocaleString("en-US");
+export const num = (n) => (n || 0).toLocaleString("en-US");
 
 /** @param {number} n @returns {string} */
-export const usd = (n) => `$${(Number(n) || 0).toFixed(4)}`;
+export const usd = (n) => `$${(n || 0).toFixed(4)}`;
 
 /** @param {number} bytes @returns {string} */
-export const kb = (bytes) => `${Math.round((Number(bytes) || 0) / 1024)} KB`;
+export const kb = (bytes) => `${Math.round((bytes || 0) / 1024)} KB`;
 
 /** @param {number} ms @returns {string} mm:ss, which is how a session length is read */
 export function clock(ms) {
-  const seconds = Math.round((Number(ms) || 0) / 1000);
+  const seconds = Math.round((ms || 0) / 1000);
 
   return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
 }

@@ -56,7 +56,7 @@ export function lastSkip({ root = getRuntimePaths().homeDir } = {}) {
   const file = skipLogPath({ root });
 
   if (!existsSync(file)) {
-    return undefined;
+    return;
   }
 
   const lines = readFileSync(file, "utf8").split("\n").filter((line) => line.trim() !== "");

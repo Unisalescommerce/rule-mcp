@@ -31,12 +31,12 @@ function skill(base, name, frontmatter = "") {
 }
 
 /** Write a persona file into a layer's personas directory. */
-function persona(base, id, role = "Tester") {
+function persona(base, role = "Tester") {
   const dir = join(base, "personas");
   mkdirSync(dir, { recursive: true });
   writeFileSync(
-    join(dir, `${id}.md`),
-    `---\nid: "${id}"\nrole: "${role}"\nyearsOfExperience: 3\nstatus: "active"\nversion: 1\nskills:\n  - "testing"\n---\n\n# ${role}\n\n- a lens\n`,
+    join(dir, `${"security"}.md`),
+    `---\nid: "${"security"}"\nrole: "${role}"\nyearsOfExperience: 3\nstatus: "active"\nversion: 1\nskills:\n  - "testing"\n---\n\n# ${role}\n\n- a lens\n`,
   );
 }
 
@@ -91,10 +91,10 @@ test("personas resolve through the same layers", () => {
   assert.ok(resolved.size >= 18, `the bundled personas resolve: ${resolved.size}`);
   assert.equal(resolved.get("security").layer, "native");
 
-  persona(join(projectRoot, ".rule-mcp"), "security", "Project Security Engineer");
+  persona(join(projectRoot, ".rule-mcp"), "Project Security Engineer");
   assert.equal(resolvePersonaFiles({ cwd: projectRoot }).get("security").layer, "project");
 
-  persona(home, "security", "My Security Engineer");
+  persona(home, "My Security Engineer");
   const user = resolvePersonaFiles({ cwd: projectRoot }).get("security");
   assert.equal(user.layer, "user");
   assert.equal(user.role.role, "My Security Engineer", "the whole entry is replaced, not merged");

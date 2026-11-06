@@ -98,7 +98,7 @@ test("a superseded plan is never offered", () => {
   const root = seededGraph();
 
   try {
-    assert.ok(!frontier(readPlans(root), retiredPlans(root)).some((plan) => plan.id === "old"));
+    assert.ok(frontier(readPlans(root), retiredPlans(root)).every((plan) => !(plan.id === "old")));
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

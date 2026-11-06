@@ -11,10 +11,10 @@ const { commandDefinition } = await import("../_definitions.js");
 const { listPrompts } = await import("@mcp/prompts/index.js");
 
 test("rule-keep and rule-export prompts are registered", () => {
-  const names = listPrompts().map((prompt) => prompt.name);
+  const names = new Set(listPrompts().map((prompt) => prompt.name));
 
-  assert.ok(names.includes("rule-keep"), "rule-keep prompt exists");
-  assert.ok(names.includes("rule-export"), "rule-export prompt exists");
+  assert.ok(names.has("rule-keep"), "rule-keep prompt exists");
+  assert.ok(names.has("rule-export"), "rule-export prompt exists");
 });
 
 test("rule-keep command body drives rule_tool_keep", () => {

@@ -9,8 +9,6 @@
  * collect `written` for the manifest and `projects.json` (ADR 184).
  */
 
-import { join } from "node:path";
-
 import { readText, writeText } from "./_paths.js";
 import { installClaudeProjectExtras } from "./_claude-project.js";
 
@@ -19,7 +17,6 @@ import { commandConfig } from "./_env-command.js";
 import { tokensaveProjectEnv } from "./_env-tokensave.js";
 import { upsertHostServer } from "./_host-formats.js";
 import { PROJECT_HOSTS, projectHostFile, projectHostFormat, projectHostLocalFile } from "./_project-hosts.data.js";
-
 
 /** Portable shared project entry: no absolute paths, no machine environment. */
 export function sharedServerConfig() {

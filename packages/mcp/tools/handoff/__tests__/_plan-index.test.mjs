@@ -51,7 +51,7 @@ test("retiring rewrites the snapshot row, the checkbox, the graph leaf and the p
     /^- \[x\] \[`_scripts-mcp-layout\.md`\]\(_scripts-mcp-layout\.md\) - own graph; retired → \[ADR 205\]\(\.\.\/adr\/205-close-out-plan-scripts-mcp-layout\.md\)\.$/m,
     "the workstream box is closed and keeps its description",
   );
-  assert.match(text, /^│   └── scripts layout \.\.\. done → ADR 205$/m, "the graph leaf names the closeout");
+  assert.match(text, /^│ {3}└── scripts layout \.\.\. done → ADR 205$/m, "the graph leaf names the closeout");
   assert.match(text, /^Plan: retired → \[ADR 205\]\(\.\.\/adr\/205-close-out-plan-scripts-mcp-layout\.md\)$/m, "the plan link is retired");
   assert.doesNotMatch(text, /_scripts-mcp-layout\.md`\]\(_scripts-mcp-layout\.md\) - own graph\./, "the open item is gone");
 });

@@ -109,7 +109,7 @@ test("gitignore entries under src are never walked", () => {
 
     assert.deepEqual(report.issues, [], "gitignored noise/ must not produce file-tree findings");
     assert.ok(
-      !report.issues.some((issue) => String(issue.path).includes("noise")),
+      report.issues.every((issue) => !String(issue.path).includes("noise")),
       "no issue path may mention noise/",
     );
   } finally {

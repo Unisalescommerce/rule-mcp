@@ -75,7 +75,7 @@ export function registerHandoffCommand(program) {
             } else if (result.landed.length === 0) {
               process.stdout.write("No pending ADRs to land.\n");
             } else {
-              process.stdout.write(`Landed ${result.landed.length} ADR(s); ${result.referencesUpdated} file(s) updated` + `${result.committed ? "; committed" : ""}.\n`);
+              process.stdout.write(`Landed ${result.landed.length} ADR(s); ${result.referencesUpdated} file(s) updated${result.committed ? "; committed" : ""}.\n`);
             }
           }
         } else {

@@ -50,10 +50,10 @@ test("a removal takes back exactly what the install added", () => {
 test("a second install refreshes the blocks rather than stacking them", () => {
   const once = written();
   const twice = appendInstruction(once, { refresh: true });
-  const count = (text, marker) => text.split(marker).length - 1;
+  const count = (marker) => twice.split(marker).length - 1;
 
-  assert.equal(count(twice, INSTRUCTION_MARKER), 1);
-  assert.equal(count(twice, RULES_MARKER), 1);
+  assert.equal(count(INSTRUCTION_MARKER), 1);
+  assert.equal(count(RULES_MARKER), 1);
   assert.equal(twice, once, "a refresh of the current text is the current text");
 });
 

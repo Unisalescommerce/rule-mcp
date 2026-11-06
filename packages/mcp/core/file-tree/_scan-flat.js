@@ -128,7 +128,7 @@ export function scanFlat(rootDir, srcDir, files) {
     for (const child of childDirs) {
       const childRelative = dir ? `${srcDir}/${dir}/${child}` : `${srcDir}/${child}`;
 
-      if (!shouldSkipWalk(child, { projectDir: rootDir, relativePath: childRelative.split("\\").join("/") })) {
+      if (!shouldSkipWalk(child, { projectDir: rootDir, relativePath: childRelative.replaceAll('\\', '/') })) {
         walk(join(dir, child), depth + 1);
       }
     }

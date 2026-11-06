@@ -15,7 +15,6 @@
  * @see docs/plans/deterministic-cache.md - sections 3 and 8
  */
 
-import test from "node:test";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";

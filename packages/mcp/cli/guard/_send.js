@@ -66,10 +66,12 @@ export function sendGuardRequest(request) {
       fail(new Error(`guard daemon unavailable at ${path}: ${error.message}`));
     });
     socket.on("end", () => {
-      if (!settled) {
-        clearTimeout(timer);
-        fail(new Error(`guard daemon closed without an answer (${path})`));
+      if (settled) {
+        return;
       }
+
+      clearTimeout(timer);
+      fail(new Error(`guard daemon closed without an answer (${path})`));
     });
   });
 }

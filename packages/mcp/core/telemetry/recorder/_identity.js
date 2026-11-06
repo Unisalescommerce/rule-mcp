@@ -95,5 +95,5 @@ export function installationId() {
  * @returns {string}
  */
 export function hashValue(value) {
-  return createHash("sha256").update(String(value)).digest("hex").slice(0, 16);
+  return createHash("sha256").update(value).digest("hex").slice(0, 16);
 }

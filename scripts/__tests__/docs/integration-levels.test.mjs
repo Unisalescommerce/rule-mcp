@@ -21,7 +21,7 @@ const DOC = fileURLToPath(new URL("../../../docs/04-operations.md", import.meta.
 
 /** The rows between the markers, as `{ host: [ceiling, ...] }`. */
 function documentedRows() {
-  const body = readFileSync(DOC, "utf8").split("<!-- levels:start -->")[1]?.split("<!-- levels:end -->")[0] ?? "";
+  const body = readFileSync(DOC, "utf8").split("<!-- levels:start -->", 2)[1]?.split("<!-- levels:end -->", 1)[0] ?? "";
   const rows = new Map();
 
   for (const line of body.split("\n")) {

@@ -3,7 +3,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { parseSkillFrontmatter } from "../../core/skills/_frontmatter.js";
-import { clearSkillResolution, resolvedSkills as resolved } from "./_skill-resolution.js";
+import { resolvedSkills as resolved } from "./_skill-resolution.js";
 
 /** The SKILL.md of a skill, from the layer that won, or null. */
 function readSkill(skillName) {

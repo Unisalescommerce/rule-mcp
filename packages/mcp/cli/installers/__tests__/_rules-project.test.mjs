@@ -8,7 +8,7 @@ block is not this step's business.
 
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -34,7 +34,7 @@ test("the block is replaced and the project's own text is kept", () => {
   assert.equal(result.status, "refreshed");
   assert.ok(body.includes("Our own convention lives here."), "the file's own text survives");
   assert.equal(body.includes("an old rule that no longer ships"), false, "the stale rule is gone");
-  assert.ok(body.includes(INSTRUCTION_BLOCKS[1].split("\n")[2]), "and the shipped rule is there");
+  assert.ok(body.includes(INSTRUCTION_BLOCKS[1].split("\n", 3)[2]), "and the shipped rule is there");
 });
 
 test("a file without the block is left alone, and no file is created", () => {

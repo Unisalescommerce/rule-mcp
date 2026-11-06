@@ -95,7 +95,7 @@ export function planProse(text) {
 export function planDone(text) {
   const boxes = stripFenced(text).match(/^\s*-\s*\[[ xX]\]/gm) ?? [];
 
-  return DONE_STATUS.has(planStatus(text)) && boxes.some((line) => /\[[xX]\]/.test(line)) && !boxes.some((line) => /\[ \]/.test(line));
+  return DONE_STATUS.has(planStatus(text)) && boxes.some((line) => /\[[xX]\]/.test(line)) && boxes.every((line) => !/\[ \]/.test(line));
 }
 
 /** True when a review shows a Status column and no open row. */

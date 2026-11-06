@@ -1,6 +1,6 @@
 /** The manifest file itself: where it lives, what it says, and the two store primitives. */
 
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { getRuntimePaths } from "../paths/index.js";

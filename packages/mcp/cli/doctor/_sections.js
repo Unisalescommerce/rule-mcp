@@ -1,6 +1,6 @@
 /** Render the doctor report sections for the terminal. */
 import { banner, color, section } from "../index.js";
-import { agentIcon, agentsSection, truncate, yesNo } from "./_sections-agents.js";
+import { truncate, yesNo } from "./_sections-agents.js";
 
 export { agentIcon, agentsSection, truncate, yesNo } from "./_sections-agents.js";
 import { WRAPPER_SCRIPT_PATH } from "../daemon/index.js";

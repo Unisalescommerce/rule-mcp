@@ -42,7 +42,7 @@ export function exportDistill(options = {}) {
   const { drain = false, keep, toolCalls, ...rest } = options;
   // Distill-only keeps the log. An explicit drain wins over keep; an explicit
   // keep:false without drain still drains, matching exportFlight's contract.
-  const kept = drain ? false : keep !== false;
+  const kept = !drain && (keep !== false);
 
   const merge = mergeTranscriptTelemetry({
     projectDir: rest.projectDir,

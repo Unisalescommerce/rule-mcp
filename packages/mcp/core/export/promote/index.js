@@ -21,7 +21,7 @@ const HOST_PREFIXES = ["mcp__rule_mcp__", "mcp__rule-mcp__"];
  * @returns {string}
  */
 export function normalizeToolName(toolName) {
-  const raw = String(toolName ?? "");
+  const raw = (toolName ?? "");
 
   for (const prefix of HOST_PREFIXES) {
     if (raw.startsWith(prefix)) {

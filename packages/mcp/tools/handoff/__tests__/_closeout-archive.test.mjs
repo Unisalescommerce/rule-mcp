@@ -105,7 +105,7 @@ test("a retired plan leaves one handoff of its own", () => {
   const body = readFileSync(join(dir, plan.handoffPath), "utf8");
 
   assert.match(body, /## Delivered/, "it records what the plan delivered");
-  assert.match(body, new RegExp(`ADR\\*\\*: ${String(plan.adrNumber).padStart(3, "0")}`), "it points at the ADR that holds the decision");
+  assert.match(body, new RegExp(String.raw`ADR\*\*: ${String(plan.adrNumber).padStart(3, "0")}`), "it points at the ADR that holds the decision");
 
   rmSync(dir, { recursive: true, force: true });
 });

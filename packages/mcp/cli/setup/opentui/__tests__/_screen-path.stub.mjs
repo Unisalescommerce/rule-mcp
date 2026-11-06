@@ -42,7 +42,7 @@ export const createCliRenderer = async () => {
     destroy() {
       renderer.destroyed = true;
     },
-    press: (key) => keys.forEach((handler) => handler(key)),
+    press: (key) => { for (const handler of keys) {handler(key)} },
   };
 
   globalThis.__fakeRenderer = renderer;

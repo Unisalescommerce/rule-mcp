@@ -9,7 +9,7 @@ import { loadAllSkills } from "../index.js";
 import { getOrCreateSseBearerToken } from "../../../transport/_sse-auth.js";
 import { startSseServer, stopSseServer } from "../../../transport/sse/index.js";
 
-const openSse = (port, token) =>
+const openSse = (port) =>
   new Promise((resolve, reject) => {
     const request = httpGet(
       {
@@ -33,7 +33,7 @@ const openSse = (port, token) =>
     request.on("error", reject);
   });
 
-const postToolsList = (port, token, sessionId) =>
+const postToolsList = (port, sessionId) =>
   new Promise((resolve, reject) => {
     const body = JSON.stringify({ jsonrpc: "2.0", id: "1", method: "tools/list" });
     const request = httpRequest(
@@ -62,12 +62,12 @@ const token = getOrCreateSseBearerToken();
 const server = await startSseServer({ port: 0 });
 
 try {
-  const first = await openSse(server.port, token);
-  const second = await openSse(server.port, token);
+  const first = await openSse(server.port);
+  const second = await openSse(server.port);
 
   assert.notEqual(first.sessionId, second.sessionId, "each client receives an independent session");
-  assert.equal(await postToolsList(server.port, token, first.sessionId), 202, "first client stays usable after second connects");
-  assert.equal(await postToolsList(server.port, token, second.sessionId), 202, "second client is usable");
+  assert.equal(await postToolsList(server.port, first.sessionId), 202, "first client stays usable after second connects");
+  assert.equal(await postToolsList(server.port, second.sessionId), 202, "second client is usable");
 
   first.response.destroy();
   second.response.destroy();

@@ -5,7 +5,7 @@ import { homedir } from "node:os";
 import { normalizeInstallMode } from "./_catalog.js";
 import { DEFAULT_SSE_PORT } from "../paths/index.js";
 import { getOrCreateSseBearerToken } from "../../transport/index.js";
-import { minimalEnvFrom, resolveEnvironment } from "./_env.js";
+import { resolveEnvironment } from "./_env.js";
 import { resolveGlobalBinary, serverName } from "./_paths.js";
 
 const commandConfig = (entrypoint, options = {}) => {

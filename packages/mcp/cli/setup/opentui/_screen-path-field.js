@@ -63,7 +63,7 @@ export function askPathField({ renderer, body, empty, text, BoxRenderable, clear
       for (const [offset, item] of view.items.slice(view.window.start, view.window.end).entries()) {
         const current = view.window.start + offset === view.cursor;
 
-        menu.add(text(`${current ? GLYPHS.arrow : " "} ${item.name}`, { fg: current ? COLORS.accentSoft : COLORS.muted, ...(current ? { attributes: 1 } : {}) }));
+        menu.add(text(`${current ? GLYPHS.arrow : " "} ${item.name}`, { fg: current ? COLORS.accentSoft : COLORS.muted, ...(current && { attributes: 1 }) }));
       }
 
       footer.content = state.open ? view.footer : "";

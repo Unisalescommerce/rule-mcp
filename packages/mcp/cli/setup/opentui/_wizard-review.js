@@ -40,6 +40,6 @@ export async function askReview({ screen, answers, context, defaults }) {
 
       answers.plan = plan;
 
-      return undefined;
+      return;
     }
 }

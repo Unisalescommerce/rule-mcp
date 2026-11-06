@@ -42,7 +42,7 @@ export function assertLoopbackUrl(baseUrl) {
   try {
     url = new URL(baseUrl);
   } catch {
-    throw new DecisionClientError(`invalid decision URL: ${String(baseUrl)}`);
+    throw new DecisionClientError(`invalid decision URL: ${baseUrl}`);
   }
 
   if (!LOOPBACK_PROTOCOLS.has(url.protocol)) {

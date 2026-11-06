@@ -23,7 +23,7 @@ import { projectRulesTask } from "./_task-rules.js";
  * @returns {Array<{ id: string, title: string, detail: string, run: Function }>}
  */
 export function buildProjectInstallPlan({ agents = [], projects = [], projectConfig = "shared" } = {}) {
-  if (!projects.length) {
+  if (projects.length === 0) {
     throw new Error("--scope project requires at least one --project <path>");
   }
 

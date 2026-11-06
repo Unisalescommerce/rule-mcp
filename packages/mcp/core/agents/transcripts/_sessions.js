@@ -86,11 +86,7 @@ function opencodeSessions({ projectDir, home }) {
   for (const file of files) {
     const row = readJson(file);
 
-    if (!row) {
-      continue;
-    }
-
-    if ((row.path?.root ?? row.path?.cwd) !== projectDir) {
+    if (!row || ((row.path?.root ?? row.path?.cwd) !== projectDir)) {
       continue;
     }
 

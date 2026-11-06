@@ -63,10 +63,12 @@ function removeLandHookFiles(root) {
   for (const event of LAND_EVENTS) {
     const path = join(root, ".githooks", event);
 
-    if (existsSync(path) && readFileSync(path, "utf8").includes(HOOK_MARKER)) {
-      rmSync(path, { force: true });
-      removed.push(event);
+    if (!(existsSync(path) && readFileSync(path, "utf8").includes(HOOK_MARKER))) {
+      continue;
     }
+
+    rmSync(path, { force: true });
+    removed.push(event);
   }
 
   return removed;

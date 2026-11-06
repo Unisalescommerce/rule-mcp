@@ -91,7 +91,7 @@ export function removeLandHooks(projectDir) {
     const body = readFileSync(privatePath, "utf8");
     const next = body
       .split("\n")
-      .filter((line) => !ATTRIBUTE_LINES.some((attribute) => line.trim() === attribute))
+      .filter((line) => ATTRIBUTE_LINES.every((attribute) => !(line.trim() === attribute)))
       .join("\n");
 
     if (next !== body) {

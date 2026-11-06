@@ -12,7 +12,7 @@ test("assertSafeValue accepts plain strings, numbers and deep objects", () => {
 });
 
 test("assertSafeValue rejects NUL bytes, forbidden keys and prototypes", () => {
-  assert.throws(() => assertSafeValue("bad\u0000byte", state()), /NUL/, "NUL control bytes are refused");
+  assert.throws(() => assertSafeValue("bad\0byte", state()), /NUL/, "NUL control bytes are refused");
   assert.throws(() => assertSafeValue(JSON.parse('{"__proto__": {"x": 1}}'), state()), /forbidden/, "pollution keys are refused");
   assert.throws(() => assertSafeValue(new Date(), state()), /plain objects/, "a class instance is refused");
   assert.doesNotThrow(() => assertSafeValue(Object.create(null), state()), "a null-prototype object is allowed");

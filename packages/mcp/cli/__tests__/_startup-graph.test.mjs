@@ -37,9 +37,9 @@ function resolveSpec(fromFile, spec) {
 }
 
 /** Every file reachable from `entry` through static imports. */
-function staticGraph(entry) {
+function staticGraph() {
   const seen = new Set();
-  const queue = [resolve(ROOT, entry)];
+  const queue = [resolve(ROOT, "packages/mcp/index.js")];
 
   while (queue.length > 0) {
     const file = queue.pop();
@@ -66,7 +66,7 @@ function staticGraph(entry) {
 }
 
 test("the CLI entry point does not statically import the tool or server graph", () => {
-  const graph = staticGraph("packages/mcp/index.js");
+  const graph = staticGraph();
   const forbidden = [
     "packages/mcp/tools/router/index.js",
     "packages/mcp/core/skills/index.js",
@@ -81,7 +81,7 @@ test("the CLI entry point does not statically import the tool or server graph", 
 });
 
 test("the commander program is still built statically, so help text cannot drift", () => {
-  const graph = staticGraph("packages/mcp/index.js");
+  const graph = staticGraph();
 
   for (const file of ["packages/mcp/cli/_program.js", "packages/mcp/cli/_register-info.js", "packages/mcp/cli/_register-setup.js", "packages/mcp/cli/_register-server.js", "packages/mcp/cli/_register-session.js"]) {
     assert.ok(graph.has(file), `${file} must stay a static import: it declares commands and options that --help renders`);

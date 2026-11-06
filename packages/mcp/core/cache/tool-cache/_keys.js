@@ -40,7 +40,7 @@ export function cacheKey(toolName, args) {
     return null;
   }
 
-  const payload = `${namespace()}\u0000${compressionLevel()}\u0000${toolName}\u0000${stableStringify(args ?? {})}`;
+  const payload = `${namespace()}\0${compressionLevel()}\0${toolName}\0${stableStringify(args ?? {})}`;
 
   return createHash("sha256").update(payload).digest("hex");
 }

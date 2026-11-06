@@ -65,7 +65,7 @@ test("getRepoRoot resolves the git workspace root", () => {
 test("alias hook serves packages/mcp under the mcp prefix and the tree has no legacy alias imports", () => {
   const hook = readFileSync(join(ROOT, "scripts/alias-hook.mjs"), "utf8");
 
-  assert.match(hook, new RegExp(`const PREFIX = "${NEXT_ALIAS.replaceAll("/", "\\/")}"`));
+  assert.match(hook, new RegExp(`const PREFIX = "${NEXT_ALIAS.replaceAll("/", String.raw`\/`)}"`));
   assert.match(hook, /packages\/mcp\//);
 
   const offenders = [];

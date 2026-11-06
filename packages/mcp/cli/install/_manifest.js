@@ -1,10 +1,9 @@
 /** The install manifest: what this machine has, so the uninstall can remove it. */
 
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
-import { dirname } from "node:path";
 
 import { getRuntimePaths } from "../paths/index.js";
-import { readmePath } from "./_manifest-hosts.js";
+
 import { MANIFEST_VERSION, manifestPath, readManifest } from "./_manifest-store.js";
 
 export * from "./_manifest-hosts.js";

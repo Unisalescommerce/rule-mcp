@@ -61,7 +61,7 @@ test("identity from the environment makes a shared entry suppress acceptance for
 test("parsing reports what it understood", () => {
   assert.deepEqual(parseSuppression("1"), { all: true, names: [] });
   assert.deepEqual(parseSuppression("claude-code, , Zed"), { all: false, names: ["claude-code", "zed"] });
-  assert.deepEqual(parseSuppression(undefined), { all: false, names: [] });
+  assert.deepEqual(parseSuppression(), { all: false, names: [] });
 });
 
 test("the registry hides its prompts for a named client", () => {

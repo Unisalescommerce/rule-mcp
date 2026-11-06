@@ -35,7 +35,7 @@ export async function askScope({ screen, answers }) {
     answers.projects = [];
     answers.projectConfig = "shared";
 
-    return undefined;
+    return;
   }
 
   const picked = await screen.ask({
@@ -88,5 +88,5 @@ export async function askScope({ screen, answers }) {
 
   answers.projectConfig = projectConfig;
 
-  return undefined;
+  return;
 }

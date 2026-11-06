@@ -6,13 +6,12 @@ real navigation, the real copy and the real plan are exercised with no
 terminal and no native renderer. The dependencies that read or write the
 machine are stubbed; everything the user reads is not.
 */
-import assert from "node:assert/strict";
+
 import { mkdtempSync } from "node:fs";
 import { registerHooks } from "node:module";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
-import { test } from "node:test";
 
 process.env.RULE_MCP_HOME = mkdtempSync(join(tmpdir(), "rule-mcp-wizard-"));
 

@@ -43,7 +43,7 @@ function roleNames(role) {
  * @returns {object|undefined} the role, or undefined when the prompt is ordinary work
  */
 export function detectRole(prompt, overlays = []) {
-  const text = String(prompt ?? "").toLowerCase();
+  const text = (prompt ?? "").toLowerCase();
 
   if (text.trim() === "") {
     return;

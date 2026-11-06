@@ -1,7 +1,7 @@
 /** @module cli/commands/targets-sync - write the command files into every resolved target */
 
 import { renderAgentCommandFiles } from "../../core/agents/commands/index.js";
-import { existsSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { print } from "./_shared.js";
 import { isRuleCommandEntry, stalePersonaFiles } from "./_targets-stale.js";
 import { dirname, resolve } from "node:path";

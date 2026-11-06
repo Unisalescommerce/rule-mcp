@@ -17,9 +17,9 @@ import { DIMENSIONS, resolveProfile } from "../../install/_profiles.js";
 import { depthItems, modeItems } from "./_items-depth.js";
 import { readManifest } from "../../install/_manifest.js";
 import { agentRows } from "../_agent-rows.js";
-import { selectionLabel } from "../_commands-items.js";
+
 import { installNextSteps, uninstallNextSteps } from "../_next-steps.js";
-import { buildInstallPlan } from "../_plan-install.js";
+
 import { buildUninstallPlan } from "../_plan-uninstall.js";
 import { preflight } from "../_preflight.js";
 import { runPlan, TASK_PENDING, tally } from "../_run-plan.js";
@@ -27,8 +27,7 @@ import { installableTargets } from "../_rules-apply.js";
 import { scanInstallation } from "../_scan.js";
 import { GLYPHS } from "../_theme.js";
 import { BACK, CANCEL } from "./_answers.js";
-import { featureIds, FEATURES, levelsFor, readLevel } from "../../../core/runtime/features/index.js";
-import { mergedEnv } from "../../../core/runtime/features/_store.js";
+
 import {
   doneLines,
   dimensionItems,
@@ -50,10 +49,8 @@ import {
 import { askFeatures } from "./_wizard-features.js";
 import { askReview } from "./_wizard-review.js";
 import { askScope } from "./_wizard-scope.js";
-import { INSTALL_RAIL, INSTALL_STEPS, UNINSTALL_RAIL, UNINSTALL_STEPS } from "./_wizard-steps.js";
-import { dimensionMap, installOrder, installPlan, uninstallOrder } from "./_wizard-steps.js";
-
-export { INSTALL_STEPS, UNINSTALL_STEPS, installOrder, uninstallOrder };
+import { INSTALL_RAIL,  UNINSTALL_RAIL,  } from "./_wizard-steps.js";
+import { installOrder, installPlan, uninstallOrder } from "./_wizard-steps.js";
 
 /** A plan as pending rows, for the frame before the first task starts. */
 const pendingRows = (plan) => progressRows(plan.map((task) => ({ ...task, status: TASK_PENDING, summary: "" })));
@@ -130,7 +127,7 @@ export async function runInstallWizard({ screen, defaults = {} }) {
           return CANCEL;
         }
 
-        return undefined;
+        return;
       }
 
       case "profile": {
@@ -170,7 +167,7 @@ export async function runInstallWizard({ screen, defaults = {} }) {
         answers.surface = answers.surface ?? { preset: resolveProfile(profile).surface };
         answers.selection = answers.selection ?? selectionFromSurface(answers.surface);
 
-        return undefined;
+        return;
       }
 
       case "agents": {
@@ -188,7 +185,7 @@ export async function runInstallWizard({ screen, defaults = {} }) {
 
         answers.agents = picked;
 
-        return undefined;
+        return;
       }
 
       case "scope": {
@@ -213,7 +210,7 @@ export async function runInstallWizard({ screen, defaults = {} }) {
 
         answers.level = level;
 
-        return undefined;
+        return;
       }
 
       case "transport": {
@@ -232,7 +229,7 @@ export async function runInstallWizard({ screen, defaults = {} }) {
 
         answers.mode = mode;
 
-        return undefined;
+        return;
       }
 
       case "features": {
@@ -258,7 +255,7 @@ export async function runInstallWizard({ screen, defaults = {} }) {
           answers.surface = { preset };
           answers.selection = selectionFromSurface(answers.surface);
 
-          return undefined;
+          return;
         }
 
         const areas = await screen.ask({
@@ -277,7 +274,7 @@ export async function runInstallWizard({ screen, defaults = {} }) {
           answers.surface = { areas };
           answers.selection = selectionFromSurface(answers.surface);
 
-          return undefined;
+          return;
         }
 
         const skills = surfaceSkillItems(areas);
@@ -295,7 +292,7 @@ export async function runInstallWizard({ screen, defaults = {} }) {
         answers.surface = picked.length === skills.length ? { areas } : { skills: picked };
         answers.selection = selectionFromSurface(answers.surface);
 
-        return undefined;
+        return;
       }
 
       case "review": {
@@ -400,7 +397,7 @@ export async function runUninstallWizard({ screen, defaults = {} }) {
 
         answers.groups = picked;
 
-        return undefined;
+        return;
       }
 
       case "purge": {
@@ -419,7 +416,7 @@ export async function runUninstallWizard({ screen, defaults = {} }) {
 
         answers.purgeIds = picked;
 
-        return undefined;
+        return;
       }
 
       case "review": {
@@ -451,7 +448,7 @@ export async function runUninstallWizard({ screen, defaults = {} }) {
 
           answers.plan = steps;
 
-          return undefined;
+          return;
         }
       }
 
@@ -507,3 +504,5 @@ export async function runUninstallWizard({ screen, defaults = {} }) {
 
   return { results, dryRun: answers.dryRun };
 }
+
+export {INSTALL_STEPS, UNINSTALL_STEPS, installOrder, uninstallOrder} from "./_wizard-steps.js";

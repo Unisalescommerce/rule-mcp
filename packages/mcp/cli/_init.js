@@ -29,8 +29,7 @@ import { mkdirSync } from "node:fs";
 import { installGitGovernance } from "../core/commit/index.js";
 import { detectReleaseTooling, renderInitExtras, unpinnedDependencies } from "../core/release/index.js";
 import { hostLevels } from "./install/_manifest.js";
-import { reasonOf } from "../core/tokensave/_client.js";
-import { probeFilesystem } from "../core/tokensave/_probe.js";
+
 import { findProjectRoot, getProjectPaths } from "./paths/index.js";
 
 /**

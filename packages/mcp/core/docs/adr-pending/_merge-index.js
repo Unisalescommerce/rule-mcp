@@ -51,7 +51,7 @@ function inferProjectDir(oursPath, repoPath) {
   const relative = repoPath.replaceAll("\\", "/");
   const index = absolute.lastIndexOf(`/${relative}`);
 
-  if (index >= 0) {
+  if (index !== -1) {
     return absolute.slice(0, index);
   }
 

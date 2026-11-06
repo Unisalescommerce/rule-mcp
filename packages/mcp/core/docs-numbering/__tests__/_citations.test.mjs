@@ -67,11 +67,11 @@ test("the link, the filename and the prose form all move", () => {
     const code = readFileSync(join(root, "packages/mcp/thing.js"), "utf8");
     const skill = readFileSync(join(root, "skills/rule-x/SKILL.md"), "utf8");
 
-    assert.match(plan, new RegExp(`\\[${TO}\\]\\(${PATH_TO.replaceAll(".", "\\.")}\\)`, "u"), "the link moves in label and target");
-    assert.match(plan, new RegExp(`and ${PROSE_TO}\\.`, "u"), "the prose form moves");
-    assert.match(plan, new RegExp(`${PROSE_KEEP} stays\\.`, "u"), "a citation the plan does not name stays");
+    assert.match(plan, new RegExp(String.raw`\[${TO}\]\(${PATH_TO.replaceAll(".", String.raw`\.`)}\)`, "u"), "the link moves in label and target");
+    assert.match(plan, new RegExp(String.raw`and ${PROSE_TO}\.`, "u"), "the prose form moves");
+    assert.match(plan, new RegExp(String.raw`${PROSE_KEEP} stays\.`, "u"), "a citation the plan does not name stays");
     assert.match(code, new RegExp(`${PROSE_TO} froze it`, "u"), "the prose form moves in code");
-    assert.match(code, new RegExp(`adr/${PATH_TO.replaceAll(".", "\\.")}`, "u"), "the path form moves in code");
+    assert.match(code, new RegExp(`adr/${PATH_TO.replaceAll(".", String.raw`\.`)}`, "u"), "the path form moves in code");
     assert.match(skill, new RegExp(`${PROSE_TO}/${KEEP}`, "u"), "the paired form moves its first number only");
     assert.equal(result.filesUpdated, 3, "three files changed");
     assert.deepEqual(result.unresolved, [], "nothing was left behind");
@@ -90,7 +90,7 @@ test("a test fixture keeps its numbers, because a fixture arranges them", () => 
     const result = rewriteCitations({ projectDir: root, renames: RENAMES });
     const fixture = readFileSync(join(root, "packages/mcp/core/__tests__/thing.test.mjs"), "utf8");
 
-    assert.match(fixture, new RegExp(`${PROSE_FROM} and ${PATH_FROM.replaceAll(".", "\\.")}`, "u"), "the fixture is untouched");
+    assert.match(fixture, new RegExp(`${PROSE_FROM} and ${PATH_FROM.replaceAll(".", String.raw`\.`)}`, "u"), "the fixture is untouched");
     assert.equal(result.filesUpdated, 3, "the three documents moved, the fixture did not");
   } finally {
     rmSync(root, { recursive: true, force: true });

@@ -18,8 +18,7 @@ import { FEATURES, levelsFor } from "../../../core/runtime/features/index.js";
 import { getSkillNames } from "../../../tools/router/index.js";
 import { hookSupport } from "../../install/_hook-hosts.js";
 import { DIMENSION_DETAIL, DIMENSIONS, PROFILES } from "../../install/_profiles.js";
-import { remoteModeAgents } from "../../installers/index.js";
-import { hostRecord } from "../../installers/hosts/index.js";
+
 import { statusStyle, GLYPHS } from "../_theme.js";
 
 /** The tone a task status maps onto. */
@@ -260,7 +259,7 @@ export function surfaceAreaItems() {
 /** The skills of the chosen areas, hub rows first. */
 export function surfaceSkillItems(areas) {
   return getSkillNames()
-    .filter((name) => areas.includes(name.split("-")[1]))
+    .filter((name) => areas.includes(name.split("-", 2)[1]))
     .map((name) => ({
       id: name,
       label: name,
@@ -328,7 +327,7 @@ export function tallyLine(counts) {
   return ["ok", "warn", "fail", "skip"]
     .filter((status) => counts[status] > 0)
     .map((status) => `${statusStyle(status).glyph} ${counts[status]} ${status}`)
-    .join("   ");
+    .join(' '.repeat(3));
 }
 
 /**

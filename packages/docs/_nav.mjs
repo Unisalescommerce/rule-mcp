@@ -49,7 +49,7 @@ export function isReferencePage(current) {
  * @returns {string}
  */
 export function stripChapterNumber(value) {
-  return String(value)
+  return value
     .replace(/^\d{2}\s*[-:]\s*/u, "")
     .trim();
 }

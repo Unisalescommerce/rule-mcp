@@ -15,7 +15,7 @@ import { test } from "node:test";
 
 import { renderAgentCommandFiles } from "../_render.js";
 
-const frontmatterOf = (content) => content.split("---")[1] ?? "";
+const frontmatterOf = (content) => content.split("---", 2)[1] ?? "";
 const nameOf = (content) => /^name: (.+)$/mu.exec(frontmatterOf(content))?.[1];
 
 test("a skill's name is a bare id, never a slash command", () => {
@@ -32,7 +32,7 @@ test("a skill's name is a bare id, never a slash command", () => {
 
 test("the directory a skill lands in is the name it declares", () => {
   for (const { name, filename, content } of renderAgentCommandFiles("skill")) {
-    const dir = filename.split("/")[0];
+    const dir = filename.split("/", 1)[0];
 
     assert.equal(dir, nameOf(content), `${name}: the loader compares the two, and a mismatch drops the skill`);
   }

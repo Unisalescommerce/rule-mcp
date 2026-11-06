@@ -4,7 +4,7 @@ import { FORMAT_EXT, commandNames, renderAgentCommandFiles } from "../../core/ag
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { print } from "./_shared.js";
 import { resolve } from "node:path";
-import { resolveCommandTargets } from "../../core/agents/command-targets/index.js";
+
 import { syncCommandTargets } from "./_targets-sync.js";
 import { resolvedTargets } from "./_targets-resolve.js";
 

@@ -1,6 +1,6 @@
 /** Closeout: completed audits/reviews/plans fold into ADRs and leave the tree. */
 import { strict as assert } from "node:assert";
-import { existsSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { test } from "node:test";
 

@@ -67,7 +67,7 @@ export function scanCodeForForeign(code) {
 export function scanPathForForeign(filePath) {
   const hits = [];
 
-  for (const segment of String(filePath).split(/[\\/]+/)) {
+  for (const segment of filePath.split(/[\\/]+/)) {
     if (segment === "") {
       continue;
     }

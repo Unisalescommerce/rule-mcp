@@ -50,7 +50,7 @@ test("no tracked file outside the record names the former gateway", () => {
       output
         .split("\n")
         .filter(Boolean)
-        .map((line) => line.split(":")[0]),
+        .map((line) => line.split(":", 1)[0]),
     ),
   ];
 

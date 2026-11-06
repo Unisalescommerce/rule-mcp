@@ -60,7 +60,7 @@ export function createPlanFrame({ renderer, body, empty, text }) {
     }
 
     for (const row of rows) {
-      list.add(text(row.text, { fg: colorOf(row.tone), ...(row.bold ? { attributes: 1 } : {}) }));
+      list.add(text(row.text, { fg: colorOf(row.tone), ...(row.bold && { attributes: 1 }) }));
     }
   };
 

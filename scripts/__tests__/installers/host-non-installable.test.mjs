@@ -43,10 +43,12 @@ test("every one of them carries a reason, and a covered one names its owner", ()
   for (const row of nonInstallable()) {
     assert.ok(row.reason.trim().length > 20, `${row.id}: a reason a reader can act on`);
 
-    if (row.coveredBy) {
-      assert.ok(allAgents.includes(row.coveredBy), `${row.id}: covered by ${row.coveredBy}, which is not installable either`);
-      assert.equal(hostRecord(row.id), null, `${row.id}: a covered product is not its own record`);
+    if (!row.coveredBy) {
+      continue;
     }
+
+    assert.ok(allAgents.includes(row.coveredBy), `${row.id}: covered by ${row.coveredBy}, which is not installable either`);
+    assert.equal(hostRecord(row.id), null, `${row.id}: a covered product is not its own record`);
   }
 
   assert.equal(evidenceOf("cursor-cli").coveredBy, "cursor", "the CLI reads the editor's config, so one install covers both");

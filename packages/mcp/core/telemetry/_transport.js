@@ -32,7 +32,7 @@ export const REMOTE_ENABLED = false;
 const SAFE_FIELDS = ["ts", "tool", "durationMs", "ok", "cacheHit", "routedSkill", "guardrailFailures", "promptLength", "estimatedRouting", "transport"];
 
 /** @param {string} value @returns {string} */
-const hash = (value) => createHash("sha256").update(String(value)).digest("hex").slice(0, 16);
+const hash = (value) => createHash("sha256").update(value).digest("hex").slice(0, 16);
 
 /**
  * Reduce a local event to what could leave the machine.

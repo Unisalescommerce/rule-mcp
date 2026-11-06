@@ -17,7 +17,7 @@ test.after(() => {
 });
 
 /** One codex session day with the standard rows. */
-function codexSession(file, cwd, { inWindowRows = true } = {}) {
+function codexSession(file, cwd, {    } = {}) {
   const dir = join(home, ".codex", "sessions", "2026", "01", "01");
   mkdirSync(dir, { recursive: true });
   const ts = "2026-01-01T10:00:00Z";
@@ -25,7 +25,7 @@ function codexSession(file, cwd, { inWindowRows = true } = {}) {
     { type: "session_meta", payload: { cwd, model_provider: "openai" } },
     { type: "turn_context", payload: { model: "gpt-codex" } },
     { type: "user_message", payload: { type: "user_message", content: "hi" } },
-    ...(inWindowRows
+    ...(true
       ? [
           {
             type: "token_count",

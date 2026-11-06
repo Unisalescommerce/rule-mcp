@@ -2,7 +2,6 @@
 
 import { guardCommand, normalized } from "./_hook-command.js";
 
-export { guardCommand };
 
 /**
  * Titles Codex `/hooks` shows for each handler.
@@ -29,12 +28,12 @@ const CODEX_STATUS = {
  * @returns {{ matcher?: string, hooks: Array<{ type: string, command: string, statusMessage?: string }> }}
  */
 const grouped = (launcher, subcommand, matcher, options = {}) => ({
-  ...(matcher ? { matcher } : {}),
+  ...(matcher && { matcher }),
   hooks: [
     {
       type: "command",
       command: guardCommand(launcher, subcommand),
-      ...(options.statusMessage ? { statusMessage: options.statusMessage } : {}),
+      ...(options.statusMessage && { statusMessage: options.statusMessage }),
     },
   ],
 });
@@ -48,7 +47,7 @@ const grouped = (launcher, subcommand, matcher, options = {}) => ({
  * @returns {object}
  */
 export function cursorHooks(launcher) {
-  const hook = (subcommand, matcher) => ({ ...(matcher ? { matcher } : {}), command: guardCommand(launcher, subcommand) });
+  const hook = (subcommand, matcher) => ({ ...(matcher && { matcher }), command: guardCommand(launcher, subcommand) });
 
   return {
     version: 1,
@@ -73,7 +72,7 @@ export function kiroHooks(launcher) {
   const hook = (name, trigger, subcommand, matcher) => ({
     name,
     trigger,
-    ...(matcher ? { matcher } : {}),
+    ...(matcher && { matcher }),
     action: { type: "command", command: guardCommand(launcher, subcommand) },
     timeout: 60,
     enabled: true,
@@ -124,7 +123,7 @@ export function geminiHooks(launcher) {
 const codexGuardCommand = (launcher, subcommand) => `env RULE_MCP_HOOK_HOST=codex ${guardCommand(launcher, subcommand)}`;
 
 const codexGrouped = (launcher, subcommand, matcher) => ({
-  ...(matcher ? { matcher } : {}),
+  ...(matcher && { matcher }),
   hooks: [
     {
       type: "command",
@@ -204,3 +203,5 @@ export function piExtension(launcher) {
     "",
   ].join("\n");
 }
+
+export {guardCommand} from "./_hook-command.js";

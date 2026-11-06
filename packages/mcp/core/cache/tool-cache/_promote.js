@@ -61,7 +61,7 @@ export function promotableEntries(minHits = MIN_HITS) {
       continue;
     }
 
-    const identity = `${entry.tool}\u0000${stableStringify(entry.args ?? {})}`;
+    const identity = `${entry.tool}\0${stableStringify(entry.args ?? {})}`;
     const merged = byCall.get(identity);
 
     if (merged) {

@@ -47,7 +47,7 @@ test("every rung of every host says whether it is supported, and why not", () =>
 test("the ceiling is the highest supported rung, not a guess", () => {
   for (const id of allAgents) {
     const { levels, ceiling } = hostRecord(id);
-    const highest = ["L0", "L1", "L2", "L3", "L4"].filter((rung) => levels[rung].supported).at(-1);
+    const highest = ["L0", "L1", "L2", "L3", "L4"].findLast((rung) => levels[rung].supported);
 
     assert.equal(ceiling, highest, `${id}: ceiling ${ceiling} but ${highest} is the highest supported rung`);
   }

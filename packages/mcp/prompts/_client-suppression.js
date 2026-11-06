@@ -97,5 +97,5 @@ export function suppressesPrompts({ env = process.env, clientName } = {}) {
   // The handshake sends `name/version` as one string in practice; a list entry
   // matches that whole string or the name before the slash - and stops at a word
   // boundary, so `claude-code` does not swallow a client called `claude-codex`.
-  return policy.names.some((entry) => name === entry || name.split("/")[0] === entry || name.startsWith(`${entry}-`) || name.startsWith(`${entry}/`));
+  return policy.names.some((entry) => name === entry || name.split("/", 1)[0] === entry || name.startsWith(`${entry}-`) || name.startsWith(`${entry}/`));
 }

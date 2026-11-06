@@ -17,10 +17,10 @@ test.after(() => {
   delete process.env.RULE_MCP_ROLES_OVERLAY_DIR;
 });
 
-const PERSONA_FOR = (id) =>
+const PERSONA_FOR = () =>
   [
     "---",
-    `id: "${id}"`,
+    `id: "${"tester"}"`,
     'role: "Tester"',
     "yearsOfExperience: 3",
     'status: "active"',
@@ -59,7 +59,7 @@ test("validateRole names every missing and malformed field", () => {
 });
 
 test("loadRoleOverlays reads md and legacy json overlays, overriding by id", () => {
-  writeFileSync(join(overlayDir, "tester.md"), PERSONA_FOR("tester"));
+  writeFileSync(join(overlayDir, "tester.md"), PERSONA_FOR());
   writeFileSync(
     join(overlayDir, "legacy.json"),
     JSON.stringify({ id: "legacy", role: "Legacy", yearsOfExperience: 2, status: "active", version: 1, skills: ["a"], evidenceSkills: [], lenses: [] }),
@@ -88,7 +88,7 @@ test("loadRoleOverlays reads md and legacy json overlays, overriding by id", () 
 });
 
 test("parsePersonaFile reads frontmatter and body lenses", () => {
-  const parsed = parsePersonaFile(PERSONA_FOR("tester"));
+  const parsed = parsePersonaFile(PERSONA_FOR());
   assert.equal(parsed.role, "Tester", "the role field reads");
   assert.deepEqual(parsed.skills, ["testing"], "the skills list reads");
   assert.deepEqual(parsed.lenses, ["edge cases first"], "the body bullets are lenses");

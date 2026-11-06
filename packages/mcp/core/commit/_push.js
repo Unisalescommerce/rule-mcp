@@ -26,7 +26,7 @@ export function pushCommits(projectDir, stdinText) {
   const seen = new Set();
   const commits = [];
 
-  for (const line of String(stdinText).split("\n")) {
+  for (const line of stdinText.split("\n")) {
     if (!line.trim()) {
       continue;
     }

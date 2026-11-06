@@ -120,7 +120,7 @@ export async function openScreen({ title, subtitle = "", steps = [] }) {
       const marker = state === "done" ? GLYPHS.ok : state === "active" ? GLYPHS.radioOn : GLYPHS.radioOff;
       const tone = state === "active" ? COLORS.info : state === "done" ? COLORS.ok : COLORS.muted;
 
-      rail.add(text(`${marker} ${step}`, { fg: tone, ...(state === "active" ? { attributes: bold } : {}) }));
+      rail.add(text(`${marker} ${step}`, { fg: tone, ...((state === "active") && { attributes: bold }) }));
     }
   };
 
@@ -154,7 +154,7 @@ export async function openScreen({ title, subtitle = "", steps = [] }) {
 
       // Header + rail + footer + title + help + note + padding around the list.
       const reserved = 9 + help.length + (note ? 1 : 0);
-      const listHeight = Math.max(5, Math.min(height ?? Number.POSITIVE_INFINITY, renderer.terminalHeight - reserved));
+      const listHeight = Math.max(5, Math.min(height ?? Infinity, renderer.terminalHeight - reserved));
       const detailWidth = Math.max(28, Math.min(44, Math.floor(renderer.terminalWidth / 3)));
 
       const host = new BoxRenderable(renderer, { flexDirection: "column", flexGrow: 1 });
@@ -199,7 +199,7 @@ export async function openScreen({ title, subtitle = "", steps = [] }) {
 
         row.add(text(`${active ? GLYPHS.pointer : " "} `, { fg: active ? COLORS.info : COLORS.muted }));
         row.add(text(`${GLYPHS[markOf(isSelected, mode)]} `, { fg: item.disabled ? COLORS.muted : isSelected ? COLORS.ok : COLORS.muted }));
-        row.add(text(item.label, { ...(labelTone ? { fg: labelTone } : {}), ...(active ? { attributes: bold } : {}) }));
+        row.add(text(item.label, { ...(labelTone && { fg: labelTone }), ...(active && { attributes: bold }) }));
 
         if (item.note) {
           row.add(text(`  ${item.note}`, { fg: colorOf(item.noteTone) ?? COLORS.muted }));
@@ -351,7 +351,7 @@ export async function openScreen({ title, subtitle = "", steps = [] }) {
       host.add(text(heading, { fg: blocked ? COLORS.fail : COLORS.accentSoft, attributes: bold }));
 
       for (const line of lines) {
-        host.add(text(line.text, { fg: colorOf(line.tone), ...(line.bold ? { attributes: bold } : {}) }));
+        host.add(text(line.text, { fg: colorOf(line.tone), ...(line.bold && { attributes: bold }) }));
       }
 
       if (copy) {

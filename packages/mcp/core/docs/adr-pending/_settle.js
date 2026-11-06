@@ -23,13 +23,8 @@ export function settleDuplicateAdrs(projectDir) {
   }
 
   const adrDir = join(projectDir, ADR_DIR);
-  const byNumber = new Map();
+  const byNumber = Map.groupBy(listExistingAdrs(adrDir), adr => adr.number);
 
-  for (const adr of listExistingAdrs(adrDir)) {
-    const list = byNumber.get(adr.number) ?? [];
-    list.push(adr);
-    byNumber.set(adr.number, list);
-  }
 
   const settled = [];
   const pendingDir = join(projectDir, PENDING_DIR);
@@ -58,7 +53,7 @@ export function settleDuplicateAdrs(projectDir) {
       }
 
       const padded = String(number).padStart(3, "0");
-      const body = readFileSync(from, "utf8").replace(new RegExp(String.raw`^# ${padded}:`, "m"), "# Pending:");
+      const body = readFileSync(from, "utf8").replace(new RegExp(`^# ${padded}:`, "m"), "# Pending:");
 
       writeFileSync(from, body);
       renameSync(from, to);

@@ -13,7 +13,7 @@
  * are also ignored: a JSDoc license header is not code to share.
  */
 import { strict as assert } from "node:assert";
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 import test from "node:test";
 

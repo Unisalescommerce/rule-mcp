@@ -14,5 +14,5 @@ test("guard does not bootstrap core tools", () => {
 test("other commands still bootstrap core tools", () => {
   assert.equal(shouldBootstrapCoreTools({ name: () => "doctor" }), true);
   assert.equal(shouldBootstrapCoreTools({ name: () => "serve" }), true);
-  assert.equal(shouldBootstrapCoreTools(undefined), true);
+  assert.equal(shouldBootstrapCoreTools(), true);
 });

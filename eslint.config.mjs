@@ -112,7 +112,7 @@ export default defineConfig([
     files: ["**/*.{js,mjs,cjs}"],
     rules: {
       // Repo-specific preferences (preserved from legacy .eslintrc)
-      "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+      "no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_", caughtErrorsIgnorePattern: "^_", destructuredArrayIgnorePattern: "^_" }],
       "no-console": ["warn", { allow: ["warn", "error", "log"] }],
       eqeqeq: ["error", "always"],
       curly: ["error", "all"],

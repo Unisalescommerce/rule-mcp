@@ -68,15 +68,13 @@ export function listExistingHandoffs(handoffDir) {
 
         const content = readFileSync(join(handoffDir, name), "utf8");
 
-        return [
-          {
+        return {
             file: name,
             number: Number(match[1]),
             title: titleOf(content, match[2]),
             date: dateOf(content),
             branch: branchOf(content),
-          },
-        ];
+          };
       })
       .sort((left, right) => right.number - left.number);
   } catch {

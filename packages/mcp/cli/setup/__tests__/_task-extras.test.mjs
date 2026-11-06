@@ -1,8 +1,6 @@
 /** The optional tasks answer without side effects: dry runs and skips. */
 import { strict as assert } from "node:assert";
-import { mkdtempSync, rmSync } from "node:fs";
-import { tmpdir } from "node:os";
-import { join } from "node:path";
+
 import { test } from "node:test";
 
 import { dockerTask, doctorTask, rulesTask, serviceTask, skillsTask } from "../_task-extras.js";

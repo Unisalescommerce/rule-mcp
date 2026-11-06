@@ -13,7 +13,7 @@
  * real home during a test.
  */
 
-import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { getRuntimePaths } from "../paths/index.js";
@@ -40,13 +40,13 @@ export function currentVersion({ root = getRuntimePaths().homeDir } = {}) {
   const file = join(launcherRoot({ root }), CURRENT);
 
   if (!existsSync(file)) {
-    return undefined;
+    return;
   }
 
   try {
     return readFileSync(file, "utf8").trim() || undefined;
   } catch {
-    return undefined;
+    return;
   }
 }
 

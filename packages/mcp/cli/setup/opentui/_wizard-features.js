@@ -64,5 +64,5 @@ export async function askFeatures({ screen, answers }) {
 
   answers.attribution = attribution;
 
-  return undefined;
+  return;
 }
