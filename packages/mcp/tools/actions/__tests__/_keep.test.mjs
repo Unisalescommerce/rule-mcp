@@ -10,8 +10,6 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
 
-import { withHome } from "rule-mcp-shared";
-
 const state = mkdtempSync(join(tmpdir(), "rule-keep-tool-"));
 
 process.env.RULE_MCP_STATE_DIR = state;
@@ -28,8 +26,38 @@ test.after(() => rmSync(state, { recursive: true, force: true }));
 
 const text = (result) => result.content.map((part) => part.text).join("\n");
 
+/**
+ * Run an async body with `RULE_MCP_HOME` pointed at a fresh temp dir.
+ *
+ * `withHome` restores the variable as soon as the callback returns, and an
+ * async callback returns a promise immediately, so the tool call inside it ran
+ * against the real home and the assertion read an empty store. Awaiting the
+ * body first is what makes the isolation real.
+ *
+ * @param {() => Promise<unknown>} fn
+ * @param {string} prefix
+ */
+async function withAsyncHome(fn, prefix) {
+  const home = mkdtempSync(join(tmpdir(), prefix));
+  const previous = process.env.RULE_MCP_HOME;
+
+  process.env.RULE_MCP_HOME = home;
+
+  try {
+    await fn(home);
+  } finally {
+    if (previous === undefined) {
+      delete process.env.RULE_MCP_HOME;
+    } else {
+      process.env.RULE_MCP_HOME = previous;
+    }
+
+    rmSync(home, { recursive: true, force: true });
+  }
+}
+
 test("rule_tool_keep confirms a decision in the export decision-cache", async () => {
-  await withHome(async () => {
+  await withAsyncHome(async () => {
     const projectDir = mkdtempSync(join(tmpdir(), "rule-keep-proj-"));
 
     const result = await callTool("rule_tool_keep", {
@@ -53,7 +81,7 @@ test("rule_tool_keep confirms a decision in the export decision-cache", async ()
 });
 
 test("rule_tool_keep refuses when NO_CACHE is set", async () => {
-  await withHome(async () => {
+  await withAsyncHome(async () => {
     process.env.RULE_MCP_NO_CACHE = "1";
 
     try {
