@@ -9,7 +9,9 @@
  *   three letters inside base64 hashes; the plan that retires them deletes the
  *   folder.
  *
- * The match is the name, not the substring: `nyx` inside `G6nnyxo5m` is a hash.
+ * The match is the name, not the substring: the three letters inside a base64
+ * hash are not the project. This file is skipped because it has to spell the
+ * name to search for it.
  */
 import { strict as assert } from "node:assert";
 import { execFileSync } from "node:child_process";
@@ -19,7 +21,8 @@ import { fileURLToPath } from "node:url";
 import test from "node:test";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
-const SKIPPED = [":(exclude)docs/adr/**", ":(exclude)docs/handoff/**", ":(exclude)docs/plans/**", ":(exclude)docs/case-studies/**", ":(exclude)CHANGELOG.md"];
+const SELF = ":(exclude)scripts/__tests__/docs/no-former-gateway.test.mjs";
+const SKIPPED = [SELF, ":(exclude)docs/adr/**", ":(exclude)docs/handoff/**", ":(exclude)docs/plans/**", ":(exclude)docs/case-studies/**", ":(exclude)CHANGELOG.md"];
 
 /** The name, wherever it is not part of a longer word. */
 const NAME = "(^|[^A-Za-z0-9])nyx([^A-Za-z0-9]|$)";
