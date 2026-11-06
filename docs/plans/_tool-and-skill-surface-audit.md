@@ -132,14 +132,14 @@ The 24 skills with no guardrail step: `rule-data-validation`, `rule-frontend`, `
 
 The repo-root `CLAUDE.md` says "107 tools / 186 resources / 37 prompts / 89 skills" in "Repository state". The runtime-verified counts on 2026-11-05 are 106 tools, 174 resources, 41 prompts, and 83 skills. The 83 is the `rule-` catalog. `skills/` has 84 entries because of the root skill `rule`.
 
-- [ ] **WS1-T1**: Run `node --import ./scripts/alias-hook.mjs --test scripts/__tests__/docs/docs-accuracy.test.mjs`. It passes and prints the real counts on its last line. Copy those counts into `CLAUDE.md`. Change only the counts. Leave the "212 checks" figure for WS2.
+- [x] **WS1-T1**: Run `node --import ./scripts/alias-hook.mjs --test scripts/__tests__/docs/docs-accuracy.test.mjs`. It passes and prints the real counts on its last line. Copy those counts into `CLAUDE.md`. Change only the counts. Leave the "212 checks" figure for WS2. Measured 2026-11-06: 106 tools / 174 resources / 41 prompts / 83 skills / 44 commands, now in `CLAUDE.md` (commit `183b42c16`).
 
 ### WS2 - Confirm the check count (G3)
 
 A static count finds 120 guardrail files: `find skills -path "*/guardrails/_*.js" -not -path "*__tests__*" | wc -l`. They sit in 22 of 84 skills. "Checks" may count something else.
 
-- [ ] **WS2-T1**: Get the real count from the project runtime (`rule_tool_stats`, or the call that `docs-accuracy.test.mjs` would use). Do not use grep. Find what "212" counted.
-- [ ] **WS2-T2**: Write the confirmed number and its unit (files or assertions) into `CLAUDE.md`. If 212 was right for some unit, only add the unit.
+- [x] **WS2-T1**: Get the real count from the project runtime (`rule_tool_stats`, or the call that `docs-accuracy.test.mjs` would use). Do not use grep. Find what "212" counted. Measured 2026-11-06 through `loadLayerGuardrails` and the engine registry. It reports 84 skill directories, with 22 owning rules. It counts 116 owned entries and 110 distinct owned rule IDs. Resolved rules sum to 200 across skills, and 67 distinct baseline rule IDs apply to every check. Static file counts are 120 rule files and 14 test files, also not 212. The figure has no verifiable unit and was replaced, not relabeled.
+- [x] **WS2-T2**: Write the confirmed number and its unit (files or assertions) into `CLAUDE.md`. If 212 was right for some unit, only add the unit. `CLAUDE.md` now states 110 guardrail rules owned by 22 of 84 skill directories, plus 67 baseline rules every check runs.
 
 ### WS3 - Stop the drift (G2, G3)
 
