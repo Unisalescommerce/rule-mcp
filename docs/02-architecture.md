@@ -5,8 +5,8 @@ decision log behind it is not part of this site.
 
 The git checkout is a private pnpm workspace (`rule-mcp-workspace`). The
 published product package is `packages/mcp` (`rule-mcp`); shared helpers live
-in `packages/shared`, and the docs site in `packages/docs`. Optional Nyx stays
-a sibling `../nyx` workspace member.
+in `packages/shared`, and the docs site in `packages/docs`. Every workspace
+member is inside the checkout, so the tree builds without a sibling project.
 
 ## Request path
 

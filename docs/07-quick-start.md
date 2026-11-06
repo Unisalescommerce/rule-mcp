@@ -90,8 +90,7 @@ rule-mcp cache stats
 pnpm cache:report
 ```
 
-`RULE_MCP_NO_CACHE=1` turns it off for a run. The L2 Nyx similarity tier
-is opt-in with `RULE_MCP_NYX_CACHE=1`; the L3 decision-cache replay is
+`RULE_MCP_NO_CACHE=1` turns it off for a run. The L3 decision-cache replay is
 opt-in with `RULE_MCP_DECISION_CACHE_REPLAY=1`.
 
 ## 8. The decision layer

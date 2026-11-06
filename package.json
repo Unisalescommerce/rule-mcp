@@ -60,8 +60,6 @@
     "report:compression": "node --import ./scripts/alias-hook.mjs scripts/reports/compression/index.mjs",
     "report:startup": "node --import ./scripts/alias-hook.mjs scripts/reports/startup/index.mjs",
     "cache:similarity": "node --import ./scripts/alias-hook.mjs scripts/reports/cache-similarity/index.mjs",
-    "report:nyx-routing": "node --import ./scripts/alias-hook.mjs scripts/reports/nyx-routing/index.mjs",
-    "report:nyx-similarity": "node --import ./scripts/alias-hook.mjs scripts/reports/nyx-similarity/index.mjs",
     "report:decision-cache": "node --import ./scripts/alias-hook.mjs scripts/reports/decision-cache/index.mjs",
     "audit:decision-cache": "node --import ./scripts/alias-hook.mjs scripts/audits/decision-cache/corpus.mjs",
     "clean:prose": "node --import ./scripts/alias-hook.mjs scripts/fix/prose/index.mjs --apply",

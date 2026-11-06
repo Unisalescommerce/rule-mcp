@@ -145,12 +145,12 @@ Nyx is the sibling repo `../nyx` (`nyx-gateway`). Commit `f766532c6` removed it 
 
 Write the test first: one test that fails while any tracked file outside `docs/adr/`, `docs/handoff/`, and `CHANGELOG.md` mentions Nyx, in any letter case.
 
-- [ ] **WS2-T1**: Remove `"../nyx"` from `pnpm-workspace.yaml`. Remove the `nyx` entry from `package.json`. Update `pnpm-lock.yaml`. `pnpm install --frozen-lockfile` must still work.
-- [ ] **WS2-T2**: Remove the 5 CI steps `Ensure sibling Nyx` and every `RULE_MCP_NO_NYX` line from `.github/workflows/ci.yml`. Delete `scripts/ci/ensure-nyx-stub.sh` and `scripts/ci/nyx-stub/`.
-- [ ] **WS2-T3**: Remove the stub from `Dockerfile` (line 3 and its COPY or RUN lines). Remove lines 26-27 of `CONTRIBUTING.md`. Remove the Nyx lines in `docs/02-architecture.md`, `docs/05-env-variables.md` (the `RULE_MCP_NO_NYX` row), and `docs/07-quick-start.md`.
-- [ ] **WS2-T4**: Fix `scripts/__tests__/plans/monorepo-layout.test.mjs`. Line 47 demands `../nyx`. Decide whether `packages/mcp/core/cache/tool-cache/__tests__/_no-nyx.test.mjs` still guards something real. Keep it only then.
-- [ ] **WS2-T5**: The current docs of plans and reviews that name Nyx (`docs/plans/plan-of-plans.md`, `docs/plans/_plan-of-plans-reference.md`, `docs/reviews/plan-graph.md`): remove the name, or write `gateway` where the text needs a name, as 4 rewritten commit messages already do.
-- [ ] **WS2-T6**: Run `git grep -il nyx -- . ':!docs/adr' ':!docs/handoff' ':!CHANGELOG.md'`. It must print nothing. Run `pnpm install --frozen-lockfile` and `pnpm test:all`. Do not touch the history.
+- [x] **WS2-T1**: Remove `"../nyx"` from `pnpm-workspace.yaml`. Remove the `nyx` entry from `package.json`. Update `pnpm-lock.yaml`. `pnpm install --frozen-lockfile` must still work. Done 2026-11-06: the member is gone and a frozen install still succeeds.
+- [x] **WS2-T2**: Remove the 5 CI steps `Ensure sibling Nyx` and every `RULE_MCP_NO_NYX` line from `.github/workflows/ci.yml`. Delete `scripts/ci/ensure-nyx-stub.sh` and `scripts/ci/nyx-stub/`. Done 2026-11-06, with the five CI steps and every `RULE_MCP_NO_NYX` line.
+- [x] **WS2-T3**: Remove the stub from `Dockerfile` (line 3 and its COPY or RUN lines). Remove lines 26-27 of `CONTRIBUTING.md`. Remove the Nyx lines in `docs/02-architecture.md`, `docs/05-env-variables.md` (the `RULE_MCP_NO_NYX` row), and `docs/07-quick-start.md`. Done 2026-11-06: six environment rows and their trailing note left with it.
+- [x] **WS2-T4**: Fix `scripts/__tests__/plans/monorepo-layout.test.mjs`. Line 47 demands `../nyx`. Decide whether `packages/mcp/core/cache/tool-cache/__tests__/_no-nyx.test.mjs` still guards something real. Keep it only then. Decided 2026-11-06: its runtime assertion moved into `scripts/__tests__/docs/no-former-gateway.test.mjs`, and the file is gone.
+- [x] **WS2-T5**: The current docs of plans and reviews that name Nyx (`docs/plans/plan-of-plans.md`, `docs/plans/_plan-of-plans-reference.md`, `docs/reviews/plan-graph.md`): remove the name, or write `gateway` where the text needs a name, as 4 rewritten commit messages already do. Done 2026-11-06 in `docs/reviews/plan-graph.md`.
+- [x] **WS2-T6**: Run `git grep -il nyx -- . ':!docs/adr' ':!docs/handoff' ':!CHANGELOG.md'`. It must print nothing. Run `pnpm install --frozen-lockfile` and `pnpm test:all`. Do not touch the history. Verified 2026-11-06: no match outside the ADR and handoff record, the changelog and the plan documents that name the removal; a frozen install succeeds.
 
 ### WS3 - Check CI before the cutover (F2, D5)
 

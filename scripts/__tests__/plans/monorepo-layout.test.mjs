@@ -40,11 +40,13 @@ test("packages/{mcp,shared,docs} use the fixed package names", () => {
   }
 });
 
-test("pnpm-workspace.yaml lists packages/* and the sibling nyx checkout", () => {
+test("pnpm-workspace.yaml lists packages/* and nothing outside the checkout", () => {
   const yaml = readFileSync(join(ROOT, "pnpm-workspace.yaml"), "utf8");
+  const members = [...yaml.matchAll(/^\s*-\s*["']?([^"'\s]+)["']?\s*$/gm)].map((match) => match[1]);
+  const outside = members.filter((member) => member.startsWith(".."));
 
   assert.match(yaml, /^\s*-\s*["']?packages\/\*["']?\s*$/m);
-  assert.match(yaml, /^\s*-\s*["']?\.\.\/nyx["']?\s*$/m);
+  assert.deepEqual(outside, [], "a workspace member outside the checkout breaks a plain clone");
 });
 
 test("legacy layout roots are gone", () => {
@@ -57,11 +59,7 @@ test("getRepoRoot resolves the git workspace root", () => {
   const root = getRepoRoot();
 
   assert.equal(existsSync(join(root, "skills")), true, "skills/ marks the product root");
-  assert.equal(
-    existsSync(join(root, ".git")) || existsSync(join(root, "pnpm-workspace.yaml")),
-    true,
-    "root carries .git or the workspace file",
-  );
+  assert.equal(existsSync(join(root, ".git")) || existsSync(join(root, "pnpm-workspace.yaml")), true, "root carries .git or the workspace file");
 });
 
 test("alias hook serves packages/mcp under the mcp prefix and the tree has no legacy alias imports", () => {

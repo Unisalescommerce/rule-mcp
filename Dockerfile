@@ -1,7 +1,6 @@
 # rule-mcp - Docker image
 # Workspace root builds the published packages/mcp server. Skills stay embedded
-# from the repository. Sibling Nyx is optional: a stub lands at /nyx and the
-# engine stays off via RULE_MCP_NO_NYX=1.
+# from the repository.
 
 FROM node:22-alpine
 WORKDIR /app
@@ -12,9 +11,6 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY packages/mcp/package.json packages/mcp/
 COPY packages/shared/package.json packages/shared/
 COPY packages/docs/package.json packages/docs/
-# Workspace member ../nyx resolves to /nyx from WORKDIR /app.
-COPY scripts/ci/nyx-stub/ /nyx/
-
 RUN pnpm install --frozen-lockfile --prod --ignore-scripts
 
 COPY bin/ bin/
@@ -34,8 +30,6 @@ ENV RULE_MCP_PORT=37999
 # Marks this install as a container so detectInstallType() refuses git
 # self-update: an image is replaced, not fast-forwarded in place.
 ENV RULE_MCP_DOCKER=1
-# Sibling Nyx is the stub copied above; keep the engine off in the image.
-ENV RULE_MCP_NO_NYX=1
 # Feature opt-out switches shipped at 0 (feature ON) for discoverability;
 # set any to 1 to disable that feature.
 ENV RULE_MCP_NO_AUTOUPDATE=0

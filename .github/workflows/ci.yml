@@ -33,12 +33,9 @@ jobs:
         with:
           node-version: "26"
           cache: "pnpm"
-      - name: Ensure sibling Nyx (stub when absent)
-        run: bash scripts/ci/ensure-nyx-stub.sh
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
         env:
-          RULE_MCP_NO_NYX: "1"
       - name: Embed skills
         run: node scripts/build/embed-skills/index.mjs
       - name: Check syntax (all source files)
@@ -71,12 +68,9 @@ jobs:
         with:
           node-version: "26"
           cache: "pnpm"
-      - name: Ensure sibling Nyx (stub when absent)
-        run: bash scripts/ci/ensure-nyx-stub.sh
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
         env:
-          RULE_MCP_NO_NYX: "1"
       # Pinned and checksum-verified, because this binary decides whether a
       # commit carries a credential: an unverified download would move the
       # trust boundary from the lockfile to whoever answers the release URL.
@@ -140,19 +134,15 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: "pnpm"
-      - name: Ensure sibling Nyx (stub when absent)
-        run: bash scripts/ci/ensure-nyx-stub.sh
         shell: bash
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
         env:
-          RULE_MCP_NO_NYX: "1"
       - name: Embed skills
         run: node scripts/build/embed-skills/index.mjs
       - name: Run the quick suite (glob runner)
         run: node scripts/ci/run-tests/index.mjs quick
         env:
-          RULE_MCP_NO_NYX: "1"
 
   coverage:
     name: Coverage gate (branch ratchet)
@@ -168,18 +158,14 @@ jobs:
         with:
           node-version: "26"
           cache: "pnpm"
-      - name: Ensure sibling Nyx (stub when absent)
-        run: bash scripts/ci/ensure-nyx-stub.sh
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
         env:
-          RULE_MCP_NO_NYX: "1"
       - name: Embed skills
         run: node scripts/build/embed-skills/index.mjs
       - name: Coverage over the full suite (fails under the branch floor)
         run: pnpm test:coverage
         env:
-          RULE_MCP_NO_NYX: "1"
 
   commit-lint:
     name: Commit lint
@@ -230,11 +216,8 @@ jobs:
         with:
           node-version: "26"
           cache: "pnpm"
-      - name: Ensure sibling Nyx (stub when absent)
-        run: bash scripts/ci/ensure-nyx-stub.sh
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
         env:
-          RULE_MCP_NO_NYX: "1"
       - name: Dependency audit gate
         run: pnpm audit:gate

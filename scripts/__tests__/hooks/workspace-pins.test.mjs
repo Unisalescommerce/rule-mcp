@@ -16,7 +16,3 @@ test("active workspace dependencies use exact versions", () => {
     }
   }
 });
-
-test("the MCP package has no Nyx gateway dependency", () => {
-  assert.equal(read("packages/mcp/package.json").dependencies["nyx-gateway"], undefined);
-});

@@ -22,9 +22,8 @@ pnpm install
 ```
 
 This git root is the private workspace (`rule-mcp-workspace`). The
-published npm package is `packages/mcp` (`rule-mcp`). Optional sibling
-`../nyx` (`nyx-gateway`) is linked via `pnpm-workspace.yaml`; CI stubs it
-when absent and sets `RULE_MCP_NO_NYX=1`.
+published npm package is `packages/mcp` (`rule-mcp`). The workspace lists
+`packages/*` and nothing outside the checkout, so a clone installs on its own.
 
 `pnpm install` runs `prepare`, which installs the git hooks from
 `.githooks/` as shims into `.git/hooks/`. To install them on demand:
