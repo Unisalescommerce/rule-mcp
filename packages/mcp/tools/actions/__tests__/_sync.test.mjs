@@ -1,6 +1,6 @@
 /** WS2 - the rule_tool_sync contract: read-only by default, confirmed to act. */
 import { strict as assert } from "node:assert";
-import { mkdtempSync } from "node:fs";
+import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { before, test } from "node:test";
@@ -62,5 +62,19 @@ test("action=rebase with confirm applies the rebase", async () => {
 
   assert.match(output, /Rebase applied/u, "the rebase ran");
   assert.match(output, /Commits behind now: 0/u, "and the branch is level with the base");
+  remove(root);
+});
+
+test("a diverged branch with a dirty tree asks for a commit or a stash", async () => {
+  const root = diverged();
+  commit(root, "dirty.txt", "d\n", "chore: dirty");
+  run(root, "checkout", "-q", "-b", "feat/y");
+  commit(root, "more.txt", "m\n", "feat(y): more");
+  writeFileSync(join(root, "dirty.txt"), "changed\n");
+
+  const output = await text({ projectDir: root });
+
+  assert.match(output, /NOT safe/u, "the dirty tree is named");
+  assert.match(output, /Commit or stash changes above before rebasing/u, "and the advice follows");
   remove(root);
 });
