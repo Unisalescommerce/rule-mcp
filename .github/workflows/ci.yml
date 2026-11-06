@@ -111,7 +111,33 @@ jobs:
               range="${base}..${head}"
             fi
           fi
-          node ./bin/rule-mcp.js secrets --range "$range"
+          # The command caps a patch at 4 MiB, and a full history is larger, so
+          # the commits are scanned in windows. A window that is still too large
+          # is halved, and a commit that cannot be read is a failed scan rather
+          # than a clean one.
+          window=120
+          mapfile -t commits < <(git rev-list --reverse "$range")
+          index=0
+          while [ "$index" -lt "${#commits[@]}" ]; do
+            end=$((index + window))
+            [ "$end" -gt "${#commits[@]}" ] && end="${#commits[@]}"
+            if [ "$index" -eq 0 ]; then
+              spec="${commits[end - 1]}"
+            else
+              spec="${commits[index - 1]}..${commits[end - 1]}"
+            fi
+            if node ./bin/rule-mcp.js secrets --range "$spec"; then
+              index="$end"
+            else
+              status=$?
+              if [ "$status" -eq 2 ] && [ "$window" -gt 1 ]; then
+                window=$((window / 2))
+                continue
+              fi
+              echo "credential scan could not read ${spec}" >&2
+              exit 2
+            fi
+          done
 
   test:
     name: test (${{ matrix.os }})
@@ -169,7 +195,18 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
       - name: Every commit follows type(scope)
-        run: node scripts/build/commit-types/index.mjs --lint-range "${{ github.event.pull_request.base.sha || github.event.before }}" HEAD
+        env:
+          EVENT_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          set -euo pipefail
+          # A manual run carries no base sha, and an empty argument is a usage
+          # error rather than a full-history check. The root commit is the base
+          # that means "every commit on this branch".
+          base="$EVENT_BASE"
+          if [ -z "$base" ] || [[ "$base" =~ ^0+$ ]]; then
+            base="$(git rev-list --max-parents=0 HEAD)"
+          fi
+          node scripts/build/commit-types/index.mjs --lint-range "$base" HEAD
 
   release-preview:
     name: Release preview
