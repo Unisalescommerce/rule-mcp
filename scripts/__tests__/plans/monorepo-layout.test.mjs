@@ -7,6 +7,8 @@ import { strict as assert } from "node:assert";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { test } from "node:test";
+
+import { planTest } from "./_guard.mjs";
 import { fileURLToPath } from "node:url";
 
 import { getRepoRoot } from "../../../packages/mcp/cli/paths/_repo.js";
@@ -19,14 +21,14 @@ function readJson(relative) {
   return JSON.parse(readFileSync(join(ROOT, relative), "utf8"));
 }
 
-test("root package.json is the private workspace facade", () => {
+planTest("root package.json is the private workspace facade", () => {
   const pkg = readJson("package.json");
 
   assert.equal(pkg.name, "rule-mcp-workspace");
   assert.equal(pkg.private, true);
 });
 
-test("packages/{mcp,shared,docs} use the fixed package names", () => {
+planTest("packages/{mcp,shared,docs} use the fixed package names", () => {
   const expected = {
     mcp: "rule-mcp",
     shared: "rule-mcp-shared",
@@ -40,7 +42,7 @@ test("packages/{mcp,shared,docs} use the fixed package names", () => {
   }
 });
 
-test("pnpm-workspace.yaml lists packages/* and nothing outside the checkout", () => {
+planTest("pnpm-workspace.yaml lists packages/* and nothing outside the checkout", () => {
   const yaml = readFileSync(join(ROOT, "pnpm-workspace.yaml"), "utf8");
   const members = [...yaml.matchAll(/^\s*-\s*["']?([^"'\s]+)["']?\s*$/gm)].map((match) => match[1]);
   const outside = members.filter((member) => member.startsWith(".."));
@@ -49,20 +51,20 @@ test("pnpm-workspace.yaml lists packages/* and nothing outside the checkout", ()
   assert.deepEqual(outside, [], "a workspace member outside the checkout breaks a plain clone");
 });
 
-test("legacy layout roots are gone", () => {
+planTest("legacy layout roots are gone", () => {
   for (const relative of ["src", "tests", "case-studies", "scripts/docs-site"]) {
     assert.equal(existsSync(join(ROOT, relative)), false, `${relative}/ must not remain at the repo root`);
   }
 });
 
-test("getRepoRoot resolves the git workspace root", () => {
+planTest("getRepoRoot resolves the git workspace root", () => {
   const root = getRepoRoot();
 
   assert.equal(existsSync(join(root, "skills")), true, "skills/ marks the product root");
   assert.equal(existsSync(join(root, ".git")) || existsSync(join(root, "pnpm-workspace.yaml")), true, "root carries .git or the workspace file");
 });
 
-test("alias hook serves packages/mcp under the mcp prefix and the tree has no legacy alias imports", () => {
+planTest("alias hook serves packages/mcp under the mcp prefix and the tree has no legacy alias imports", () => {
   const hook = readFileSync(join(ROOT, "scripts/alias-hook.mjs"), "utf8");
 
   assert.match(hook, new RegExp(`const PREFIX = "${NEXT_ALIAS.replaceAll("/", String.raw`\/`)}"`));

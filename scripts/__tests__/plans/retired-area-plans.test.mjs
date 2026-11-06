@@ -5,6 +5,8 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
 
+import { planTest } from "./_guard.mjs";
+
 const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 const plansRoot = join(root, "docs", "plans");
 const RETIRED_AREA_PLANS = ["ai", "backend", "data", "devops", "frontend", "meta"].map((area) => `_${area}-guardrails.md`);
@@ -52,7 +54,7 @@ const RETAINED_AREA_RULES = new Map([
   ["skills/meta/_rule-mcp-meta-astro.md", ["astro-client-directive"]],
 ]);
 
-test("retired area guardrail rules live in their owning skill plans", () => {
+planTest("retired area guardrail rules live in their owning skill plans", () => {
   const missing = [];
 
   for (const [path, ids] of RETAINED_AREA_RULES) {
@@ -68,7 +70,7 @@ test("retired area guardrail rules live in their owning skill plans", () => {
   assert.deepEqual(missing, [], `migrate these retained rules before deleting their area plans: ${missing.join(", ")}`);
 });
 
-test("retired area guardrail plan files and active references are gone", () => {
+planTest("retired area guardrail plan files and active references are gone", () => {
   const remainingFiles = RETIRED_AREA_PLANS.filter((path) => existsSync(join(plansRoot, path)));
   const activeReferences = [];
   const retiredReference = /(?:_|\*)(?:ai|backend|data|devops|frontend|meta|\*)-guardrails\.md/g;

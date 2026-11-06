@@ -24,3 +24,8 @@ playwright-report/
 .windsurf/
 
 coverage/
+
+# Local working papers: kept on disk, never published
+docs/plans/
+docs/audits/
+docs/reviews/

@@ -20,6 +20,8 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
 
+import { planTest, plansAvailable } from "./_guard.mjs";
+
 import { edges, graphLine, graphSection, nodeId, stagesFromPlan as stagesFromPlanText } from "./_plan-graph.fixture.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
@@ -55,26 +57,28 @@ function planFiles() {
   return found.filter((path) => !NOT_A_PLAN.has(path)).sort();
 }
 
-const files = planFiles();
+// A clone has no working papers, so every read below is empty there and the
+// suites skip (see `_guard.mjs`).
+const files = plansAvailable() ? planFiles() : [];
 const texts = new Map(files.map((path) => [path, readFileSync(join(plansRoot, path), "utf8")]));
-const planText = readFileSync(join(skillsPlans, "_skills-plan.md"), "utf8");
-const levelZeroText = readFileSync(join(plansRoot, "plan-of-plans.md"), "utf8");
+const planText = plansAvailable() ? readFileSync(join(skillsPlans, "_skills-plan.md"), "utf8") : "";
+const levelZeroText = plansAvailable() ? readFileSync(join(plansRoot, "plan-of-plans.md"), "utf8") : "";
 
 const stagesFromPlan = () => stagesFromPlanText(planText);
 
-test("the level-zero index registers every self-registering top-level plan", () => {
+planTest("the level-zero index registers every self-registering top-level plan", () => {
   const missing = files.filter((path) => !path.startsWith("skills/") && texts.get(path).includes("WS0 - Register this plan")).filter((path) => !levelZeroText.includes(path));
 
   assert.deepEqual(missing, [], `register these plans in plan-of-plans.md: ${missing.join(", ")}`);
 });
 
-test("every plan carries a checkbox step", () => {
+planTest("every plan carries a checkbox step", () => {
   const offenders = files.filter((path) => !/^- \[[ xX]\]/m.test(texts.get(path)));
 
   assert.deepEqual(offenders, [], `add at least one step to: ${offenders.join(", ")}`);
 });
 
-test("every plan carries a status from the closed vocabulary", () => {
+planTest("every plan carries a status from the closed vocabulary", () => {
   const offenders = [];
 
   for (const path of files) {
@@ -95,7 +99,7 @@ test("every plan carries a status from the closed vocabulary", () => {
   assert.deepEqual(offenders, [], `normalise these status lines: ${offenders.slice(0, 12).join("; ")}`);
 });
 
-test("every plan carries a dependency graph with its three lines", () => {
+planTest("every plan carries a dependency graph with its three lines", () => {
   const offenders = [];
 
   for (const path of files) {
@@ -116,7 +120,7 @@ test("every plan carries a dependency graph with its three lines", () => {
   assert.deepEqual(offenders, [], `retrofit these plans: ${offenders.slice(0, 12).join("; ")}`);
 });
 
-test("the stage tables list every node exactly once", () => {
+planTest("the stage tables list every node exactly once", () => {
   const stageOf = stagesFromPlan();
   const seen = new Map();
 
@@ -138,7 +142,7 @@ test("the stage tables list every node exactly once", () => {
   assert.deepEqual(missing, [], `add these nodes to a stage table: ${missing.join(", ")}`);
 });
 
-test("the graph is acyclic", () => {
+planTest("the graph is acyclic", () => {
   const nodes = new Set([...texts.keys()].map(nodeId));
   const edgesOf = new Map();
 
@@ -180,7 +184,7 @@ test("the graph is acyclic", () => {
   assert.deepEqual(cycle, [], `dependency cycle through: ${cycle.join(" -> ")}`);
 });
 
-test("a CONTRACT edge names a phase the target plan has", () => {
+planTest("a CONTRACT edge names a phase the target plan has", () => {
   const offenders = [];
 
   for (const path of files) {
@@ -210,7 +214,7 @@ test("a CONTRACT edge names a phase the target plan has", () => {
   assert.deepEqual(offenders, [], `fix these phase references: ${offenders.join("; ")}`);
 });
 
-test("a dependency sits in an earlier stage than the node", () => {
+planTest("a dependency sits in an earlier stage than the node", () => {
   const stageOf = stagesFromPlan();
   const offenders = [];
 
@@ -237,7 +241,7 @@ test("a dependency sits in an earlier stage than the node", () => {
   assert.deepEqual(offenders, [], `move a node or an edge: ${offenders.join("; ")}`);
 });
 
-test("done means no open box, and the progress table matches the files", () => {
+planTest("done means no open box, and the progress table matches the files", () => {
   const offenders = [];
 
   for (const path of files) {
@@ -270,7 +274,7 @@ test("done means no open box, and the progress table matches the files", () => {
   assert.deepEqual(offenders, [], `fix these: ${offenders.join("; ")}`);
 });
 
-test("every plan path in the catalog resolves", () => {
+planTest("every plan path in the catalog resolves", () => {
   const missing = files.filter((path) => !existsSync(join(plansRoot, path)));
 
   assert.deepEqual(missing, [], `resolve these paths: ${missing.join(", ")}`);
