@@ -5,6 +5,11 @@ on:
     branches: [main, master]
   pull_request:
   workflow_dispatch:
+    inputs:
+      blocking:
+        description: Fail the run when the full-history credential scan finds something
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -92,9 +97,18 @@ jobs:
           PR_HEAD: ${{ github.event.pull_request.head.sha }}
           PUSH_BEFORE: ${{ github.event.before }}
           PUSH_AFTER: ${{ github.event.after }}
+          BLOCKING: ${{ inputs.blocking }}
         run: |
           set -euo pipefail
           test "$(betterleaks --version)" = "2.0.0-rc.7"
+          # A manual run has no event commits and no base to compare against, so
+          # it reads the whole history and reports. It blocks only when the run
+          # asked for that: the gate that must hold is the one on a push or a
+          # pull request, which scans exactly what the change adds.
+          advisory=""
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] && [ "$BLOCKING" != "true" ]; then
+            advisory="1"
+          fi
           head="HEAD"
           base=""
           if [ "$EVENT_NAME" = "pull_request" ]; then
@@ -132,6 +146,11 @@ jobs:
               status=$?
               # 1 means credentials were found, which is the gate doing its job.
               if [ "$status" -eq 1 ]; then
+                if [ -n "$advisory" ]; then
+                  echo "::warning::credentials found in ${spec}; this manual run is advisory"
+                  index="$end"
+                  continue
+                fi
                 echo "credentials found in ${spec}" >&2
                 exit 1
               fi
@@ -150,6 +169,11 @@ jobs:
                   index="$end"
                   continue
                 fi
+              fi
+              if [ -n "$advisory" ]; then
+                echo "::warning::credential scan could not read ${spec}; this manual run is advisory"
+                index="$end"
+                continue
               fi
               echo "credential scan could not read ${spec}" >&2
               exit 2
