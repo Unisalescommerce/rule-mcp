@@ -8,9 +8,9 @@ corrected by the pending decision recorded on 2026-11-06.
 
 ## What changed
 
-- The GitHub repository did not move: it is `pixu1980/rule-mcp`. The guide
-  earlier claimed a move to `pixu1980/rule` and a redirect, and neither was
-  true: that URL answers 404.
+- The GitHub repository did not move: it is `pixu1980/rule-mcp`. An earlier
+  version of this guide claimed a move and a redirect, and neither was true:
+  the old address answers 404.
 - The npm package and the binary are `rule-mcp`. The old `rule-mcp`
   package was never published to npm.
 - MCP client configs use `"command": "rule-mcp"` instead of the old command.

@@ -154,13 +154,13 @@ A plain `\b` grep also matches `rule-mcp`. Do not use it. Do not edit `docs/adr/
 
 Write the tests first. A test that enforces the wrong value must change before the files do.
 
-- [ ] **WS2-T1**: Change these 4 tests to expect `pixu1980/rule-mcp`: `scripts/__tests__/docs/version-sync.test.mjs`, `scripts/__tests__/docs/security-policy.test.mjs`, `scripts/__tests__/docs/rename.test.mjs` (also `server.name` becomes `io.github.pixu1980/rule-mcp`), and `scripts/__tests__/docs/packaging-manifests.test.mjs`. Run them. They must fail.
-- [ ] **WS2-T2**: Fix the manifests: `package.json`, `packages/mcp/package.json`, `server.json` (the URL fields and the `name`), `REUSE.toml`, `SECURITY-INSIGHTS.yml`, `.github/scoop/rule-mcp.json`, `.github/winget/pixu1980.rule-mcp.yaml`.
-- [ ] **WS2-T3**: Fix the docs and code: `SECURITY.md` (the advisory link, line 83), `CONTRIBUTING.md`, `docs/01-getting-started.md`, `docs/04-operations.md`, `docs/07-quick-start.md`, `packages/mcp/cli/daemon/_systemd-unit.js`, `packages/mcp/cli/setup/_next-steps.js`, `.github/ISSUE_TEMPLATE/config.yml`.
-- [ ] **WS2-T4**: Fix `scripts/install.sh`, `scripts/package.sh`, and `scripts/uninstall.sh`. Then run `pnpm checksums`. `scripts/SHA256SUMS` covers these files, and CI checks it.
-- [ ] **WS2-T5**: Rewrite the false claims in `docs/migrations/rule-mcp-rename.md`. The repo did not move, and no redirect exists. The guide also says the npm package `rule-mcp` is "an unrelated third-party package". That is false today (npm returns 404). After D9 the package is the project's own placeholder. Say that. Keep the rest of the guide.
-- [ ] **WS2-T6**: In `docs/04-operations.md`, list only the channels that exist today (the clone and the installer). Mark the rest `planned`. Do not tell users to run `pnpx rule-mcp`. The placeholder does nothing.
-- [ ] **WS2-T7**: Check: the `git grep` above returns nothing outside `docs/adr/` and `docs/handoff/`. Run `pnpm test:all`.
+- [x] **WS2-T1**: Change these 4 tests to expect `pixu1980/rule-mcp`: `scripts/__tests__/docs/version-sync.test.mjs`, `scripts/__tests__/docs/security-policy.test.mjs`, `scripts/__tests__/docs/rename.test.mjs` (also `server.name` becomes `io.github.pixu1980/rule-mcp`), and `scripts/__tests__/docs/packaging-manifests.test.mjs`. Run them. They must fail. Done 2026-11-06: all four failed on the old slug before the manifests changed.
+- [x] **WS2-T2**: Fix the manifests: `package.json`, `packages/mcp/package.json`, `server.json` (the URL fields and the `name`), `REUSE.toml`, `SECURITY-INSIGHTS.yml`, `.github/scoop/rule-mcp.json`, `.github/winget/pixu1980.rule-mcp.yaml`.
+- [x] **WS2-T3**: Fix the docs and code: `SECURITY.md` (the advisory link, line 83), `CONTRIBUTING.md`, `docs/01-getting-started.md`, `docs/04-operations.md`, `docs/07-quick-start.md`, `packages/mcp/cli/daemon/_systemd-unit.js`, `packages/mcp/cli/setup/_next-steps.js`, `.github/ISSUE_TEMPLATE/config.yml`.
+- [x] **WS2-T4**: Fix `scripts/install.sh`, `scripts/package.sh`, and `scripts/uninstall.sh`. Then run `pnpm checksums`. `scripts/SHA256SUMS` covers these files, and CI checks it. Regenerated 2026-11-06.
+- [x] **WS2-T5**: Rewrite the false claims in `docs/migrations/rule-mcp-rename.md`. The repo did not move, and no redirect exists. The guide also says the npm package `rule-mcp` is "an unrelated third-party package". That is false today (npm returns 404). After D9 the package is the project's own placeholder. Say that. Keep the rest of the guide.
+- [x] **WS2-T6**: In `docs/04-operations.md`, list only the channels that exist today (the clone and the installer). Mark the rest `planned`. Do not tell users to run `pnpx rule-mcp`. The placeholder does nothing.
+- [x] **WS2-T7**: Check: the `git grep` above returns nothing outside `docs/adr/` and `docs/handoff/`. Run `pnpm test:all`. Verified 2026-11-06: no match outside the ADR and handoff record, and a fresh clone reports 3105 tests with 0 failures.
 
 ### WS3 - Notify by default (F4, D4, D11)
 
