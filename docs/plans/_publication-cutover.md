@@ -27,7 +27,7 @@ WS1 fixes the failing tests. WS2 removes the last traces of Nyx. WS3 checks that
 
 WS5 deletes the case-study code, rewrites the history one last time, and makes `rel/v0.1.0` the new `main`.
 
-This plan waits for [OSS readiness and repo health](_oss-readiness-and-repo-health.md) and [tool and skill surface audit](_tool-and-skill-surface-audit.md) to close. Both change files that WS5 rewrites.
+This plan waited for [OSS readiness and repo health](../adr/217-close-out-plan-oss-readiness-and-repo-health.md) and [tool and skill surface audit](../adr/218-close-out-plan-tool-and-skill-surface-audit.md) to close. Both changed files that WS5 rewrites.
 
 ## Files that will be deleted from this repo
 

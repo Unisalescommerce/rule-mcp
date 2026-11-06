@@ -8,6 +8,10 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [218](218-close-out-plan-tool-and-skill-surface-audit.md)                                                               | Close out plan _tool-and-skill-surface-audit                                                              | 2026-11-06 | accepted   | docs, closeout, plan                                                                |
+| [217](217-close-out-plan-oss-readiness-and-repo-health.md)                                                              | Close out plan _oss-readiness-and-repo-health                                                             | 2026-11-06 | accepted   | docs, closeout, plan                                                                |
+| [216](216-close-out-plan-installer-global-link-and-launcher-deploy.md)                                                  | Close out plan _installer-global-link-and-launcher-deploy                                                 | 2026-11-06 | accepted   | docs, closeout, plan                                                                |
+| [215](215-the-uninstall-drops-the-pnpm-global-link-and-the-launcher-deploys-one-project.md)                             | The uninstall drops the pnpm global link, and the launcher deploys one project                            | 2026-11-06 | accepted   | installer, pnpm, launcher                                                           |
 | [214](214-main-is-the-only-branch-after-one-final-history-rewrite.md)                                                   | main is the only branch after one final history rewrite                                                   | 2026-11-06 | accepted   | git, history, release, governance                                                   |
 | [213](213-close-out-plan-plan-of-plans-reference.md)                                                                    | Close out plan _plan-of-plans-reference                                                                   | 2026-11-06 | accepted   | docs, closeout, plan                                                                |
 | [212](212-close-out-plan-secrets-guardrails.md)                                                                         | Close out plan _secrets-guardrails                                                                        | 2026-11-05 | accepted   | docs, closeout, plan                                                                |
@@ -221,6 +225,10 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [218](218-close-out-plan-tool-and-skill-surface-audit.md)                                                               | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_tool-and-skill-surface-audit.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                                   |
+| [217](217-close-out-plan-oss-readiness-and-repo-health.md)                                                              | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_oss-readiness-and-repo-health.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                                  |
+| [216](216-close-out-plan-installer-global-link-and-launcher-deploy.md)                                                  | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_installer-global-link-and-launcher-deploy.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                      |
+| [215](215-the-uninstall-drops-the-pnpm-global-link-and-the-launcher-deploys-one-project.md)                             | The uninstall owns the link, and the launcher names the project it copies.                                                                                                                                                      | Positive: uninstall plus setup now round-trips; the launcher copy is produced by a command pnpm accepts in this workspace; an empty launcher directory can no longer be mistaken for a copy; one owner for the global bin.      |
 | [214](214-main-is-the-only-branch-after-one-final-history-rewrite.md)                                                   | Rewrite the history once, then make rel/v0.1.0 the new main. filter-repo drops docs/case-studies and coverage/tmp from every commit and rewrites `clean(core):` to `refactor(core):`. The push is a lease over the old main...  | Positive: one branch, one linear history, and the repository is 32 MB instead of 68 MB. Positive: every commit on main satisfies the Conventional Commit rule, so the lint gate is meaningful.                                  |
 | [213](213-close-out-plan-plan-of-plans-reference.md)                                                                    | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_plan-of-plans-reference.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                                        |
 | [212](212-close-out-plan-secrets-guardrails.md)                                                                         | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_secrets-guardrails.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                                             |
@@ -434,6 +442,9 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### docs
 
+- [218](218-close-out-plan-tool-and-skill-surface-audit.md) Close out plan _tool-and-skill-surface-audit
+- [217](217-close-out-plan-oss-readiness-and-repo-health.md) Close out plan _oss-readiness-and-repo-health
+- [216](216-close-out-plan-installer-global-link-and-launcher-deploy.md) Close out plan _installer-global-link-and-launcher-deploy
 - [213](213-close-out-plan-plan-of-plans-reference.md) Close out plan _plan-of-plans-reference
 - [212](212-close-out-plan-secrets-guardrails.md) Close out plan _secrets-guardrails
 - [211](211-close-out-plan-rule-mcp-process-adr.md) Close out plan _rule-mcp-process-adr
@@ -471,6 +482,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### installer
 
+- [215](215-the-uninstall-drops-the-pnpm-global-link-and-the-launcher-deploys-one-project.md) The uninstall drops the pnpm global link, and the launcher deploys one project
 - [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
 - [197](197-own-every-user-facing-switch-as-a-feature.md) Own every user-facing switch as a feature
 - [193](193-setup-scope-project-records-projects-json-and-wires-install-writers.md) Setup --scope project records projects.json and wires install writers
@@ -501,6 +513,36 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [041](041-lossless-installer-preserve-toolprefix-normalize-rule-blank-lines.md) Lossless installer: preserve toolPrefix and normalize rule blank lines
 - [039](039-fix-vscode-extension-and-derivatives-install-uninstall.md) Fix VS Code extension and derivatives install/uninstall
 - [028](028-clean-rule-mcp-commands-via-user-commands-prompt-suppression-not-a-plugin.md) Clean /rule-mcp-* commands via user commands + prompt suppression, not a plugin
+
+### closeout
+
+- [218](218-close-out-plan-tool-and-skill-surface-audit.md) Close out plan _tool-and-skill-surface-audit
+- [217](217-close-out-plan-oss-readiness-and-repo-health.md) Close out plan _oss-readiness-and-repo-health
+- [216](216-close-out-plan-installer-global-link-and-launcher-deploy.md) Close out plan _installer-global-link-and-launcher-deploy
+- [213](213-close-out-plan-plan-of-plans-reference.md) Close out plan _plan-of-plans-reference
+- [212](212-close-out-plan-secrets-guardrails.md) Close out plan _secrets-guardrails
+- [211](211-close-out-plan-rule-mcp-process-adr.md) Close out plan _rule-mcp-process-adr
+- [210](210-close-out-plan-rule-mcp-process-ai.md) Close out plan _rule-mcp-process-ai
+- [209](209-close-out-plan-decision-models.md) Close out plan _decision-models
+- [208](208-close-out-plan-rule-mcp-process-uv-release.md) Close out plan _rule-mcp-process-uv-release
+- [207](207-close-out-plan-rule-mcp-process-npm-release.md) Close out plan _rule-mcp-process-npm-release
+- [206](206-close-out-plan-rule-mcp-process-cargo-release.md) Close out plan _rule-mcp-process-cargo-release
+- [205](205-close-out-plan-scripts-mcp-layout.md) Close out plan _scripts-mcp-layout
+- [204](204-close-out-plan-asd-ste100.md) Close out plan _asd-ste100
+- [203](203-close-out-audit-export.md) Close out audit export
+- [202](202-close-out-review-export.md) Close out review export
+- [201](201-close-out-plan-stable-launcher-outside-the-checkout.md) Close out plan _stable-launcher-outside-the-checkout
+- [200](200-close-out-plan-mcp-host-integration-depth.md) Close out plan _mcp-host-integration-depth
+- [199](199-close-out-plan-export.md) Close out plan _export
+- [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
+- [119](119-close-out-audit-ui.md) Close out audit ui
+- [118](118-close-out-review-ui.md) Close out review ui
+- [111](111-close-out-audit-security.md) Close out audit security
+- [110](110-close-out-review-security.md) Close out review security
+- [103](103-every-handoff-mode-sweeps-completed-working-papers-and-closeout-false-is-the-rea.md) Every handoff mode sweeps completed working papers, and closeout false is the read-only run
+- [100](100-the-tokensave-integration-closes-out-and-the-adapter-is-the-code-graph-layer.md) The TokenSave integration closes out: the adapter and its graph-backed tools are the code-graph layer
+- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
+- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
 
 ### skills
 
@@ -556,33 +598,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [019](019-use-a-persistent-local-bearer-token-for-daemon-transport.md) use a persistent local bearer token for daemon transport
 - [018](018-fail-closed-mcp-enforcement-and-reusable-agent-commands.md) fail closed mcp enforcement and reusable agent commands
 - [011](011-forms-per-framework.md) Forms per Framework - Merger & Distribution
-
-### closeout
-
-- [213](213-close-out-plan-plan-of-plans-reference.md) Close out plan _plan-of-plans-reference
-- [212](212-close-out-plan-secrets-guardrails.md) Close out plan _secrets-guardrails
-- [211](211-close-out-plan-rule-mcp-process-adr.md) Close out plan _rule-mcp-process-adr
-- [210](210-close-out-plan-rule-mcp-process-ai.md) Close out plan _rule-mcp-process-ai
-- [209](209-close-out-plan-decision-models.md) Close out plan _decision-models
-- [208](208-close-out-plan-rule-mcp-process-uv-release.md) Close out plan _rule-mcp-process-uv-release
-- [207](207-close-out-plan-rule-mcp-process-npm-release.md) Close out plan _rule-mcp-process-npm-release
-- [206](206-close-out-plan-rule-mcp-process-cargo-release.md) Close out plan _rule-mcp-process-cargo-release
-- [205](205-close-out-plan-scripts-mcp-layout.md) Close out plan _scripts-mcp-layout
-- [204](204-close-out-plan-asd-ste100.md) Close out plan _asd-ste100
-- [203](203-close-out-audit-export.md) Close out audit export
-- [202](202-close-out-review-export.md) Close out review export
-- [201](201-close-out-plan-stable-launcher-outside-the-checkout.md) Close out plan _stable-launcher-outside-the-checkout
-- [200](200-close-out-plan-mcp-host-integration-depth.md) Close out plan _mcp-host-integration-depth
-- [199](199-close-out-plan-export.md) Close out plan _export
-- [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
-- [119](119-close-out-audit-ui.md) Close out audit ui
-- [118](118-close-out-review-ui.md) Close out review ui
-- [111](111-close-out-audit-security.md) Close out audit security
-- [110](110-close-out-review-security.md) Close out review security
-- [103](103-every-handoff-mode-sweeps-completed-working-papers-and-closeout-false-is-the-rea.md) Every handoff mode sweeps completed working papers, and closeout false is the read-only run
-- [100](100-the-tokensave-integration-closes-out-and-the-adapter-is-the-code-graph-layer.md) The TokenSave integration closes out: the adapter and its graph-backed tools are the code-graph layer
-- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
-- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
 
 ### governance
 
@@ -656,6 +671,28 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [021](021-skill-routing-eslint-flat-config-for-typescript-react-proje.md) Skill routing: ESLint flat config for TypeScript React project
 - [020](020-skill-routing-typescript-tsconfig-strict-mode-configuration.md) Skill routing: TypeScript tsconfig strict mode configuration
 
+### plan
+
+- [218](218-close-out-plan-tool-and-skill-surface-audit.md) Close out plan _tool-and-skill-surface-audit
+- [217](217-close-out-plan-oss-readiness-and-repo-health.md) Close out plan _oss-readiness-and-repo-health
+- [216](216-close-out-plan-installer-global-link-and-launcher-deploy.md) Close out plan _installer-global-link-and-launcher-deploy
+- [213](213-close-out-plan-plan-of-plans-reference.md) Close out plan _plan-of-plans-reference
+- [212](212-close-out-plan-secrets-guardrails.md) Close out plan _secrets-guardrails
+- [211](211-close-out-plan-rule-mcp-process-adr.md) Close out plan _rule-mcp-process-adr
+- [210](210-close-out-plan-rule-mcp-process-ai.md) Close out plan _rule-mcp-process-ai
+- [209](209-close-out-plan-decision-models.md) Close out plan _decision-models
+- [208](208-close-out-plan-rule-mcp-process-uv-release.md) Close out plan _rule-mcp-process-uv-release
+- [207](207-close-out-plan-rule-mcp-process-npm-release.md) Close out plan _rule-mcp-process-npm-release
+- [206](206-close-out-plan-rule-mcp-process-cargo-release.md) Close out plan _rule-mcp-process-cargo-release
+- [205](205-close-out-plan-scripts-mcp-layout.md) Close out plan _scripts-mcp-layout
+- [204](204-close-out-plan-asd-ste100.md) Close out plan _asd-ste100
+- [201](201-close-out-plan-stable-launcher-outside-the-checkout.md) Close out plan _stable-launcher-outside-the-checkout
+- [200](200-close-out-plan-mcp-host-integration-depth.md) Close out plan _mcp-host-integration-depth
+- [199](199-close-out-plan-export.md) Close out plan _export
+- [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
+- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
+- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
+
 ### breaking
 
 - [153](153-retire-the-rule-mcp-platform-agent-skill.md) Retire the rule-platform-agent skill
@@ -674,25 +711,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [115](115-map-tools-slash-commands-and-skills-into-one-surface.md) Map tools, slash commands, and skills into one surface
 - [114](114-flight-is-process-area-guidance-injected-on-every-prompt-not-a-slash-command.md) Flight is process-area guidance injected on every prompt, not a slash command
 - [113](113-rename-the-command-surface-under-process-and-persona-namespaces.md) Rename the command surface under process and persona namespaces
-
-### plan
-
-- [213](213-close-out-plan-plan-of-plans-reference.md) Close out plan _plan-of-plans-reference
-- [212](212-close-out-plan-secrets-guardrails.md) Close out plan _secrets-guardrails
-- [211](211-close-out-plan-rule-mcp-process-adr.md) Close out plan _rule-mcp-process-adr
-- [210](210-close-out-plan-rule-mcp-process-ai.md) Close out plan _rule-mcp-process-ai
-- [209](209-close-out-plan-decision-models.md) Close out plan _decision-models
-- [208](208-close-out-plan-rule-mcp-process-uv-release.md) Close out plan _rule-mcp-process-uv-release
-- [207](207-close-out-plan-rule-mcp-process-npm-release.md) Close out plan _rule-mcp-process-npm-release
-- [206](206-close-out-plan-rule-mcp-process-cargo-release.md) Close out plan _rule-mcp-process-cargo-release
-- [205](205-close-out-plan-scripts-mcp-layout.md) Close out plan _scripts-mcp-layout
-- [204](204-close-out-plan-asd-ste100.md) Close out plan _asd-ste100
-- [201](201-close-out-plan-stable-launcher-outside-the-checkout.md) Close out plan _stable-launcher-outside-the-checkout
-- [200](200-close-out-plan-mcp-host-integration-depth.md) Close out plan _mcp-host-integration-depth
-- [199](199-close-out-plan-export.md) Close out plan _export
-- [198](198-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
-- [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
-- [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
 
 ### release
 
@@ -1171,6 +1189,12 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md) Retire the cross-branch plan graph and orchestrate from rel/v0.1.0
 - [175](175-orchestrate-the-plan-catalog-with-a-staged-dependency-graph.md) Orchestrate the plan catalog with a staged dependency graph
 - [170](170-retire-the-plan-of-plans-into-an-adr-and-a-handoff.md) Retire the plan-of-plans into an ADR and a handoff
+
+### pnpm
+
+- [215](215-the-uninstall-drops-the-pnpm-global-link-and-the-launcher-deploys-one-project.md) The uninstall drops the pnpm global link, and the launcher deploys one project
+- [123](123-start-the-six-case-study-apps-with-one-port-allocating-command.md) Start the six case-study apps with one port-allocating command
+- [109](109-no-corepack-activation-and-no-engines-field-in-a-generated-package-json.md) No corepack activation and no engines field in a generated package.json
 
 ### quality
 

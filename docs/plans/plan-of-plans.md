@@ -21,26 +21,27 @@ Node ids in graph lines stay skill names (`rule-process-ai`), not filenames. Fil
 
 ## 1 - Snapshot (2026-11-05)
 
-| Group                           | Path                                | Status         | Open work                                                                           |
-| ------------------------------- | ----------------------------------- | -------------- | ----------------------------------------------------------------------------------- |
-| this index                      | `plan-of-plans.md`                  | `in-progress`  | workstream ordering + owner merge gate                                              |
-| catalog orchestrator            | `skills/_skills-plan.md`            | `in-progress`  | 3 release nodes done; remaining leaves per its stages                               |
-| host integration                | _(retired)_                         | done → ADR 200 | 37/37; per-host tokens deferred (pending ADR close-host-…)                          |
-| launcher                        | _(retired)_                         | done → ADR 201 | Phase 4 closed 2026-10-30 (pending ADR the-launcher-owns-…)                         |
-| port / installer scope          | _(retired)_                         | done → ADR 198 | file gone; HARD edge to host plan satisfied                                         |
-| export                          | _(retired)_                         | done → ADR 199 | Steps 0–8 complete 2026-10-31; review/audit → ADR 202/203                           |
-| scripts layout                  | _(retired)_                         | done → ADR 205 | WS0–WS7 closed 2026-11-01; product ADR pending land                                 |
-| decision models                 | _(retired)_                         | done → ADR 209 | own graph                                                                           |
-| ASD-STE100 writing + plan shape | _(retired)_                         | done → ADR 204 | WS-G closed 2026-10-31; product pending ADR mcp-authored-markdown-uses-asd-ste100…  |
-| plan-graph audit                | _(retired)_                         | done → ADR 213 | history (ADR 171)                                                                   |
-| Pi integration and catalog debt | `_pi-integration-and-debt.md`       | `in-progress`  | WS1 installed-skill verification; WS2 catalog debt                                  |
-| OSS readiness and repo health   | `_oss-readiness-and-repo-health.md` | `planned`      | WS1 records four decisions; serialize ADR writes with the surface audit             |
-| tool and skill surface audit    | `_tool-and-skill-surface-audit.md`  | `done`         | closed 2026-11-06: counts guarded, catalog refreshed, ADRs decided                  |
-| publication cutover             | `_publication-cutover.md`           | `planned`      | HARD-waits for the OSS and surface plans, then fixes tests, CI, secrets and cutover |
-| Deepseek audit runbook          | `_deepseek-prompts.md`              | support        | prompt order for the OSS and surface plans; not an executable graph node            |
-| Secrets guardrails              | _(retired)_                         | done → ADR 212 | closeout recorded                                                                   |
+| Group                           | Path                          | Status         | Open work                                                                           |
+| ------------------------------- | ----------------------------- | -------------- | ----------------------------------------------------------------------------------- |
+| this index                      | `plan-of-plans.md`            | `in-progress`  | workstream ordering + owner merge gate                                              |
+| catalog orchestrator            | `skills/_skills-plan.md`      | `in-progress`  | 3 release nodes done; remaining leaves per its stages                               |
+| host integration                | _(retired)_                   | done → ADR 200 | 37/37; per-host tokens deferred (pending ADR close-host-…)                          |
+| launcher                        | _(retired)_                   | done → ADR 201 | Phase 4 closed 2026-10-30 (pending ADR the-launcher-owns-…)                         |
+| port / installer scope          | _(retired)_                   | done → ADR 198 | file gone; HARD edge to host plan satisfied                                         |
+| export                          | _(retired)_                   | done → ADR 199 | Steps 0–8 complete 2026-10-31; review/audit → ADR 202/203                           |
+| scripts layout                  | _(retired)_                   | done → ADR 205 | WS0–WS7 closed 2026-11-01; product ADR pending land                                 |
+| decision models                 | _(retired)_                   | done → ADR 209 | own graph                                                                           |
+| ASD-STE100 writing + plan shape | _(retired)_                   | done → ADR 204 | WS-G closed 2026-10-31; product pending ADR mcp-authored-markdown-uses-asd-ste100…  |
+| plan-graph audit                | _(retired)_                   | done → ADR 213 | history (ADR 171)                                                                   |
+| Pi integration and catalog debt | `_pi-integration-and-debt.md` | `in-progress`  | WS1 installed-skill verification; WS2 catalog debt                                  |
+| OSS readiness and repo health   | _(retired)_                   | done → ADR 217 | WS1 records four decisions; serialize ADR writes with the surface audit             |
+| tool and skill surface audit    | _(retired)_                   | done → ADR 218 | closed 2026-11-06: counts guarded, catalog refreshed, ADRs decided                  |
+| publication cutover             | `_publication-cutover.md`     | `planned`      | HARD-waits for the OSS and surface plans, then fixes tests, CI, secrets and cutover |
+| Deepseek audit runbook          | `_deepseek-prompts.md`        | support        | prompt order for the OSS and surface plans; not an executable graph node            |
+| Secrets guardrails              | _(retired)_                   | done → ADR 212 | closeout recorded                                                                   |
 
 Branch history that motivated stages 1-5 (2026-10-21) lives in git and in ADR 181; it is not re-executed. The remote `feat/*` refs carry no content this tree lacks.
+| Installer: remove the pnpm global link, fix the launcher deploy | _(retired)_ | done → ADR 216 | scaffold shape check |
 
 ## 2 - What this file is not
 
@@ -138,11 +139,12 @@ Run only when WS-A/B/C are idle on the shared files in section 8. The OSS and su
 - [x] scripts-layout — WS0–WS7 complete; retired → [ADR 205](../adr/205-close-out-plan-scripts-mcp-layout.md); product ADR pending `docs/adr/_pending/pnpm-workspace-with-packages-mcp-shared-docs-and-publish-from-packages-mcp.md`.
 - [x] decision models — DM-04 closed by its kill criterion: the harness and the registry ship, the Italian routing claim is dropped; retired → [ADR 209](../adr/209-close-out-plan-decision-models.md).
 - [ ] [`_pi-integration-and-debt.md`](_pi-integration-and-debt.md) - WS1 installed-skill verification and WS2 catalog debt remain.
-- [ ] [`_oss-readiness-and-repo-health.md`](_oss-readiness-and-repo-health.md) - registration is complete. WS1 records the four repository decisions.
+- [x] [`_oss-readiness-and-repo-health.md`](_oss-readiness-and-repo-health.md) - registration is complete. WS1 records the four repository decisions; retired → [ADR 217](../adr/217-close-out-plan-oss-readiness-and-repo-health.md).
 - [x] [`_tool-and-skill-surface-audit.md`](_tool-and-skill-surface-audit.md) - closed 2026-11-06: counts guarded by a test, catalog documents refreshed, proposed ADRs decided, orchestrator deduplicated.
 - [ ] [`_publication-cutover.md`](_publication-cutover.md) - the history rewrite and the branch cutover landed 2026-11-06; the lint and coverage debt it records stays open.
 - [x] [`_deepseek-prompts.md`](_deepseek-prompts.md) - registered as a support runbook for the OSS and surface plans, not as an executable node.
 - [x] Secret guardrails - WS1-WS3 complete; retired to [ADR 212](../adr/212-close-out-plan-secrets-guardrails.md).
+- [x] [`_installer-global-link-and-launcher-deploy.md`](_installer-global-link-and-launcher-deploy.md) - scaffold shape check; retired → [ADR 216](../adr/216-close-out-plan-installer-global-link-and-launcher-deploy.md).
 
 ### WS-G — ASD-STE100 writing and AI plan shape
 
