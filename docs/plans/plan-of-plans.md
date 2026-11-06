@@ -1,10 +1,10 @@
-# plan-of-plans - level-0 orchestration on `rel/v0.1.0`
+# plan-of-plans - level-0 orchestration on `main`
 
 Status: `in-progress`. This file is the **only unprefixed plan** under `docs/plans/`: it is the index that coordinates every other plan. Every subordinate plan file starts with `_` (top-level and `skills/**`) so a reader can tell the coordinator from the work it orders. It plans no skill, and it never touches `main`.
 
 Format: the contract of ADR 154 (status line, `## Dependency graph`, checkbox steps), in its **four-line in-branch form** (ADR 181).
 
-Topology: **`rel/v0.1.0` is where the work is.** Every commit lands here. `main` is out of scope until the owner opens the merge request. Measured again 2026-10-30 after handoff 36.
+Topology: **`main` is the only branch.** The cutover of 2026-11-06 replaced it with the history that was on `rel/v0.1.0` and deleted the old branch (ADR 214). After the repository goes public there is no rewrite and no force-push.
 
 ## 0 - Naming convention
 
@@ -68,7 +68,7 @@ Cross-branch kinds (`MERGE`, `REBASE`, `DIVERGENCE`, `SUPERSEDES`) are retired w
 ## 4 - Dependency graph (level 0)
 
 ```
-rel/v0.1.0
+main
 ├── plan-of-plans.md .................... this index (unprefixed)
 ├── WS-A  host closeout ................. done → ADR 200 (HARD← ADR 198)
 ├── WS-B  launcher Phase 4 .............. done → ADR 201
@@ -81,7 +81,7 @@ rel/v0.1.0
 │   ├── Pi integration ................ in progress
 │   ├── OSS readiness ................. planned
 │   ├── tool and skill surface audit .. done (ORDER <- Pi; CONFLICT <-> OSS)
-│   ├── publication cutover ........... planned (HARD <- OSS + surface audit)
+│   ├── publication cutover ........... in progress (cutover done)
 │   └── Deepseek prompts .............. support runbook, not a node
 ├── WS-G  ASD-STE100 writing + plan shape
 │   └── _asd-ste100.md ................. done → ADR 204
@@ -140,7 +140,7 @@ Run only when WS-A/B/C are idle on the shared files in section 8. The OSS and su
 - [ ] [`_pi-integration-and-debt.md`](_pi-integration-and-debt.md) - WS1 installed-skill verification and WS2 catalog debt remain.
 - [ ] [`_oss-readiness-and-repo-health.md`](_oss-readiness-and-repo-health.md) - registration is complete. WS1 records the four repository decisions.
 - [x] [`_tool-and-skill-surface-audit.md`](_tool-and-skill-surface-audit.md) - closed 2026-11-06: counts guarded by a test, catalog documents refreshed, proposed ADRs decided, orchestrator deduplicated.
-- [ ] [`_publication-cutover.md`](_publication-cutover.md) - planned, but execution HARD-waits for the OSS and surface plans.
+- [ ] [`_publication-cutover.md`](_publication-cutover.md) - the history rewrite and the branch cutover landed 2026-11-06; the lint and coverage debt it records stays open.
 - [x] [`_deepseek-prompts.md`](_deepseek-prompts.md) - registered as a support runbook for the OSS and surface plans, not as an executable node.
 - [x] Secret guardrails - WS1-WS3 complete; retired to [ADR 212](../adr/212-close-out-plan-secrets-guardrails.md).
 
@@ -162,15 +162,15 @@ Retired → [ADR 204](../adr/204-close-out-plan-asd-ste100.md). Product decision
 
 ### WS-F — Owner merge to `main`
 
-- [ ] Owner opens the merge request to `main`. No stage reads or writes `main` from this graph.
+- [x] Owner merged to `main` on 2026-11-06 by the cutover itself (ADR 214). There is no merge request: the branch is the history.
 
 ## 6 - Protocol: how the agent picks the next node
 
 1. Read section 5; take the first open checkbox whose edges in section 4 are closed.
 2. If the node is a skill plan, open `skills/_skills-plan.md` and take its next node — do not invent order here.
-3. Work on `rel/v0.1.0` only.
+3. Work on `main` only; it is the only branch (ADR 214).
 4. Close the node's own checkboxes; run its gates plus section 8 shared gates.
-5. Commit `type(scope): subject`; docs in their own commit when possible; never push.
+5. Commit `type(scope): subject`; docs in their own commit when possible; push only when the owner asks.
 6. Update the matching workstream row here (or the catalog progress table) before the next node.
 
 A node that cannot finish is marked `blocked` with the blocking edge, never moved to another workstream.

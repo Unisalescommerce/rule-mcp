@@ -8,6 +8,7 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [214](214-main-is-the-only-branch-after-one-final-history-rewrite.md)                                                   | main is the only branch after one final history rewrite                                                   | 2026-11-06 | accepted   | git, history, release, governance                                                   |
 | [213](213-close-out-plan-plan-of-plans-reference.md)                                                                    | Close out plan _plan-of-plans-reference                                                                   | 2026-11-06 | accepted   | docs, closeout, plan                                                                |
 | [212](212-close-out-plan-secrets-guardrails.md)                                                                         | Close out plan _secrets-guardrails                                                                        | 2026-11-05 | accepted   | docs, closeout, plan                                                                |
 | [211](211-close-out-plan-rule-mcp-process-adr.md)                                                                       | Close out plan _rule-mcp-process-adr                                                                      | 2026-11-03 | accepted   | docs, closeout, plan                                                                |
@@ -220,6 +221,7 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [214](214-main-is-the-only-branch-after-one-final-history-rewrite.md)                                                   | Rewrite the history once, then make rel/v0.1.0 the new main. filter-repo drops docs/case-studies and coverage/tmp from every commit and rewrites `clean(core):` to `refactor(core):`. The push is a lease over the old main...  | Positive: one branch, one linear history, and the repository is 32 MB instead of 68 MB. Positive: every commit on main satisfies the Conventional Commit rule, so the lint gate is meaningful.                                  |
 | [213](213-close-out-plan-plan-of-plans-reference.md)                                                                    | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_plan-of-plans-reference.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                                        |
 | [212](212-close-out-plan-secrets-guardrails.md)                                                                         | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_secrets-guardrails.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                                             |
 | [211](211-close-out-plan-rule-mcp-process-adr.md)                                                                       | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/skills/process/_rule-mcp-process-adr.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                            |
@@ -582,6 +584,30 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
 - [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
 
+### governance
+
+- [214](214-main-is-the-only-branch-after-one-final-history-rewrite.md) main is the only branch after one final history rewrite
+- [186](186-baseline-the-cli-file-size-debt-in-the-ratchet.md) Baseline the CLI file-size debt in the ratchet
+- [182](182-one-host-record-answers-for-every-catalog-host.md) One host record answers for every catalog host
+- [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md) Retire the cross-branch plan graph and orchestrate from rel/v0.1.0
+- [178](178-surface-is-the-only-tier-picker-slash-commands-follow-it.md) Surface is the only tier picker; slash commands follow it
+- [177](177-rework-the-installer-around-one-profile-a-manifest-and-opentui.md) Rework the installer around one profile, a manifest and OpenTUI
+- [176](176-drop-the-spdx-file-headers.md) Drop the SPDX file headers
+- [175](175-orchestrate-the-plan-catalog-with-a-staged-dependency-graph.md) Orchestrate the plan catalog with a staged dependency graph
+- [174](174-retire-the-codeql-workflow-until-code-scanning-is-available.md) Retire the CodeQL workflow until code scanning is available
+- [173](173-drop-the-dco-sign-off-requirement.md) Drop the DCO sign-off requirement
+- [172](172-retire-closed-plans-into-adrs-and-one-handoff.md) Retire closed plans into ADRs and one handoff
+- [171](171-retire-the-plan-graph-audit-reference-into-an-adr-and-a-handoff.md) Retire the plan-graph audit reference into an ADR and a handoff
+- [170](170-retire-the-plan-of-plans-into-an-adr-and-a-handoff.md) Retire the plan-of-plans into an ADR and a handoff
+- [154](154-every-plan-carries-a-status-line-a-dependency-graph-and-checkbox-steps.md) Every plan carries a status line, a dependency graph and checkbox steps
+- [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
+- [135](135-codify-stage-0-oss-governance-signing-support-and-licensing-policies.md) Codify Stage 0 OSS governance, signing, support, and licensing policies
+- [098](098-develop-merges-into-main-by-area-and-stays-as-an-integration-branch.md) develop merges into main by area, and stays as an integration branch
+- [093](093-add-an-open-source-steward-persona-for-governance-contributors-and-donors.md) Add an Open Source Steward persona for governance, contributors and donors
+- [083](083-governance-is-an-explicit-bdfl-with-a-path-to-co-maintainers.md) Governance is an explicit BDFL with a path to co-maintainers
+- [079](079-add-the-oss-architect-review-persona.md) Add the OSS Architect review persona
+- [066](066-remove-externally-derived-skills-from-the-served-knowledge-base.md) Remove externally derived skills from the served knowledge base
+
 ### guardrails
 
 - [153](153-retire-the-rule-mcp-platform-agent-skill.md) Retire the rule-platform-agent skill
@@ -630,29 +656,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [021](021-skill-routing-eslint-flat-config-for-typescript-react-proje.md) Skill routing: ESLint flat config for TypeScript React project
 - [020](020-skill-routing-typescript-tsconfig-strict-mode-configuration.md) Skill routing: TypeScript tsconfig strict mode configuration
 
-### governance
-
-- [186](186-baseline-the-cli-file-size-debt-in-the-ratchet.md) Baseline the CLI file-size debt in the ratchet
-- [182](182-one-host-record-answers-for-every-catalog-host.md) One host record answers for every catalog host
-- [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md) Retire the cross-branch plan graph and orchestrate from rel/v0.1.0
-- [178](178-surface-is-the-only-tier-picker-slash-commands-follow-it.md) Surface is the only tier picker; slash commands follow it
-- [177](177-rework-the-installer-around-one-profile-a-manifest-and-opentui.md) Rework the installer around one profile, a manifest and OpenTUI
-- [176](176-drop-the-spdx-file-headers.md) Drop the SPDX file headers
-- [175](175-orchestrate-the-plan-catalog-with-a-staged-dependency-graph.md) Orchestrate the plan catalog with a staged dependency graph
-- [174](174-retire-the-codeql-workflow-until-code-scanning-is-available.md) Retire the CodeQL workflow until code scanning is available
-- [173](173-drop-the-dco-sign-off-requirement.md) Drop the DCO sign-off requirement
-- [172](172-retire-closed-plans-into-adrs-and-one-handoff.md) Retire closed plans into ADRs and one handoff
-- [171](171-retire-the-plan-graph-audit-reference-into-an-adr-and-a-handoff.md) Retire the plan-graph audit reference into an ADR and a handoff
-- [170](170-retire-the-plan-of-plans-into-an-adr-and-a-handoff.md) Retire the plan-of-plans into an ADR and a handoff
-- [154](154-every-plan-carries-a-status-line-a-dependency-graph-and-checkbox-steps.md) Every plan carries a status line, a dependency graph and checkbox steps
-- [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
-- [135](135-codify-stage-0-oss-governance-signing-support-and-licensing-policies.md) Codify Stage 0 OSS governance, signing, support, and licensing policies
-- [098](098-develop-merges-into-main-by-area-and-stays-as-an-integration-branch.md) develop merges into main by area, and stays as an integration branch
-- [093](093-add-an-open-source-steward-persona-for-governance-contributors-and-donors.md) Add an Open Source Steward persona for governance, contributors and donors
-- [083](083-governance-is-an-explicit-bdfl-with-a-path-to-co-maintainers.md) Governance is an explicit BDFL with a path to co-maintainers
-- [079](079-add-the-oss-architect-review-persona.md) Add the OSS Architect review persona
-- [066](066-remove-externally-derived-skills-from-the-served-knowledge-base.md) Remove externally derived skills from the served knowledge base
-
 ### breaking
 
 - [153](153-retire-the-rule-mcp-platform-agent-skill.md) Retire the rule-platform-agent skill
@@ -691,6 +694,24 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [099](099-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
 - [095](095-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
 
+### release
+
+- [214](214-main-is-the-only-branch-after-one-final-history-rewrite.md) main is the only branch after one final history rewrite
+- [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md) Retire the cross-branch plan graph and orchestrate from rel/v0.1.0
+- [170](170-retire-the-plan-of-plans-into-an-adr-and-a-handoff.md) Retire the plan-of-plans into an ADR and a handoff
+- [169](169-rename-the-server-to-rulemcp.md) Rename the server to RuleMCP
+- [135](135-codify-stage-0-oss-governance-signing-support-and-licensing-policies.md) Codify Stage 0 OSS governance, signing, support, and licensing policies
+- [133](133-first-release-is-v0-1-0-then-semver-from-commits.md) First release is v0.1.0, then SemVer from commits
+- [131](131-an-update-moves-a-git-clone-install-to-the-newest-release-tag-unasked.md) An update moves a git-clone install to the newest release tag, unasked
+- [130](130-this-server-releases-itself-with-pnpm-release-and-the-push-is-the-release.md) This server releases itself with pnpm release, and the push is the release
+- [127](127-derive-the-next-version-and-the-changelog-from-the-commit-rule.md) Derive the next version and the changelog from the commit rule
+- [113](113-rename-the-command-surface-under-process-and-persona-namespaces.md) Rename the command surface under process and persona namespaces
+- [097](097-the-release-target-is-v0-1-0-beta-and-the-version-tooling-accepts-a-prerelease.md) The release target is v0.1.0-beta, and the version tooling accepts a prerelease
+- [085](085-reset-the-project-version-to-0-1-0-first-release-will-be-v0-1-0.md) Reset the project version to 0.1.0, first release will be v0.1.0
+- [082](082-release-artifacts-are-github-tarballs-not-registry-packages.md) Release artifacts are GitHub tarballs, not registry packages
+- [081](081-mcp-registry-identity-is-the-github-owner-not-a-claimed-brand.md) MCP registry identity is the GitHub owner, not a claimed brand
+- [048](048-v100-release-and-docs-accuracy-guard.md) v1.0.0 release and the docs-accuracy guard
+
 ### cli
 
 - [189](189-hook-install-starts-the-guard-daemon-and-writers-use-send.md) Hook install starts the guard daemon and writers use --send
@@ -725,22 +746,21 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [054](054-split-review-personas-into-per-operation-commands-plan-audit-review.md) Split review personas into per-operation commands (plan/audit/review)
 - [028](028-clean-rule-mcp-commands-via-user-commands-prompt-suppression-not-a-plugin.md) Clean /rule-mcp-* commands via user commands + prompt suppression, not a plugin
 
-### release
+### git
 
-- [181](181-retire-the-cross-branch-plan-graph-and-orchestrate-from-rel-v0-1-0.md) Retire the cross-branch plan graph and orchestrate from rel/v0.1.0
-- [170](170-retire-the-plan-of-plans-into-an-adr-and-a-handoff.md) Retire the plan-of-plans into an ADR and a handoff
-- [169](169-rename-the-server-to-rulemcp.md) Rename the server to RuleMCP
-- [135](135-codify-stage-0-oss-governance-signing-support-and-licensing-policies.md) Codify Stage 0 OSS governance, signing, support, and licensing policies
-- [133](133-first-release-is-v0-1-0-then-semver-from-commits.md) First release is v0.1.0, then SemVer from commits
-- [131](131-an-update-moves-a-git-clone-install-to-the-newest-release-tag-unasked.md) An update moves a git-clone install to the newest release tag, unasked
+- [214](214-main-is-the-only-branch-after-one-final-history-rewrite.md) main is the only branch after one final history rewrite
+- [194](194-follow-only-real-renames-when-dating-a-numbered-document.md) Follow only real renames when dating a numbered document
+- [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
+- [143](143-rename-rule-mcp-toolchain-commits-to-rule-mcp-styleguide-git.md) Rename rule-toolchain-commits to rule-styleguide-git
+- [134](134-close-features-only-after-persisting-the-final-handoff-and-consolidate-the-featu.md) Close features only after persisting the final handoff and consolidate the feature by default
 - [130](130-this-server-releases-itself-with-pnpm-release-and-the-push-is-the-release.md) This server releases itself with pnpm release, and the push is the release
+- [128](128-consolidate-the-feature-adrs-and-handoffs-into-one-commit-at-the-close-squash.md) Consolidate the feature ADRs and handoffs into one commit at the close squash
 - [127](127-derive-the-next-version-and-the-changelog-from-the-commit-rule.md) Derive the next version and the changelog from the commit rule
-- [113](113-rename-the-command-surface-under-process-and-persona-namespaces.md) Rename the command surface under process and persona namespaces
-- [097](097-the-release-target-is-v0-1-0-beta-and-the-version-tooling-accepts-a-prerelease.md) The release target is v0.1.0-beta, and the version tooling accepts a prerelease
-- [085](085-reset-the-project-version-to-0-1-0-first-release-will-be-v0-1-0.md) Reset the project version to 0.1.0, first release will be v0.1.0
-- [082](082-release-artifacts-are-github-tarballs-not-registry-packages.md) Release artifacts are GitHub tarballs, not registry packages
-- [081](081-mcp-registry-identity-is-the-github-owner-not-a-claimed-brand.md) MCP registry identity is the GitHub owner, not a claimed brand
-- [048](048-v100-release-and-docs-accuracy-guard.md) v1.0.0 release and the docs-accuracy guard
+- [126](126-close-a-feature-with-reset-soft-onto-the-merge-base-and-one-validated-commit.md) Close a feature with reset --soft onto the merge base and one validated commit
+- [125](125-normalize-history-on-the-merge-base-and-hold-every-rewrite-to-a-tree-invariant.md) Normalize history on the merge base and hold every rewrite to a tree invariant
+- [124](124-make-the-tool-call-host-a-list-so-invocation-hosts-coexist.md) Make the tool-call host a list so invocation hosts coexist
+- [098](098-develop-merges-into-main-by-area-and-stays-as-an-integration-branch.md) develop merges into main by area, and stays as an integration branch
+- [027](027-add-rule-mcp-toolchain-commits-skill-for-atomic-conventional-commits-with-mandatory-s.md) Add rule-toolchain-commits skill for atomic conventional commits with mandatory scope
 
 ### decision-models
 
@@ -756,21 +776,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [158](158-replay-the-decision-cache-gate-only-behind-a-measured-threshold.md) Replay the decision-cache gate only behind a measured threshold
 - [157](157-shadow-the-decision-cache-gate-before-replaying.md) Shadow the decision-cache gate before replaying
 - [156](156-keep-bm25-and-gate-a-local-decision-model-as-a-second-opinion.md) Keep BM25 and gate a local decision model as a second opinion
-
-### git
-
-- [194](194-follow-only-real-renames-when-dating-a-numbered-document.md) Follow only real renames when dating a numbered document
-- [147](147-never-install-commit-hooks-into-a-machine-wide-core-hookspath.md) Never install commit hooks into a machine-wide core.hooksPath
-- [143](143-rename-rule-mcp-toolchain-commits-to-rule-mcp-styleguide-git.md) Rename rule-toolchain-commits to rule-styleguide-git
-- [134](134-close-features-only-after-persisting-the-final-handoff-and-consolidate-the-featu.md) Close features only after persisting the final handoff and consolidate the feature by default
-- [130](130-this-server-releases-itself-with-pnpm-release-and-the-push-is-the-release.md) This server releases itself with pnpm release, and the push is the release
-- [128](128-consolidate-the-feature-adrs-and-handoffs-into-one-commit-at-the-close-squash.md) Consolidate the feature ADRs and handoffs into one commit at the close squash
-- [127](127-derive-the-next-version-and-the-changelog-from-the-commit-rule.md) Derive the next version and the changelog from the commit rule
-- [126](126-close-a-feature-with-reset-soft-onto-the-merge-base-and-one-validated-commit.md) Close a feature with reset --soft onto the merge base and one validated commit
-- [125](125-normalize-history-on-the-merge-base-and-hold-every-rewrite-to-a-tree-invariant.md) Normalize history on the merge base and hold every rewrite to a tree invariant
-- [124](124-make-the-tool-call-host-a-list-so-invocation-hosts-coexist.md) Make the tool-call host a list so invocation hosts coexist
-- [098](098-develop-merges-into-main-by-area-and-stays-as-an-integration-branch.md) develop merges into main by area, and stays as an integration branch
-- [027](027-add-rule-mcp-toolchain-commits-skill-for-atomic-conventional-commits-with-mandatory-s.md) Add rule-toolchain-commits skill for atomic conventional commits with mandatory scope
 
 ### testing
 
@@ -1058,6 +1063,13 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [140](140-add-a-shared-frontend-guardrail-family-for-xss-lists-and-workers.md) Add a shared frontend guardrail family for XSS, lists and workers
 - [011](011-forms-per-framework.md) Forms per Framework - Merger & Distribution
 
+### history
+
+- [214](214-main-is-the-only-branch-after-one-final-history-rewrite.md) main is the only branch after one final history rewrite
+- [128](128-consolidate-the-feature-adrs-and-handoffs-into-one-commit-at-the-close-squash.md) Consolidate the feature ADRs and handoffs into one commit at the close squash
+- [126](126-close-a-feature-with-reset-soft-onto-the-merge-base-and-one-validated-commit.md) Close a feature with reset --soft onto the merge base and one validated commit
+- [125](125-normalize-history-on-the-merge-base-and-hold-every-rewrite-to-a-tree-invariant.md) Normalize history on the merge base and hold every rewrite to a tree invariant
+
 ### install
 
 - [131](131-an-update-moves-a-git-clone-install-to-the-newest-release-tag-unasked.md) An update moves a git-clone install to the newest release tag, unasked
@@ -1147,12 +1159,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [145](145-move-the-readme-skill-from-styleguide-to-process.md) Move the README skill from styleguide to process
 - [060](060-plans-carry-nested-sub-steps-and-an-exhaustiveness-mandate.md) Plans carry nested sub-steps and an exhaustiveness mandate
 - [059](059-persona-plans-are-checklists-with-marks-that-survive-the-sync.md) Persona plans are checklists with marks that survive the sync
-
-### history
-
-- [128](128-consolidate-the-feature-adrs-and-handoffs-into-one-commit-at-the-close-squash.md) Consolidate the feature ADRs and handoffs into one commit at the close squash
-- [126](126-close-a-feature-with-reset-soft-onto-the-merge-base-and-one-validated-commit.md) Close a feature with reset --soft onto the merge base and one validated commit
-- [125](125-normalize-history-on-the-merge-base-and-hold-every-rewrite-to-a-tree-invariant.md) Normalize history on the merge base and hold every rewrite to a tree invariant
 
 ### manifest
 
