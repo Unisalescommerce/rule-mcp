@@ -1,6 +1,6 @@
 # Plan: Tool and skill surface audit
 
-Status: `planned`.
+Status: `done`.
 
 Notes: subordinate plan; coordinated by [plan-of-plans](plan-of-plans.md).
 

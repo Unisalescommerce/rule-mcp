@@ -32,10 +32,10 @@ Node ids in graph lines stay skill names (`rule-process-ai`), not filenames. Fil
 | scripts layout                  | _(retired)_                         | done → ADR 205 | WS0–WS7 closed 2026-11-01; product ADR pending land                                 |
 | decision models                 | _(retired)_                         | done → ADR 209 | own graph                                                                           |
 | ASD-STE100 writing + plan shape | _(retired)_                         | done → ADR 204 | WS-G closed 2026-10-31; product pending ADR mcp-authored-markdown-uses-asd-ste100…  |
-| plan-graph audit                | _(retired)_ | done → ADR 213 | history (ADR 171)                                                                   |
+| plan-graph audit                | _(retired)_                         | done → ADR 213 | history (ADR 171)                                                                   |
 | Pi integration and catalog debt | `_pi-integration-and-debt.md`       | `in-progress`  | WS1 installed-skill verification; WS2 catalog debt                                  |
 | OSS readiness and repo health   | `_oss-readiness-and-repo-health.md` | `planned`      | WS1 records four decisions; serialize ADR writes with the surface audit             |
-| tool and skill surface audit    | `_tool-and-skill-surface-audit.md`  | `planned`      | WS1/WS2 verify counts; later catalog cleanup waits for Pi WS2                       |
+| tool and skill surface audit    | `_tool-and-skill-surface-audit.md`  | `done`         | closed 2026-11-06: counts guarded, catalog refreshed, ADRs decided                  |
 | publication cutover             | `_publication-cutover.md`           | `planned`      | HARD-waits for the OSS and surface plans, then fixes tests, CI, secrets and cutover |
 | Deepseek audit runbook          | `_deepseek-prompts.md`              | support        | prompt order for the OSS and surface plans; not an executable graph node            |
 | Secrets guardrails              | _(retired)_                         | done → ADR 212 | closeout recorded                                                                   |
@@ -80,7 +80,7 @@ rel/v0.1.0
 │   ├── decision models ............... done → ADR 209
 │   ├── Pi integration ................ in progress
 │   ├── OSS readiness ................. planned
-│   ├── tool and skill surface audit .. planned (ORDER <- Pi; CONFLICT <-> OSS)
+│   ├── tool and skill surface audit .. done (ORDER <- Pi; CONFLICT <-> OSS)
 │   ├── publication cutover ........... planned (HARD <- OSS + surface audit)
 │   └── Deepseek prompts .............. support runbook, not a node
 ├── WS-G  ASD-STE100 writing + plan shape
@@ -139,7 +139,7 @@ Run only when WS-A/B/C are idle on the shared files in section 8. The OSS and su
 - [x] decision models — DM-04 closed by its kill criterion: the harness and the registry ship, the Italian routing claim is dropped; retired → [ADR 209](../adr/209-close-out-plan-decision-models.md).
 - [ ] [`_pi-integration-and-debt.md`](_pi-integration-and-debt.md) - WS1 installed-skill verification and WS2 catalog debt remain.
 - [ ] [`_oss-readiness-and-repo-health.md`](_oss-readiness-and-repo-health.md) - registration is complete. WS1 records the four repository decisions.
-- [ ] [`_tool-and-skill-surface-audit.md`](_tool-and-skill-surface-audit.md) - registration is complete. WS1 and WS2 verify the surface counts. Its catalog cleanup waits for Pi WS2.
+- [x] [`_tool-and-skill-surface-audit.md`](_tool-and-skill-surface-audit.md) - closed 2026-11-06: counts guarded by a test, catalog documents refreshed, proposed ADRs decided, orchestrator deduplicated.
 - [ ] [`_publication-cutover.md`](_publication-cutover.md) - planned, but execution HARD-waits for the OSS and surface plans.
 - [x] [`_deepseek-prompts.md`](_deepseek-prompts.md) - registered as a support runbook for the OSS and surface plans, not as an executable node.
 - [x] Secret guardrails - WS1-WS3 complete; retired to [ADR 212](../adr/212-close-out-plan-secrets-guardrails.md).
