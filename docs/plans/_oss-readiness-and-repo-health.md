@@ -137,10 +137,10 @@ These parts are solid. A reviewer does not need to re-open them:
 
 Use `rule_tool_process_adr`. Do not hand-write the files.
 
-- [ ] **WS1-T1**: Write one ADR that narrows ADR 169. Decision: the GitHub repo stays `pixu1980/rule-mcp`. The registry name in `server.json` becomes `io.github.pixu1980/rule-mcp` (D5). "RuleMCP" is a display name only. No file may name another repo URL as a current fact. Reason: `pixu1980/rule` returns 404, and the real remote is `git@github.com:pixu1980/rule-mcp.git`.
-- [ ] **WS1-T2**: Write one ADR that replaces the default in ADR 131. The default update mode is notify. Automatic upgrade (checkout `main`, pull, reinstall, restart) is opt-in with `RULE_MCP_AUTO_UPDATE=upgrade`.
-- [ ] **WS1-T3**: Write one ADR that turns off `unicorn/no-asterisk-prefix-in-documentation-comments`. Cite the measurement in [the reference plan](_plan-of-plans-reference.md): 2013 of 2297 lint problems at that time. The rule rejects the JSDoc style the whole repo uses.
-- [ ] **WS1-T4**: Write one ADR that replaces the "no npm placeholder" part of ADR 084 (D9). The project publishes a placeholder package `rule-mcp` to reserve the npm name. The package does nothing. Keep the trademark posture of ADR 084 unchanged.
+- [x] **WS1-T1**: Write one ADR that narrows ADR 169. Decision: the GitHub repo stays `pixu1980/rule-mcp`. The registry name in `server.json` becomes `io.github.pixu1980/rule-mcp` (D5). "RuleMCP" is a display name only. No file may name another repo URL as a current fact. Reason: `pixu1980/rule` returns 404, and the real remote is the `rule-mcp` repository. Written 2026-11-06 as `docs/adr/_pending/the-repository-stays-pixu1980-rule-mcp-and-the-registry-name-is-io-github-pixu19.md`.
+- [x] **WS1-T2**: Write one ADR that replaces the default in ADR 131. The default update mode is notify. Automatic upgrade (checkout `main`, pull, reinstall, restart) is opt-in with `RULE_MCP_AUTO_UPDATE=upgrade`. Written 2026-11-06 as `docs/adr/_pending/an-update-notifies-by-default-and-upgrades-only-when-asked.md`.
+- [x] **WS1-T3**: Write one ADR that turns off `unicorn/no-asterisk-prefix-in-documentation-comments`. Cite the measurement in [the reference plan](_plan-of-plans-reference.md): 2013 of 2297 lint problems at that time. Written 2026-11-06 as `docs/adr/_pending/turn-off-the-asterisk-prefix-documentation-rule.md`, on a fresh measurement of 2015 of 2297. The rule rejects the JSDoc style the whole repo uses.
+- [x] **WS1-T4**: Write one ADR that replaces the "no npm placeholder" part of ADR 084 (D9). The project publishes a placeholder package `rule-mcp` to reserve the npm name. The package does nothing. Keep the trademark posture of ADR 084 unchanged. Written 2026-11-06 as `docs/adr/_pending/publish-an-npm-placeholder-to-reserve-the-rule-mcp-name.md`.
 
 ### WS2 - Fix the repo slug (F2, F5, D1, D5)
 
