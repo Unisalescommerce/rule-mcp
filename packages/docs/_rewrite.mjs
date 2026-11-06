@@ -84,11 +84,8 @@ export function rewriteLinks(html, { dir, out, routes, base }) {
 }
 
 /**
- * Turn a link the site cannot serve back into its own text.
- *
- * The alternative is a relative href pointing at a file that is not in the
- * output, which is a 404 the reader discovers and the build does not. The text
- * stays, so the sentence still reads; only the promise of a destination goes.
+ * Turn a link the site cannot serve back into its own text: the text stays, so
+ * the sentence still reads, and only the promise of a destination goes.
  *
  * @param {string} html
  * @returns {string}
