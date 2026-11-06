@@ -68,7 +68,7 @@ function prosePattern(number) {
   return new RegExp(String.raw`\bADR\s+0*${number}\b`, "g");
 }
 
-/** The shape a mention takes when this rewrite does not own it, e.g. `adr-214-...`. */
+/** The shape a mention takes when this rewrite does not own it, e.g. `adr-<number>-...`. */
 function strayPattern(number) {
   return new RegExp(String.raw`\badr[-_]0*${number}\b`, "i");
 }

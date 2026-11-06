@@ -6,6 +6,9 @@ ADR 219: the old rewrite covered markdown links under `docs/` only. A prose
 number, so a reader followed a citation to a different decision. This covers
 the three forms the tree actually uses, and reports a mention it could not
 rewrite instead of leaving it silently behind.
+
+The numbers here are synthetic. A test that cites a real ADR would be rewritten
+by the very run it exercises, and would then assert against its own output.
 */
 import { strict as assert } from "node:assert";
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -15,8 +18,11 @@ import { test } from "node:test";
 
 import { rewriteCitations } from "../index.js";
 
-/** One rename, as `planRenumber` builds it. */
-const RENAMES = [{ family: "ADR", fromNumber: "214", toNumber: "205", slug: "main-is-the-only-branch" }];
+/** One rename, as `planRenumber` builds it, on a number no real document holds. */
+const RENAMES = [{ family: "ADR", fromNumber: "900", toNumber: "901", slug: "example-slug" }];
+
+/** The hyphenated form, built at runtime so this file is not a mention itself. */
+const STRAY = ["adr", RENAMES[0].fromNumber, "old-slug"].join("-");
 
 /**
  * A tree holding one file per citation form, plus a citation that must not move.
@@ -27,9 +33,9 @@ function seed({ extra } = {}) {
   const root = mkdtempSync(join(tmpdir(), "rule-mcp-citations-"));
 
   const files = {
-    "docs/plans/plan.md": ["See [214](214-main-is-the-only-branch.md) and ADR 214.", "ADR 218 stays.", ""].join("\n"),
-    "packages/mcp/thing.js": "/**\n * ADR 214 froze it. See adr/214-main-is-the-only-branch.md\n */\n",
-    "skills/rule-x/SKILL.md": "This cites ADR 214/218 and nothing else.\n",
+    "docs/plans/plan.md": ["See [900](900-example-slug.md) and ADR 900.", "ADR 918 stays.", ""].join("\n"),
+    "packages/mcp/thing.js": "/**\n * ADR 900 froze it. See adr/900-example-slug.md\n */\n",
+    "skills/rule-x/SKILL.md": "This cites ADR 900/918 and nothing else.\n",
   };
 
   if (extra !== undefined) {
@@ -53,12 +59,12 @@ test("the link, the filename and the prose form all move", () => {
     const code = readFileSync(join(root, "packages/mcp/thing.js"), "utf8");
     const skill = readFileSync(join(root, "skills/rule-x/SKILL.md"), "utf8");
 
-    assert.match(plan, /\[205\]\(205-main-is-the-only-branch\.md\)/u, "the link moves in label and target");
-    assert.match(plan, /and ADR 205\./u, "the prose form moves");
-    assert.match(plan, /ADR 218 stays\./u, "a citation the plan does not name stays");
-    assert.match(code, /ADR 205 froze it/u, "the prose form moves in code");
-    assert.match(code, /adr\/205-main-is-the-only-branch\.md/u, "the path form moves in code");
-    assert.match(skill, /ADR 205\/218/u, "the paired form moves its first number only");
+    assert.match(plan, /\[901\]\(901-example-slug\.md\)/u, "the link moves in label and target");
+    assert.match(plan, /and ADR 901\./u, "the prose form moves");
+    assert.match(plan, /ADR 918 stays\./u, "a citation the plan does not name stays");
+    assert.match(code, /ADR 901 froze it/u, "the prose form moves in code");
+    assert.match(code, /adr\/901-example-slug\.md/u, "the path form moves in code");
+    assert.match(skill, /ADR 901\/918/u, "the paired form moves its first number only");
     assert.equal(result.filesUpdated, 3, "three files changed");
     assert.deepEqual(result.unresolved, [], "nothing was left behind");
   } finally {
@@ -67,13 +73,13 @@ test("the link, the filename and the prose form all move", () => {
 });
 
 test("a mention the rewrite does not own is reported, not ignored", () => {
-  const root = seed({ extra: "The hyphenated form adr-214-old-slug is not one of the three.\n" });
+  const root = seed({ extra: `The hyphenated form ${STRAY} is not one of the three.\n` });
 
   try {
     const result = rewriteCitations({ projectDir: root, renames: RENAMES });
 
     assert.equal(result.unresolved.length, 1, "one file still names the old number");
-    assert.equal(result.unresolved[0].number, "214", "the report names the number");
+    assert.equal(result.unresolved[0].number, RENAMES[0].fromNumber, "the report names the number");
     assert.match(result.unresolved[0].file, /docs\/odd\.md$/u, "the report names the file");
   } finally {
     rmSync(root, { recursive: true, force: true });
