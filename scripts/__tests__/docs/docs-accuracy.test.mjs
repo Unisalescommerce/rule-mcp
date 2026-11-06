@@ -38,6 +38,37 @@ const actual = {};
 }
 
 const README = readFileSync(fileURLToPath(new URL("../../../README.md", import.meta.url)), "utf8");
+const CLAUDE = readFileSync(fileURLToPath(new URL("../../../CLAUDE.md", import.meta.url)), "utf8");
+
+/** What the skill layer says each skill owns, which is the guardrail surface. */
+const guardrails = await (async () => {
+  const { loadLayerGuardrails } = await import("../../../packages/mcp/core/layers/_guardrails.js");
+  const { BASELINE_SKILLS, getGuardrails } = await import("../../../packages/mcp/core/guardrails/engine/_registry.js");
+  const owned = await loadLayerGuardrails();
+  const ids = new Set();
+  let entries = 0;
+  let skills = 0;
+
+  for (const [, layer] of owned) {
+    const rules = layer?.guardrails ?? [];
+    skills += rules.length > 0 ? 1 : 0;
+    entries += rules.length;
+
+    for (const rule of rules) {
+      ids.add(rule.id ?? rule.name);
+    }
+  }
+
+  const baseline = new Set();
+
+  for (const name of BASELINE_SKILLS) {
+    for (const rule of getGuardrails(name) ?? []) {
+      baseline.add(rule.id ?? rule.name);
+    }
+  }
+
+  return { entries, skills, distinct: ids.size, baseline: baseline.size };
+})();
 
 test("README advertises the real tool count", () => {
   assert.match(README, new RegExp(`${actual.tools} tools`), `README must mention ${actual.tools} tools`);
@@ -59,6 +90,22 @@ test("README advertises the slash command count", () => {
   assert.match(README, new RegExp(`${actual.commands} slash commands`));
 });
 
+test("CLAUDE.md advertises the same surface as the runtime", () => {
+  const expected = [
+    `${actual.tools} tools`,
+    `${actual.resources} resources`,
+    `${actual.prompts} prompts`,
+    `${actual.catalog} skills`,
+    `${guardrails.distinct} guardrail rules`,
+    `${guardrails.skills} of the ${actual.skillDirs} skill directories`,
+    `${guardrails.baseline} baseline rules`,
+  ];
+
+  const stale = expected.filter((claim) => !CLAUDE.includes(claim));
+
+  assert.deepEqual(stale, [], `CLAUDE.md must state: ${expected.join(", ")}`);
+});
+
 test("generated-document headers name scripts that exist", () => {
   const header = readFileSync(fileURLToPath(new URL("../../../CHANGELOG.md", import.meta.url)), "utf8")
     .split("\n")
@@ -73,5 +120,5 @@ test("generated-document headers name scripts that exist", () => {
 });
 
 console.log(
-  `  ✅ README counts match reality (${actual.tools} tools / ${actual.resources} resources / ${actual.prompts} prompts / ${actual.catalog} skills / ${actual.commands} commands)`,
+  `  ✅ README and CLAUDE.md match reality (${actual.tools} tools / ${actual.resources} resources / ${actual.prompts} prompts / ${actual.catalog} skills / ${actual.commands} commands / ${guardrails.distinct} guardrail rules in ${guardrails.skills} skills)`,
 );
