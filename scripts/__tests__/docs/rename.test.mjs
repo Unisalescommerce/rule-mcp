@@ -66,13 +66,13 @@ test("package and registry metadata carry the RuleMCP identity", () => {
   assert.equal(workspace.name, "rule-mcp-workspace");
   assert.equal(workspace.private, true);
   assert.equal(workspace.bin["rule-mcp"], "./bin/rule-mcp.js");
-  assert.equal(workspace.repository, "github:pixu1980/rule");
+  assert.equal(workspace.repository, "github:pixu1980/rule-mcp");
 
   const pkg = JSON.parse(readFileSync(`${ROOT}/packages/mcp/package.json`, "utf8"));
   assert.equal(pkg.name, "rule-mcp");
 
   const server = JSON.parse(readFileSync(`${ROOT}/server.json`, "utf8"));
-  assert.equal(server.name, "io.github.pixu1980/rule");
+  assert.equal(server.name, "io.github.pixu1980/rule-mcp");
   assert.equal(server.title, "RuleMCP");
   assert.equal(server.packages[0].identifier, "rule-mcp");
 });

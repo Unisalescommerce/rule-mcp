@@ -286,7 +286,7 @@ git add -A
 git commit -m "feat: initial release v0.1.0"
 
 # Add remote
-git remote add origin https://github.com/pixu1980/rule
+git remote add origin https://github.com/pixu1980/rule-mcp
 
 # Push
 git branch -M main
@@ -366,15 +366,20 @@ git push
 
 Users can install using these methods:
 
-| Method               | Command                                               |
-| -------------------- | ----------------------------------------------------- |
-| **Clone + launcher** | `git clone` + `./scripts/install.sh`                  |
-| **pnpx**             | `pnpx rule-mcp serve`                                 |
-| **Homebrew**         | `brew install pixu1980/tap/rule`                      |
-| **Docker**           | `docker pull ghcr.io/pixu1980/rule`                   |
-| **Winget**           | `winget install pixu1980.rule-mcp`                    |
-| **Scoop**            | `scoop bucket add rule-mcp && scoop install rule-mcp` |
-| **GitHub Release**   | Direct `.tgz` download                                |
+| Method               | Command                                               | State   |
+| -------------------- | ----------------------------------------------------- | ------- |
+| **Clone + launcher** | `git clone` + `./scripts/install.sh`                  | works   |
+| **pnpx**             | `pnpx rule-mcp serve`                                 | planned |
+| **Homebrew**         | `brew install pixu1980/tap/rule-mcp`                  | planned |
+| **Docker**           | `docker pull ghcr.io/pixu1980/rule-mcp`               | planned |
+| **Winget**           | `winget install pixu1980.rule-mcp`                    | planned |
+| **Scoop**            | `scoop bucket add rule-mcp && scoop install rule-mcp` | planned |
+| **GitHub Release**   | Direct `.tgz` download                                | planned |
+
+Only the clone and the installer work today. The npm name `rule-mcp` resolves to
+a placeholder that does nothing, so `pnpx rule-mcp` is not a way to run this
+server; the Homebrew tap, the container image and the two package manifests
+describe a release that has not been cut.
 
 #### Agent command artifacts
 
@@ -397,14 +402,14 @@ Uninstall removes same artifact. Universal command body forces routing, evidence
 
 ```bash
 # Test the clone install
-git clone https://github.com/pixu1980/rule.git
+git clone https://github.com/pixu1980/rule-mcp.git
 cd rule-mcp
 ./scripts/install.sh
 rule-mcp doctor
 rule-mcp install --agent all
 
 # Test Docker
-docker pull ghcr.io/pixu1980/rule
+docker pull ghcr.io/pixu1980/rule-mcp
 docker compose up -d
 curl http://localhost:37999/health
 
@@ -414,8 +419,8 @@ rule-mcp tools call rule_tool_detect --json '{}'
 rule-mcp tools call rule-mcp --json '{"prompt": "React button"}'
 
 # Verify a release tarball (every GitHub Release attaches both files)
-curl -fsSLO https://github.com/pixu1980/rule/releases/download/<tag>/rule-mcp-<version>.tgz
-curl -fsSLO https://github.com/pixu1980/rule/releases/download/<tag>/SHA256SUMS
+curl -fsSLO https://github.com/pixu1980/rule-mcp/releases/download/<tag>/rule-mcp-<version>.tgz
+curl -fsSLO https://github.com/pixu1980/rule-mcp/releases/download/<tag>/SHA256SUMS
 shasum -a 256 -c SHA256SUMS
 ```
 

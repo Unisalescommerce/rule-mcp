@@ -5,10 +5,10 @@
   "type": "module",
   "license": "MIT",
   "author": "pixu1980",
-  "homepage": "https://github.com/pixu1980/rule",
-  "repository": "github:pixu1980/rule",
+  "homepage": "https://github.com/pixu1980/rule-mcp",
+  "repository": "github:pixu1980/rule-mcp",
   "bugs": {
-    "url": "https://github.com/pixu1980/rule/issues"
+    "url": "https://github.com/pixu1980/rule-mcp/issues"
   },
   "private": true,
   "bin": {

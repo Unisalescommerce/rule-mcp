@@ -1,21 +1,24 @@
 # Migrating to RuleMCP
 
 The server formerly published as `rule-mcp` is now **RuleMCP**. The
-GitHub repository is `pixu1980/rule`, the package and binary are `rule-mcp`,
-and the product name is RuleMCP. The decision is recorded in
-[ADR 169](../adr/169-rename-the-server-to-rulemcp.md).
+GitHub repository is `pixu1980/rule-mcp`, the package and binary are `rule-mcp`,
+and the product name is RuleMCP. The rename is recorded in
+[ADR 169](../adr/169-rename-the-server-to-rulemcp.md), and the repository name is
+corrected by the pending decision recorded on 2026-11-06.
 
 ## What changed
 
-- The GitHub repository moved from `pixu1980/rule-mcp` to
-  `pixu1980/rule`; GitHub keeps the old URL as a redirect.
+- The GitHub repository did not move: it is `pixu1980/rule-mcp`. The guide
+  earlier claimed a move to `pixu1980/rule` and a redirect, and neither was
+  true: that URL answers 404.
 - The npm package and the binary are `rule-mcp`. The old `rule-mcp`
   package was never published to npm.
 - MCP client configs use `"command": "rule-mcp"` instead of the old command.
-- The `server.json` registry identifier is `io.github.pixu1980/rule`.
+- The `server.json` registry identifier is `io.github.pixu1980/rule-mcp`.
 
-Do not install the npm package `rule-mcp`: it is an unrelated third-party
-package, not this server. The `rule-mcp-server` npm name is also unrelated.
+The npm name `rule-mcp` is unclaimed today. The project reserves it with a
+placeholder package that does nothing, so installing `rule-mcp` gives you that
+placeholder and not the server. The `rule-mcp-server` npm name is unrelated.
 
 ## What did not change
 

@@ -7,7 +7,7 @@ is the shallow entry.
 ## 1. Install and init
 
 ```bash
-git clone https://github.com/pixu1980/rule.git
+git clone https://github.com/pixu1980/rule-mcp.git
 cd rule-mcp
 pnpm install
 ./scripts/install.sh

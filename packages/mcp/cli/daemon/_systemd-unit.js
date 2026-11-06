@@ -39,7 +39,7 @@ export function generateSystemdUnit(ep) {
 
   return `[Unit]
 Description=rule-mcp MCP Server
-Documentation=https://github.com/pixu1980/rule
+Documentation=https://github.com/pixu1980/rule-mcp
 After=network.target network-online.target
 Wants=network-online.target
 
