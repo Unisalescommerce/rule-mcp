@@ -344,22 +344,22 @@ rule-mcp handoff subcommand args
 
 | Argument     | Default | Description                               |
 | ------------ | ------- | ----------------------------------------- |
-| `subcommand` | -       | doctor \\                                 | land \\ | merge-index - repair numbering, number pending ADRs, or regenerate a merge conflict index |
+| `subcommand` | -       | doctor \\                                 | land \\ | compact \\ | merge-index - repair numbering, number pending ADRs, close numbering holes, or regenerate a merge conflict index |
 | `args`       | -       | merge-index receives %O %A %B %P from git |
 
 **Options**
 
-| Flag            | Default | Choices | Description                                                            |
-| --------------- | ------- | ------- | ---------------------------------------------------------------------- |
-| `--dir <path>`  | .       | -       | project root (default: .)                                              |
-| `--format <f>`  | -       | -       | full (default), brief, minimal                                         |
-| `--compress`    | -       | -       | aggressively truncate values                                           |
-| `--mode <m>`    | -       | -       | handoff (default) or close-session                                     |
-| `--no-archive`  | -       | -       | render without archiving completed docs or repairing the ADR numbering |
-| `--fix`         | -       | -       | apply the ADR renumber plan                                            |
-| `--fix-commits` | -       | -       | amend local commit messages to match renumbered ADRs                   |
-| `--commit`      | -       | -       | with land: commit the numbered ADRs                                    |
-| `--quiet`       | -       | -       | with land: suppress progress                                           |
+| Flag            | Default | Choices | Description                                                                      |
+| --------------- | ------- | ------- | -------------------------------------------------------------------------------- |
+| `--dir <path>`  | .       | -       | project root (default: .)                                                        |
+| `--format <f>`  | -       | -       | full (default), brief, minimal                                                   |
+| `--compress`    | -       | -       | aggressively truncate values                                                     |
+| `--mode <m>`    | -       | -       | handoff (default) or close-session                                               |
+| `--no-archive`  | -       | -       | render without archiving completed docs or repairing the ADR numbering           |
+| `--fix`         | -       | -       | apply the ADR renumber plan; with compact: close the holes and rewrite citations |
+| `--fix-commits` | -       | -       | amend local commit messages to match renumbered ADRs                             |
+| `--commit`      | -       | -       | with land: commit the numbered ADRs                                              |
+| `--quiet`       | -       | -       | with land: suppress progress                                                     |
 
 ## rule-mcp skills
 

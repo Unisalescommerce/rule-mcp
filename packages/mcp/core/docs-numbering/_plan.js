@@ -7,12 +7,18 @@ import { authorsToName } from "./_authors.js";
 /**
  * What the repair would do.
  *
- * @param {{ projectDir?: string }} [options]
+ * `compact` is off by default: a sweep repairs a duplicate number and leaves
+ * every other document where it is, so no citation goes stale. Closing the
+ * holes is a separate explicit run (ADR 219), and the holes are reported
+ * either way because `handoff doctor` names them.
+ *
+ * @param {{ projectDir?: string, compact?: boolean, onProgress?: Function }} [options]
  * @returns {{ projectDir: string, collisions: object[], gaps: object[], renames: object[], indexStale: boolean, handoffIndexStale: boolean }}
  */
 export function planRenumber(options = {}) {
   const projectDir = options.projectDir ?? process.cwd();
   const report = options.onProgress ?? (() => {});
+  const compact = options.compact === true;
   const collisions = [];
   const renames = [];
   const gaps = [];
@@ -63,7 +69,11 @@ export function planRenumber(options = {}) {
     const anchor = ordered[0]?.number ?? 1;
 
     for (const [index, entry] of ordered.entries()) {
-      const target = anchor + index;
+      // A collision is repaired at the number the assignment already chose. A
+      // hole is closed only when the caller asked for compaction: the target
+      // is then the position in the sequence, and everything after the hole
+      // moves down. Without compaction every document keeps its number.
+      const target = compact ? anchor + index : entry.number;
 
       for (let missing = ordered[index - 1]?.number + 1 || entry.number; missing < entry.number; missing += 1) {
         gaps.push({ family: family.label, number: String(missing).padStart(family.pad, "0") });

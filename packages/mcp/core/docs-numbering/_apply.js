@@ -2,15 +2,15 @@ import { existsSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { buildAdrIndex, listExistingAdrs } from "../../tools/adr/index.js";
 import { buildHandoffIndex, listExistingHandoffs } from "../../tools/handoff/_handoff-index.js";
-import { markdownFiles } from "./_families.js";
 import { nameAuthorIn } from "./_authors.js";
+import { rewriteCitations } from "./_citations.js";
 
 /**
  * Carry out the plan: move the files, fix their headers, follow the links.
  *
  * @param {{ renames: object[] }} plan - from planRenumber
  * @param {{ projectDir?: string }} [options]
- * @returns {{ renamed: number, referencesUpdated: number }}
+ * @returns {{ renamed: number, referencesUpdated: number, citations: object, indexRegenerated: boolean }}
  */
 export function applyRenumber(plan, options = {}) {
   const projectDir = options.projectDir ?? plan.projectDir ?? process.cwd();
@@ -36,28 +36,12 @@ export function applyRenumber(plan, options = {}) {
   let referencesUpdated = 0;
 
   if (plan.renames.length > 0) {
-    report({ step: "references", message: "Updating references across docs/" });
+    report({ step: "references", message: "Updating citations across docs/, packages/, skills/ and scripts/" });
   }
 
-  for (const file of markdownFiles(join(projectDir, "docs"))) {
-    const before = readFileSync(file, "utf8");
-    let after = before;
+  const citations = rewriteCitations({ projectDir, renames: plan.renames, onProgress: report });
 
-    for (const rename of plan.renames) {
-      const oldFile = `${rename.fromNumber}-${rename.slug}.md`;
-      const newFile = `${rename.toNumber}-${rename.slug}.md`;
-      // A markdown link carries the number twice: as the label and inside the
-      // target. Both move, and only for the document that actually moved.
-      after = after.replaceAll(`[${rename.fromNumber}](${oldFile})`, `[${rename.toNumber}](${newFile})`).replaceAll(oldFile, newFile);
-    }
-
-    if (!(after !== before)) {
-      continue;
-    }
-
-    writeFileSync(file, after);
-    referencesUpdated += 1;
-  }
+  referencesUpdated = citations.filesUpdated;
 
   // The indexes are generated from the files (ADR 050 and its handoff twin), so
   // after a move they are rebuilt rather than patched: link rewriting would
@@ -84,7 +68,7 @@ export function applyRenumber(plan, options = {}) {
     }
   }
 
-  return { renamed, referencesUpdated, indexRegenerated, handoffIndexRegenerated, authorsNamed };
+  return { renamed, referencesUpdated, citations, indexRegenerated, handoffIndexRegenerated, authorsNamed };
 }
 
 /**

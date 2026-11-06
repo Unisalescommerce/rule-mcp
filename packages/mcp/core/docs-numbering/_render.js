@@ -34,6 +34,17 @@ export function renderRenumberPlan(plan, options = {}) {
         ];
 
   if (plan.renames.length === 0 && !anyIndexBehind) {
+    if (gaps.length > 0) {
+      return [
+        "No duplicate numbers, but the sequence has holes:",
+        "",
+        ...gapLines,
+        "",
+        "A hole is not a defect. `rule-mcp handoff compact --fix` closes them and rewrites the citations.",
+        ...(authorLines.length > 0 ? ["", ...authorLines] : []),
+      ].join("\n");
+    }
+
     const clean = "Numbering is clean: no duplicate ADR or handoff numbers, no gaps, and the generated indexes are current.";
 
     return authors.length === 0 ? clean : [clean, "", ...authorLines].join("\n");
@@ -51,6 +62,7 @@ export function renderRenumberPlan(plan, options = {}) {
       "",
       ...behind.map((file) => `- ${file}`),
       ...(willFix ? [] : ["", "Run with --fix to regenerate it."]),
+      ...(gapLines.length > 0 ? ["", ...gapLines, "", "A hole is not a defect. `rule-mcp handoff compact --fix` closes them and rewrites the citations."] : []),
       ...(authorLines.length > 0 ? ["", ...authorLines] : []),
     ].join("\n");
   }
@@ -62,7 +74,9 @@ export function renderRenumberPlan(plan, options = {}) {
   const lines = [`${counted} found:`, ""];
 
   if (gapLines.length > 0) {
-    lines.push(...gapLines, "");
+    // A hole costs nothing. Closing it moves every later document, so it is a
+    // separate command and never part of a sweep (ADR 219).
+    lines.push(...gapLines, "", "A hole is not a defect. `rule-mcp handoff compact --fix` closes them and rewrites the citations.", "");
   }
 
   if (authorLines.length > 0) {

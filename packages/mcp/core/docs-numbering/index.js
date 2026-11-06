@@ -21,6 +21,7 @@
 export * from "./_index-state.js";
 export * from "./_plan.js";
 export * from "./_apply.js";
+export * from "./_citations.js";
 export * from "./_render.js";
 export * from "./_orphans.js";
 export * from "./_stale-commits.js";
