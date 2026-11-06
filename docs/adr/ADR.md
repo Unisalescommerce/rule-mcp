@@ -8,6 +8,7 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [243](243-close-out-plan-publication-cutover.md)                                                                        | Close out plan _publication-cutover                                                                       | 2026-11-06 | accepted   | docs, closeout, plan                                                                |
 | [242](242-close-out-plan-pi-integration-and-debt.md)                                                                    | Close out plan _pi-integration-and-debt                                                                   | 2026-11-06 | accepted   | docs, closeout, plan                                                                |
 | [241](241-turn-off-the-asterisk-prefix-documentation-rule.md)                                                           | Turn off the asterisk-prefix documentation rule                                                           | 2026-11-06 | accepted   | lint, governance, comments                                                          |
 | [240](240-the-repository-stays-pixu1980-rule-mcp-and-the-registry-name-is-io-github-pixu19.md)                          | The repository stays pixu1980/rule-mcp and the registry name is io.github.pixu1980/rule-mcp               | 2026-11-06 | accepted   | naming, release, repository                                                         |
@@ -258,6 +259,7 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [243](243-close-out-plan-publication-cutover.md)                                                                        | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_publication-cutover.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                                            |
 | [242](242-close-out-plan-pi-integration-and-debt.md)                                                                    | Fold the record into this ADR and the session handoff, then delete the source file.                                                                                                                                             | docs/plans/_pi-integration-and-debt.md is gone from the tree; this ADR keeps what it delivered and the handoff of this session names it.                                                                                        |
 | [241](241-turn-off-the-asterisk-prefix-documentation-rule.md)                                                           | Set `unicorn/no-asterisk-prefix-in-documentation-comments` to `off` in `eslint.config.mjs`, with a one-line reason beside it.                                                                                                   | Positive: the lint gate measures defects again instead of the comment style.                                                                                                                                                    |
 | [240](240-the-repository-stays-pixu1980-rule-mcp-and-the-registry-name-is-io-github-pixu19.md)                          | The repository stays `pixu1980/rule-mcp`. The registry name in `server.json` becomes `io.github.pixu1980/rule-mcp`. RuleMCP stays a display name only, so the package, the binary and the environment prefix do not move.       | Positive: every current link, install instruction and registry entry names a repository that exists.                                                                                                                            |
@@ -508,6 +510,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### docs
 
+- [243](243-close-out-plan-publication-cutover.md) Close out plan _publication-cutover
 - [242](242-close-out-plan-pi-integration-and-debt.md) Close out plan _pi-integration-and-debt
 - [233](233-adr-conventions-real-author-mandatory-ends-when-three-digits-explicit-supersede.md) ADR conventions: real author, mandatory ends-when, three digits, explicit supersede
 - [210](210-keep-adr-numbers-stable-and-move-gap-closing-to-its-own-command.md) Keep ADR numbers stable and move gap-closing to its own command
@@ -623,6 +626,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### closeout
 
+- [243](243-close-out-plan-publication-cutover.md) Close out plan _publication-cutover
 - [242](242-close-out-plan-pi-integration-and-debt.md) Close out plan _pi-integration-and-debt
 - [209](209-close-out-plan-tool-and-skill-surface-audit.md) Close out plan _tool-and-skill-surface-audit
 - [208](208-close-out-plan-oss-readiness-and-repo-health.md) Close out plan _oss-readiness-and-repo-health
@@ -739,6 +743,30 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [071](071-add-the-oss-architect-review-persona.md) Add the OSS Architect review persona
 - [058](058-remove-externally-derived-skills-from-the-served-knowledge-base.md) Remove externally derived skills from the served knowledge base
 
+### plan
+
+- [243](243-close-out-plan-publication-cutover.md) Close out plan _publication-cutover
+- [242](242-close-out-plan-pi-integration-and-debt.md) Close out plan _pi-integration-and-debt
+- [209](209-close-out-plan-tool-and-skill-surface-audit.md) Close out plan _tool-and-skill-surface-audit
+- [208](208-close-out-plan-oss-readiness-and-repo-health.md) Close out plan _oss-readiness-and-repo-health
+- [207](207-close-out-plan-installer-global-link-and-launcher-deploy.md) Close out plan _installer-global-link-and-launcher-deploy
+- [204](204-close-out-plan-plan-of-plans-reference.md) Close out plan _plan-of-plans-reference
+- [203](203-close-out-plan-secrets-guardrails.md) Close out plan _secrets-guardrails
+- [202](202-close-out-plan-rule-mcp-process-adr.md) Close out plan _rule-mcp-process-adr
+- [201](201-close-out-plan-rule-mcp-process-ai.md) Close out plan _rule-mcp-process-ai
+- [200](200-close-out-plan-decision-models.md) Close out plan _decision-models
+- [199](199-close-out-plan-rule-mcp-process-uv-release.md) Close out plan _rule-mcp-process-uv-release
+- [198](198-close-out-plan-rule-mcp-process-npm-release.md) Close out plan _rule-mcp-process-npm-release
+- [197](197-close-out-plan-rule-mcp-process-cargo-release.md) Close out plan _rule-mcp-process-cargo-release
+- [196](196-close-out-plan-scripts-mcp-layout.md) Close out plan _scripts-mcp-layout
+- [195](195-close-out-plan-asd-ste100.md) Close out plan _asd-ste100
+- [192](192-close-out-plan-stable-launcher-outside-the-checkout.md) Close out plan _stable-launcher-outside-the-checkout
+- [191](191-close-out-plan-mcp-host-integration-depth.md) Close out plan _mcp-host-integration-depth
+- [190](190-close-out-plan-export.md) Close out plan _export
+- [189](189-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
+- [091](091-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
+- [087](087-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
+
 ### routing
 
 - [158](158-set-the-decision-cache-replay-floor-to-0-70.md) Set the decision-cache replay floor to 0.70
@@ -762,29 +790,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [014](014-skill-routing-turborepo-monorepo-pipeline-caching-parallel.md) Skill routing: Turborepo monorepo pipeline caching parallel builds
 - [013](013-skill-routing-eslint-flat-config-for-typescript-react-proje.md) Skill routing: ESLint flat config for TypeScript React project
 - [012](012-skill-routing-typescript-tsconfig-strict-mode-configuration.md) Skill routing: TypeScript tsconfig strict mode configuration
-
-### plan
-
-- [242](242-close-out-plan-pi-integration-and-debt.md) Close out plan _pi-integration-and-debt
-- [209](209-close-out-plan-tool-and-skill-surface-audit.md) Close out plan _tool-and-skill-surface-audit
-- [208](208-close-out-plan-oss-readiness-and-repo-health.md) Close out plan _oss-readiness-and-repo-health
-- [207](207-close-out-plan-installer-global-link-and-launcher-deploy.md) Close out plan _installer-global-link-and-launcher-deploy
-- [204](204-close-out-plan-plan-of-plans-reference.md) Close out plan _plan-of-plans-reference
-- [203](203-close-out-plan-secrets-guardrails.md) Close out plan _secrets-guardrails
-- [202](202-close-out-plan-rule-mcp-process-adr.md) Close out plan _rule-mcp-process-adr
-- [201](201-close-out-plan-rule-mcp-process-ai.md) Close out plan _rule-mcp-process-ai
-- [200](200-close-out-plan-decision-models.md) Close out plan _decision-models
-- [199](199-close-out-plan-rule-mcp-process-uv-release.md) Close out plan _rule-mcp-process-uv-release
-- [198](198-close-out-plan-rule-mcp-process-npm-release.md) Close out plan _rule-mcp-process-npm-release
-- [197](197-close-out-plan-rule-mcp-process-cargo-release.md) Close out plan _rule-mcp-process-cargo-release
-- [196](196-close-out-plan-scripts-mcp-layout.md) Close out plan _scripts-mcp-layout
-- [195](195-close-out-plan-asd-ste100.md) Close out plan _asd-ste100
-- [192](192-close-out-plan-stable-launcher-outside-the-checkout.md) Close out plan _stable-launcher-outside-the-checkout
-- [191](191-close-out-plan-mcp-host-integration-depth.md) Close out plan _mcp-host-integration-depth
-- [190](190-close-out-plan-export.md) Close out plan _export
-- [189](189-close-out-plan-installer-scope-adr-policy-features.md) Close out the port plan for ADR policy, project installs, features and host paths
-- [091](091-close-out-plan-develop-consolidation.md) Close out plan develop-consolidation
-- [087](087-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
 
 ### release
 

@@ -12,7 +12,6 @@ Topology: **`main` is the only branch.** The cutover of 2026-11-06 replaced it w
 | ------------------------------------------------------------------ | -------------------------------------------------------------- |
 | `docs/plans/plan-of-plans.md`                                      | level-0 index (this file); the only plan without a leading `_` |
 | `docs/plans/_*.md`                                                 | non-skill subordinate plans                                    |
-| `docs/plans/_deepseek-prompts.md`                                  | support runbook for audit plans; not an executable plan        |
 | `docs/plans/skills/<area>/_*.md`                                   | skill and cross-skill subordinate plans                        |
 | `docs/plans/skills/_skills-plan.md`                                | level-1 catalog orchestrator                                   |
 | `docs/plans/skills/README.md`, `docs/plans/skills/DEPENDENCIES.md` | indexes, not executable plans (no `_`)                         |
@@ -36,8 +35,8 @@ Node ids in graph lines stay skill names (`rule-process-ai`), not filenames. Fil
 | Pi integration and catalog debt | _(retired)_ | done → ADR 242 | WS1 installed-skill verification; WS2 catalog debt                                  |
 | OSS readiness and repo health   | _(retired)_                   | done → ADR 208 | WS1 records four decisions; serialize ADR writes with the surface audit             |
 | tool and skill surface audit    | _(retired)_                   | done → ADR 209 | closed 2026-11-06: counts guarded, catalog refreshed, ADRs decided                  |
-| publication cutover             | `_publication-cutover.md`     | `planned`      | HARD-waits for the OSS and surface plans, then fixes tests, CI, secrets and cutover |
-| Deepseek audit runbook          | `_deepseek-prompts.md`        | support        | prompt order for the OSS and surface plans; not an executable graph node            |
+| publication cutover             | _(retired)_ | done → ADR 243 | HARD-waits for the OSS and surface plans, then fixes tests, CI, secrets and cutover |
+| Deepseek audit runbook          | _(retired)_                   | done 2026-11-06 | served OSS (ADR 208) and surface (ADR 209); file deleted                            |
 | Secrets guardrails              | _(retired)_                   | done → ADR 203 | closeout recorded                                                                   |
 
 Branch history that motivated stages 1-5 (2026-10-21) lives in git and in ADR 172; it is not re-executed. The remote `feat/*` refs carry no content this tree lacks.
@@ -52,7 +51,7 @@ Branch history that motivated stages 1-5 (2026-10-21) lives in git and in ADR 17
 | skills catalog                             | `skills/_skills-plan.md`          | in progress: npm/uv/cargo-release retired (ADR 197-208)                          |
 | host + launcher (installer infrastructure) | this file, workstreams A–B        | both done                                                                        |
 | single-document tracks                     | each plan's `## Dependency graph` | Pi, OSS readiness and surface audit can start; publication waits for both audits |
-| audit execution runbook                    | none                              | `_deepseek-prompts.md` supports OSS and surface; it owns no work                 |
+| audit execution runbook                    | none                              | retired 2026-11-06: both audits it served are closed                             |
 | repository policy / OSS Stage 0            | ADR 127 + handoff 27              | closed                                                                           |
 
 ## 3 - Edges (in-branch)
@@ -141,8 +140,8 @@ Run only when WS-A/B/C are idle on the shared files in section 8. The OSS and su
 - [x] [`_pi-integration-and-debt.md`](_pi-integration-and-debt.md) - WS1 installed-skill verification and WS2 catalog debt remain; retired → [ADR 242](../adr/242-close-out-plan-pi-integration-and-debt.md).
 - [x] [`_oss-readiness-and-repo-health.md`](_oss-readiness-and-repo-health.md) - registration is complete. WS1 records the four repository decisions; retired → [ADR 208](../adr/208-close-out-plan-oss-readiness-and-repo-health.md).
 - [x] [`_tool-and-skill-surface-audit.md`](_tool-and-skill-surface-audit.md) - closed 2026-11-06: counts guarded by a test, catalog documents refreshed, proposed ADRs decided, orchestrator deduplicated.
-- [ ] [`_publication-cutover.md`](_publication-cutover.md) - the history rewrite and the branch cutover landed 2026-11-06; the lint and coverage debt it records stays open.
-- [x] [`_deepseek-prompts.md`](_deepseek-prompts.md) - registered as a support runbook for the OSS and surface plans, not as an executable node.
+- [x] [`_publication-cutover.md`](_publication-cutover.md) - the history rewrite and the branch cutover landed 2026-11-06; the lint and coverage debt it records stays open; retired → [ADR 243](../adr/243-close-out-plan-publication-cutover.md).
+- [x] [`_deepseek-prompts.md`](_deepseek-prompts.md) - retired 2026-11-06: every block served a workstream that closed (ADR 208, ADR 209); file deleted, the prompts stay in git history.
 - [x] Secret guardrails - WS1-WS3 complete; retired to [ADR 203](../adr/203-close-out-plan-secrets-guardrails.md).
 - [x] [`_installer-global-link-and-launcher-deploy.md`](_installer-global-link-and-launcher-deploy.md) - scaffold shape check; retired → [ADR 207](../adr/207-close-out-plan-installer-global-link-and-launcher-deploy.md).
 
@@ -250,7 +249,7 @@ Shared files: `docs/plans/plan-of-plans.md` only. Generated documents belong to 
 
 ## 11 - Open notes and risks
 
-- **Underscore index rule.** Only this file is an unprefixed executable plan. A new plan under `docs/plans/` must start with `_` and be registered in section 1 and the matching workstream. `_deepseek-prompts.md` is the explicit support-runbook exception and is not a graph node.
+- **Underscore index rule.** Only this file is an unprefixed executable plan. A new plan under `docs/plans/` must start with `_` and be registered in section 1 and the matching workstream. The support-runbook exception was `_deepseek-prompts.md`, retired 2026-11-06; a new support runbook needs its own entry in section 1.
 - **ASD-STE100 (~80%).** New product prose from this server follows ADR 195 closeout + pending product ADR (`mcp-authored-markdown-uses-asd-ste100…`): short, direct, same word for the same thing, still slightly natural. Development plans use `WSn` / `WSn-Tx.y` with a dependency list **and** a diagram (ADR 146 amendment).
 - **Host plan almost done.** Do not reopen closed host phases; close the two open boxes or defer with an ADR.
 - **Launcher Phase 4 is the last launcher work.** Phases 1–3 already shipped (handoff 36); measurement chose `pnpm deploy --prod --legacy`, not `pnpm pack`.
