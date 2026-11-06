@@ -72,6 +72,23 @@ test("the link, the filename and the prose form all move", () => {
   }
 });
 
+test("a test fixture keeps its numbers, because a fixture arranges them", () => {
+  const root = seed({ extra: undefined });
+
+  try {
+    mkdirSync(join(root, "packages/mcp/core/__tests__"), { recursive: true });
+    writeFileSync(join(root, "packages/mcp/core/__tests__/thing.test.mjs"), "// ADR 900 and 900-example-slug.md are arranged here\n");
+
+    const result = rewriteCitations({ projectDir: root, renames: RENAMES });
+    const fixture = readFileSync(join(root, "packages/mcp/core/__tests__/thing.test.mjs"), "utf8");
+
+    assert.match(fixture, /ADR 900 and 900-example-slug\.md/u, "the fixture is untouched");
+    assert.equal(result.filesUpdated, 3, "the three documents moved, the fixture did not");
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
 test("a mention the rewrite does not own is reported, not ignored", () => {
   const root = seed({ extra: `The hyphenated form ${STRAY} is not one of the three.\n` });
 

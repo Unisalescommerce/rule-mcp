@@ -20,6 +20,12 @@
  * Anything else that still names a moved number is reported, not ignored. The
  * caller decides what to do with it; a silent miss is the failure this exists
  * to prevent.
+ *
+ * Test files are skipped. A fixture writes `069-personas.md` to mean "a
+ * document numbered 069", not "the decision 069 holds", and its numbers are
+ * arranged to exercise the code rather than to point at a record. Rewriting
+ * them moves half of a fixture that was consistent and leaves the bare numbers
+ * it asserts on, which is how one compaction broke four tests (ADR 219).
  */
 
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
@@ -33,6 +39,16 @@ export const CITATION_EXTENSIONS = [".md", ".js", ".mjs", ".cjs"];
 
 /** Directories that hold copies, not sources. */
 const SKIP = new Set(["node_modules", ".git", "dist", "coverage", ".vitepress"]);
+
+/**
+ * Whether a path is a test or a fixture, whose numbers are arranged, not cited.
+ *
+ * @param {string} path
+ * @returns {boolean}
+ */
+export function isFixture(path) {
+  return /(?:^|\/)(?:__tests__|tests|fixtures)\//u.test(path) || /\.(?:test|spec)\.[cm]?js$/u.test(path);
+}
 
 /**
  * Every citable file under one directory, recursively.
@@ -89,7 +105,7 @@ export function rewriteCitations({ projectDir = ".", renames = [], onProgress = 
     return { filesUpdated: 0, replacements: 0, unresolved: [] };
   }
 
-  const files = CITATION_ROOTS.flatMap((root) => citableFiles(join(projectDir, root)));
+  const files = CITATION_ROOTS.flatMap((root) => citableFiles(join(projectDir, root))).filter((file) => !isFixture(file));
 
   onProgress({ step: "citations", message: `Reading ${files.length} file(s) for citations` });
 

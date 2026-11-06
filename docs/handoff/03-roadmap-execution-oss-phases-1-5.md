@@ -31,7 +31,7 @@ committing, and Conventional Commits with mandatory scope plus DCO
   Step 5 (DCO), Step 14 (Covenant 3.0), Step 19 (commit types),
   Step 23 (ROADMAP.md), Step 25 (funding), Step 26 (TRADEMARK + ADR 084).
 - **Phase 4**: Step 17 (SPDX on 989 files, REUSE.toml, 1538/1538
-  compliant, 3 ADR-061 splits, `test:all` 1209/0).
+  compliant, 3 ADR 061 splits, `test:all` 1209/0).
 - **Phase 5**: Step 27 (docs site generator + Pages), Step 11 (tag-pinned
   verified pipe), Step 22 (Scorecard/SBOM via cdxgen), Step 24 (README),
   Step 29 code (signing docs + tag gate).
