@@ -1,13 +1,7 @@
 /**
- * ARCH-1: the invocation path must stay acyclic.
- *
- * Tool invocation, skill loading, self-update and the gateway import each
- * other through this path, so a change to any one of them has to fight the
- * other three. The edges are held by an `@mcp/` alias and by `await
- * import(...)`, and the code graph models neither: it reports zero dependents
- * for core/self-update and core/skills, so it cannot see this cycle at all.
- * This test resolves both specifier forms and walks the real graph, one
- * invariant per cut the plan makes.
+ * ARCH-1: the invocation path must stay acyclic. Tool invocation, skill loading,
+ * self-update and the gateway import each other through an `@mcp/` alias and
+ * `await import(...)`; the code graph models neither, so this walks the edges.
  */
 import { strict as assert } from "node:assert";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
@@ -42,8 +36,6 @@ function specifiers(text) {
   const found = [];
 
   for (const re of [FROM, DYNAMIC]) {
-    re.lastIndex = 0;
-
     for (const match of text.matchAll(re)) {
       found.push(match[1]);
     }

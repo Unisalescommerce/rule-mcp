@@ -35,7 +35,6 @@ export const FILE_SIZE_RATCHET = new Map([
   ["packages/mcp/cli/setup/__tests__/_task-extras-branches.test.mjs", 153],
   ["packages/mcp/cli/setup/_task-extras.js", 161],
   ["packages/mcp/cli/setup/opentui/__tests__/_items.test.mjs", 209],
-  ["packages/mcp/cli/setup/opentui/__tests__/_wizard.test.mjs", 172],
   ["packages/mcp/cli/setup/opentui/_items.js", 451],
   ["packages/mcp/cli/setup/opentui/_screen.js", 461],
   ["packages/mcp/cli/setup/opentui/_wizard.js", 509],
