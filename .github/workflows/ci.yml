@@ -130,6 +130,11 @@ jobs:
               index="$end"
             else
               status=$?
+              # 1 means credentials were found, which is the gate doing its job.
+              if [ "$status" -eq 1 ]; then
+                echo "credentials found in ${spec}" >&2
+                exit 1
+              fi
               if [ "$status" -eq 2 ] && [ "$window" -gt 1 ]; then
                 window=$((window / 2))
                 continue
