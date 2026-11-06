@@ -47,3 +47,16 @@ test("a numbered ADR is still resolved from its number", () => {
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+test("a landed ADR is found by the slug it had while pending", () => {
+  const root = mkdtempSync(join(tmpdir(), "rule-handon-landed-"));
+
+  try {
+    mkdirSync(join(root, "docs", "adr"), { recursive: true });
+    writeFileSync(join(root, "docs", "adr", "213-my-landed-slug.md"), "# 213: Landed\n\n- **Status**: accepted\n");
+
+    assert.equal(verifyAdr(root, "my-landed-slug"), "accepted");
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});

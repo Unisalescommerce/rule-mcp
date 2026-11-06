@@ -79,7 +79,16 @@ function resolveAdrFile(dir, id) {
 
   const numbered = readdirSync(dir).find((name) => name.startsWith(`${id}-`));
 
-  return numbered ? join(dir, numbered) : null;
+  if (numbered) {
+    return join(dir, numbered);
+  }
+
+  // A record that landed keeps its slug and gains a number, so a handoff that
+  // cited `docs/adr/_pending/<slug>.md` still names this file. Matching on the
+  // slug alone is what lets the check follow it across the landing.
+  const landed = readdirSync(dir).find((name) => name.replace(/^\d+-/u, "").replace(/\.md$/u, "") === id);
+
+  return landed ? join(dir, landed) : null;
 }
 
 /**
