@@ -39,15 +39,11 @@ export function gitOut(cwd, args) {
  */
 export function createdAt(projectDir, relativePath) {
   try {
-    const out = execFileSync(
-      "git",
-      ["log", RENAME_SIMILARITY, "--diff-filter=A", "--follow", "--format=%ct", "--", relativePath],
-      {
-        cwd: projectDir,
-        encoding: "utf8",
-        stdio: ["ignore", "pipe", "ignore"],
-      },
-    ).trim();
+    const out = execFileSync("git", ["log", RENAME_SIMILARITY, "--diff-filter=A", "--follow", "--format=%ct", "--", relativePath], {
+      cwd: projectDir,
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"],
+    }).trim();
     const first = out.split("\n").findLast(Boolean);
 
     if (first) {
@@ -72,15 +68,7 @@ export function createdAt(projectDir, relativePath) {
  * @returns {string} "Name <address>", or "" when git cannot answer
  */
 export function addedBy(projectDir, relativePath) {
-  const out = gitOut(projectDir, [
-    "log",
-    RENAME_SIMILARITY,
-    "--follow",
-    "--diff-filter=A",
-    "--format=%an <%ae>",
-    "--",
-    relativePath,
-  ]);
+  const out = gitOut(projectDir, ["log", RENAME_SIMILARITY, "--follow", "--diff-filter=A", "--format=%an <%ae>", "--", relativePath]);
 
   return out.split("\n").findLast(Boolean) ?? "";
 }

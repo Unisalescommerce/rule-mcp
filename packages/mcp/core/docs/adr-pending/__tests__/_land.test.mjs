@@ -73,10 +73,7 @@ test("landPendingAdrs numbers in list order and rewrites ADR <slug>", () => {
     git(root, ["add", "docs/adr/_pending/alpha.md"]);
     commit(root, "alpha", "2026-03-20T12:00:00 +0000");
 
-    writeFileSync(
-      join(root, "docs", "notes.md"),
-      "See ADR alpha and docs/adr/_pending/zeta.md before merge.\n",
-    );
+    writeFileSync(join(root, "docs", "notes.md"), "See ADR alpha and docs/adr/_pending/zeta.md before merge.\n");
     git(root, ["add", "docs/notes.md"]);
     commit(root, "notes");
 

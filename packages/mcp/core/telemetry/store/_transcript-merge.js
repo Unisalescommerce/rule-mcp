@@ -80,13 +80,7 @@ function writeLedger(projectDir, ledger) {
  * }} options
  * @returns {{ status: "merged"|"unchanged"|"empty", digest?: string, usage?: object }}
  */
-export function mergeTranscriptTelemetry({
-  projectDir,
-  home = homedir(),
-  client,
-  since,
-  until,
-} = {}) {
+export function mergeTranscriptTelemetry({ projectDir, home = homedir(), client, since, until } = {}) {
   if (!projectDir) {
     return { status: "empty" };
   }

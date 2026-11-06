@@ -20,11 +20,11 @@ pinned at install time stays pinned while the server's rules move on.
 
 Which decisions get an ADR, and when, is one switch: `RULE_MCP_ADR_POLICY`.
 
-| Level      | When the ADR is written                                          |
-| ---------- | ---------------------------------------------------------------- |
-| `full`     | As the decision is made, inside the task                          |
-| `handoff`  | At the handoff, from the session's own record (the default)       |
-| `on-demand`| Only when the caller asks with `rule_tool_process_adr`            |
+| Level       | When the ADR is written                                     |
+| ----------- | ----------------------------------------------------------- |
+| `full`      | As the decision is made, inside the task                    |
+| `handoff`   | At the handoff, from the session's own record (the default) |
+| `on-demand` | Only when the caller asks with `rule_tool_process_adr`      |
 
 `RULE_MCP_NO_ADR` is the blunt instrument: no ADR tool is exposed at all. The
 `adr` feature level writes the same key.

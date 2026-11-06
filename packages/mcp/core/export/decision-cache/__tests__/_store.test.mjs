@@ -12,13 +12,7 @@ import test from "node:test";
 
 import { withEnv, withHome } from "rule-mcp-shared";
 
-const {
-  SCHEMA_VERSION,
-  putDecision,
-  getDecision,
-  setDecisionStatus,
-  listDecisions,
-} = await import("../index.js");
+const { SCHEMA_VERSION, putDecision, getDecision, setDecisionStatus, listDecisions } = await import("../index.js");
 
 test("putDecision persists schemaVersion and round-trips by fingerprint", () => {
   withHome(() => {

@@ -24,7 +24,6 @@ const TEST_PATH = /(?:^|\/)(?:__tests__|tests)\/|\.(?:test|fixture|stub)\.[cm]?j
  * @returns {boolean}
  */
 const isExported = (source, name) =>
-
   new RegExp(String.raw`export\s+(?:async\s+)?(?:function|const|let|var|class)\s+${name}\b`).test(source) ||
   new RegExp(String.raw`export\s*\{[^}]*\b${name}\b[^}]*\}`).test(source);
 

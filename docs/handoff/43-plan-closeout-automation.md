@@ -12,7 +12,7 @@
 3. **One ADR per plan** — the ADR carries `## Outcome` with the closed steps and ends with `## What would end this`. The session handoff cites it (ADR 163); no per-plan handoff file is created.
 4. **Index retirement** — `_plan-index.js`, `_plan-index-lines.js` and `_plan-index-shape.js` retire snapshot rows, workstream checkboxes (description kept), graph leaves, Plan/Orchestrator links and `_skills-plan.md` progress rows. Matching is conservative on line shape and idempotent on a second run.
 5. **File split** — `_closeout.js` is a three-line barrel over `_closeout-scan.js`, `_closeout-archive.js` and `_closeout-docs.js`, inside the 150-line cap and its ratchet.
-6. **Census** — the tool renderer prints `anyOf`/`oneOf`/`const` unions (`boolean \`preview\``) instead of `any`; `docs/10-tools.md` and `scripts/__tests__/fixtures/census.json` regenerated.
+6. **Census** — the tool renderer prints `anyOf`/`oneOf`/`const` unions (`boolean \`preview\``) instead of `any`; `docs/10-tools.md`and`scripts/**tests**/fixtures/census.json` regenerated.
 7. **Instructions** — the plan-lifecycle note went into `AGENTS.md` only; `CLAUDE.md` stays byte-identical to the installer's `RULES_BLOCK` because a static test enforces it.
 8. **Gates** — `pnpm test:all` 2971 pass, 0 fail, 3 skip; `rule_tool_check` mode project 6/7 (graph check skipped, tokensave unavailable for the project run); `pnpm census:check` current.
 9. **First live sweep** — cargo-release, npm-release and uv-release plans retired as ADRs 206, 207 and 208; the three sources are deleted; `_skills-plan.md` rows read `retired`; `plan-of-plans.md` rows point at the new ADRs.

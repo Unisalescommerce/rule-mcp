@@ -41,7 +41,7 @@ test("a refusal quotes the rows that come close and opens the menu", () => {
 });
 
 test("an empty field is refused without a suggestion", () => {
-  const result = acceptPath({ text: ' '.repeat(3), cwd: root, isDirectory: defaultIsDirectory });
+  const result = acceptPath({ text: " ".repeat(3), cwd: root, isDirectory: defaultIsDirectory });
 
   assert.equal(result.accepted, false);
   assert.equal(result.open, false);

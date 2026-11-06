@@ -14,7 +14,6 @@ import { WIZARD_ONLY } from "./_wizard-only.data.js";
 
 const MODE_HELP = "stdio (default), daemon (SSE), docker, or skills (no MCP server, ADR 081)";
 
-
 /**
  * Say so when a flag the plan owns was given to a run that has no plan.
  *
@@ -137,7 +136,9 @@ export function registerUninstallCommand(program) {
         }
       }
 
-      await (await import("./commands/_lifecycle.js")).uninstallCommand({
+      await (
+        await import("./commands/_lifecycle.js")
+      ).uninstallCommand({
         agent: options.agent,
         dryRun: options.dryRun,
         json: options.json,

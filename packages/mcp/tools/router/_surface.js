@@ -78,37 +78,39 @@ function listTools() {
     return memo.tools;
   }
 
-  const tools = _tools.filter((t) => !(adrOff && ADR_FEATURE_TOOLS.has(t.name))).map((t) => {
-    let inputSchema = t.inputSchema ?? { type: "object", properties: {} };
+  const tools = _tools
+    .filter((t) => !(adrOff && ADR_FEATURE_TOOLS.has(t.name)))
+    .map((t) => {
+      let inputSchema = t.inputSchema ?? { type: "object", properties: {} };
 
-    // If a Zod schema is provided, convert it to JSON Schema
-    if (t.zodSchema) {
-      try {
-        const jsonSchema = t.zodSchema.toJSONSchema();
-        // Properties with .default() should not be in required
-        // because the server fills them in automatically
-        const hasDefault = new Set(
-          Object.entries(jsonSchema.properties ?? {})
-            .filter(([, v]) => v && typeof v === "object" && "default" in v)
-            .map(([k]) => k),
-        );
-        const required = (jsonSchema.required ?? []).filter((k) => !hasDefault.has(k));
-        inputSchema = {
-          type: jsonSchema.type ?? "object",
-          properties: jsonSchema.properties ?? {},
-          required,
-        };
-      } catch {
-        // Fall back to plain inputSchema if conversion fails
+      // If a Zod schema is provided, convert it to JSON Schema
+      if (t.zodSchema) {
+        try {
+          const jsonSchema = t.zodSchema.toJSONSchema();
+          // Properties with .default() should not be in required
+          // because the server fills them in automatically
+          const hasDefault = new Set(
+            Object.entries(jsonSchema.properties ?? {})
+              .filter(([, v]) => v && typeof v === "object" && "default" in v)
+              .map(([k]) => k),
+          );
+          const required = (jsonSchema.required ?? []).filter((k) => !hasDefault.has(k));
+          inputSchema = {
+            type: jsonSchema.type ?? "object",
+            properties: jsonSchema.properties ?? {},
+            required,
+          };
+        } catch {
+          // Fall back to plain inputSchema if conversion fails
+        }
       }
-    }
 
-    const annotations = annotationsFor(t.name);
+      const annotations = annotationsFor(t.name);
 
-    const description = compress ? compressText(String(t.description ?? "")) : String(t.description ?? "");
+      const description = compress ? compressText(String(t.description ?? "")) : String(t.description ?? "");
 
-    return annotations ? { name: t.name, description, inputSchema, annotations } : { name: t.name, description, inputSchema };
-  });
+      return annotations ? { name: t.name, description, inputSchema, annotations } : { name: t.name, description, inputSchema };
+    });
 
   memo = { generation, compress, adrOff, tools };
 

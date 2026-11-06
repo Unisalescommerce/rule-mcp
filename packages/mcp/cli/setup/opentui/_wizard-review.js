@@ -12,34 +12,34 @@ import { selectionLabel } from "../_commands-items.js";
  * @returns {Promise<unknown>}
  */
 export async function askReview({ screen, answers, context, defaults }) {
-    const plan = installPlan({ answers, context, force: Boolean(defaults.force), minimal: defaults.minimal });
+  const plan = installPlan({ answers, context, force: Boolean(defaults.force), minimal: defaults.minimal });
 
-    for (;;) {
-      const action = await screen.confirm({
-        title: "Review",
-        lines: [
-          { text: `Profile: ${answers.profile} - ${answers.dimensions.join(", ") || "nothing"}`, tone: "muted" },
-          { text: `Surface: ${surfaceLabel(answers.surface)} - commands ${selectionLabel(answers.selection)}`, tone: "muted" },
-          { text: "" },
-          ...reviewLines(plan, { dryRun: answers.dryRun }),
-        ],
-        actions: [
-          { key: "d", label: "toggle dry run", value: "dry" },
-          { key: "return", label: answers.dryRun ? "keep it a dry run" : "run it", value: "run" },
-        ],
-      });
+  for (;;) {
+    const action = await screen.confirm({
+      title: "Review",
+      lines: [
+        { text: `Profile: ${answers.profile} - ${answers.dimensions.join(", ") || "nothing"}`, tone: "muted" },
+        { text: `Surface: ${surfaceLabel(answers.surface)} - commands ${selectionLabel(answers.selection)}`, tone: "muted" },
+        { text: "" },
+        ...reviewLines(plan, { dryRun: answers.dryRun }),
+      ],
+      actions: [
+        { key: "d", label: "toggle dry run", value: "dry" },
+        { key: "return", label: answers.dryRun ? "keep it a dry run" : "run it", value: "run" },
+      ],
+    });
 
-      if (action === CANCEL || action === BACK) {
-        return action;
-      }
-
-      if (action === "dry") {
-        answers.dryRun = !answers.dryRun;
-        continue;
-      }
-
-      answers.plan = plan;
-
-      return;
+    if (action === CANCEL || action === BACK) {
+      return action;
     }
+
+    if (action === "dry") {
+      answers.dryRun = !answers.dryRun;
+      continue;
+    }
+
+    answers.plan = plan;
+
+    return;
+  }
 }

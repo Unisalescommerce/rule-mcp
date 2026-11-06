@@ -23,8 +23,7 @@ export function registerWritePlanTool() {
   registerTool({
     name: "rule_tool_write_plan",
     entry: "action",
-    description:
-      "Write a durable development plan to docs/plans/_<slug>.md and register it in plan-of-plans.md. Host CreatePlan files are not the source of truth.",
+    description: "Write a durable development plan to docs/plans/_<slug>.md and register it in plan-of-plans.md. Host CreatePlan files are not the source of truth.",
     zodSchema: WritePlanSchema,
     advertise: ["slug", "title", "body", "overwrite"],
     handler: async (arguments_) => {

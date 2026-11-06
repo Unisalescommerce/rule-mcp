@@ -10,13 +10,7 @@
 import { strict as assert } from "node:assert";
 import test from "node:test";
 
-import {
-  STE100_ANCHOR,
-  STE100_DIRECTIVE,
-  STE100_HARD_RULES,
-  STE100_SOFT_RULES,
-  scanSte100Prose,
-} from "../directive/_ste100.js";
+import { STE100_ANCHOR, STE100_DIRECTIVE, STE100_HARD_RULES, STE100_SOFT_RULES, scanSte100Prose } from "../directive/_ste100.js";
 import { promptDirective, sessionDirective } from "../directive/index.js";
 
 test("canonical STE100~80 directive names the 80% target and the core habits", () => {

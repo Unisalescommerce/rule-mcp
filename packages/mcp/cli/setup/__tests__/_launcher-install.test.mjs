@@ -61,7 +61,10 @@ test("a new version adds a directory, moves the pointer and prunes the old copy"
   assert.equal(currentVersion({ root }), "1.1.0");
   assert.deepEqual(result.pruned, ["1.0.0"], "the copy it replaced is gone");
   assert.equal(existsSync(join(launcherRoot({ root }), "1.0.0")), false);
-  assert.deepEqual(installedVersions({ root }).map((row) => row.version), ["1.1.0"]);
+  assert.deepEqual(
+    installedVersions({ root }).map((row) => row.version),
+    ["1.1.0"],
+  );
 });
 
 test("a dry run reports and writes nothing", () => {

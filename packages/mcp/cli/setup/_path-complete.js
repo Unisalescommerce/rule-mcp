@@ -15,7 +15,9 @@ import { homedir } from "node:os";
 import { isAbsolute, join, resolve } from "node:path";
 
 /** Directories whose names never reach a suggestion list. */
-const SENSITIVE = ["~/.ssh", "~/.aws", "~/.config/gh", "~/.gnupg", "~/.password-store", "~/.kube", "/etc/ssh"].map((path) => (path.startsWith("~") ? join(homedir(), path.slice(2)) : path));
+const SENSITIVE = ["~/.ssh", "~/.aws", "~/.config/gh", "~/.gnupg", "~/.password-store", "~/.kube", "/etc/ssh"].map((path) =>
+  path.startsWith("~") ? join(homedir(), path.slice(2)) : path,
+);
 
 /** A name with a control character in it (macOS writes `Icon\r` in every folder). */
 const hasControlCharacter = (name) => /[\u0000-\u001F\u007F]/.test(name);

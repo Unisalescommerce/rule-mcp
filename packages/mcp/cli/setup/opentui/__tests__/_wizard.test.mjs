@@ -30,12 +30,7 @@ test("a standard install asks every step and plans the whole profile", async () 
   const outcome = await runInstallWizard({ screen });
 
   assert.equal(outcome.dryRun, false);
-  assert.deepEqual(globalThis.__wizardStub.plans.at(-1), [...GLOBAL_PLAN_HEAD, "rules", "commands",
-    "skills",
-    "cli",
-    "manifest",
-    "doctor",
-  ]);
+  assert.deepEqual(globalThis.__wizardStub.plans.at(-1), [...GLOBAL_PLAN_HEAD, "rules", "commands", "skills", "cli", "manifest", "doctor"]);
   assert.deepEqual(screen.steps, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "the rail lights once per step, in order");
   assert.match(screen.confirms.at(-1).title, /Complete/u);
   assert.ok(
@@ -70,38 +65,17 @@ test("back from the agents screen re-asks the profile and has no commands step",
     false,
     "commands ride with Surface, they are not a second screen",
   );
-  assert.deepEqual(globalThis.__wizardStub.plans.at(-1), [...GLOBAL_PLAN_HEAD, "commands",
-    "skills",
-    "cli",
-    "manifest",
-  ]);
+  assert.deepEqual(globalThis.__wizardStub.plans.at(-1), [...GLOBAL_PLAN_HEAD, "commands", "skills", "cli", "manifest"]);
 });
 
 test("a custom profile asks for its dimensions and uses them", async () => {
   reset();
-  const screen = fakeScreen([
-
-    "next",
-    "custom",
-    ["server", "commands"],
-    ["claude"],
-    SCOPE_ANSWER,
-    "auto",
-    "stdio",
-    "full",
-    ...FEATURE_ANSWERS,
-    "run",
-    "close",
-  ]);
+  const screen = fakeScreen(["next", "custom", ["server", "commands"], ["claude"], SCOPE_ANSWER, "auto", "stdio", "full", ...FEATURE_ANSWERS, "run", "close"]);
 
   await runInstallWizard({ screen });
 
   assert.ok(screen.asks.some((ask) => ask.title === "What should this install write?"));
-  assert.deepEqual(globalThis.__wizardStub.plans.at(-1), [...GLOBAL_PLAN_HEAD, "commands",
-    "skills",
-    "cli",
-    "manifest",
-  ]);
+  assert.deepEqual(globalThis.__wizardStub.plans.at(-1), [...GLOBAL_PLAN_HEAD, "commands", "skills", "cli", "manifest"]);
 });
 
 test("the review can arm a dry run before the plan runs", async () => {
@@ -154,4 +128,3 @@ test("an uninstall with nothing to remove says so and stops", async () => {
   assert.match(screen.confirms[0].title, /Nothing to remove/u);
   assert.deepEqual(globalThis.__wizardStub.plans, []);
 });
-

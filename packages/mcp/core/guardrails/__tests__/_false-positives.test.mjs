@@ -123,10 +123,7 @@ test("barrel-exports-match-files accepts a Node barrel that re-exports a functio
   const nodeBarrel = barrelLine("landPendingAdrs", "_land.js");
 
   assert.equal(rule("barrel-exports-match-files", nodeBarrel, "index.js"), undefined, "a camelCase re-export is a function, not a component");
-  assert.ok(
-    rule("barrel-exports-match-files", barrelLine("Button", "_button.js"), "index.js"),
-    "a component file still has to be PascalCase",
-  );
+  assert.ok(rule("barrel-exports-match-files", barrelLine("Button", "_button.js"), "index.js"), "a component file still has to be PascalCase");
 });
 
 test("barrel-file-tree accepts an index that exports its own API", () => {

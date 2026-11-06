@@ -47,18 +47,14 @@ function git(cwd, args, env = {}) {
 }
 
 function commit(cwd, message, when, author) {
-  git(
-    cwd,
-    ["-c", "core.hooksPath=/dev/null", "commit", "--no-verify", "-m", message],
-    {
-      GIT_AUTHOR_DATE: when,
-      GIT_COMMITTER_DATE: when,
-      GIT_AUTHOR_NAME: author.name,
-      GIT_AUTHOR_EMAIL: author.email,
-      GIT_COMMITTER_NAME: author.name,
-      GIT_COMMITTER_EMAIL: author.email,
-    },
-  );
+  git(cwd, ["-c", "core.hooksPath=/dev/null", "commit", "--no-verify", "-m", message], {
+    GIT_AUTHOR_DATE: when,
+    GIT_COMMITTER_DATE: when,
+    GIT_AUTHOR_NAME: author.name,
+    GIT_AUTHOR_EMAIL: author.email,
+    GIT_COMMITTER_NAME: author.name,
+    GIT_COMMITTER_EMAIL: author.email,
+  });
 }
 
 function initRepo() {

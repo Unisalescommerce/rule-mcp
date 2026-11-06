@@ -101,7 +101,7 @@ test("with neither, exit 127 names both paths and the repair", () => {
 
 test("the target's own exit code is passed through", () => {
   const root = join(sandbox, "exit");
-  const dir = copyOf(root, "2.0.0", 'process.exit(3);\n');
+  const dir = copyOf(root, "2.0.0", "process.exit(3);\n");
 
   assert.equal(run({ root, checkout: join(sandbox, "no-checkout.js") }).status, 3, "the launcher does not invent an exit code");
   assert.ok(readFileSync(join(dir, "bin", "rule-mcp.js"), "utf8").includes("process.exit"));
@@ -110,7 +110,7 @@ test("the target's own exit code is passed through", () => {
 test("arguments reach the target untouched", () => {
   const root = join(sandbox, "args");
 
-  copyOf(root, "3.0.0", 'console.log(JSON.stringify(process.argv.slice(2)));\n');
+  copyOf(root, "3.0.0", "console.log(JSON.stringify(process.argv.slice(2)));\n");
 
   const result = run({ root, checkout: join(sandbox, "no-checkout.js"), args: ["--version", "a b"] });
 

@@ -10,7 +10,7 @@ export const HandoffSchema = z.object({
     .optional()
     .default(true)
     .describe(
-      "Archive completed audits/reviews/plans into ADRs, retire them from the plan indexes and delete the sources (default true). \"preview\" lists what would close out and writes nothing; false skips the sweep entirely",
+      'Archive completed audits/reviews/plans into ADRs, retire them from the plan indexes and delete the sources (default true). "preview" lists what would close out and writes nothing; false skips the sweep entirely',
     ),
   includeContext: z.boolean().optional().default(true).describe("Include .context/ values"),
   includeAdrs: z.boolean().optional().default(true).describe("Include ADR summaries"),

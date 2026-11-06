@@ -17,7 +17,7 @@ export async function configureCommand(opts = {}) {
     RULE_MCP_AUTO_ADR: { desc: "Automatically log architecture decisions (honors ADR policy).", values: "1 = enable" },
     RULE_MCP_ADR_POLICY: {
       desc: "When to write ADRs: full, handoff (default), on-demand; or JSON with categories.",
-      values: "full | handoff | on-demand | {\"default\":\"handoff\",\"categories\":{...}}",
+      values: 'full | handoff | on-demand | {"default":"handoff","categories":{...}}',
     },
     RULE_MCP_DISABLE_AUTO_ADR: {
       desc: "Disable automatic ADR logging (used internally).",

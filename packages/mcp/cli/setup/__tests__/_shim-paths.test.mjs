@@ -81,7 +81,10 @@ test("linkCandidates only trusts a PNPM_HOME inside the home it was given", () =
     // is concerned: reading it would make the uninstall sweep real paths.
     const outside = withEnv({ PNPM_HOME: "/fake/pnpm-elsewhere" }, () => linkCandidates(home));
 
-    assert.ok(outside.every((path) => path.startsWith(home)), `no path outside the home: ${outside.join(", ")}`);
+    assert.ok(
+      outside.every((path) => path.startsWith(home)),
+      `no path outside the home: ${outside.join(", ")}`,
+    );
   } finally {
     rmSync(home, { recursive: true, force: true });
   }

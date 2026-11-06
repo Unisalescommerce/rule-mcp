@@ -327,7 +327,7 @@ export function tallyLine(counts) {
   return ["ok", "warn", "fail", "skip"]
     .filter((status) => counts[status] > 0)
     .map((status) => `${statusStyle(status).glyph} ${counts[status]} ${status}`)
-    .join(' '.repeat(3));
+    .join(" ".repeat(3));
 }
 
 /**

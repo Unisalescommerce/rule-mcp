@@ -44,8 +44,14 @@ test("plan prose that is not a checkbox is kept, and the graph is not prose", ()
 
   assert.ok(prose.some((line) => line.includes("why the plan exists at all")));
   assert.ok(prose.some((line) => line.includes("reasoning a reader will need later")));
-  assert.ok(prose.every((line) => !line.includes("WS1 --> WS2")), "a fenced graph is not prose");
-  assert.ok(prose.every((line) => !line.startsWith("Status:")), "the status line is metadata");
+  assert.ok(
+    prose.every((line) => !line.includes("WS1 --> WS2")),
+    "a fenced graph is not prose",
+  );
+  assert.ok(
+    prose.every((line) => !line.startsWith("Status:")),
+    "the status line is metadata",
+  );
 });
 
 test("the archived ADR carries whole steps and the plan prose", () => {

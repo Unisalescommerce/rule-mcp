@@ -60,6 +60,4 @@ export function canRenderWizard(env = process.env, stdin = process.stdin, stdout
 
 /** Why the wizard is not drawing, when the reason is the runtime. */
 export const wizardRuntimeNote = () =>
-  atLeast(process.version, WIZARD_NODE_MIN)
-    ? ""
-    : `${process.version} cannot host the wizard (node ${WIZARD_NODE_MIN} or newer draws it) - running the same plan from the flags.`;
+  atLeast(process.version, WIZARD_NODE_MIN) ? "" : `${process.version} cannot host the wizard (node ${WIZARD_NODE_MIN} or newer draws it) - running the same plan from the flags.`;

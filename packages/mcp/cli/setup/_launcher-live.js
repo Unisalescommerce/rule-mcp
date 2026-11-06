@@ -30,7 +30,7 @@ export function skipIsCurrent({ skip, live }) {
     return false;
   }
 
-  if ((live.kind !== "copy") || !skip.at || !live.installedAt) {
+  if (live.kind !== "copy" || !skip.at || !live.installedAt) {
     return true;
   }
 

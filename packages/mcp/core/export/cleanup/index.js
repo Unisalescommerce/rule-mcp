@@ -64,9 +64,7 @@ export function planCleanup({ agent, sessions, currentUnknown, keep = DEFAULT_KE
   }
 
   const kept = keepSet(sessions, { keep });
-  const doomed = sessions
-    .filter((row) => !kept.has(row.id) && typeof row.path === "string" && row.path.length > 0)
-    .map((row) => ({ id: row.id, path: row.path }));
+  const doomed = sessions.filter((row) => !kept.has(row.id) && typeof row.path === "string" && row.path.length > 0).map((row) => ({ id: row.id, path: row.path }));
 
   return { ok: true, delete: doomed, keep: [...kept], agent };
 }

@@ -29,8 +29,7 @@ export function pruneHistoricalTokensaveDefault(saved) {
   }
 
   const keys = Object.keys(saved);
-  const writtenByInstall =
-    keys.length === Object.keys(HISTORICAL_OPTOUT_ENV).length && keys.every((key) => HISTORICAL_OPTOUT_ENV[key] === saved[key]);
+  const writtenByInstall = keys.length === Object.keys(HISTORICAL_OPTOUT_ENV).length && keys.every((key) => HISTORICAL_OPTOUT_ENV[key] === saved[key]);
 
   if (!writtenByInstall) {
     return saved;

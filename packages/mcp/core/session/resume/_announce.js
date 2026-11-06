@@ -20,7 +20,6 @@ let announced = false;
  */
 const PROCESS_STARTED_AT = Date.now() - Math.round(process.uptime() * 1000);
 
-
 /**
  * Whether something already announced the handoff for this project during this
  * session. A record older than this process is a previous session's: resuming

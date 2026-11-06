@@ -48,10 +48,7 @@ export async function askFeatures({ screen, answers }) {
 
   const attribution = await screen.ask({
     title: "Commit attribution",
-    help: [
-      "hide writes the documented value for every agent whose vendor page names one.",
-      "keep removes only the value an install wrote; an undocumented agent is left alone.",
-    ],
+    help: ["hide writes the documented value for every agent whose vendor page names one.", "keep removes only the value an install wrote; an undocumented agent is left alone."],
     items: attributionItems(),
     mode: "radio",
     initial: [answers.attribution],

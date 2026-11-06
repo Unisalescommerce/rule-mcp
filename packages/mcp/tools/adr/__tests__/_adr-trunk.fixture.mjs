@@ -24,4 +24,3 @@ export const trunkProject = (prefix) => {
 
   return root;
 };
-

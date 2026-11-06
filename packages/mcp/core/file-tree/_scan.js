@@ -106,7 +106,5 @@ export function scanFileTree(rootDir, options = {}) {
 
   const { files, source } = listFiles(rootDir, { path: srcDir, union: true, ...options });
 
-  return source === "tokensave"
-    ? scanFlat(rootDir, srcDir, files)
-    : scanRecursive(target, { projectDir: rootDir, srcDir });
+  return source === "tokensave" ? scanFlat(rootDir, srcDir, files) : scanRecursive(target, { projectDir: rootDir, srcDir });
 }

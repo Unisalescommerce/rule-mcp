@@ -63,7 +63,6 @@ export function hookBody(name, command = DEFAULT_COMMAND, { root = getRuntimePat
 
   /** The warning, and the line that outlives it. */
   const skip = (reason) => [
-
     `    echo "${HOOK_MARKER}: ${reason}; commit validation skipped - run: rule-mcp setup" >&2`,
     `    mkdir -p ${JSON.stringify(logDir)} 2>/dev/null`,
     String.raw`    printf '%s ${name}: ${reason}\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> ${JSON.stringify(logFile)} 2>/dev/null`,

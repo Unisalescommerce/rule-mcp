@@ -28,7 +28,11 @@ test("the table has one row for every agent in the catalog", () => {
     [...allAgents],
     "the table is in catalog order, so a new agent shows up here instead of being forgotten",
   );
-  assert.deepEqual(rowsFromData().map((row) => row.agent), [...allAgents], "the data module and the reader agree");
+  assert.deepEqual(
+    rowsFromData().map((row) => row.agent),
+    [...allAgents],
+    "the data module and the reader agree",
+  );
 });
 
 test("a row without a cited page carries no values at all", () => {

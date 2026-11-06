@@ -22,11 +22,18 @@ test("a global answer records the scope and writes no project", async () => {
 
   await runInstallWizard({ screen });
 
-  assert.ok(screen.asks.some((ask) => ask.title === "Where does this install write?"), "the scope is asked once");
+  assert.ok(
+    screen.asks.some((ask) => ask.title === "Where does this install write?"),
+    "the scope is asked once",
+  );
   const plan = globalThis.__wizardStub.plans.at(-1);
 
   assert.ok(plan.includes("agent:claude"), `a global answer writes the agent config: ${plan.join(", ")}`);
-  assert.equal(plan.some((id) => String(id).includes(process.cwd())), false, "and writes nothing into a project");
+  assert.equal(
+    plan.some((id) => String(id).includes(process.cwd())),
+    false,
+    "and writes nothing into a project",
+  );
 });
 
 test("a project answer asks for the roots and the kind, and plans the project installs", async () => {
@@ -37,8 +44,15 @@ test("a project answer asks for the roots and the kind, and plans the project in
 
   const plan = globalThis.__wizardStub.plans.at(-1);
 
-  assert.ok(plan.some((id) => String(id).includes(resolve(process.cwd()))), `the plan writes into the chosen root: ${plan.join(", ")}`);
-  assert.equal(plan.some((id) => String(id).startsWith("agent:")), false, "and does not write a global agent config");
+  assert.ok(
+    plan.some((id) => String(id).includes(resolve(process.cwd()))),
+    `the plan writes into the chosen root: ${plan.join(", ")}`,
+  );
+  assert.equal(
+    plan.some((id) => String(id).startsWith("agent:")),
+    false,
+    "and does not write a global agent config",
+  );
 });
 
 test("the rails and the orders are pure data", () => {
@@ -59,5 +73,8 @@ test("a typed path comes from the path field, not from a free-text answer", asyn
   assert.equal(screen.paths[0].title, "Project root");
   const plan = globalThis.__wizardStub.plans.at(-1);
 
-  assert.ok(plan.some((id) => String(id).includes(root)), `the typed root is planned: ${plan.join(", ")}`);
+  assert.ok(
+    plan.some((id) => String(id).includes(root)),
+    `the typed root is planned: ${plan.join(", ")}`,
+  );
 });

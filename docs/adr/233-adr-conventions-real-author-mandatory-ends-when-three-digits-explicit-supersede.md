@@ -12,6 +12,7 @@ The ADR tool writes the header and the index, but hand-written and pasted ADRs d
 ## Decision
 
 Five conventions, all rules of the house and not preferences:
+
 1. Every ADR ends with a `## What would end this` section: the observation that would make the decision wrong.
 2. The author is a person or a team. The server name is never the author, because a tool cannot be asked why.
 3. Numbering is three digits, allocated at write time; a pending record carries a slug and is numbered when it lands on the trunk (ADR 187).

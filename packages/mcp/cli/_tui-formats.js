@@ -51,7 +51,14 @@ export function formatUninstallResult(result) {
   const reclaimed = result.reclaimed ?? [];
 
   if (reclaimed.length > 0) {
-    lines.push("", section("Configuration", "🧾"), table(["", "Status", "File"], reclaimed.map((entry) => ["", entry.status, entry.file])));
+    lines.push(
+      "",
+      section("Configuration", "🧾"),
+      table(
+        ["", "Status", "File"],
+        reclaimed.map((entry) => ["", entry.status, entry.file]),
+      ),
+    );
   }
 
   return `${lines.join("\n")}\n`;

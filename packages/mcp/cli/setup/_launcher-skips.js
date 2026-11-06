@@ -59,7 +59,9 @@ export function lastSkip({ root = getRuntimePaths().homeDir } = {}) {
     return;
   }
 
-  const lines = readFileSync(file, "utf8").split("\n").filter((line) => line.trim() !== "");
+  const lines = readFileSync(file, "utf8")
+    .split("\n")
+    .filter((line) => line.trim() !== "");
 
   return lines.length === 0 ? undefined : parseLine(lines.at(-1));
 }
@@ -77,7 +79,9 @@ export function trimSkips({ root = getRuntimePaths().homeDir, keep = SKIP_LOG_LI
     return 0;
   }
 
-  const lines = readFileSync(file, "utf8").split("\n").filter((line) => line.trim() !== "");
+  const lines = readFileSync(file, "utf8")
+    .split("\n")
+    .filter((line) => line.trim() !== "");
 
   if (lines.length <= keep) {
     return lines.length;

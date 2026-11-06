@@ -118,7 +118,11 @@ test("the graph resolves both specifier forms", () => {
 });
 
 test("self-update reaches the reload port and nothing else in the catalog", () => {
-  assert.deepEqual(offenders(under("packages/mcp/core/self-update/"), ["packages/mcp/core/skills/"]), ["packages/mcp/core/skills/_reload-port.js"], "self-update depends on the port, never on the loader");
+  assert.deepEqual(
+    offenders(under("packages/mcp/core/self-update/"), ["packages/mcp/core/skills/"]),
+    ["packages/mcp/core/skills/_reload-port.js"],
+    "self-update depends on the port, never on the loader",
+  );
 });
 
 test("the invocation pipeline never reaches self-update", () => {
@@ -129,14 +133,22 @@ test("the invocation pipeline never reaches self-update", () => {
 });
 
 test("the skill catalog never reaches the gateway or the apply tool", () => {
-  assert.deepEqual(offenders(["packages/mcp/core/skills/_load.js"], ["packages/mcp/tools/gateway/", "packages/mcp/tools/apply/"]), [], "the bootstrap registers those, not loadAllSkills");
+  assert.deepEqual(
+    offenders(["packages/mcp/core/skills/_load.js"], ["packages/mcp/tools/gateway/", "packages/mcp/tools/apply/"]),
+    [],
+    "the bootstrap registers those, not loadAllSkills",
+  );
 });
 
 test("the search index never reaches the loader", () => {
   // _load.js builds the index and the index reads the skill bodies, so the two
   // modules touch each other. Drawing the index's edge to the skills *barrel*
   // is what turns that into a cycle: the barrel re-exports the loader.
-  assert.deepEqual(offenders(under("packages/mcp/core/bm25/"), ["packages/mcp/core/skills/_load.js"]), [], "the index takes the skill cache from its own module, not from the catalog's barrel");
+  assert.deepEqual(
+    offenders(under("packages/mcp/core/bm25/"), ["packages/mcp/core/skills/_load.js"]),
+    [],
+    "the index takes the skill cache from its own module, not from the catalog's barrel",
+  );
 });
 
 test("the loader imports the whole catalog statically", () => {

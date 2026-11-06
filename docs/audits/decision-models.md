@@ -67,17 +67,17 @@ The three battery states are a billing complaint, a late parcel and a login erro
 
 Measured on this checkout, before any change, so the plan argues from numbers and not from a hunch.
 
-| Flow                 | Mechanism now                                                                                                          | Where it lives                                                                            |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| Skill routing        | BM25 over section text, plus name affinity, tag affinity, graph bonus, framework bias and two hard-coded domain boosts | `src/tools/ai/_rank-skills.js`, `src/core/bm25/`                                          |
+| Flow                 | Mechanism now                                                                                                          | Where it lives                                                                                        |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Skill routing        | BM25 over section text, plus name affinity, tag affinity, graph bonus, framework bias and two hard-coded domain boosts | `src/tools/ai/_rank-skills.js`, `src/core/bm25/`                                                      |
 | Routing quality      | 95 prompts, `77/95` exact (81%), `90/95` top-or-alternative (95%), floors at 78% and 93%                               | `scripts/__tests__/fixtures/routing-corpus.mjs`, `src/core/skills/__tests__/_routing-corpus.test.mjs` |
-| Confidence reported  | `confidence` and `uncertain` on every answer, derived from the normalized score, not from a probability                | `src/tools/router/_compute.js`                                                            |
-| Guardrails           | 88 deterministic rules (regex, AST, structure), with an `advisory` flag that reports without failing                   | `skills/*/guardrails/`, `src/core/guardrails/`                                            |
-| Personas             | 20 persona documents, findings with a severity the agent assigns                                                       | `personas/`, `src/core/review/`                                                           |
-| Slash-command intent | A frozen keyword list, English and Italian                                                                             | `src/core/agents/commands/_check-intent.js`                                               |
-| Outbound HTTP        | None in the request path: no production module calls `fetch`                                                           | `src/`                                                                                    |
-| Privacy stance       | "Everything this server records stays on the machine"; remote transport is off by a code constant                      | `docs/06-privacy.md`                                                                      |
-| Configuration        | `RULE_MCP_*` environment variables, 30 of them today                                                                   | `src/`                                                                                    |
+| Confidence reported  | `confidence` and `uncertain` on every answer, derived from the normalized score, not from a probability                | `src/tools/router/_compute.js`                                                                        |
+| Guardrails           | 88 deterministic rules (regex, AST, structure), with an `advisory` flag that reports without failing                   | `skills/*/guardrails/`, `src/core/guardrails/`                                                        |
+| Personas             | 20 persona documents, findings with a severity the agent assigns                                                       | `personas/`, `src/core/review/`                                                                       |
+| Slash-command intent | A frozen keyword list, English and Italian                                                                             | `src/core/agents/commands/_check-intent.js`                                                           |
+| Outbound HTTP        | None in the request path: no production module calls `fetch`                                                           | `src/`                                                                                                |
+| Privacy stance       | "Everything this server records stays on the machine"; remote transport is off by a code constant                      | `docs/06-privacy.md`                                                                                  |
+| Configuration        | `RULE_MCP_*` environment variables, 30 of them today                                                                   | `src/`                                                                                                |
 
 ## Prototype measurements
 

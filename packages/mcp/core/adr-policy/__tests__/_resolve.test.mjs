@@ -38,10 +38,7 @@ test("aliases map decision to full and off to on-demand", () => {
 });
 
 test("env level string wins over the saved env.json", () => {
-  writeFileSync(
-    join(home, ".rule-mcp", "config", "env.json"),
-    `${JSON.stringify({ [POLICY_ENV]: "full" }, null, 2)}\n`,
-  );
+  writeFileSync(join(home, ".rule-mcp", "config", "env.json"), `${JSON.stringify({ [POLICY_ENV]: "full" }, null, 2)}\n`);
 
   const policy = resolveAdrPolicy({
     projectDir: project,
@@ -88,10 +85,7 @@ test("nearest .context/adr.json wins over env", () => {
 
 test("saved env.json is used when env and project file are absent", () => {
   rmSync(join(project, "packages"), { recursive: true, force: true });
-  writeFileSync(
-    join(home, ".rule-mcp", "config", "env.json"),
-    `${JSON.stringify({ [POLICY_ENV]: "full" }, null, 2)}\n`,
-  );
+  writeFileSync(join(home, ".rule-mcp", "config", "env.json"), `${JSON.stringify({ [POLICY_ENV]: "full" }, null, 2)}\n`);
 
   const policy = resolveAdrPolicy({
     projectDir: project,

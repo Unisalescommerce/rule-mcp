@@ -78,11 +78,7 @@ test("a different window produces a new digest and still does not double-count t
 
     assert.equal(open.status, "merged");
     assert.equal(again.status, "unchanged");
-    assert.notEqual(
-      usageDigest({ projectDir, since: 0, until: 1, usage: open.usage }),
-      open.digest,
-      "a different window digests differently",
-    );
+    assert.notEqual(usageDigest({ projectDir, since: 0, until: 1, usage: open.usage }), open.digest, "a different window digests differently");
 
     rmSync(projectDir, { recursive: true, force: true });
   }, "rule-mcp-merge-w-");

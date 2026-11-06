@@ -13,7 +13,6 @@ import { forgetProject, listProjects, recordProject } from "../install/_projects
 import { installProjectHost, uninstallProjectHost } from "../installers/_install-project.js";
 import { PROJECT_HOST_IDS } from "../installers/_project-hosts.data.js";
 
-
 /** Agents that have a project MCP file, optionally narrowed by `--agent`. */
 export function projectAgents(agents) {
   const allowed = new Set(PROJECT_HOST_IDS);
@@ -129,5 +128,4 @@ export function refreshTasksFromStore() {
 
 /** Ensure the runtime home exists before touching `state/projects.json`. */
 
-
-export {runtimeHomeTask} from "./_task-core.js";
+export { runtimeHomeTask } from "./_task-core.js";

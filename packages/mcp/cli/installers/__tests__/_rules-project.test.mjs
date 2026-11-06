@@ -42,7 +42,11 @@ test("a file without the block is left alone, and no file is created", () => {
   const test = results.find((entry) => entry.file.endsWith("AGENTS.md"));
 
   assert.equal(test.status, "absent");
-  assert.equal(results.some((entry) => entry.file.endsWith(".cursorrules")), true, "every candidate is reported");
+  assert.equal(
+    results.some((entry) => entry.file.endsWith(".cursorrules")),
+    true,
+    "every candidate is reported",
+  );
 });
 
 test("a second run says current", () => {

@@ -69,7 +69,6 @@ See the [closeout archive](../../packages/mcp/tools/handoff/_closeout-archive.js
 
 See the [handon check](../../packages/mcp/tools/handon/_verify.js).
 
-
 ## Decision
 
 Fold the record into this ADR and the session handoff, then delete the source file. The full text stays in git history.

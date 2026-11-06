@@ -22,18 +22,7 @@ export const WORKFLOW_PROMPTS = ["rule-handoff"];
 // a new hub would silently contradict.
 export const AREA_PROMPTS = listAreaPrompts().map((prompt) => prompt.name);
 
-export const ONE_SHOT_PROMPTS = [
-  "rule-adr",
-  "rule-compress",
-  "rule-export",
-  "rule-git",
-  "rule-handon",
-  "rule-init",
-  "rule-keep",
-  "rule-stats",
-  "rule-update",
-  "rule-usage",
-];
+export const ONE_SHOT_PROMPTS = ["rule-adr", "rule-compress", "rule-export", "rule-git", "rule-handon", "rule-init", "rule-keep", "rule-stats", "rule-update", "rule-usage"];
 
 export const EXPECTED = [...WORKFLOW_PROMPTS, ...AREA_PROMPTS];
 

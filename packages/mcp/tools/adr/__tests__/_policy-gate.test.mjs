@@ -35,7 +35,10 @@ test("mid-task process_adr under handoff answers Not written", async () => {
 
   assert.match(text, /Not written/);
   assert.match(text, /handoff/i);
-  assert.equal(readdirSync(project, { withFileTypes: true }).some((entry) => entry.name === "docs"), false);
+  assert.equal(
+    readdirSync(project, { withFileTypes: true }).some((entry) => entry.name === "docs"),
+    false,
+  );
 });
 
 test("handoff moment under handoff policy writes the ADR", async () => {

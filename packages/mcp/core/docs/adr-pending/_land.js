@@ -87,25 +87,17 @@ export function landPendingAdrs(projectDir, options = {}) {
  * @returns {boolean}
  */
 function commitLanding(projectDir, landed, options = {}) {
-  const paths = [
-    ...landed.map((entry) => join(ADR_DIR, entry.file)),
-    join(ADR_DIR, "ADR.md"),
-    PENDING_DIR,
-  ];
+  const paths = [...landed.map((entry) => join(ADR_DIR, entry.file)), join(ADR_DIR, "ADR.md"), PENDING_DIR];
 
   try {
     execFileSync("git", ["add", "-A", "--", ...paths], {
       cwd: projectDir,
       stdio: options.quiet ? "ignore" : ["ignore", "pipe", "pipe"],
     });
-    execFileSync(
-      "git",
-      ["-c", "core.hooksPath=/dev/null", "commit", "--no-verify", "-m", "docs(adr): number pending ADRs on landing"],
-      {
-        cwd: projectDir,
-        stdio: options.quiet ? "ignore" : ["ignore", "pipe", "pipe"],
-      },
-    );
+    execFileSync("git", ["-c", "core.hooksPath=/dev/null", "commit", "--no-verify", "-m", "docs(adr): number pending ADRs on landing"], {
+      cwd: projectDir,
+      stdio: options.quiet ? "ignore" : ["ignore", "pipe", "pipe"],
+    });
 
     return true;
   } catch {

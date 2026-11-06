@@ -19,12 +19,7 @@ import { existsSync, mkdirSync, readdirSync, rmSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 import { homedir } from "node:os";
-import {
-  DEFAULT_OPTOUT_ENV,
-  LEGACY_ENV_CONFIG_DIR,
-  readEnvConfig,
-  writeEnvConfig,
-} from "../installers/index.js";
+import { DEFAULT_OPTOUT_ENV, LEGACY_ENV_CONFIG_DIR, readEnvConfig, writeEnvConfig } from "../installers/index.js";
 import { pruneHistoricalTokensaveDefault } from "../installers/_env-tokensave.js";
 
 export { reclaimConfig, reclaimTargets } from "./_config-reclaim.js";

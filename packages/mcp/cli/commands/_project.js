@@ -57,11 +57,7 @@ Configure one project root, recording it.
 export async function projectAdd({ path = process.cwd(), agents, projectConfig, dryRun = false } = {}) {
   const root = resolve(path);
   const chosen = projectDefaults({ agents, projectConfig });
-  const plan = [
-    runtimeHomeTask(),
-    ...chosen.agents.map((agent) => projectAgentInstallTask(agent, root, chosen.projectConfig)),
-    projectGitTask(root, chosen.projectConfig),
-  ];
+  const plan = [runtimeHomeTask(), ...chosen.agents.map((agent) => projectAgentInstallTask(agent, root, chosen.projectConfig)), projectGitTask(root, chosen.projectConfig)];
   const results = await runPlan(plan, { dryRun });
 
   return { root, dryRun, projectConfig: chosen.projectConfig, agents: chosen.agents, results };
@@ -82,10 +78,7 @@ export async function projectRemove({ path = process.cwd(), dryRun = false } = {
   }
 
   const plan = [
-
-    ...(recorded.agents ?? []).map((agent) =>
-      projectAgentRemovalTask(agent, root, recorded.projectConfig ?? "shared", recorded.written?.[agent]),
-    ),
+    ...(recorded.agents ?? []).map((agent) => projectAgentRemovalTask(agent, root, recorded.projectConfig ?? "shared", recorded.written?.[agent])),
     projectGitRemovalTask(root),
     projectForgetTask(root),
   ];

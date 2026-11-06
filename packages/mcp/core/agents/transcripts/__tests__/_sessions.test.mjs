@@ -93,10 +93,7 @@ test("codex sessions filter by session_meta.cwd", () => {
   const match = join(day, "rollout-match.jsonl");
   const miss = join(day, "rollout-miss.jsonl");
 
-  writeFileSync(
-    match,
-    `${JSON.stringify({ type: "session_meta", payload: { cwd: projectDir } })}\n`,
-  );
+  writeFileSync(match, `${JSON.stringify({ type: "session_meta", payload: { cwd: projectDir } })}\n`);
   writeFileSync(miss, `${JSON.stringify({ type: "session_meta", payload: { cwd: other } })}\n`);
   stamp(match, Date.parse("2026-01-05T00:00:00Z"));
   stamp(miss, Date.parse("2026-01-05T01:00:00Z"));

@@ -80,13 +80,7 @@ export function featureListCommand({ homeDir } = {}) {
  *   refresh?: () => Promise<{ global: number, projects: number }|void>|{ global: number, projects: number }|void,
  * }} options
  */
-export async function featureEnableCommand({
-  id,
-  level = "enable",
-  dryRun = false,
-  homeDir,
-  refresh = refreshRememberedInstalls,
-} = {}) {
+export async function featureEnableCommand({ id, level = "enable", dryRun = false, homeDir, refresh = refreshRememberedInstalls } = {}) {
   if (!id) {
     throw new Error("feature enable needs <id>");
   }

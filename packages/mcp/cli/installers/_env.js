@@ -62,11 +62,7 @@ export function minimalEnvFrom(env = process.env) {
 function readEnvConfig() {
   try {
     const canonical = ENV_CONFIG_FILE();
-    const path = existsSync(canonical)
-      ? canonical
-      : existsSync(LEGACY_ENV_CONFIG_FILE)
-        ? LEGACY_ENV_CONFIG_FILE
-        : null;
+    const path = existsSync(canonical) ? canonical : existsSync(LEGACY_ENV_CONFIG_FILE) ? LEGACY_ENV_CONFIG_FILE : null;
 
     if (!path) {
       return {};
@@ -97,11 +93,4 @@ function resolveEnvironment(options = {}) {
   return { NODE_COMPILE_CACHE: COMPILE_CACHE_DIR, ...DEFAULT_OPTOUT_ENV, ...saved, ...minimalEnvFrom(), ...options.env };
 }
 
-export {
-  LEGACY_ENV_CONFIG_DIR,
-  LEGACY_ENV_CONFIG_FILE,
-  DEFAULT_OPTOUT_ENV,
-  readEnvConfig,
-  writeEnvConfig,
-  resolveEnvironment,
-};
+export { LEGACY_ENV_CONFIG_DIR, LEGACY_ENV_CONFIG_FILE, DEFAULT_OPTOUT_ENV, readEnvConfig, writeEnvConfig, resolveEnvironment };

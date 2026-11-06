@@ -22,18 +22,9 @@ await loadAllSkills();
 const failing = (text) => checkCode("rule-styleguide-javascript", text, { fileName: "sample.js" }).failCount;
 
 test("a fixed file never fails more rules than the original", () => {
-  const source = [
-
-    "export function run(value) {",
-    "  const done = (answer) => {",
-    "    finish(answer);",
-    "    report(answer);",
-    "  };",
-    "",
-    "  return done(value);",
-    "}",
-    "",
-  ].join("\n");
+  const source = ["export function run(value) {", "  const done = (answer) => {", "    finish(answer);", "    report(answer);", "  };", "", "  return done(value);", "}", ""].join(
+    "\n",
+  );
 
   const fixed = applyJsStyle(source);
 

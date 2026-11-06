@@ -23,7 +23,6 @@ function graphLine(section, label) {
 
 /** Edge targets from `Depends on: `a` (HARD), `b#2` (CONTRACT)`. */
 function edges(line) {
-
   return line
     .split(",")
 

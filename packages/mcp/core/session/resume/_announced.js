@@ -8,7 +8,6 @@ import { getRuntimePaths } from "@mcp/cli/paths/index.js";
 /** Where the record lives. Keyed by project, because two projects are two answers. */
 function recordFile(cwd) {
   const key = createHash("sha256")
-
     .update(resolve(cwd ?? process.cwd()))
     .digest("hex")
     .slice(0, 16);

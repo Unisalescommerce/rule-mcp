@@ -15,7 +15,7 @@ The plan record docs/plans/_plan-of-plans-reference.md, "Review: can the plan gr
 - F3 - decide the toolchain additions: two toolchain plans exist (_rule-mcp-toolchain-electron.md, _rule-mcp-toolchain-tauri.md) and run in Stage 4, after the stage that creates them.
 - F4 - one id per node: rule-process-bmad, with Produces: rule-method. Measured 2026-11-05: rule-method appears in no plan file, and the Stage 2 table names rule-process-bmad as producing rule-mcp-method.
 - F5 - one format: amend ADR 146 to five lines (Status, Branch, Path, Depends on, Feeds) plus Shared files. Measured 2026-11-05: ADR 146 carries both Branch: and Path:.
-- F1 - apply the contract, stage by stage: 92 plans carry a ## Dependency graph section and 93 carry Depends on: / Feeds:, asserted by scripts/__tests__/plans/skills-plan.test.mjs. Status wording stays F8.
+- F1 - apply the contract, stage by stage: 92 plans carry a ## Dependency graph section and 93 carry Depends on: / Feeds:, asserted by scripts/**tests**/plans/skills-plan.test.mjs. Status wording stays F8.
 - F6 - align the contended-file lists (fixed in plan-of-plans.md; the level-1 file must point at it).
 - F7 - correct 98 to 99.
 - F8 - normalise the status line as each stage starts. Measured 2026-11-05: 93 of 94 plan files carry one of the five values; the exception is skills/README.md, an index rather than a plan, and the plan tests exclude indexes by path.
@@ -65,7 +65,6 @@ Not resolved, and deliberately out of scope: the sync banner shifts `content[0]`
 The rule is left in place on purpose. Disabling it in `eslint.config.mjs` would change the documentation contract for the whole repository to make one rule quiet, and the gate would still be red on the other 284 problems. Clearing it properly means either rewriting every JSDoc block or removing the rule with a recorded decision; both are repository-wide changes that need their own ADR, not a side effect of closing a plan.
 
 Branch names in this review were updated on 2026-10-21, after `feat/guardrails-evolution` was renamed to `feat/guardrails` and `feat/evolution` became the convergence branch.
-
 
 ## Decision
 

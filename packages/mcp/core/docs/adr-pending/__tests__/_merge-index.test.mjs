@@ -14,10 +14,7 @@ test("mergeGeneratedIndex rewrites ADR.md from the files on disk", () => {
 
   try {
     mkdirSync(adr, { recursive: true });
-    writeFileSync(
-      join(adr, "001-one.md"),
-      "# 001: One\n\n- **Date**: 2026-01-01\n- **Status**: accepted\n- **Tags**: test\n\n## Decision\n\nShip it.\n",
-    );
+    writeFileSync(join(adr, "001-one.md"), "# 001: One\n\n- **Date**: 2026-01-01\n- **Status**: accepted\n- **Tags**: test\n\n## Decision\n\nShip it.\n");
     writeFileSync(ours, "# stale conflict marker\n<<<<<<<\n=======\n>>>>>>>\n");
 
     const result = mergeGeneratedIndex("/tmp/O", ours, "/tmp/B", "docs/adr/ADR.md", { projectDir: root });

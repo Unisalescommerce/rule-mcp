@@ -53,7 +53,11 @@ The attribution task for the install plan.
 export const attributionTask = ({ mode = "keep", agents = [] } = {}) => ({
   id: "attribution",
   title: "Attribution",
-  detail: `${mode} - ${attributionTargets({ agents }).targets.map((row) => row.agent).join(", ") || "no documented agent"}`,
+  detail: `${mode} - ${
+    attributionTargets({ agents })
+      .targets.map((row) => row.agent)
+      .join(", ") || "no documented agent"
+  }`,
   run: ({ dryRun }) => {
     const { targets, skipped } = attributionTargets({ agents });
     const lines = [];

@@ -61,13 +61,17 @@ test("circular counts only the cycles that touch src, and only real imports", ()
     write("src/c.js", `/** @param {import(".${"/d"}${".js"}").D} d */\nexport const c = 1;\n`);
     write("src/d.js", cyclicSource("d", "c"));
 
-    assert.equal(
-      circular.evaluate({ cycles: [["lib/a.js", "lib/b.js"]] }, { projectDir: root }),
-      null,
-      "a cycle outside src is not this rule's business",
-    );
+    assert.equal(circular.evaluate({ cycles: [["lib/a.js", "lib/b.js"]] }, { projectDir: root }), null, "a cycle outside src is not this rule's business");
 
-    const failure = circular.evaluate({ cycles: [["src/a.js", "src/b.js"], ["src/c.js", "src/d.js"]] }, { projectDir: root });
+    const failure = circular.evaluate(
+      {
+        cycles: [
+          ["src/a.js", "src/b.js"],
+          ["src/c.js", "src/d.js"],
+        ],
+      },
+      { projectDir: root },
+    );
 
     assert.equal(failure.failCount, 1, "the type reference does not count as an edge");
     assert.match(failure.detail[1], /src\/a\.js -> src\/b\.js/, "the first cycle is spelled out");
@@ -107,10 +111,7 @@ test("dead code counts only what the graph can prove is dead", () => {
   try {
     assert.equal(dead.evaluate({ dead_code_count: 0 }, { projectDir: root }), null);
     assert.equal(dead.evaluate({ dead_code_count: 3 }, { projectDir: root }), null, "a count without symbols decides nothing");
-    assert.equal(
-      dead.evaluate({ dead_code_count: 1, symbols: [{ file: "src/dead.js", name: "orphan" }] }, { projectDir: root }).failCount,
-      1,
-    );
+    assert.equal(dead.evaluate({ dead_code_count: 1, symbols: [{ file: "src/dead.js", name: "orphan" }] }, { projectDir: root }).failCount, 1);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

@@ -120,7 +120,7 @@ export async function openScreen({ title, subtitle = "", steps = [] }) {
       const marker = state === "done" ? GLYPHS.ok : state === "active" ? GLYPHS.radioOn : GLYPHS.radioOff;
       const tone = state === "active" ? COLORS.info : state === "done" ? COLORS.ok : COLORS.muted;
 
-      rail.add(text(`${marker} ${step}`, { fg: tone, ...((state === "active") && { attributes: bold }) }));
+      rail.add(text(`${marker} ${step}`, { fg: tone, ...(state === "active" && { attributes: bold }) }));
     }
   };
 

@@ -28,10 +28,7 @@ export function rewritePendingReferences(projectDir, landed) {
       const pendingPath = `docs/adr/_pending/${entry.slug}.md`;
       const numberedPath = `docs/adr/${entry.file}`;
 
-      after = after
-        .replaceAll(`ADR ${entry.slug}`, `ADR ${padded}`)
-        .replaceAll(pendingPath, numberedPath)
-        .replaceAll(`_pending/${entry.slug}.md`, entry.file);
+      after = after.replaceAll(`ADR ${entry.slug}`, `ADR ${padded}`).replaceAll(pendingPath, numberedPath).replaceAll(`_pending/${entry.slug}.md`, entry.file);
     }
 
     if (after === before) {

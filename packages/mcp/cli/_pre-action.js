@@ -8,7 +8,6 @@
  * on every hook spawn was pure wall time (Phase 5 spawn spike).
  */
 
-
 /**
 Whether this command needs the gateway/apply tools registered before it runs.
 

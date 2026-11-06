@@ -42,7 +42,9 @@ const reopen = (state) => {
 const acceptText = (state) => {
   const result = acceptPath({ text: state.text, cwd: state.cwd, isDirectory: state.isDirectory, suggestions: pathView(state).items });
 
-  return result.accepted ? { ...state, open: false, message: "", done: { type: "accept", value: result.value } } : { ...state, open: result.open, cursor: 0, message: result.message };
+  return result.accepted
+    ? { ...state, open: false, message: "", done: { type: "accept", value: result.value } }
+    : { ...state, open: result.open, cursor: 0, message: result.message };
 };
 
 /**

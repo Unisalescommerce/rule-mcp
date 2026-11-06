@@ -7,11 +7,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
 
-import {
-  featureDisableCommand,
-  featureEnableCommand,
-  featureListCommand,
-} from "../commands/_feature.js";
+import { featureDisableCommand, featureEnableCommand, featureListCommand } from "../commands/_feature.js";
 import { envConfigPath } from "../../core/runtime/features/_store.js";
 
 const home = mkdtempSync(join(tmpdir(), "rule-mcp-feature-cmd-"));

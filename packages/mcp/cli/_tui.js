@@ -100,4 +100,3 @@ export function table(headers, rows, { maxWidth = 54 } = {}) {
 
   return [color(renderRow(headers), "bold"), color(widths.map((w) => "─".repeat(w)).join("  "), "dim"), ...normalized.map(renderRow)].join("\n");
 }
-

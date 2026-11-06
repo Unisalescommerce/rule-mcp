@@ -15,10 +15,8 @@
  * `finally` below putting the cursor back.
  */
 
-import { openScreen,  } from "./opentui/_screen.js";
+import { openScreen } from "./opentui/_screen.js";
 import { INSTALL_STEPS, runInstallWizard, runUninstallWizard, UNINSTALL_STEPS } from "./opentui/_wizard.js";
-
-
 
 /**
  * Render one wizard full-screen and resolve with what it finished with.
@@ -41,4 +39,4 @@ export async function mountWizard({ direction = "install", defaults = {} } = {})
   }
 }
 
-export {rendererOptions} from "./opentui/_screen.js";
+export { rendererOptions } from "./opentui/_screen.js";

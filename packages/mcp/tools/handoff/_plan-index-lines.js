@@ -82,7 +82,7 @@ export function patchGraphLeaf(line, entry) {
  */
 export function patchPlanLink(line, entry) {
   const trimmed = line.trim();
-  const label = trimmed.startsWith('Plan:') ? "Plan" : trimmed.startsWith('Orchestrator:') ? "Orchestrator" : "";
+  const label = trimmed.startsWith("Plan:") ? "Plan" : trimmed.startsWith("Orchestrator:") ? "Orchestrator" : "";
 
   if (label === "" || !line.includes(basename(entry.filename)) || line.includes("done → ADR")) {
     return null;

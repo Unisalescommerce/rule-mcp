@@ -64,8 +64,10 @@ async function report(outcome, options, verb) {
   }
 
   print(
-    [`rule-mcp project ${verb}${outcome.dryRun ? " (dry run)" : ""} - ${outcome.root}`, "", ...outcome.results.map((task) => `  ${task.status === "ok" ? "✓" : "✗"} ${task.title} - ${task.summary}`)].join(
-      "\n",
-    ),
+    [
+      `rule-mcp project ${verb}${outcome.dryRun ? " (dry run)" : ""} - ${outcome.root}`,
+      "",
+      ...outcome.results.map((task) => `  ${task.status === "ok" ? "✓" : "✗"} ${task.title} - ${task.summary}`),
+    ].join("\n"),
   );
 }

@@ -53,9 +53,7 @@ test("promoteToolResults skips errors and never overwrites an existing entry", (
     withEnv({ RULE_MCP_NO_CACHE: undefined }, () => {
       cacheClear();
 
-      const first = promoteToolResults([
-        { tool: "rule_tool_stats", args: {}, result: { content: [{ type: "text", text: "first" }] } },
-      ]);
+      const first = promoteToolResults([{ tool: "rule_tool_stats", args: {}, result: { content: [{ type: "text", text: "first" }] } }]);
 
       assert.equal(first.promoted, 1);
 
@@ -80,9 +78,7 @@ test("promoteToolResults refuses when the cache is disabled", () => {
     withEnv({ RULE_MCP_NO_CACHE: "1" }, () => {
       cacheClear();
 
-      const report = promoteToolResults([
-        { tool: "rule_tool", args: { prompt: "nocache" }, result: okResult },
-      ]);
+      const report = promoteToolResults([{ tool: "rule_tool", args: { prompt: "nocache" }, result: okResult }]);
 
       assert.equal(report.promoted, 0);
       assert.ok(report.skipped.every((row) => row.reason === "cache-disabled"));

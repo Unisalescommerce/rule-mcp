@@ -13,7 +13,6 @@ import { rmSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 
-
 import { forgetInstall, readManifest } from "./_manifest-store.js";
 
 /** The path of the human-readable manifest written beside the JSON one. */

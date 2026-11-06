@@ -77,7 +77,6 @@ test("purge is appended only when a purge target is chosen", () => {
 
 test("a failing task never stops the ones after it", async () => {
   const plan = [
-
     { id: "a", title: "A", run: () => ({ status: "ok" }) },
     {
       id: "b",

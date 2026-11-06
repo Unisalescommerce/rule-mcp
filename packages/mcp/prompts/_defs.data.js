@@ -72,8 +72,7 @@ export const PROMPT_DEFS = [
   },
   {
     name: "rule-adr",
-    description:
-      "Write an ADR via rule_tool_process_adr, then offer /rule-keep so the decision lands in the export decision-cache",
+    description: "Write an ADR via rule_tool_process_adr, then offer /rule-keep so the decision lands in the export decision-cache",
     arguments: [
       {
         name: "options",

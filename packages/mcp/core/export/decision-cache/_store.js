@@ -22,15 +22,7 @@ export { SCHEMA_VERSION } from "./_io.js";
  * }} options
  * @returns {{ ok: boolean, record?: object, reason?: string }}
  */
-export function putDecision({
-  projectDir,
-  fingerprint,
-  choice,
-  status,
-  source,
-  agent,
-  now = Date.now(),
-}) {
+export function putDecision({ projectDir, fingerprint, choice, status, source, agent, now = Date.now() }) {
   if (!cacheEnabled()) {
     return { ok: false, reason: "NO_CACHE" };
   }

@@ -23,8 +23,7 @@ export function settleDuplicateAdrs(projectDir) {
   }
 
   const adrDir = join(projectDir, ADR_DIR);
-  const byNumber = Map.groupBy(listExistingAdrs(adrDir), adr => adr.number);
-
+  const byNumber = Map.groupBy(listExistingAdrs(adrDir), (adr) => adr.number);
 
   const settled = [];
   const pendingDir = join(projectDir, PENDING_DIR);

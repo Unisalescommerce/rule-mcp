@@ -31,10 +31,7 @@ test("a deployed copy answers --version and carries the platform binary", { skip
     assert.equal(probeCopy({ dir: result.dir }).ok, true, "the copy must start on its own");
 
     const store = join(result.dir, "node_modules", ".pnpm");
-    const platform = existsSync(store)
-
-      ? readdirSync(store).filter((name) => name.startsWith("@opentui+core-"))
-      : [];
+    const platform = existsSync(store) ? readdirSync(store).filter((name) => name.startsWith("@opentui+core-")) : [];
 
     assert.ok(platform.length > 0, "the terminal UI's platform binary is part of the copy");
   } finally {

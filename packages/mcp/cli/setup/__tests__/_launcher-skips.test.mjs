@@ -47,7 +47,9 @@ test("the log is capped, and the newest lines are the ones kept", () => {
   }
 
   const trimmed = trimSkips({ root: small, keep: 5 });
-  const lines = readFileSync(skipLogPath({ root: small }), "utf8").trim().split("\n");
+  const lines = readFileSync(skipLogPath({ root: small }), "utf8")
+    .trim()
+    .split("\n");
 
   assert.equal(trimmed, 5);
   assert.equal(lines.length, 5);

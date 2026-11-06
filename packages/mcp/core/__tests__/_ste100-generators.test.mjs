@@ -32,9 +32,7 @@ const ROLE = {
 function assertsSte100Anchor(text, label) {
   assert.match(String(text), /STE100/, `${label} must name STE100`);
   assert.ok(
-    String(text).includes(STE100_ANCHOR) ||
-      (STE100_WRITING_LINE && String(text).includes(STE100_WRITING_LINE)) ||
-      /ASD-STE100|STE100~80/.test(String(text)),
+    String(text).includes(STE100_ANCHOR) || (STE100_WRITING_LINE && String(text).includes(STE100_WRITING_LINE)) || /ASD-STE100|STE100~80/.test(String(text)),
     `${label} must carry the shared STE100~80 wording`,
   );
 }
@@ -91,13 +89,19 @@ test("ADR English gate also rejects STE100 banned patterns", () => {
     title: "Use a shared cache",
     decision: "Please utilize Redis for session storage.",
   });
-  assert.ok(utilize.some((offense) => /utilize|STE100|ste100/i.test(offense)), "utilize is an ADR offense");
+  assert.ok(
+    utilize.some((offense) => /utilize|STE100|ste100/i.test(offense)),
+    "utilize is an ADR offense",
+  );
 
   const emDash = adrEnglishOffenses({
     title: "Split the module",
     context: "The file is too large — split it.",
   });
-  assert.ok(emDash.some((offense) => /em-dash|em dash|STE100|\\u2014|—/i.test(offense) || offense.includes("em-dash")), "em dash is an ADR offense");
+  assert.ok(
+    emDash.some((offense) => /em-dash|em dash|STE100|\\u2014|—/i.test(offense) || offense.includes("em-dash")),
+    "em dash is an ADR offense",
+  );
 });
 
 test("WS2 fixture prose from generators passes scanSte100Prose", () => {

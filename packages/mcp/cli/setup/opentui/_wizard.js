@@ -49,7 +49,7 @@ import {
 import { askFeatures } from "./_wizard-features.js";
 import { askReview } from "./_wizard-review.js";
 import { askScope } from "./_wizard-scope.js";
-import { INSTALL_RAIL,  UNINSTALL_RAIL,  } from "./_wizard-steps.js";
+import { INSTALL_RAIL, UNINSTALL_RAIL } from "./_wizard-steps.js";
 import { installOrder, installPlan, uninstallOrder } from "./_wizard-steps.js";
 
 /** A plan as pending rows, for the frame before the first task starts. */
@@ -505,4 +505,4 @@ export async function runUninstallWizard({ screen, defaults = {} }) {
   return { results, dryRun: answers.dryRun };
 }
 
-export {INSTALL_STEPS, UNINSTALL_STEPS, installOrder, uninstallOrder} from "./_wizard-steps.js";
+export { INSTALL_STEPS, UNINSTALL_STEPS, installOrder, uninstallOrder } from "./_wizard-steps.js";

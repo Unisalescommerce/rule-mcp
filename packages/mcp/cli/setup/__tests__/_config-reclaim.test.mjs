@@ -58,11 +58,11 @@ test("the reclaim names every file rule-mcp wrote, absent ones included", () => 
 
   const present = reclaimTargets();
 
-  assert.ok(present.every((target) => target.exists), `every seeded file is found: ${JSON.stringify(present)}`);
-  assert.deepEqual(
-    present.map((target) => target.id).sort(),
-    ["env-config", "legacy-env-config", "manifest", "projects"],
+  assert.ok(
+    present.every((target) => target.exists),
+    `every seeded file is found: ${JSON.stringify(present)}`,
   );
+  assert.deepEqual(present.map((target) => target.id).sort(), ["env-config", "legacy-env-config", "manifest", "projects"]);
 });
 
 test("a dry run reports what it would delete and deletes nothing", () => {
@@ -79,7 +79,10 @@ test("the real thing removes them, and says so", () => {
 
   const results = reclaimConfig();
 
-  assert.ok(results.every((entry) => entry.status === "removed"), JSON.stringify(results));
+  assert.ok(
+    results.every((entry) => entry.status === "removed"),
+    JSON.stringify(results),
+  );
   assert.equal(existsSync(ENV_CONFIG_FILE()), false);
   assert.equal(existsSync(LEGACY_ENV_CONFIG_FILE), false);
   assert.equal(existsSync(manifestPath()), false);
@@ -91,7 +94,10 @@ test("a no at the prompt keeps the configuration", async () => {
 
   const results = await reclaimConfiguration({ confirm: () => false });
 
-  assert.ok(results.every((entry) => entry.status === "kept"), JSON.stringify(results));
+  assert.ok(
+    results.every((entry) => entry.status === "kept"),
+    JSON.stringify(results),
+  );
   assert.ok(existsSync(ENV_CONFIG_FILE()));
 });
 

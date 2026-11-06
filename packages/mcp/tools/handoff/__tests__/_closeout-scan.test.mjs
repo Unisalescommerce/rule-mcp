@@ -10,7 +10,6 @@ import { seed } from "./_closeout.fixture.mjs";
 test("only fully completed docs are found, open and orphaned ones are not", () => {
   const dir = seed();
   const found = findCompletedDocs(dir)
-
     .map((entry) => entry.path)
     .sort();
 
@@ -26,10 +25,11 @@ test("nested plans close out too, and the index files never do", () => {
   writeFileSync(join(dir, "docs/plans/plan-of-plans.md"), "# index\n\nStatus: `done`\n\n- [x] **Step 1**: ordering.\n");
   writeFileSync(join(dir, "docs/plans/README.md"), "# readme\n\nStatus: `done`\n\n- [x] **Step 1**: index.\n");
 
-  const found = new Set(findCompletedDocs(dir)
-
-    .map((entry) => entry.path)
-    .sort());
+  const found = new Set(
+    findCompletedDocs(dir)
+      .map((entry) => entry.path)
+      .sort(),
+  );
 
   assert.ok(found.has("docs/plans/skills/process/_rule-mcp-process-npm-release.md"), "a catalog leaf is a plan");
   assert.ok(!found.has("docs/plans/plan-of-plans.md"), "the level-0 index is not work");

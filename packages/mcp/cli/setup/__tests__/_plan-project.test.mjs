@@ -20,7 +20,6 @@ const { readManifest } = await import("../../install/_manifest.js");
 
 async function runPlan(plan) {
   for (const task of plan) {
-     
     await task.run({ dryRun: false });
   }
 }
@@ -34,8 +33,14 @@ test("project install plan writes MCP configs and records projects.json", async 
 
   assert.ok(plan.some((task) => task.id === "runtime-home"));
   assert.ok(plan.some((task) => task.id.startsWith("project:")));
-  assert.ok(plan.every((task) => !(task.id === "shim")), "project scope skips the global shim");
-  assert.ok(plan.every((task) => !(task.id === "skills")), "project scope skips skills");
+  assert.ok(
+    plan.every((task) => !(task.id === "shim")),
+    "project scope skips the global shim",
+  );
+  assert.ok(
+    plan.every((task) => !(task.id === "skills")),
+    "project scope skips skills",
+  );
 
   await runPlan(plan);
 

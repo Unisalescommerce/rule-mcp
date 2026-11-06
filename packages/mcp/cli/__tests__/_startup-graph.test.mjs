@@ -83,7 +83,13 @@ test("the CLI entry point does not statically import the tool or server graph", 
 test("the commander program is still built statically, so help text cannot drift", () => {
   const graph = staticGraph();
 
-  for (const file of ["packages/mcp/cli/_program.js", "packages/mcp/cli/_register-info.js", "packages/mcp/cli/_register-setup.js", "packages/mcp/cli/_register-server.js", "packages/mcp/cli/_register-session.js"]) {
+  for (const file of [
+    "packages/mcp/cli/_program.js",
+    "packages/mcp/cli/_register-info.js",
+    "packages/mcp/cli/_register-setup.js",
+    "packages/mcp/cli/_register-server.js",
+    "packages/mcp/cli/_register-session.js",
+  ]) {
     assert.ok(graph.has(file), `${file} must stay a static import: it declares commands and options that --help renders`);
   }
 });

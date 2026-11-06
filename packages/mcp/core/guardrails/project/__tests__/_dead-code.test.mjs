@@ -63,5 +63,9 @@ test("the filter keeps only what it can prove, from one tool answer", () => {
     project,
   );
 
-  assert.deepEqual(kept.map((symbol) => symbol.name), ["trulyDead"], "one of the four is dead");
+  assert.deepEqual(
+    kept.map((symbol) => symbol.name),
+    ["trulyDead"],
+    "one of the four is dead",
+  );
 });

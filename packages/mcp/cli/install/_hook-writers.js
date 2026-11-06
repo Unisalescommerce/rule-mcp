@@ -2,7 +2,6 @@
 
 import { guardCommand, normalized } from "./_hook-command.js";
 
-
 /**
  * Titles Codex `/hooks` shows for each handler.
  *
@@ -204,4 +203,4 @@ export function piExtension(launcher) {
   ].join("\n");
 }
 
-export {guardCommand} from "./_hook-command.js";
+export { guardCommand } from "./_hook-command.js";

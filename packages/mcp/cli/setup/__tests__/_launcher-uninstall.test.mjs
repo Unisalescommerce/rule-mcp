@@ -45,7 +45,10 @@ test("removeLauncher deletes the copy directory and reports it", () => {
 
   assert.equal(result.status, "removed");
   assert.equal(existsSync(launcherRoot({ root })), false);
-  assert.ok(result.lines.some((line) => line.includes("launcher")), "reports what left");
+  assert.ok(
+    result.lines.some((line) => line.includes("launcher")),
+    "reports what left",
+  );
 });
 
 test("a dry run plans the removal and writes nothing", () => {

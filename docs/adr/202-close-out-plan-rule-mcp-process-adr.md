@@ -23,13 +23,13 @@ The plan record docs/plans/skills/process/_rule-mcp-process-adr.md, "rule-proces
 - ADRSchema and adr new gain endsWhen (--ends-when).
 - adr new gains --alternatives, repeatable.
 - A superseded ADR must name its successor, in the tool and in the CLI;
-- Tool tests in packages/mcp/tools/adr/__tests__/.
+- Tool tests in packages/mcp/tools/adr/**tests**/.
 - Rewrite the template to the sections generateAdr really writes, author
 - Replace the Italian example with an English one the tool would accept.
 - Restructure around the workflow: when to record, how to write it, how it
 - State the five conventions as rules of the house, not as preferences.
 - node --import ./scripts/alias-hook.mjs --test skills/rule-process-adr/guardrails/
-- node --import ./scripts/alias-hook.mjs --test packages/mcp/tools/adr/__tests__/
+- node --import ./scripts/alias-hook.mjs --test packages/mcp/tools/adr/**tests**/
 - _corpus and _routing-corpus suites.
 - ...and 2 more step(s) in the closed record.
 

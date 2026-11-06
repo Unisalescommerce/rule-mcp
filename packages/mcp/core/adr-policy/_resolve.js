@@ -9,14 +9,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { dirname, join, parse as parsePath } from "node:path";
 
-import {
-  CATEGORIES,
-  DEFAULT_LEVEL,
-  LEVEL_ALIASES,
-  LEVELS,
-  POLICY_ENV,
-  POLICY_FILE,
-} from "./_words.data.js";
+import { CATEGORIES, DEFAULT_LEVEL, LEVEL_ALIASES, LEVELS, POLICY_ENV, POLICY_FILE } from "./_words.data.js";
 
 /**
  * Normalize a level token (aliases + case) or return null when unknown.
@@ -140,11 +133,7 @@ function readPolicyFile(path) {
  *   source: string,
  * }}
  */
-export function resolveAdrPolicy({
-  projectDir = ".",
-  env = process.env,
-  homeDir = process.env.RULE_MCP_HOME || join(homedir(), ".rule-mcp"),
-} = {}) {
+export function resolveAdrPolicy({ projectDir = ".", env = process.env, homeDir = process.env.RULE_MCP_HOME || join(homedir(), ".rule-mcp") } = {}) {
   const filePath = findPolicyFile(projectDir);
 
   if (filePath) {

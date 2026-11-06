@@ -21,7 +21,7 @@ const settled = (text) => {
 };
 
 test("a block whose body is one line but on its own line is left alone", () => {
-  const source = ['export function installOrder() {', '  return ["preflight", "profile"];', "}", ""].join("\n");
+  const source = ["export function installOrder() {", '  return ["preflight", "profile"];', "}", ""].join("\n");
   const { first, second } = settled(source);
 
   assert.equal(first.text, source, `a multi-line block is not a one-liner: ${JSON.stringify(first.text)}`);
@@ -45,7 +45,7 @@ test("a body without a semicolon gets exactly one", () => {
 });
 
 test("the whole style chain settles on a one-line return inside a block", () => {
-  const source = ['export function installOrder() {', '  return ["preflight", "profile"];', "}", ""].join("\n");
+  const source = ["export function installOrder() {", '  return ["preflight", "profile"];', "}", ""].join("\n");
   const once = applyJsStyle(source);
 
   assert.equal(once.text, source, "nothing to change");
@@ -53,7 +53,7 @@ test("the whole style chain settles on a one-line return inside a block", () => 
 });
 
 test("code that only looks like a one-liner inside a string is left alone", () => {
-  const source = 'const parts = [\'function f() {\', \'  return 1;\', \'}\', ""].join("\\n");\n';
+  const source = "const parts = ['function f() {', '  return 1;', '}', \"\"].join(\"\\n\");\n";
   const { first } = settled(source);
 
   assert.equal(first.text, source, `a quoted body is text: ${JSON.stringify(first.text)}`);

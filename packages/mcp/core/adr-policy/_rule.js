@@ -7,8 +7,7 @@
 import { resolveAdrPolicy, levelFor } from "./_resolve.js";
 
 /** Static rule for surfaces that cannot resolve a project policy. */
-export const ADR_RULE =
-  "Write an ADR with rule_tool_process_adr when the project ADR policy allows it (default: at handoff; mid-task only under full).";
+export const ADR_RULE = "Write an ADR with rule_tool_process_adr when the project ADR policy allows it (default: at handoff; mid-task only under full).";
 
 /**
  * Policy-aware ADR rule for surfaces that run inside a project.

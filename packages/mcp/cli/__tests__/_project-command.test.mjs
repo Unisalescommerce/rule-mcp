@@ -42,7 +42,10 @@ test("add writes the project entry, with a portable command and no machine path"
   assert.equal(entry.command, "rule-mcp");
   assert.deepEqual(entry.args, ["serve"]);
   assert.equal(entry.env, undefined, "a shared entry carries no machine environment");
-  assert.ok(listProjects().some((project) => project.root === first), "the project is recorded");
+  assert.ok(
+    listProjects().some((project) => project.root === first),
+    "the project is recorded",
+  );
 });
 
 test("a second project copies the configuration of the last one recorded", async () => {
@@ -71,7 +74,10 @@ test("a dry run writes nothing and reports what it would do", async () => {
 
   assert.equal(result.dryRun, true);
   assert.equal(existsSync(join(home, "third", ".cursor", "mcp.json")), false);
-  assert.equal(listProjects().some((project) => project.root === join(home, "third")), false);
+  assert.equal(
+    listProjects().some((project) => project.root === join(home, "third")),
+    false,
+  );
 });
 
 test("an agent with no project file is refused by name", async () => {

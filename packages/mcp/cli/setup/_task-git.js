@@ -100,11 +100,7 @@ export const projectGitTask = (projectRoot, projectConfig) => {
         return {
           status: "ok",
           summary: "would write",
-          lines: [
-            ...planned.hooks.map((hook) => `hook ${hook.event}: ${hook.status}`),
-            `driver: ${planned.driver}`,
-            `attributes: ${planned.attributes}`,
-          ],
+          lines: [...planned.hooks.map((hook) => `hook ${hook.event}: ${hook.status}`), `driver: ${planned.driver}`, `attributes: ${planned.attributes}`],
         };
       }
 

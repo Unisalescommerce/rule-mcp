@@ -26,12 +26,7 @@ const io = (argv) => ({
 });
 
 test("--feature is repeatable and --adr-policy is a string", () => {
-  const resolved = resolveSetupOptions(
-    setupOptions(
-      "install",
-      io(["--feature", "telemetry=anonymous", "--feature", "adr=off", "--adr-policy", "full"]),
-    ),
-  );
+  const resolved = resolveSetupOptions(setupOptions("install", io(["--feature", "telemetry=anonymous", "--feature", "adr=off", "--adr-policy", "full"])));
 
   assert.deepEqual(resolved.features, ["telemetry=anonymous", "adr=off"]);
   assert.equal(resolved.adrPolicy, "full");

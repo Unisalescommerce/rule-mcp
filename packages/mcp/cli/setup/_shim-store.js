@@ -25,13 +25,15 @@ const LINK_PACKAGES = ["rule-mcp-workspace", "rule-mcp"];
 
 /** Linked package entries inside pnpm's per-user global store. */
 export function linkCandidates(home = homedir()) {
-  return globalStoreRoots(home)
-    .filter((root) => existsSync(root))
-    .flatMap((root) => readdirs(root))
-    // Two layouts, one sweep: pnpm 5/6 wrote `<layout>/node_modules/<pkg>`,
-    // pnpm 10+ writes `<layout>/<hash>/node_modules/<pkg>`.
-    .flatMap((layout) => [layout, ...readdirs(layout)])
-    .flatMap((dir) => LINK_PACKAGES.map((name) => join(dir, "node_modules", name)));
+  return (
+    globalStoreRoots(home)
+      .filter((root) => existsSync(root))
+      .flatMap((root) => readdirs(root))
+      // Two layouts, one sweep: pnpm 5/6 wrote `<layout>/node_modules/<pkg>`,
+      // pnpm 10+ writes `<layout>/<hash>/node_modules/<pkg>`.
+      .flatMap((layout) => [layout, ...readdirs(layout)])
+      .flatMap((dir) => LINK_PACKAGES.map((name) => join(dir, "node_modules", name)))
+  );
 }
 
 /**

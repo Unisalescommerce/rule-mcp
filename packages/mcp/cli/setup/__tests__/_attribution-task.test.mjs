@@ -28,7 +28,11 @@ test.after(() => rmSync(home, { recursive: true, force: true }));
 test("only the agents with a cited control are written, the rest are named", () => {
   const { targets, skipped } = attributionTargets();
 
-  assert.deepEqual(targets.map((row) => row.agent), ["claude"], "gemini documents no control, so it is not a target");
+  assert.deepEqual(
+    targets.map((row) => row.agent),
+    ["claude"],
+    "gemini documents no control, so it is not a target",
+  );
   assert.ok(skipped.some((entry) => entry.agent === "gemini" && /no attribution control/.test(entry.reason)));
   assert.ok(skipped.some((entry) => entry.agent === "codex" && /not documented/.test(entry.reason)));
 });
@@ -36,7 +40,10 @@ test("only the agents with a cited control are written, the rest are named", () 
 test("narrowing by agent keeps only that agent", () => {
   const { targets } = attributionTargets({ agents: ["claude"] });
 
-  assert.deepEqual(targets.map((row) => row.agent), ["claude"]);
+  assert.deepEqual(
+    targets.map((row) => row.agent),
+    ["claude"],
+  );
   assert.deepEqual(attributionTargets({ agents: ["codex"] }).targets, [], "an undocumented agent is not a target");
 });
 
@@ -47,7 +54,10 @@ test("hide writes the documented value into the agent's own file", () => {
 
   assert.equal(result.status, "ok");
   assert.deepEqual(JSON.parse(readFileSync(claudeSettings, "utf8")), { theme: "dark", attribution: false });
-  assert.ok(result.lines.some((line) => /skipped\s+gemini/.test(line)), "the untouched agents are reported");
+  assert.ok(
+    result.lines.some((line) => /skipped\s+gemini/.test(line)),
+    "the untouched agents are reported",
+  );
 });
 
 test("keep removes only what a hide wrote", () => {

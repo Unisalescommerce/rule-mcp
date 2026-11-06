@@ -86,10 +86,7 @@ function targetFile(agent, projectRoot, projectConfig) {
 export function installProjectHost({ agent, projectRoot, projectConfig = "shared", entrypoint, dryRun = false } = {}) {
   const file = targetFile(agent, projectRoot, projectConfig);
   const format = projectHostFormat(agent);
-  const config =
-    projectConfig === "local"
-      ? localServerConfig(agent, entrypoint ?? process.argv[1] ?? "rule-mcp", { projectRoot })
-      : sharedServerConfig();
+  const config = projectConfig === "local" ? localServerConfig(agent, entrypoint ?? process.argv[1] ?? "rule-mcp", { projectRoot }) : sharedServerConfig();
   const content = upsertHostServer(format, readText(file), config);
 
   if (content === null) {

@@ -11,7 +11,7 @@ The server lived under a single root package named rule-mcp with src/, tests/, s
 
 ## Decision
 
-Keep the git root as the private facade rule-mcp-workspace. Publish the product as packages/mcp (name rule-mcp). Put cross-cutting helpers in packages/shared (rule-mcp-shared) with no re-export shim under mcp. Put the docs site builder in packages/docs (rule-mcp-docs). Keep [removed] as sibling ../[removed] ([removed]-gateway) linked via pnpm-workspace.yaml; CI and Docker materialize scripts/ci/[removed]-stub when the sibling is absent and set RULE_MCP_NO_[removed]=1. Alias @mcp/* maps to packages/mcp/; shared imports use rule-mcp-shared. Relocate tests to scripts/__tests__/ and case-study apps to docs/case-studies/. Pack with pnpm pack --filter rule-mcp. Docker COPY packages/ and CMD node bin/rule-mcp.js. Do not create branch refactor/packages-mcp-[removed]-workspace.
+Keep the git root as the private facade rule-mcp-workspace. Publish the product as packages/mcp (name rule-mcp). Put cross-cutting helpers in packages/shared (rule-mcp-shared) with no re-export shim under mcp. Put the docs site builder in packages/docs (rule-mcp-docs). Keep [removed] as sibling ../[removed] ([removed]-gateway) linked via pnpm-workspace.yaml; CI and Docker materialize scripts/ci/[removed]-stub when the sibling is absent and set RULE_MCP_NO_[removed]=1. Alias @mcp/* maps to packages/mcp/; shared imports use rule-mcp-shared. Relocate tests to scripts/**tests**/ and case-study apps to docs/case-studies/. Pack with pnpm pack --filter rule-mcp. Docker COPY packages/ and CMD node bin/rule-mcp.js. Do not create branch refactor/packages-mcp-[removed]-workspace.
 
 ## Consequences
 
