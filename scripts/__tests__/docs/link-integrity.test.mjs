@@ -19,7 +19,7 @@ function markdownFiles(dir) {
       // Case-study apps moved under docs/ in WS5; their vendored trees and ADR
       // indexes are not handbook links. Skip the same private trees the docs
       // site already excludes from publication.
-      if (!["node_modules", ".git", "case-studies", "adr", "handoff", "audits", "plans", "reviews"].includes(entry)) {
+      if (!["node_modules", ".git", "adr", "handoff", "audits", "plans", "reviews"].includes(entry)) {
         found.push(...markdownFiles(full));
       }
     } else if (entry.endsWith(".md")) {

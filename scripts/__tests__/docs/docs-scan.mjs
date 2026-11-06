@@ -23,7 +23,7 @@ const tools = new Set(listTools().map((x) => x.name));
 // pre-rename `rule_init` on purpose.
 // case-studies: apps moved under docs/ in WS5; their benchmarks quote historical
 // tool names the same way adr/handoff archives do.
-const archivalDirectories = new Set(["adr", "handoff", "plans", "reports", "spike", "case-studies"]);
+const archivalDirectories = new Set(["adr", "handoff", "plans", "reports", "spike"]);
 
 function scan(dir) {
   let stale = 0;

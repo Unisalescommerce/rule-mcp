@@ -16,7 +16,6 @@
   },
   "scripts": {
     "dev": "node ./bin/rule-mcp.js serve",
-    "case-studies": "node scripts/case-studies/index.mjs",
     "docs:dev": "pnpm --filter rule-mcp-docs dev",
     "docs:build": "pnpm --filter rule-mcp-docs build",
     "dev:sse": "node ./bin/rule-mcp.js serve --transport sse",
