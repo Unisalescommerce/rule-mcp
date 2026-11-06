@@ -57,8 +57,8 @@ The three open steps already live in the [bundler family plan](skills/toolchain/
 
 This workstream does not copy them.
 
-- [ ] **WS2-T1**: Carry out those three steps and mark them closed in that plan.
-- [ ] **WS2-T2**: Confirm the cascade no longer lists that plan as ready.
+- [x] **WS2-T1**: Carry out those three steps and mark them closed in that plan. Done 2026-11-06: the router plan carries the family contract, `rule-toolchain` owns five bundler rules with tests and corpus pairs, and vite, rspack and parcel declare `inherits: [rule-toolchain]`.
+- [x] **WS2-T2**: Confirm the cascade no longer lists that plan as ready. Confirmed 2026-11-06: the bundler family plan has no open step and is `done`, so the cascade skips it.
 
 ### WS3 - Known debt
 

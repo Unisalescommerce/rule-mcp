@@ -1,6 +1,6 @@
 # Bundler family - shared contract (Vite, Rspack, Parcel)
 
-Status: `planned`
+Status: `in-progress`
 Notes:`planned` Notes: plan only. Cross-skill plan, not tied to a single skill file. Owner when implemented: `rule-toolchain` (the router), inherited by every toolchain skill through `inherits`. Per-bundler plans: `rule-toolchain-vite` (this pass), `rule-toolchain-rspack`, `rule-toolchain-parcel`. Webpack is removed from the family entirely: no guidance, not even a migration section.
 
 ## Evidence base
@@ -81,10 +81,15 @@ The family cannot be implemented before its owner exists in the plan order.
 - [x] Verify the bundler facts and the shared mechanisms.
 - [x] Interview the owner and record the decisions.
 - [x] Write the family contract.
-- [ ] When `rule-toolchain` (skill 14) is planned, move this contract into its
-      plan and wire `inherits` for the toolchain skills.
-- [ ] Implement the family guardrails in `rule-toolchain`.
-- [ ] Confirm each bundler plan points here instead of restating a row.
+- [x] When `rule-toolchain` (skill 14) is planned, move this contract into its
+      plan and wire `inherits` for the toolchain skills. Done 2026-11-06: the
+      router plan carries the contract, and vite, rspack and parcel declare
+      `inherits: [rule-toolchain]`.
+- [x] Implement the family guardrails in `rule-toolchain`. Done 2026-11-06:
+      five rules with unit tests and labeled corpus pairs.
+- [x] Confirm each bundler plan points here instead of restating a row. Done
+      2026-11-06: the three bundler plans cite this document as the family
+      contract and keep only their own specifics.
 
 ## Model assignment
 

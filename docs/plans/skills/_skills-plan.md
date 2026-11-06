@@ -333,7 +333,7 @@ file, so a stale row fails rather than misleads.
 | ------------------------------- | ------ | ----------- | ----- | ----- |
 | `rule-process-adr`              | leaf   | retired     | 22/22 | 0     |
 | `rule-process-ai`               | leaf   | retired     | 23/23 | 0     |
-| `bundler-family`                | cross  | in-progress | 3/6   | 1     |
+| `bundler-family`                | cross  | done        | 6/6   | 1     |
 | `rule-toolchain-biome`          | leaf   | in-progress | 4/18  | 1     |
 | `rule-toolchain-eslint`         | leaf   | in-progress | 4/19  | 1     |
 | `rule-toolchain-husky`          | leaf   | in-progress | 4/19  | 1     |
@@ -416,7 +416,7 @@ file, so a stale row fails rather than misleads.
 | `rule-platform`                 | router | planned     | 0/20  | 10    |
 | `rule-process`                  | router | planned     | 0/25  | 10    |
 | `rule-styleguide`               | router | in-progress | 4/19  | 10    |
-| `rule-toolchain`                | router | in-progress | 3/18  | 10    |
+| `rule-toolchain`                | router | in-progress | 5/18  | 10    |
 | `rule-ui`                       | router | in-progress | 4/19  | 10    |
 
 ### Plans outside the catalog graph
@@ -617,7 +617,7 @@ file, so a stale row fails rather than misleads.
 | ------------------------------- | ------ | ----------- | ----- | ----- |
 | `rule-process-adr`              | leaf   | retired     | 22/22 | 0     |
 | `rule-process-ai`               | leaf   | retired     | 23/23 | 0     |
-| `bundler-family`                | cross  | in-progress | 3/6   | 1     |
+| `bundler-family`                | cross  | done        | 6/6   | 1     |
 | `rule-toolchain-biome`          | leaf   | in-progress | 4/18  | 1     |
 | `rule-toolchain-eslint`         | leaf   | in-progress | 4/19  | 1     |
 | `rule-toolchain-husky`          | leaf   | in-progress | 4/19  | 1     |
@@ -700,7 +700,7 @@ file, so a stale row fails rather than misleads.
 | `rule-platform`                 | router | planned     | 0/20  | 10    |
 | `rule-process`                  | router | planned     | 0/25  | 10    |
 | `rule-styleguide`               | router | in-progress | 4/19  | 10    |
-| `rule-toolchain`                | router | in-progress | 3/18  | 10    |
+| `rule-toolchain`                | router | in-progress | 5/18  | 10    |
 | `rule-ui`                       | router | in-progress | 4/19  | 10    |
 
 ### Plans outside the catalog graph

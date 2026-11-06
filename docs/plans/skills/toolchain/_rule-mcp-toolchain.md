@@ -138,11 +138,11 @@ Shared files: skills/rule/SKILL.md, scripts/data/router-gaps.data.mjs, tests/fix
 
 ### Phase 2 - Family contract and guardrails
 
-- [ ] Add `guardrails/index.js` with the five bundler-family rules.
-- [ ] Add `inherits: [rule-toolchain]` to vite, rspack and parcel.
+- [x] Add `guardrails/index.js` with the five bundler-family rules. Landed 2026-11-06: `skills/rule-toolchain/guardrails/` exports `bundler-no-public-secret`, `bundler-dev-not-exposed`, `bundler-target-declared`, `bundler-io-declared` and `bundler-sourcemap-policy`, each with a labeled corpus pair.
+- [x] Add `inherits: [rule-toolchain]` to vite, rspack and parcel. Landed 2026-11-06 in the three SKILL.md frontmatter blocks.
 - [ ] Implement `toolchain-no-webpack` and `toolchain-no-prescribed-default`.
 - [ ] Move the four integrity rules to `rule-mcp` and inherit them here.
-- [ ] Promote the Tier A rules after the corpus gate reports 100%.
+- [ ] Promote the Tier A rules after the corpus gate reports 100%. The engine has no `severity` field yet, so the three Tier B rules currently block on bundler config files only.
 - [ ] Write the ADR for the family ownership and the generated router table,
       since both are structural decisions.
 
