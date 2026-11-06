@@ -15,7 +15,12 @@
  */
 export const SUITES = {
   quick: {
-    steps: ["scripts/__tests__/smoke.mjs", "packages/mcp/core/skills/__tests__/_ai.test.mjs", "packages/mcp/core/skills/__tests__/_detector.test.mjs", "packages/mcp/core/skills/__tests__/_framework-routing.test.mjs"],
+    steps: [
+      "scripts/__tests__/smoke.mjs",
+      "packages/mcp/core/skills/__tests__/_ai.test.mjs",
+      "packages/mcp/core/skills/__tests__/_detector.test.mjs",
+      "packages/mcp/core/skills/__tests__/_framework-routing.test.mjs",
+    ],
   },
   skills: {
     // The asset trees ship their own node:test files beside the code they cover,
@@ -37,6 +42,10 @@ export const SUITES = {
       "scripts/__tests__/plans/**/*.test.mjs",
       "scripts/__tests__/release/**/*.test.mjs",
       "scripts/__tests__/ci/**/*.test.mjs",
+      // `scripts/**/__tests__/*.test.mjs` stops at the files directly inside
+      // `__tests__`, so the five tests under `hooks/` ran only when somebody
+      // typed the path by hand.
+      "scripts/__tests__/hooks/**/*.test.mjs",
       "packages/**/__tests__/*.test.mjs",
       "scripts/**/__tests__/*.test.mjs",
       "skills/**/__tests__/*.test.mjs",

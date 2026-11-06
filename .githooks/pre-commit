@@ -12,9 +12,13 @@
 # 2. Regenerate the census and stage what it owns, so every commit ships the
 #    docs that match the code. The generator formats its own output, writes only
 #    the files that actually changed, and prints them; a changed surface
-#    therefore lands in the commit instead of a stale doc. Exits 0 even when
-#    nothing changed. A commit is not the place to fail over a missing dev
-#    dependency, so this stops early when prettier is not installed.
+#    therefore lands in the commit instead of a stale doc. The list below is
+#    every path the snapshot in `scripts/__tests__/fixtures/census.json` names,
+#    plus the snapshot, which carries a digest per document and moves whenever
+#    one does: a file left off this list is a file the hook writes and leaves
+#    modified. Exits 0 even when nothing changed. A commit is not the place to
+#    fail over a missing dev dependency, so this stops early when prettier is
+#    not installed.
 #
 # `RULE_MCP_HOOK_NO_SIDE_EFFECTS=1` skips step 2: a test that runs this hook
 # must not rewrite and stage documentation while it measures an exit code.
@@ -50,9 +54,10 @@ fi
 
 node --import ./scripts/alias-hook.mjs scripts/reports/census/index.mjs >/dev/null
 
-git add docs/02-architecture.md docs/05-env-variables.md docs/08-engineering-guides.md \
-  docs/09-skills.md docs/10-tools.md docs/11-prompts.md docs/12-instructions.md \
-  docs/13-cli.md docs/14-personas.md docs/15-guardrails.md docs/16-resources.md \
-  docs/17-surface-map.md
+git add docs/01-getting-started.md docs/02-architecture.md docs/05-env-variables.md \
+  docs/08-engineering-guides.md docs/09-skills.md docs/10-tools.md \
+  docs/11-prompts.md docs/12-instructions.md docs/13-cli.md docs/14-personas.md \
+  docs/15-guardrails.md docs/16-resources.md docs/17-surface-map.md \
+  scripts/__tests__/fixtures/census.json
 
 exit 0
