@@ -1,7 +1,7 @@
 # 139: Extend the data guardrail family with shared and per-engine rules
 
 - **Date**: 2026-10-17
-- **Status**: proposed
+- **Status**: accepted
 - **Tags**: guardrails, data, database, quality-gate
 - **Author**: Emiliano Pisu <pisuemiliano.1980@gmail.com>
 

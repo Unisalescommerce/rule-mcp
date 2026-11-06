@@ -1,7 +1,7 @@
 # 141: Give the meta-framework area its first server and client boundary guardrails
 
 - **Date**: 2026-10-17
-- **Status**: proposed
+- **Status**: accepted
 - **Tags**: guardrails, meta, frontend, quality-gate
 - **Author**: Emiliano Pisu <pisuemiliano.1980@gmail.com>
 

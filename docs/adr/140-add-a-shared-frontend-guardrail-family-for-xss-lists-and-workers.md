@@ -1,7 +1,7 @@
 # 140: Add a shared frontend guardrail family for XSS, lists and workers
 
 - **Date**: 2026-10-17
-- **Status**: proposed
+- **Status**: accepted
 - **Tags**: guardrails, frontend, security, quality-gate
 - **Author**: Emiliano Pisu <pisuemiliano.1980@gmail.com>
 

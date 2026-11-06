@@ -1,7 +1,7 @@
 # 138: Give the AI area its first source-cited guardrail family
 
 - **Date**: 2026-10-17
-- **Status**: proposed
+- **Status**: accepted
 - **Tags**: guardrails, ai, agents, quality-gate
 - **Author**: Emiliano Pisu <pisuemiliano.1980@gmail.com>
 

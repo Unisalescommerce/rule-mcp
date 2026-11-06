@@ -1,7 +1,7 @@
 # 137: Add a source-cited backend guardrail family and fix the six existing rules
 
 - **Date**: 2026-10-17
-- **Status**: proposed
+- **Status**: accepted
 - **Tags**: guardrails, backend, security, quality-gate
 - **Author**: Emiliano Pisu <pisuemiliano.1980@gmail.com>
 
