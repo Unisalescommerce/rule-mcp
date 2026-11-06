@@ -27,7 +27,7 @@ export function dateOf(text) {
 
 /** Every Markdown file under a directory, relative to it, sorted. */
 export function markdownFiles(dir, base = "") {
-  let entries = [];
+  let entries;
 
   try {
     entries = readdirSync(dir, { withFileTypes: true });

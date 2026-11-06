@@ -68,11 +68,13 @@ async function updateCommand() {
   // An update that changed the code changed the installs too: the commands,
   // skills and env each host carries are written from this tree, so a stale
   // install runs a server it no longer matches.
-  if (result.updated) {
-    const refreshed = await reapplyRememberedInstalls();
-
-    print(`Re-applied ${refreshed.global} global install(s) and ${refreshed.projects} project(s).`);
+  if (!result.updated) {
+    return;
   }
+
+  const refreshed = await reapplyRememberedInstalls();
+
+  print(`Re-applied ${refreshed.global} global install(s) and ${refreshed.projects} project(s).`);
 }
 
 /**

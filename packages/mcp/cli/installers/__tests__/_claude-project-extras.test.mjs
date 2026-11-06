@@ -31,8 +31,15 @@ test("the extras are the rules block, the slash commands and the hooks", () => {
   assert.ok(instruction.includes(INSTRUCTION_MARKER), "the short block is in the project's CLAUDE.md");
   assert.ok(instruction.includes(RULES_MARKER), "and the enforced-workflow block");
   assert.ok(settings.includes(HOOK_MARKER), "the guard hooks are in the project settings");
-  assert.ok(written.some((file) => file.includes(join(".claude", "commands"))), "the slash commands are written");
-  assert.equal(written.some((file) => file.includes("settings.local.json")), false, "a shared install does not use the local file");
+  assert.ok(
+    written.some((file) => file.includes(join(".claude", "commands"))),
+    "the slash commands are written",
+  );
+  assert.equal(
+    written.some((file) => file.includes("settings.local.json")),
+    false,
+    "a shared install does not use the local file",
+  );
 });
 
 test("a local project config puts the hooks in settings.local.json", () => {
@@ -59,7 +66,7 @@ test("installing into a project twice leaves one block and one hook", () => {
     const settings = readFileSync(join(twice, ".claude", "settings.json"), "utf8");
 
     assert.equal(instruction.split(INSTRUCTION_MARKER).length - 1, 1, "one short block");
-    assert.equal(settings.split(HOOK_MARKER).length - 1 > 0, true);
+    assert.equal(settings.split(HOOK_MARKER).length > 1, true);
   } finally {
     rmSync(twice, { recursive: true, force: true });
   }
@@ -71,8 +78,14 @@ test("the host install writes the entry and the extras together", () => {
   try {
     const { written } = installProjectHost({ agent: "claude", projectRoot: project, projectConfig: "shared", entrypoint: "/tmp/rule.js" });
 
-    assert.ok(written.some((file) => file.endsWith(".mcp.json")), "the MCP entry");
-    assert.ok(written.some((file) => file.endsWith("CLAUDE.md")), "the rules block");
+    assert.ok(
+      written.some((file) => file.endsWith(".mcp.json")),
+      "the MCP entry",
+    );
+    assert.ok(
+      written.some((file) => file.endsWith("CLAUDE.md")),
+      "the rules block",
+    );
   } finally {
     rmSync(project, { recursive: true, force: true });
   }

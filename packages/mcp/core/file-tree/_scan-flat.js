@@ -57,14 +57,10 @@ export function scanFlat(rootDir, srcDir, files) {
   const dirs = new Set([""]);
 
   for (const rel of files) {
-    if (!rel.startsWith(prefix)) {
-      continue;
-    }
-
     // Drop gitignored paths before rebuilding the tree. Hardcoded IGNORE_DIRS
     // still seed the map so totalDirs matches the recursive scanner, then
     // shouldSkipWalk refuses to descend.
-    if (isGitIgnored(rootDir, rel)) {
+    if (!rel.startsWith(prefix) || isGitIgnored(rootDir, rel)) {
       continue;
     }
 
@@ -128,7 +124,7 @@ export function scanFlat(rootDir, srcDir, files) {
     for (const child of childDirs) {
       const childRelative = dir ? `${srcDir}/${dir}/${child}` : `${srcDir}/${child}`;
 
-      if (!shouldSkipWalk(child, { projectDir: rootDir, relativePath: childRelative.replaceAll('\\', '/') })) {
+      if (!shouldSkipWalk(child, { projectDir: rootDir, relativePath: childRelative.replaceAll("\\", "/") })) {
         walk(join(dir, child), depth + 1);
       }
     }

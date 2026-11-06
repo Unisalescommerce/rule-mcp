@@ -73,16 +73,23 @@ export function askPathField({ renderer, body, empty, text, BoxRenderable, clear
     const onKey = (key) => {
       state = pathKey(state, key);
 
-      if (state.done?.type === "accept") {
-        done(state.done.value);
-      } else if (state.done?.type === "cancel") {
-        done(CANCEL);
-      } else if (state.done?.type === "back") {
-        done(BACK);
-      } else {
-        paint();
+      switch (state.done?.type) {
+        case "accept": {
+          done(state.done.value);
+          break;
+        }
+        case "cancel": {
+          done(CANCEL);
+          break;
+        }
+        case "back": {
+          done(BACK);
+          break;
+        }
+        default: {
+          paint();
+        }
       }
-
     };
 
     setHints([

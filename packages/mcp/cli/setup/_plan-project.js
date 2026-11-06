@@ -30,7 +30,9 @@ export function buildProjectInstallPlan({ agents = [], projects = [], projectCon
   const targets = projectAgents(agents);
   const plan = [runtimeHomeTask()];
 
-  for (const projectRoot of projects.map((root) => resolve(root))) {
+  const projectRoots = projects.map((root) => resolve(root));
+
+  for (const projectRoot of projectRoots) {
     for (const agent of targets) {
       plan.push(projectAgentInstallTask(agent, projectRoot, projectConfig));
     }

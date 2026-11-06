@@ -28,7 +28,7 @@ const stubMountUrl = pathToFileURL(join(import.meta.dirname, "_setup-mount.stub.
 
 let plainMode = "ok";
 let mountCalls = 0;
-
+const directions = [];
 registerHooks({
   resolve(specifier, context, nextResolve) {
     if (specifier === "./_plain.js" && context.parentURL?.includes("/cli/setup/")) {
@@ -47,7 +47,7 @@ registerHooks({
 Object.defineProperty(globalThis, "__ruleSetupBranches", {
   configurable: true,
   value: {
-    directions: [],
+    directions,
     get plainMode() {
       return plainMode;
     },
@@ -58,7 +58,7 @@ Object.defineProperty(globalThis, "__ruleSetupBranches", {
       mountCalls += 1;
     },
     recordDirection(direction) {
-      this.directions.push(direction);
+      directions.push(direction);
     },
     get mountCalls() {
       return mountCalls;

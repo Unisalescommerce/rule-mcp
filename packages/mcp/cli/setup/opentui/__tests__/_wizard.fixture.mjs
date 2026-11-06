@@ -36,7 +36,7 @@ const CATALOG = {
   detected: ["claude"],
 };
 
-globalThis.__wizardStub = {
+Reflect.set(globalThis, "__wizardStub", {
   plans: [],
   preflight: {
     checks: [
@@ -48,7 +48,7 @@ globalThis.__wizardStub = {
   catalog: CATALOG,
   ruleTargets: [],
   scan: { groups: [], purge: [], agents: [] },
-};
+});
 
 const { INSTALL_STEPS, installOrder, runInstallWizard, runUninstallWizard, UNINSTALL_STEPS, uninstallOrder } = await import("../_wizard.js");
 const { BACK, CANCEL } = await import("../_answers.js");
@@ -106,4 +106,18 @@ const SCOPE_ANSWER = "global";
 /** The steps a global run plans, in order, without the profile-specific tail. */
 const GLOBAL_PLAN_HEAD = ["runtime-home", "features", "launcher", "attribution", "agent:claude"];
 
-export { GLOBAL_PLAN_HEAD, INSTALL_STEPS, UNINSTALL_STEPS, installOrder, uninstallOrder, runInstallWizard, runUninstallWizard, BACK, CANCEL, fakeScreen, reset, FEATURE_ANSWERS, SCOPE_ANSWER };
+export {
+  GLOBAL_PLAN_HEAD,
+  INSTALL_STEPS,
+  UNINSTALL_STEPS,
+  installOrder,
+  uninstallOrder,
+  runInstallWizard,
+  runUninstallWizard,
+  BACK,
+  CANCEL,
+  fakeScreen,
+  reset,
+  FEATURE_ANSWERS,
+  SCOPE_ANSWER,
+};

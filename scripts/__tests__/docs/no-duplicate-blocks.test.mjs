@@ -52,11 +52,8 @@ function windows(text) {
   for (let index = 0; index + 3 < lines.length; index++) {
     const block = lines.slice(index, index + 4);
 
-    if (!block.every(isCode)) {
-      continue;
-    }
     // Require real statements, not brace-only alignment like `}` closers.
-    if (block.every((line) => /^[\s{}[\],]+$/.test(line))) {
+    if (!block.every(isCode) || block.every((line) => /^[\s{}[\],]+$/.test(line))) {
       continue;
     }
 

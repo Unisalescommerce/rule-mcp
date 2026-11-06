@@ -33,15 +33,12 @@ export function applyRenumber(plan, options = {}) {
     renamed += 1;
   }
 
-  let referencesUpdated = 0;
-
   if (plan.renames.length > 0) {
     report({ step: "references", message: "Updating citations across docs/, packages/, skills/ and scripts/" });
   }
 
   const citations = rewriteCitations({ projectDir, renames: plan.renames, onProgress: report });
-
-  referencesUpdated = citations.filesUpdated;
+  const referencesUpdated = citations.filesUpdated;
 
   // The indexes are generated from the files (ADR 042 and its handoff twin), so
   // after a move they are rebuilt rather than patched: link rewriting would

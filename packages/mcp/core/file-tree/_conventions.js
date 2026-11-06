@@ -79,13 +79,10 @@ export function isBareComponent(name) {
 
   const extension = extname(name);
 
-  if (!COMPONENT_EXTENSIONS.has(extension)) {
+  // Exclude utility files that belong at the folder root: kebab-case utils.
+  if (!COMPONENT_EXTENSIONS.has(extension) || /^[a-z][a-z0-9-]*\.[a-z]+$/.test(name)) {
     return false;
   }
-  // Exclude utility files that belong at the folder root
-  if (/^[a-z][a-z0-9-]*\.[a-z]+$/.test(name)) {
-    return false;
-  } // kebab-case utils
   // Match files that look like components: PascalCase, camelCase starting with uppercase
   return /^[A-Z][a-zA-Z0-9]*\./.test(name);
 }

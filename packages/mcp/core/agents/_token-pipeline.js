@@ -55,15 +55,8 @@ const TRUNCATE_MIN_LINES_DEFAULT = 120;
  * @param {object} [args] - validated tool arguments (path/target/projectDir used)
  */
 export function decorateWithTokensave(name, core, args = {}) {
-  if (!core || core.isError || !Array.isArray(core.content)) {
-    return core;
-  }
   // Test-fixture tools (registered by suites) must keep exact payloads.
-  if (name.startsWith("test_")) {
-    return core;
-  }
-
-  if (process.env.RULE_MCP_NO_TOKENSAVE === "1") {
+  if (!core || core.isError || !Array.isArray(core.content) || name.startsWith("test_") || process.env.RULE_MCP_NO_TOKENSAVE === "1") {
     return core;
   }
 

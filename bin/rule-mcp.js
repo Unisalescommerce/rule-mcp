@@ -53,9 +53,9 @@ const isGuardSend = (argv) => argv[0] === "guard" && argv.includes("--send");
  * @returns {string}
  */
 const guardSendAction = (argv) => {
-  const positional = argv.slice(1).filter((part) => part !== "--send" && !part.startsWith("-"));
+  const positional = argv.slice(1).find((part) => part !== "--send" && !part.startsWith("-"));
 
-  return positional[0] ?? "bash";
+  return positional ?? "bash";
 };
 
 const argv = process.argv.slice(2);

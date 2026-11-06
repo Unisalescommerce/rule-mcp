@@ -65,6 +65,14 @@ export default defineConfig([
       "unicorn/no-declarations-before-early-exit": "off",
       // The rule rejects the `/** ... */` block every file here uses: 2015 of 2297 findings (ADR 213 family).
       "unicorn/no-asterisk-prefix-in-documentation-comments": "off",
+      // A default parameter covers `undefined` and nothing else, while `x ?? y`
+      // also covers `null` and `x || y` covers every falsy value. The rule asks
+      // for a rewrite that changes the result of `f(null)` at 47 call sites, so
+      // the fallback stays where the author wrote it.
+      "unicorn/prefer-default-parameters": "off",
+      // The rule asks to drop a parameter that always receives its default,
+      // which is a public signature change (`compare`, `redact`, `parseVersion`).
+      "unicorn/no-unnecessary-parameters": "off",
       "unicorn/prefer-await": "off", // .then() chains are idiomatic in this codebase
       "unicorn/max-nested-calls": "off",
       "unicorn/no-unreadable-for-of-expression": "off",
@@ -153,6 +161,6 @@ export default defineConfig([
     },
   },
   {
-    ignores: ["node_modules/", "dist/", "coverage/", ".tokensave/", ".git/", ".DS_Store"],
+    ignores: ["node_modules/", "dist/", "coverage/", ".tokensave/", ".git/", ".DS_Store", "scripts/__tests__/fixtures/plugins/"],
   },
 ]);

@@ -19,7 +19,6 @@ export { WIZARD_NODE_MIN, atLeast, canRenderWizard, versionParts, wizardRuntimeN
 /** Optional steps that run unless the caller opts out. */
 export const DEFAULT_EXTRAS = ["rules", "commands", "hooks", "doctor"];
 
-
 /**
  * Carry a `--minimal` / `--no-minimal` answer into the process environment.
  *
@@ -80,7 +79,7 @@ export function resolveSetupOptions(options = {}) {
   // (skills, platform service). Wizard UI for scope lands in a later slice.
   const mode = scope === "project" ? "stdio" : normalizeInstallMode(options.mode ?? "stdio");
   const projectOptions = scope === "project" ? { ...options, mode, skills: false, service: false } : { ...options, mode };
-  const projects = Array.isArray(options.projects) ? options.projects : options.project ? [].concat(options.project) : [];
+  const projects = Array.isArray(options.projects) ? options.projects : options.project ? [options.project] : [];
 
   return {
     mode,
