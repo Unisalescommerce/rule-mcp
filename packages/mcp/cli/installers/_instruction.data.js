@@ -8,7 +8,7 @@
  * before implementation, failing tests before code, guardrails before done.
  *
  * Every name here is a registered tool: they are all `rule_tool*`. Data file:
- * exempt from the size cap. ADR 115 dropped component/scaffold/form tools.
+ * exempt from the size cap. ADR 107 dropped component/scaffold/form tools.
  */
 
 /** Sentinel of the short routing block. */

@@ -68,7 +68,7 @@ function planParagraph(role) {
 /**
  * The operation section of the filled template for one operation.
  *
- * The ladder is cumulative (ADR 120). `audit` writes the evidence and stops;
+ * The ladder is cumulative (ADR 112). `audit` writes the evidence and stops;
  * `review` runs the audit first and derives `docs/reviews/` from it; `plan`, and
  * the default `all`, run all three. Asking for a deeper document without the
  * ones it derives from would leave the run with no evidence to stand on.

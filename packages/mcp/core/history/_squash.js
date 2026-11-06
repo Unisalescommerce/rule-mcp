@@ -10,7 +10,7 @@
  * untouched, so the commit's tree is the tip tree plus exactly the planned
  * document changes - and the verification fails if any other path differs.
  *
- * The merged documents are deterministic concatenations (ADR 128); the final
+ * The merged documents are deterministic concatenations (ADR 120); the final
  * message is the caller's, validated against the one rule because this commit
  * becomes the PR title, the changelog entry and the version input.
  */

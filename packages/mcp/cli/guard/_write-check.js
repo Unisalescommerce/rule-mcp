@@ -5,7 +5,7 @@
  * produced - the same engine `rule_tool_fix` runs, on every file that lands
  * instead of only on the ones the model chooses to hand over.
  *
- * It reports and never decides (ADR 129), so the composed file is read from
+ * It reports and never decides (ADR 121), so the composed file is read from
  * the payload and the disk after the tool call rather than before it.
  */
 import { readFileSync } from "node:fs";
@@ -39,7 +39,7 @@ function onDisk(path) {
 /**
  * The file the write produced.
  *
- * The hook runs after the tool call (ADR 129), so the file on disk is the
+ * The hook runs after the tool call (ADR 121), so the file on disk is the
  * answer for Write, Edit and MultiEdit alike, and replaying the payload on top
  * of it would apply the same edit twice. `content` is the fallback for a path
  * that cannot be read back, which is the only case the payload knows better.

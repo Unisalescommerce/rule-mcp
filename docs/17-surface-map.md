@@ -10,7 +10,7 @@ registry, so a stale copy fails the build instead of misleading a reader.
 ## Command / Tool / Skill map (128)
 
 One row per slash command, then every catalog skill that has no slash of its
-own (ADR 117: leaf skills are reached through area hubs or the router), then
+own (ADR 109: leaf skills are reached through area hubs or the router), then
 any remaining action tools. An empty cell is `-`.
 
 Regenerate with `pnpm census`.

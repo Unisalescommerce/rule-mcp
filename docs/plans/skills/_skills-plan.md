@@ -11,12 +11,12 @@ WS-C delegates here and does not restate this order).
 
 Scope: **every skill plan in this tree**, which since 2026-10-25 is one branch
 (`rel/v0.1.0`). The `feat/*` branches this file was written on are remote
-history and their content is here (ADR 181); a plan that lands later lands here
+history and their content is here (ADR 172); a plan that lands later lands here
 too, and this file is its ordering authority. Non-skill tracks (host, launcher,
 export, …) are ordered only by `plan-of-plans.md`.
 
-Decisions recorded: ADR 175 (this model), ADR 154 (the plan format contract),
-ADR 181 (one branch, and this file as the level-1 orchestrator of it).
+Decisions recorded: ADR 166 (this model), ADR 146 (the plan format contract),
+ADR 172 (one branch, and this file as the level-1 orchestrator of it).
 
 ## 1 - The universe
 
@@ -94,10 +94,10 @@ other marker form. The test normalizes `[X]` rather than rejecting it.
 | P4  | `rule-process#2` (shared router rules) and `rule-process#3` (route-table generator) close before the 7 routers that consume them                                  | measured: ai, backend, data, devops, frontend, meta, platform each wait for both |
 | P5  | `rule-platform-desktop#3` (served-references surface) closes before the 9 plans that move files into `references/`                                                | measured: 9 plan files name that surface                                         |
 | P6  | Areas run in the order `ui, toolchain, styleguide, process, platform, meta, frontend, devops, data, backend, ai`, except where P3-P5 or P7 move a node            | `DEPENDENCIES.md`                                                                |
-| P7  | A plan that removes or renames a skill runs alone, after its area's leaves, with a human gate                                                                     | ADR 151, ADR 152                                                                 |
+| P7  | A plan that removes or renames a skill runs alone, after its area's leaves, with a human gate                                                                     | ADR 143, ADR 144                                                                 |
 | P8  | Two plans that share a file in section 4 never run concurrently                                                                                                   | measured: 5 shared files                                                         |
 | P9  | When a plan's text contradicts this graph, the contradiction is an audit finding, not a silent override                                                           | this plan                                                                        |
-| P10 | Every area follows P2 with no exception, including AI: ADR 137's eight rules live in `rule-ai-agent-architecture`, the leaf that consumes them, not in the router | decision of 2026-10-21                                                           |
+| P10 | Every area follows P2 with no exception, including AI: ADR 129's eight rules live in `rule-ai-agent-architecture`, the leaf that consumes them, not in the router | decision of 2026-10-21                                                           |
 
 ## 4 - Shared files and conflict edges
 
@@ -114,7 +114,7 @@ other marker form. The test normalizes `[X]` rather than rejecting it.
 Stages are ordered; inside a stage, nodes are parallel unless a `HARD` edge says
 otherwise. Every node appears in exactly one table, so the counts can be summed
 instead of asserted: **87 nodes**. A `CONTRACT` edge names a phase and is exempt
-from the stage rule, because what closes first is the phase, not the plan (ADR 154).
+from the stage rule, because what closes first is the phase, not the plan (ADR 146).
 
 ### Stage 0a - Foundations: the prose and scope rules
 
@@ -322,7 +322,7 @@ Human gates, exactly where they are worth a human:
 | Stage 0           | before stage 1                                               | the prose rules and the ADR format govern every later commit |
 | Area close        | after stage 10, per area                                     | the router table is the last chance to notice a missing leaf |
 | Contract commits  | any node touching the 5 shared files                         | a mistake there multiplies across stages                     |
-| Destructive nodes | `rule-process-bmad` (rename), any node following ADR 151/152 | removal and rename are one-way in review terms               |
+| Destructive nodes | `rule-process-bmad` (rename), any node following ADR 143/152 | removal and rename are one-way in review terms               |
 
 ## 9 - Progress table
 
@@ -421,7 +421,7 @@ file, so a stale row fails rather than misleads.
 
 ### Plans outside the catalog graph
 
-ADR 175 retired six area-level guardrail plans. Their 76 retained rule IDs now
+ADR 166 retired six area-level guardrail plans. Their 76 retained rule IDs now
 live in owning skill plans: AI in `rule-ai-agent-architecture`; backend across
 the security, runtime, worker, GraphQL, and framework leaves; data in
 `rule-data`, PostgreSQL, MongoDB, and SQLite; devops across its router and four
@@ -438,7 +438,7 @@ execution, installer scope, and host integration. They are tracked on their own.
 | `installer-scope-adr-policy-features` | the port of ADR policy, project installs, features and host paths               |
 | `mcp-host-integration-depth`          | per-host integration levels, install/uninstall split, server-side wiring        |
 
-## 10 - Per-plan retrofit contract (ADR 154)
+## 10 - Per-plan retrofit contract (ADR 146)
 
 Every one of the 83 nodes must gain, before its own execution closes:
 
@@ -471,8 +471,8 @@ One test, `tests/plans/skills-plan.test.mjs`, parses `docs/plans` and this file:
 
 ### Phase 0 - Decisions
 
-- [x] ADR 175: the orchestration model (nodes, edges, policies, stages, gates).
-- [x] ADR 154: the plan format contract (status line, graph section, checkboxes).
+- [x] ADR 166: the orchestration model (nodes, edges, policies, stages, gates).
+- [x] ADR 146: the plan format contract (status line, graph section, checkboxes).
 
 ### Phase 1 - This file
 
@@ -511,7 +511,7 @@ One test, `tests/plans/skills-plan.test.mjs`, parses `docs/plans` and this file:
 - **Stage 0 is the whole risk.** Four nodes carry the rest of the graph and they
   are the ones whose plans have the least certainty: prose rules, ADR format,
   references surface, route-table generator.
-- **P10 changes the AI plans.** ADR 137 put the eight rules in `rule-ai`; the
+- **P10 changes the AI plans.** ADR 129 put the eight rules in `rule-ai`; the
   decision of 2026-10-21 puts them in `rule-ai-agent-architecture`. Both plan files
   have been updated accordingly, and the router keeps only the shared router
   rules.

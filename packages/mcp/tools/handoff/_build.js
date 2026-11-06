@@ -36,7 +36,7 @@ export function buildHandoff({
   // Archiving completed papers and repairing the ADR numbering are one act: a
   // run that writes ADRs renumbers so it cannot leave a collision behind, and a
   // run asked to keep its hands off the tree does neither. Both handoff modes
-  // archive (ADR 103); `closeout: false` is the read-only diagnosis.
+  // archive (ADR 095); `closeout: false` is the read-only diagnosis.
   const shouldArchive = closeout !== false;
   const applyCloseout = closeout !== "preview";
 

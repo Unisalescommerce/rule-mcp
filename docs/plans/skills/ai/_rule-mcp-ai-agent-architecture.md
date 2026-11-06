@@ -6,7 +6,7 @@ Notes:`planned` Notes: plan only, 2026-10-21. Index row `#83`, `pending` until t
 Area: ai, leaf and the area's architectural center. **205 lines**, one file, no
 `guardrails/`, **no dispatcher row**, no `inherits:` (it had one until this
 morning: a sentence that opened the Purpose by citing the retired
-`rule-platform-agent`, removed with ADR 151). Siblings: `rule-ai-prompting`,
+`rule-platform-agent`, removed with ADR 143). Siblings: `rule-ai-prompting`,
 `rule-ai-evals`, `rule-ai-context-engineering`, `rule-ai`.
 
 ## Evidence base (measured 2026-10-21)
@@ -15,15 +15,15 @@ Sections: the model does not call your tool, the harness decides quality, a loop
 until a graph earns it, MCP - what the protocol gives and leaves, tool surface
 design, agents in the browser, judging an agent framework.
 
-This leaf is where ADR 137's rules belong: every one of its eight is a statement
+This leaf is where ADR 129's rules belong: every one of its eight is a statement
 about agent code - the tool schema, the call timeout, the token cap, output
 validation, secrets in a prompt, the generation span, eval presence, MCP token
-validation. The decision of 2026-10-21 (ADR 175, P10) put them here rather than in
+validation. The decision of 2026-10-21 (ADR 166, P10) put them here rather than in
 the router, so the leaf owns the floor and `rule-ai` stays a list. That is the same
 model `rule-data` and `rule-backend` use, with the rules one level lower because
 this is the leaf that describes the code they check.
 
-## ADR 137's eight rules, owned here
+## ADR 129's eight rules, owned here
 
 | Tier | Rules                                                                                                                   |
 | ---- | ----------------------------------------------------------------------------------------------------------------------- |
@@ -31,9 +31,9 @@ this is the leaf that describes the code they check.
 | B    | `ai-eval-presence`, `ai-mcp-token-validation`                                                                           |
 
 All eight ship advisory first and are promoted after the corpus gate reports full
-precision and recall - ADR 137's own rule, kept as written.
+precision and recall - ADR 129's own rule, kept as written.
 
-## What this leaf adds on top of ADR 137
+## What this leaf adds on top of ADR 129
 
 | Statement in the body                                                | Rule                      |
 | -------------------------------------------------------------------- | ------------------------- |
@@ -46,7 +46,7 @@ repeatable.
 
 ## The eleven rules
 
-Eight from ADR 137 plus three of its own:
+Eight from ADR 129 plus three of its own:
 
 | id                        | Rejects                                                                                      | Tier | Today         |
 | ------------------------- | -------------------------------------------------------------------------------------------- | ---- | ------------- |
@@ -76,7 +76,7 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 
 ### Phase 0 - Decisions
 
-- [ ] Implement ADR 137 here: eight `ai-*` rules in
+- [ ] Implement ADR 129 here: eight `ai-*` rules in
       `skills/rule-ai-agent-architecture/guardrails`, advisory first, each citing
       OWASP / MCP / OpenTelemetry where the ADR says so.
 - [ ] ADR: the AI family shape, amending 137's placement (rules in the leaf, not
@@ -89,7 +89,7 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
       `unbounded-loop/`, `graph-without-measurement/`, `unnamed-owner/`, each with
       a one-line `README.md`.
 - [ ] Eleven `CORPUS` pairs bound to `rule-ai-agent-architecture`, eight of them
-      for ADR 137's rules.
+      for ADR 129's rules.
 - [ ] Suites written and watched to fail with "rule not found".
 
 ### Phase 2 - The rules
@@ -130,9 +130,9 @@ Plan default: `T3-rules` - `kimi-k2.7-code`. Fallback: `step-5-preview` for auth
 ## Open notes
 
 - "The harness is the product" is the single most useful sentence in the AI area,
-  and the eight rules ADR 137 proposes are its operational form. Nothing here
+  and the eight rules ADR 129 proposes are its operational form. Nothing here
   needs rewriting; it needs a floor.
-- ADR 151 removed the scaffolding skill this leaf used to point at. The sentence
+- ADR 143 removed the scaffolding skill this leaf used to point at. The sentence
   was rewritten rather than left dangling, which is the tombstone rule working on
   prose rather than on a link.
 - `agent-loop-has-exit` is the rule with the best false-positive story: every

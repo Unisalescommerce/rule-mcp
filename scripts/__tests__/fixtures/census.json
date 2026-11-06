@@ -11,19 +11,19 @@
       "file": "02-architecture.md",
       "kind": "block",
       "marker": "surface-counts",
-      "sha256": "f9156315a1dbe00153307e2c63c9b109051b4695b1a02d1313f0dfa850ddb50b"
+      "sha256": "ab972f22c8544d6255bf6d618e752ead608f6c97455308cf1d363d966c57ac0d"
     },
     {
       "file": "05-env-variables.md",
       "kind": "block",
       "marker": "env-registry",
-      "sha256": "528290244d7fc5ed24911ca26c72145a2347e26fa3d533d42e9b17c9c3fa780b"
+      "sha256": "ec27a9356d32a93dd43fce6b6fb4f8c8ff663c4c89ce9b7b2576ae4288210620"
     },
     {
       "file": "08-engineering-guides.md",
       "kind": "block",
       "marker": "command-surface",
-      "sha256": "91108cbf568888e74715f0566c6902072020fc9782c61f0970f8a9c7cb947306"
+      "sha256": "567d0365336adbc31d70af6302fe5c572e06af8eeb4c5ca6de721e8ea344d393"
     },
     {
       "file": "09-skills.md",
@@ -33,22 +33,22 @@
     {
       "file": "10-tools.md",
       "kind": "document",
-      "sha256": "8ed9f7acb6d5348b05a2c58915530bb12b88a90e9373e3fedbccc5a02e3a459e"
+      "sha256": "0417a36c0eaed48f647bad1a43e3ef35a0f686f8a6bfb36ab0e0d5e5b1d0e304"
     },
     {
       "file": "11-prompts.md",
       "kind": "document",
-      "sha256": "04e7cbe4c00025f5ea8c60b8dfe818f14a142cc1e840660a6bdb48474de5114d"
+      "sha256": "8686aa7fcdcb4fae36542cb50b7906b8f701db26b057b43f356119d089328a57"
     },
     {
       "file": "12-instructions.md",
       "kind": "document",
-      "sha256": "7a104570adbc084f7c0d7d83128e1913885998167c1ee57346907b1b63eda184"
+      "sha256": "347e78f8ea713ac373483a7485a07d06dbc0b6226f3944f7047b4d65a920cc54"
     },
     {
       "file": "13-cli.md",
       "kind": "document",
-      "sha256": "1ce585bf39e66382f5ff7d6b8e13264a1739c7295fd9c78970ed16c584fd62e6"
+      "sha256": "f2d88688440bceb35d5db0ab12ce2f4762375df5e43238e8e55129597a077db6"
     },
     {
       "file": "14-personas.md",
@@ -58,7 +58,7 @@
     {
       "file": "15-guardrails.md",
       "kind": "document",
-      "sha256": "b8189a56ae644d71b048a10e2f82d1bc9e657aaa88b885d86f67c859121c4671"
+      "sha256": "912dfd1b701c5f3313b00ffac2e3d2655b27a46861c20de93e593ae6d61a6421"
     },
     {
       "file": "16-resources.md",
@@ -68,7 +68,7 @@
     {
       "file": "17-surface-map.md",
       "kind": "document",
-      "sha256": "d85fd20431ff265f2c7753075bddc5715e13a2c38d2d66722f6d2f022a380978"
+      "sha256": "39740bf0401b51c497b88718d07284d170740c5b434fa285f5f3715c3fc2f164"
     }
   ]
 }

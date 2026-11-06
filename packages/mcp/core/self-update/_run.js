@@ -66,7 +66,7 @@ export async function runSelfUpdate(opts = {}) {
   }
 
   // -p -P: branches and tags the remote dropped are dropped here too, so a
-  // withdrawn release is never read as the newest one (ADR 131).
+  // withdrawn release is never read as the newest one (ADR 123).
   const fetched = await git(["fetch", "--quiet", "-p", "-P"], root);
 
   if (fetched === null) {

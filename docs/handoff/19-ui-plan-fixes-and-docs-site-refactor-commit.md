@@ -46,7 +46,7 @@ af08668c test(docs-site): add Playwright e2e coverage and relax the accuracy reg
 2. `home-grid-hero-deadspace` (medium): the home page hero card used `align-self: start` inside a two-row grid area, leaving about 330px of dead space below it when the flow/cards column ran taller. Fixed with `align-self: stretch` (`scripts/docs-site/style.css`).
 3. `prefs-theme-fowt` (low): the stored theme/contrast/motion preference applied via a `defer`-loaded `prefs.js`, which could paint the default theme before the deferred script ran. Fixed with a blocking inline `<script>` (`themeScript()` in `_shell.mjs`) placed before the stylesheet `<link>`; `prefs.js`'s redundant initial `applyPrefs()` call was removed.
 
-All three verified: new unit tests in `scripts/docs-site/__tests__/_build.test.mjs`, plus the existing Playwright e2e suite (`tests/e2e/docs-site/`, 11 tests: axe-core WCAG 2.2 AA, 4.5:1 contrast, layout, keyboard path, no console errors, 320px reflow, no stray motion); all 11 pass against the fixed code. `docs/audits/ui.md` and `docs/reviews/ui.md` are archived into ADR 118/119 and removed from the tree; `docs/plans/ui.md` was already deleted (nothing left open).
+All three verified: new unit tests in `scripts/docs-site/__tests__/_build.test.mjs`, plus the existing Playwright e2e suite (`tests/e2e/docs-site/`, 11 tests: axe-core WCAG 2.2 AA, 4.5:1 contrast, layout, keyboard path, no console errors, 320px reflow, no stray motion); all 11 pass against the fixed code. `docs/audits/ui.md` and `docs/reviews/ui.md` are archived into ADR 110/119 and removed from the tree; `docs/plans/ui.md` was already deleted (nothing left open).
 
 **Concurrent working-tree state committed (148 files, mostly pre-existing WIP, not authored this session) as 7 atomic commits:**
 
@@ -56,7 +56,7 @@ All three verified: new unit tests in `scripts/docs-site/__tests__/_build.test.m
 - `chore(toolchain)`: `@axe-core/playwright` + `playwright` wired for `tests/e2e/docs-site/`, eslint browser-global overrides for e2e specs and docs-site client scripts.
 - `test(docs-site)`: the Playwright e2e suite itself, plus a relaxed `docs-accuracy.test.mjs` regex matching the slimmer README, plus regenerated `census.json` fixture hashes.
 - `chore(site-dist)`: fresh `pnpm docs:build` output: 17 pages + 3 assets, down from the old tree because the new generator no longer publishes `docs/adr/`, `docs/handoff/`, `docs/audits/`, `docs/plans/`, `docs/reviews/`, or chapter-numbered slugs.
-- `docs(adr)`: the ui audit/review closeout (ADR 118, 119).
+- `docs(adr)`: the ui audit/review closeout (ADR 110, 119).
 
 ### Flagged, not fixed (out of this session's scope)
 

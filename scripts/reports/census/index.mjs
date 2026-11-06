@@ -8,7 +8,7 @@
  *
  * A census written by hand is a census that is wrong by the next commit. This
  * repository has already paid for that once - count claims in the docs that
- * disagreed with the runtime surface (ADR 049). So the inventory is derived,
+ * disagreed with the runtime surface (ADR 041). So the inventory is derived,
  * and `docs/09-skills.md` through `docs/16-resources.md` are outputs rather
  * than documents.
  *

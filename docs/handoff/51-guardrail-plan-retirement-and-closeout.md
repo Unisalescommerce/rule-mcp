@@ -15,9 +15,9 @@
 - Registered the OSS readiness, tool and skill surface, and publication cutover plans in the level-zero dependency graph.
 - Verified that the six area guardrail plans were not fully absorbed. AI already retained 8 rule IDs; the other areas lacked 68 IDs.
 - Assigned all 76 retained rule IDs to explicit skill-plan owners, added regression coverage, deleted the six superseded files, and removed their references.
-- Corrected catalog-orchestration citations from ADR 153 to ADR 175.
-- Recorded the retirement decision in `docs/adr/246-retire-area-guardrail-plans-after-assigning-every-retained-rule.md`.
-- Closed `docs/plans/_plan-of-plans-reference.md` into ADR 213 and `docs/handoff/plans/plan-of-plans-reference.md`.
+- Corrected catalog-orchestration citations from ADR 145 to ADR 166.
+- Recorded the retirement decision in `docs/adr/237-retire-area-guardrail-plans-after-assigning-every-retained-rule.md`.
+- Closed `docs/plans/_plan-of-plans-reference.md` into ADR 204 and `docs/handoff/plans/plan-of-plans-reference.md`.
 
 ## Commits since handoff 50
 
@@ -60,7 +60,7 @@
 ## Decisions and constraints
 
 - Do not restore the retired area guardrail plans. Change the ownership map and its regression test if a retained rule moves or is intentionally removed.
-- ADR 175, not ADR 153, is the catalog-orchestration decision.
+- ADR 166, not ADR 145, is the catalog-orchestration decision.
 - Run one ADR-writing session at a time because `docs/adr/ADR.md` and numbering are shared.
 - Keep dependencies exact. Use `pnpm` and `pnpx`.
 - Never push without explicit authorization.

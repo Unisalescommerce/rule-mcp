@@ -27,7 +27,7 @@ for a root that is not a checkout.
 ## Handing ADRs off a trunk
 
 Off the trunk, `rule_tool_process_adr` writes `docs/adr/_pending/<slug>.md` and
-refers to the decision as `ADR <slug>` (ADR 196). `rule-mcp handoff land` numbers
+refers to the decision as `ADR <slug>` (ADR 187). `rule-mcp handoff land` numbers
 them on the trunk, in the order they were added, and rewrites every reference;
 `handoff merge-index` is the merge driver that regenerates `ADR.md` and
 `HANDOFF.md` instead of merging them as text. `rule-mcp handoff doctor` reports
@@ -124,12 +124,12 @@ commit - the docs follow the code instead of being remembered.
   like, and that is the corpus the level table describes. Guard violations
   are 0 at every level on all four, which is the number that has to stay 0.
 
-  The rules are ported from the `rule_tool_compress` / `/rule-compress` (ADR 115)
+  The rules are ported from the `rule_tool_compress` / `/rule-compress` (ADR 107)
   skill and its `caveman-compress` companion: the vocabulary tables, the
   classification guards and `validate.py`'s structural validator. The LLM
   compression step is deliberately not ported - an LLM in the output path
   costs determinism, cacheability and the zero-dependency contract, and the
-  guard plus per-block rollback buys the same safety for free (ADR 073).
+  guard plus per-block rollback buys the same safety for free (ADR 065).
 
 ## Compression surfaces: everything the server emits to a model
 
@@ -148,12 +148,12 @@ why they are not compressed.
 | prompts/get bodies                                         | `src/server/_prompt-handlers.js` `GetPrompt`           | prose                                 | `caveman-prompt`           |
 | prompts/list descriptions                                  | `src/server/_prompt-handlers.js` `ListPrompts`         | prose                                 | `caveman-prompt-list`      |
 | tools/list descriptions                                    | `src/tools/router/_surface.js` `listTools()`           | prose                                 | none (memoized at startup) |
-| resources/list labels                                      | `src/resources/_listing.js`                            | prose (no-op on the terse set)        | none (ADR 077)             |
+| resources/list labels                                      | `src/resources/_listing.js`                            | prose (no-op on the terse set)        | none (ADR 069)             |
 | resume hook block (SessionStart / UserPromptSubmit)        | `src/core/session/resume/_context.js` `handoffBlock()` | prose                                 | `caveman-resume`           |
 | banners (self-update notice, resume announcement)          | `src/tools/router/_helpers.js` `withBanner()`          | prose                                 | `caveman-banner`           |
 | workflow reminder                                          | `src/core/enforcement/_reminder.js`                    | prose (rides on the tool-result pass) | `caveman`                  |
 | error envelopes                                            | `src/tools/router/call/_pipeline.js`                   | terse by construction, not compressed | -                          |
-| completions/complete                                       | `src/server/_completions.js`                           | fixed vocabulary, not prose (ADR 077) | -                          |
+| completions/complete                                       | `src/server/_completions.js`                           | fixed vocabulary, not prose (ADR 069) | -                          |
 | JSON payloads (application/json bodies, JSON tool content) | `_serve.js`, `_helpers.js`                             | data, never compressed                | -                          |
 
 By document category, the answer to "is it compressed before it reaches a
@@ -163,10 +163,10 @@ model?":
 | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
 | Markdown (handoffs, docs served via `rule://` text resources, the resume hook block) | compressed (tool result, resource read, `caveman-resume`)                                                                |
 | Skills (full body + summary resources, tool-embedded evidence)                       | compressed (resource read + tool-result pass)                                                                            |
-| Resources                                                                            | read: compressed; list labels: pass-through (no-op, ADR 077)                                                             |
+| Resources                                                                            | read: compressed; list labels: pass-through (no-op, ADR 069)                                                             |
 | Instructions (session/prompt directives, agent-instruction files)                    | directives already terse by authorship; anything emitted runs the pass                                                   |
-| Prompts                                                                              | get: compressed; list: descriptions compressed (ADR 077)                                                                 |
-| Tools                                                                                | results: compressed; list: descriptions compressed, schemas never (ADR 077)                                              |
+| Prompts                                                                              | get: compressed; list: descriptions compressed (ADR 069)                                                                 |
+| Tools                                                                                | results: compressed; list: descriptions compressed, schemas never (ADR 069)                                              |
 | Personas                                                                             | served content (plan outputs): compressed via the tool-result pass; `src/roles/*.md` source files stay untouched on disk |
 
 Opt-outs apply everywhere: `RULE_MCP_NO_CAVEMAN=1` and
@@ -179,7 +179,7 @@ runs it (plus `RULE_MCP_NO_RESUME_HANDON` for the resume block and
   on the entry import, 53 ms registering skills and 8 ms converting tool
   schemas; the second `tools/list` in a process is free. The compiled code
   cache is worth 2-6 %; the 168 ms came from what `--help` no longer loads
-  (ADR 074).
+  (ADR 066).
 
 ## The TokenSave adapter
 
@@ -234,7 +234,7 @@ Measured on 2026-09-15, `develop`:
 | Kind       | Count | Example              | Reach for it when                                                |
 | ---------- | ----- | -------------------- | ---------------------------------------------------------------- |
 | `router`   | 1     | `/rule`              | Routes a free-text request to the skill that answers it          |
-| `area`     | 11    | `/rule-area-ai`      | Area hub: free text routes to leaf skills/tools (ADR 117)        |
+| `area`     | 11    | `/rule-area-ai`      | Area hub: free text routes to leaf skills/tools (ADR 109)        |
 | `workflow` | 3     | `/rule-check`        | Runs a named workflow (e.g. /rule-check auto-detects guardrails) |
 | `session`  | 10    | `/rule-adr`          | Carries a session across a context boundary                      |
 | `persona`  | 19    | `/rule-persona-a11y` | Runs one review role at one operation, and writes its documents  |

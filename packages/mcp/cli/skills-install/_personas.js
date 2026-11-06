@@ -11,7 +11,7 @@
  * the tool list unchanged.
  *
  * One skill per role: the depth of the run is read from the request, not from
- * the skill name (ADR 120), so the 57 per-operation skills collapse to 19.
+ * the skill name (ADR 112), so the 57 per-operation skills collapse to 19.
  */
 
 import { mkdirSync, writeFileSync, rmSync, existsSync, readdirSync } from "node:fs";
@@ -53,7 +53,7 @@ const skillContent = (role) => {
 /**
  * Remove persona skill dirs that no longer name a role: the per-operation
  * `rule-persona-<role>-<operation>` dirs, and the older
- * `rule-mcp-{plan|audit|review}-*` names that predate them (ADR 120, ADR 116).
+ * `rule-mcp-{plan|audit|review}-*` names that predate them (ADR 112, ADR 108).
  *
  * @param {string} targetDir
  * @param {boolean} dryRun

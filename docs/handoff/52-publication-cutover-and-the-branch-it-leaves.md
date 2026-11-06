@@ -13,7 +13,7 @@
 - Closed Publication WS2: every trace of the retired sibling left the tree, with a regression test that reads the whole tree.
 - Closed Publication WS4: the full history scanned, 1403 commits, 23 findings in paths that no longer exist and 7 in tracked files, all example values the owner chose to keep.
 - Closed Publication WS5: one history rewrite that drops `docs/case-studies` and `coverage/tmp` and fixes one commit message, then `rel/v0.1.0` became `main` and the old branch was deleted.
-- Wrote ADR 214 for the topology, the removal, the invalidated hashes and the freeze.
+- Wrote ADR 205 for the topology, the removal, the invalidated hashes and the freeze.
 
 ## What the rewrite did
 
@@ -55,5 +55,5 @@ The owner chose to record these as debt rather than block the cutover. The first
 ### Resume Prompt
 
 ```prompt
-Resume work on rule-mcp-workspace on `main`, the only branch. Read `docs/handoff/52-publication-cutover-and-the-branch-it-leaves.md`, then run `rule_tool_handon` with closeout disabled: on this trunk the handoff tool numbers pending ADRs and closes numbering gaps without rewriting the ADR references inside `docs/plans`, which corrupts them. First take the lint debt: 193 errors, 88 of them `no-unused-vars`, recorded in `docs/plans/_publication-cutover.md`. Write the debt ADR before the sweep, keep commits `type(scope): subject`, and never rewrite history again: ADR 214 froze it. The credential scan blocks a push to main on seven example values the owner kept, so ask before changing them.
+Resume work on rule-mcp-workspace on `main`, the only branch. Read `docs/handoff/52-publication-cutover-and-the-branch-it-leaves.md`, then run `rule_tool_handon` with closeout disabled: on this trunk the handoff tool numbers pending ADRs and closes numbering gaps without rewriting the ADR references inside `docs/plans`, which corrupts them. First take the lint debt: 193 errors, 88 of them `no-unused-vars`, recorded in `docs/plans/_publication-cutover.md`. Write the debt ADR before the sweep, keep commits `type(scope): subject`, and never rewrite history again: ADR 205 froze it. The credential scan blocks a push to main on seven example values the owner kept, so ask before changing them.
 ```

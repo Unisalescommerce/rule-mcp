@@ -2,7 +2,7 @@
  * @module core/layers/sources
  *
  * Where a skill or a persona can come from, in the order they resolve
- * (ADR 089).
+ * (ADR 081).
  *
  * Three layers, read native first and user last, so the last one read wins:
  * the machine owner overrides the repository, and the repository overrides

@@ -1,7 +1,7 @@
 # pi-integration-and-debt
 
 - **Plan**: `docs/plans/_pi-integration-and-debt.md` (retired)
-- **ADR**: 251 (`251-close-out-plan-pi-integration-and-debt.md`)
+- **ADR**: 251 (`242-close-out-plan-pi-integration-and-debt.md`)
 
 ## Delivered
 

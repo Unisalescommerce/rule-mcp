@@ -1,7 +1,7 @@
 # installer-global-link-and-launcher-deploy
 
 - **Plan**: `docs/plans/_installer-global-link-and-launcher-deploy.md` (retired)
-- **ADR**: 216 (`216-close-out-plan-installer-global-link-and-launcher-deploy.md`)
+- **ADR**: 216 (`207-close-out-plan-installer-global-link-and-launcher-deploy.md`)
 
 ## Delivered
 

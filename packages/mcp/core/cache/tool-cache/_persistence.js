@@ -23,7 +23,7 @@ function encode(entries) {
  * entry shapes are dropped rather than migrated: one written before entries
  * carried their dependencies (the result sat at the top level), and one whose
  * core carries a request id, which can never match a recompute and would be
- * reported as drift on every verify (ADR 059).
+ * reported as drift on every verify (ADR 051).
  *
  * @param {object} parsed
  * @returns {Array<[string, any]>}

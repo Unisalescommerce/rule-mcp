@@ -88,7 +88,7 @@ Environment variables set in your shell profile override the persisted config.
 
 ## Minimal tool surface
 
-Set `RULE_MCP_MINIMAL_TOOLS=1` (off by default) to expose only the fixed dispatcher/action allowlist (ADR 115):
+Set `RULE_MCP_MINIMAL_TOOLS=1` (off by default) to expose only the fixed dispatcher/action allowlist (ADR 107):
 `rule_tool`, `rule_tool_meta`, `rule_tool_update`, `rule_tool_init`, `rule_tool_gateway`, `rule_tool_apply`, `rule_tool_search`, `rule_tool_check`, `rule_tool_compress`, `rule_tool_detect`, `rule_tool_handoff`, `rule_tool_handon`, `rule_tool_stats`, `rule_tool_usage`.
 
 ## Telemetry
@@ -120,7 +120,7 @@ on disk in a parseable form can declare it with `rule_tool_usage`; a transcript
 always wins over a declaration, and a declaration is labeled as one.
 
 Nothing is written into the project: a recording is filed per project under the
-home directory, so a checkout has nothing to ignore (ADR 082).
+home directory, so a checkout has nothing to ignore (ADR 074).
 `rule-mcp init` sets that up, and installs git hooks so a clone or a
 checkout re-asserts the rule.
 

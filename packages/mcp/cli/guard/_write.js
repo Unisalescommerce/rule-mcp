@@ -4,7 +4,7 @@
  * What a file that just landed has to say for itself: the language it is
  * written in, and the guardrails of the skill that owns it.
  *
- * It reports to the model and it decides nothing (ADR 129). A file gate that
+ * It reports to the model and it decides nothing (ADR 121). A file gate that
  * stopped to ask would put a person in the loop of a find-and-replace, once per
  * file, in every project on the machine.
  */

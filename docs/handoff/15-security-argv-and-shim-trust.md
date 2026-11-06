@@ -15,7 +15,7 @@ worked from the top: six of its eight steps are done.
 
 ## Work Completed
 
-### 1. No corepack, no engines (ADR 109)
+### 1. No corepack, no engines (ADR 101)
 
 - `skills/rule-toolchain-pnpm/guardrails/_no-engines.js` (new): `pkg-no-engines`
   forbids `engines` in a `package.json`, next to `pkg-no-corepack`. Both are in

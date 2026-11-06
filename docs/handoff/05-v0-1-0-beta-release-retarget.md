@@ -60,14 +60,14 @@ not in `.gitignore`; deliberately not staged).
 | 058         | Command surface restructure: /rule router, rule-area-*, compression implicit, rule-process-tdd                             |
 | 057         | Review personas split into per-operation commands (plan/audit/review)                                                      |
 | 056         | Gateway as single entrypoint with server-side receipts                                                                     |
-| 049         | v1.0.0 release + docs-accuracy guard (NOTE: release retargeted to v0.1.0-beta this session; ADR 049 predates the retarget) |
+| 049         | v1.0.0 release + docs-accuracy guard (NOTE: release retargeted to v0.1.0-beta this session; ADR 041 predates the retarget) |
 | 048         | rule-mcp-architect splits into standalone web-app repo                                                                     |
 | 047         | Installer self-heals global shim, surfaces failures                                                                        |
 
 Proposed (not accepted): 039 native Claude skills integration, 038 skill
 "see also" sections, 037 lossless idempotent installer, 036 sandbox timeout
 with AbortController, 035 SSE server with bearer auth. Superseded: 040
-(VS Code extension fix, extension dropped per ADR 059).
+(VS Code extension fix, extension dropped per ADR 051).
 
 ### Recent commits (context at handoff time)
 
@@ -97,7 +97,7 @@ d8788ed feat(census): eight generated inventories, three fenced blocks, one form
 
 - `site-dist/` build output is untracked, decide whether to add it to
   `.gitignore` or leave as-is (no action taken this session).
-- ADR 049 still records the v1.0.0 release; consider a follow-up ADR or
+- ADR 041 still records the v1.0.0 release; consider a follow-up ADR or
   amendment recording the v0.1.0-beta retarget rationale.
 - The `v0.1.0-beta` tag itself has not been cut yet (`git tag v0.1.0-beta`);
   tagging triggers the GitHub Release workflow. Tags were left uncut

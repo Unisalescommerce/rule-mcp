@@ -5,7 +5,7 @@ import { listPrompts } from "@mcp/prompts/index.js";
 /** The router command, pinned first in every agent's command list. */
 export const ROUTER_COMMAND = "rule";
 
-/** General auto-detecting check workflow (ADR 106; kept by ADR 116). */
+/** General auto-detecting check workflow (ADR 098; kept by ADR 108). */
 export const CHECK_COMMAND = "rule-check";
 
 /** Deterministic guardrail fixer for the changed files. */
@@ -16,7 +16,7 @@ export const FIX_COMMAND = "rule-fix";
  * `/rule-check`, sorted locale-alphabetically. This is the single ordering used
  * everywhere commands are enumerated (installers, docs, help output).
  *
- * ADR 116: no `/rule-area-*-check` siblings; area check intent lives on the
+ * ADR 108: no `/rule-area-*-check` siblings; area check intent lives on the
  * parent via keyword intercept. `/rule-check` remains.
  *
  * @returns {string[]}

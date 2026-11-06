@@ -5,7 +5,7 @@
  * is written: the transport, and the depth.
  *
  * Split out of `items.js`, which is past the 150-line cap and may only shrink
- * (ADR 061, ADR 186). The depth screen owns a vocabulary of its own - the rungs
+ * (ADR 053, ADR 177). The depth screen owns a vocabulary of its own - the rungs
  * in words - so it is a concern, not a slice of one.
  */
 

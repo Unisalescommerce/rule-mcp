@@ -3,7 +3,7 @@
 Status: `planned`
 Notes:`planned`
 
-Notes: new skill, created by `rule-platform-desktop` phase 4 (ADR 152's ghost plugins). Index row `#86`, planned.
+Notes: new skill, created by `rule-platform-desktop` phase 4 (ADR 144's ghost plugins). Index row `#86`, planned.
 
 Area: toolchain, leaf. It takes the Electron depth that today lives inside
 `rule-platform-desktop` (808 lines, the largest skill in the catalog) and gives

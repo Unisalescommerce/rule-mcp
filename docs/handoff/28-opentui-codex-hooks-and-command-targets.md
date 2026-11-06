@@ -7,10 +7,10 @@
 
 ## Done
 
-1. **OpenTUI installer** — Reworked setup wizard on `@opentui/core` (exact `0.6.8`). One profile set; Surface is the only tier picker; slash-command selection follows Surface (ADR 178). Old Ink/step UI removed.
-2. **Command targets** — Codex → `~/.codex/prompts/*.md` (`/prompts:<name>`); Copilot CLI → `~/.copilot/skills/<name>/SKILL.md`. Nested skill sync create/remove. Gaps for codex/copilot removed (ADR 179).
+1. **OpenTUI installer** — Reworked setup wizard on `@opentui/core` (exact `0.6.8`). One profile set; Surface is the only tier picker; slash-command selection follows Surface (ADR 169). Old Ink/step UI removed.
+2. **Command targets** — Codex → `~/.codex/prompts/*.md` (`/prompts:<name>`); Copilot CLI → `~/.copilot/skills/<name>/SKILL.md`. Nested skill sync create/remove. Gaps for codex/copilot removed (ADR 170).
 3. **Codex hook titles** — Every Codex handler carries `statusMessage` so `/hooks` no longer shows "Unnamed hook". Commands tagged `env RULE_MCP_HOOK_HOST=codex`.
-4. **Codex PreToolUse compatibility** — Codex rejects bare `permissionDecision:allow` and `:ask`. Guard now emits silent `{}` for allow; on Codex, ask → `decision:block` with reason (ADR 180).
+4. **Codex PreToolUse compatibility** — Codex rejects bare `permissionDecision:allow` and `:ask`. Guard now emits silent `{}` for allow; on Codex, ask → `decision:block` with reason (ADR 171).
 
 ## Commits this session
 

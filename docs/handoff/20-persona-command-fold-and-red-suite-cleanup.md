@@ -12,7 +12,7 @@
 
 ### Shipped this session
 
-**One persona command per role (ADR 120).** The persona surface generated one prompt, one slash command and one skill per role and per operation: 57 names on each surface. It is now one `/rule-persona-<role>`, and the depth is read from the request by `core/review/roles/_operation-intent` (whole tokens, English and Italian, plan outranks review, default audit). The operations stay cumulative, so `review` runs the audit and `plan` runs all three, without growing the `rule_tool_plan` contract. Every surface reads the same intent: the prompt resolver decides server-side from the topic, the command body states the rule over `$ARGUMENTS`, and the generated persona skill embeds the same keyword lists. The old names are deleted, not aliased: `agent-commands --sync` purges stale persona files in every target directory, and `skills install` purges the old skill directories.
+**One persona command per role (ADR 112).** The persona surface generated one prompt, one slash command and one skill per role and per operation: 57 names on each surface. It is now one `/rule-persona-<role>`, and the depth is read from the request by `core/review/roles/_operation-intent` (whole tokens, English and Italian, plan outranks review, default audit). The operations stay cumulative, so `review` runs the audit and `plan` runs all three, without growing the `rule_tool_plan` contract. Every surface reads the same intent: the prompt resolver decides server-side from the topic, the command body states the rule over `$ARGUMENTS`, and the generated persona skill embeds the same keyword lists. The old names are deleted, not aliased: `agent-commands --sync` purges stale persona files in every target directory, and `skills install` purges the old skill directories.
 
 Counts: prompts 75 -> 37, slash commands 77 -> 39, persona prompts and skills 57 -> 19, surface map 163 -> 125 rows.
 
@@ -34,7 +34,7 @@ Full log: `docs/adr/ADR.md` (120 entries).
 ### Recent Commits
 
 ```
-80266874 docs(personas): regenerate the census, README counts and ADR 120
+80266874 docs(personas): regenerate the census, README counts and ADR 112
 fcd87382 fix(repo): align the stale tests, pins and oversized modules with the live surface
 93ff5cb2 feat(commands): fold the per-operation persona commands into one per role
 17090320 perf(self-update): yield the BM25 build, persist the throttle window
@@ -59,7 +59,7 @@ Every commit is `type(scope): subject`; the commit-msg hook rejects a scope-less
 
 Branch: `main` (16 commits ahead of origin/main; never pushed).
 Commit range covered: `17090320..80266874`.
-Shipped this session: the persona fold (ADR 120, 57 commands to 19 with the depth read from the request) and the cleanup of 13 pre-existing red tests, pins and oversized modules. `pnpm test:all` is green.
+Shipped this session: the persona fold (ADR 112, 57 commands to 19 with the depth read from the request) and the cleanup of 13 pre-existing red tests, pins and oversized modules. `pnpm test:all` is green.
 
 First step: run the installer sync so the purge of the old persona commands and skills actually happens on this machine (`rule-mcp agent-commands --sync` and `rule-mcp skills install --all`), then start backlog Step 4 (ARCH-10): a `Transport` interface and a `ToolPolicy` type.
 ```

@@ -38,7 +38,7 @@ eleven lines, and three See-also links.
 
 | Fact                   | State                                                                                                                    |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Children after ADR 152 | 7: angular, react, solidjs, svelte, template-engine, vue, workers                                                        |
+| Children after ADR 144 | 7: angular, react, solidjs, svelte, template-engine, vue, workers                                                        |
 | Table rows             | 10: the six UI frameworks, workers, and the four meta-frameworks                                                         |
 | Missing child          | **`rule-frontend-template-engine`**, the last entry in `ROUTER_GAPS`                                                     |
 | Dispatcher row         | present                                                                                                                  |
@@ -80,7 +80,7 @@ instead of copying six lines each.
 | `router-tool-name`            | A tool name the registry does not know         | B    | clean                                                           |
 | `router-child-listed`         | A skill under the area with no row             | B    | **red**: `rule-frontend-template-engine`                        |
 | `router-quick-selection`      | A row the Quick Selection cannot reach         | B    | **red**: template-engine, and the meta rows are reachable twice |
-| `router-no-stale-name`        | A reference to a skill that no longer exists   | B    | clean after ADR 152                                             |
+| `router-no-stale-name`        | A reference to a skill that no longer exists   | B    | clean after ADR 144                                             |
 | `router-tag-single-owner`     | A subject tag claimed by the router and a leaf | B    | **red**: six tags                                               |
 | `frontend-no-cross-area-rows` | A row for a skill another area owns            | B    | **red**: four meta rows                                         |
 
@@ -128,7 +128,7 @@ instead of copying six lines each.
 
 ## Retained area guardrail backlog
 
-ADR 140 proposed this rule set before ADR 175 moved area work into skill plans.
+ADR 132 proposed this rule set before ADR 166 moved area work into skill plans.
 This plan owns: `xss-sink-sanitized`, `fe-list-key`, `fe-effect-cleanup`, `ce-valid`.
 
 The fixtures-first, implementation, and verification phases above include these

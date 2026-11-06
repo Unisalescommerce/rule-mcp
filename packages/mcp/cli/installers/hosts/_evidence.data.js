@@ -66,9 +66,9 @@ export const HOST_EVIDENCE = [
     note: "Agent Skills (`$rule-init`) replaced the custom slash prompts upstream; a deterministic run needs the external dispatcher or a bundled script",
     sources: ["https://developers.openai.com/codex/skills", "https://developers.openai.com/codex/cli/slash-commands"],
     installer: true,
-    conflict: "ADR 179 writes `~/.codex/prompts/*.md` as a command target; the study records that upstream moved to Skills",
+    conflict: "ADR 170 writes `~/.codex/prompts/*.md` as a command target; the study records that upstream moved to Skills",
     resolution:
-      "Resolved 2026-10-25: the primary target becomes `~/.agents/skills/<name>/SKILL.md`, the user scope the Skills documentation lists, and `~/.codex/prompts/*.md` stays as a documented fallback that still loads as `/prompts:<name>`. ADR 179 amended; the target change is Phase 2 work.",
+      "Resolved 2026-10-25: the primary target becomes `~/.agents/skills/<name>/SKILL.md`, the user scope the Skills documentation lists, and `~/.codex/prompts/*.md` stays as a documented fallback that still loads as `/prompts:<name>`. ADR 170 amended; the target change is Phase 2 work.",
   },
   {
     id: "copilot",

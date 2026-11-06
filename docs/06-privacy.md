@@ -2,8 +2,8 @@
 
 - **Applies to**: rule-mcp, every transport (stdio, SSE, HTTP, daemon, Docker)
 - **Last reviewed**: 2026-10-31
-- **Related**: ADR 019 (persistent local bearer token), ADR 034 (SSE bearer auth),
-  ADR 040 (per-invocation self-update with throttle, fire-and-forget), ADR 051
+- **Related**: ADR 011 (persistent local bearer token), ADR 026 (SSE bearer auth),
+  ADR 032 (per-invocation self-update with throttle, fire-and-forget), ADR 043
   (token-efficiency pipeline), `docs/02-architecture.md`,
   `docs/08-engineering-guides.md`
 - **Enforced by**: `tests/core/self-guardrails.test.mjs`, `tests/core/flight-redact.test.mjs`,
@@ -40,7 +40,7 @@ project (`<slug>` below).
 | Failed-auth audit lines                                                             | stderr of the server process                        | wherever your process manager keeps stderr     | n/a - security logging                      |
 
 A recording never enters a repository: it is written under the runtime home,
-filed per project (ADR 082), so there is nothing in a checkout to ignore and
+filed per project (ADR 074), so there is nothing in a checkout to ignore and
 nothing to commit by accident. The raw log also has a hard size cap
 (`MAX_EVENTS_BYTES`, 8 MiB) beneath the retention window, so a machine that
 never rolls up does not fill up.

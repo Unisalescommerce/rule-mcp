@@ -11,7 +11,7 @@ registry, so a stale copy fails the build instead of misleading a reader.
 
 22 reusable prompts, plus 19 generated from the persona registry.
 Claude Code installs clean `/rule-mcp-*` commands instead and suppresses these
-(ADR 029), so the two names are deliberately the same.
+(ADR 021), so the two names are deliberately the same.
 
 ### Reusable
 
@@ -42,7 +42,7 @@ Claude Code installs clean `/rule-mcp-*` commands instead and suppresses these
 
 ### Persona, one per role
 
-One command per role (ADR 120). The depth of the run is read from the request: naming a
+One command per role (ADR 112). The depth of the run is read from the request: naming a
 review runs the audit and the review, naming a plan runs the audit, the review and the plan,
 and anything else runs the audit alone. Each takes an optional free-text `topic` naming the
 focus for the run.

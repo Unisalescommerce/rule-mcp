@@ -37,7 +37,7 @@
 | 095 | accepted   | Close out the install and uninstall rework plan                   | docs, closeout, plan                       | Fold the record into this ADR and the session handoff, then delete the source file. The full text...           |
 | 094 | accepted   | Rename the compression subsystem and apply it to every mo...      | compression, tokens, rename                | Rename the code, comments and configuration to neutral compression names: `_caveman*.js` becomes ...           |
 | 093 | accepted   | Add an Open Source Steward persona for governance, contri...      | personas, open-source, governance          | Add `personas/oss.md` as an active persona named `Open Source Steward` with id `oss`. Its skills ...           |
-| 092 | accepted   | Surface selection amends the install stack freeze with an...      | install, wizard, architecture              | Amend ADR 081 narrowly: the installer writes one grammar string (RULE_MCP_SURFACE) and the ...                 |
+| 092 | accepted   | Surface selection amends the install stack freeze with an...      | install, wizard, architecture              | Amend ADR 073 narrowly: the installer writes one grammar string (RULE_MCP_SURFACE) and the ...                 |
 | 091 | accepted   | Install/uninstall rework keeps current stack, steps and c...      | install, wizard, architecture              | The install/uninstall rework changes wizard steps and contents only (order, copy, offered choices...           |
 | 090 | accepted   | The setup wizard is the installer, and it asks which comm...      | installer, cli, wizard                     | The wizard is the installer. `src/cli/setup/` holds the whole flow - preflight, agents, mode, opt...           |
 | 089 | accepted   | Skills own their guardrails, and three layers resolve bot...      | architecture, skills, guardrails           | A skill owns the rules that judge its subject. Guardrails move into skills/<name>/guardrails/*.js...           |
@@ -133,14 +133,14 @@
 ### Recent Commits
 
 ```
-8fa75c3e docs(adr): accept ADR 114 and 115 (28 seconds ago)
+8fa75c3e docs(adr): accept ADR 106 and 115 (28 seconds ago)
 e65cc04d feat(tools): map tools, slash commands, and skills (35 seconds ago)
 f33bedfb feat(directive): inject flight guidance on every prompt (50 seconds ago)
 f7cc269c feat(commands): rename slash surface under process and persona namespaces (2 hours ago)
 f805d2da chore(handoff): add session handoff 16-arch-7.1-shipped-god-file-splits (22 hours ago)
 a5fbcce8 docs(architect): mark ARCH-7.1 complete (22 hours ago)
 d25914eb refactor(skills): split shipped god files (22 hours ago)
-b95bd543 docs(census): refresh the product-architecture digest for ADR 112 (25 hours ago)
+b95bd543 docs(census): refresh the product-architecture digest for ADR 104 (25 hours ago)
 2a0fab24 test(docs): hold the shipped skill trees to the 150-line cap (25 hours ago)
 8f9a0cd1 test(skills): run the asset trees' node tests in the suite (25 hours ago)
 b3514d37 docs(architect): record ARCH-6 as built (26 hours ago)
@@ -152,12 +152,12 @@ efc06d1a docs(architect): record ARCH-5 5.1
 
 **Roadmaps:**
 
-- `docs/adr/054-split-review-personas-into-per-operation-commands-plan-audit-review.md` (2683B, last modified: 2026-09-22)
-- `docs/adr/059-persona-plans-are-checklists-with-marks-that-survive-the-sync.md` (2073B, last modified: 2026-09-15)
-- `docs/adr/060-plans-carry-nested-sub-steps-and-an-exhaustiveness-mandate.md` (2089B, last modified: 2026-09-15)
-- `docs/adr/087-session-close-archives-completed-audits-reviews-and-plans.md` (2210B, last modified: 2026-09-17)
-- `docs/adr/095-close-out-the-install-and-uninstall-rework-plan.md` (838B, last modified: 2026-09-15)
-- `docs/adr/099-close-out-plan-develop-consolidation.md` (2066B, last modified: 2026-09-15)
+- `docs/adr/046-split-review-personas-into-per-operation-commands-plan-audit-review.md` (2683B, last modified: 2026-09-22)
+- `docs/adr/051-persona-plans-are-checklists-with-marks-that-survive-the-sync.md` (2073B, last modified: 2026-09-15)
+- `docs/adr/052-plans-carry-nested-sub-steps-and-an-exhaustiveness-mandate.md` (2089B, last modified: 2026-09-15)
+- `docs/adr/079-session-close-archives-completed-audits-reviews-and-plans.md` (2210B, last modified: 2026-09-17)
+- `docs/adr/087-close-out-the-install-and-uninstall-rework-plan.md` (838B, last modified: 2026-09-15)
+- `docs/adr/091-close-out-plan-develop-consolidation.md` (2066B, last modified: 2026-09-15)
 - `docs/handoff/01-performance-plan-execution.md` (8804B, last modified: 2026-09-15)
 - `docs/handoff/02-oss-audit-and-remediation-plan.md` (8565B, last modified: 2026-09-15)
 - `docs/handoff/03-roadmap-execution-oss-phases-1-5.md` (8279B, last modified: 2026-09-15)
@@ -187,12 +187,12 @@ The ADR log and the context snapshot capture what has been decided; do not re-as
 Every commit is `type(scope): subject`; the commit-msg hook rejects a scope-less message.
 
 Branch: `main` (ahead of origin/main; not pushed).
-Commit range covered: `f805d2da..8fa75c3e` (includes prior rename `f7cc269c` plus ADR 114/115 work).
+Commit range covered: `f805d2da..8fa75c3e` (includes prior rename `f7cc269c` plus ADR 106/115 work).
 Live surface: 106 MCP tools, 244 agent slash commands, 153 MCP prompts.
 
-First step: decide whether to push `main` and/or cut `0.2.0-rc` (`pnpm changelog` / tag); otherwise continue any remaining docs/census drift against ADR 115.
+First step: decide whether to push `main` and/or cut `0.2.0-rc` (`pnpm changelog` / tag); otherwise continue any remaining docs/census drift against ADR 107.
 ```
 
 ---
 
-_Handoff: full, compress, ADR 114+115 session. Local only; never pushed._
+_Handoff: full, compress, ADR 106+115 session. Local only; never pushed._

@@ -3,7 +3,7 @@
  *
  * The one-shot task prompts: handon, init, update - plus the session prompts
  * (compress, git, stats, usage) delegated to `_task-prompts-session`. Flight is
- * not a prompt (ADR 114).
+ * not a prompt (ADR 106).
  */
 
 import { exportTaskPrompt } from "./_task-prompts-export.js";

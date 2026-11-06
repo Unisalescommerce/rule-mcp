@@ -74,7 +74,7 @@ export async function runGuard(kind = "bash", io = {}) {
 
     write(JSON.stringify(inject(kind, payload)));
     // A prompt is where one task ends and the next begins, so the structural
-    // confirmation the last one gave stops covering this one (ADR 129).
+    // confirmation the last one gave stops covering this one (ADR 121).
     startTask(payload?.cwd);
 
     return;

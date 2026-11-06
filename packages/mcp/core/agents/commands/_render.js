@@ -51,7 +51,7 @@ export function renderAgentCommand(command, format) {
  * The rendered file is read by the agent on every session, so its body runs
  * through the compression pass before it reaches disk (measured ~6% on the
  * shipped bodies; frontmatter and placeholders are code-shaped and pass
- * untouched; the guard guarantees structure - ADR 078).
+ * untouched; the guard guarantees structure - ADR 070).
  *
  * @param {"args"|"workflow"|"gemini"} format
  * @returns {Array<{ name: string, filename: string, content: string }>}

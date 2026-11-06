@@ -86,7 +86,7 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 
 ## Retained area guardrail backlog
 
-ADR 139 proposed this rule set before ADR 175 moved area work into skill plans.
+ADR 131 proposed this rule set before ADR 166 moved area work into skill plans.
 This plan owns: `sqlite-wal`.
 
 The fixtures-first, implementation, and verification phases above include these

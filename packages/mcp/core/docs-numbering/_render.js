@@ -75,7 +75,7 @@ export function renderRenumberPlan(plan, options = {}) {
 
   if (gapLines.length > 0) {
     // A hole costs nothing. Closing it moves every later document, so it is a
-    // separate command and never part of a sweep (ADR 219).
+    // separate command and never part of a sweep (ADR 210).
     lines.push(...gapLines, "", "A hole is not a defect. `rule-mcp handoff compact --fix` closes them and rewrites the citations.", "");
   }
 

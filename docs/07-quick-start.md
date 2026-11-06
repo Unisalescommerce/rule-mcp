@@ -111,7 +111,7 @@ pnpm report:decision-cache
 ```
 
 The report recommends a floor only with zero false replays and enough labeled
-predictions. The measured floor is 0.70 (ADR 167). Enable the replay only after
+predictions. The measured floor is 0.70 (ADR 158). Enable the replay only after
 the report confirms it:
 
 ```bash

@@ -38,9 +38,9 @@ postinstall hook tested with fresh `pnpm i`. CLI registers but needs TTY-safe im
 
 ## ADR Reference
 
-- ADR 090: setup wizard is the installer
-- ADR 033: registry-driven clean slash commands for every agent and IDE
-- ADR 028: clean /rule-mcp-* commands via user commands and prompt suppression
+- ADR 082: setup wizard is the installer
+- ADR 025: registry-driven clean slash commands for every agent and IDE
+- ADR 020: clean /rule-mcp-* commands via user commands and prompt suppression
 
 ## References
 

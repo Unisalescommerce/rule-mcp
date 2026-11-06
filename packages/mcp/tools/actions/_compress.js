@@ -1,7 +1,7 @@
 /**
  * @module tools/compress
  *
- * `rule_tool_compress` (ADR 115): the sole compression engine. Covers
+ * `rule_tool_compress` (ADR 107): the sole compression engine. Covers
  * postprocessing of model prose (answers, commits, reviews) and is the place
  * callers run the same deterministic passes the server already applies to tool
  * results - filler strip, fingerprint/ASCII, structural guard. Prompt/context
@@ -60,7 +60,7 @@ export function registerCompressTool() {
     name: "rule_tool_compress",
     entry: "action",
     description:
-      "Sole compression engine (ADR 115): preprocess enriched prompts/contexts and postprocess model prose. " +
+      "Sole compression engine (ADR 107): preprocess enriched prompts/contexts and postprocess model prose. " +
       "Strip filler and leading articles, replace typographic characters with ASCII, convert British spelling " +
       "to American. Code, inline spans, URLs and JSON are never touched. Prefer /rule-compress.",
     zodSchema: CompressSchema,

@@ -101,7 +101,7 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 
 ## Retained area guardrail backlog
 
-ADR 137 proposed this rule set before ADR 175 moved area work into skill plans.
+ADR 129 proposed this rule set before ADR 166 moved area work into skill plans.
 This plan owns: `outbound-timeout`, `bounded-concurrency`, `no-sync-blocking`, `graceful-shutdown`.
 
 The fixtures-first, implementation, and verification phases above include these
@@ -129,4 +129,4 @@ Plan default: `T3-rules` - `kimi-k2.7-code`. Fallback: `step-5-preview` for auth
 - The two `create-*.ts` scripts are the only TypeScript in the catalog outside
   `src/`. They are also the only scaffold helpers that generate agents, which
   makes them the closest thing to the retired `rule-platform-agent` content that
-  survived (ADR 151).
+  survived (ADR 143).

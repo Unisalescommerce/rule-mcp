@@ -2,7 +2,7 @@
  * @module cli/guard/_verdict
  *
  * The answers a guard can give, and the coercion that keeps the file guard out
- * of the permission system (ADR 129).
+ * of the permission system (ADR 121).
  */
 
 /**
@@ -39,7 +39,7 @@ export const advise = (context) => ({
 
 /**
  * Strip every way a hook answer can stop a tool call, so a file guard can only
- * ever report (ADR 129). An `ask` or a `deny` becomes an `allow`; the fields a
+ * ever report (ADR 121). An `ask` or a `deny` becomes an `allow`; the fields a
  * host reads to block the turn are dropped.
  *
  * @param {object} [answer] - what the write path produced

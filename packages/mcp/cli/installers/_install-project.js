@@ -6,7 +6,7 @@
  * Local installs carry the full launcher (and ADR policy env when set).
  *
  * Callers (setup `--scope project`, refresh, uninstall) pass a project root and
- * collect `written` for the manifest and `projects.json` (ADR 193).
+ * collect `written` for the manifest and `projects.json` (ADR 184).
  */
 
 import { join } from "node:path";

@@ -54,46 +54,10 @@ export function registerHandoffCommand(program) {
       }
 
       if (subcommand === "compact") {
-        // ADR 219: closing a hole moves every document after it, so it never
-        // runs inside a handoff or a closeout. It is this command, it asks for
-        // --fix, and it refuses to finish while a mention of a moved number is
-        // still there in a form the rewrite does not own.
-        const { applyRenumber, planRenumber } = await import("../core/docs-numbering/index.js");
-        const projectDir = options.dir;
-        const onProgress = ({ message }) => process.stdout.write(`  ${message}\n`);
-        const plan = planRenumber({ projectDir, compact: true, onProgress });
+        const { runHandoffCompact } = await import("./commands/_handoff-compact.js");
+        const { exitCode } = await runHandoffCompact({ projectDir: options.dir, fix: Boolean(options.fix) });
 
-        if (plan.gaps.length === 0) {
-          process.stdout.write("No holes to close: the sequence is already dense.\n");
-
-          return;
-        }
-
-        const holes = plan.gaps.map((gap) => gap.number).join(", ");
-
-        process.stdout.write(`${plan.gaps.length} hole(s): ${holes}. ${plan.renames.length} document(s) would move.\n`);
-
-        if (!options.fix) {
-          process.stdout.write("Dry run. Add --fix to close the holes and rewrite the citations.\n");
-          process.exitCode = 1;
-
-          return;
-        }
-
-        const applied = applyRenumber(plan, { projectDir, onProgress });
-        const { replacements, unresolved } = applied.citations ?? { replacements: 0, unresolved: [] };
-
-        process.stdout.write(`Renumbered ${applied.renamed} document(s); ${replacements} citation(s) in ${applied.referencesUpdated} file(s).\n`);
-
-        if (unresolved.length > 0) {
-          process.stdout.write(`${unresolved.length} mention(s) of a moved number are left; fix them by hand:\n`);
-
-          for (const entry of unresolved) {
-            process.stdout.write(`  ${entry.file} names ${entry.number}\n`);
-          }
-
-          process.exitCode = 1;
-        }
+        process.exitCode = exitCode;
 
         return;
       }

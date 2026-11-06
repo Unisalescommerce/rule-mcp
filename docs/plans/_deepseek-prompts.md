@@ -65,22 +65,22 @@ Rules that decide this order:
 
 ```
 OSS-WS1 - write four ADRs with rule_tool_process_adr. No code change.
-A) Narrow ADR 169 (rename the server to RuleMCP). Decision: the GitHub repo
+A) Narrow ADR 160 (rename the server to RuleMCP). Decision: the GitHub repo
    stays pixu1980/rule-mcp. The registry name in server.json becomes
    io.github.pixu1980/rule-mcp. "RuleMCP" is a display name only. No file may
    name another repo URL as a current fact. Reason: pixu1980/rule returns 404
    (curl -I), the real remote is git@github.com:pixu1980/rule-mcp.git.
-B) Replace the default of ADR 131. The default update mode becomes notify.
+B) Replace the default of ADR 123. The default update mode becomes notify.
    Automatic upgrade (checkout main, pull, reinstall, restart) is opt-in with
    RULE_MCP_AUTO_UPDATE=upgrade.
 C) Turn off unicorn/no-asterisk-prefix-in-documentation-comments. Cite the
    measurement recorded in docs/plans/_plan-of-plans-reference.md (2013 of
    2297 lint problems at that time). The rule rejects the JSDoc style the
    whole repo uses.
-D) Replace the "no npm placeholder" part of ADR 084. The project publishes a
+D) Replace the "no npm placeholder" part of ADR 076. The project publishes a
    placeholder package `rule-mcp` to reserve the npm name (npm view returns
    404 today; nobody owns it). The package does nothing. Keep the trademark
-   posture of ADR 084 unchanged.
+   posture of ADR 076 unchanged.
 files_to_change: new ADR files only (four of them).
 out_of_scope: any code. OSS-WS2, OSS-WS4, OSS-WS5 do the code.
 ```
@@ -153,7 +153,7 @@ Steps, in order. Stop and report if one fails:
    delete: docs/plans/skills/ui/_rule-mcp-ui-design-system.md (remove the link
    into docs/case-studies); remove "case-studies" from the skip lists in
    scripts/__tests__/docs/docs-scan.mjs and
-   scripts/__tests__/docs/link-integrity.test.mjs. Leave ADR 123 and
+   scripts/__tests__/docs/link-integrity.test.mjs. Leave ADR 115 and
    handoff 22 as history. monorepo-layout.test.mjs needs no change. Run
    `pnpm test:all`.
 3. git tag backup/pre-case-studies-removal (same pattern as backup/pre-spdx-removal).
@@ -164,7 +164,7 @@ Steps, in order. Stop and report if one fails:
 5. Force-push every rewritten branch and tag. Do NOT push backup/* refs.
    The repo is private with one remote, so this is the lowest-risk moment.
 6. Write one ADR (rule_tool_process_adr): case-study apps and runner live in
-   the talk repo (supersedes ADR 123); hashes cited in ADRs and handoffs
+   the talk repo (supersedes ADR 115); hashes cited in ADRs and handoffs
    before this step no longer resolve; that is accepted.
 7. Tell the owner to run `rm -rf docs/case-studies` by hand (untracked
    node_modules, dist, and a .env in bookmarks-manager-sonnet5/backend;
@@ -214,8 +214,7 @@ T1 Settle 8 duplicate ADR pairs in 001-020: 001/007, 002/013, 003/014,
    number). settleDuplicateAdrs
    (packages/mcp/core/docs/adr-pending/_settle.js) only catches same-number
    collisions. Keep the older file; move the newer to _pending/ with a note,
-   the same shape _settle.js produces. Run before SURF-WS7 (it settles ADR
-   136/155 and also regenerates ADR.md).
+   the same shape _settle.js produces. Run before SURF-WS7 (it settles ADR 128/155 and also regenerates ADR.md).
 T2 eslint.config.mjs: add "unicorn/no-asterisk-prefix-in-documentation-comments":
    "off" next to the other unicorn overrides, with a one-line reason. Run
    `pnpm lint` and report the remaining count (about 280 expected, other
@@ -231,7 +230,7 @@ T4 Bump c8 and eslint to versions that clear the 2 moderate pnpm audit
 T5 Delete the six remote feat/* branches (decision-models, export,
    guardrails, guardrails-aligned, guardrails-evolution, nyx). The owner
    decided. Ancestry checks fail because history was rewritten, so check the
-   tree: `git diff --stat rel/v0.1.0 origin/feat/<name>`. ADR 181 says these
+   tree: `git diff --stat rel/v0.1.0 origin/feat/<name>`. ADR 172 says these
    refs carry no content the tree lacks. Delete a branch only if the diff
    shows nothing missing. If feat/nyx shows content (nyx is a sibling
    project), stop and ask the owner. Do it before OSS-WS3.
@@ -317,7 +316,7 @@ out_of_scope: stages, edges, progress-table values, skill plans.
 
 Completed in the main session after an ownership check found 68 rule IDs that
 were not yet present in skill plans. Those IDs moved to their owning skill
-plans before the retired files were deleted. ADR 175 remains the catalog
+plans before the retired files were deleted. ADR 166 remains the catalog
 orchestration decision, and the retirement ADR records the final mapping.
 
 ### SURF-WS6 - refresh the catalog docs
@@ -356,10 +355,10 @@ out_of_scope: renaming plan files (SURF-O3), editing skill plans.
 ### SURF-WS7 - close the seven proposed ADRs (ask the owner first)
 
 ```
-SURF-WS7 - ADR 136, 137, 138, 139, 140, 141 and 155 are all
-`Status: proposed`, dated 2026-10-17. ADR 136 and ADR 155 have the same body
-(only the heading differs). ADR 140 names `vanilla-reactive`, which ADR 152
-retired. ADR 140 and 141 plan shared rules on the routers rule-frontend and
+SURF-WS7 - ADR 128, 137, 138, 139, 140, 141 and 155 are all
+`Status: proposed`, dated 2026-10-17. ADR 128 and ADR 155 have the same body
+(only the heading differs). ADR 132 names `vanilla-reactive`, which ADR 144
+retired. ADR 132 and 141 plan shared rules on the routers rule-frontend and
 rule-meta (xss-sink-sanitized, meta-public-env-secret ...), but the skill
 plans for rule-frontend and rule-meta have no guardrail step, so those rules
 have no owner.
@@ -368,7 +367,7 @@ ASK THE OWNER (SURF-O1) before writing anything:
  (b) accept the six distinct ones as rationale and settle 155 as a duplicate;
  (c) another choice.
 Then:
-- Settle ADR 155 as the duplicate of ADR 136 (keep the older file), the way
+- Settle ADR 155 as the duplicate of ADR 128 (keep the older file), the way
   settleDuplicateAdrs (packages/mcp/core/docs/adr-pending/_settle.js) does.
   Run after OSS-WS5 T1.
 - Write the status change or the supersede pair with rule_tool_process_adr.

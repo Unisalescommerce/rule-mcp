@@ -15,7 +15,7 @@
  *
  * - migration: any migrate/push/upgrade command from the common ORMs
  * - commit: `git commit`, with the guardrail failures on the staged files
- * - structure: one confirmation per task for a structural write (ADR 129)
+ * - structure: one confirmation per task for a structural write (ADR 121)
  *
  * "ask" and not "deny" on purpose. These are judgment calls with a human in the
  * room; a hard block on a false positive costs more than the prompt it saves.
@@ -67,13 +67,13 @@ export function hookEntries(launcher) {
     // `git -C path commit`.
     //
     // The structural gate asks once per task about a boundary change, never
-    // once per file (ADR 129). Write/Edit/MultiEdit land through PostToolUse.
+    // once per file (ADR 121). Write/Edit/MultiEdit land through PostToolUse.
     PreToolUse: [
       entry("bash", "rule-mcp guard: migration and commit checks", { matcher: "Bash" }),
       entry("structure", "rule-mcp guard: structural change, once per task", { matcher: "Write|Edit|MultiEdit" }),
     ],
     // PostToolUse carries `additionalContext` and no permission decision, so a
-    // language or guardrail report reaches the model and nobody else (ADR 129).
+    // language or guardrail report reaches the model and nobody else (ADR 121).
     PostToolUse: [
       entry("write", "rule-mcp guard: language and guardrails on the written file", {
         matcher: "Write|Edit|MultiEdit",

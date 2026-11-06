@@ -3,7 +3,7 @@
 The server formerly published as `rule-mcp` is now **RuleMCP**. The
 GitHub repository is `pixu1980/rule-mcp`, the package and binary are `rule-mcp`,
 and the product name is RuleMCP. The rename is recorded in
-[ADR 169](../adr/169-rename-the-server-to-rulemcp.md), and the repository name is
+[ADR 160](../adr/160-rename-the-server-to-rulemcp.md), and the repository name is
 corrected by the pending decision recorded on 2026-11-06.
 
 ## What changed

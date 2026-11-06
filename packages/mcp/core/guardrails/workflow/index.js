@@ -10,7 +10,7 @@
  * their own answer, so the indentation rules live here once.
  *
  * A rule still imports nothing: the engine hands helpers over as
- * `context.helpers` (ADR 089), so adding `parseWorkflow` to that bag is a
+ * `context.helpers` (ADR 081), so adding `parseWorkflow` to that bag is a
  * contract change, taken when the first release rule needs it.
  */
 

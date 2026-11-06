@@ -111,5 +111,5 @@ test("the fixture corpus reaches 100% precision and recall with the fake model",
 test("the rule is in the semantic family with its source", () => {
   assert.equal(SEMANTIC_GUARDRAILS.length, 1);
   assert.equal(SEMANTIC_GUARDRAILS[0].id, "semantic-error-message-actionable");
-  assert.match(SEMANTIC_GUARDRAILS[0].description, /ADR 156/u);
+  assert.match(SEMANTIC_GUARDRAILS[0].description, /ADR 147/u);
 });

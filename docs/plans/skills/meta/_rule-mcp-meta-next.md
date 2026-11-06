@@ -114,7 +114,7 @@ around 120 lines.
 
 ## Retained area guardrail backlog
 
-ADR 141 proposed this rule set before ADR 175 moved area work into skill plans.
+ADR 133 proposed this rule set before ADR 166 moved area work into skill plans.
 This plan owns: `meta-client-directive`, `meta-cache-explicit`.
 
 The fixtures-first, implementation, and verification phases above include these

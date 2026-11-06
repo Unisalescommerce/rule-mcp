@@ -11,7 +11,7 @@
 2. **Linearize, first attempt** — `rule_tool_git action=linearize` stopped on a conflict (`docs/plans/plan-of-plans.md` modify/delete, `docs/reviews/plan-graph.md` content) and rolled the branch back untouched.
 3. **Linearize, by hand** — `git rebase 325936e6` replayed 468 commits. Three conflicts were resolved by taking the incoming commit's side: the two plan documents, the generated `docs/handoff/HANDOFF.md`, and `tests/fixtures/census.json`. The result is 468 commits and 0 merge commits.
 4. **Tree verified** — after the replay the tree differed from the reviewed tip in three paths: handoff 26 had been renumbered 24, and two retired plans (`docs/plans/execution-plan.md`, `docs/plans/oss.md`) had come back. `bc1d4212` restores the reviewed state; `git diff backup/pre-linearize-46 HEAD` is now empty.
-5. **One real failure caught** — the full suite failed on `adr-english` for ADR 211, whose `## Measurement` quoted tokens the shared scanner reads as foreign words. `3d76effe` rewords the sentence; the rules and the scanner are unchanged.
+5. **One real failure caught** — the full suite failed on `adr-english` for ADR 202, whose `## Measurement` quoted tokens the shared scanner reads as foreign words. `3d76effe` rewords the sentence; the rules and the scanner are unchanged.
 
 ## State
 

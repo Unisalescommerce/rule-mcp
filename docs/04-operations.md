@@ -7,7 +7,7 @@ release and troubleshooting. Installing it is [01 getting started](./01-getting-
 
 `rule-mcp setup --scope project --project <path> [--project-config shared|local]`
 writes only into the project trees it is given, and records each one in
-`~/.rule-mcp/state/projects.json` (ADR 193). `rule-mcp project add [path]` joins
+`~/.rule-mcp/state/projects.json` (ADR 184). `rule-mcp project add [path]` joins
 another project, reusing the agents and the config kind of the most recently
 recorded one; `rule-mcp project remove [path]` takes every config back and
 forgets the root.

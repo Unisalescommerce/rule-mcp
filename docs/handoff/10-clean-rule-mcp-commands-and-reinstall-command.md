@@ -39,7 +39,7 @@ behind three entry points.
   `docs/02-product-architecture.md` to match.
 - Tests: `src/cli/commands/__tests__/_targets-sync.test.mjs`,
   `src/cli/commands/__tests__/_coverage.test.mjs`.
-- ADR 101.
+- ADR 093.
 
 ### 3. Reinstall: one implementation, three entry points
 
@@ -56,7 +56,7 @@ behind three entry points.
 - Tests: `src/cli/__tests__/_reinstall-command.test.mjs`,
   `src/cli/__tests__/_reinstall-script.test.mjs` (script runs in a scratch copy
   with a fake `pnpm` on PATH).
-- ADR 102.
+- ADR 094.
 
 ### 4. Lockfile refresh
 
@@ -74,7 +74,7 @@ wrong." when `endsWhen` is absent. The MCP tool schema in
 `src/tools/adr/_register.js` (call site around line 50) never accepts or forwards
 an `endsWhen` argument, so the field is unreachable from `rule_tool_process_adr`.
 29 files under `docs/adr/` currently carry the placeholder instead of a real
-falsification condition, including ADR 101 and ADR 102 written this session.
+falsification condition, including ADR 093 and ADR 094 written this session.
 
 Next steps: add an `endsWhen` string to the ADR tool input schema, forward it
 through `_register.js` and `src/tools/handoff/_closeout.js`, then backfill the
@@ -103,11 +103,11 @@ tests use a scratch copy, so the same shell dependency as `mcp:install` applies.
 
 ## ADR Reference
 
-- ADR 101: accept a comma-separated agent list in agent-commands
-- ADR 102: reinstall is one shell script behind three entry points
-- ADR 033: registry-driven clean slash commands for every agent and IDE
-- ADR 028: clean `/rule-mcp-*` commands via user commands and prompt suppression
-- ADR 046: installer self-heals its global shim (background on the pnpm global bin)
+- ADR 093: accept a comma-separated agent list in agent-commands
+- ADR 094: reinstall is one shell script behind three entry points
+- ADR 025: registry-driven clean slash commands for every agent and IDE
+- ADR 020: clean `/rule-mcp-*` commands via user commands and prompt suppression
+- ADR 038: installer self-heals its global shim (background on the pnpm global bin)
 
 ## References
 
@@ -115,5 +115,5 @@ tests use a scratch copy, so the same shell dependency as `mcp:install` applies.
 - `src/cli/commands/_reinstall.js`, `src/cli/_register-reinstall.js`
 - `src/core/agents/command-targets/_resolve.js`
 - `src/cli/installers/_env.js`, `src/server/_prompt-handlers.js`
-- `docs/adr/101-accept-a-comma-separated-agent-list-in-agent-commands.md`
-- `docs/adr/102-reinstall-is-one-shell-script-behind-three-entry-points.md`
+- `docs/adr/093-accept-a-comma-separated-agent-list-in-agent-commands.md`
+- `docs/adr/094-reinstall-is-one-shell-script-behind-three-entry-points.md`

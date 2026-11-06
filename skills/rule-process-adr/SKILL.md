@@ -35,7 +35,7 @@ These are rules of the house, not preferences. `rule_tool_check` reads them.
 2. **The author is a person or a team**, written as `Name <email>`. The serving
    tool is never the author, because nobody can ask it why.
 3. **Numbering is three digits and allocated at write time.** Off the trunk a
-   record is pending: it carries a slug and is numbered when it lands (ADR 196).
+   record is pending: it carries a slug and is numbered when it lands (ADR 187).
 4. **A supersede is explicit in both directions.** The old record gains
    `- **Superseded by**: [NNN]`, the new one gains `- **Supersedes**: [NNN]`;
    the tool refuses a `superseded` record that names no successor.

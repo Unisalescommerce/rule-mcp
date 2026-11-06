@@ -9,7 +9,7 @@
 
 1. **Closeout runs on close** — `rule_tool_handoff` and `rule_tool_handon` archive completed working papers by default and repair ADR numbering. `closeout: false` stays read-only; `closeout: "preview"` lists prospective ADR numbers and writes nothing (a boolean union on the existing parameter, not a new tool).
 2. **Completeness rule** — a paper is archivable only with `Status:` in `done|complete|completed|closed`, at least one closed checkbox and zero open ones, fenced blocks ignored. `plan-of-plans.md`, `README.md` and `DEPENDENCIES.md` are never archivable.
-3. **One ADR per plan** — the ADR carries `## Outcome` with the closed steps and ends with `## What would end this`. The session handoff cites it (ADR 172); no per-plan handoff file is created.
+3. **One ADR per plan** — the ADR carries `## Outcome` with the closed steps and ends with `## What would end this`. The session handoff cites it (ADR 163); no per-plan handoff file is created.
 4. **Index retirement** — `_plan-index.js`, `_plan-index-lines.js` and `_plan-index-shape.js` retire snapshot rows, workstream checkboxes (description kept), graph leaves, Plan/Orchestrator links and `_skills-plan.md` progress rows. Matching is conservative on line shape and idempotent on a second run.
 5. **File split** — `_closeout.js` is a three-line barrel over `_closeout-scan.js`, `_closeout-archive.js` and `_closeout-docs.js`, inside the 150-line cap and its ratchet.
 6. **Census** — the tool renderer prints `anyOf`/`oneOf`/`const` unions (`boolean \`preview\``) instead of `any`; `docs/10-tools.md` and `scripts/__tests__/fixtures/census.json` regenerated.
@@ -26,7 +26,7 @@
 
 ## Left out / next
 
-- `docs/plans/_plan-of-plans-reference.md` still carries 8 open boxes while ADR 171 declared it deleted. It is therefore not archivable. Flagged, not fixed.
+- `docs/plans/_plan-of-plans-reference.md` still carries 8 open boxes while ADR 162 declared it deleted. It is therefore not archivable. Flagged, not fixed.
 - A plan whose prose is not English is skipped forever by the ADR English gate. Behavior unchanged and documented.
 - `docs/02-architecture.md` ADR counts still need the repo-side `pnpm census`; the MCP tool cannot regenerate them.
 - Snapshot prose such as `in progress: npm/uv/cargo-release done` matched no retirement shape and was edited by hand this session: a candidate line shape for the sweep.

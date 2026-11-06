@@ -77,7 +77,7 @@ export function computeKpi(options = {}) {
       // measured saving rather than from core-minus-final: the difference
       // between the two ends of post-processing nets compression against the
       // reminder added in the same step, which is why every export reported a
-      // compression of zero on results that demonstrably compressed (ADR 071).
+      // compression of zero on results that demonstrably compressed (ADR 063).
       // The reminder's own cost stays in reminderOverhead, below.
       ...(fold.coreTokens > 0 && {
         compressionRatio: Math.min(1, (fold.savedBySource.compression ?? 0) / fold.coreTokens),

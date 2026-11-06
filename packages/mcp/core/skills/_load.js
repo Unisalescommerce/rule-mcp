@@ -14,7 +14,7 @@
  *
  * Called once at startup, or on demand via `skills reload`.
  *
- * ADR 115: form/scaffold/component/a11y_report are not registered - callers use
+ * ADR 107: form/scaffold/component/a11y_report are not registered - callers use
  * styleguide area slash/skills or persona a11y instead.
  */
 
@@ -68,7 +68,7 @@ export function resetForReload() {
 export async function registerCoreTools() {
   await installSkillGuardrails();
   registerAiTool();
-  // In code: minimal mode mints no skill tool, and this one is allowlisted (ADR 075).
+  // In code: minimal mode mints no skill tool, and this one is allowlisted (ADR 067).
   registerMetaTool();
   registerSearchTool();
   registerCheckTool();

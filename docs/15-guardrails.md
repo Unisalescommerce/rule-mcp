@@ -37,7 +37,7 @@ always, plus whatever that skill's area adds.
 
 | Rule                                | Label                                     | What it rejects                                                                                       | Also in |
 | ----------------------------------- | ----------------------------------------- | ----------------------------------------------------------------------------------------------------- | ------- |
-| `semantic-error-message-actionable` | Error messages tell the caller what to do | A thrown error names the next action, not only the failure (ADR 156; docs/audits/decision-models.md). | -       |
+| `semantic-error-message-actionable` | Error messages tell the caller what to do | A thrown error names the next action, not only the failure (ADR 147; docs/audits/decision-models.md). | -       |
 
 ## The rest of the census
 

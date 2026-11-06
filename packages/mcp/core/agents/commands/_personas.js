@@ -6,7 +6,7 @@ import { PLAN_INTENT_KEYWORDS_LIST, REVIEW_INTENT_KEYWORDS_LIST, activeRoles, pa
 
 /**
  * A persona command's target: which role it runs. The operation is no longer
- * part of the name; the request decides it (ADR 120).
+ * part of the name; the request decides it (ADR 112).
  *
  * @param {string} name
  * @returns {{ role: string, roleName: string }|null} null for non-persona commands
@@ -30,7 +30,7 @@ export function personaTarget(name) {
 /**
  * Body for a persona command: it routes through the tools, not a hand-written
  * recap. The depth of the run is read from `$ARGUMENTS` with the same whole-token
- * intent the prompt resolver uses (ADR 120): a plan ask runs the audit, the
+ * intent the prompt resolver uses (ADR 112): a plan ask runs the audit, the
  * review and the plan; a review ask runs the audit and the review; anything
  * else runs the audit alone. `rule_tool_plan` hands back the operation contract;
  * `rule_tool_impersonation` does the trio bookkeeping.

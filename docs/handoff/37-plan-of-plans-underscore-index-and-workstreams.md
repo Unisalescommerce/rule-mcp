@@ -7,7 +7,7 @@
 
 ## Done
 
-1. **`docs/plans/plan-of-plans.md` rewritten as the level-0 index.** Naming rule: only this file stays unprefixed under `docs/plans/`. Snapshot dated 2026-10-30 (host 35/37, launcher phases 1–3 done, installer-scope → ADR 198). Six workstreams WS-A…WS-F with a dependency graph so execution can stay linear and conflict-free.
+1. **`docs/plans/plan-of-plans.md` rewritten as the level-0 index.** Naming rule: only this file stays unprefixed under `docs/plans/`. Snapshot dated 2026-10-30 (host 35/37, launcher phases 1–3 done, installer-scope → ADR 189). Six workstreams WS-A…WS-F with a dependency graph so execution can stay linear and conflict-free.
 2. **100 subordinate plans renamed with a leading `_`** (top-level + `skills/**`), including `_skills-plan.md`. `skills/README.md` and `skills/DEPENDENCIES.md` stay unprefixed indexes.
 3. **References retargeted** in ADRs, handoffs, reviews, `@see` comments, and `tests/plans/skills-plan.test.mjs` (`nodeId` strips `_` then `rule-mcp-` → `rule-`; `plan-of-plans.md` excluded from the catalog node set).
 4. **Sub-plans annotated** with Notes pointing at the owning workstream (WS-A host, WS-B launcher, WS-C catalog, WS-D single tracks; superseded guardrails marked no-execution).

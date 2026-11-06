@@ -25,7 +25,7 @@ Read and measured in this session:
   newest CHANGELOG heading.
 - `.github/workflows/ci.yml` (release-preview job): runs
   `changelog/index.mjs --check` **only when tags exist**; skips when the
-  boundary is undefined. Matches ADR 127.
+  boundary is undefined. Matches ADR 119.
 - `.github/workflows/release.yml`: extracts the tagged CHANGELOG entry into the
   GitHub Release body; checkout uses `fetch-depth: 0`.
 - `src/core/commit/`: the real commit-msg / pre-push hooks
@@ -49,7 +49,7 @@ Problems found:
 
 | Problem                          | Detail                                                                                                                                                                  |
 | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| skill disagrees with ADR 127     | the skill says never gate on freshness; this repository gates byte-identity with `--check` once tags define the release boundary, and skips only when there are no tags |
+| skill disagrees with ADR 119     | the skill says never gate on freshness; this repository gates byte-identity with `--check` once tags define the release boundary, and skips only when there are no tags |
 | the hook is a second source      | a 7-line `commit-msg` script is pasted in the skill while `src/core/commit` and `rule-styleguide-git` own the real hook; the two will drift                             |
 | zero skill guardrails            | twelve checkable claims sit in prose while the author's own tests already enforce several of them outside the skill family                                              |
 | quick selection omits it         | the area router table lists changelog; the quick-selection guide does not, so routing by glance misses it                                                               |
@@ -62,7 +62,7 @@ Problems found:
 
 | Question          | Decision                                                                                                                                                                                                                                                                                                                                     |
 | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Freshness gate    | Align the skill with ADR 127: **shape always**; **byte-identity `--check` when tags exist**; skip when the clone has no tags. The skill's "never gate freshness" paragraph is rewritten, not kept                                                                                                                                            |
+| Freshness gate    | Align the skill with ADR 119: **shape always**; **byte-identity `--check` when tags exist**; skip when the clone has no tags. The skill's "never gate freshness" paragraph is rewritten, not kept                                                                                                                                            |
 | Hook ownership    | Delete the inline hook script. Point at `rule-styleguide-git` and at `rule-mcp commit-lint` / `src/core/commit`. One sentence: a documented hook that is not installed is not a hook                                                                                                                                                         |
 | KaC mapping       | Keep `Documentation` for `docs` as a **documented house extension**. Add an explicit "delta from Keep a Changelog" note. Do not invent Deprecated/Security entries from commit types that do not exist in the Conventional Commit set this project uses                                                                                      |
 | Boundary          | This skill owns generation policy, type->section mapping, entry shape, and when CI may check. `rule-styleguide-git` owns the commit rule. `rule-process-npm-release` owns the publish workflow. `rule-platform-library` links here for libraries that generate; changesets stay an acknowledged monorepo alternative, not the default advice |
@@ -71,7 +71,7 @@ Problems found:
 | Router            | Add a quick-selection line for changelog                                                                                                                                                                                                                                                                                                     |
 | Delivery          | Plan only                                                                                                                                                                                                                                                                                                                                    |
 
-## Workstream A - Align the skill with the generator and ADR 127
+## Workstream A - Align the skill with the generator and ADR 119
 
 Rewrite the "Do not gate the changelog on being current" section to the policy
 this repository already runs:
@@ -160,13 +160,13 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 
 ### Phase 0 - Evaluation and decisions
 
-- [x] Audit the skill against the generator, ADR 127, CI and neighbors.
-- [x] Record the freshness-gate reversal (skill -> ADR 127).
+- [x] Audit the skill against the generator, ADR 119, CI and neighbors.
+- [x] Record the freshness-gate reversal (skill -> ADR 119).
 - [x] Create this plan and flip the index row to `planned`.
 
 ### Phase 1 - Align prose and references
 
-- [ ] Rewrite the freshness / CI section to match ADR 127.
+- [ ] Rewrite the freshness / CI section to match ADR 119.
 - [ ] Delete the inline hook; link to `rule-styleguide-git`.
 - [ ] Add `references/ci-and-checkout.md`; cut the body toward 120 lines.
 - [ ] Document the Keep a Changelog house delta (`Documentation`).
@@ -219,7 +219,7 @@ pnpm lint
 
 ## Open notes
 
-- The skill taught "never freshness-check"; ADR 127 and CI already disagree. The
+- The skill taught "never freshness-check"; ADR 119 and CI already disagree. The
   plan takes the repository's side. If a consumer project has no tags yet, the
   skip remains mandatory so a shallow first day does not false-fail.
 - Quick-selection prose is not covered by `router-child-coverage`. Either accept

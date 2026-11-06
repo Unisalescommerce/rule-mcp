@@ -3,7 +3,7 @@
 import { SCAFFOLD_GUARDRAILS } from "../_scaffold.js";
 import { resolveInherited } from "../../layers/_inherit.js";
 
-// ─── Skill-owned guardrails (ADR 079) ───
+// ─── Skill-owned guardrails (ADR 071) ───
 // Populated once at startup from the resolved skill layers. Read-only after
 // that: getGuardrails stays synchronous because the check engine is, and an
 // import on the check path would make every call await the filesystem.
@@ -44,7 +44,7 @@ export function skillChain(skillName) {
 }
 
 /**
- * The skills whose rules every check includes (ADR 079).
+ * The skills whose rules every check includes (ADR 071).
  *
  * These are the baseline: the naming, prose, comment, simplicity and markup
  * rules that applied to every skill before the rules moved into the skills
@@ -122,7 +122,7 @@ export function getGuardrails(skillName, mode) {
   const plugin = PLUGIN_GUARDRAILS.get(skillName) || [];
 
   // The skill's own rules come last so that a rule which has moved into a
-  // skill overrides the copy the families still carry while ADR 079's
+  // skill overrides the copy the families still carry while ADR 071's
   // migration is in flight.
   const baseline = BASELINE_SKILLS.flatMap((name) => (name === skillName ? [] : ownedGuardrails(name)));
   const families = [...baseline, ...scaffold, ...plugin, ...ownedGuardrails(skillName)];

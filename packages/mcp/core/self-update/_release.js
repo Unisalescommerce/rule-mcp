@@ -4,7 +4,7 @@
  * Whether a newer release exists: the highest version tag on the remote's
  * main against the highest one this checkout already contains.
  *
- * Tags are what `pnpm release` cuts (ADR 130), so a tag is what an update
+ * Tags are what `pnpm release` cuts (ADR 122), so a tag is what an update
  * moves to - never a commit that happens to sit on main between releases.
  */
 

@@ -43,7 +43,7 @@ export function applyRenumber(plan, options = {}) {
 
   referencesUpdated = citations.filesUpdated;
 
-  // The indexes are generated from the files (ADR 050 and its handoff twin), so
+  // The indexes are generated from the files (ADR 042 and its handoff twin), so
   // after a move they are rebuilt rather than patched: link rewriting would
   // leave the rows, the titles and the order describing the arrangement before
   // the repair. A family with documents and no index is stale too, so the run

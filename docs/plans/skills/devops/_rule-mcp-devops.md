@@ -133,7 +133,7 @@ equally. The same pruning `rule-platform`, `rule-meta` and `rule-frontend` neede
 
 ## Retained area guardrail backlog
 
-ADR 136 proposed this rule set before ADR 175 moved area work into skill plans.
+ADR 128 proposed this rule set before ADR 166 moved area work into skill plans.
 This plan owns: `ci-image-digest-pinned`, `ci-no-secret-echo`, `ci-no-allow-failure`, `ci-protected-deploy`, `ci-provenance`.
 
 The fixtures-first, implementation, and verification phases above include these

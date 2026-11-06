@@ -3,7 +3,7 @@
  *
  * One table that joins slash commands, MCP tools, and catalog skills.
  *
- * Leaf skills have no slash command (ADR 117); they appear with an empty
+ * Leaf skills have no slash command (ADR 109); they appear with an empty
  * Command cell. Area hubs and session commands carry the command that reaches
  * them. Action tools that are not skill-minted fill Command from a fixed map
  * when a slash exists.
@@ -92,7 +92,7 @@ export function surfaceMapSection(data) {
     `## Command / Tool / Skill map (${rows.length})`,
     "",
     "One row per slash command, then every catalog skill that has no slash of its",
-    "own (ADR 117: leaf skills are reached through area hubs or the router), then",
+    "own (ADR 109: leaf skills are reached through area hubs or the router), then",
     "any remaining action tools. An empty cell is `-`.",
     "",
     "Regenerate with `pnpm census`.",

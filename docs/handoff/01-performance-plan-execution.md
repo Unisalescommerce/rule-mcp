@@ -22,7 +22,7 @@ startup branch, the benchmark, and the attribution.
 | 6    | PERF-8 startup      | `pnpm report:startup`; compiled code cache in `bin/`; handlers deferred into their actions; `listTools()` memoized                                                                                                                              |
 | 7    | PERF-9 meta surface | `rule-meta-*` namespace, `rule_tool_meta` dispatcher, `rule-area-toolset` prompt rename (branch `perf/meta-surface`)                                                                                                                            |
 | 8    | PERF-6 benchmark    | `pnpm report:compression` over four corpora                                                                                                                                                                                                     |
-| 9    | PERF-7 attribution  | Credit lines in the module doc and the guides; ADR 073                                                                                                                                                                                          |
+| 9    | PERF-7 attribution  | Credit lines in the module doc and the guides; ADR 065                                                                                                                                                                                          |
 
 ## Commits
 
@@ -112,7 +112,7 @@ are work `tools list` and `serve` genuinely need.
    All of it was reverted and the fix applied per-file. Consider making
    `--apply` require a path.
 4. **Merging the four meta tools into one** is the change that would actually
-   cut the connect cost, and it is deliberately not done (ADR 075).
+   cut the connect cost, and it is deliberately not done (ADR 067).
 5. `docs/audits/performance.md` and `docs/plans/performance.md` are not
    prettier-formatted. That predates this session; `pnpm format` is not in the
    test suite.

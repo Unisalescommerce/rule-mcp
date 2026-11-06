@@ -59,7 +59,7 @@ export const GIT_BODY = [
   "8. Write in English, American spelling (color, behavior, organize).",
 ].join("\n");
 
-/** /rule-compress -> rule_tool_compress (ADR 115 sole engine). */
+/** /rule-compress -> rule_tool_compress (ADR 107 sole engine). */
 export const COMPRESS_BODY = [
   "Compress text with rule_tool_compress: $ARGUMENTS",
   "",

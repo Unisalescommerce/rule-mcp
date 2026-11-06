@@ -64,7 +64,7 @@ let memo = { generation: -1, tools: [], compress: null };
  *
  * The description is prose the model reads on every turn to choose a tool, so
  * it goes through the same compression pass as tool results; names, schemas and
- * annotations are the machine contract and are left untouched (ADR 077).
+ * annotations are the machine contract and are left untouched (ADR 069).
  *
  * @returns {Array<{ name: string, description: string, inputSchema: object }>}
  */

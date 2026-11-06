@@ -122,7 +122,7 @@ Shared files: skills/rule/SKILL.md, scripts/data/router-gaps.data.mjs, tests/fix
 
 ## Retained area guardrail backlog
 
-ADR 139 proposed this rule set before ADR 175 moved area work into skill plans.
+ADR 131 proposed this rule set before ADR 166 moved area work into skill plans.
 This plan owns: `no-select-star`, `query-limit`, `query-timeout`, `db-least-privilege`, `migration-down`.
 
 The fixtures-first, implementation, and verification phases above include these

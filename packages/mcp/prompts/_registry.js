@@ -11,7 +11,7 @@ import { listAreaPrompts } from "./_areas.js";
  * @returns {Array<{ name: string, description: string, arguments: Array<{ name: string, description: string, required?: boolean }> }>}
  */
 export function listPrompts() {
-  // The area prompts are one per area hub (ADR 117); leaf skills keep tools only.
+  // The area prompts are one per area hub (ADR 109); leaf skills keep tools only.
   const areas = listAreaPrompts().map(({ name, description, arguments: args }) => ({ name, description, arguments: args }));
   const all = [...PROMPT_DEFS, ...areas, ...rolePrompts()].sort((left, right) => left.name.localeCompare(right.name));
 
@@ -24,13 +24,13 @@ export function listPrompts() {
 
 /**
  * One prompt per active review persona: `rule-persona-<role>` - 19 persona
- * commands for the 19 active roles (ADR 120). The depth of the run (audit,
+ * commands for the 19 active roles (ADR 112). The depth of the run (audit,
  * audit+review, audit+review+plan) is read from the request, not from the
  * command name; see `core/review/roles/operation-intent`.
  *
  * The names are shared with the agent commands on purpose: the command
  * generator derives its set from this registry, so a second name for the same
- * role would be the drift ADR 028 removed.
+ * role would be the drift ADR 020 removed.
  *
  * @returns {Array<{ name: string, description: string, arguments: object[] }>}
  */

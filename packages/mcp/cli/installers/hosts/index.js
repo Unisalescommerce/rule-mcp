@@ -13,7 +13,7 @@
  * Path and identity live in `./_core.js` so uninstall bodies can read them
  * without importing `./_writers.js`. `install` / `uninstall` are attached here
  * from the writers table; bodies stay in `_agents-*.js` / `_uninstall-*.js`.
- * One module per host remains deferred: ADR 061 asks for one file per concern,
+ * One module per host remains deferred: ADR 053 asks for one file per concern,
  * and 23 files of the same twelve lines are one concern wearing 23 names.
  *
  * `server.file` is the file an install writes today. `legacy` lists the files

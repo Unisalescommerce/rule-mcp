@@ -27,7 +27,7 @@ WS1 fixes the failing tests. WS2 removes the last traces of Nyx. WS3 checks that
 
 WS5 deletes the case-study code, rewrites the history one last time, and makes `rel/v0.1.0` the new `main`.
 
-This plan waited for [OSS readiness and repo health](../adr/217-close-out-plan-oss-readiness-and-repo-health.md) and [tool and skill surface audit](../adr/218-close-out-plan-tool-and-skill-surface-audit.md) to close. Both changed files that WS5 rewrites.
+This plan waited for [OSS readiness and repo health](../adr/208-close-out-plan-oss-readiness-and-repo-health.md) and [tool and skill surface audit](../adr/209-close-out-plan-tool-and-skill-surface-audit.md) to close. Both changed files that WS5 rewrites.
 
 ## Files that will be deleted from this repo
 
@@ -45,7 +45,7 @@ These files stay but change:
 | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
 | `docs/plans/skills/ui/_rule-mcp-ui-design-system.md`                                     | Remove the link into `docs/case-studies`.                               |
 | `scripts/__tests__/docs/docs-scan.mjs`, `scripts/__tests__/docs/link-integrity.test.mjs` | Remove `"case-studies"` from the skip lists. The lists work without it. |
-| `docs/adr/123-start-the-six-case-study-apps-with-one-port-allocating-command.md`         | Stays as history. The ADR in WS5 supersedes it.                         |
+| `docs/adr/115-start-the-six-case-study-apps-with-one-port-allocating-command.md`         | Stays as history. The ADR in WS5 supersedes it.                         |
 | `docs/handoff/22-case-studies-launcher-and-registry-idempotency.md`                      | Stays as history.                                                       |
 
 `scripts/__tests__/plans/monorepo-layout.test.mjs` needs no change for this. It checks that a root `case-studies/` folder does not exist, and that stays true.
@@ -186,7 +186,7 @@ Stop and report if a task fails.
 - [x] **WS5-T8**: The push starts `ci.yml` by itself (`on: push: branches: [main]`). Check that the first run on `main` is green. Done 2026-11-06: the push started `ci.yml` on main. Commit lint passes on the rewritten history. Three jobs stay red for the reasons recorded below.
 - [x] **WS5-T9**: Run the WS4 scan again on `main`. The rewrite changes hashes, not content, so the count must not rise. Done 2026-11-06: 7 findings, the same count as before the rewrite, so the rewrite changed hashes and not content.
 - [x] **WS5-T10**: Purge old objects. Delete `refs/original`. Run `git reflog expire --expire=now --all` and `git gc --prune=now`. Then ask the owner about `/tmp/rule-mcp-history-backup.*` and the bundle: keep one offline copy, or delete. After this step the old history is gone from the local repo. Done 2026-11-06: `refs/original` deleted, reflog expired, `git gc --prune=now` run. The old main object is gone from the local repository.
-- [x] **WS5-T11**: Write one ADR (`rule_tool_process_adr`). `main` is the only branch. It replaces the topology of ADR 181 and ADR 098. List the docs that name `rel/v0.1.0` as the work branch (`CLAUDE.md`, `docs/plans/plan-of-plans.md`, the `Branch:` line of each plan) and update the ones that are current instructions. Plans that are records keep their branch name. The same ADR supersedes ADR 123 (the case-study apps and their runner live in the talk repo). It also records that every hash cited in an ADR or a handoff before WS5-T4 no longer resolves. That cost is accepted. Written 2026-11-06 as ADR 214.
+- [x] **WS5-T11**: Write one ADR (`rule_tool_process_adr`). `main` is the only branch. It replaces the topology of ADR 172 and ADR 090. List the docs that name `rel/v0.1.0` as the work branch (`CLAUDE.md`, `docs/plans/plan-of-plans.md`, the `Branch:` line of each plan) and update the ones that are current instructions. Plans that are records keep their branch name. The same ADR supersedes ADR 115 (the case-study apps and their runner live in the talk repo). It also records that every hash cited in an ADR or a handoff before WS5-T4 no longer resolves. That cost is accepted. Written 2026-11-06 as ADR 205.
 - [x] **WS5-T12**: State the freeze in that ADR: after the repo goes public, no rewrite and no force-push.
 
 ### What stays red on main, and why
@@ -197,7 +197,7 @@ The owner chose to record these as debt rather than block the cutover on them:
 | ------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
 | Lint + Format | 193 errors from other rules: 88 `no-unused-vars`, 43 `prefer-default-parameters`, 62 more               | after the cutover, with its own ADR               |
 | Coverage gate | branch coverage 90.7 percent against a 92 percent floor                                                 | after the cutover, with its own ADR               |
-| Secret scan   | the seven example credentials the owner chose to keep; a push to main reads the full history and blocks | owner decision of 2026-11-06, recorded in ADR 214 |
+| Secret scan   | the seven example credentials the owner chose to keep; a push to main reads the full history and blocks | owner decision of 2026-11-06, recorded in ADR 205 |
 
 A manual dispatch keeps the scan advisory unless its `blocking` input is set.
 
@@ -212,9 +212,9 @@ No session does these. They are not checkbox tasks.
 | A3  | After WS5-T12 | Make the repo public (decision D2 of the OSS plan).                                                                                                        |
 | A4  | After A3      | Publish the npm placeholder (action A1 of the OSS plan).                                                                                                   |
 | A5  | After A3      | Turn on branch protection for `main`: no force-push, no deletion, required CI. Branch protection needs a public repo on this plan. It enforces the freeze. |
-| A6  | After A3      | Restore the CodeQL workflow from history (ADR 174 says to do it when the repo can store results).                                                          |
+| A6  | After A3      | Restore the CodeQL workflow from history (ADR 165 says to do it when the repo can store results).                                                          |
 | A7  | After A3      | Check that Dependabot and Scorecard run on the new `main`.                                                                                                 |
 
 ## 7 - What this plan does not decide
 
-Whether to reword the four `gateway` commit messages back to `nyx`. After D2 the name `nyx` leaves the tree, so the messages stay as they are. This plan also does not rate the quality of the secret rules. It only checks that the scan runs. Stated in ADR 214: after the repository goes public, no rewrite and no force-push.
+Whether to reword the four `gateway` commit messages back to `nyx`. After D2 the name `nyx` leaves the tree, so the messages stay as they are. This plan also does not rate the quality of the secret rules. It only checks that the scan runs. Stated in ADR 205: after the repository goes public, no rewrite and no force-push.

@@ -18,8 +18,8 @@
  *
  * @see module:core/text/compression - the pass itself
  * @see module:core/text/compress-guard - the structural guard
- * @see ADR 080 - deterministic port, no LLM in the output path
- * @see ADR 077 - the list surfaces joined the manifest
+ * @see ADR 072 - deterministic port, no LLM in the output path
+ * @see ADR 069 - the list surfaces joined the manifest
  */
 
 import { compressSurfaceText } from "./_compression.js";
@@ -80,7 +80,7 @@ export const SURFACES = [
     kind: "prose",
     where: "src/resources/_listing.js compressResourceListing()",
     source: null,
-    noSourceReason: "no-op on the terse real set; kept for the invariant (ADR 077)",
+    noSourceReason: "no-op on the terse real set; kept for the invariant (ADR 069)",
     compress: text(compressSurfaceText),
     optOut: "RULE_MCP_NO_COMPRESSION / RULE_MCP_COMPRESSION_LEVEL=off",
   },
@@ -118,7 +118,7 @@ export const SURFACES = [
     id: "completions/complete",
     kind: "vocabulary",
     where: "src/server/_completions.js",
-    reason: "a fixed token list the client matches against, not prose (ADR 077)",
+    reason: "a fixed token list the client matches against, not prose (ADR 069)",
   },
   {
     id: "JSON payloads (application/json bodies, JSON tool content)",

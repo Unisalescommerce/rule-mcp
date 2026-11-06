@@ -54,7 +54,7 @@ This document: `docs/handoff/24-merge-into-rule-process-ai.md`.
 
 ```prompt
 Resume work on rule-mcp from `docs/handoff/24-merge-into-rule-process-ai.md`. Run `rule_tool_handon` first: it checks which claims in this handoff still hold before any of them are trusted.
-The ADR log and the context snapshot capture what has been decided; do not re-ask answered questions. ADR 148 records the merge, and ADR 147 the hooks boundary.
+The ADR log and the context snapshot capture what has been decided; do not re-ask answered questions. ADR 140 records the merge, and ADR 139 the hooks boundary.
 Every commit is `type(scope): subject`; the commit-msg hook rejects a scope-less message, and `pnpm hooks:check` says whether the hooks are installed.
 The merged skill is `rule-process-ai` with nine `ai-*` guardrails and the tool `rule_tool_process_ai`; the three skills it absorbed no longer exist, and a running server needs a restart before it serves the new catalog.
 Decision-models (audit, plan, harness) live on `feat/decision-models`.

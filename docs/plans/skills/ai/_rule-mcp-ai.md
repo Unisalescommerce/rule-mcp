@@ -9,17 +9,17 @@ Siblings: `rule-ai-prompting`, `rule-ai-evals`, `rule-ai-context-engineering`,
 
 ## The one area with no floor at all
 
-ADR 137 (proposed, 2026-10-17) records it exactly: five rule-ai skills exist, none
+ADR 129 (proposed, 2026-10-17) records it exactly: five rule-ai skills exist, none
 owns a guardrail, none declares `inherits`. Every other area has either rules of
 its own, inherited area rules (`rule-data`, `rule-backend`) or both. The AI area has
 neither, which means the one area that describes agent code - the most expensive
 code to get wrong - is the only one nothing checks.
 
-**Where the eight rules land, decided on 2026-10-21 (ADR 175, P10):** in
+**Where the eight rules land, decided on 2026-10-21 (ADR 166, P10):** in
 `rule-ai-agent-architecture`, the leaf that consumes them, not here. This router
 keeps only the six shared router rules. That is the same model `rule-data` and
 `rule-backend` use, moved one level down because AI has exactly one leaf that
-describes the code ADR 137's rules check.
+describes the code ADR 129's rules check.
 
 | Tier | Rules                                                                                                                   | Owner                        |
 | ---- | ----------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
@@ -85,7 +85,7 @@ Six shared router rules, plus the one this router motivated:
 
 ## Reaching the children
 
-ADR 137 left one question open: whether the four children declare
+ADR 129 left one question open: whether the four children declare
 `inherits: [rule-ai]`. This plan answers **no**, and P10 explains why: the eight
 rules live in `rule-ai-agent-architecture`, so there is nothing in the router to
 inherit. The children instead link the leaf that owns the floor, and
@@ -105,10 +105,10 @@ Shared files: skills/rule/SKILL.md, scripts/data/router-gaps.data.mjs, tests/fix
 
 ### Phase 0 - Decisions
 
-- [ ] ADR: the AI family shape. Amends ADR 137's placement: the eight rules
+- [ ] ADR: the AI family shape. Amends ADR 129's placement: the eight rules
       live in `rule-ai-agent-architecture`, the router stays a list (P10), and 137
       moves from proposed to superseded.
-- [ ] ADR: the rule design, tiers as ADR 137 set them, detection shared with the
+- [ ] ADR: the rule design, tiers as ADR 129 set them, detection shared with the
       other areas.
 
 ### Phase 1 - Fixtures first (red)
@@ -168,14 +168,14 @@ Plan default: `T7-author` - `qwen3.8-max`. Fallback: `step-5-preview` for author
 
 ## Open notes
 
-- ADR 137 has been proposed since 2026-10-17. This plan is the first thing in the
+- ADR 129 has been proposed since 2026-10-17. This plan is the first thing in the
   series that turns a proposed ADR into a plan instead of writing a new one, and
   that is the right order: the decision exists, the execution did not.
-- ADR 137 put the eight rules in this router; the decision of 2026-10-21 moved
-  them to `rule-ai-agent-architecture` (P10, ADR 175). The router keeps the
+- ADR 129 put the eight rules in this router; the decision of 2026-10-21 moved
+  them to `rule-ai-agent-architecture` (P10, ADR 166). The router keeps the
   routing and one rule of its own, which is the same shape `rule-data` and
   `rule-backend` have, one level down.
-- `ai-trace-span` overlaps `observability-behavior-versions`, and ADR 137 itself
+- `ai-trace-span` overlaps `observability-behavior-versions`, and ADR 129 itself
   flags it. The owner split: the span is emitted here, the versions it carries are
   defined there.
 - The stale package name is the finding with the longest reach in this plan: it

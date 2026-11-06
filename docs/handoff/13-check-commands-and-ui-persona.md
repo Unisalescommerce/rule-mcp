@@ -53,8 +53,8 @@ Two ADRs record both decisions.
 - The census pre-commit hook regenerated `docs/02`, `07`, `10`, `11`, `13`,
   so the committed inventories match the code (command surface 156 to 246,
   MCP prompts 155 to 153).
-- ADR 106 records per-area check commands and the auto-detecting general check;
-  ADR 107 records the `design-system` to `ui` rename. The ADR index follows.
+- ADR 098 records per-area check commands and the auto-detecting general check;
+  ADR 099 records the `design-system` to `ui` rename. The ADR index follows.
 - `README.md` prompt count updated 155 to 153.
 
 ## Verification
@@ -79,16 +79,16 @@ Two ADRs record both decisions.
 
 ## ADR Reference
 
-- ADR 106: Check runs per area, and the general check auto-detects it.
-- ADR 107: The design-system persona becomes the UI/UX lead.
+- ADR 098: Check runs per area, and the general check auto-detects it.
+- ADR 099: The design-system persona becomes the UI/UX lead.
 
 ## References
 
 - `src/core/agents/commands/_names.js`, `_definitions.js`, `_bodies.js`
 - `src/prompts/_defs.data.js`
 - `personas/ui.md`
-- `docs/adr/106-check-runs-per-area-and-the-general-check-auto-detects-it.md`
-- `docs/adr/107-the-design-system-persona-becomes-the-ui-ux-lead.md`
+- `docs/adr/098-check-runs-per-area-and-the-general-check-auto-detects-it.md`
+- `docs/adr/099-the-design-system-persona-becomes-the-ui-ux-lead.md`
 
 ### Resume Prompt
 

@@ -26,7 +26,7 @@
 
 - Decide the sentence-length threshold, the glossary, and whether the foreign-token dictionary should grow; that decision unblocks three rules.
 - Phase 2 also owes the census regeneration once the advisory set is complete.
-- `docs/plans/_plan-of-plans-reference.md` still has 5 open boxes while ADR 171 declared it deleted; it stays unarchivable until they close.
+- `docs/plans/_plan-of-plans-reference.md` still has 5 open boxes while ADR 162 declared it deleted; it stays unarchivable until they close.
 - Two tests are load flakes under the full suite and pass alone: `daemon start detaches instead of holding the daemon open` and `the hard timeout aborts the call and the client does not retry`.
 - Feature close is still pending: `--close-feature --squash` with 456 commits and 2 merge commits.
 

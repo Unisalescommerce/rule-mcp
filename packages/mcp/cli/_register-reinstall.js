@@ -3,7 +3,7 @@
  *
  * The `reinstall` command declaration. The handler is imported inside the
  * action, like every other command: `--help` renders declarations, not work
- * (ADR 074).
+ * (ADR 066).
  */
 
 /** Register the `reinstall` command. */

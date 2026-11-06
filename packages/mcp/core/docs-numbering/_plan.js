@@ -9,7 +9,7 @@ import { authorsToName } from "./_authors.js";
  *
  * `compact` is off by default: a sweep repairs a duplicate number and leaves
  * every other document where it is, so no citation goes stale. Closing the
- * holes is a separate explicit run (ADR 219), and the holes are reported
+ * holes is a separate explicit run (ADR 210), and the holes are reported
  * either way because `handoff doctor` names them.
  *
  * @param {{ projectDir?: string, compact?: boolean, onProgress?: Function }} [options]

@@ -18,16 +18,16 @@ The writing is the strongest in the catalog and it is the only skill that admits
 a boundary of principle: **"no code in, no code out"** in learning mode, so the
 agent teaches instead of replacing the thinking.
 
-None of it is enforced, and the area has no floor at all: ADR 137 (proposed,
+None of it is enforced, and the area has no floor at all: ADR 129 (proposed,
 2026-10-17) records that **five rule-ai skills exist and none owns a guardrail,
 none declares `inherits`**. That ADR is the spine of this plan and of the four
 that follow it; the eight rules it lists live in the router and reach the leaves
 through inheritance.
 
-## What this leaf adds on top of ADR 137
+## What this leaf adds on top of ADR 129
 
 The router's eight `ai-*` rules are about agent code. This leaf is about the
-prompt, and it owns three things ADR 137 does not name:
+prompt, and it owns three things ADR 129 does not name:
 
 | Statement in the body                     | Rule                          |
 | ----------------------------------------- | ----------------------------- |
@@ -58,10 +58,10 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 
 ### Phase 0 - Decisions
 
-- [ ] Implement ADR 137: the eight `ai-*` rules land in `rule-ai/guardrails`,
+- [ ] Implement ADR 129: the eight `ai-*` rules land in `rule-ai/guardrails`,
       advisory first, each citing OWASP / MCP / OpenTelemetry where the ADR says
       so.
-- [ ] Answer ADR 137's open question: **the four children declare
+- [ ] Answer ADR 129's open question: **the four children declare
       `inherits: [rule-ai]`**, the same model `rule-data` and `rule-backend` already
       use. This plan assumes yes; the ADR records it.
 - [ ] ADR: the AI family shape, replacing the "proposed" status of 137 with an

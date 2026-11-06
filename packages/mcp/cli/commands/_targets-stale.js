@@ -49,7 +49,7 @@ export const isRuleCommandEntry = (dir, entry) => {
  *
  * A sync writes the rendered set, which carries one name per active role.
  * Anything under the persona prefix outside that set is a file no command
- * reaches, whatever shape it has (ADR 120, ADR 116).
+ * reaches, whatever shape it has (ADR 112, ADR 108).
  *
  * @param {string} dir - target directory (used when entries are skill dirs)
  * @param {string[]} entries - directory entries

@@ -3,7 +3,7 @@
 Status: `planned`
 Notes:`planned` Notes: plan only. Each skill waits for the owner before implementation. Output convention: one plan per skill at `docs/plans/skills/<area>/<skill>.md`. Index: `docs/plans/skills/README.md`.
 
-Area: data. Order: after the move from styleguide (ADR 144).
+Area: data. Order: after the move from styleguide (ADR 136).
 
 ## Evaluation outcome
 
@@ -58,14 +58,14 @@ Standards to anchor (each section cites its own):
 
 | Question   | Decision                                                                                                                        |
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| Area       | `data`; the rename is done (ADR 144)                                                                                            |
+| Area       | `data`; the rename is done (ADR 136)                                                                                            |
 | Router     | `rule-data` lists the skill; no new area and no router                                                                          |
 | Scope      | Rename plus a restructure into sections by domain                                                                               |
 | Boundaries | Country formats and checksums here; boundary validation, schema constraints, locale formatting and forms stay with their owners |
 | Additions  | IBAN/SEPA and payment card numbers with Luhn                                                                                    |
 | Standards  | One cited standard per domain, as in the table above                                                                            |
 | Delivery   | Plan only now                                                                                                                   |
-| ADR        | The move is already recorded in ADR 144; a second ADR only if the restructure changes ownership                                 |
+| ADR        | The move is already recorded in ADR 136; a second ADR only if the restructure changes ownership                                 |
 
 ## Workstream A - Restructure by domain
 
@@ -134,7 +134,7 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 ### Phase 0 - Evaluation, move and decisions
 
 - [x] Evaluate the area and record the outcome.
-- [x] Move the skill to `rule-data-validation` (ADR 144).
+- [x] Move the skill to `rule-data-validation` (ADR 136).
 - [x] Interview the owner and record the decisions.
 - [x] Create this plan and the index entry.
 

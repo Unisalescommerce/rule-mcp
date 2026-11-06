@@ -8,7 +8,7 @@ date: 2026-09-21
 
 ## Completed
 
-- ARCH-7.1 is complete. Six pre-existing `skills/` size-ratchet offenders were split using the ADR 061 folder/barrel pattern.
+- ARCH-7.1 is complete. Six pre-existing `skills/` size-ratchet offenders were split using the ADR 053 folder/barrel pattern.
 - Template-engine assets now use `filters/`, `expression-parser/`, and `renderer/` responsibility folders.
 - Vanilla-reactive template instance code is split into markup, descriptors, template lookup, node paths, and instance lifecycle modules.
 - Custom-element scaffolding is split under `scripts/scaffold/`.

@@ -12,7 +12,7 @@ import { spawnSync } from "node:child_process";
 import { expandSuite, resolveSuite } from "./_expand.mjs";
 import { SUITES } from "./_suites.data.mjs";
 
-// Server code resolves `@mcp/*` through a hook (ADR 089). Every process this
+// Server code resolves `@mcp/*` through a hook (ADR 081). Every process this
 // runner spawns loads server code, so every one of them registers it. The
 // `file://` URL is required: a bare `D:\...` path is rejected by `--import` on
 // Windows.

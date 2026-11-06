@@ -1,7 +1,7 @@
 # tool-and-skill-surface-audit
 
 - **Plan**: `docs/plans/_tool-and-skill-surface-audit.md` (retired)
-- **ADR**: 218 (`218-close-out-plan-tool-and-skill-surface-audit.md`)
+- **ADR**: 218 (`209-close-out-plan-tool-and-skill-surface-audit.md`)
 
 ## Delivered
 

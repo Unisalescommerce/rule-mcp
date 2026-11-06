@@ -12,7 +12,7 @@ import { Option } from "commander";
 import { commanderIo } from "./_register-wizard.js";
 import { WIZARD_ONLY } from "./_wizard-only.data.js";
 
-const MODE_HELP = "stdio (default), daemon (SSE), docker, or skills (no MCP server, ADR 089)";
+const MODE_HELP = "stdio (default), daemon (SSE), docker, or skills (no MCP server, ADR 081)";
 
 
 /**

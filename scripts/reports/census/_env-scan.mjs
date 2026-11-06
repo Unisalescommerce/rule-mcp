@@ -20,7 +20,7 @@ import { ROOT } from "./_registries.mjs";
 const SOURCE_DIRS = ["packages/mcp", "packages/shared", "bin"];
 
 /**
- * Tests are co-located with the module they cover (ADR 070), so the shipped
+ * Tests are co-located with the module they cover (ADR 062), so the shipped
  * code and its tests share a tree. A test sets a variable to drive a case; it
  * is not a place the behavior is read, and listing it would bury the module
  * that answers the knob under the suites that exercise it.

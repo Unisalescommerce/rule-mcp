@@ -7,7 +7,7 @@
 
 ## Done
 
-1. **Handoff 32 verified, not trusted** — ADR 187 read `accepted` in `docs/adr/ADR.md`, ADR 198 absent from both the directory and the index, the pending attribution ADR present, the plan at `Status: in-progress` with 5 open boxes, no `_attribution*` file under `src/cli/installers/`. Two claims were stale: the tree was clean (the "modified since" edits were committed in `738f9ab6`/`4d7bfbc7`), and the suggested first move named `main` although `rel/v0.1.0` was checked out.
+1. **Handoff 32 verified, not trusted** — ADR 178 read `accepted` in `docs/adr/ADR.md`, ADR 189 absent from both the directory and the index, the pending attribution ADR present, the plan at `Status: in-progress` with 5 open boxes, no `_attribution*` file under `src/cli/installers/`. Two claims were stale: the tree was clean (the "modified since" edits were committed in `738f9ab6`/`4d7bfbc7`), and the suggested first move named `main` although `rel/v0.1.0` was checked out.
 2. **Three handon defects, each test-first** — (a) `parseHandoff` accepted only `**Branch:**` while every handoff here writes `**Branch**:`, so the declared branch was never read and the trunk named under `**Base**:` became "the branch this work was on"; both forms are read, the base is excluded, and `firstMove` only proposes the declared branch. (b) The same parse now exposes `declaredBranch`. (c) Named files were compared from the range *start*, so everything the handoff itself had committed came back "modified since"; the comparison base is the one the commit count uses - the end when it resolves, the start when the range ends at `HEAD`.
 3. **Tokensave switch owns its default** — `on+autotrack` resolves to the canonical `autotrack` level; with no choice recorded `readLevel("tokensave")` follows `hasTokensave(projectDir ?? process.cwd())`; a project-scope `local` install writes the derived value through `tokensaveProjectEnv`, and `RULE_MCP_NO_TOKENSAVE` left `DEFAULT_OPTOUT_ENV` so no config claims a graph it cannot have. Documented in `docs/05-env-variables.md`; `tests/fixtures/census.json` regenerated for the changed `env-registry` block.
 4. **An explicit `on` is a decision now** — it removed both keys, which read the same as never choosing, so the derived default overrode it in a graphless checkout. `on` writes `RULE_MCP_NO_TOKENSAVE=0`; any recorded value blocks the guess; and the `0` every earlier install wrote is pruned once by the setup path when the file matches that constant table key for key, because it was the installer's value and not a decision. The setup path was verified on a real legacy-shaped file: one key dropped, the other seven kept.
@@ -28,10 +28,10 @@ Handoff and ADR commits in the same window: `79272e9d`, `1bcbf914`, `d4580c82`, 
 
 ## ADRs
 
-- pending: `docs/adr/229-attribution-is-one-table-row-per-agent-and-an-undocumented-agent-is-left-alone.md`
-- pending: `docs/adr/230-derive-the-tokensave-switch-from-the-project-and-accept-on-autotrack-as-its-name.md`
-- pending: `docs/adr/231-uninstall-reclaims-the-configuration-it-wrote-after-asking.md`
-- pending: `docs/adr/232-split-the-files-the-size-ratchet-named-and-baseline-the-eight-that-were-never-re.md`
+- pending: `docs/adr/220-attribution-is-one-table-row-per-agent-and-an-undocumented-agent-is-left-alone.md`
+- pending: `docs/adr/221-derive-the-tokensave-switch-from-the-project-and-accept-on-autotrack-as-its-name.md`
+- pending: `docs/adr/222-uninstall-reclaims-the-configuration-it-wrote-after-asking.md`
+- pending: `docs/adr/223-split-the-files-the-size-ratchet-named-and-baseline-the-eight-that-were-never-re.md`
 - both land with numbers on trunk (`rule-mcp handoff land`); do not cite a number for either before that.
 
 ## Left out / next

@@ -93,7 +93,7 @@ export function toolCallEvent(call, context = {}) {
     event.reminderTokens = call.reminderTokens;
   }
   // What a hit replayed. Recorded apart from `saved` because it is output the
-  // model still reads, not a saving (ADR 076).
+  // model still reads, not a saving (ADR 068).
   if (typeof call.replayedTokens === "number") {
     event.replayedTokens = call.replayedTokens;
   }

@@ -7,7 +7,7 @@
 
 ## What was produced
 
-Ran the `oss` persona (ADR 079, added one commit earlier in `58652b7e`) end to
+Ran the `oss` persona (ADR 071, added one commit earlier in `58652b7e`) end to
 end: audit, review, plan. There was no prior `docs/reviews/oss.md` to derive
 from - it was deleted in `7a73f6a0` - so the audit was conducted fresh against
 the tree rather than against an older finding list.

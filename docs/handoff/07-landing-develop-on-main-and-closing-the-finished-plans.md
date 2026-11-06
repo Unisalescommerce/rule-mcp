@@ -3,7 +3,7 @@
 - Branch: `main`
 - Covers: `964a32b0..c33c9e46` (84 commits landed by fast-forward)
 - Date: 2026-09-15
-- Decisions: ADR 097, ADR 098, ADR 099, ADR 100
+- Decisions: ADR 089, ADR 090, ADR 091, ADR 092
 
 ## What happened
 
@@ -32,7 +32,7 @@ merge.
 **The realignment.** `develop` was reset onto `main` (`git branch -f develop
 main`) and pushed as a fast-forward, because the `develop` tip the fork carried
 was an ancestor of the merge: `3dae3a31..c33c9e46`. `develop` therefore stays
-alive as the integration branch ADR 098 describes. `merge/develop-into-main`
+alive as the integration branch ADR 090 describes. `merge/develop-into-main`
 is deleted and `.merge-notes/` is gone.
 
 ## Gates
@@ -54,7 +54,7 @@ Run fresh on the landed tree before the push, not read from `.merge-notes/`:
 
 ## Closing the finished plans
 
-ADR 087 says a completed working paper folds into one ADR and leaves the tree
+ADR 079 says a completed working paper folds into one ADR and leaves the tree
 on session close. Two plans were finished:
 
 - `docs/plans/develop-consolidation.md` - 53 resolved checks, all phases 0 to 7
@@ -63,7 +63,7 @@ on session close. Two plans were finished:
 - `docs/plans/tokensave-integration.md` - milestones M0 to M8 each stamped
   `Status: **done**` with its commit, from `d4521b5` to `f38b003`. Its tracking
   is prose (`Status: **done**`), not checkboxes, so `planDone()` in
-  `src/tools/handoff/_closeout.js` cannot see it; it was archived as ADR 100
+  `src/tools/handoff/_closeout.js` cannot see it; it was archived as ADR 092
   through `rule_tool_process_adr` instead, and its five open design questions
   were carried into that ADR's alternatives rather than left only in git
   history.
@@ -81,16 +81,16 @@ Four plans stay, deliberately, because they are not finished:
 - `docs/plans/backlog.md` - the queue is empty; it is a standing queue with its
   Done record, not a finished plan.
 
-The ADR index was regenerated with `updateAdrIndex` after ADR 100 was renamed
+The ADR index was regenerated with `updateAdrIndex` after ADR 092 was renamed
 to a slug that is not truncated, and every link in `docs/adr/ADR.md` was checked
 to resolve to a file that exists.
 
 ## Closeout
 
-- Archived `docs/plans/develop-consolidation.md` -> ADR 099
-  (`099-close-out-plan-develop-consolidation.md`); source file deleted.
-- Archived `docs/plans/tokensave-integration.md` -> ADR 100
-  (`100-the-tokensave-integration-closes-out-and-the-adapter-is-the-code-graph-layer.md`);
+- Archived `docs/plans/develop-consolidation.md` -> ADR 091
+  (`091-close-out-plan-develop-consolidation.md`); source file deleted.
+- Archived `docs/plans/tokensave-integration.md` -> ADR 092
+  (`092-the-tokensave-integration-closes-out-and-the-adapter-is-the-code-graph-layer.md`);
   source file deleted.
 
 ## Open items

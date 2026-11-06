@@ -4,7 +4,7 @@
  * The smaller one-shot task prompts: compress, git, stats, usage.
  *
  * Split out of `_task-prompts.js` so the dispatcher stays under the file-size
- * budget (ADR 061) as the prompt set grows.
+ * budget (ADR 053) as the prompt set grows.
  */
 
 /**
@@ -52,7 +52,7 @@ export function sessionTaskPrompt(name, args, user) {
             `Compress with rule_tool_compress. Options: ${args.options ?? "both"}.`,
             "",
             "1. Call `rule_tool_compress` with the text to transform and mode both | compression | fingerprint.",
-            "2. This is the sole compression engine (ADR 115): use it for inbound prompt/context preprocessing",
+            "2. This is the sole compression engine (ADR 107): use it for inbound prompt/context preprocessing",
             "   and for outbound prose postprocessing. Do not invent a parallel compression path.",
             "3. Report tokens before/after when the tool returns them. Keep code fences, URLs and JSON intact.",
             "4. If no text is in the chat, ask the user what to compress before calling the tool.",

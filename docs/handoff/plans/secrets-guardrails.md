@@ -1,7 +1,7 @@
 # secrets-guardrails
 
 - **Plan**: `docs/plans/_secrets-guardrails.md` (retired)
-- **ADR**: 212 (`212-close-out-plan-secrets-guardrails.md`)
+- **ADR**: 212 (`203-close-out-plan-secrets-guardrails.md`)
 
 ## Delivered
 

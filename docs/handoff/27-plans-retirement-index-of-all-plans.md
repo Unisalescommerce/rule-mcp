@@ -7,8 +7,8 @@
 
 ### Retired
 
-- `docs/plans/plan-of-plans.md` - the level-0 orchestrator, stages 0-8 complete, `Status: done`, zero real open checkboxes. Retired into ADR 170; file deleted.
-- `docs/plans/_plan-of-plans-reference.md` - the plan-graph audit, `Status: done` with eight follow-ups. Retired into ADR 171; file deleted.
+- `docs/plans/plan-of-plans.md` - the level-0 orchestrator, stages 0-8 complete, `Status: done`, zero real open checkboxes. Retired into ADR 161; file deleted.
+- `docs/plans/_plan-of-plans-reference.md` - the plan-graph audit, `Status: done` with eight follow-ups. Retired into ADR 162; file deleted.
 
 ### Open plans (96 files, 1,490 open items)
 
@@ -29,9 +29,9 @@ F1 apply the contract stage by stage; F2 decide the Stage 3 order; F3 decide the
 
 ### ADRs
 
-- ADR 170 - retire the plan-of-plans into an ADR and a handoff.
-- ADR 171 - retire the plan-graph audit reference into an ADR and a handoff.
-- ADR 172 - retire closed plans into ADRs and one handoff.
+- ADR 161 - retire the plan-of-plans into an ADR and a handoff.
+- ADR 162 - retire the plan-graph audit reference into an ADR and a handoff.
+- ADR 163 - retire closed plans into ADRs and one handoff.
 
 ### Next
 

@@ -105,7 +105,7 @@ boot are neither.
 
 ## Retained area guardrail backlog
 
-ADR 136 proposed this rule set before ADR 175 moved area work into skill plans.
+ADR 128 proposed this rule set before ADR 166 moved area work into skill plans.
 This plan owns: `dockerignore-hardening`, `docker-no-build-secrets`, `compose-hardening`.
 
 The fixtures-first, implementation, and verification phases above include these

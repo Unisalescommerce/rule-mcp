@@ -33,7 +33,7 @@ export async function runWriteHook(payload, write) {
   // answered yes: the harness only runs a tool call the person allowed.
   noteWriteLanded(payload?.cwd);
 
-  // A settings file written before ADR 129 still calls this from PreToolUse.
+  // A settings file written before ADR 121 still calls this from PreToolUse.
   // There it can only wave the write through: the answer is the one shape that
   // decides nothing, and `neverBlocks` makes that true by construction.
   const answer = payload?.hook_event_name === "PreToolUse" ? ALLOW : report.advice ? advise(report.advice) : SILENT;

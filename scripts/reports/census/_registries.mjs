@@ -38,7 +38,7 @@ const guardrails = await import("../../../packages/mcp/core/guardrails/index.js"
 
 /**
  * The role a persona name addresses, or nothing when the name is not one.
- * Canonical form: `rule-persona-<role>` (ADR 120).
+ * Canonical form: `rule-persona-<role>` (ADR 112).
  *
  * @param {string} name
  * @returns {{role: string} | undefined}

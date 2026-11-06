@@ -11,7 +11,7 @@
  * 1. **What a hook costs**: wall time and context size for each kind, because
  *    every character a hook injects is paid on every turn of every session.
  * 2. **Whether a warmed decision would be served**: the decision cache replay is
- *    behind `RULE_MCP_DECISION_CACHE_REPLAY=1` (ADR 166 keeps it off), so a
+ *    behind `RULE_MCP_DECISION_CACHE_REPLAY=1` (ADR 157 keeps it off), so a
  *    prefetch written by `UserPromptSubmit` has no reader.
  * 3. **Whether an eager invalidation would save a stale read**: `cacheGet` checks
  *    the entry's dependencies and evicts on the read that found them stale, so an
@@ -108,7 +108,7 @@ if (process.argv.includes("--json")) {
     process.stdout.write(`${line([row.kind, row.wall.toFixed(1), row.chars, Math.round(row.chars / 4)])}\n`);
   }
 
-  process.stdout.write(`\nDecision-cache replay enabled: ${replayOn ? "yes - a prefetch would be served" : "no (ADR 166) - a prefetch would be written and never read"}\n`);
+  process.stdout.write(`\nDecision-cache replay enabled: ${replayOn ? "yes - a prefetch would be served" : "no (ADR 157) - a prefetch would be written and never read"}\n`);
   process.stdout.write(`Fresh read served: ${report.cache.freshReadServed ? "yes" : "no"}\n`);
   process.stdout.write(`Stale read served without eager invalidation: ${report.cache.staleReadServed ? "yes" : "no - cacheGet evicts on the read"}\n`);
   process.stdout.write(`Dependency check works both ways: ${report.cache.dependencyCheckWorks ? "yes" : "no"}\n`);

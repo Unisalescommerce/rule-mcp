@@ -1,7 +1,7 @@
 /**
 @module core/plans/shape
 
-Contract for AI-assisted development plans (ADR 154 amendment / WS3 of
+Contract for AI-assisted development plans (ADR 146 amendment / WS3 of
 docs/plans/_asd-ste100.md). Persona trio checklists stay finding-shaped
 (ADR 59); this scanner applies to product development plans under docs/plans/.
 */

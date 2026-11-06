@@ -12,11 +12,11 @@
 
 ### Shipped this session
 
-**One command starts the six case-study apps (ADR 123).** The three bookmarks web apps and three phonebook Electron apps each hardcoded dev ports, and the Electron mains hardcoded their renderer URL, so six terminals collided. `pnpm case-studies` (`scripts/case-studies/index.mjs`) allocates one Vite port and one API port per app from per-app bases, exports them as `VITE_PORT`, `PORT`, `VITE_API_ORIGIN`, `VITE_API_URL`, CORS origins and `ELECTRON_RENDERER_URL`, starts the six in parallel with app-prefixed logs, and kills every process group on Ctrl-C. The apps read their ports from the environment and keep the old defaults for standalone runs. `phonebook-ds4-flash` gained `electron/package.json` with `"type": "commonjs"` so its CommonJS main loads despite the app's `type: module`. `case-studies/**` is now tracked (six apps plus the two benchmark reports).
+**One command starts the six case-study apps (ADR 115).** The three bookmarks web apps and three phonebook Electron apps each hardcoded dev ports, and the Electron mains hardcoded their renderer URL, so six terminals collided. `pnpm case-studies` (`scripts/case-studies/index.mjs`) allocates one Vite port and one API port per app from per-app bases, exports them as `VITE_PORT`, `PORT`, `VITE_API_ORIGIN`, `VITE_API_URL`, CORS origins and `ELECTRON_RENDERER_URL`, starts the six in parallel with app-prefixed logs, and kills every process group on Ctrl-C. The apps read their ports from the environment and keep the old defaults for standalone runs. `phonebook-ds4-flash` gained `electron/package.json` with `"type": "commonjs"` so its CommonJS main loads despite the app's `type: module`. `case-studies/**` is now tracked (six apps plus the two benchmark reports).
 
 **Tool registration is idempotent by name.** The core tools are registered from two entry points in one process (the CLI `preAction` hook and `startServer`), so a blind push advertised `rule_tool_gateway` and `rule_tool_apply` twice and every MCP client had to dedupe them. `registerTool` now replaces an existing name in place, preserving registry order, and `resetTools` owns the generation bump. The registry state moved to `src/tools/router/_registry.js`; `src/tools/router/_hooks.js` re-exports its public surface. New test `src/tools/router/__tests__/_registry-idempotency.test.mjs` covers duplicate-name, order and `bootstrapCoreTools`. Verified: 3/3 pass under `node --import ./scripts/alias-hook.mjs --test`.
 
-**Generated docs refreshed.** ADR 123 recorded and indexed; `docs/02-architecture.md` decision count 122 -> 123; `tests/fixtures/census.json` hash regenerated; `site-dist/index.html` rebuilt to the live surface (107 tools, 37 prompts, 40 slash commands).
+**Generated docs refreshed.** ADR 115 recorded and indexed; `docs/02-architecture.md` decision count 122 -> 123; `tests/fixtures/census.json` hash regenerated; `site-dist/index.html` rebuilt to the live surface (107 tools, 37 prompts, 40 slash commands).
 
 Surface unchanged this session: 107 tools, 40 commands, 37 prompts, 89 skills.
 
@@ -65,7 +65,7 @@ Every commit is `type(scope): subject`; the commit-msg hook rejects a scope-less
 
 Branch: `main` (30 commits ahead of origin/main; never pushed).
 Commit range covered: `47490808..9c8f8a13`.
-Shipped this session: `pnpm case-studies` starts the six case-study apps on allocated ports (ADR 123), and `registerTool` is idempotent by name (registry moved to `src/tools/router/_registry.js`). The surface is unchanged at 107 tools, 40 commands, 37 prompts; site-dist and the census were refreshed.
+Shipped this session: `pnpm case-studies` starts the six case-study apps on allocated ports (ADR 115), and `registerTool` is idempotent by name (registry moved to `src/tools/router/_registry.js`). The surface is unchanged at 107 tools, 40 commands, 37 prompts; site-dist and the census were refreshed.
 
-First step: resume the documentation site and the presentation deck. Ask the user which artifact to start and whether the deck is new or already exists, then confirm the docs-site surface/counts pages (`scripts/docs-site/`, `site-dist/`) match the live surface and ADR 123 before touching the deck.
+First step: resume the documentation site and the presentation deck. Ask the user which artifact to start and whether the deck is new or already exists, then confirm the docs-site surface/counts pages (`scripts/docs-site/`, `site-dist/`) match the live surface and ADR 115 before touching the deck.
 ```

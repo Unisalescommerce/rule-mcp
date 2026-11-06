@@ -109,7 +109,7 @@ class of mistake as a rule with no fixture: a claim with nothing behind it.
 
 ## Retained area guardrail backlog
 
-ADR 136 proposed this rule set before ADR 175 moved area work into skill plans.
+ADR 128 proposed this rule set before ADR 166 moved area work into skill plans.
 This plan owns: `test-coverage-thresholds`, `test-no-focused`, `test-no-fixed-sleep`, `test-setup-required`.
 
 The fixtures-first, implementation, and verification phases above include these

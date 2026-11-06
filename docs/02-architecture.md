@@ -57,7 +57,7 @@ Live counts and the Command - Tool - Skill table: [Surface map](./17-surface-map
 - **Local-first**: skills on disk; no required network for core use.
 - **Model-agnostic**: no LLM inside the server.
 - **Registry-driven**: census and agent commands derive from the same registries.
-- **ADR 117**: leaf skills have no slash; area hubs collect them.
+- **ADR 109**: leaf skills have no slash; area hubs collect them.
 
 ## Related
 

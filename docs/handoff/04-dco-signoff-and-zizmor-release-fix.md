@@ -76,7 +76,7 @@
 
 - a0b34e6 fix(ci): satisfy zizmor in the release workflow
 - cf9a22a docs(plans): close Step 31, add GitHub admin checklist
-- ef02cb8 docs(adr): record session-close archiving as ADR 087
+- ef02cb8 docs(adr): record session-close archiving as ADR 079
 - 3ce2120 feat(handoff): archive completed audits, reviews and plans on close-session
 - 2cbd892 fix(personas): parse persona files with CRLF line endings
 

@@ -41,7 +41,7 @@ export async function evaluateDecision(toolName, args, threshold = SHADOW_THRESH
   }
 
   // The multilingual model's cache answers were overconfident on the corpus
-  // (ADR 163): keep it on routing and leave the cache gate to the English model.
+  // (ADR 154): keep it on routing and leave the cache gate to the English model.
   if (model.alias === "julia") {
     return null;
   }

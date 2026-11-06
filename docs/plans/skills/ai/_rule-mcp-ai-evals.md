@@ -18,7 +18,7 @@ practice with a failure mode attached, and the ordering is deliberate: look at
 traces, then build the interface, then write code checks, then a judge, then
 calibrate it. Most eval advice starts at the judge.
 
-ADR 137 gives the area an `ai-eval-presence` rule (Tier B). This leaf adds the
+ADR 129 gives the area an `ai-eval-presence` rule (Tier B). This leaf adds the
 three that make an eval worth running.
 
 ## The four rules
@@ -44,9 +44,9 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 
 ### Phase 0 - Decisions
 
-- [ ] Implement ADR 137: the eight `ai-*` rules in `rule-ai/guardrails`, including
+- [ ] Implement ADR 129: the eight `ai-*` rules in `rule-ai/guardrails`, including
       `ai-eval-presence`, which is this leaf's floor.
-- [ ] The four children declare `inherits: [rule-ai]` (ADR 137's open question).
+- [ ] The four children declare `inherits: [rule-ai]` (ADR 129's open question).
 - [ ] ADR: the AI family shape, superseding the proposed status of 137.
 
 ### Phase 1 - Fixtures first (red)

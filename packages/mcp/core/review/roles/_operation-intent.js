@@ -4,7 +4,7 @@
  * How deep a persona run goes, decided from the request the user typed after
  * `/rule-persona-<role>`. The command was split three ways per role (57 commands
  * for 19 roles); folding it back into one command moves the choice into the
- * argument, the same move ADR 116 made for the check siblings.
+ * argument, the same move ADR 108 made for the check siblings.
  *
  * The ladder is cumulative, because each document is derived from the previous
  * one: an audit always runs, a review adds `docs/reviews/`, a plan adds

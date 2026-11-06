@@ -15,7 +15,7 @@ export function commandSection(data) {
     "",
     `The router \`/${ROUTER_COMMAND}\` is pinned first; the rest follow in`,
     "locale-alphabetical order. The same set is written for every agent and IDE,",
-    "in that host's own format (ADR 034).",
+    "in that host's own format (ADR 026).",
     "",
     "Directories are resolved per machine and are not listed here: they depend on",
     "which agents are installed and where their homes are.",

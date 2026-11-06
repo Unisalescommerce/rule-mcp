@@ -2,7 +2,7 @@
  * @module cli/setup/plan-project
  *
  * Install / refresh / uninstall plans that touch project trees only.
- * Global shim, skills and platform service stay out of these plans (ADR 193).
+ * Global shim, skills and platform service stay out of these plans (ADR 184).
  */
 
 import { resolve } from "node:path";

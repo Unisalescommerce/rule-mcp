@@ -41,7 +41,7 @@ export function commandKinds(data) {
 
   return [
     { kind: "router", what: "Routes a free-text request to the skill that answers it", commands: kinds.router },
-    { kind: "area", what: "Area hub: free text routes to leaf skills/tools (ADR 117)", commands: kinds.area },
+    { kind: "area", what: "Area hub: free text routes to leaf skills/tools (ADR 109)", commands: kinds.area },
     { kind: "workflow", what: "Runs a named workflow (e.g. /rule-check auto-detects guardrails)", commands: kinds.workflow },
     { kind: "session", what: "Carries a session across a context boundary", commands: kinds.session },
     { kind: "persona", what: "Runs one review role at one operation, and writes its documents", commands: kinds.persona },

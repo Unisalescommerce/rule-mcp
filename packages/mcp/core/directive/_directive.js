@@ -17,7 +17,7 @@
  *
  * Flight guidance (`rule-area-process-flight`) rides along: full block on
  * SessionStart, a short fragment on every UserPromptSubmit. Opt out of flight
- * alone with RULE_MCP_NO_FLIGHT=1 (ADR 114).
+ * alone with RULE_MCP_NO_FLIGHT=1 (ADR 106).
  *
  * @see module:core/agents/hooks - the hook entries that carry it
  * @see module:cli/guard - the command those hooks invoke

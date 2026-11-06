@@ -3,7 +3,7 @@
  *
  * The one confirmation a task can be asked for: this change is structural.
  *
- * Everything else the file hooks do reports (ADR 129). This gate is the
+ * Everything else the file hooks do reports (ADR 121). This gate is the
  * exception, and it is scoped to be one: it asks per task, not per file, and it
  * goes quiet for the rest of the task once the answer is in. A second file of
  * the same architectural change is the same decision, already taken.
@@ -11,7 +11,7 @@
  * The model's own declaration is the normal road - it is the one that knows
  * whether a change is architectural. The two signals below are the net under
  * it, for the task that never declared itself. Creating a file is not one of
- * them (ADR 129): a new module is ordinary work, and asking about it asked
+ * them (ADR 121): a new module is ordinary work, and asking about it asked
  * about every test file a task wrote first.
  *
  * @see module:cli/guard/_task - where the answer is remembered

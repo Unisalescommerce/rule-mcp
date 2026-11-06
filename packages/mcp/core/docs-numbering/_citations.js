@@ -4,28 +4,20 @@
  * Every form a citation takes, rewritten in every tree that carries one.
  *
  * A number in a filename is an alias. When the alias moves, the documents that
- * point at it have to move with it, or a reader follows a citation to a
- * different decision. The first version of this rewrite handled markdown links
- * under `docs/` only, which left a prose `ADR 214` in `docs/plans/` and a
- * `adr/214-slug.md` in `packages/` pointing at whatever took the old number
- * (ADR 219).
+ * point at it move with it, or a reader follows a citation to a different
+ * decision. Three forms cover what the tree writes: the link
+ * `[214](214-slug.md)`, whose label and target both move; the path
+ * `214-slug.md`, with or without a directory in front of it; and the prose
+ * `ADR 214`, `ADR 0214`, and the paired `ADR 214/218`, which moves only the
+ * number that moved.
  *
- * Three forms, because the tree writes three:
- *
- * - the link `[214](214-slug.md)`, whose label and target both move;
- * - the path `214-slug.md`, with or without a directory in front of it;
- * - the prose `ADR 214`, `ADR 0214`, and the paired `ADR 214/218`, which moves
- *   only the number that moved.
- *
- * Anything else that still names a moved number is reported, not ignored. The
- * caller decides what to do with it; a silent miss is the failure this exists
- * to prevent.
+ * A mention in any other form is reported, not ignored: the caller decides
+ * what to do with it, and a silent miss is the failure this exists to prevent.
  *
  * Test files are skipped. A fixture writes `069-personas.md` to mean "a
  * document numbered 069", not "the decision 069 holds", and its numbers are
- * arranged to exercise the code rather than to point at a record. Rewriting
- * them moves half of a fixture that was consistent and leaves the bare numbers
- * it asserts on, which is how one compaction broke four tests (ADR 219).
+ * arranged to exercise the code. Rewriting half of a consistent fixture leaves
+ * the bare numbers it asserts on, which is how one run broke four tests.
  */
 
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
@@ -106,12 +98,11 @@ export function rewriteCitations({ projectDir = ".", renames = [], onProgress = 
   }
 
   const files = CITATION_ROOTS.flatMap((root) => citableFiles(join(projectDir, root))).filter((file) => !isFixture(file));
-
-  onProgress({ step: "citations", message: `Reading ${files.length} file(s) for citations` });
-
   const unresolved = [];
   let filesUpdated = 0;
   let replacements = 0;
+
+  onProgress({ step: "citations", message: `Reading ${files.length} file(s) for citations` });
 
   for (const file of files) {
     const before = readFileSync(file, "utf8");
@@ -123,15 +114,12 @@ export function rewriteCitations({ projectDir = ".", renames = [], onProgress = 
       const newFile = `${rename.toNumber}-${rename.slug}.md`;
       const oldLink = `[${rename.fromNumber}](${oldFile})`;
       const newLink = `[${rename.toNumber}](${newFile})`;
+      const prose = prosePattern(rename.fromNumber);
 
       moved += countOf(after, oldLink);
       after = after.replaceAll(oldLink, newLink);
-
-      // The target of a link that did not use the label form, and the bare path.
       moved += countOf(after, oldFile);
       after = after.replaceAll(oldFile, newFile);
-
-      const prose = prosePattern(rename.fromNumber);
       moved += (after.match(prose) ?? []).length;
       after = after.replace(prose, `ADR ${rename.toNumber}`);
     }

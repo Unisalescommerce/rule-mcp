@@ -5,7 +5,7 @@
  * `pnpm release`: cut a release of this server from main.
  *
  * The version is derived from the commits since the last release tag, unless
- * `--version` forces one (ADR 133: the first cut is `v0.1.0`). The run bumps
+ * `--version` forces one (ADR 125: the first cut is `v0.1.0`). The run bumps
  * the manifests, regenerates the census and the changelog, runs `pnpm run ci`,
  * commits `chore(release): vX.Y.Z`, tags it, and pushes main and the tag
  * atomically.
@@ -16,8 +16,8 @@
  *   pnpm release --no-checks             skip `pnpm run ci`
  *   pnpm release --no-push               commit and tag locally, push nothing
  *
- * @see docs/adr/130-this-server-releases-itself-with-pnpm-release-and-the-push-is-the-release.md
- * @see docs/adr/133-first-release-is-v0-1-0-then-semver-from-commits.md
+ * @see docs/adr/122-this-server-releases-itself-with-pnpm-release-and-the-push-is-the-release.md
+ * @see docs/adr/125-first-release-is-v0-1-0-then-semver-from-commits.md
  */
 
 import { fileURLToPath } from "node:url";

@@ -20,7 +20,7 @@ export const UNINSTALL_RAIL = { select: 0, purge: 1, review: 2, remove: 3, done:
  * The install steps, always the same order.
  *
  * Surface is the only place that picks a tier: the slash-command files follow
- * that answer, so there is no separate Commands screen (ADR 178).
+ * that answer, so there is no separate Commands screen (ADR 169).
  *
  * @returns {string[]}
  */

@@ -13,31 +13,31 @@ verified), `rule-mcp` routing before implementation, `rule_tool_check` before
 committing, and Conventional Commits with mandatory scope plus DCO
 `Signed-off-by` trailers (active since the Step 5 commit).
 
-- **Setup wizard** (`829c368`, ADR 080): Node/Ink wizard behind
+- **Setup wizard** (`829c368`, ADR 072): Node/Ink wizard behind
   `rule-mcp setup`, four shell scripts shrunk to bootstraps.
   Closed the earlier install/uninstall complaint: each agent's
   install/uninstall is scoped to that agent only.
 - **Phase 1**: Step 12 (drop self `link:` dep), Step 4 (registry install
-  claims -> clone path), Step 3 (server.json `io.github.pixu1980`, ADR 081),
+  claims -> clone path), Step 3 (server.json `io.github.pixu1980`, ADR 073),
   Step 2 code (SECURITY.md private channel; owner clicks 2.1/2.5 open),
   Step 20 (CHANGELOG header + generator preamble), Step 21 (version
   script + package.json fields), Step 18 (holder pixu1980 + AUTHORS).
 - **Phase 2**: Step 7 (action SHAs + zizmor workflow), Step 8
   (permissions), Step 9 (dependabot + cooldown; 9.4 closed later via
   CONTRIBUTING text), Step 28 (audit gate), Step 31 (padded tables),
-  Step 10 (CodeQL), Step 6 (3-job release pipeline + ADR 082), Step 1
+  Step 10 (CodeQL), Step 6 (3-job release pipeline + ADR 074), Step 1
   (manifests, `test:all` 1205/0).
-- **Phase 3**: Step 16 (governance + ADR 083), Step 15 (CONTRIBUTING),
+- **Phase 3**: Step 16 (governance + ADR 075), Step 15 (CONTRIBUTING),
   Step 5 (DCO), Step 14 (Covenant 3.0), Step 19 (commit types),
-  Step 23 (ROADMAP.md), Step 25 (funding), Step 26 (TRADEMARK + ADR 084).
+  Step 23 (ROADMAP.md), Step 25 (funding), Step 26 (TRADEMARK + ADR 076).
 - **Phase 4**: Step 17 (SPDX on 989 files, REUSE.toml, 1538/1538
-  compliant, 3 ADR 061 splits, `test:all` 1209/0).
+  compliant, 3 ADR 053 splits, `test:all` 1209/0).
 - **Phase 5**: Step 27 (docs site generator + Pages), Step 11 (tag-pinned
   verified pipe), Step 22 (Scorecard/SBOM via cdxgen), Step 24 (README),
   Step 29 code (signing docs + tag gate).
 - **Phase 6**: Step 30 (preserved-controls lens on oss persona).
-- **Owner extras**: version reset 1.0.0 -> 0.1.0 (ADR 085, tag v1.0.0
-  deleted locally); Step 13 closed as superseded by ADR 080; follow-up
+- **Owner extras**: version reset 1.0.0 -> 0.1.0 (ADR 077, tag v1.0.0
+  deleted locally); Step 13 closed as superseded by ADR 072; follow-up
   batch (setup.sh deletion, truthful hints, org fixes, manifest hashes
   in `version --apply`).
 

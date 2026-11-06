@@ -8,8 +8,8 @@
 
 | Commit     | Change                                                                                                                        |
 | ---------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `bc27ba90` | `docs(adr): record ADR 215 and close out three completed plans` - ADR 216, 217, 218 plus their handoffs.                      |
-| `192a8ddc` | `fix(cli): drop the pnpm global link on uninstall and deploy one project` - the code ADR 215 describes, with four test files. |
+| `bc27ba90` | `docs(adr): record ADR 206 and close out three completed plans` - ADR 207, 217, 218 plus their handoffs.                      |
+| `192a8ddc` | `fix(cli): drop the pnpm global link on uninstall and deploy one project` - the code ADR 206 describes, with four test files. |
 | `de8b11e1` | `chore(deps): bump opentui, eslint, jsdom, marked, playwright and the inspector`.                                             |
 | `3f63e708` | `chore(census): refresh the snapshot the ADR closeout shifted`.                                                               |
 | `e35c89a2` | `docs(plans): close the pi 1.5.0 skill-loading steps` - WS1-T3 and WS1-T3.1, plan `Status: done`.                             |
@@ -35,12 +35,12 @@ This session ran the handoff with its default closeout. It rewrote the corpus:
 
 Two examples:
 
-- "main is the only branch" moved from 214 to 205. `docs/plans/plan-of-plans.md` and `docs/plans/_publication-cutover.md` still cite ADR 214.
-- `packages/mcp/tools/adr/_english.js` still cites ADR 057.
+- "main is the only branch" moved from 214 to 205. `docs/plans/plan-of-plans.md` and `docs/plans/_publication-cutover.md` still cite ADR 205.
+- `packages/mcp/tools/adr/_english.js` still cites ADR 049.
 
 Handoff 52 warned about this behavior. It is real.
 
-The tree was reverted: `git checkout -- .` plus `git clean -fd docs/adr docs/handoff`. Nothing was lost. The sweep also archived `_pi-integration-and-debt.md` as ADR 241, and that closeout can run again after the repair is fixed.
+The tree was reverted: `git checkout -- .` plus `git clean -fd docs/adr docs/handoff`. Nothing was lost. The sweep also archived `_pi-integration-and-debt.md` as ADR 232, and that closeout can run again after the repair is fixed.
 
 The handoff was then re-run with `closeout: false`, which writes nothing.
 

@@ -56,8 +56,8 @@ export const ROUTER = {
 };
 
 /**
- * Uniform body for an area hub command (ADR 117: collectors only). Check intent
- * in $ARGUMENTS flips to the guardrail-only path (ADR 116).
+ * Uniform body for an area hub command (ADR 109: collectors only). Check intent
+ * in $ARGUMENTS flips to the guardrail-only path (ADR 108).
  *
  * @param {string} description - the prompt's registry description
  * @param {{ skill?: string, members?: string[] }} [opts]
@@ -105,7 +105,7 @@ export function areaBody(description, { skill, members = [] } = {}) {
 
 /**
  * Body for the general `/rule-check` command (auto-detects area from context).
- * Kept as an explicit workflow; area siblings were folded into parents (ADR 116).
+ * Kept as an explicit workflow; area siblings were folded into parents (ADR 108).
  */
 export const generalCheckBody = [
   "Auto-detect area and run rule-mcp guardrails validation: $ARGUMENTS",

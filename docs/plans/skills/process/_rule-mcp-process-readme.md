@@ -3,7 +3,7 @@
 Status: `planned`
 Notes:`planned` Notes: plan only. Each skill waits for the owner before implementation. Output convention: one plan per skill at `docs/plans/skills/<area>/<skill>.md`. Index: `docs/plans/skills/README.md`.
 
-Area: process. Order: after the move from styleguide (ADR 145).
+Area: process. Order: after the move from styleguide (ADR 137).
 
 ## Evaluation outcome
 
@@ -58,7 +58,7 @@ cites is external, and the plan keeps it as the origin of the structure.
 
 | Question     | Decision                                                                                                           |
 | ------------ | ------------------------------------------------------------------------------------------------------------------ |
-| Area         | `process`; the rename is done (ADR 145)                                                                            |
+| Area         | `process`; the rename is done (ADR 137)                                                                            |
 | OSS persona  | `rule-process-readme` added to evidence skills, plus a lens on the README as the first contact                     |
 | Scope        | The skill covers both the open source and the internal repository structure; the description is corrected          |
 | Badges       | A minimal set is allowed when a badge states a fact that is not already in the text                                |
@@ -145,7 +145,7 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 ### Phase 0 - Evaluation, move and decisions
 
 - [x] Evaluate the area and record the outcome.
-- [x] Move the skill to `rule-process-readme` (ADR 145).
+- [x] Move the skill to `rule-process-readme` (ADR 137).
 - [x] Add the skill to the Open Source Steward persona.
 - [x] Interview the owner and record the decisions.
 - [x] Create this plan and the index entry.

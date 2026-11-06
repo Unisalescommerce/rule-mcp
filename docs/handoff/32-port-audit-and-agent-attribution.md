@@ -10,7 +10,7 @@
 1. **Handoff 31 verified, not trusted** — ADRs 187, 190–192, 194–197 read as `accepted` in `docs/adr/`, and 195/196 confirmed. One claim was stale: handoff 31 said the work was on `main` "exists, not checked out", while `rel/v0.1.0` was checked out and is the branch its own resume prompt named. No closeout writes were pending, so no `docs(adr)` sweep commit was needed.
 2. **Port audit, the plan's open step** — The sibling checkout is not on this machine, so the diff ran against the plan's steps and the tree: seven subsystems landed and each kept something this repository already did better (numbering doctor `-M70%`, one host table with legacy paths, Junie path, ADR policy order, pending-ADR merge driver, features catalog, project scope). Recorded in `docs/plans/installer-scope-adr-policy-features.md`.
 3. **Attribution is per agent (plan step 7 rewritten)** — The step was a Claude Code switch; it is now `_attribution.data.js`: one row per agent in `allAgents()` (23 today) with `{ agent, mechanism, file, key, keep, hide, evidence }`, mechanism one of `commit-trailer`, `pr-body`, `tool-signature`, `none`. A row is written only with a cited vendor page; an unverified row has no values and produces no writer. `applyAttribution(agent, text, { mode })` keeps the invariants: a user value stays, `hide` undoes only what an install wrote, an unparseable file is refused, a non-project install writes nothing into a project.
-4. **A false closeout, undone** — `rule_tool_handoff` archived the plan into ADR 198 and deleted the source file, because the only checkbox in `## Steps` had just been checked. Restored the plan from `HEAD`, re-applied this session's edits, deleted ADR 198, restored `ADR.md`, and set `Status: in-progress` with the five remaining open boxes so the sweep can read the plan's real state. The duplicated `Notes:` line in the header went with it.
+4. **A false closeout, undone** — `rule_tool_handoff` archived the plan into ADR 189 and deleted the source file, because the only checkbox in `## Steps` had just been checked. Restored the plan from `HEAD`, re-applied this session's edits, deleted ADR 189, restored `ADR.md`, and set `Status: in-progress` with the five remaining open boxes so the sweep can read the plan's real state. The duplicated `Notes:` line in the header went with it.
 
 ## Commits this handoff window
 
@@ -19,7 +19,7 @@
 
 ## ADRs
 
-- pending: `docs/adr/229-attribution-is-one-table-row-per-agent-and-an-undocumented-agent-is-left-alone.md` (numbers on trunk landing)
+- pending: `docs/adr/220-attribution-is-one-table-row-per-agent-and-an-undocumented-agent-is-left-alone.md` (numbers on trunk landing)
 
 ## Left out / next
 

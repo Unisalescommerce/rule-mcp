@@ -15,7 +15,7 @@ export const normalized = (launcher) => (typeof launcher === "string" ? { comman
  */
 export function guardCommand(launcher, subcommand) {
   const { command, args = [] } = normalized(launcher);
-  // `--send` talks to the warm guard daemon (ADR 188). Install starts the daemon
+  // `--send` talks to the warm guard daemon (ADR 179). Install starts the daemon
   // when hooks are written; a missing daemon fails the hook loudly instead of
   // silently paying a full CLI spawn again.
   const line = [command, ...args, "guard", "--send", subcommand].map((part) => (/\s/.test(part) ? JSON.stringify(part) : part)).join(" ");

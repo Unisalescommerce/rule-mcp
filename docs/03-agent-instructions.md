@@ -83,7 +83,7 @@ nothing, so resuming twice from the same handoff works twice.
 3. Treat repository/tool evidence as source of truth. Never invent APIs, files, dependencies, tools, requirements, or successful checks.
 4. If evidence missing, call `rule_tool_search`; if still absent, state uncertainty.
 5. Write failing tests before implementation changes.
-6. Use `/rule-area-styleguide` (name leaves like file-tree in the request) for templates and project tree work (ADR 115/117).
+6. Use `/rule-area-styleguide` (name leaves like file-tree in the request) for templates and project tree work (ADR 107/117).
 7. Run `rule_tool_check`. Failed guardrails are blocking; fix and rerun until all pass.
 8. Run project tests/typecheck and report only commands actually executed.
 9. Record structural decisions with `rule_tool_process_adr` (disabled by default, enable with `RULE_MCP_AUTO_ADR=1`).
@@ -119,7 +119,7 @@ Every agent receives the same **registry-driven** clean command set - the `/rule
 ## Minimal tool surface
 
 Set `RULE_MCP_MINIMAL_TOOLS=1` (off by default) to expose only the fixed dispatcher/action
-allowlist (ADR 115) instead of the full per-skill surface (fits clients that cap or truncate the
+allowlist (ADR 107) instead of the full per-skill surface (fits clients that cap or truncate the
 tool list, and costs less context on every turn): `rule_tool`, `rule_tool_meta`, `rule_tool_update`,
 `rule_tool_init`, `rule_tool_gateway`, `rule_tool_apply`, `rule_tool_search`, `rule_tool_check`,
 `rule_tool_compress`, `rule_tool_detect`, `rule_tool_handoff`, `rule_tool_handon`, `rule_tool_stats`,

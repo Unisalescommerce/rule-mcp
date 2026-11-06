@@ -1,7 +1,7 @@
 /**
  * @module core/guardrails/helpers
  *
- * What a guardrail is handed to do its job (ADR 089).
+ * What a guardrail is handed to do its job (ADR 081).
  *
  * A rule imports nothing. The engine passes this bag as `context.helpers` on
  * every check, so a rule file is a plain module that resolves the same wherever

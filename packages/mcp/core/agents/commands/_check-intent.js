@@ -2,7 +2,7 @@
  * @module core/agents/commands/check-intent
  *
  * Whole-token keywords that flip an area or router slash command into the
- * guardrail-only path (ADR 116). Kept in one list so bodies, tests and the ADR
+ * guardrail-only path (ADR 108). Kept in one list so bodies, tests and the ADR
  * cannot drift.
  */
 

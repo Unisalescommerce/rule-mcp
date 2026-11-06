@@ -4,7 +4,7 @@ Status: `planned`
 Notes:`planned` Notes:revision 2, 2026-10-21. Written for `skills/rule-process-bmad`; the family it describes is now `rule-mcp-method`. This file replaces the previous "best-practice implementation plan" in place, and then supersedes its own single-skill scope: the owner decided on 2026-10-21 that each methodology gets a skill, under a new `rule-mcp-method` area.
 
 Area: method. Old index row: `#32`, `rule-process-bmad` (process). Read this
-plan together with ADR 149 (superseded by 150) and ADR 150.
+plan together with ADR 141 (superseded by 150) and ADR 142.
 
 ## Target surface
 
@@ -75,7 +75,7 @@ nothing else.
 - Ten files mention `rule-process-bmad`: the skill, `rule-process`, the `rule-mcp`
   dispatcher, `docs/09-skills.md`, `docs/17-surface-map.md`,
   `docs/plans/skills/README.md`, the `rule-process-tdd` plan, this plan, and
-  ADR 149 plus the ADR index.
+  ADR 141 plus the ADR index.
 
 ### What an area is, mechanically
 
@@ -91,8 +91,8 @@ nothing else.
   `rule_tool_process_bmad` becomes `rule_tool_method_bmad` in the same run.
 - `src/tools/ai/_rank-skills.js` has no BMAD branch, so the rename needs no
   ranker edit. Its framework-bias list does not name `process` either.
-- Rename precedent: ADR 142 (`rule-toolchain-project` -> `rule-styleguide-configuration`)
-  and ADR 143 (`rule-toolchain-commits` -> `rule-styleguide-git`). ADR 143 is the
+- Rename precedent: ADR 134 (`rule-toolchain-project` -> `rule-styleguide-configuration`)
+  and ADR 135 (`rule-toolchain-commits` -> `rule-styleguide-git`). ADR 135 is the
   template: directory, name, tool name, router rows, cross-references, census.
 
 ### How guardrails work here (this constrains the design)
@@ -102,7 +102,7 @@ nothing else.
   `check(code, context)` and `pass: false` is a failure. There is **no severity
   field** - "Tier B" is a wiring decision: these rules ship in their own suite
   and are never added to a blocking gate.
-- A rule **imports nothing** (ADR 089): what it needs arrives in `context`.
+- A rule **imports nothing** (ADR 081): what it needs arrives in `context`.
   Filesystem-shaped rules therefore never touch `fs`; they read an injected
   `context.fileList` (repo-relative POSIX paths).
 - Frontmatter `guardrails: [...]` and the exported ids are cross-checked
@@ -158,11 +158,11 @@ Produces: `rule-mcp-method`
 
 - [x] Interview the owner; fix scope, tier, detection, homes, gates.
 - [x] Rewrite this plan in place.
-- [x] ADR 149 - one SDD framework per repository, chooser over peer skills.
-- [x] ADR 150 - open the `rule-mcp-method` area, one skill per framework, rename
+- [x] ADR 141 - one SDD framework per repository, chooser over peer skills.
+- [x] ADR 142 - open the `rule-mcp-method` area, one skill per framework, rename
       `rule-process-bmad` to `rule-mcp-method-bmad`. Supersedes 149; 149 flipped to
       `superseded` and the ADR index was rebuilt in the same step.
-- [ ] ADR 151 - filesystem-shaped rules read an injected file list, all Tier B.
+- [ ] ADR 143 - filesystem-shaped rules read an injected file list, all Tier B.
 
 ### Phase 1 - Structure before content (pure moves)
 

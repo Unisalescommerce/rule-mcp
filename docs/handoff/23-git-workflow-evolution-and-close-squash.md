@@ -27,7 +27,7 @@ feature's ADRs and handoffs as their own commits.
 - `71fbaf32` feat(handoff): consolidate the feature ADRs and handoffs at the close squash
 - `5de53654` chore(case-studies): app bookmark and architect artifacts (data, not code)
 
-### Decisions (ADR 124-128)
+### Decisions (ADR 116-128)
 
 - **124** - the tool-call host is a list, so self-update and the sync guard coexist.
 - **125** - normalize the feature history on the merge base, and hold every rewrite to the tree invariant.

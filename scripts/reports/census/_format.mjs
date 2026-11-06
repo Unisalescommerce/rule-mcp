@@ -48,7 +48,7 @@ export const toolOf = (name) => {
   if (name === "rule") {
     return "rule_tool";
   }
-  // The prefix is `rule-`, not `rule-mcp-`: the catalog was renamed (ADR 169) and
+  // The prefix is `rule-`, not `rule-mcp-`: the catalog was renamed (ADR 160) and
   // this slice kept the old length, so `rule-platform` became `rule_tool_form` -
   // `platform` cut at index 4. Both forms are accepted because a stale plan or doc
   // may still name the old one.

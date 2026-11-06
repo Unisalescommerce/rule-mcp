@@ -10,7 +10,7 @@
  * what makes the second checkout one command; `remove` takes back every config
  * the install wrote and drops the root from the store.
  *
- * @see ADR 193 - setup --scope project records projects.json and wires install writers
+ * @see ADR 184 - setup --scope project records projects.json and wires install writers
  */
 
 import { resolve } from "node:path";

@@ -192,8 +192,8 @@ sitting stays honest; a file that cannot be read whole hides its coupling.
 - **100 lines of code per file, with a +50 tolerance.** At 150 lines the file
   must be split - not negotiated. The tolerance absorbs a legitimate long
   function; it is not a second budget. `scripts/__tests__/docs/file-size-budget.test.mjs`
-  enforces it and the ratchet that goes with it (ADR 057 for the splitting,
-  ADR 058 for the ratchet).
+  enforces it and the ratchet that goes with it (ADR 049 for the splitting,
+  ADR 050 for the ratchet).
 - **Split by meaning, never by count.** Each new file holds one nameable
   concern - one rule, one function, one command. A file named for its position
   (`js-1.js`, `parts-2.js`, `utils-3.js`) is a split that happened without a

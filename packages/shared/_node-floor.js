@@ -6,7 +6,7 @@
  * The floor lives here rather than in `package.json`'s `engines`, which a
  * package manager reads as a vote on whether an install may proceed - the same
  * veto `pkg-no-engines` forbids for the projects this server generates, and this
- * repository holds itself to its own rules (ADR 109). Three readers carry it
+ * repository holds itself to its own rules (ADR 101). Three readers carry it
  * instead: the installer's preflight, the doctor, and the server at start.
  */
 

@@ -3,7 +3,7 @@
  *
  * Which commands an install writes.
  *
- * Area slash commands are hubs only (ADR 117); leaf skills stay as tools.
+ * Area slash commands are hubs only (ADR 109); leaf skills stay as tools.
  * Personas and session tasks still fan out. Selection is data - a preset, or
  * families plus areas - so the interactive picker and the flags decide the
  * same thing the same way, and a test can assert what each choice produces.
@@ -38,7 +38,7 @@ function familyOf(name) {
 /**
  * The presets, in the order a picker offers them.
  *
- * Area slash commands are hubs only (ADR 117). `minimal` is router + area hubs.
+ * Area slash commands are hubs only (ADR 109). `minimal` is router + area hubs.
  * `standard` adds personas and tasks. `full` is the same area set plus every
  * persona and task (no per-skill slash).
  */

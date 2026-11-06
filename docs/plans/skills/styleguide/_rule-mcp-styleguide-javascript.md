@@ -37,7 +37,7 @@ Problems found:
 | ----------------------------- | ---------------------------------------------------------------------------------------------------- |
 | testing duplicated            | the Playwright and axe-core section restates `rule-styleguide-a11y`, which owns `a11y-test-required` |
 | idioms duplicated             | the unicorn idiom table restates `rule-toolchain-eslint`                                             |
-| DOM duplicated                | the custom element section restated a skill removed in ADR 152                                       |
+| DOM duplicated                | the custom element section restated a skill removed in ADR 144                                       |
 | JSDoc has no clear owner      | it sits here while `rule-styleguide-comments` owns comment hygiene                                   |
 | 17 guardrails, all formatting | nothing checks the semantic rules a reader would expect                                              |
 | missing runtime topics        | modules, error handling, iterators, `structuredClone`, `AbortController`, memory                     |
@@ -50,7 +50,7 @@ Problems found:
 | Boundaries              | The skill owns runtime JS and language rules only                                     |
 | Testing                 | Removed; linked to `rule-styleguide-a11y`                                             |
 | Idioms table            | Reduced to a link to `rule-toolchain-eslint`                                          |
-| DOM and custom elements | Removed; the skill it linked was itself removed in ADR 152                            |
+| DOM and custom elements | Removed; the skill it linked was itself removed in ADR 144                            |
 | JSDoc                   | Moves to `rule-styleguide-comments` as part of the runtime-only boundary              |
 | Missing topics          | Modules, errors, iterators, `structuredClone`, `AbortController`, memory              |
 | Async                   | Expanded, and its claims verified against MDN and TC39                                |
@@ -79,7 +79,7 @@ Two answers crossed again, and the more specific one wins:
 2. The unicorn idiom table becomes one sentence and a link to
    `rule-toolchain-eslint`, which owns the rules and their tuning.
 3. The DOM and custom element section becomes a link to
-   the custom element and reactive-vanilla skills, both removed in ADR 152.
+   the custom element and reactive-vanilla skills, both removed in ADR 144.
 4. JSDoc moves to `rule-styleguide-comments`, which already owns comment
    hygiene; this skill keeps only the one-line rule that exported symbols are
    documented.

@@ -1,7 +1,7 @@
 /**
  * @module cli/guard/_task
  *
- * The task the structural gate asks once per (ADR 129).
+ * The task the structural gate asks once per (ADR 121).
  *
  * A task runs from one user prompt to the next, which is the only boundary
  * every host agrees on: `UserPromptSubmit` fires at its start and nothing fires

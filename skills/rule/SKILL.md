@@ -65,7 +65,7 @@ Prompt
 | `rule_tool_styleguide`                       | Scaffold    | `mode=scaffold` generates project scaffolding files: one with `file=<name>`, or all of them.                                             |
 | `rule_tool_detect`                           | Detection   | Detect project framework, TypeScript usage, and build tool from package.json.                                                            |
 | `rule_tool_process_adr`                      | ADR         | Save an Architecture Decision Record (ADR) to docs/adr/. Auto-numbers, maintains index, uses Nygard template.                            |
-| `/rule-area-styleguide` (request: file-tree) | Check + fix | Report the file tree with `rule_tool_check` and apply the mechanical guardrail fixes with `rule_tool_fix` (ADR 117: hub slash only).     |
+| `/rule-area-styleguide` (request: file-tree) | Check + fix | Report the file tree with `rule_tool_check` and apply the mechanical guardrail fixes with `rule_tool_fix` (ADR 109: hub slash only).     |
 | `rule_tool_handoff`                          | Handoff     | Generate a compressed LLM handoff summary from ADR logs and project context. Paste the output into a new chat to resume work seamlessly. |
 | `rule://templates`                           | Templates   | Component and test templates, served as resources.                                                                                       |
 | `rule_tool_fix`                              | Fix         | Apply the deterministic guardrail fixes of every skill (blank lines, braces, ASCII typography, American spelling).                       |

@@ -12,7 +12,7 @@ export const REGISTERED_BY_CODE = new Set(["rule-mcp", "rule-meta", "rule-proces
  *
  * Minimal mode registers none - evidence is loaded through rule_tool_gateway there.
  * A skill from a project or a home directory mints a tool only when its
- * frontmatter asks (ADR 089), so dropping a folder in adds rules and
+ * frontmatter asks (ADR 081), so dropping a folder in adds rules and
  * searchable evidence without growing the surface every turn pays for.
  */
 export function registerSkillTools() {

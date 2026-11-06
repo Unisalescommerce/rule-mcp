@@ -9,7 +9,7 @@
  * the `commit-msg` and `pre-push` hooks, the CLI, `/rule-git`, the handoff and
  * the CI lint.
  *
- * @see ADR 061 - one concern per file
+ * @see ADR 053 - one concern per file
  */
 
 export * from "./_detect.js";

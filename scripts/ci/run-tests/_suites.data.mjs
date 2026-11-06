@@ -3,7 +3,7 @@
  *
  * A suite is globs plus optional serial steps. New `*.test.mjs` files are
  * picked up by the pattern that covers their directory - adding a test never
- * edits package.json or ci.yml again (ADR 061, phase 6).
+ * edits package.json or ci.yml again (ADR 053, phase 6).
  *
  * - `steps`: plain node scripts that run serially, in order, before the globs
  *   (they are not `node --test` files: smoke prints its own report, docs-scan

@@ -26,7 +26,7 @@ export async function serveResource(uri) {
     for (const base of [embeddedSkills]) {
       try {
         for (const entry of readdirSync(base, { withFileTypes: true })) {
-          // The catalog prefix is `rule-` (ADR 169); the URI pattern below
+          // The catalog prefix is `rule-` (ADR 160); the URI pattern below
           // accepts both spellings so an old link still resolves.
           if (!(entry.isDirectory() && entry.name.startsWith("rule-"))) {
             continue;

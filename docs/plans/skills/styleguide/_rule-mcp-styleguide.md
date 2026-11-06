@@ -29,7 +29,7 @@ Problems found:
 | Problem                            | Detail                                                                                                                   |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | the table missed three children    | 13 rows for 16 children: comments, english and file-tree were absent                                                     |
-| the metadata pointed at ghosts     | the description routes "business validation" (moved to data, ADR 144) and a tag advertises "patterns" (deleted, ADR 146) |
+| the metadata pointed at ghosts     | the description routes "business validation" (moved to data, ADR 136) and a tag advertises "patterns" (deleted, ADR 138) |
 | the scaffolding duplicated         | eight files, 61% of the file, copied from the configuration skill                                                        |
 | shared guardrails were mislabeled  | 11 entries under "across all styleguides"; four are single-owner                                                         |
 | the routing description was loose  | the ranker is BM25 plus name, tag and graph signals, not keyword matching                                                |
@@ -124,7 +124,7 @@ Owned by `rule-mcp`, inherited here; advisory first, blocking after the corpus g
 | `router-child-coverage` | a child directory missing from the table      | A    | This plan |
 | `router-link-resolves`  | a link to a file that does not exist          | A    | This plan |
 | `router-use-when`       | a row whose "when to use" is empty or generic | B    | This plan |
-| `router-no-dup-rules`   | a router restating a rule its child owns      | B    | ADR 079   |
+| `router-no-dup-rules`   | a router restating a rule its child owns      | B    | ADR 071   |
 
 ## Verification
 

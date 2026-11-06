@@ -32,7 +32,7 @@ export function areaOf(skillName) {
 }
 
 /**
- * The slash/MCP area command a skill routes through (always the hub; ADR 117).
+ * The slash/MCP area command a skill routes through (always the hub; ADR 109).
  *
  * @param {string} skillName
  * @returns {string|null}

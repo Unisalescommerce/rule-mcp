@@ -1,7 +1,7 @@
 /**
  * @module scripts/bench/guard-daemon-spike
  *
- * After ADR 187: does a Unix-socket daemon + `--send` beat a full `guard`
+ * After ADR 178: does a Unix-socket daemon + `--send` beat a full `guard`
  * spawn? Hosts still spawn a client per hook; the only win is a cheaper client.
  *
  * Run: node --import ./scripts/alias-hook.mjs scripts/bench/guard-daemon-spike.mjs

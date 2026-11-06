@@ -18,7 +18,7 @@ import { join } from "node:path";
 import { PLAN_OF_PLANS, SKILLS_PLAN, basename } from "./_plan-index-shape.js";
 import { mapLines, patchCheckbox, patchGraphLeaf, patchPlanLink, patchProgressRow, patchSnapshotRow } from "./_plan-index-lines.js";
 
-/** The node id of a plan path (ADR 153): strip `_`, then `rule-mcp-` → `rule-`. */
+/** The node id of a plan path (ADR 145): strip `_`, then `rule-mcp-` → `rule-`. */
 export function planNodeId(filename) {
   return basename(filename)
     .replace(/\.md$/, "")

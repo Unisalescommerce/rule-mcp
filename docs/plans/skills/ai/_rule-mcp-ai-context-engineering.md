@@ -17,7 +17,7 @@ The last section is the one no other skill in the catalog has: it explains what 
 usage limit actually spends, which turns a vague cost discussion into an
 operational one.
 
-ADR 137 does not cover this leaf, and the area's eight rules are about code. The
+ADR 129 does not cover this leaf, and the area's eight rules are about code. The
 gap is real: every statement here is a budget decision, and a budget with no
 number in it is a preference.
 
@@ -44,7 +44,7 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 
 ### Phase 0 - Decisions
 
-- [ ] Implement ADR 137 for the area floor; this leaf inherits it with
+- [ ] Implement ADR 129 for the area floor; this leaf inherits it with
       `inherits: [rule-ai]` even though its own subject is not agent code.
 - [ ] ADR: the AI family shape and the inheritance decision.
 

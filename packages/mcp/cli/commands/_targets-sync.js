@@ -78,7 +78,7 @@ export function syncCommandTargets(opts) {
       files += 1;
     }
 
-    // Purge persona files that name no current role (ADR 120), so a target
+    // Purge persona files that name no current role (ADR 112), so a target
     // directory holds exactly the rendered set. A dry run has not created the
     // directory yet.
     const stale = stalePersonaFiles(dir, existsSync(dir) ? readdirSync(dir) : []);

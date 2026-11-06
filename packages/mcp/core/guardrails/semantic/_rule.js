@@ -15,7 +15,7 @@ const ERROR = /new Error\(\s*["'`]([^"'`\n]+)["'`]\s*\)/gu;
 export const errorMessageActionable = {
   id: "semantic-error-message-actionable",
   label: "Error messages tell the caller what to do",
-  description: "A thrown error names the next action, not only the failure (ADR 156; docs/audits/decision-models.md).",
+  description: "A thrown error names the next action, not only the failure (ADR 147; docs/audits/decision-models.md).",
   question: "Do these error messages tell the caller what to do next?",
   claim: "the messages tell the caller what to do",
   suggestion: "Name the variable, the file or the next action in the error message.",

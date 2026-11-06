@@ -3,7 +3,7 @@
 - **Branch**: `develop`
 - **Commit range**: `39ffa3e..0e0fdce` (5 commits)
 - **Date**: 2026-09-14
-- **Decision**: ADR 080
+- **Decision**: ADR 072
 
 ## What happened
 

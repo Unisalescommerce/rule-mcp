@@ -45,9 +45,9 @@ and detection from `opencode.json`.
 - `index.js`: exports the new writers module.
 - Tests: `_opencode-install.test.mjs`, `_writers-opencode.test.mjs`.
 
-### 4. ADR 105 and docs
+### 4. ADR 097 and docs
 
-- ADR 105 records the decision; the ADR.md index is regenerated.
+- ADR 097 records the decision; the ADR.md index is regenerated.
 - `docs/01-getting-started.md` gains the opencode config-path row;
   `docs/02-product-architecture.md` moves the ADR count to 105.
 
@@ -65,14 +65,14 @@ and detection from `opencode.json`.
 
 ## ADR Reference
 
-- ADR 105: opencode gets a dedicated installer writing its own config shape.
+- ADR 097: opencode gets a dedicated installer writing its own config shape.
 
 ## References
 
 - `src/cli/installers/_writers-opencode.js`, `_agents-opencode.js`
 - `src/cli/installers/_registry.js`, `_uninstall.js`, `index.js`
 - `src/cli/install/_detect.js`
-- `docs/adr/105-opencode-gets-a-dedicated-installer-writing-its-own-config-shape.md`
+- `docs/adr/097-opencode-gets-a-dedicated-installer-writing-its-own-config-shape.md`
 
 ### Resume Prompt
 

@@ -2,7 +2,7 @@
 @module core/plans/write
 
 Materialize a durable development plan under docs/plans/_*.md and register
-it in plan-of-plans.md (ADR 154). Host CreatePlan session files are not
+it in plan-of-plans.md (ADR 146). Host CreatePlan session files are not
 written here.
 */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";

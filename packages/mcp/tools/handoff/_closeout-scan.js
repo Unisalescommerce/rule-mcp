@@ -16,7 +16,7 @@ import { countMatches, dateOf, markdownFiles, titleOf } from "./_closeout-docs.j
 /** Working-paper kinds that close out, in archive order. */
 export const KINDS = ["plans", "reviews", "audits"];
 
-/** Statuses that mean the record is implemented. ADR 154 makes the line mandatory. */
+/** Statuses that mean the record is implemented. ADR 146 makes the line mandatory. */
 const DONE_STATUS = new Set(["done", "complete", "completed", "closed"]);
 
 /** Remove fenced blocks: a checkbox quoted as an example is not a step. */

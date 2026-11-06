@@ -61,13 +61,13 @@ One unrelated test that was already failing at HEAD was fixed in its own commit.
 - `src/cli/install/__tests__/_installer-stdio-path.test.mjs` asserted every
   opt-out env flag ships as `"0"`, but `DEFAULT_OPTOUT_ENV` carries
   `RULE_MCP_NO_PROMPTS: "1"` so Claude Code shows the clean `/rule-mcp-*`
-  commands (ADR 028). The test failed at HEAD. It now compares each flag against
+  commands (ADR 020). The test failed at HEAD. It now compares each flag against
   its own default and pins the one exception.
 
 ### 4. Decision documents
 
-- ADR 103 records the reversal of the mode restriction.
-- ADR 087 is marked `superseded` with a pointer to 103, scoped to the mode
+- ADR 095 records the reversal of the mode restriction.
+- ADR 079 is marked `superseded` with a pointer to 103, scoped to the mode
   question only: what counts as complete, the one-ADR-per-doc fold and the
   English gate stay as 087 wrote them.
 - Skill `rule-process-handoff` no longer claims `handon` is read-only, documents
@@ -105,7 +105,7 @@ next commit. The tip is green.
 `generateAdr()` in `src/tools/adr/_body.js:34` falls back to the template
 sentence when `endsWhen` is absent, and the tool schema in
 `src/tools/adr/_register.js` never accepts or forwards it. 30 files under
-`docs/adr/` now carry the placeholder, including ADR 103 written this session.
+`docs/adr/` now carry the placeholder, including ADR 095 written this session.
 Next steps: add `endsWhen` to the ADR tool input schema, forward it through
 `_register.js` and `src/tools/handoff/_closeout.js`, backfill the affected ADRs,
 regenerate `docs/adr/ADR.md`.
@@ -131,12 +131,12 @@ Carried over from handoff 10: POSIX-only, exercised in a scratch copy with a fak
 
 ## ADR Reference
 
-- ADR 103: every handoff mode sweeps completed working papers, and `closeout:
+- ADR 095: every handoff mode sweeps completed working papers, and `closeout:
 false` is the read-only run
-- ADR 087: session close archives completed audits, reviews and plans
+- ADR 079: session close archives completed audits, reviews and plans
   (superseded on the mode question)
-- ADR 028: clean `/rule-mcp-*` commands via user commands and prompt suppression
-- ADR 068: `src/shared` for every shareable helper (the sweep stayed in
+- ADR 020: clean `/rule-mcp-*` commands via user commands and prompt suppression
+- ADR 060: `src/shared` for every shareable helper (the sweep stayed in
   `tools/handoff`, following the existing cross-tool import convention that
   `_closeout.js` already uses for `../adr/*`)
 
@@ -147,4 +147,4 @@ false` is the read-only run
 - `src/prompts/_handoff-options.js`, `_handoff-options.data.js`, `_handoff-prompt.js`
 - `src/cli/_register-handoff.js`, `src/cli/_register-session.js`
 - `skills/rule-process-handoff/SKILL.md`
-- `docs/adr/103-every-handoff-mode-sweeps-completed-working-papers-and-closeout-false-is-the-rea.md`
+- `docs/adr/095-every-handoff-mode-sweeps-completed-working-papers-and-closeout-false-is-the-rea.md`

@@ -3,7 +3,7 @@
  *
  * Flight guidance under the process namespace. It is not an MCP prompt and not
  * an agent slash command: SessionStart carries the full form, UserPromptSubmit
- * re-anchors it. Opt out with RULE_MCP_NO_FLIGHT=1 (ADR 114).
+ * re-anchors it. Opt out with RULE_MCP_NO_FLIGHT=1 (ADR 106).
  */
 
 /** Conceptual id - process area, never listed on the command surface. */

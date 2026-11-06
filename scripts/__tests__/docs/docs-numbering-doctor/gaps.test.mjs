@@ -9,6 +9,9 @@
  * Compaction preserves the existing order rather than re-deriving it from
  * creation dates: closing a hole must move the documents after it down by one,
  * never reshuffle which decision holds which number.
+ *
+ * It is opt-in: a sweep reports the holes and moves nothing (ADR 219). The two
+ * tests that expect a move ask for `compact: true`.
  */
 import { strict as assert } from "node:assert";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -47,7 +50,7 @@ test("closing a hole moves the documents after it down, and only those", () => {
   const root = seedGappedRepo();
 
   try {
-    const plan = planRenumber({ projectDir: root });
+    const plan = planRenumber({ projectDir: root, compact: true });
     const moves = plan.renames.map((rename) => `${rename.fromNumber}->${rename.toNumber}`);
 
     assert.deepEqual(moves, ["003->002", "004->003", "006->004"], "001 keeps its number, the rest close up");
@@ -95,7 +98,7 @@ test("applying the plan renames the files, their headers and the references", ()
   const root = seedGappedRepo();
 
   try {
-    const plan = planRenumber({ projectDir: root });
+    const plan = planRenumber({ projectDir: root, compact: true });
     const applied = applyRenumber(plan, { projectDir: root });
 
     assert.equal(applied.renamed, 3);

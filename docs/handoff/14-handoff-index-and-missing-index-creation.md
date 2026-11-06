@@ -79,7 +79,7 @@ and format fixes it required, so the branch does not ship a red gate.
 | `node -e "node --check"` over `bin` `src` | clean                                                                                |
 | version script `--check`                  | 0.1.0-beta in sync (4 places)                                                        |
 | `handoff doctor` at the tip               | clean: 108 ADRs, 14 handoffs, both indexes current                                   |
-| ADR 108 author gate                       | `rule_tool_process_adr` wrote the file and regenerated `docs/adr/ADR.md`             |
+| ADR 100 author gate                       | `rule_tool_process_adr` wrote the file and regenerated `docs/adr/ADR.md`             |
 
 The one failing test is `src/cli/install/__tests__/_installer-stdio-path.test.mjs`.
 It fails on this machine and not because of this branch: it hardcodes the
@@ -89,9 +89,9 @@ deeper and the checkout is elsewhere. `src/cli/install/` was not touched here.
 
 ## ADR Reference
 
-- ADR 108: the handoff family gets a generated index, and the root `HANDOFF.md`
+- ADR 100: the handoff family gets a generated index, and the root `HANDOFF.md`
   summary retires.
-- ADR 103: every handoff mode sweeps completed working papers, and
+- ADR 095: every handoff mode sweeps completed working papers, and
   `closeout: false` is the read-only run.
 
 ## Next Session

@@ -2,7 +2,7 @@
  * @module core/self-update/_upgrade
  *
  * Move a git-clone install to the newest release: `git checkout main`,
- * `git pull -r`, then `scripts/reinstall.sh --keep-lock` (ADR 131).
+ * `git pull -r`, then `scripts/reinstall.sh --keep-lock` (ADR 123).
  *
  * The lock is kept because the release pinned it: regenerating it would
  * resolve whatever the registry serves today and leave the checkout dirty.

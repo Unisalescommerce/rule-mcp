@@ -4,7 +4,7 @@
  * The six case-study apps: where each lives, which ports it searches from, and
  * the environment it needs.
  *
- * Data file: exempt from the file-size cap (ADR 061).
+ * Data file: exempt from the file-size cap (ADR 053).
  *
  * @see scripts/case-studies/index.mjs - the launcher that consumes it
  */

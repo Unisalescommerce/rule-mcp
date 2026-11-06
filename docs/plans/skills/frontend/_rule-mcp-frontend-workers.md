@@ -163,7 +163,7 @@ security, anti-patterns, and pointers. Around 200 lines.
 
 ## Retained area guardrail backlog
 
-ADR 140 proposed this rule set before ADR 175 moved area work into skill plans.
+ADR 132 proposed this rule set before ADR 166 moved area work into skill plans.
 This plan owns: `worker-no-dom`, `worker-transferable`.
 
 The fixtures-first, implementation, and verification phases above include these

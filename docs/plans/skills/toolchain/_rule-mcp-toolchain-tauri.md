@@ -3,7 +3,7 @@
 Status: `planned`
 Notes:`planned`
 
-Notes: new skill, created by `rule-platform-desktop` phase 4 (ADR 152's ghost plugins). Index row `#87`, planned.
+Notes: new skill, created by `rule-platform-desktop` phase 4 (ADR 144's ghost plugins). Index row `#87`, planned.
 
 Area: toolchain, leaf. It takes the Tauri material that today sits inside
 `rule-platform-desktop` as a second framework under an Electron-shaped umbrella.

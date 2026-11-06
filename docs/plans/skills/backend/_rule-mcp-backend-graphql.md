@@ -76,7 +76,7 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
 
 ## Retained area guardrail backlog
 
-ADR 137 proposed this rule set before ADR 175 moved area work into skill plans.
+ADR 129 proposed this rule set before ADR 166 moved area work into skill plans.
 This plan owns: `gql-depth-limit`, `gql-introspection-prod`, `gql-batching-limit`, `gql-pagination`, `gql-authz-edges-nodes`.
 
 The fixtures-first, implementation, and verification phases above include these

@@ -2,7 +2,7 @@
  * @module core/history/documents-refs
  *
  * Reading a tree of numbered documents, and the documents a text names -
- * by path (`docs/adr/124-x.md`) or by number (`ADR 124`, `ADR 124 to 126`).
+ * by path (`docs/adr/124-x.md`) or by number (`ADR 116`, `ADR 116 to 126`).
  */
 
 import { readdirSync } from "node:fs";

@@ -11,7 +11,7 @@ registry, so a stale copy fails the build instead of misleading a reader.
 
 The router `/rule` is pinned first; the rest follow in
 locale-alphabetical order. The same set is written for every agent and IDE,
-in that host's own format (ADR 034).
+in that host's own format (ADR 026).
 
 Directories are resolved per machine and are not listed here: they depend on
 which agents are installed and where their homes are.
@@ -57,7 +57,7 @@ which agents are installed and where their homes are.
 | Kind       | Count | What it is for                                                   |
 | ---------- | ----- | ---------------------------------------------------------------- |
 | `router`   | 1     | Routes a free-text request to the skill that answers it          |
-| `area`     | 11    | Area hub: free text routes to leaf skills/tools (ADR 117)        |
+| `area`     | 11    | Area hub: free text routes to leaf skills/tools (ADR 109)        |
 | `workflow` | 3     | Runs a named workflow (e.g. /rule-check auto-detects guardrails) |
 | `session`  | 10    | Carries a session across a context boundary                      |
 | `persona`  | 19    | Runs one review role at one operation, and writes its documents  |

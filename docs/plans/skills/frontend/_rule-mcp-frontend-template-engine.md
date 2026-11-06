@@ -16,7 +16,7 @@ Inherited from the platform, meta and workers interviews, 2026-10-21:
 | Scope of this pass | **Plan only**                                                                                                                                |
 | Identity           | The one leaf in the area that ships runnable code: the procedure stays, the assets become served references, and the install step is checked |
 | Assets             | `assets/` and `REFERENCE.md` move under `references/` and get served; the 8 test files join the suite that runs skill-local tests            |
-| Shared owners      | `rule-styleguide-html` owns markup rules; `rule-frontend-custom-element` is gone (ADR 152), so the engine is the only template path left     |
+| Shared owners      | `rule-styleguide-html` owns markup rules; `rule-frontend-custom-element` is gone (ADR 144), so the engine is the only template path left     |
 | Reach              | Fixed here: the last `ROUTER_GAPS` entry for the frontend area                                                                               |
 | Rule set           | Six rules, all Tier B (advisory)                                                                                                             |
 | Detection          | Both: section and table parsing, plus injected `fileList`                                                                                    |
@@ -47,7 +47,7 @@ top and not from the area it belongs to.
 platform-auth}`. With `RULE_MCP_SKILL_UNIVERSE=base` - the setting the
 routing corpus uses - this skill is invisible to BM25, because its body would
 dilute the pinned term frequencies. So its routing quality has never been
-measured, by construction, and after ADR 152 it is the only exclusion left on
+measured, by construction, and after ADR 144 it is the only exclusion left on
 the frontend side.
 
 ### The shipped code is unchecked in the same way the workers examples were
@@ -154,7 +154,7 @@ criteria. Around 140 lines, with every asset behind a served reference.
 
 ## Retained area guardrail backlog
 
-ADR 140 proposed this rule set before ADR 175 moved area work into skill plans.
+ADR 132 proposed this rule set before ADR 166 moved area work into skill plans.
 This plan owns: `template-escape`.
 
 The fixtures-first, implementation, and verification phases above include these
@@ -208,5 +208,5 @@ Shared files: tests/fixtures/guardrail-corpus.mjs, tests/fixtures/census.json, d
   a way to never measure a skill. If the corpus is re-measured, this is the
   first entry to revisit; if it is not, the exclusion should say why in one
   sentence instead of relying on a comment.
-- After ADR 152 removed the custom-element skill, this is the only template
+- After ADR 144 removed the custom-element skill, this is the only template
   path in the catalog. That raises the stakes on its tests, not lowers them.

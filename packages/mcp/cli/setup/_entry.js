@@ -42,7 +42,7 @@ export function setupOptions(kind, { getArgument, getArguments = () => [], hasFl
     uninstall: kind === "uninstall" || hasFlag("--uninstall"),
     agent: getArgument("--agent"),
     mode: getArgument("--mode", "stdio"),
-    // Project-scope installs write into chosen trees only (ADR 193). `--project`
+    // Project-scope installs write into chosen trees only (ADR 184). `--project`
     // is repeatable; the adapter must expose getArguments so every path arrives.
     scope: getArgument("--scope"),
     projects: getArguments("--project"),

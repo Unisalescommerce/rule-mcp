@@ -62,7 +62,7 @@
 | 095 | accepted   | Close out the install and uninstall rework plan                   | docs, closeout, plan                       | Fold the record into this ADR and the session handoff, then delete the source file. The full text...           |
 | 094 | accepted   | Rename the compression subsystem and apply it to every mo...      | compression, tokens, rename                | Rename the code, comments and configuration to neutral compression names: `_caveman*.js` becomes ...           |
 | 093 | accepted   | Add an Open Source Steward persona for governance, contri...      | personas, open-source, governance          | Add `personas/oss.md` as an active persona named `Open Source Steward` with id `oss`. Its skills ...           |
-| 092 | accepted   | Surface selection amends the install stack freeze with an...      | install, wizard, architecture              | Amend ADR 081 narrowly: the installer writes one grammar string (RULE_MCP_SURFACE) and the ...                 |
+| 092 | accepted   | Surface selection amends the install stack freeze with an...      | install, wizard, architecture              | Amend ADR 073 narrowly: the installer writes one grammar string (RULE_MCP_SURFACE) and the ...                 |
 | 091 | accepted   | Install/uninstall rework keeps current stack, steps and c...      | install, wizard, architecture              | The install/uninstall rework changes wizard steps and contents only (order, copy, offered choices...           |
 | 090 | accepted   | The setup wizard is the installer, and it asks which comm...      | installer, cli, wizard                     | The wizard is the installer. `src/cli/setup/` holds the whole flow - preflight, agents, mode, opt...           |
 | 089 | accepted   | Skills own their guardrails, and three layers resolve bot...      | architecture, skills, guardrails           | A skill owns the rules that judge its subject. Guardrails move into skills/<name>/guardrails/*.js...           |
@@ -182,13 +182,13 @@ aa69e83f chore(release): v0.1.0 (11 days ago)
 
 **Roadmaps:**
 
-- `docs/adr/054-split-review-personas-into-per-operation-commands-plan-audit-review.md` (2683B, last modified: 2026-09-22)
-- `docs/adr/059-persona-plans-are-checklists-with-marks-that-survive-the-sync.md` (2073B, last modified: 2026-09-15)
-- `docs/adr/060-plans-carry-nested-sub-steps-and-an-exhaustiveness-mandate.md` (2089B, last modified: 2026-09-15)
-- `docs/adr/087-session-close-archives-completed-audits-reviews-and-plans.md` (2210B, last modified: 2026-09-17)
-- `docs/adr/095-close-out-the-install-and-uninstall-rework-plan.md` (838B, last modified: 2026-09-15)
-- `docs/adr/099-close-out-plan-develop-consolidation.md` (2066B, last modified: 2026-09-15)
-- `docs/adr/132-rename-rule-mcp-tool-plan-docs-to-rule-mcp-tool-impersonation.md` (1139B, last modified: 2026-10-01)
+- `docs/adr/046-split-review-personas-into-per-operation-commands-plan-audit-review.md` (2683B, last modified: 2026-09-22)
+- `docs/adr/051-persona-plans-are-checklists-with-marks-that-survive-the-sync.md` (2073B, last modified: 2026-09-15)
+- `docs/adr/052-plans-carry-nested-sub-steps-and-an-exhaustiveness-mandate.md` (2089B, last modified: 2026-09-15)
+- `docs/adr/079-session-close-archives-completed-audits-reviews-and-plans.md` (2210B, last modified: 2026-09-17)
+- `docs/adr/087-close-out-the-install-and-uninstall-rework-plan.md` (838B, last modified: 2026-09-15)
+- `docs/adr/091-close-out-plan-develop-consolidation.md` (2066B, last modified: 2026-09-15)
+- `docs/adr/124-rename-rule-mcp-tool-plan-docs-to-rule-mcp-tool-impersonation.md` (1139B, last modified: 2026-10-01)
 - `docs/handoff/01-performance-plan-execution.md` (8804B, last modified: 2026-09-15)
 - `docs/handoff/02-oss-audit-and-remediation-plan.md` (8565B, last modified: 2026-09-15)
 - `docs/handoff/03-roadmap-execution-oss-phases-1-5.md` (8279B, last modified: 2026-09-15)
@@ -198,12 +198,12 @@ aa69e83f chore(release): v0.1.0 (11 days ago)
 
 **Changelogs:**
 
-- `docs/adr/125-normalize-history-on-the-merge-base-and-hold-every-rewrite-to-a-tree-invariant.md` (2485B, last modified: 2026-09-28)
-- `docs/adr/127-derive-the-next-version-and-the-changelog-from-the-commit-rule.md` (2353B, last modified: 2026-09-29)
+- `docs/adr/117-normalize-history-on-the-merge-base-and-hold-every-rewrite-to-a-tree-invariant.md` (2485B, last modified: 2026-09-28)
+- `docs/adr/119-derive-the-next-version-and-the-changelog-from-the-commit-rule.md` (2353B, last modified: 2026-09-29)
 
 **Key documents:**
 
-- `docs/adr/134-close-features-only-after-persisting-the-final-handoff-and-consolidate-the-featu.md` (1479B, 2026-10-12)
+- `docs/adr/126-close-features-only-after-persisting-the-final-handoff-and-consolidate-the-featu.md` (1479B, 2026-10-12)
 - `docs/adr/ADR.md` (172027B, 2026-10-12)
 - `docs/audits/oss.md` (16691B, 2026-10-12)
 - `docs/audits/ui.md` (14292B, 2026-10-12)
