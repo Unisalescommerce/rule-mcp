@@ -14,7 +14,7 @@ serves it carries no rules of its own, and the guardrails it is checked
 against are in [`15-guardrails.md`](15-guardrails.md).
 
 The router's own directory, `skills/rule/`, mints no skill tool, which is why
-the catalog is 0 and the directory count is 84.
+the catalog is 0 and the directory count is 83.
 
 | Area | Skills | Covers |
 | ---- | ------ | ------ |

@@ -10,9 +10,6 @@ tags:
   - "multi-stage"
   - "base-image"
 frameworks: [all]
-metadata:
-  author: rule-mcp-engineering
-  version: "3.0"
 inherits: [rule-devops]
 guardrails: [docker-healthcheck, docker-non-root]
 ---

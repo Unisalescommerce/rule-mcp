@@ -4,8 +4,8 @@ Status: `planned`
 Notes:`planned` Notes: plan only, 2026-10-21. Index row `#56`, `pending` until this file existed, now `planned`. Implementation waits for the owner.
 
 Area: frontend, router, planned last in the area (`DEPENDENCIES.md`). Sibling
-plans: the seven leaves (`workers`, `vue`, `svelte`, `solidjs`, `react`,
-`angular`, `template-engine`) and `rule-meta` (the dispatcher for the four
+plans: the six leaves (`workers`, `vue`, `svelte`, `solidjs`, `react`,
+`angular`) and `rule-meta` (the dispatcher for the four
 meta-framework rows this router also carries). The shared router rules and the
 route-table generator come from `rule-process`.
 
@@ -36,15 +36,15 @@ table, a cross-framework rules section, a cross-cutting table, a
 meta-framework table, an "over-engineering" section, a Quick Selection of
 eleven lines, and three See-also links.
 
-| Fact                   | State                                                                                                                    |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Children after ADR 144 | 7: angular, react, solidjs, svelte, template-engine, vue, workers                                                        |
-| Table rows             | 10: the six UI frameworks, workers, and the four meta-frameworks                                                         |
-| Missing child          | **`rule-frontend-template-engine`**, the last entry in `ROUTER_GAPS`                                                     |
-| Dispatcher row         | present                                                                                                                  |
-| Tags                   | frontend, ui, react, vue, angular, svelte, solidjs, astro, index                                                         |
-| Tag overlap            | each of `react`, `vue`, `angular`, `svelte`, `solidjs`, `astro` is claimed by exactly 2 skills: this router and its leaf |
-| Guardrails             | none                                                                                                                     |
+| Fact                                       | State                                                                                                                    |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| Children after the template-engine removal | 6: angular, react, solidjs, svelte, vue, workers                                                                         |
+| Table rows                                 | 10: the six UI frameworks, workers, and the four meta-frameworks                                                         |
+| Missing child                              | none: `rule-frontend-template-engine` was removed, and `ROUTER_GAPS` is empty                                            |
+| Dispatcher row                             | present                                                                                                                  |
+| Tags                                       | frontend, ui, react, vue, angular, svelte, solidjs, astro, index                                                         |
+| Tag overlap                                | each of `react`, `vue`, `angular`, `svelte`, `solidjs`, `astro` is claimed by exactly 2 skills: this router and its leaf |
+| Guardrails                                 | none                                                                                                                     |
 
 ### Four rows that belong to another area
 
@@ -74,15 +74,15 @@ instead of copying six lines each.
 
 ## The seven rules
 
-| id                            | Rejects                                        | Tier | Today                                                           |
-| ----------------------------- | ---------------------------------------------- | ---- | --------------------------------------------------------------- |
-| `router-dead-link`            | A relative link resolving to no `SKILL.md`     | B    | clean                                                           |
-| `router-tool-name`            | A tool name the registry does not know         | B    | clean                                                           |
-| `router-child-listed`         | A skill under the area with no row             | B    | **red**: `rule-frontend-template-engine`                        |
-| `router-quick-selection`      | A row the Quick Selection cannot reach         | B    | **red**: template-engine, and the meta rows are reachable twice |
-| `router-no-stale-name`        | A reference to a skill that no longer exists   | B    | clean after ADR 144                                             |
-| `router-tag-single-owner`     | A subject tag claimed by the router and a leaf | B    | **red**: six tags                                               |
-| `frontend-no-cross-area-rows` | A row for a skill another area owns            | B    | **red**: four meta rows                                         |
+| id                            | Rejects                                        | Tier | Today                                      |
+| ----------------------------- | ---------------------------------------------- | ---- | ------------------------------------------ |
+| `router-dead-link`            | A relative link resolving to no `SKILL.md`     | B    | clean                                      |
+| `router-tool-name`            | A tool name the registry does not know         | B    | clean                                      |
+| `router-child-listed`         | A skill under the area with no row             | B    | clean                                      |
+| `router-quick-selection`      | A row the Quick Selection cannot reach         | B    | **red**: the meta rows are reachable twice |
+| `router-no-stale-name`        | A reference to a skill that no longer exists   | B    | clean after ADR 144                        |
+| `router-tag-single-owner`     | A subject tag claimed by the router and a leaf | B    | **red**: six tags                          |
+| `frontend-no-cross-area-rows` | A row for a skill another area owns            | B    | **red**: four meta rows                    |
 
 ## Phase 0 - Decisions
 
@@ -108,7 +108,7 @@ instead of copying six lines each.
 
 ## Phase 3 - Open the last door
 
-- [ ] A row for `rule-frontend-template-engine` and a Quick Selection line.
+- [x] A row for `rule-frontend-template-engine` and a Quick Selection line. Closed 2026-11-06: the skill was removed, so the row left with it.
 - [ ] Delete the `"rule-frontend"` entry from
       `scripts/data/router-gaps.data.mjs`: the area has no gaps after this.
 - [ ] Replace the four meta rows with one pointer line to `rule-meta`, and the
@@ -162,7 +162,7 @@ pnpm lint
 
 The router closes after its leaves and after the shared router rules and the route-table generator are exported.
 
-Depends on: `rule-frontend-angular` (HARD), `rule-frontend-react` (HARD), `rule-frontend-solidjs` (HARD), `rule-frontend-svelte` (HARD), `rule-frontend-template-engine` (HARD), `rule-frontend-vue` (HARD), `rule-frontend-workers` (HARD), `rule-process#2` (CONTRACT), `rule-process#3` (CONTRACT)
+Depends on: `rule-frontend-angular` (HARD), `rule-frontend-react` (HARD), `rule-frontend-solidjs` (HARD), `rule-frontend-svelte` (HARD), `rule-frontend-vue` (HARD), `rule-frontend-workers` (HARD), `rule-process#2` (CONTRACT), `rule-process#3` (CONTRACT)
 
 Feeds:,
 

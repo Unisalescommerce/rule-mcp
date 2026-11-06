@@ -74,7 +74,6 @@ inside a skill plan records the status at registration.
 | 46  | `rule-meta`                     | meta       | `docs/plans/skills/meta/_rule-mcp-meta.md`                           | planned | none       |
 | 47  | `rule-frontend-workers`         | frontend   | `docs/plans/skills/frontend/_rule-mcp-frontend-workers.md`           | planned | planned    |
 | 48  | `rule-frontend-vue`             | frontend   | `docs/plans/skills/frontend/_rule-mcp-frontend-vue.md`               | planned | has        |
-| 50  | `rule-frontend-template-engine` | frontend   | `docs/plans/skills/frontend/_rule-mcp-frontend-template-engine.md`   | planned | planned    |
 | 51  | `rule-frontend-svelte`          | frontend   | `docs/plans/skills/frontend/_rule-mcp-frontend-svelte.md`            | planned | has        |
 | 52  | `rule-frontend-solidjs`         | frontend   | `docs/plans/skills/frontend/_rule-mcp-frontend-solidjs.md`           | planned | planned    |
 | 53  | `rule-frontend-react`           | frontend   | `docs/plans/skills/frontend/_rule-mcp-frontend-react.md`             | planned | has        |

@@ -2,7 +2,7 @@
  * @module test/skills-suites
  *
  * The asset trees under skills/ ship their own node:test files, and a guard
- * nobody runs is not a guard: the 102 template-engine tests that cover its four
+ * nobody runs is not a guard: the skill-local tests that cover an asset tree
  * largest modules were matched by no suite until ARCH-7 needed them to split
  * those modules. These tests hold the wiring to account, and hold the exclusion
  * list short: an exclusion is a stated reason a file is another runner's, not a

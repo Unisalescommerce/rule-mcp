@@ -9,10 +9,6 @@ tags:
   - security
   - performance
 frameworks: [node, api, graphql]
-compatibility: Designed for AI coding assistants
-metadata:
-  author: rule-mcp-engineering
-  version: "1.0"
 inherits: [rule-backend]
 ---
 

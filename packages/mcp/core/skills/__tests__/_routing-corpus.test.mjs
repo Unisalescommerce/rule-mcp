@@ -27,7 +27,7 @@ process.env.RULE_MCP_NO_AUTOUPDATE = "1";
 // asked, and read back answers computed before the code under test existed.
 process.env.RULE_MCP_NO_CACHE = "1";
 // The thresholds were measured on the source skill set; the two target-only
-// skills (template-engine, auth) are real routing targets in the union, but
+// skills (auth) are real routing targets in the union, but
 // their bodies dilute the term-document
 // frequencies the pinned scores assume - measure on the source-commensurate
 // universe (note in src/tools/router/index.js TARGET_ONLY_SKILLS).

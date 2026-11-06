@@ -14,7 +14,7 @@ Shape: `# Scaffolding Backend Node`, then project profile, dependency baseline,
 required layout, build order in numbered steps (baseline files, bootstrap the
 Express app, fill in the domain modules, ...), and a closing section.
 
-It is the second runbook in the catalog after `rule-frontend-template-engine`, and
+It is a runbook in the catalog, and
 the only one whose scaffold produces a **server**.
 
 ### The two shipped scripts are unserved and unrun
@@ -22,7 +22,7 @@ the only one whose scaffold produces a **server**.
 `assets/templates/scripts/create-tool.ts` and `create-agent.ts` are referenced by
 the body, read by no surface (`serveResource` serves `SKILL.md` only), linted by
 no scope (`pnpm lint` covers `bin/ src/ tests/`), and run by no test. Same blind
-spot as the frontend workers examples and the template-engine assets, in a third
+spot as the frontend workers examples, in a third
 place.
 
 ### It bootstraps Express while sitting above Express

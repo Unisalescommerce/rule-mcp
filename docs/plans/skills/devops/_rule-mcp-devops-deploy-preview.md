@@ -11,20 +11,20 @@ Area: devops, leaf. Sibling plans: `rule-devops-testing`,
 
 Inherited from the platform, meta and frontend interviews, 2026-10-21:
 
-| Question           | Decision                                                                                                                                              |
-| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Scope of this pass | **Plan only**                                                                                                                                         |
-| Identity           | Keep the procedural shape: it is a runbook with two templates, like the template-engine leaf, and it is the only GitLab-specific skill in the catalog |
-| Doors              | Fixed here: the area router table row and the dispatcher row it never got                                                                             |
-| Templates          | `assets/templates/` moves under `references/` and gets served and parsed, so a broken YAML fails a test instead of a reviewer                         |
-| Rule set           | Six rules, all Tier B (advisory)                                                                                                                      |
-| Detection          | Both: section and table parsing, plus injected `fileList`                                                                                             |
-| Fixtures           | Shared corpus pairs plus skill trees on disk                                                                                                          |
-| Flow               | Failing test first                                                                                                                                    |
-| Gates              | Skill suite, corpora, catalog clean, census, lint and typecheck, plus the template parse                                                              |
-| Commits            | One per phase                                                                                                                                         |
-| ADR                | Two for the whole area: the devops family shape, the rule design                                                                                      |
-| Done               | Both doors are open, the templates are served and parsed, and the rules pass                                                                          |
+| Question           | Decision                                                                                                                      |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| Scope of this pass | **Plan only**                                                                                                                 |
+| Identity           | Keep the procedural shape: it is a runbook with two templates, and it is the only GitLab-specific skill in the catalog        |
+| Doors              | Fixed here: the area router table row and the dispatcher row it never got                                                     |
+| Templates          | `assets/templates/` moves under `references/` and gets served and parsed, so a broken YAML fails a test instead of a reviewer |
+| Rule set           | Six rules, all Tier B (advisory)                                                                                              |
+| Detection          | Both: section and table parsing, plus injected `fileList`                                                                     |
+| Fixtures           | Shared corpus pairs plus skill trees on disk                                                                                  |
+| Flow               | Failing test first                                                                                                            |
+| Gates              | Skill suite, corpora, catalog clean, census, lint and typecheck, plus the template parse                                      |
+| Commits            | One per phase                                                                                                                 |
+| ADR                | Two for the whole area: the devops family shape, the rule design                                                              |
+| Done               | Both doors are open, the templates are served and parsed, and the rules pass                                                  |
 
 ## Evidence base (measured 2026-10-21)
 

@@ -1,5 +1,5 @@
 {
-  "count": 106,
+  "count": 105,
   "tools": [
     "rule_tool",
     "rule_tool_ai",
@@ -41,7 +41,6 @@
     "rule_tool_frontend_react",
     "rule_tool_frontend_solidjs",
     "rule_tool_frontend_svelte",
-    "rule_tool_frontend_template_engine",
     "rule_tool_frontend_vue",
     "rule_tool_frontend_workers",
     "rule_tool_gateway",

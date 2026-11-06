@@ -40,10 +40,9 @@ frameworks: [all]
 
 ## Cross-Cutting
 
-| Skill                                                                      | Framework | Covers                                                                                 |
-| -------------------------------------------------------------------------- | --------- | -------------------------------------------------------------------------------------- |
-| [rule-frontend-workers](../rule-frontend-workers/SKILL.md)                 | all       | Web Workers, worker pools, transferables, OffscreenCanvas, `scheduler.yield`, INP/LoAF |
-| [rule-frontend-template-engine](../rule-frontend-template-engine/SKILL.md) | none      | File-based HTML templates: extends/include/block, directives, `{{ }}` and filters      |
+| Skill                                                      | Framework | Covers                                                                                 |
+| ---------------------------------------------------------- | --------- | -------------------------------------------------------------------------------------- |
+| [rule-frontend-workers](../rule-frontend-workers/SKILL.md) | all       | Web Workers, worker pools, transferables, OffscreenCanvas, `scheduler.yield`, INP/LoAF |
 
 ## Meta-Frameworks
 

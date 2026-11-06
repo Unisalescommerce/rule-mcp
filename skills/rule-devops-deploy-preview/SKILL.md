@@ -10,10 +10,6 @@ tags:
   - "digitalocean"
   - "deploy"
 frameworks: [all]
-compatibility: Designed for AI coding assistants
-metadata:
-  author: rule-mcp-engineering
-  version: "1.0"
 inherits: [rule-devops]
 ---
 

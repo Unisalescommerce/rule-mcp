@@ -45,7 +45,7 @@ function markdownUnder(absolute) {
     let entries;
 
     // The tree is read while other processes run in it: the shipped
-    // template-engine tests create and delete a `test-tmp` directory at the
+    // skill tests create and delete a `test-tmp` directory at the
     // repository root, so a directory read here can be gone before it is
     // read, and a file can be gone before it is typed. Both are simply not
     // part of the snapshot this call is taking. `withFileTypes` answers

@@ -198,15 +198,14 @@ from the stage rule, because what closes first is the phase, not the plan (ADR 1
 
 ### Stage 5 - frontend leaves
 
-| Node                            | Kind | Exits              |
-| ------------------------------- | ---- | ------------------ |
-| `rule-frontend-angular`         | leaf | router of the area |
-| `rule-frontend-react`           | leaf | router of the area |
-| `rule-frontend-solidjs`         | leaf | router of the area |
-| `rule-frontend-svelte`          | leaf | router of the area |
-| `rule-frontend-template-engine` | leaf | router of the area |
-| `rule-frontend-vue`             | leaf | router of the area |
-| `rule-frontend-workers`         | leaf | router of the area |
+| Node                    | Kind | Exits              |
+| ----------------------- | ---- | ------------------ |
+| `rule-frontend-angular` | leaf | router of the area |
+| `rule-frontend-react`   | leaf | router of the area |
+| `rule-frontend-solidjs` | leaf | router of the area |
+| `rule-frontend-svelte`  | leaf | router of the area |
+| `rule-frontend-vue`     | leaf | router of the area |
+| `rule-frontend-workers` | leaf | router of the area |
 
 ### Stage 6 - devops leaves
 
@@ -281,8 +280,8 @@ It runs inside the first plan that needs it; every other plan links it.
 | Fix                                                                                      | Owner plan                           | Consumers                                            |
 | ---------------------------------------------------------------------------------------- | ------------------------------------ | ---------------------------------------------------- |
 | Scaffold blocks terminated in 7 skills (`## Guardrails` before `## Project Scaffolding`) | `rule-frontend-vue` (first of the 7) | svelte, solidjs, react, angular, workers, meta-astro |
-| `skills` suite wired into `all`, so skill-local tests run in CI                          | `rule-frontend-workers`              | template-engine, every leaf with `tests/`            |
-| Example lint scope (`skills/**/examples/**`, `assets/**`)                                | `rule-frontend-template-engine`      | workers, react, backend-node                         |
+| `skills` suite wired into `all`, so skill-local tests run in CI                          | `rule-frontend-workers`              | every leaf with `tests/`                             |
+| Example lint scope (`skills/**/examples/**`, `assets/**`)                                | `rule-frontend-workers`              | react, backend-node                                  |
 | Rule-id existence check across the catalog                                               | `rule-frontend-svelte`               | solidjs, react, angular, every skill naming a rule   |
 
 ## 7 - Execution protocol
@@ -380,7 +379,6 @@ file, so a stale row fails rather than misleads.
 | `rule-frontend-react`           | leaf   | planned     | 0/19  | 5     |
 | `rule-frontend-solidjs`         | leaf   | planned     | 0/18  | 5     |
 | `rule-frontend-svelte`          | leaf   | planned     | 0/19  | 5     |
-| `rule-frontend-template-engine` | leaf   | planned     | 0/21  | 5     |
 | `rule-frontend-vue`             | leaf   | planned     | 0/18  | 5     |
 | `rule-frontend-workers`         | leaf   | planned     | 0/21  | 5     |
 | `rule-devops-deploy-preview`    | leaf   | planned     | 0/16  | 6     |
@@ -411,7 +409,7 @@ file, so a stale row fails rather than misleads.
 | `rule-backend`                  | router | planned     | 0/16  | 10    |
 | `rule-data`                     | router | planned     | 0/16  | 10    |
 | `rule-devops`                   | router | planned     | 0/16  | 10    |
-| `rule-frontend`                 | router | planned     | 0/18  | 10    |
+| `rule-frontend`                 | router | planned     | 1/18  | 10    |
 | `rule-meta`                     | router | planned     | 0/16  | 10    |
 | `rule-platform`                 | router | planned     | 0/20  | 10    |
 | `rule-process`                  | router | planned     | 0/25  | 10    |
@@ -425,7 +423,7 @@ ADR 166 retired six area-level guardrail plans. Their 76 retained rule IDs now
 live in owning skill plans: AI in `rule-ai-agent-architecture`; backend across
 the security, runtime, worker, GraphQL, and framework leaves; data in
 `rule-data`, PostgreSQL, MongoDB, and SQLite; devops across its router and four
-leaves; frontend in its router, template-engine, and workers plans; meta in its
+leaves; frontend in its router and workers plans; meta in its
 router, Next, and Astro plans. A regression test keeps this ownership complete.
 
 Four other plans stay outside the skills graph. They cover repository policy,

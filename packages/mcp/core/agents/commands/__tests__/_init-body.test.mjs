@@ -1,5 +1,5 @@
 /**
- * `/rule-init` carries the same contract as `/webidoo-init`, adapted to what
+ * `/rule-init` carries what
  * `rule_tool_init` actually answers: idempotence, a per-item report that does
  * not turn `existing` or `refused` into success, the scaffold for a project
  * with no config yet, and the base branch the repository states.

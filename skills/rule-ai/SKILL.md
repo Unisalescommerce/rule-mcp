@@ -8,7 +8,6 @@ tags:
   - "llm"
   - "index"
 frameworks: [all]
-compatibility: Designed for AI coding assistants
 ---
 
 # rule-ai - AI Agent Skills Index

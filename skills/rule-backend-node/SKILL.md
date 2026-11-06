@@ -17,9 +17,6 @@ tags:
   - "queue"
   - "packages"
 frameworks: [node, api]
-metadata:
-  author: rule-mcp-engineering
-  version: "2.1"
 inherits: [rule-backend]
 ---
 

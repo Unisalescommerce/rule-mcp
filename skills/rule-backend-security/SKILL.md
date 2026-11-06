@@ -16,9 +16,6 @@ tags:
   - "rate-limiting"
   - "step-up"
 frameworks: [node, api]
-metadata:
-  author: rule-mcp-engineering
-  version: "1.0"
 inherits: [rule-backend]
 ---
 

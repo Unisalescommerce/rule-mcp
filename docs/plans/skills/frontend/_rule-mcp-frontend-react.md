@@ -5,7 +5,7 @@ Notes:`planned` Notes: plan only, 2026-10-21. Index row `#53`, `pending` until t
 
 Area: frontend, framework leaf, and the largest one. Sibling plans:
 `rule-frontend-vue`, `rule-frontend-svelte`, `rule-frontend-solidjs` (same shape),
-`rule-frontend-workers`, `rule-frontend-template-engine`, `rule-frontend-angular`,
+`rule-frontend-workers`, `rule-frontend-angular`,
 and `rule-frontend` (the area router).
 
 ## Scope decisions (owner)

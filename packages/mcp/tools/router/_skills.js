@@ -50,7 +50,7 @@ function getSkillMetadata(skillName) {
  * measurement comparable - their extra bodies would otherwise dilute the
  * term-document frequencies (idf) the scorer's numbers are pinned to.
  */
-const TARGET_ONLY_SKILLS = new Set(["rule-frontend-template-engine", "rule-platform-auth"]);
+const TARGET_ONLY_SKILLS = new Set(["rule-platform-auth"]);
 
 /**
  * Every skill name that resolves, sorted.

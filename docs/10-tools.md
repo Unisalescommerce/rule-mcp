@@ -7,7 +7,7 @@ a tool, a skill, a prompt, a role, a command or a guardrail;
 `scripts/__tests__/docs/census-generated.test.mjs` compares this file against the live
 registry, so a stale copy fails the build instead of misleading a reader.
 
-## Action tools (106)
+## Action tools (105)
 
 The tools that do something rather than serve a skill. Every one is
 deterministic: none of them calls a model, so the same arguments return the
@@ -71,7 +71,6 @@ same result behind any client.
 | [`rule_tool_frontend_react`](#ruletoolfrontendreact)                     | rule-frontend-react skill.                                                                                                                                                                                                                                                                                                                    |
 | [`rule_tool_frontend_solidjs`](#ruletoolfrontendsolidjs)                 | rule-frontend-solidjs skill.                                                                                                                                                                                                                                                                                                                  |
 | [`rule_tool_frontend_svelte`](#ruletoolfrontendsvelte)                   | rule-frontend-svelte skill.                                                                                                                                                                                                                                                                                                                   |
-| [`rule_tool_frontend_template_engine`](#ruletoolfrontendtemplateengine)  | rule-frontend-template-engine skill.                                                                                                                                                                                                                                                                                                          |
 | [`rule_tool_frontend_vue`](#ruletoolfrontendvue)                         | rule-frontend-vue skill.                                                                                                                                                                                                                                                                                                                      |
 | [`rule_tool_frontend_workers`](#ruletoolfrontendworkers)                 | rule-frontend-workers skill.                                                                                                                                                                                                                                                                                                                  |
 | [`rule_tool_meta_astro`](#ruletoolmetaastro)                             | rule-meta-astro skill.                                                                                                                                                                                                                                                                                                                        |
@@ -914,22 +913,6 @@ rule-frontend-solidjs skill. Modes: full (rules), guardrails (testable assertion
 ### rule_tool_frontend_svelte
 
 rule-frontend-svelte skill. Modes: full (rules), guardrails (testable assertions), check (validate code), search (find in content).
-
-| Parameter             | Type                                                                 | Required | Default  | Description                                               |
-| --------------------- | -------------------------------------------------------------------- | -------- | -------- | --------------------------------------------------------- |
-| `query`               | string                                                               | no       | -        | Search query (mode=search/tldr)                           |
-| `mode`                | `full` \| `summary` \| `search` \| `guardrails` \| `check` \| `tldr` | no       | `"full"` | Tool mode: full, summary, tldr, search, guardrails, check |
-| `code`                | string                                                               | no       | -        | Code to check (mode=check)                                |
-| `framework`           | string                                                               | no       | -        | Framework hint                                            |
-| `file`                | string                                                               | no       | -        | Scaffold file                                             |
-| `target`              | string                                                               | no       | -        | Target dir                                                |
-| `fileName`            | string                                                               | no       | -        | File name                                                 |
-| `isComponent`         | boolean                                                              | no       | -        |                                                           |
-| `allowedDependencies` | array of string                                                      | no       | -        |                                                           |
-
-### rule_tool_frontend_template_engine
-
-rule-frontend-template-engine skill. Modes: full (rules), guardrails (testable assertions), check (validate code), search (find in content).
 
 | Parameter             | Type                                                                 | Required | Default  | Description                                               |
 | --------------------- | -------------------------------------------------------------------- | -------- | -------- | --------------------------------------------------------- |

@@ -7,7 +7,7 @@ a tool, a skill, a prompt, a role, a command or a guardrail;
 `scripts/__tests__/docs/census-generated.test.mjs` compares this file against the live
 registry, so a stale copy fails the build instead of misleading a reader.
 
-## Command / Tool / Skill map (128)
+## Command / Tool / Skill map (127)
 
 One row per slash command, then every catalog skill that has no slash of its
 own (ADR 109: leaf skills are reached through area hubs or the router), then
@@ -100,7 +100,6 @@ Regenerate with `pnpm census`.
 | -                           | `rule_tool_frontend_react`           | -                 | rule-frontend-react skill.                                                                                                                                                    |
 | -                           | `rule_tool_frontend_solidjs`         | -                 | rule-frontend-solidjs skill.                                                                                                                                                  |
 | -                           | `rule_tool_frontend_svelte`          | -                 | rule-frontend-svelte skill.                                                                                                                                                   |
-| -                           | `rule_tool_frontend_template_engine` | -                 | rule-frontend-template-engine skill.                                                                                                                                          |
 | -                           | `rule_tool_frontend_vue`             | -                 | rule-frontend-vue skill.                                                                                                                                                      |
 | -                           | `rule_tool_frontend_workers`         | -                 | rule-frontend-workers skill.                                                                                                                                                  |
 | -                           | `rule_tool_meta_astro`               | -                 | rule-meta-astro skill.                                                                                                                                                        |

@@ -46,7 +46,6 @@ const RETAINED_AREA_RULES = new Map([
   ["skills/devops/_rule-mcp-devops-observability.md", ["obs-health-endpoint", "obs-structured-logs", "obs-no-pii-in-logs", "obs-span-versioning"]],
   ["skills/devops/_rule-mcp-devops-deploy-preview.md", ["preview-on-stop", "preview-auto-stop", "preview-no-secrets-spec", "preview-envsubst-whitelist"]],
   ["skills/frontend/_rule-mcp-frontend.md", ["xss-sink-sanitized", "fe-list-key", "fe-effect-cleanup", "ce-valid"]],
-  ["skills/frontend/_rule-mcp-frontend-template-engine.md", ["template-escape"]],
   ["skills/frontend/_rule-mcp-frontend-workers.md", ["worker-no-dom", "worker-transferable"]],
   ["skills/meta/_rule-mcp-meta.md", ["meta-public-env-secret", "meta-server-data-leak", "hydration-safe", "meta-route-validation"]],
   ["skills/meta/_rule-mcp-meta-next.md", ["meta-client-directive", "meta-cache-explicit"]],

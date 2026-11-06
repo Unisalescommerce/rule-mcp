@@ -11,10 +11,6 @@ tags:
   - a11y
   - quality
 frameworks: [all]
-compatibility: Designed for AI coding assistants
-metadata:
-  author: rule-mcp-engineering
-  version: "1.0"
 ---
 
 # Test-Driven Development and Test Writing
