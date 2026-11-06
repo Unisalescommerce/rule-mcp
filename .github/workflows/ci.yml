@@ -134,6 +134,18 @@ jobs:
                 window=$((window / 2))
                 continue
               fi
+              if [ "$status" -eq 2 ] && [ "$window" -eq 1 ]; then
+                # One commit can exceed the cap on its own, a vendored dump for
+                # instance. The patch goes to betterleaks directly with the same
+                # flags, so the commit is read instead of reported as unreadable.
+                if git show --root --format=medium --no-abbrev-commit --diff-merges=first-parent \
+                    --no-ext-diff --no-textconv --no-color "${commits[index]}" \
+                    | betterleaks stdin --git-diff --redact --no-banner --output=- --exit-code=0 \
+                      --validate=false --analyze=false; then
+                  index="$end"
+                  continue
+                fi
+              fi
               echo "credential scan could not read ${spec}" >&2
               exit 2
             fi
