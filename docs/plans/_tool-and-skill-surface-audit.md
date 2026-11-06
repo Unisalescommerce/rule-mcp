@@ -183,8 +183,8 @@ ADR 136, 137, 138, 139, 140, 141, and 155 are all `Status: proposed`, dated 2026
 The owner has not decided what to do. This workstream evaluates. It changes no ADR status.
 
 - [x] **WS7-T1**: Evaluate each of the seven ADRs. For each rule an ADR lists, find out: is it built in `skills/`, is it planned in a skill plan (name the plan and the step), or does nobody own it. Write the result as a table directly under this workstream in this file. Columns: ADR, rule, state (`built`, `planned in <plan>`, `unowned`), and a proposal (`supersede`, `accept as rationale`, `needs an owner decision`). Add a short summary of three to five lines. State plainly which rules would be lost if all seven ADRs became `superseded`.
-- [ ] **WS7-T2**: Settle ADR 155 as the duplicate of ADR 136. Keep the older file, as `settleDuplicateAdrs` does. Run it after WS4-T1 of the OSS plan. Blocked 2026-11-06: OSS WS4-T1 has not run, and settling here would allocate the same numbering twice.
-- [x] **WS7-T3**: Stop. Do not change the status of any other ADR. Do not add a guardrail step to any plan. The owner reads the table and decides in a later session. Honored 2026-11-06: no ADR status changed and no plan gained a guardrail step.
+- [x] **WS7-T2**: Settle ADR 155 as the duplicate of ADR 136. Keep the older file, as `settleDuplicateAdrs` does. Run it after WS4-T1 of the OSS plan. Done 2026-11-06 after OSS WS4-T1: 155 moved to `docs/adr/_pending/extend-the-devops-guardrail-family-with-file-scoped-source-cited-rules.md` and 136 stays numbered.
+- [x] **WS7-T3**: Stop. Do not change the status of any other ADR. Do not add a guardrail step to any plan. The owner reads the table and decides in a later session. Decided 2026-11-06: ADRs 136-141 stay as the accepted rationale for their rule families. No plan gained a guardrail step.
 
 ### WS7 findings
 
