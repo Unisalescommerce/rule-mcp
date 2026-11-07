@@ -33,6 +33,13 @@ jobs:
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      # The site is published only if its own checks pass: layout, contrast,
+      # accessibility, text overlap and the page change are measured in a real
+      # browser, and a failing one stops the deploy instead of shipping.
+      - name: Install the browser
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Check the site
+        run: pnpm test:e2e:docs-site
       - name: Build the site
         run: pnpm docs:build
       - name: Upload the site
