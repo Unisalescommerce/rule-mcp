@@ -22,7 +22,7 @@
 
 set -euo pipefail
 
-NODE_MIN=26
+NODE_MIN=24
 
 die() {
   echo "rule-mcp: $1" >&2

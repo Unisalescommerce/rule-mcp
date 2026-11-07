@@ -81,11 +81,11 @@ test("a job that calls pnpm sets pnpm up first", () => {
   }
 });
 
-test("every workflow that builds runs the Node the server requires", () => {
+test("the release and pages builds run a Node the wizard can draw on", () => {
   const pages = readFileSync(join(root, ".github", "workflows", "pages.yml"), "utf8");
 
   for (const text of [release, pages]) {
-    assert.ok(!/node-version: "(?:20|22|24)"/u.test(text), "the server refuses to start below 26.4");
+    assert.ok(!/node-version: "(?:20|22|24)"/u.test(text), "both build the wizard, which needs 26.4");
   }
 });
 

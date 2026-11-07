@@ -9,8 +9,10 @@ itself dumb. Kept beside the options so the answer is testable without running a
 install.
 */
 
+import { WIZARD_FLOOR } from "rule-mcp-shared";
+
 /** The oldest node that can mount the renderer. The minor matters: 26.0 exists and cannot. */
-export const WIZARD_NODE_MIN = "26.4.0";
+export const WIZARD_NODE_MIN = WIZARD_FLOOR;
 
 /** A version string as comparable numbers. */
 export const versionParts = (version = process.version) =>

@@ -3,15 +3,26 @@
  *
  * The Node version this server runs on, and the one check that fails closed.
  *
- * The floor lives here rather than in `package.json`'s `engines`, which a
+ * The floors live here rather than in `package.json`'s `engines`, which a
  * package manager reads as a vote on whether an install may proceed - the same
  * veto `pkg-no-engines` forbids for the projects this server generates, and this
  * repository holds itself to its own rules (ADR 101). Three readers carry it
  * instead: the installer's preflight, the doctor, and the server at start.
  */
 
-/** The lowest Node this server runs on. OpenTUI's native core needs 26.4. */
-export const NODE_FLOOR = "26.4.0";
+/** The lowest Node this server runs on. */
+export const NODE_FLOOR = "24.0.0";
+
+/**
+ * The lowest Node that can draw the wizard.
+ *
+ * OpenTUI's native core loads `node:ffi`, which is experimental and needs 26.1
+ * or newer; 26.4 is the first release where the renderer mounts reliably. The
+ * floor is separate from the server's because the server never loads the
+ * renderer: a Node 24 host runs every tool and prints the same plan from the
+ * flags instead of the full-screen wizard.
+ */
+export const WIZARD_FLOOR = "26.4.0";
 
 /** A version string split into comparable numbers, `v` prefix and suffix dropped. */
 const parts = (version) =>

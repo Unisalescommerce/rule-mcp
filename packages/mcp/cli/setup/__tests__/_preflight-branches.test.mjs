@@ -67,7 +67,7 @@ test("a node below the floor fails the node check with the required version", ()
     const node = check(preflight().checks, "node");
 
     assert.equal(node.status, "fail");
-    assert.match(node.detail, /18\.20\.0 - version 26\.4\.0 or newer is required/);
+    assert.match(node.detail, /18\.20\.0 - version 24\.0\.0 or newer is required/);
   } finally {
     Object.defineProperty(process, "version", descriptor);
   }

@@ -27,7 +27,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$nodeMin = 26
+$nodeMin = 24
 
 function Stop-WithMessage([string]$message) {
   Write-Error "rule-mcp: $message"
