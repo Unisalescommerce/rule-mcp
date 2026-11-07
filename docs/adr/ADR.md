@@ -8,6 +8,7 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [246](246-the-server-floor-is-node-24-and-the-wizard-floor-stays-26-4.md)                                               | The server floor is Node 24, and the wizard floor stays 26.4                                              | 2026-11-07 | accepted   | runtime, install, wizard                                                            |
 | [245](245-the-release-asset-is-the-source-tree-built-with-pnpm-and-a-tag-needs-no-signatur.md)                          | The release asset is the source tree, built with pnpm, and a tag needs no signature                       | 2026-11-06 | accepted   | release, ci, packaging                                                              |
 | [244](244-the-documentation-holds-no-html-and-the-census-writes-whole-files.md)                                         | The documentation holds no HTML and the census writes whole files                                         | 2026-11-06 | accepted   | docs, census, site                                                                  |
 | [243](243-close-out-plan-publication-cutover.md)                                                                        | Close out plan _publication-cutover                                                                       | 2026-11-06 | accepted   | docs, closeout, plan                                                                |
@@ -261,6 +262,7 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [246](246-the-server-floor-is-node-24-and-the-wizard-floor-stays-26-4.md)                                               | Two floors, two readers.                                                                                                                                                                                                        | Node 24 hosts install and run the server, and get the flag-driven setup instead of the full-screen wizard.                                                                                                                      |
 | [245](245-the-release-asset-is-the-source-tree-built-with-pnpm-and-a-tag-needs-no-signatur.md)                          | scripts/package.sh writes the committed tree with git archive as rule-mcp-VERSION.tgz.                                                                                                                                          | An install from a tarball needs Node.js and pnpm, the same as a clone, and rule-mcp update works only in a clone.                                                                                                               |
 | [244](244-the-documentation-holds-no-html-and-the-census-writes-whole-files.md)                                         | README.md and docs hold no raw HTML, and a parser test enforces it.                                                                                                                                                             | A placeholder in prose needs a code span.                                                                                                                                                                                       |
 | [243](243-close-out-plan-publication-cutover.md)                                                                        | Fold record into this ADR and session handoff, then delete source file. full text stays in git history.                                                                                                                         | docs/plans/_publication-cutover.md is gone from tree; this ADR keeps what it delivered and handoff of this session names it.                                                                                                    |
@@ -1134,6 +1136,15 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [055](055-coverage-floor-raised-to-87-95-remains-the-ratchet-endpoint.md) Coverage floor raised to 87; 95 remains the ratchet endpoint
 - [054](054-glob-suite-runner-colocated-tests-and-a-branch-coverage-ratchet.md) Glob suite runner, co-located tests, and a branch-coverage ratchet
 
+### install
+
+- [246](246-the-server-floor-is-node-24-and-the-wizard-floor-stays-26-4.md) The server floor is Node 24, and the wizard floor stays 26.4
+- [238](238-an-update-notifies-by-default-and-upgrades-only-when-asked.md) An update notifies by default and upgrades only when asked
+- [123](123-an-update-moves-a-git-clone-install-to-the-newest-release-tag-unasked.md) An update moves a git-clone install to the newest release tag, unasked
+- [087](087-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
+- [084](084-surface-selection-amends-the-install-stack-freeze-with-an-additive-loader-filter.md) Surface selection amends the install stack freeze with an additive loader filter
+- [083](083-install-uninstall-rework-keeps-current-stack-steps-and-contents-only.md) Install/uninstall rework keeps current stack, steps and contents only
+
 ### tokensave
 
 - [225](225-count-the-cycles-and-the-dead-symbols-the-graph-can-prove-and-break-the-cycles-t.md) Count the cycles and the dead symbols the graph can prove, and break the cycles that are real
@@ -1193,14 +1204,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [133](133-give-the-meta-framework-area-its-first-server-and-client-boundary-guardrails.md) Give the meta-framework area its first server and client boundary guardrails
 - [132](132-add-a-shared-frontend-guardrail-family-for-xss-lists-and-workers.md) Add a shared frontend guardrail family for XSS, lists and workers
 - [008](008-forms-per-framework.md) Forms per Framework - Merger & Distribution
-
-### install
-
-- [238](238-an-update-notifies-by-default-and-upgrades-only-when-asked.md) An update notifies by default and upgrades only when asked
-- [123](123-an-update-moves-a-git-clone-install-to-the-newest-release-tag-unasked.md) An update moves a git-clone install to the newest release tag, unasked
-- [087](087-close-out-the-install-and-uninstall-rework-plan.md) Close out the install and uninstall rework plan
-- [084](084-surface-selection-amends-the-install-stack-freeze-with-an-additive-loader-filter.md) Surface selection amends the install stack freeze with an additive loader filter
-- [083](083-install-uninstall-rework-keeps-current-stack-steps-and-contents-only.md) Install/uninstall rework keeps current stack, steps and contents only
 
 ### mcp
 
@@ -1306,6 +1309,13 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [089](089-the-release-target-is-v0-1-0-beta-and-the-version-tooling-accepts-a-prerelease.md) The release target is v0.1.0-beta, and the version tooling accepts a prerelease
 - [077](077-reset-the-project-version-to-0-1-0-first-release-will-be-v0-1-0.md) Reset the project version to 0.1.0, first release will be v0.1.0
 
+### wizard
+
+- [246](246-the-server-floor-is-node-24-and-the-wizard-floor-stays-26-4.md) The server floor is Node 24, and the wizard floor stays 26.4
+- [084](084-surface-selection-amends-the-install-stack-freeze-with-an-additive-loader-filter.md) Surface selection amends the install stack freeze with an additive loader filter
+- [083](083-install-uninstall-rework-keeps-current-stack-steps-and-contents-only.md) Install/uninstall rework keeps current stack, steps and contents only
+- [082](082-the-setup-wizard-is-the-installer-and-it-asks-which-commands-to-write.md) The setup wizard is the installer, and it asks which commands to write
+
 ### code-graph
 
 - [100](100-the-handoff-family-gets-a-generated-index-and-the-root-handoff-summary-retires.md) The handoff family gets a generated index, and the root HANDOFF summary retires
@@ -1407,12 +1417,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [048](048-drop-the-vs-code-extension-and-its-installers.md) Drop the VS Code extension and its installers
 - [031](031-fix-vscode-extension-and-derivatives-install-uninstall.md) Fix VS Code extension and derivatives install/uninstall
 - [025](025-registry-driven-clean-slash-commands-for-every-agent-and-ide.md) Registry-driven clean slash commands for every agent and IDE
-
-### wizard
-
-- [084](084-surface-selection-amends-the-install-stack-freeze-with-an-additive-loader-filter.md) Surface selection amends the install stack freeze with an additive loader filter
-- [083](083-install-uninstall-rework-keeps-current-stack-steps-and-contents-only.md) Install/uninstall rework keeps current stack, steps and contents only
-- [082](082-the-setup-wizard-is-the-installer-and-it-asks-which-commands-to-write.md) The setup wizard is the installer, and it asks which commands to write
 
 ### no tags
 
