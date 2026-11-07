@@ -13,7 +13,7 @@
  */
 
 import { areasOfSkills, isRootSkill } from "../../../core/skills/_surface.js";
-import { MINIMAL_ALLOWLIST } from "../../../core/skills/_minimal.js";
+import { resolveCommandTargets } from "../../../core/agents/command-targets/index.js";
 import { FEATURES, levelsFor } from "../../../core/runtime/features/index.js";
 import { getSkillNames } from "../../../tools/router/index.js";
 import { hookSupport } from "../../install/_hook-hosts.js";
@@ -78,11 +78,13 @@ export function dimensionItems({ agents = [], ruleFiles = [] } = {}) {
     }
 
     if (id === "commands") {
+      const dirs = resolveCommandTargets({ agent: agents }).map((target) => `${target.agent}: ${target.dir}`);
+
       return {
         id,
         label: "Agent slash commands",
-        note: "per agent directory",
-        detail: ["Writes the rule-* command files into the", `command directories of: ${forAgents}`],
+        note: dirs.length > 0 ? `${dirs.length} director${dirs.length === 1 ? "y" : "ies"}` : "no directory",
+        detail: ["Writes the rule-* command files into the command", "directories of the selected agents:", "", ...(dirs.length > 0 ? dirs : ["No command directory on this machine yet."])],
       };
     }
 
@@ -200,12 +202,6 @@ export function surfaceItems() {
       label: "Standard",
       note: `${hubs} hub tools`,
       detail: ["The area hubs only as tools; slash commands cover", "area hubs, personas and tasks."],
-    },
-    {
-      id: "minimal",
-      label: "Minimal",
-      note: `${MINIMAL_ALLOWLIST.size} tools`,
-      detail: ["The dispatcher and its action tools; slash commands", "are the router and the area hubs."],
     },
     {
       id: "custom",

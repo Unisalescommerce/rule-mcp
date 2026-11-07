@@ -43,7 +43,7 @@ test("the dimension rows name the agents and the files they touch", () => {
   const rows = dimensionItems({ agents: ["claude"], ruleFiles: ["/home/me/CLAUDE.md"] });
 
   assert.match(rows.find((row) => row.id === "rules").detail.join("\n"), /\/home\/me\/CLAUDE\.md/u);
-  assert.match(rows.find((row) => row.id === "commands").detail.join("\n"), /claude/u);
+  assert.match(rows.find((row) => row.id === "commands").detail.join("\n"), /claude: .*commands/u, "the row names the directory it writes");
   assert.equal(rows.find((row) => row.id === "hooks").disabled, false, "claude documents a writable hook file");
   assert.equal(rows.find((row) => row.id === "doctor").disabled, undefined);
 });
@@ -78,7 +78,7 @@ test("every surface preset states its price and mentions the slash commands", ()
 
   assert.deepEqual(
     rows.map((row) => row.id),
-    ["full", "standard", "minimal", "custom"],
+    ["full", "standard", "custom"],
   );
   assert.equal(rows[0].note, `${skills} skill tools`);
   assert.match(rows[1].note, /^\d+ hub tools$/u);
@@ -105,7 +105,7 @@ test("a surface answer becomes one review line", () => {
 });
 
 test("the command selection follows the surface tier", () => {
-  assert.deepEqual(selectionFromSurface({ preset: "minimal" }), { preset: "minimal" });
+  assert.deepEqual(selectionFromSurface({ preset: "standard" }), { preset: "standard" });
   assert.deepEqual(selectionFromSurface({ areas: ["frontend", "data"] }), {
     families: ["areas", "personas", "tasks"],
     areas: ["frontend", "data"],

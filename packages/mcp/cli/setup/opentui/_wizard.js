@@ -196,8 +196,8 @@ export async function runInstallWizard({ screen, defaults = {} }) {
 
       case "depth": {
         const level = await screen.ask({
-          title: "How much should the install write?",
-          help: ["Each host writes as much as it supports, up to the row you pick.", "The screen before this one says where each host stops."],
+          title: "How deep should each agent go?",
+          help: ["A cap on the rungs: L0 MCP entry, L1 rules, L2 commands, L3 hooks,", "L4 a handler. A host stops at its own ceiling, listed below."],
           items: depthItems(answers.agents),
           mode: "radio",
           initial: [answers.level ?? "auto"],
@@ -324,7 +324,7 @@ export async function runInstallWizard({ screen, defaults = {} }) {
     index += 1;
   }
 
-  const plan = answers.plan ?? installPlan({ answers, context, force: Boolean(defaults.force), minimal: defaults.minimal });
+  const plan = answers.plan ?? installPlan({ answers, context, force: Boolean(defaults.force) });
   const title = answers.dryRun ? "Dry run" : "Installing";
 
   screen.setStep(INSTALL_RAIL.install);

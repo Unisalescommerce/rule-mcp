@@ -75,6 +75,10 @@ test("a custom profile asks for its dimensions and uses them", async () => {
   await runInstallWizard({ screen });
 
   assert.ok(screen.asks.some((ask) => ask.title === "What should this install write?"));
+  assert.ok(
+    screen.asks.some((ask) => ask.title === "How deep should each agent go?"),
+    "the depth step says what it caps",
+  );
   assert.deepEqual(globalThis.__wizardStub.plans.at(-1), [...GLOBAL_PLAN_HEAD, "commands", "skills", "cli", "manifest"]);
 });
 
