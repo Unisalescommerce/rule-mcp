@@ -46,6 +46,14 @@ test("content reflows at 320 CSS px without horizontal scrolling (WCAG 1.4.10)",
   const outs = allPages();
   const failures = [];
 
+  // Two faces: the platform's own, and a wide one. A runner whose fallback font
+  // is wider than the maintainer's is how a long heading pushed the page
+  // sideways on CI and not locally, so the wide pass is the one that matters.
+  const faces = [
+    { name: "system", css: "" },
+    { name: "wide", css: "body, h1, h2, h3, h4, p, li, td, th, code, summary, a, label { font-family: Verdana, DejaVu Sans, sans-serif !important; }" },
+  ];
+
   for (const width of [320, 375]) {
     const context = await browser.newContext({ viewport: { width, height: 800 } });
 
@@ -60,8 +68,16 @@ test("content reflows at 320 CSS px without horizontal scrolling (WCAG 1.4.10)",
         tables: document.querySelectorAll("table").length,
       }));
 
-      if (reflow.scrollWidth > reflow.clientWidth) {
-        failures.push(`${width}px ${out}: page scrolls horizontally (${reflow.scrollWidth} > ${reflow.clientWidth})`);
+      for (const face of faces) {
+        if (face.css) {
+          await page.addStyleTag({ content: face.css });
+        }
+
+        const measured = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+
+        if (measured > 1) {
+          failures.push(`${width}px ${face.name} ${out}: page scrolls horizontally (${measured}px over)`);
+        }
       }
 
       // Every table sits in a scroll container, so a wide one scrolls itself
