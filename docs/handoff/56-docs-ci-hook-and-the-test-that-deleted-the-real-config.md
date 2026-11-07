@@ -1,12 +1,12 @@
 # Session handoff 56 - docs, CI, hook, and the test that deleted the real config
 
 - Branch: `main`
-- Commit range covered: `76bf1382..213ed6bf`, 17 commits, all local
+- Commit range covered: `76bf1382..da9521e8`, 19 commits, all local
 - Date: 2026-11-06
 
 ## State at the end of this session
 
-The working tree is clean at `213ed6bf`. `main` is 17 commits ahead of `origin/main`. Nothing was pushed and no tag exists, so `git tag` is empty.
+The working tree is clean at `da9521e8`. `main` is 19 commits ahead of `origin/main`. Nothing was pushed and no tag exists, so `git tag` is empty.
 
 Three worktrees exist besides the main one: `/private/tmp/base-check` (detached at `b42fb9c7`) and two Claude worktrees under `.claude/worktrees/` at `a38d1369`. The `pensive-gauss-ae1b68` worktree carries the unfinished `withHome` fix: `packages/shared/_testkit.js` modified, `packages/shared/__tests__/_testkit.test.mjs` untracked. It was left untouched, by decision.
 
@@ -42,9 +42,17 @@ The test is now hermetic and asserts that every path stays in the test home. The
 
 ## Verified now, and reported earlier
 
-Checked in this session: clean tree, 17 commits ahead, no tag, empty `~/.rule-mcp/config`, missing global `post-commit`, 23 chapters, 82 skills in the census, 124 guardrail rules, `fast-uri: 4.2.3` in `pnpm-workspace.yaml`.
+Checked in this session: clean tree, 17 commits ahead, no tag, empty `~/.rule-mcp/config`, missing global `post-commit`, 23 chapters, 82 skills in the census, 124 guardrail rules, `fast-uri: 4.2.3` in `pnpm-workspace.yaml`, and one full `pnpm run ci`: 3220 tests, 3217 passed, 3 skipped, 0 failed.
 
-Reported by the previous session and not re-run here: 92.2% coverage in the CI tree with 164 new tests, 0 failed and 23 skipped, a 27-branch margin over the floor, 11/11 Playwright and WCAG checks over 25 pages, two consecutive local releases, a clean secret scan, and 3.4% yield from the ADR and handoff compression pass. Treat those as claims until `pnpm ci` runs again.
+Reported by the previous session and not re-run here: 92.2% coverage in the CI tree with 164 new tests, a 27-branch margin over the floor, 11/11 Playwright and WCAG checks over 25 pages, two consecutive local releases, a clean secret scan, and 3.4% yield from the ADR and handoff compression pass. Treat those as claims until `pnpm test:coverage` runs again.
+
+## Fixed after the first handoff
+
+The first `pnpm release` run stopped in `pnpm run ci`. `_task-extras-branches.test.mjs` failed on the row that explains a rejected command sync.
+
+Cause: a runner that exports `FORCE_COLOR` made the child CLI print a Node warning. The capture sets `NO_COLOR`, so Node warned on every child. The task keeps the last six log lines, and the two warning lines pushed the CLI's complaint out of that window.
+
+Fix: `runCliCommand` now drops the inherited `FORCE_COLOR` before it sets `NO_COLOR`, in `packages/mcp/cli/setup/_exec.js`. A new test, `packages/mcp/cli/setup/__tests__/_exec.test.mjs`, fails before the fix and passes after it. `pnpm run ci` is green at `da9521e8`.
 
 ## Open items, in order
 
@@ -70,9 +78,9 @@ Reported by the previous session and not re-run here: 92.2% coverage in the CI t
 ```prompt
 Resume work on rule-mcp-workspace from docs/handoff/56-docs-ci-hook-and-the-test-that-deleted-the-real-config.md. Run `rule_tool_handon` first: it checks which claims in this handoff still hold before any of them is trusted.
 
-State: `main` is 17 commits ahead of `origin/main` at 213ed6bf, the tree is clean, nothing is pushed, no tag exists. Two open holes: the `withHome` async hole (fix uncommitted in the `pensive-gauss-ae1b68` worktree) and the `pnpm dlx rule-mcp` fallback in four install scripts.
+State: `main` is 19 commits ahead of `origin/main` at da9521e8, the tree is clean, nothing is pushed, no tag exists. `pnpm run ci` is green. Two open holes: the `withHome` async hole (fix uncommitted in the `pensive-gauss-ae1b68` worktree) and the `pnpm dlx rule-mcp` fallback in four install scripts.
 
-First step: run `rule-mcp setup` in a terminal and confirm `~/.rule-mcp/config/env.json` and `install.json` exist again. Then activate Pages (Settings, Pages, Source: GitHub Actions), then `pnpm release --dry-run --version 0.1.0`, then `pnpm release --version 0.1.0`.
+First step: run `rule-mcp setup` in a terminal and confirm `~/.rule-mcp/config/env.json` and `install.json` exist again. Then activate Pages (Settings, Pages, Source: GitHub Actions), then `pnpm release --dry-run --version 0.1.0`, then `pnpm release --version 0.1.0`. Export `FORCE_COLOR` freely: the setup log now survives it.
 
 Every commit is `type(scope): subject`; the commit-msg hook rejects a scope-less message. Do not push outside the release command. Writing: STE100~80. Short sentences, active voice, one idea per sentence, same word for the same thing.
 ```
