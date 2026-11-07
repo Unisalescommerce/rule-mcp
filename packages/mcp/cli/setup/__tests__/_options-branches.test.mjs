@@ -8,7 +8,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { canRenderWizard, resolveSetupOptions } from "../_options.js";
+import { canRenderWizard, canRunPlainWizard, resolveSetupOptions } from "../_options.js";
 
 const tty = { isTTY: true };
 const pipe = { isTTY: false };
@@ -36,6 +36,14 @@ test("a CI job declines the wizard even on a TTY", () => {
 
 test("a terminal that calls itself dumb declines the wizard", () => {
   assert.equal(canRenderWizard({ TERM: "dumb" }, tty, tty, "v26.4.0"), false);
+});
+
+test("a terminal runs the wizard on any node, and the mount picks the renderer", () => {
+  assert.equal(canRunPlainWizard({}, tty, tty), true, "the prompts need no version floor");
+  assert.equal(canRunPlainWizard({}, pipe, tty), false, "stdin piped");
+  assert.equal(canRunPlainWizard({}, tty, pipe), false, "stdout piped");
+  assert.equal(canRunPlainWizard({ CI: "1" }, tty, tty), false, "a CI job has nobody to answer");
+  assert.equal(canRunPlainWizard({ TERM: "dumb" }, tty, tty), false);
 });
 
 test("a named agent narrows the run to that agent", () => {

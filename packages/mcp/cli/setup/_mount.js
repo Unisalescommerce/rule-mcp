@@ -16,6 +16,8 @@
  */
 
 import { openScreen } from "./opentui/_screen.js";
+import { createPlainScreen } from "./_screen-plain.js";
+import { canRenderWizard } from "./_version-floor.js";
 import { INSTALL_STEPS, runInstallWizard, runUninstallWizard, UNINSTALL_STEPS } from "./opentui/_wizard.js";
 import { quietRendererWarnings } from "./_warnings.js";
 
@@ -31,11 +33,11 @@ quietRendererWarnings();
  */
 export async function mountWizard({ direction = "install", defaults = {} } = {}) {
   const uninstall = direction === "uninstall";
-  const screen = await openScreen({
-    title: uninstall ? "Uninstall" : "Setup",
-    subtitle: defaults.dryRun ? "dry run" : "",
-    steps: uninstall ? UNINSTALL_STEPS : INSTALL_STEPS,
-  });
+  const title = uninstall ? "Uninstall" : "Setup";
+  const steps = uninstall ? UNINSTALL_STEPS : INSTALL_STEPS;
+  // The renderer needs `node:ffi`; the flow does not. A terminal without it
+  // answers the same questions as prompts instead of drawing the frame.
+  const screen = canRenderWizard() ? await openScreen({ title, subtitle: defaults.dryRun ? "dry run" : "", steps }) : createPlainScreen({ steps });
 
   try {
     return uninstall ? await runUninstallWizard({ screen, defaults }) : await runInstallWizard({ screen, defaults });

@@ -17,8 +17,6 @@
  * by a template is a flag nothing can prove is documented.
  */
 
-import { canRenderWizard } from "./_options.js";
-
 /**
  * A `--thing` / `--no-thing` pair as true, false, or unanswered.
  *
@@ -89,7 +87,7 @@ export function setupOptions(kind, { getArgument, getArguments = () => [], hasFl
 export async function setupRan(kind, io) {
   const options = setupOptions(kind, io);
 
-  if (!options.interactive || !canRenderWizard()) {
+  if (!options.interactive) {
     return false;
   }
 

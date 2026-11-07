@@ -67,6 +67,7 @@ Object.defineProperty(globalThis, "__ruleSetupBranches", {
 });
 
 const { runSetup } = await import("../index.js");
+const { wizardRuntimeNote } = await import("../_version-floor.js");
 
 test.after(() => {
   rmSync(home, { recursive: true, force: true });
@@ -173,27 +174,9 @@ test("interactive uninstall mounts the uninstall wizard", async () => {
   }
 });
 
-test("a wizard runtime note prints when the renderer floor is not met", async () => {
-  const descriptor = Object.getOwnPropertyDescriptor(process, "version");
-  const stdout = [];
-  const write = process.stdout.write.bind(process.stdout);
-
-  Object.defineProperty(process, "version", { value: "v20.11.0", configurable: true, enumerable: true });
-  process.stdout.write = (chunk, ...rest) => {
-    stdout.push(String(chunk));
-
-    return write(chunk, ...rest);
-  };
-  plainMode = "ok";
-
-  try {
-    // interactive omitted (not false): the note is allowed to print.
-    await runSetup({ dryRun: true, rules: false, commands: false, hooks: false, doctor: false, skills: false });
-    assert.match(stdout.join(""), /cannot host the wizard/u);
-  } finally {
-    process.stdout.write = write;
-    Object.defineProperty(process, "version", descriptor);
-  }
+test("a wizard note names the terminal, and a terminal needs no note", () => {
+  assert.match(wizardRuntimeNote({}, { isTTY: false }, { isTTY: true }), /no terminal for the wizard/u);
+  assert.equal(wizardRuntimeNote({}, { isTTY: true }, { isTTY: true }), "", "a terminal asks its own questions");
 });
 
 test("interactive false suppresses the wizard runtime note", async () => {
@@ -211,7 +194,7 @@ test("interactive false suppresses the wizard runtime note", async () => {
 
   try {
     await runSetup({ interactive: false, dryRun: true, rules: false, commands: false, hooks: false, doctor: false, skills: false });
-    assert.doesNotMatch(stdout.join(""), /cannot host the wizard/u);
+    assert.doesNotMatch(stdout.join(""), /no terminal for the wizard/u);
   } finally {
     process.stdout.write = write;
     Object.defineProperty(process, "version", descriptor);

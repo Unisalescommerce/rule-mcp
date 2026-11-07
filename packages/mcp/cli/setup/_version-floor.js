@@ -48,18 +48,31 @@ export function atLeast(version, floor) {
 }
 
 /**
+Whether this process has a terminal the wizard can ask questions on.
+
+A terminal is all the plain adapter needs: the renderer adds its own version
+floor on top (see `canRenderWizard`).
+
+@param {object} [env] @param {object} [stdin] @param {object} [stdout]
+*/
+export function canRunPlainWizard(env = process.env, stdin = process.stdin, stdout = process.stdout) {
+  return Boolean(stdin.isTTY && stdout.isTTY) && !env.CI && env.TERM !== "dumb";
+}
+
+/**
 Whether this process can host a full-screen wizard.
 
 @param {object} [env] @param {object} [stdin] @param {object} [stdout] @param {string} [version]
 */
 export function canRenderWizard(env = process.env, stdin = process.stdin, stdout = process.stdout, version = process.version) {
-  if (!atLeast(version, WIZARD_NODE_MIN)) {
-    return false;
-  }
-
-  return Boolean(stdin.isTTY && stdout.isTTY) && !env.CI && env.TERM !== "dumb";
+  return atLeast(version, WIZARD_NODE_MIN) && canRunPlainWizard(env, stdin, stdout);
 }
 
-/** Why the wizard is not drawing, when the reason is the runtime. */
-export const wizardRuntimeNote = () =>
-  atLeast(process.version, WIZARD_NODE_MIN) ? "" : `${process.version} cannot host the wizard (node ${WIZARD_NODE_MIN} or newer draws it) - running the same plan from the flags.`;
+/**
+Why the wizard is not asking questions, when the reason is the terminal.
+
+The runtime is never the reason: below the renderer's floor the plain prompts
+ask the same questions, so only a terminal that cannot answer stops the wizard.
+*/
+export const wizardRuntimeNote = (env = process.env, stdin = process.stdin, stdout = process.stdout) =>
+  canRunPlainWizard(env, stdin, stdout) ? "" : "no terminal for the wizard - running the same plan from the flags.";

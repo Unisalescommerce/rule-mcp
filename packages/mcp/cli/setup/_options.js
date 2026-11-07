@@ -12,9 +12,9 @@
 import { normalizeInstallMode } from "../installers/index.js";
 import { selectionOf } from "../install/_selection-flags.js";
 import { surfaceOf } from "../install/_surface-flags.js";
-import { canRenderWizard } from "./_version-floor.js";
+import { canRunPlainWizard } from "./_version-floor.js";
 
-export { WIZARD_NODE_MIN, atLeast, canRenderWizard, versionParts, wizardRuntimeNote } from "./_version-floor.js";
+export { WIZARD_NODE_MIN, atLeast, canRenderWizard, canRunPlainWizard, versionParts, wizardRuntimeNote } from "./_version-floor.js";
 
 /** Optional steps that run unless the caller opts out. */
 export const DEFAULT_EXTRAS = ["rules", "commands", "hooks", "doctor"];
@@ -88,6 +88,8 @@ export function resolveSetupOptions(options = {}) {
     force: Boolean(options.force),
     purge: Boolean(options.purge),
     keepConfig: Boolean(options.keepConfig),
-    interactive: options.interactive !== false && canRenderWizard(),
+    // A terminal is the only requirement: the mount picks the renderer when
+    // the runtime can host it, and the plain prompts otherwise.
+    interactive: options.interactive !== false && canRunPlainWizard(),
   };
 }
