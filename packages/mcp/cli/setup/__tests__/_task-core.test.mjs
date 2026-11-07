@@ -29,15 +29,13 @@ test("the agent task says what it will do, before it does it", () => {
   assert.equal(agentInstallTask("claude", "stdio", false).detail, "mode stdio", "the plain case names the mode alone");
   assert.equal(agentInstallTask("claude", "stdio", false, false).detail, "mode stdio, no guard hooks", "a declined guard screen is visible in the plan");
   assert.equal(agentInstallTask("codex", "stdio", false, false).detail, "mode stdio", "only Claude writes a guard, so only Claude says it does not");
-  assert.equal(agentInstallTask("claude", "daemon", false, true, true).detail, "mode daemon, minimal tools", "the older toggle shows when no surface was answered");
+  assert.equal(agentInstallTask("claude", "daemon", false, true, false).detail, "mode daemon, no command files", "a declined commands step is visible in the plan");
 });
 
-test("an answered surface step owns the surface, and the older toggle goes quiet", () => {
-  // minimal: true asks for the old toggle, and the surface answer overrides it.
+test("an answered surface step is stated in the plan", () => {
   const detail = agentInstallTask("claude", "stdio", false, true, true, { preset: "standard" }).detail;
 
   assert.equal(detail, "mode stdio, standard tools", "the surface is what the plan states");
-  assert.doesNotMatch(detail, /minimal/, "the toggle it overrode is not also reported");
 });
 
 test("a surface named by areas is spelled out in the plan", () => {

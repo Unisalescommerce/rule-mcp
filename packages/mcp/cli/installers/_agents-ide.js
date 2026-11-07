@@ -10,7 +10,7 @@ import { commandConfig } from "./_env-command.js";
 import { upsertJsonServer, upsertVscode } from "./_writers-json.js";
 import { HOST_FILES, hostFile } from "./_hosts.data.js";
 import { upsertHostServer } from "./_host-formats.js";
-import { renderAgentCommandFiles } from "../../core/agents/commands/index.js";
+
 
 const vscodeGlobalDir = () => {
   if (process.platform === "darwin") {
@@ -22,14 +22,6 @@ const vscodeGlobalDir = () => {
   }
 
   return join(HOME, ".config", "Code", "User");
-};
-
-const devinConfigPath = () => {
-  if (process.platform === "win32") {
-    return join(process.env.APPDATA || join(HOME, "AppData", "Roaming"), "devin", "mcp_config.json");
-  }
-
-  return join(HOME, ".config", "devin", "mcp_config.json");
 };
 
 const installVscode = ({ entrypoint, dryRun, global, mode }) => {
@@ -116,30 +108,8 @@ const createGenericInstaller =
     return [writeText({ file, content, dryRun })];
   };
 
-const installDevin = ({ entrypoint, dryRun, global }) => {
-  const results = [
-    writeText({
-      file: devinConfigPath(),
-      content: upsertJsonServer(readText(devinConfigPath()), commandConfig(entrypoint, { global, agentName: "devin" })),
-      dryRun,
-    }),
-  ];
-  // Devin invokes commands as /<name> from ~/.config/devin/skills: one directory
-  // per skill, each holding a SKILL.md. The file declares the bare name, the
-  // same shape Codex and Copilot CLI read - the slash is the invocation, never
-  // the declaration.
-  const base = join(HOME, ".config", "devin", "skills");
-
-  for (const { filename, content } of renderAgentCommandFiles("skill")) {
-    results.push(writeText({ file: join(base, filename), content, dryRun }));
-  }
-
-  return results;
-};
-
 export {
   vscodeGlobalDir,
-  devinConfigPath,
   junieConfigPath,
   nvimMcpFile,
   emacsInitFile,
@@ -148,5 +118,6 @@ export {
   installNeovim,
   installEmacs,
   createGenericInstaller,
-  installDevin,
 };
+
+export { devinConfigPath, installDevin } from "./_devin.js";

@@ -39,3 +39,16 @@ test("installDevin writes the config and one file per skill", () => {
   assert.ok(existsSync(join(home, ".config", "devin", "mcp_config.json")), "the devin config lands");
   assert.ok(results.length > 1, "the slash-command files are written too");
 });
+
+test("installDevin writes no command file when the commands step was declined", () => {
+  const skills = join(home, ".config", "devin", "skills");
+
+  // The earlier case wrote them; a declined step must not put them back.
+  rmSync(skills, { recursive: true, force: true });
+
+  const results = installDevin({ entrypoint: ENTRY, dryRun: false, global: false, commands: false });
+
+  assert.equal(results.length, 1, "only the server entry is written");
+  assert.ok(existsSync(join(home, ".config", "devin", "mcp_config.json")), "the devin config still lands");
+  assert.equal(existsSync(skills), false, "no skill directory appears");
+});

@@ -15,7 +15,6 @@ export const FILE_SIZE_RATCHET = new Map([
   ["scripts/bench/hook-spawn-spike.mjs", 210],
   ["packages/mcp/cli/_register-info.js", 156],
   ["packages/mcp/cli/install/_projects.js", 169],
-  ["packages/mcp/cli/installers/_agents-ide.js", 152],
   ["packages/mcp/cli/installers/_uninstall-hosts.js", 151],
   ["packages/mcp/core/adr-policy/_resolve.js", 229],
   ["packages/mcp/core/git-hooks/_land-hooks.js", 182],

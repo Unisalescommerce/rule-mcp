@@ -2,7 +2,6 @@
 
 import { entrypoint, print, printJson } from "./_shared.js";
 import { applySurfaceEnv, surfaceOf } from "../install/_surface-flags.js";
-import { applyMinimalEnv } from "../setup/_options.js";
 import { formatInstallResult, formatUninstallResult } from "../_tui-formats.js";
 import { installAgent } from "../install/index.js";
 import { checkLevel } from "./_lifecycle-install.js";
@@ -29,10 +28,9 @@ function installCommand(opts) {
     return;
   }
 
-  // The narrow path owns no plan, but both answers still have to land: same
-  // mirror the plan tasks use (see cli/installers/_env.js).
+  // The narrow path owns no plan, but the surface answer still has to land:
+  // same mirror the plan tasks use (see cli/installers/_env.js).
   const surface = typeof opts.surface === "string" ? surfaceOf({ surface: opts.surface }) : (opts.surface ?? null);
-  applyMinimalEnv(surface ? undefined : opts.minimal);
   applySurfaceEnv(surface);
 
   let result;
@@ -46,6 +44,7 @@ function installCommand(opts) {
       mode: opts.mode,
       entrypoint,
       hooks: level.hooks,
+      commands: opts.commands !== false,
       level: opts.level ?? null,
     });
   } catch (error) {

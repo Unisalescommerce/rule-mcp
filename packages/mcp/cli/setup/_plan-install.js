@@ -50,7 +50,7 @@ const dimensionsOf = (extras, agents) => ({
 });
 
 /**
- * @param {{ agents?: string[], mode?: string, extras?: object, force?: boolean, context?: object, selection?: object|null, minimal?: boolean, surface?: object|null, profile?: string|null, dimensions?: object|null, features?: Array<{ id: string, level: string }>|string[], adrPolicy?: string|null }} answers
+ * @param {{ agents?: string[], mode?: string, extras?: object, force?: boolean, context?: object, selection?: object|null, surface?: object|null, profile?: string|null, dimensions?: object|null, features?: Array<{ id: string, level: string }>|string[], adrPolicy?: string|null }} answers
  * @returns {Array<{ id: string, title: string, detail: string, run: Function }>}
  */
 export function buildInstallPlan({
@@ -60,7 +60,6 @@ export function buildInstallPlan({
   force = false,
   context = {},
   selection = null,
-  minimal,
   surface,
   profile = null,
   dimensions = null,
@@ -96,7 +95,7 @@ export function buildInstallPlan({
   // than a task the plan can leave out. `extras` only ever carries the steps
   // that were kept, so the test is presence - `!== false` was true for an
   // absent key, which made the hooks impossible to decline.
-  plan.push(...targets.map((agent) => agentInstallTask(agent, mode, force, extras.hooks === true, minimal, surface)));
+  plan.push(...targets.map((agent) => agentInstallTask(agent, mode, force, extras.hooks === true, extras.commands === true, surface)));
 
   if (extras.rules) {
     plan.push(rulesTask(agents));

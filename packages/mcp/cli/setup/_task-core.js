@@ -11,7 +11,6 @@
 import { entrypoint } from "../commands/_shared.js";
 import { installAgent } from "../install/index.js";
 import { applySurfaceEnv, surfaceSpec } from "../install/_surface-flags.js";
-import { applyMinimalEnv } from "./_options.js";
 import { uninstallFromAgent } from "../_uninstall.js";
 import { ensureRuntimeHome } from "./_runtime-home.js";
 import { ensureGlobalShim, removeGlobalShims } from "./_shim-apply.js";
@@ -72,20 +71,20 @@ export const shimRemovalTask = () => ({
  *
  * `hooks` reaches the Claude installer, which is the only one that writes a
  * PreToolUse guard: a user who declined the guard screen must not get one
- * anyway because the agent screen selected Claude. `minimal` and `surface`
- * land in the process env just before the write, which the writers mirror
- * into the server env (see cli/installers/_env.js); an answered Surface
- * step owns the surface, the older toggle only applies when it was skipped.
+ * anyway because the agent screen selected Claude. `commands` reaches the
+ * installers that write command files as their own side effect, so a declined
+ * Commands step writes none of them. `surface` lands in the process env just
+ * before the write, which the writers mirror into the server env (see
+ * cli/installers/_env.js).
  */
-export const agentInstallTask = (agent, mode, force, hooks = true, minimal, surface) => ({
+export const agentInstallTask = (agent, mode, force, hooks = true, commands = true, surface) => ({
   id: `agent:${agent}`,
   title: `Configure ${agent}`,
-  detail: `mode ${mode}${agent === "claude" && !hooks ? ", no guard hooks" : ""}${minimal === true && !surface ? ", minimal tools" : ""}${surface ? `, ${surfaceSpec(surface)} tools` : ""}`,
+  detail: `mode ${mode}${agent === "claude" && !hooks ? ", no guard hooks" : ""}${commands ? "" : ", no command files"}${surface ? `, ${surfaceSpec(surface)} tools` : ""}`,
   run: ({ dryRun }) => {
-    applyMinimalEnv(surface ? undefined : minimal);
     applySurfaceEnv(surface);
 
-    const result = installAgent({ agent, entrypoint, dryRun, force, mode, hooks });
+    const result = installAgent({ agent, entrypoint, dryRun, force, mode, hooks, commands });
     const outcome = result.installed[agent] ?? {};
 
     if (outcome.error) {

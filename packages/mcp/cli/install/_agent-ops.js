@@ -43,10 +43,10 @@ export function checkRemoteSupport(name, normalizedMode, force = false) {
  * `hooks` installs the guard hooks for each selected agent that documents a
  * hook file: a host that was not selected is never touched.
  *
- * @param {{ agent: string, entrypoint: string, dryRun?: boolean, force?: boolean, global?: boolean, mode?: "stdio"|"daemon"|"sse"|"docker", hooks?: boolean }} opts
+ * @param {{ agent: string, entrypoint: string, dryRun?: boolean, force?: boolean, global?: boolean, mode?: "stdio"|"daemon"|"sse"|"docker", hooks?: boolean, commands?: boolean }} opts
  * @returns {{ ok: boolean, dryRun: boolean, global: boolean, installed: object, manifest?: string }}
  */
-export const installAgent = ({ agent, entrypoint, dryRun = false, force = false, global = false, mode = "stdio", hooks = false, level = null, _env = {} }) => {
+export const installAgent = ({ agent, entrypoint, dryRun = false, force = false, global = false, mode = "stdio", hooks = false, commands = true, level = null, _env = {} }) => {
   const normalizedMode = normalizeInstallMode(mode);
   // Legacy names redirect to their successor (windsurf -> devin): the
   // catalog no longer offers them, but naming one still works and warns.
@@ -89,7 +89,7 @@ export const installAgent = ({ agent, entrypoint, dryRun = false, force = false,
     }
 
     try {
-      result[name] = installers[name]({ entrypoint, dryRun, global, force, mode: normalizedMode });
+      result[name] = installers[name]({ entrypoint, dryRun, global, force, mode: normalizedMode, commands });
 
       if (hooks) {
         const file = installHookFile({ agent: name, entrypoint, dryRun });
