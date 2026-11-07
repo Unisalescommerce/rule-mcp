@@ -51,9 +51,10 @@ test("nav labels never render undefined; primary trio is present", () => {
   const nav = html.match(/<nav aria-label="Primary"><ul>([\s\S]*?)<\/ul><\/nav>/u)?.[1] ?? "";
 
   assert.doesNotMatch(nav, /\bundefined\b/u, "nav must not render undefined titles");
-  assert.match(nav, />Home</u);
+  assert.doesNotMatch(nav, />Home</u, "the brand opens the home page, not a third entry");
   assert.match(nav, />Getting Started</u);
   assert.match(nav, />Reference</u);
+  assert.match(html, /<p data-part="brand"><a href="index\.html">/u, "the brand points at the home page");
 });
 
 test("the architecture page renders the flow without a chart library", () => {

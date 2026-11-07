@@ -278,27 +278,40 @@
     top: var(--space-4);
   }
 
+  /* Mobile first. Two rows on a phone: the brand with the preference trigger,
+     then the destinations. From 56rem the three share one row. */
   body > header {
-    padding: var(--space-3) var(--inset);
-    background: var(--header-bg);
-    border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
     z-index: 5;
-  }
-
-  body > header {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    /* One column by default: at 200% text size a phone has no room for the
+       brand and the trigger side by side, and the breakpoint is in rem so it
+       follows the text, not the screen. */
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "brand"
+      "nav"
+      "prefs";
     align-items: center;
-    gap: var(--space-3) var(--space-5);
+    gap: var(--space-1) var(--space-4);
+    padding: var(--space-2) var(--inset);
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--border);
   }
 
+  /* The brand is one of the menu items, not a masthead above them: same face,
+     same weight, same height, so the row reads on one line. */
   body > header > p {
+    grid-area: brand;
     margin: 0;
-    font-family: var(--font-sans);
-    font-size: 1.38rem;
-    font-weight: 700;
+    font-family: var(--font-ui);
+    font-size: 1.14rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    min-height: 2.75rem;
+    display: flex;
+    align-items: center;
   }
 
   body > header > p a {
@@ -307,9 +320,14 @@
     /* Clear space around a standalone mark: at least 15% of the core height.
        The mark is 30px, so the gap carries more than the minimum. */
     gap: var(--space-2);
+    min-height: 2.75rem;
     color: var(--fg);
     text-decoration: none;
     letter-spacing: -0.01em;
+  }
+
+  body > header > p a:hover {
+    color: var(--accent);
   }
 
   /* The monochrome mark, recolored with the brand gradient: the guidelines
@@ -325,6 +343,11 @@
     -webkit-mask: url("assets/monochrome-mark.png") center / 132% no-repeat;
   }
 
+  body > header nav {
+    grid-area: nav;
+    min-width: 0;
+  }
+
   body > header nav ul,
   body > nav[aria-label="Reference"] ul {
     display: flex;
@@ -337,10 +360,17 @@
 
   body > header nav a,
   body > nav[aria-label="Reference"] a {
-    display: inline-block;
-    padding: var(--space-1) var(--space-2);
+    display: inline-flex;
+    align-items: center;
+    padding-inline: var(--space-3);
     border-radius: var(--radius);
     text-decoration: none;
+  }
+
+  /* A finger needs a target it can hit: 44px below the wide breakpoint. */
+  body > header nav a {
+    min-height: 2.75rem;
+    font-weight: 600;
   }
 
   body > header nav a:hover,
@@ -461,8 +491,8 @@
 
 @layer dropdown {
   body > header details[data-part="prefs"] {
+    grid-area: prefs;
     position: relative;
-    margin-inline-start: auto;
     font-size: 1.02rem;
     font-family: var(--font-ui);
   }
@@ -473,7 +503,7 @@
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
-    min-height: 2.5rem;
+    min-height: 2.75rem;
     padding: var(--space-1) var(--space-4);
     border: 1px solid var(--border);
     border-radius: 999px;
@@ -483,7 +513,10 @@
     line-height: 1.2;
     cursor: pointer;
     list-style: none;
-    white-space: nowrap;
+    /* The label wraps rather than pushing the header wider than the screen:
+       at 200% text size "Preferences" alone is wider than a phone. */
+    text-align: start;
+    max-width: 100%;
   }
 
   body > header details[data-part="prefs"] summary::-webkit-details-marker {
@@ -605,13 +638,30 @@
   /* Narrow screens have no room for a panel beside the header, so the panel
      takes the full width and pushes the page down instead of covering its
      title. An overlay that hides the heading reads as a broken page. */
-  @media (max-width: 56rem) {
-    body > header details[data-part="prefs"] {
-      flex-basis: 100%;
+  @media (min-width: 24rem) {
+    body > header {
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas:
+        "brand prefs"
+        "nav nav";
+    }
+  }
+
+  /* A 320px phone fits both destinations on one line at this size, and two
+     stacked rows of menu is a header taller than the content it introduces. */
+  @media (max-width: 23.999rem) {
+    body > header nav {
+      font-size: 1.06rem;
     }
 
-    /* A full-width trigger with the chevron on the far edge reads as one bar,
-       instead of a pill that stops halfway with a panel below it. */
+    body > header nav a {
+      padding-inline: var(--space-2);
+    }
+  }
+
+  /* Below the wide breakpoint the panel takes the full width and pushes the
+     page down instead of covering its title. */
+  @media (max-width: 55.999rem) {
     body > header details[data-part="prefs"] summary {
       width: 100%;
       justify-content: space-between;
@@ -623,6 +673,29 @@
       min-width: 0;
       margin-block-start: var(--space-2);
       transform: none;
+    }
+  }
+
+  /* One row from 56rem: brand, destinations, preferences. */
+  @media (min-width: 56rem) {
+    body > header {
+      grid-template-columns: auto 1fr auto;
+      grid-template-areas: "brand nav prefs";
+      gap: var(--space-2) var(--space-5);
+      padding-block: var(--space-3);
+    }
+
+    body > header > p,
+    body > header > p a {
+      min-height: 2.5rem;
+    }
+
+    body > header nav a {
+      min-height: 2.25rem;
+    }
+
+    body > header details[data-part="prefs"] summary {
+      min-height: 2.5rem;
     }
   }
 }
@@ -676,6 +749,7 @@
      a deep navy field, large corners, one inner border and restrained glow. */
   [data-part="brand-plate"] {
     display: block;
+    max-width: 100%;
     margin-block-end: var(--space-5);
     filter: drop-shadow(0 0 1.75rem var(--brand-glow));
   }
@@ -683,14 +757,54 @@
   [data-part="brand-plate"] img {
     display: block;
     width: 8rem;
-    height: 8rem;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 1;
     border: 1px solid color-mix(in srgb, var(--brand-lilac) 28%, transparent);
     border-radius: 1.6rem;
   }
 
-  body[data-page="home"] section[data-part="hero"] > p:first-of-type {
+  body[data-page="home"] section[data-part="hero"] > p[data-part="lead"] {
     font-size: 1.56rem;
     text-wrap: balance;
+  }
+
+  /* The build line: what this site documents, and where the source is. */
+  body[data-page="home"] [data-part="meta"] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+    margin-block: var(--space-3) var(--space-4);
+    font-size: 1.02rem;
+    color: var(--muted);
+  }
+
+  body[data-page="home"] [data-part="meta"] [data-part="version"] {
+    padding: 0.05rem var(--space-2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+  }
+
+  body[data-page="home"] [data-part="meta"] a[data-part="repo"] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 2rem;
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  body[data-page="home"] [data-part="meta"] a[data-part="repo"]:hover {
+    text-decoration: underline;
+  }
+
+  body[data-page="home"] [data-part="meta"] svg {
+    width: 1.1em;
+    height: 1.1em;
   }
 
   body[data-page="home"] section[data-part="flow"] {
@@ -771,7 +885,9 @@
 
   body[data-page="home"] section[data-part="flow"] ol {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    /* `min()` keeps the track from forcing a column wider than the card:
+       at 200% text size 14rem is wider than a phone. */
+    grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
     gap: var(--space-3);
     list-style: none;
     margin: 0;
@@ -816,7 +932,7 @@
 
   body[data-page="home"] section[data-part="cards"] {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
     gap: var(--space-4);
   }
 

@@ -3,16 +3,17 @@
  *
  * The three menus the shell renders, and the labels they carry.
  *
- * The top-level menu is fixed: Home, Getting Started, Reference. The Reference
- * menu is the published order of that section, and a page renders it only when
- * the menu lists it, so the subnav never claims a page the section does not own.
+ * The top-level menu is fixed: Getting Started and Reference. Home is the
+ * brand: the mark and the wordmark in the header point at it, so a third entry
+ * would be a second door to the page the logo already opens. The Reference menu
+ * is the published order of that section, and a page renders it only when the
+ * menu lists it, so the subnav never claims a page the section does not own.
  */
 
 import { depthPrefix, escapeHtml } from "./_html.mjs";
 
-/** Top-level public nav: Home / Getting Started / Reference. */
+/** Top-level public nav: Getting Started / Reference. The brand opens Home. */
 export const PRIMARY_NAV = [
-  { out: "index.html", title: "Home" },
   { out: "docs/getting-started.html", title: "Getting Started" },
   { out: "docs/README.html", title: "Reference" },
 ];

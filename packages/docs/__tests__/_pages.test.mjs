@@ -33,10 +33,15 @@ test("a merged source has no route of its own and lands on its composed page", (
   assert.equal(outs.filter((out) => out === "docs/instructions.html").length, 1);
 });
 
-test("primary nav is Home / Getting Started / Reference", () => {
+test("primary nav is Getting Started / Reference, because the brand is home", () => {
   assert.deepEqual(
     PRIMARY_NAV.map((item) => item.title),
-    ["Home", "Getting Started", "Reference"],
+    ["Getting Started", "Reference"],
+  );
+  assert.equal(
+    PRIMARY_NAV.some((item) => item.out === "index.html"),
+    false,
+    "the logo is the only door to the home page",
   );
 });
 
