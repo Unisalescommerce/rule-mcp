@@ -84,7 +84,12 @@ export function dimensionItems({ agents = [], ruleFiles = [] } = {}) {
         id,
         label: "Agent slash commands",
         note: dirs.length > 0 ? `${dirs.length} director${dirs.length === 1 ? "y" : "ies"}` : "no directory",
-        detail: ["Writes the rule-* command files into the command", "directories of the selected agents:", "", ...(dirs.length > 0 ? dirs : ["No command directory on this machine yet."])],
+        detail: [
+          "Writes the rule-* command files into the command",
+          "directories of the selected agents:",
+          "",
+          ...(dirs.length > 0 ? dirs : ["No command directory on this machine yet."]),
+        ],
       };
     }
 

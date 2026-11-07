@@ -63,7 +63,6 @@ test("update and tokensave map to the existing opt-out keys", () => {
     RULE_MCP_NO_TOKENSAVE: "0",
     RULE_MCP_TOKENSAVE_AUTOTRACK: null,
   });
-
 });
 
 test("an unknown feature or level throws", () => {

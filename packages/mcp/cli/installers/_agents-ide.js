@@ -11,7 +11,6 @@ import { upsertJsonServer, upsertVscode } from "./_writers-json.js";
 import { HOST_FILES, hostFile } from "./_hosts.data.js";
 import { upsertHostServer } from "./_host-formats.js";
 
-
 const vscodeGlobalDir = () => {
   if (process.platform === "darwin") {
     return join(HOME, "Library", "Application Support", "Code", "User");
@@ -108,16 +107,6 @@ const createGenericInstaller =
     return [writeText({ file, content, dryRun })];
   };
 
-export {
-  vscodeGlobalDir,
-  junieConfigPath,
-  nvimMcpFile,
-  emacsInitFile,
-  installVscode,
-  installJetbrains,
-  installNeovim,
-  installEmacs,
-  createGenericInstaller,
-};
+export { vscodeGlobalDir, junieConfigPath, nvimMcpFile, emacsInitFile, installVscode, installJetbrains, installNeovim, installEmacs, createGenericInstaller };
 
 export { devinConfigPath, installDevin } from "./_devin.js";
