@@ -156,6 +156,9 @@
     font-weight: 650;
     letter-spacing: -0.015em;
     text-wrap: balance;
+    /* A long identifier or a wide font has no break opportunity in a heading,
+       and an unbreakable word pushes the whole document sideways at 320px. */
+    overflow-wrap: break-word;
   }
 
   h1 {
