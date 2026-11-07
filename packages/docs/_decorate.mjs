@@ -19,8 +19,11 @@ export function decorateHome(html) {
   const [opening, ...rest] = html.split(/(?=<h2>)/u);
   const hero = opening.replace(/(<\/h1>\n?)([\s\S]*)$/u, (_, heading, body) => {
     const stats = body.replace("<ul>", '<ul data-part="stats">').replace(/<p>(<a [\s\S]*?)<\/p>\s*$/u, '<p data-part="cta">$1</p>\n');
+    // The brand kit's primary icon, in the rounded-square plate the guidelines
+    // describe. Decorative here: the hero heading already names the product.
+    const plate = '<div data-part="brand-plate"><img src="assets/primary-icon.png" alt="" width="128" height="128" decoding="async"></div>\n';
 
-    return `${heading}<section data-part="hero">\n${stats}</section>\n`;
+    return `${heading}<section data-part="hero">\n${plate}${stats}</section>\n`;
   });
 
   const sections = rest.map((section) => {
@@ -34,7 +37,9 @@ export function decorateHome(html) {
       return `<section data-part="cards">\n${cards}</section>\n`;
     }
 
-    return section;
+    // The closing prose is one block, not loose paragraphs: the home grid puts
+    // one item in the foot area, and two loose paragraphs landed on each other.
+    return `<section data-part="foot">\n${section}</section>\n`;
   });
 
   return [hero, ...sections].join("");

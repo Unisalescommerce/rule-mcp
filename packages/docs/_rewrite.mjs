@@ -3,12 +3,10 @@
  *
  * Three passes over a rendered page, and the one decision behind each:
  *
- * - a link that stays in the emitted set becomes the page it points at, so the
- *   site never serves a navigation dead end;
- * - a link that leaves the set becomes a GitHub URL, and every off-site link
- *   opens in a new tab without an opener;
- * - a table gets a scroll container, and the first heading loses its chapter
- *   number, because a reader came for the subject and not the ordinal.
+ * - a link in the emitted set becomes the page it points at;
+ * - a link that leaves it becomes a GitHub URL, opened without an opener;
+ * - a table gets a scroll container, and the heading loses its chapter number,
+ *   because a reader came for the subject and not the ordinal.
  */
 
 import { execFileSync } from "node:child_process";
@@ -60,11 +58,15 @@ export function rewriteLinks(html, { dir, out, routes, base }) {
     const fragment = hash === -1 ? "" : target.slice(hash);
     const joined = posix(join(dir, path));
     const resolved = routes.get(joined);
+    const from = out === "index.html" ? "." : posix(dirname(out));
 
     if (resolved) {
-      const from = out === "index.html" ? "." : posix(dirname(out));
-
       return `${attribute}="${posix(relative(from, resolved))}${fragment}"`;
+    }
+
+    // A site asset is served by the site: the brand marks live under assets/.
+    if (joined.startsWith("assets/")) {
+      return `${attribute}="${posix(relative(from, joined))}${fragment}"`;
     }
 
     // Not a page. Anything inside the repository becomes a GitHub URL, so the
@@ -102,9 +104,8 @@ export function unwrapDeadLinks(html) {
  * directions and WCAG 2.2 SC 1.4.10 reflow fails. The wrapper scrolls instead,
  * which keeps the table element and its implicit roles intact.
  *
- * The wrapper is reachable by keyboard and named by its own header row: a
- * scrollable box a keyboard user cannot focus is content they cannot read
- * (WCAG 2.2 SC 2.1.1, the `scrollable-region-focusable` rule).
+ * The wrapper is keyboard-reachable and named by its header row (WCAG 2.2
+ * SC 2.1.1, the `scrollable-region-focusable` rule).
  *
  * @param {string} html
  * @returns {string}

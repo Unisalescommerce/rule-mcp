@@ -1,8 +1,8 @@
-# RuleMCP
+# rule-mcp
 
 **Deterministic skills for every AI coding agent, without calling an LLM.**
 
-RuleMCP is an MCP server. It sends a free-text request to the correct skill. It serves styleguides and templates as tools and resources. It checks generated code with guardrails. It runs on your machine and works with any model.
+rule-mcp is an MCP server. It sends a free-text request to the correct skill. It serves styleguides and templates as tools and resources. It checks generated code with guardrails. It runs on your machine and works with any model.
 
 - **Node 24+** (the wizard draws on 26.4+)
 - **82 skills**

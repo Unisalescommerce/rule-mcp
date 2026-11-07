@@ -37,16 +37,26 @@
     --space-6: 2rem;
     --space-7: 3rem;
     --radius: 0.35rem;
-    --bg: light-dark(#f7f4ef, #12141a);
-    --fg: light-dark(#1a1c1f, #e8e6e1);
-    --muted: light-dark(#5c635c, #a8aea8);
-    --border: light-dark(#c9c2b6, #2e3440);
-    --accent: light-dark(#0b6e4f, #5dcaa5);
-    --accent-fg: light-dark(#ffffff, #0a1210);
-    --code-bg: light-dark(#ece7de, #1c212b);
-    --focus: light-dark(#0b6e4f, #5dcaa5);
-    --header-bg: light-dark(#efeae2, #181b22);
-    --table-stripe: light-dark(#f0ebe3, #171a21);
+    --bg: light-dark(#f7f4ef, #111724);
+    --fg: light-dark(#1a1c1f, #e0f8ff);
+    --muted: light-dark(#5c635c, #a9b8ce);
+    --border: light-dark(#c9c2b6, #2a3350);
+    --accent: light-dark(#1e2363, #63ddff);
+    --accent-fg: light-dark(#e0f8ff, #08101c);
+    --code-bg: light-dark(#ece7de, #1a2033);
+    --focus: light-dark(#1e2363, #8cecff);
+    --header-bg: light-dark(#efeae2, #15182a);
+    --table-stripe: light-dark(#f0ebe3, #161d2e);
+    /* Brand kit palette. The dark theme is the navy field the guidelines
+       describe; the light theme keeps its paper field and takes the brand blue
+       as its accent, which is the documented light adaptation. */
+    --brand-navy: #111724;
+    --brand-indigo: #2c2557;
+    --brand-cyan: #63ddff;
+    --brand-violet: #8f7cff;
+    --brand-lilac: #c6bbff;
+    --brand-ink: #08101c;
+    --brand-glow: color-mix(in srgb, var(--brand-cyan) 22%, transparent);
   }
 
   html[data-theme="light"] {
@@ -55,26 +65,26 @@
     --fg: #1a1c1f;
     --muted: #5c635c;
     --border: #c9c2b6;
-    --accent: #0b6e4f;
-    --accent-fg: #ffffff;
+    --accent: #1e2363;
+    --accent-fg: #e0f8ff;
     --code-bg: #ece7de;
-    --focus: #0b6e4f;
+    --focus: #1e2363;
     --header-bg: #efeae2;
     --table-stripe: #f0ebe3;
   }
 
   html[data-theme="dark"] {
     color-scheme: dark;
-    --bg: #12141a;
-    --fg: #e8e6e1;
-    --muted: #a8aea8;
-    --border: #2e3440;
-    --accent: #5dcaa5;
-    --accent-fg: #0a1210;
-    --code-bg: #1c212b;
-    --focus: #5dcaa5;
-    --header-bg: #181b22;
-    --table-stripe: #171a21;
+    --bg: #111724;
+    --fg: #e0f8ff;
+    --muted: #a9b8ce;
+    --border: #2a3350;
+    --accent: #63ddff;
+    --accent-fg: #08101c;
+    --code-bg: #1a2033;
+    --focus: #8cecff;
+    --header-bg: #15182a;
+    --table-stripe: #161d2e;
   }
 
   html[data-contrast="more"] {
@@ -139,9 +149,12 @@
   h2,
   h3,
   h4 {
-    font-family: var(--font-sans);
-    line-height: 1.2;
-    font-weight: 600;
+    /* The brand asks for a neutral modern sans and keeps typography secondary
+       to the mark, so the display serif left the headings. */
+    font-family: var(--font-ui);
+    line-height: 1.15;
+    font-weight: 650;
+    letter-spacing: -0.015em;
     text-wrap: balance;
   }
 
@@ -286,8 +299,27 @@
   }
 
   body > header > p a {
+    display: inline-flex;
+    align-items: center;
+    /* Clear space around a standalone mark: at least 15% of the core height.
+       The mark is 30px, so the gap carries more than the minimum. */
+    gap: var(--space-2);
     color: var(--fg);
     text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  /* The monochrome mark, recolored with the brand gradient: the guidelines
+     allow recoloring it and reserve it for small sizes, where the full color
+     mark turns into a dark smudge. */
+  body > header > p [data-part="brand-mark"] {
+    display: block;
+    width: 34px;
+    height: 34px;
+    flex: none;
+    background: linear-gradient(135deg, var(--brand-cyan), var(--brand-violet));
+    mask: url("assets/monochrome-mark.png") center / 132% no-repeat;
+    -webkit-mask: url("assets/monochrome-mark.png") center / 132% no-repeat;
   }
 
   body > header nav ul,
@@ -456,6 +488,7 @@
   }
 
   body > header details[data-part="prefs"][open] summary + menu {
+    display: flex;
     transform: scaleY(1);
     opacity: 1;
   }
@@ -470,8 +503,12 @@
     cursor: default;
   }
 
+  /* Closed, the panel leaves the flow entirely. Opacity alone kept an
+     invisible box over the nav and the content, which ate clicks and read as
+     overlapping text. No transition is allowed on this site, so `display` is
+     the honest switch. */
   body > header details[data-part="prefs"] summary + menu {
-    display: flex;
+    display: none;
     z-index: 99;
     position: absolute;
     right: 0;
@@ -539,8 +576,11 @@
     margin-block-end: 0;
   }
 
-  body[data-page="home"] main > p {
+  body[data-page="home"] section[data-part="foot"] {
     grid-area: foot;
+  }
+
+  body[data-page="home"] section[data-part="foot"] > p:last-child {
     margin-block-end: 0;
   }
 
@@ -549,11 +589,27 @@
     /* Stretches to match the taller flow/cards column instead of hugging the
        top, so the card's border and background do not leave dead space below
        it (docs/reviews/ui.md: home-grid-hero-deadspace). */
-    align-self: stretch;
+    align-self: start;
     padding: var(--space-6) clamp(1.25rem, 3vw, 2.5rem);
     border: 1px solid var(--border);
     border-radius: calc(var(--radius) * 2);
-    background: radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%), var(--header-bg);
+    background: radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--brand-violet) 20%, transparent), transparent 60%), var(--header-bg);
+  }
+
+  /* The primary icon in its rounded-square plate, as the brand kit describes:
+     a deep navy field, large corners, one inner border and restrained glow. */
+  [data-part="brand-plate"] {
+    display: block;
+    margin-block-end: var(--space-5);
+    filter: drop-shadow(0 0 1.75rem var(--brand-glow));
+  }
+
+  [data-part="brand-plate"] img {
+    display: block;
+    width: 8rem;
+    height: 8rem;
+    border: 1px solid color-mix(in srgb, var(--brand-lilac) 28%, transparent);
+    border-radius: 1.6rem;
   }
 
   body[data-page="home"] section[data-part="hero"] > p:first-of-type {
@@ -597,12 +653,15 @@
   }
 
   body[data-page="home"] ul[data-part="stats"] li {
+    max-width: 100%;
     padding: var(--space-1) var(--space-3);
     border: 1px solid var(--border);
     border-radius: 999px;
     background: var(--bg);
     font-size: 1.14rem;
-    white-space: nowrap;
+    /* A pill that cannot wrap pushes the document past the viewport at 320px
+       (WCAG 2.2 SC 1.4.10), so the label wraps instead. */
+    overflow-wrap: anywhere;
   }
 
   body[data-page="home"] ul[data-part="stats"] strong {
@@ -710,6 +769,12 @@
 /* View transitions */
 
 @layer transitions {
+  /* Without a background on the transition root the browser composites the two
+     snapshots over the canvas, which reads as a white flash between pages. */
+  ::view-transition {
+    background-color: var(--bg);
+  }
+
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation-duration: 0.25s;
@@ -751,7 +816,12 @@
 
 @layer prefs {
   /* The view transitions are the only motion on the site, so the preference
-     exists to switch those off. */
+     exists to switch those off. A root with no name is not captured, which is
+     how a stored preference disables the declarative cross-document one. */
+  html[data-motion="reduce"] {
+    view-transition-name: none;
+  }
+
   html[data-motion="reduce"]::view-transition-old(root),
   html[data-motion="reduce"]::view-transition-new(root) {
     animation: none !important;

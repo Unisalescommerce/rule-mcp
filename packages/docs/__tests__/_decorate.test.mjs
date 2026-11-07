@@ -43,7 +43,7 @@ test("the home page gets its hero, stats, call to action, flow and cards", () =>
   assert.match(html, /<p data-part="cta"><a href="a.md">Go<\/a>/u);
   assert.match(html, /<section data-part="flow">\n<h2>How it works<\/h2>/u);
   assert.equal(html.match(/<article>/gu).length, 2, "one card per third-level heading");
-  assert.match(html, /<\/section>\n<h2>Project<\/h2>/u, "a section the page does not style stays plain");
+  assert.match(html, /<section data-part="foot">\n<h2>Project<\/h2>/u, "the closing prose is one block, so the foot area holds one item");
 });
 
 test("a home page with no matching heading keeps its content", () => {
