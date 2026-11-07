@@ -460,17 +460,24 @@
   body > header details[data-part="prefs"] {
     position: relative;
     margin-inline-start: auto;
-    font-size: 1.08rem;
+    font-size: 1.02rem;
     font-family: var(--font-ui);
   }
 
+  /* The trigger speaks the nav's language: the same pill, the same hover wash,
+     and the same accent fill as the current page once it is open. */
   body > header details[data-part="prefs"] summary {
-    padding: var(--space-2) var(--space-3);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 2.5rem;
+    padding: var(--space-1) var(--space-4);
     border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--bg);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
     color: var(--fg);
-    line-height: inherit;
+    font-weight: 600;
+    line-height: 1.2;
     cursor: pointer;
     list-style: none;
     white-space: nowrap;
@@ -482,26 +489,32 @@
 
   body > header details[data-part="prefs"] summary::after {
     display: inline-block;
-    width: 0.8rem;
-    height: 0.8rem;
-    margin-inline-start: 0.4rem;
-    vertical-align: baseline;
+    width: 0.55rem;
+    height: 0.55rem;
     border-inline-end: 2px solid currentColor;
     border-block-end: 2px solid currentColor;
-    transform: rotate(45deg) translateY(-0.15rem);
+    rotate: 45deg;
+    translate: 0 -0.15rem;
     content: "";
   }
 
   body > header details[data-part="prefs"] summary:hover {
     border-color: var(--accent);
+    color: var(--accent);
   }
 
-  body > header details[data-part="prefs"][open] summary + menu {
-    display: flex;
-    transform: scaleY(1);
-    opacity: 1;
+  body > header details[data-part="prefs"][open] summary {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--accent-fg);
   }
 
+  body > header details[data-part="prefs"][open] summary::after {
+    rotate: -135deg;
+    translate: 0 0.1rem;
+  }
+
+  /* The outside-click catcher: an invisible layer under the panel. */
   body > header details[data-part="prefs"][open] summary::before {
     display: block;
     z-index: 1;
@@ -522,18 +535,25 @@
     position: absolute;
     right: 0;
     flex-direction: column;
-    gap: var(--space-1);
-    min-width: 14rem;
-    margin: var(--space-1) 0 0;
-    padding: var(--space-2);
+    gap: var(--space-3);
+    min-width: 16rem;
+    margin: var(--space-2) 0 0;
+    padding: var(--space-3);
     border: 1px solid var(--border);
-    border-radius: var(--radius);
+    border-radius: calc(var(--radius) * 2.5);
     background: var(--bg);
     color: var(--fg);
+    box-shadow: 0 0.9rem 1.6rem color-mix(in srgb, #000 24%, transparent);
     list-style: none;
     opacity: 0;
-    transform: scaleY(0.95);
+    transform: scaleY(0.96);
     transform-origin: top right;
+  }
+
+  body > header details[data-part="prefs"][open] summary + menu {
+    display: flex;
+    transform: scaleY(1);
+    opacity: 1;
   }
 
   body > header details[data-part="prefs"] summary + menu > li {
@@ -541,22 +561,42 @@
   }
 
   body > header details[data-part="prefs"] fieldset {
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
     margin: 0;
-    padding: var(--space-2) var(--space-3);
+    padding: var(--space-2) var(--space-2) var(--space-1);
+    border: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
+    border-radius: var(--radius);
   }
 
   body > header details[data-part="prefs"] legend {
     padding: 0 var(--space-1);
-    font-size: 0.96rem;
+    font-size: 0.86rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--muted);
   }
 
+  /* One row per answer: the whole row is the target, and the native control
+     takes the brand color instead of a second set of hand-drawn glyphs. */
   body > header details[data-part="prefs"] label {
-    display: block;
-    margin: var(--space-1) 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 2rem;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius);
     cursor: pointer;
+  }
+
+  body > header details[data-part="prefs"] label:hover {
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+  }
+
+  body > header details[data-part="prefs"] input {
+    flex: none;
+    width: 1.05rem;
+    height: 1.05rem;
+    margin: 0;
+    accent-color: var(--accent);
   }
 
   /* Narrow screens have no room for a panel beside the header, so the panel
@@ -565,6 +605,13 @@
   @media (max-width: 56rem) {
     body > header details[data-part="prefs"] {
       flex-basis: 100%;
+    }
+
+    /* A full-width trigger with the chevron on the far edge reads as one bar,
+       instead of a pill that stops halfway with a panel below it. */
+    body > header details[data-part="prefs"] summary {
+      width: 100%;
+      justify-content: space-between;
     }
 
     body > header details[data-part="prefs"][open] summary + menu {
