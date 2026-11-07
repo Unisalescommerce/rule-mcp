@@ -7,7 +7,7 @@ This chapter lists each `RULE_MCP_*` variable. [Environment readers](./23-env-re
 Use the `config env` command to save a variable. The command writes `~/.rule-mcp/config/env.json`. The installer adds the saved values to the MCP configuration of each agent.
 
 ```bash
-rule-mcp config env --set RULE_MCP_MINIMAL_TOOLS=1
+rule-mcp config env --set RULE_MCP_NO_AUTOUPDATE=1
 ```
 
 ```bash
@@ -15,7 +15,7 @@ rule-mcp config env --list
 ```
 
 ```bash
-rule-mcp config env --unset RULE_MCP_MINIMAL_TOOLS
+rule-mcp config env --unset RULE_MCP_NO_AUTOUPDATE
 ```
 
 A variable in your shell overrides the saved value.
@@ -48,7 +48,6 @@ A variable in your shell overrides the saved value.
 
 | Variable                       | Description                                                                 | Default     | Values                         |
 | ------------------------------ | --------------------------------------------------------------------------- | ----------- | ------------------------------ |
-| `RULE_MCP_MINIMAL_TOOLS`       | Exposes a short list of tools.                                              | Unset       | `1`                            |
 | `RULE_MCP_SURFACE`             | Limits the skills that the session advertises.                              | All         | A surface spec                 |
 | `RULE_MCP_COMPRESSION_LEVEL`   | Sets the compression strength. An unknown value gives `full` and a warning. | `full`      | `off`, `lite`, `full`, `ultra` |
 | `RULE_MCP_NO_COMPRESSION`      | Stops text compression of tool results. Code and JSON do not change.        | Unset       | `1`                            |
@@ -125,13 +124,12 @@ A variable in your shell overrides the saved value.
 
 `rule-mcp feature enable <id> --level <name>` writes these keys into `~/.rule-mcp/config/env.json`.
 
-| Feature         | Levels                     | Keys                                                    |
-| --------------- | -------------------------- | ------------------------------------------------------- |
-| `adr`           | `on`, `off`                | `RULE_MCP_NO_ADR`                                       |
-| `telemetry`     | `full`, `anonymous`, `off` | `RULE_MCP_NO_TELEMETRY`, `RULE_MCP_NO_PROMPT_TEXT`      |
-| `update`        | `auto`, `notify`, `off`    | `RULE_MCP_NO_AUTOUPDATE`, `RULE_MCP_AUTO_UPDATE`        |
-| `tokensave`     | `on`, `autotrack`, `off`   | `RULE_MCP_NO_TOKENSAVE`, `RULE_MCP_TOKENSAVE_AUTOTRACK` |
-| `minimal-tools` | `off`, `on`                | `RULE_MCP_MINIMAL_TOOLS`                                |
+| Feature     | Levels                     | Keys                                                    |
+| ----------- | -------------------------- | ------------------------------------------------------- |
+| `adr`       | `on`, `off`                | `RULE_MCP_NO_ADR`                                       |
+| `telemetry` | `full`, `anonymous`, `off` | `RULE_MCP_NO_TELEMETRY`, `RULE_MCP_NO_PROMPT_TEXT`      |
+| `update`    | `auto`, `notify`, `off`    | `RULE_MCP_NO_AUTOUPDATE`, `RULE_MCP_AUTO_UPDATE`        |
+| `tokensave` | `on`, `autotrack`, `off`   | `RULE_MCP_NO_TOKENSAVE`, `RULE_MCP_TOKENSAVE_AUTOTRACK` |
 
 ## Node.js variables
 

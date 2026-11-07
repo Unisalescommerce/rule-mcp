@@ -18,13 +18,12 @@ rule-mcp feature enable <id> --level <name>
 rule-mcp feature disable <id>
 ```
 
-| Feature         | Levels                     |
-| --------------- | -------------------------- |
-| `adr`           | `on`, `off`                |
-| `telemetry`     | `full`, `anonymous`, `off` |
-| `update`        | `auto`, `notify`, `off`    |
-| `tokensave`     | `on`, `autotrack`, `off`   |
-| `minimal-tools` | `off`, `on`                |
+| Feature     | Levels                     |
+| ----------- | -------------------------- |
+| `adr`       | `on`, `off`                |
+| `telemetry` | `full`, `anonymous`, `off` |
+| `update`    | `auto`, `notify`, `off`    |
+| `tokensave` | `on`, `autotrack`, `off`   |
 
 The catalog is `packages/mcp/core/runtime/features/_catalog.data.js`. Each level sets environment variables. `on+autotrack` is another name for `autotrack`.
 

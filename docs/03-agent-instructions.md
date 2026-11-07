@@ -70,6 +70,6 @@ Several clients read one shared `.mcp.json` file, so a switch in that file appli
 
 ## Minimal tool surface
 
-Set `RULE_MCP_MINIMAL_TOOLS=1` to expose a short list of tools in place of the full surface. Use this for a client that limits the tool list. The list has `rule_tool`, `rule_tool_meta`, `rule_tool_update`, `rule_tool_init`, `rule_tool_gateway`, `rule_tool_apply`, `rule_tool_search`, `rule_tool_check`, `rule_tool_compress`, `rule_tool_detect`, `rule_tool_handoff`, `rule_tool_handon`, `rule_tool_keep`, `rule_tool_stats`, and `rule_tool_usage`.
+A client that limits the tool list takes the `standard` surface instead of the full one. Set `RULE_MCP_SURFACE=standard` in the server configuration, or answer the Surface step that way. The area hubs stay reachable, and `rule_tool_search` loads the rest on demand.
 
 [Environment variables](./10-env-variables.md) lists all settings.
