@@ -418,8 +418,17 @@
     color: var(--accent-fg);
     font-size: 1.02rem;
     font-weight: 700;
+    /* The body line box is taller than the circle, so a centered line box put
+       the digit off-centre. One line, one em, then the em box is the digit. */
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
     display: grid;
     place-items: center;
+    /* A digit's ink sits right of its advance centre and above the em centre,
+       so the centred box leaves the numeral visibly off the circle's centre.
+       Both nudges are in em: they hold when the badge size changes. */
+    text-indent: -0.05em;
+    padding-block-start: 0.06em;
   }
 
   [data-part="architecture-diagram"] > li[data-part="step"]:not(:last-child)::after {
@@ -548,6 +557,23 @@
     display: block;
     margin: var(--space-1) 0;
     cursor: pointer;
+  }
+
+  /* Narrow screens have no room for a panel beside the header, so the panel
+     takes the full width and pushes the page down instead of covering its
+     title. An overlay that hides the heading reads as a broken page. */
+  @media (max-width: 56rem) {
+    body > header details[data-part="prefs"] {
+      flex-basis: 100%;
+    }
+
+    body > header details[data-part="prefs"][open] summary + menu {
+      position: static;
+      width: 100%;
+      min-width: 0;
+      margin-block-start: var(--space-2);
+      transform: none;
+    }
   }
 }
 
@@ -725,8 +751,17 @@
     color: var(--accent-fg);
     font-size: 1.02rem;
     font-weight: 700;
+    /* The body line box is taller than the circle, so a centered line box put
+       the digit off-centre. One line, one em, then the em box is the digit. */
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
     display: grid;
     place-items: center;
+    /* A digit's ink sits right of its advance centre and above the em centre,
+       so the centred box leaves the numeral visibly off the circle's centre.
+       Both nudges are in em: they hold when the badge size changes. */
+    text-indent: -0.05em;
+    padding-block-start: 0.06em;
   }
 
   body[data-page="home"] section[data-part="cards"] {
