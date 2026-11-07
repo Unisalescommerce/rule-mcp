@@ -8,6 +8,7 @@ this directory are the source of truth; this index is generated from them by
 
 | #                                                                                                                       | Title                                                                                                     | Date       | Status     | Tags                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------------------------------------------------- |
+| [247](247-the-wizard-asks-its-questions-as-prompts-when-the-renderer-cannot-run.md)                                     | The wizard asks its questions as prompts when the renderer cannot run                                     | 2026-11-07 | accepted   | wizard, runtime, cli                                                                |
 | [246](246-the-server-floor-is-node-24-and-the-wizard-floor-stays-26-4.md)                                               | The server floor is Node 24, and the wizard floor stays 26.4                                              | 2026-11-07 | accepted   | runtime, install, wizard                                                            |
 | [245](245-the-release-asset-is-the-source-tree-built-with-pnpm-and-a-tag-needs-no-signatur.md)                          | The release asset is the source tree, built with pnpm, and a tag needs no signature                       | 2026-11-06 | accepted   | release, ci, packaging                                                              |
 | [244](244-the-documentation-holds-no-html-and-the-census-writes-whole-files.md)                                         | The documentation holds no HTML and the census writes whole files                                         | 2026-11-06 | accepted   | docs, census, site                                                                  |
@@ -262,6 +263,7 @@ file. Where a line stops short the rest is in the ADR.
 
 | ADR                                                                                                                     | Decision                                                                                                                                                                                                                        | Consequence                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [247](247-the-wizard-asks-its-questions-as-prompts-when-the-renderer-cannot-run.md)                                     | The flow talks to a six-method port - setStep, ask, askPath, confirm, progress, close - and the renderer is one adapter behind it.                                                                                              | A Node 24 terminal gets the same questions, defaults and review as the full-screen wizard, printed as prompts.                                                                                                                  |
 | [246](246-the-server-floor-is-node-24-and-the-wizard-floor-stays-26-4.md)                                               | Two floors, two readers.                                                                                                                                                                                                        | Node 24 hosts install and run the server, and get the flag-driven setup instead of the full-screen wizard.                                                                                                                      |
 | [245](245-the-release-asset-is-the-source-tree-built-with-pnpm-and-a-tag-needs-no-signatur.md)                          | scripts/package.sh writes the committed tree with git archive as rule-mcp-VERSION.tgz.                                                                                                                                          | An install from a tarball needs Node.js and pnpm, the same as a clone, and rule-mcp update works only in a clone.                                                                                                               |
 | [244](244-the-documentation-holds-no-html-and-the-census-writes-whole-files.md)                                         | README.md and docs hold no raw HTML, and a parser test enforces it.                                                                                                                                                             | A placeholder in prose needs a code span.                                                                                                                                                                                       |
@@ -841,6 +843,7 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 
 ### cli
 
+- [247](247-the-wizard-asks-its-questions-as-prompts-when-the-renderer-cannot-run.md) The wizard asks its questions as prompts when the renderer cannot run
 - [228](228-the-launcher-owns-a-copy-outside-the-checkout.md) The launcher owns a copy outside the checkout
 - [180](180-hook-install-starts-the-guard-daemon-and-writers-use-send.md) Hook install starts the guard daemon and writers use --send
 - [179](179-guard-daemon-on-a-unix-socket-with-a-thin-send-client.md) Guard daemon on a Unix socket with a thin --send client
@@ -1253,6 +1256,14 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [069](069-compress-every-server-model-list-surface-prompts-list-tools-list-resources-list.md) Compress every server->model list surface (prompts/list, tools/list, resources/list)
 - [067](067-meta-frameworks-get-their-own-namespace-and-a-narrow-dispatcher.md) Meta-frameworks get their own namespace and a narrow dispatcher
 
+### wizard
+
+- [247](247-the-wizard-asks-its-questions-as-prompts-when-the-renderer-cannot-run.md) The wizard asks its questions as prompts when the renderer cannot run
+- [246](246-the-server-floor-is-node-24-and-the-wizard-floor-stays-26-4.md) The server floor is Node 24, and the wizard floor stays 26.4
+- [084](084-surface-selection-amends-the-install-stack-freeze-with-an-additive-loader-filter.md) Surface selection amends the install stack freeze with an additive loader filter
+- [083](083-install-uninstall-rework-keeps-current-stack-steps-and-contents-only.md) Install/uninstall rework keeps current stack, steps and contents only
+- [082](082-the-setup-wizard-is-the-installer-and-it-asks-which-commands-to-write.md) The setup wizard is the installer, and it asks which commands to write
+
 ### ai
 
 - [234](234-the-adr-guardrails-are-advisory-with-dual-detection-and-a-shrinking-legacy-list.md) The ADR guardrails are advisory with dual detection and a shrinking legacy list
@@ -1308,13 +1319,6 @@ theme it carries, and the early ADRs that predate the tag field are listed last.
 - [122](122-this-server-releases-itself-with-pnpm-release-and-the-push-is-the-release.md) This server releases itself with pnpm release, and the push is the release
 - [089](089-the-release-target-is-v0-1-0-beta-and-the-version-tooling-accepts-a-prerelease.md) The release target is v0.1.0-beta, and the version tooling accepts a prerelease
 - [077](077-reset-the-project-version-to-0-1-0-first-release-will-be-v0-1-0.md) Reset the project version to 0.1.0, first release will be v0.1.0
-
-### wizard
-
-- [246](246-the-server-floor-is-node-24-and-the-wizard-floor-stays-26-4.md) The server floor is Node 24, and the wizard floor stays 26.4
-- [084](084-surface-selection-amends-the-install-stack-freeze-with-an-additive-loader-filter.md) Surface selection amends the install stack freeze with an additive loader filter
-- [083](083-install-uninstall-rework-keeps-current-stack-steps-and-contents-only.md) Install/uninstall rework keeps current stack, steps and contents only
-- [082](082-the-setup-wizard-is-the-installer-and-it-asks-which-commands-to-write.md) The setup wizard is the installer, and it asks which commands to write
 
 ### code-graph
 
