@@ -22,7 +22,6 @@ test("readers honor legacy opt-out keys", () => {
   assert.equal(readLevel("telemetry", { RULE_MCP_NO_PROMPTS: "1" }), "anonymous");
   assert.equal(readLevel("update", { RULE_MCP_AUTO_UPDATE: "upgrade" }), "auto");
   assert.equal(readLevel("tokensave", { RULE_MCP_TOKENSAVE_AUTOTRACK: "1" }), "autotrack");
-  assert.equal(readLevel("minimal-tools", { RULE_MCP_MINIMAL_TOOLS: "1" }), "on");
 });
 
 test("setFeatureLevel writes under RULE_MCP_HOME/config/env.json", () => {
@@ -40,13 +39,13 @@ test("setFeatureLevel writes under RULE_MCP_HOME/config/env.json", () => {
 });
 
 test("disable clears keys that the off level nulls", () => {
-  setFeatureLevel("minimal-tools", "on", { homeDir: home });
-  assert.equal(readSavedEnv({ homeDir: home }).RULE_MCP_MINIMAL_TOOLS, "1");
+  setFeatureLevel("tokensave", "autotrack", { homeDir: home });
+  assert.equal(readSavedEnv({ homeDir: home }).RULE_MCP_TOKENSAVE_AUTOTRACK, "1");
 
-  const off = setFeatureLevel("minimal-tools", "disable", { homeDir: home });
+  const off = setFeatureLevel("tokensave", "disable", { homeDir: home });
 
   assert.equal(off.level, "off");
-  assert.equal("RULE_MCP_MINIMAL_TOOLS" in readSavedEnv({ homeDir: home }), false);
+  assert.equal("RULE_MCP_TOKENSAVE_AUTOTRACK" in readSavedEnv({ homeDir: home }), false);
 });
 
 test("dry-run does not touch the file", () => {

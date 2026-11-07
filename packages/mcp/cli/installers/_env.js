@@ -42,22 +42,13 @@ const DEFAULT_OPTOUT_ENV = {
   RULE_MCP_NO_PROMPTS: "1",
 };
 
-/** Env var that selects the minimal MCP tool surface (see core/skills/_minimal.js). */
-export const MINIMAL_ENV_VAR = "RULE_MCP_MINIMAL_TOOLS";
-
 /**
- * The minimal choice an environment carries, or nothing when it carries none.
+ * The environment an agent config carries: the saved file, then the explicit
+ * answer.
  *
  * Pure so the installer can be tested without a home directory: the saved
  * file stays the job of `resolveEnvironment`, this only reads the ambient.
- *
- * @param {object} [env]
  */
-export function minimalEnvFrom(env = process.env) {
-  const value = env[MINIMAL_ENV_VAR];
-
-  return value === undefined ? {} : { [MINIMAL_ENV_VAR]: value };
-}
 
 function readEnvConfig() {
   try {
@@ -87,10 +78,7 @@ function resolveEnvironment(options = {}) {
   // saved preferences and explicit opts override them.
   // The cache directory is not an opt-out flag, so it sits beside the table
   // rather than in it: every entry there is a documented "0" the user flips.
-  // An ambient minimal choice rides along between saved and explicit: the
-  // running server already honors it (see core/skills/_minimal.js), so the
-  // written config says what the runtime does instead of hiding it.
-  return { NODE_COMPILE_CACHE: COMPILE_CACHE_DIR, ...DEFAULT_OPTOUT_ENV, ...saved, ...minimalEnvFrom(), ...options.env };
+  return { NODE_COMPILE_CACHE: COMPILE_CACHE_DIR, ...DEFAULT_OPTOUT_ENV, ...saved, ...options.env };
 }
 
 export { LEGACY_ENV_CONFIG_DIR, LEGACY_ENV_CONFIG_FILE, DEFAULT_OPTOUT_ENV, readEnvConfig, writeEnvConfig, resolveEnvironment };

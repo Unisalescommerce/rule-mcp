@@ -80,21 +80,12 @@ function readTokensave(env, { projectDir } = {}) {
   return "on";
 }
 
-/**
- * @param {NodeJS.ProcessEnv|Record<string, string|undefined>} env
- * @returns {string}
- */
-function readMinimalTools(env) {
-  return get(env, "RULE_MCP_MINIMAL_TOOLS") === "1" ? "on" : "off";
-}
-
 /** @type {Record<string, (env: NodeJS.ProcessEnv|Record<string, string|undefined>, options?: { projectDir?: string }) => string>} */
 export const READERS = {
   adr: readAdr,
   telemetry: readTelemetry,
   update: readUpdate,
   tokensave: readTokensave,
-  "minimal-tools": readMinimalTools,
 };
 
 /**

@@ -4,13 +4,11 @@
  * Enforce the installer's surface answer on the registered tools.
  *
  * The pure grammar lives in `_surface.js`; this is the side effect, kept
- * apart so the tests never boot the router. Same post-registration retain
- * the minimal mode uses - one mechanism, not two.
+ * apart so the tests never boot the router.
  */
 
 import { _tools, exposesTool, getSkillNames, retainTools } from "../../tools/router/index.js";
 import { toolNameForSkill } from "../../tools/skill/index.js";
-import { MINIMAL_ALLOWLIST } from "./_minimal.js";
 import { REGISTERED_BY_CODE } from "./_skill-tools.js";
 import { SURFACE_VAR, filterSurfaceSkills, parseSurface } from "./_surface.js";
 
@@ -29,16 +27,10 @@ export function retainSurface(env = process.env, warn = (text) => process.stderr
 
   if (!selection) {
     if (typeof raw === "string" && raw.trim() !== "") {
-      warn(`surface: unknown spec "${raw}" - expected minimal, standard, full, areas:<a,b> or skills:<s,...>; running full.`);
+      warn(`surface: unknown spec "${raw}" - expected standard, full, areas:<a,b> or skills:<s,...>; running full.`);
     }
 
     return null;
-  }
-
-  if (selection.preset === "minimal") {
-    retainTools(MINIMAL_ALLOWLIST);
-
-    return MINIMAL_ALLOWLIST.size;
   }
 
   const names = getSkillNames().filter((name) => !REGISTERED_BY_CODE.has(name) && exposesTool(name));

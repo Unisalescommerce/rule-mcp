@@ -26,7 +26,7 @@ export function surfaceOf(options = {}, warn = (text) => process.stderr.write(`$
   const parsed = parseSurface(options.surface);
 
   if (!parsed) {
-    warn(`install: unknown --surface "${options.surface}" - expected minimal, standard, full, areas:<a,b> or skills:<s,...>; leaving the surface alone.`);
+    warn(`install: unknown --surface "${options.surface}" - expected standard, full, areas:<a,b> or skills:<s,...>; leaving the surface alone.`);
   }
 
   return parsed;

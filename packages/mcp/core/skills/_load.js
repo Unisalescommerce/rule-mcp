@@ -31,7 +31,6 @@ import { cacheClear, clearSkillDigests } from "../cache/tool-cache/index.js";
 import { registerDetectTool } from "./_detect-tool.js";
 import { installSkillGuardrails } from "./_guardrail-layers.js";
 import { skillCache } from "./_lru.js";
-import { IS_MINIMAL_TOOLS } from "./_minimal.js";
 import { registerSkillTools as registerPerSkillTools } from "./_skill-tools.js";
 import { retainSurface } from "./_surface-retain.js";
 
@@ -68,7 +67,7 @@ export function resetForReload() {
 export async function registerCoreTools() {
   await installSkillGuardrails();
   registerAiTool();
-  // In code: minimal mode mints no skill tool, and this one is allowlisted (ADR 067).
+  // Registered in code because the meta dispatcher mints no skill tool (ADR 067).
   registerMetaTool();
   registerSearchTool();
   registerCheckTool();
@@ -79,11 +78,7 @@ export async function registerCoreTools() {
   registerActionTools();
   registerHandonTool();
 
-  // Mutation tools: hidden in minimal mode
-  if (!IS_MINIMAL_TOOLS) {
-    registerProcessAdrTool();
-  }
-
+  registerProcessAdrTool();
   registerHandoffTool();
   // The index is built from the skill files on disk, not from the tools
   // registered above, so it does not wait for the per-skill pass.

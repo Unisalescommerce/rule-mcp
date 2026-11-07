@@ -48,7 +48,7 @@ export const dimensionMap = (dimensions) => Object.fromEntries(DIMENSIONS.map((d
  * global one answers with neither, and the two plans are built by the modules
  * that already own them.
  */
-export const installPlan = ({ answers, context, force, minimal }) => {
+export const installPlan = ({ answers, context, force }) => {
   if (answers.scope === "project") {
     return buildProjectInstallPlan({
       agents: answers.dimensions.includes("server") ? answers.agents : [],
@@ -73,7 +73,6 @@ export const installPlan = ({ answers, context, force, minimal }) => {
     force,
     context,
     selection: answers.selection,
-    minimal,
     surface: answers.surface,
     profile: answers.profile,
     dimensions: dimensionMap(answers.dimensions),

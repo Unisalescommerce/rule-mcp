@@ -5,15 +5,15 @@
  *
  * One env var carries the installer's answer into the server process, in the
  * same grammar the `--surface` flag accepts: a preset on its own, or one
- * list - `minimal`, `standard`, `full`, `areas:frontend,data`, or
+ * list - `standard`, `full`, `areas:frontend,data`, or
  * `skills:rule-ai,rule-data-sql`. Empty and unknown read as full, never as
  * empty: a typo must not silence the server.
  *
- * The filter is additive over the minimal mechanism, not a second one: preset
- * `minimal` retains exactly the minimal allowlist, everything else retains
- * every code-registered tool plus the selected skill tools. Non-native skills
- * are always kept - a project skill its frontmatter exposed is a deliberate
- * choice, not surface to prune.
+ * The filter keeps the surface small without a second mechanism: preset
+ * `standard` retains the code-registered tools plus the area hubs, everything
+ * else retains every code-registered tool plus the selected skill tools.
+ * Non-native skills are always kept - a project skill its frontmatter exposed
+ * is a deliberate choice, not surface to prune.
  */
 
 /** Env var carrying the surface answer from the installer to the server. */
@@ -32,7 +32,7 @@ export function parseSurface(raw) {
 
   const text = raw.trim();
 
-  if (["minimal", "standard", "full"].includes(text)) {
+  if (["standard", "full"].includes(text)) {
     return { preset: text };
   }
 

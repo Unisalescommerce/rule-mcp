@@ -19,7 +19,7 @@
     },
     {
       "file": "17-cli.md",
-      "sha256": "e59f5f522b1ff9e6f4adae2632ade8805f4b6045350765a0ee442ecdf0a45b13"
+      "sha256": "7c7adfebec7308c6d4b2092e9e1d9eec1a6875f9f1b004df1589a45477dc61ff"
     },
     {
       "file": "18-personas.md",
@@ -43,7 +43,7 @@
     },
     {
       "file": "23-env-readers.md",
-      "sha256": "7857be84d66c14e504a92351367f87ce652744aba612586811613975133dc53f"
+      "sha256": "00b45996b9031f2a31a58b9cf18ee74f1447d2aae779da446f2f4af7221f1c72"
     }
   ]
 }

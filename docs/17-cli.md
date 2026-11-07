@@ -17,7 +17,7 @@ the package version from anywhere. An error exits 1 and prints to stderr;
 | [`serve`](#rule-mcp-serve)                   | 4       | Start the MCP server (STDIO by default)                                                   |
 | [`up`](#rule-mcp-up)                         | 1       | Same as "serve --transport sse" (on-demand HTTP daemon)                                   |
 | [`daemon`](#rule-mcp-daemon)                 | 1       | Manage the MCP daemon (process and native platform services)                              |
-| [`install`](#rule-mcp-install)               | 27      | Install rule-mcp into an agent/IDE (edits mcp.json)                                       |
+| [`install`](#rule-mcp-install)               | 26      | Install rule-mcp into an agent/IDE (edits mcp.json)                                       |
 | [`uninstall`](#rule-mcp-uninstall)           | 7       | Remove rule-mcp from an agent/IDE                                                         |
 | [`setup`](#rule-mcp-setup)                   | 37      | Full-screen install/uninstall wizard (falls back to flags when piped)                     |
 | [`tools`](#rule-mcp-tools)                   | 1       | List or call MCP tools directly                                                           |
@@ -132,8 +132,7 @@ rule-mcp install
 | `--no-hooks`                 | -       | -                                            | skip guard hooks                                                                                                              |
 | `--skills`                   | -       | -                                            | install the bundled rule-mcp-* skills                                                                                         |
 | `--no-skills`                | -       | -                                            | skip the bundled skills                                                                                                       |
-| `--minimal`                  | -       | -                                            | minimal server tool surface (--no-minimal for full)                                                                           |
-| `--surface <spec>`           | -       | -                                            | server tool surface: minimal, standard, full, areas:<a,b> or skills:<s,...>                                                   |
+| `--surface <spec>`           | -       | -                                            | server tool surface: standard, full, areas:<a,b> or skills:<s,...>                                                            |
 | `--service`                  | -       | -                                            | register the platform daemon service                                                                                          |
 | `--no-service`               | -       | -                                            | skip the platform daemon service                                                                                              |
 | `--doctor`                   | -       | -                                            | run the health check at the end                                                                                               |

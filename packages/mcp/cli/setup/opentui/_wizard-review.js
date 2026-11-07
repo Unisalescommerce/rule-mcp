@@ -12,7 +12,7 @@ import { selectionLabel } from "../_commands-items.js";
  * @returns {Promise<unknown>}
  */
 export async function askReview({ screen, answers, context, defaults }) {
-  const plan = installPlan({ answers, context, force: Boolean(defaults.force), minimal: defaults.minimal });
+  const plan = installPlan({ answers, context, force: Boolean(defaults.force) });
 
   for (;;) {
     const action = await screen.confirm({

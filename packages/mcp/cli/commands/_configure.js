@@ -10,10 +10,6 @@ import { readEnvConfig as readEnvironmentConfig, writeEnvConfig as writeEnvironm
  */
 export async function configureCommand(opts = {}) {
   const RULE_MCP_VARS = {
-    RULE_MCP_MINIMAL_TOOLS: {
-      desc: "Expose only the 10 dispatcher/action tools (fits client tool caps, cheaper context).",
-      values: "1 = enable",
-    },
     RULE_MCP_AUTO_ADR: { desc: "Automatically log architecture decisions (honors ADR policy).", values: "1 = enable" },
     RULE_MCP_ADR_POLICY: {
       desc: "When to write ADRs: full, handoff (default), on-demand; or JSON with categories.",

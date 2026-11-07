@@ -72,13 +72,6 @@ export const FEATURES = {
     // the env patch stays single-sourced; the other name is only an input.
     aliases: { "on+autotrack": "autotrack" },
   },
-  "minimal-tools": {
-    label: "Minimal MCP tool surface",
-    levels: {
-      off: { RULE_MCP_MINIMAL_TOOLS: null },
-      on: { RULE_MCP_MINIMAL_TOOLS: "1" },
-    },
-  },
 };
 
 /** Stable feature ids in catalog order. */

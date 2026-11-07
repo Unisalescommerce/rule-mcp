@@ -99,12 +99,12 @@ test("config env collects every repeated --set value", () => {
       encoding: "utf8",
     });
 
-  const r = spawn(["config", "env", "--set", "RULE_MCP_MINIMAL_TOOLS=1", "--set", "RULE_MCP_AUTO_ADR=1"]);
+  const r = spawn(["config", "env", "--set", "RULE_MCP_ADR_POLICY=handoff", "--set", "RULE_MCP_AUTO_ADR=1"]);
   assert.equal(r.status, 0, `${r.stdout}\n${r.stderr}`);
 
   const listed = spawn(["config", "env", "--list"]);
   assert.equal(listed.status, 0, `${listed.stdout}\n${listed.stderr}`);
-  assert.match(listed.stdout, /RULE_MCP_MINIMAL_TOOLS=1/);
+  assert.match(listed.stdout, /RULE_MCP_ADR_POLICY=handoff/);
   assert.match(listed.stdout, /RULE_MCP_AUTO_ADR=1/);
 });
 

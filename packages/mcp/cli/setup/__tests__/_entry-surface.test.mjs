@@ -21,10 +21,9 @@ const io = (argv) => ({
   hasFlag: (name) => argv.includes(name),
 });
 
-test("the minimal pair arrives as a tri-state", () => {
-  assert.equal(setupOptions("install", io(["--minimal"])).minimal, true);
-  assert.equal(setupOptions("install", io(["--no-minimal"])).minimal, false);
-  assert.equal(setupOptions("install", io([])).minimal, undefined, "unanswered leaves the saved config alone");
+test("the removed minimal tier leaves the surface alone", () => {
+  assert.equal(resolveSetupOptions(setupOptions("install", io(["--surface", "minimal"]))).surface, null, "an unknown tier selects nothing");
+  assert.equal(setupOptions("install", io(["--minimal"])).minimal, undefined, "the flag no longer exists");
 });
 
 test("the surface spec normalizes through the same path the wizard uses", () => {

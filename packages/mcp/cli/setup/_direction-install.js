@@ -98,7 +98,6 @@ export async function install(options) {
     force: options.force,
     context,
     selection: options.selection,
-    minimal: options.minimal,
     surface: options.surface,
     features: options.features,
     adrPolicy: options.adrPolicy,

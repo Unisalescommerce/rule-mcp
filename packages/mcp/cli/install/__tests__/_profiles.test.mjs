@@ -25,7 +25,7 @@ test("custom starts empty and an unknown profile throws", () => {
 });
 
 test("every profile names the surface it implies", () => {
-  assert.equal(PROFILES.minimal.surface, "minimal");
+  assert.equal(PROFILES.minimal.surface, "standard", "the smallest tier left is the hub surface");
   assert.equal(PROFILES.standard.surface, "standard");
   assert.equal(PROFILES.full.surface, "full");
   assert.equal(PROFILES.custom.surface, "full");

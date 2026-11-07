@@ -24,7 +24,7 @@ export function registerFeatureCommand(program) {
   feature
     .command("enable")
     .description("Turn a feature on, or set an explicit level")
-    .argument("<id>", "feature id (adr, telemetry, update, tokensave, minimal-tools)")
+    .argument("<id>", "feature id (adr, telemetry, update, tokensave)")
     .addOption(new Option("--level <name>", "level to set (default: the feature's non-off default)"))
     .option("--dry-run", "preview without writing or re-applying installs")
     .allowExcessArguments(false)

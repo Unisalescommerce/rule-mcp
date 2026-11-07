@@ -40,15 +40,15 @@ test("enable writes the level and reports a dry-run without refresh", async () =
   };
 
   await featureEnableCommand({
-    id: "minimal-tools",
-    level: "on",
+    id: "update",
+    level: "notify",
     dryRun: true,
     homeDir: home,
     refresh,
   });
 
   assert.equal(refreshed, 0);
-  assert.match(lines.join(""), /Would set minimal-tools=on/);
+  assert.match(lines.join(""), /Would set update=notify/);
 });
 
 test("enable persists and calls refresh when the level changes", async () => {
@@ -91,5 +91,5 @@ test("list prints every feature", () => {
 
   assert.match(text, /adr=/);
   assert.match(text, /telemetry=/);
-  assert.match(text, /minimal-tools=/);
+  assert.match(text, /tokensave=/);
 });

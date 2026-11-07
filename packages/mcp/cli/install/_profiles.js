@@ -17,7 +17,7 @@ export const PROFILES = {
   minimal: {
     label: "Minimal",
     dimensions: ["server", "commands"],
-    surface: "minimal",
+    surface: "standard",
     description: "The MCP entry and the slash commands: enough for the agent to answer.",
   },
   standard: {

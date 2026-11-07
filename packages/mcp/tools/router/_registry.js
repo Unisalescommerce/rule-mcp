@@ -1,5 +1,4 @@
 /** The tool registry: state, registration, retention and generation. */
-import { IS_MINIMAL_TOOLS, MINIMAL_ALLOWLIST } from "../../core/skills/_minimal.js";
 
 /** The entries a tool may declare. */
 const ENTRIES = new Set(["router", "gateway", "skill", "action"]);
@@ -68,10 +67,6 @@ function retainTools(allowed) {
 function registerTool(tool) {
   if (!ENTRIES.has(tool.entry)) {
     throw new Error(`registerTool(${tool.name}): entry must be one of ${[...ENTRIES].join(", ")}, got ${String(tool.entry)}`);
-  }
-
-  if (IS_MINIMAL_TOOLS && !MINIMAL_ALLOWLIST.has(tool.name)) {
-    return;
   }
 
   const existing = _tools.findIndex((registered) => registered.name === tool.name);

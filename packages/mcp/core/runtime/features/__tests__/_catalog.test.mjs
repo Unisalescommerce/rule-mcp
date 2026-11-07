@@ -9,8 +9,8 @@ import { test } from "node:test";
 
 import { FEATURES, featureIds, levelsFor, envPatchFor } from "../_catalog.data.js";
 
-test("the catalog names the five user-facing features in a stable order", () => {
-  assert.deepEqual(featureIds(), ["adr", "telemetry", "update", "tokensave", "minimal-tools"]);
+test("the catalog names the four user-facing features in a stable order", () => {
+  assert.deepEqual(featureIds(), ["adr", "telemetry", "update", "tokensave"]);
 });
 
 test("each feature lists levels with the default first", () => {
@@ -18,7 +18,6 @@ test("each feature lists levels with the default first", () => {
   assert.deepEqual(levelsFor("telemetry"), ["full", "anonymous", "off"]);
   assert.deepEqual(levelsFor("update"), ["auto", "notify", "off"]);
   assert.deepEqual(levelsFor("tokensave"), ["on", "autotrack", "off"]);
-  assert.deepEqual(levelsFor("minimal-tools"), ["off", "on"]);
 });
 
 test("adr off writes NO_ADR; adr on clears it", () => {
@@ -47,7 +46,7 @@ test("telemetry anonymous drops prompt text and marks anonymous; off kills telem
   });
 });
 
-test("update / tokensave / minimal-tools map to the existing opt-out keys", () => {
+test("update and tokensave map to the existing opt-out keys", () => {
   assert.deepEqual(envPatchFor("update", "off"), { RULE_MCP_NO_AUTOUPDATE: "1", RULE_MCP_AUTO_UPDATE: null });
   assert.deepEqual(envPatchFor("update", "notify"), { RULE_MCP_NO_AUTOUPDATE: null, RULE_MCP_AUTO_UPDATE: null });
   assert.deepEqual(envPatchFor("update", "auto"), { RULE_MCP_NO_AUTOUPDATE: null, RULE_MCP_AUTO_UPDATE: "upgrade" });
@@ -65,8 +64,6 @@ test("update / tokensave / minimal-tools map to the existing opt-out keys", () =
     RULE_MCP_TOKENSAVE_AUTOTRACK: null,
   });
 
-  assert.deepEqual(envPatchFor("minimal-tools", "on"), { RULE_MCP_MINIMAL_TOOLS: "1" });
-  assert.deepEqual(envPatchFor("minimal-tools", "off"), { RULE_MCP_MINIMAL_TOOLS: null });
 });
 
 test("an unknown feature or level throws", () => {

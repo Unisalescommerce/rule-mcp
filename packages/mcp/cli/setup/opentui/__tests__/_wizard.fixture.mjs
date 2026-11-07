@@ -98,7 +98,7 @@ const reset = () => {
 
 /** Default answers for the five Features screens (catalog order). */
 /** One answer per feature screen, then the single attribution question. */
-const FEATURE_ANSWERS = ["on", "full", "notify", "on", "off", "keep"];
+const FEATURE_ANSWERS = ["on", "full", "notify", "on", "keep"];
 
 /** The Scope answer a global run gives: one radio, nothing else. */
 const SCOPE_ANSWER = "global";

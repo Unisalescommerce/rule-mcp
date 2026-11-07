@@ -13,7 +13,6 @@ import { areasOfSkills, filterSurfaceSkills, isRootSkill, parseSurface } from ".
 const SKILLS = ["rule-ai", "rule-ai-prompting", "rule-data", "rule-data-sql", "rule-frontend", "rule-frontend-react", "rule-process", "rule-process-tdd"];
 
 test("parseSurface reads presets", () => {
-  assert.deepEqual(parseSurface("minimal"), { preset: "minimal" });
   assert.deepEqual(parseSurface("standard"), { preset: "standard" });
   assert.deepEqual(parseSurface("full"), { preset: "full" });
 });
