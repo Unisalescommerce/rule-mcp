@@ -1,14 +1,14 @@
 # Session handoff 56 - docs, CI, hook, and the test that deleted the real config
 
 - Branch: `main`
-- Commit range covered: `76bf1382..eac2cd7d`, 20 commits
+- Commit range covered: `76bf1382..HEAD`, 20 commits on top of the remote
 - Date: 2026-11-06
 
 ## State at the end of this session
 
-The working tree is clean at `eac2cd7d`. `origin/main` sits at `489640a3`, the handoff commit, pushed at 17:59:02. This session never ran a push; the push appeared between the handoff commit and the release attempt, and its origin is unrecorded.
+The working tree is clean. `origin/main` sits at `489640a3`, the handoff commit, pushed at 17:59:02. This session never ran a push; the push appeared between the handoff commit and the release attempt, and its origin is unrecorded.
 
-Local `main` is 2 commits ahead of `origin/main`: `da9521e8` (the color fix) and `eac2cd7d` (this document). No tag exists, so `git tag` is empty.
+Local `main` is ahead of `origin/main`; `git log --oneline origin/main..HEAD` lists the commits, and they are the color fix plus handoff revisions. No tag exists, so `git tag` is empty.
 
 GitHub ran CI on `489640a3` and every workflow passed: `ci`, `Pages`, `Check workflows` and `Scorecard`. Pages is already active with `build_type: workflow`, and its deploy succeeded, so the "activate Pages" step is done.
 
@@ -81,7 +81,7 @@ Fix: `runCliCommand` now drops the inherited `FORCE_COLOR` before it sets `NO_CO
 ```prompt
 Resume work on rule-mcp-workspace from docs/handoff/56-docs-ci-hook-and-the-test-that-deleted-the-real-config.md. Run `rule_tool_handon` first: it checks which claims in this handoff still hold before any of them is trusted.
 
-State: `origin/main` is at 489640a3, with the GitHub workflows green. Local `main` is 2 commits ahead at eac2cd7d, the tree is clean, and no tag exists. Two open holes: the `withHome` async hole (fix uncommitted in the `pensive-gauss-ae1b68` worktree) and the `pnpm dlx rule-mcp` fallback in four install scripts.
+State: `origin/main` is at 489640a3, with the GitHub workflows green. Local `main` is ahead of it, the tree is clean, and no tag exists. Two open holes: the `withHome` async hole (fix uncommitted in the `pensive-gauss-ae1b68` worktree) and the `pnpm dlx rule-mcp` fallback in four install scripts.
 
 First step: run `rule-mcp setup` in a terminal and confirm `~/.rule-mcp/config/env.json` and `install.json` exist again. Then `pnpm release --dry-run --version 0.1.0`, then `pnpm release --version 0.1.0`. Pages is already active, so skip that step. Export `FORCE_COLOR` freely: the setup log now survives it.
 
