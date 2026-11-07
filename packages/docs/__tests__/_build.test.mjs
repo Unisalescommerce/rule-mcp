@@ -15,7 +15,7 @@ test("the emitted site has no dead internal links among public pages", () => {
   const pages = buildSite({ projectDir: root, outDir });
   const emitted = new Set(pages.map((page) => page.out));
   const dead = [];
-  const assetOk = /(?:^|\/)(?:style\.css|prefs\.js|transitions\.js)/u;
+  const assetOk = /(?:^|\/)(?:style\.css|prefs\.js)/u;
 
   for (const page of pages) {
     const html = readFileSync(join(outDir, page.out), "utf8");
