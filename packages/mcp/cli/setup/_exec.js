@@ -24,6 +24,25 @@ const toLines = (text) =>
     .filter(Boolean);
 
 /**
+ * The environment the child runs with: plain text, and no color warning.
+ *
+ * The capture sets NO_COLOR so the log holds text a person reads. A runner that
+ * exports FORCE_COLOR makes Node print a warning on every child, and that
+ * warning takes a row the task's tail keeps. Dropping the inherited
+ * FORCE_COLOR keeps the child silent and the log readable.
+ *
+ * @param {object} [extra] - keys to override before the color decision
+ * @returns {NodeJS.ProcessEnv}
+ */
+function childEnv(extra) {
+  const merged = { ...process.env, ...extra };
+
+  delete merged.FORCE_COLOR;
+
+  return { ...merged, NO_COLOR: "1" };
+}
+
+/**
  * Run `rule-mcp <args>` and capture what it printed.
  *
  * @param {string[]} args
@@ -35,7 +54,7 @@ export async function runCliCommand(args, { cwd = process.cwd(), timeout = 120_0
     const { stdout, stderr } = await execFileAsync(process.execPath, [entrypoint, ...args], {
       cwd,
       timeout,
-      env: { ...process.env, ...env, NO_COLOR: "1" },
+      env: childEnv(env),
       maxBuffer: 8 * 1024 * 1024,
     });
 
