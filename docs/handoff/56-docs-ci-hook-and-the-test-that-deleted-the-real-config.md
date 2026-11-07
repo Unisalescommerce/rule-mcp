@@ -1,16 +1,20 @@
 # Session handoff 56 - docs, CI, hook, and the test that deleted the real config
 
 - Branch: `main`
-- Commit range covered: `76bf1382..da9521e8`, 19 commits, all local
+- Commit range covered: `76bf1382..eac2cd7d`, 20 commits
 - Date: 2026-11-06
 
 ## State at the end of this session
 
-The working tree is clean at `da9521e8`. `main` is 19 commits ahead of `origin/main`. Nothing was pushed and no tag exists, so `git tag` is empty.
+The working tree is clean at `eac2cd7d`. `origin/main` sits at `489640a3`, the handoff commit, pushed at 17:59:02. This session never ran a push; the push appeared between the handoff commit and the release attempt, and its origin is unrecorded.
+
+Local `main` is 2 commits ahead of `origin/main`: `da9521e8` (the color fix) and `eac2cd7d` (this document). No tag exists, so `git tag` is empty.
+
+GitHub ran CI on `489640a3` and every workflow passed: `ci`, `Pages`, `Check workflows` and `Scorecard`. Pages is already active with `build_type: workflow`, and its deploy succeeded, so the "activate Pages" step is done.
 
 Three worktrees exist besides the main one: `/private/tmp/base-check` (detached at `b42fb9c7`) and two Claude worktrees under `.claude/worktrees/` at `a38d1369`. The `pensive-gauss-ae1b68` worktree carries the unfinished `withHome` fix: `packages/shared/_testkit.js` modified, `packages/shared/__tests__/_testkit.test.mjs` untracked. It was left untouched, by decision.
 
-## What the 17 local commits carry
+## What the local commits carry
 
 - Handbook rewrite: 23 chapters plus `README.md`, no raw HTML, short sentences.
 - Lint and format pass: the last 75 errors closed, the job green.
@@ -57,20 +61,19 @@ Fix: `runCliCommand` now drops the inherited `FORCE_COLOR` before it sets `NO_CO
 ## Open items, in order
 
 1. Run `rule-mcp setup` and rebuild `env.json` and `install.json`. The wizard needs a terminal, so it was not run here.
-2. Activate Pages: Settings, Pages, Source: GitHub Actions.
-3. Run `pnpm release --dry-run --version 0.1.0`, then `pnpm release --version 0.1.0`. The release pushes `main` and the tag.
-4. Land the `withHome` fix from the `pensive-gauss-ae1b68` worktree, then close its plan.
-5. Remove the `pnpm dlx rule-mcp` fallback. It is still in `scripts/install.sh:112`, `scripts/uninstall.sh:54`, `scripts/install.ps1:90` and `scripts/uninstall.ps1:61`. The npm name `rule-mcp` returns E404, so a squatter would own that command.
-6. Check the npm publication, or reserve the name.
+2. Run `pnpm release --dry-run --version 0.1.0`, then `pnpm release --version 0.1.0`. The release pushes `main` and the tag.
+3. Land the `withHome` fix from the `pensive-gauss-ae1b68` worktree, then close its plan.
+4. Remove the `pnpm dlx rule-mcp` fallback. It is still in `scripts/install.sh:112`, `scripts/uninstall.sh:54`, `scripts/install.ps1:90` and `scripts/uninstall.ps1:61`. The npm name `rule-mcp` returns E404, so a squatter would own that command.
+5. Check the npm publication, or reserve the name.
 
 ## Doubts on record
 
-- `ajv` declares `^3.0.1`, and the override forces `fast-uri` 4.2.3, a different major. The suite passed and the audit is clean, but GitHub CI has not run it. Decide whether to keep the pin.
+- `ajv` declares `^3.0.1`, and the override forces `fast-uri` 4.2.3, a different major. GitHub CI passed on that tree, and the audit gate is part of the workflow. Decide whether to keep the pin on that evidence.
 - `pnpm-workspace.yaml` changed at 17:45:44, and nobody claims it. The comment in the file explains the pin as advisory remediation.
-- Not verified: `zizmor`, the new tests on Windows and Linux, and the Docker build. The `Dockerfile` moved to `node:26-alpine` because Node 22 refuses to start the server, but Docker is absent here.
+- Not verified: the new tests on Windows and Linux, and the Docker build. The `Dockerfile` moved to `node:26-alpine` because Node 22 refuses to start the server, but Docker is absent here. `zizmor` is verified: the `Check workflows` job passed on `489640a3`.
 - `docs/migrations/rule-mcp-rename.md` was not reviewed.
 - After an uninstall, `~/.claude.json` can stay empty.
-- `install.sh` outside a checkout still falls back to `pnpm dlx rule-mcp`. See open item 5.
+- `install.sh` outside a checkout still falls back to `pnpm dlx rule-mcp`. See open item 4.
 - `pnpm 11` and `pnpm 12` both run the project script, so the block in the docs is correct.
 
 ### Resume Prompt
@@ -78,9 +81,9 @@ Fix: `runCliCommand` now drops the inherited `FORCE_COLOR` before it sets `NO_CO
 ```prompt
 Resume work on rule-mcp-workspace from docs/handoff/56-docs-ci-hook-and-the-test-that-deleted-the-real-config.md. Run `rule_tool_handon` first: it checks which claims in this handoff still hold before any of them is trusted.
 
-State: `main` is 19 commits ahead of `origin/main` at da9521e8, the tree is clean, nothing is pushed, no tag exists. `pnpm run ci` is green. Two open holes: the `withHome` async hole (fix uncommitted in the `pensive-gauss-ae1b68` worktree) and the `pnpm dlx rule-mcp` fallback in four install scripts.
+State: `origin/main` is at 489640a3, with the GitHub workflows green. Local `main` is 2 commits ahead at eac2cd7d, the tree is clean, and no tag exists. Two open holes: the `withHome` async hole (fix uncommitted in the `pensive-gauss-ae1b68` worktree) and the `pnpm dlx rule-mcp` fallback in four install scripts.
 
-First step: run `rule-mcp setup` in a terminal and confirm `~/.rule-mcp/config/env.json` and `install.json` exist again. Then activate Pages (Settings, Pages, Source: GitHub Actions), then `pnpm release --dry-run --version 0.1.0`, then `pnpm release --version 0.1.0`. Export `FORCE_COLOR` freely: the setup log now survives it.
+First step: run `rule-mcp setup` in a terminal and confirm `~/.rule-mcp/config/env.json` and `install.json` exist again. Then `pnpm release --dry-run --version 0.1.0`, then `pnpm release --version 0.1.0`. Pages is already active, so skip that step. Export `FORCE_COLOR` freely: the setup log now survives it.
 
 Every commit is `type(scope): subject`; the commit-msg hook rejects a scope-less message. Do not push outside the release command. Writing: STE100~80. Short sentences, active voice, one idea per sentence, same word for the same thing.
 ```
