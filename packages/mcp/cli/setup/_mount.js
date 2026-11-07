@@ -17,6 +17,11 @@
 
 import { openScreen } from "./opentui/_screen.js";
 import { INSTALL_STEPS, runInstallWizard, runUninstallWizard, UNINSTALL_STEPS } from "./opentui/_wizard.js";
+import { quietRendererWarnings } from "./_warnings.js";
+
+// Installed before the first screen opens: the renderer's native core imports
+// `node:ffi`, and its experimental notice would land after the screen closes.
+quietRendererWarnings();
 
 /**
  * Render one wizard full-screen and resolve with what it finished with.
