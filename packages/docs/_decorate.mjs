@@ -18,7 +18,10 @@
 export function decorateHome(html) {
   const [opening, ...rest] = html.split(/(?=<h2>)/u);
   const hero = opening.replace(/(<\/h1>\n?)([\s\S]*)$/u, (_, heading, body) => {
-    const stats = body.replace("<ul>", '<ul data-part="stats">').replace(/<p>(<a [\s\S]*?)<\/p>\s*$/u, '<p data-part="cta">$1</p>\n');
+    const stats = body
+      .replace(/^<p>/u, '<p data-part="lead">')
+      .replace("<ul>", '<ul data-part="stats">')
+      .replace(/<p>(<a [\s\S]*?)<\/p>\s*$/u, '<p data-part="cta">$1</p>\n');
     // The brand kit's primary icon, in the rounded-square plate the guidelines
     // describe. Decorative here: the hero heading already names the product.
     const plate = '<div data-part="brand-plate"><img src="assets/primary-icon.png" alt="" width="128" height="128" decoding="async"></div>\n';

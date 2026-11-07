@@ -59,6 +59,10 @@ export function buildSite({ projectDir = root, outDir = join(root, "site-dist") 
   const pages = collectPages(projectDir);
   const routes = sourceMap(pages);
   const base = repoBase(projectDir);
+  // What the home page states about itself: the package version it documents,
+  // and the repository the source lives in.
+  const version = JSON.parse(readFileSync(join(projectDir, "packages", "mcp", "package.json"), "utf8")).version;
+  const repo = base ? base.replace(/\/blob\/[^/]+\/$/u, "") : null;
 
   rmSync(outDir, { recursive: true, force: true });
   mkdirSync(outDir, { recursive: true });
@@ -70,7 +74,7 @@ export function buildSite({ projectDir = root, outDir = join(root, "site-dist") 
     const file = join(outDir, page.out);
 
     mkdirSync(dirname(file), { recursive: true });
-    writeFileSync(file, layout({ title, out: page.out, body: html, pages }));
+    writeFileSync(file, layout({ title, out: page.out, body: html, pages, version, repo }));
   }
 
   copyAssets(outDir, projectDir);

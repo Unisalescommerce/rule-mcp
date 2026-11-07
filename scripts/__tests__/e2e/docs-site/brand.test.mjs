@@ -6,9 +6,12 @@
  * its own rounded field, and the tab takes the same monochrome file.
  */
 
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
 import { expect, test } from "@playwright/test";
 
-import { darkContext, installSite } from "./_site.mjs";
+import { darkContext, installSite, ROOT } from "./_site.mjs";
 
 const site = installSite(test);
 
@@ -83,4 +86,33 @@ test("both themes take the brand palette, and the wordmark is lowercase", async 
 
     await context.close();
   }
+});
+
+test("the home page states its version and links the repository", async ({ browser }) => {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+
+  await page.goto(site.url("index.html"));
+
+  const meta = await page.evaluate(() => {
+    const line = document.querySelector("[data-part='meta']");
+    const repo = line?.querySelector("a[data-part='repo']");
+
+    return {
+      version: line?.querySelector("[data-part='version']")?.textContent.trim() ?? "",
+      href: repo?.getAttribute("href") ?? "",
+      label: repo?.textContent.trim() ?? "",
+      icon: Boolean(repo?.querySelector("svg")),
+      inHero: Boolean(line?.closest("section[data-part='hero']")),
+    };
+  });
+  const declared = JSON.parse(readFileSync(join(ROOT, "packages", "mcp", "package.json"), "utf8")).version;
+
+  expect(meta.version, "the version is the package the site documents").toBe(`v${declared}`);
+  expect(meta.href, "the link opens the repository").toMatch(/^https:\/\/github\.com\/[^/]+\/[^/]+$/u);
+  expect(meta.label, "the link is named, not an icon alone").toBe("GitHub");
+  expect(meta.icon, "the GitHub mark travels with the link").toBe(true);
+  expect(meta.inHero, "the line sits in the hero, not at the foot of the page").toBe(true);
+
+  await context.close();
 });
