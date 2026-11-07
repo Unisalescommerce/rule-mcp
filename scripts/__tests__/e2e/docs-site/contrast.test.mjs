@@ -23,14 +23,20 @@ const COVERAGE = [
       "main a",
       "footer p",
       "code",
+      // The brand is the home link now, so it is the header text a reader sees
+      // as current on this page; the current pill lives on the chapters.
+      "header p[data-part='brand'] a",
       "header nav a",
-      "header nav a[aria-current='page']",
       "header details[data-part='prefs'] summary",
+      "body[data-page='home'] [data-part='meta'] a[data-part='repo']",
       "body[data-page='home'] ul[data-part='stats'] strong",
       "body[data-page='home'] p[data-part='cta'] a",
     ],
   ],
-  ["docs/getting-started.html", ["main p", "main a", "footer p", "td", "code", "th", "header nav a", "header details[data-part='prefs'] summary"]],
+  [
+    "docs/getting-started.html",
+    ["main p", "main a", "footer p", "td", "code", "th", "header nav a", "header nav a[aria-current='page']", "header details[data-part='prefs'] summary"],
+  ],
   [
     "docs/surface-map.html",
     ["main p", "main a", "footer p", "code", "th", "header nav a", "header details[data-part='prefs'] summary", "nav[aria-label='Reference'] a[aria-current='page']"],
