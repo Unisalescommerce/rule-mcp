@@ -16,7 +16,7 @@ No model runs inside the server. Any agent that speaks MCP can use it. The tools
 
 | Item    | Version       | Check            |
 | ------- | ------------- | ---------------- |
-| Node.js | 26.4 or newer | `node --version` |
+| Node.js | 24 or newer   | `node --version` |
 | pnpm    | 11 or newer   | `pnpm --version` |
 
 The server stops at start if the Node.js version is too old. There is no npm package, so you install from a clone or from a release tarball.

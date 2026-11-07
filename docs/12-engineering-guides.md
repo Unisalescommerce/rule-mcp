@@ -36,7 +36,7 @@ This chapter tells how to work on this repository. Read `CONTRIBUTING.md` for th
 | `check-workflows.yml` | Push, pull request | Runs zizmor on the workflows                                    |
 | `scorecard.yml`       | Schedule, push     | OpenSSF Scorecard                                               |
 
-CI uses Node.js 26 and pnpm 11.25.0.
+CI uses Node.js 24 and 26, and pnpm 11.25.0.
 
 ## Guardrails
 

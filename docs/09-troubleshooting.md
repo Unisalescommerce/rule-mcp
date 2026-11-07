@@ -23,8 +23,8 @@ rule-mcp daemon logs
 | Symptom                               | Cause                           | Fix                                        |
 | ------------------------------------- | ------------------------------- | ------------------------------------------ |
 | `command not found: rule-mcp`         | The shim is not on `PATH`       | Run `./scripts/install.sh` from the clone  |
-| `rule-mcp needs Node 26.4.0 or newer` | The Node.js version is old      | Install Node.js 26.4 or newer              |
-| `SyntaxError` on `registerHooks`      | Node.js is older than 22        | Install Node.js 26.4 or newer              |
+| `rule-mcp needs Node 24.0.0 or newer` | The Node.js version is old      | Install Node.js 24 or newer                |
+| `SyntaxError` on `registerHooks`      | Node.js is older than 22        | Install Node.js 24 or newer                |
 | `rule-mcp launcher: cannot start.`    | The copy and the clone are gone | Run `rule-mcp setup` from a clone          |
 | `ECONNREFUSED` on port `37999`        | The daemon is not running       | Run `rule-mcp daemon start`                |
 | A tool returns no results             | The skills are not loaded       | Run `rule-mcp skills reload`               |
