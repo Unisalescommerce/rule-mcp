@@ -12,3 +12,4 @@
 export * from "./_registry.js";
 export * from "./_check.js";
 export * from "./_report.js";
+export * from "./_project-config.js";

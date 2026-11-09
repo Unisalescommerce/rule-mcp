@@ -63,3 +63,25 @@ The result includes `myco-no-todo` and the baseline rules.
 - The `rule://community` resource lists the custom skills.
 
 The file `plugin.js` has no effect. The server also does not read `~/.agents/skills/` as a skill layer.
+
+## Choose the rules of a project
+
+A project can turn rules off in the file `.rule-mcp/config.json` at its root:
+
+```json
+{
+  "guardrails": {
+    "baseline": "minimal",
+    "disable": ["jsdoc-required", "ai-no-emdash"]
+  }
+}
+```
+
+| Key        | Values                      | Effect                                                         |
+| ---------- | --------------------------- | -------------------------------------------------------------- |
+| `baseline` | `full` (default), `minimal` | `minimal` stops the baseline rules on a check of another skill |
+| `disable`  | A list of rule ids          | The server does not run these rules on any check               |
+
+With `minimal`, a check runs the rules of the skill that it names and the rules that this skill inherits. A check of a baseline skill still runs the rules of that skill.
+
+If the file is not there, all rules run. If a value in the file is not valid, the server ignores that value. A file that does not parse turns nothing off. An unknown rule id in `disable` has no effect.

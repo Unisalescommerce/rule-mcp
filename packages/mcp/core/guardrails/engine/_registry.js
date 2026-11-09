@@ -2,6 +2,7 @@
 
 import { SCAFFOLD_GUARDRAILS } from "../_scaffold.js";
 import { resolveInherited } from "../../layers/_inherit.js";
+import { projectGuardrailConfig } from "./_project-config.js";
 
 // ─── Skill-owned guardrails (ADR 071) ───
 // Populated once at startup from the resolved skill layers. Read-only after
@@ -124,7 +125,12 @@ export function getGuardrails(skillName, mode) {
   // The skill's own rules come last so that a rule which has moved into a
   // skill overrides the copy the families still carry while ADR 071's
   // migration is in flight.
-  const baseline = BASELINE_SKILLS.flatMap((name) => (name === skillName ? [] : ownedGuardrails(name)));
+  // The project config (pending ADR a-project-chooses-its-guardrails-in-rule-mcp-config-json):
+  // `minimal` keeps the baseline off the checks of other skills, and a check
+  // that names a baseline skill still runs that skill's own rules.
+  const config = projectGuardrailConfig();
+  const baselineSkills = config.baseline === "minimal" ? [] : BASELINE_SKILLS;
+  const baseline = baselineSkills.flatMap((name) => (name === skillName ? [] : ownedGuardrails(name)));
   const families = [...baseline, ...scaffold, ...plugin, ...ownedGuardrails(skillName)];
 
   // One run per rule id, and the last definition wins: the simplicity rules
@@ -136,5 +142,5 @@ export function getGuardrails(skillName, mode) {
     byId.set(guardrail.id, guardrail);
   }
 
-  return [...byId.values()];
+  return [...byId.values()].filter((guardrail) => !config.disable.has(guardrail.id));
 }
