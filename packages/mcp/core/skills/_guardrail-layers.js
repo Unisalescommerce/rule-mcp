@@ -14,12 +14,13 @@
  */
 export async function installSkillGuardrails(options = {}) {
   const { loadLayerGuardrails } = await import("../layers/_guardrails.js");
-  const { readGuardrailConfig, setGuardrailConfig, setSkillGuardrails } = await import("../guardrails/index.js");
+  const { readGuardrailConfig, setGuardrailConfig, setSkillGuardrails, setSkillPaths } = await import("../guardrails/index.js");
   const { config, file, problems } = readGuardrailConfig(options);
   const loaded = await loadLayerGuardrails(options);
 
   setGuardrailConfig(config);
   setSkillGuardrails(loaded);
+  setSkillPaths(loaded);
 
   return { problems: [...problems.map((reason) => ({ file, layer: "project", reason })), ...loaded.problems] };
 }

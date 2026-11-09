@@ -1,9 +1,9 @@
 // Auto-extracted - frontmatter parser shared by the skill store and router.
 
-import { listAt, yamlBoolean } from "./_yaml-list.js";
+import { listAt, unquote, yamlBoolean } from "./_yaml-list.js";
 
-/** The list keys a skill declares: the rules it owns and the skills it inherits (ADR 081). */
-const LIST_KEYS = ["tags", "guardrails", "inherits"];
+/** The list keys a skill declares: the rules it owns, the skills it inherits (ADR 081) and the paths it applies to. */
+const LIST_KEYS = ["tags", "guardrails", "inherits", "paths"];
 
 /**
  * Parse the YAML frontmatter of a SKILL.md file.
@@ -89,6 +89,13 @@ export function parseSkillFrontmatter(content) {
 
     if (exposeMatch) {
       result.exposeTool = yamlBoolean(exposeMatch[1]);
+      continue;
+    }
+    // severity: the default of the skill's rules, block or warn (see core/guardrails/engine/scope)
+    const severityMatch = line.match(/^severity:\s*(.+)$/);
+
+    if (severityMatch) {
+      result.severity = unquote(severityMatch[1]);
       continue;
     }
     // frameworks: inline scalar

@@ -42,8 +42,11 @@ export function checkCode(skillName, code, context = {}) {
           failCount: 1,
           detail: [`Input is ${Buffer.byteLength(code, "utf8")} bytes; the cap is ${MAX_CHECK_INPUT_BYTES} (256 KiB).`],
           suggestion: "Split the input into smaller units (256 KiB cap), or exclude generated/vendored files.",
+          severity: "block",
         },
       ],
+      advisoryCount: 0,
+      advisory: [],
       skipped: [],
       inputTooLarge: true,
       summary: "❌ Refused to check: input exceeds the 256 KiB cap. Split it into smaller units.",
@@ -101,12 +104,16 @@ export function checkCode(skillName, code, context = {}) {
       detail: result.detail || [],
       suggestion: result.suggestion || "",
       note: result.note || "",
+      severity: g.severity === "warn" ? "warn" : "block",
       skipped: false,
     };
   });
 
+  // A failing `warn` rule reports in `advisory` and does not fail the check.
   const passed = results.filter((r) => r.pass && !r.skipped);
-  const failed = results.filter((r) => !r.pass);
+  const failed = results.filter((r) => !r.pass && r.severity !== "warn");
+  const advisory = results.filter((r) => !r.pass && r.severity === "warn");
+  const finding = (r) => ({ id: r.id, label: r.label, wcag: r.wcag || "", failCount: r.failCount, detail: r.detail, suggestion: r.suggestion, severity: r.severity });
   const skipped = results.filter((r) => r.skipped);
 
   const newPassed = [...passed.map((r) => r.id)];
@@ -118,14 +125,9 @@ export function checkCode(skillName, code, context = {}) {
     failCount: failed.length,
     skippedCount: skipped.length,
     passed: passed.map((r) => ({ id: r.id, label: r.label })),
-    failed: failed.map((r) => ({
-      id: r.id,
-      label: r.label,
-      wcag: r.wcag || "",
-      failCount: r.failCount,
-      detail: r.detail,
-      suggestion: r.suggestion,
-    })),
+    failed: failed.map(finding),
+    advisoryCount: advisory.length,
+    advisory: advisory.map(finding),
     skipped: skipped.map((r) => ({ id: r.id, label: r.label })),
     summary:
       failed.length === 0

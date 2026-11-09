@@ -1,9 +1,8 @@
 /** @module cli/guard/staged - guardrail failures over the staged files */
 
 import { execFileSync } from "node:child_process";
-import { CHECKABLE, skillForPath } from "./_decide.js";
-import { extname } from "node:path";
 import { checkCode } from "../../core/guardrails/index.js";
+import { skillsForPath } from "./_route.js";
 
 /** @param {{ cwd?: string }} [options] @returns {string[]} staged files worth checking */
 export function stagedFiles({ cwd } = {}) {
@@ -19,7 +18,7 @@ export function stagedFiles({ cwd } = {}) {
       maxBuffer: 4 * 1024 * 1024,
     })
       .split("\0")
-      .filter((line) => line && CHECKABLE.has(extname(line)));
+      .filter((line) => line && skillsForPath(line).length > 0);
   } catch {
     return [];
   }
@@ -37,10 +36,18 @@ export function stagedFailures({ cwd, check = checkCode } = {}) {
       continue;
     }
 
-    const report = check(skillForPath(file), code, { fileName: file });
+    const failures = new Set();
 
-    if (!report.allPass) {
-      results.push({ file, failures: report.failed.map((f) => f.id) });
+    for (const skill of skillsForPath(file)) {
+      const report = check(skill, code, { fileName: file });
+
+      for (const failed of report.allPass ? [] : report.failed) {
+        failures.add(failed.id);
+      }
+    }
+
+    if (failures.size > 0) {
+      results.push({ file, failures: [...failures] });
     }
   }
 

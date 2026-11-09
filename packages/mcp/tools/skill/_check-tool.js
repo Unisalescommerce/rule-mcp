@@ -98,6 +98,10 @@ export function registerCheckTool() {
       } else if (result.allPass) {
         lines.push("✅ All " + result.total + " guardrails pass. Code is fully rule-mcp-compliant.");
       }
+      // Warn-severity rules report here and never fail the check.
+      for (const a of result.advisory ?? []) {
+        lines.push("## ⚠️ " + a.id + ": " + a.label + " (warn, not failing)", "- Fix: " + a.suggestion, "");
+      }
       // Show skipped count if any
       if (result.skippedCount > 0) {
         lines.push("### Skipped (previously passed)", "");

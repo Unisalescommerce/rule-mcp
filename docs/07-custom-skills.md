@@ -64,6 +64,28 @@ The result includes `myco-no-todo` and the baseline rules.
 
 The file `plugin.js` has no effect. The server also does not read `~/.agents/skills/` as a skill layer.
 
+## Scope and severity
+
+Two more frontmatter keys control where a skill applies and how hard its rules stop a check:
+
+```markdown
+---
+name: house-migrations
+paths: ["supabase/migrations/**"]
+severity: warn
+guardrails: [myco-no-drop]
+---
+```
+
+| Key        | Values                    | Effect                                                   |
+| ---------- | ------------------------- | -------------------------------------------------------- |
+| `paths`    | A list of globs           | A check by path also sends a matching file to this skill |
+| `severity` | `block` (default), `warn` | The default severity of the rules of this skill          |
+
+The globs are relative to the project root. The extension of a file still selects one skill. A skill with `paths` is added to that skill. A check that names a skill runs the skill on any file.
+
+A rule object can also have `severity: "warn"` or `severity: "block"`. The value on the rule wins over the value of the skill. A failed `warn` rule goes in the `advisory` list of the result. It does not fail the check. A value that is not `block` or `warn` is reported, and the rule blocks.
+
 ## Choose the rules of a project
 
 A project can turn rules off in the file `.rule-mcp/config.json` at its root:

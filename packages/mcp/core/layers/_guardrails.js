@@ -20,6 +20,7 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 
+import { withSeverity } from "../guardrails/engine/_scope.js";
 import { resolveSkillDirs } from "./_resolve.js";
 
 /** Whether an export is usable as a guardrail. */
@@ -119,7 +120,7 @@ function reportDrift(entry, loaded, problems) {
  * Every skill that resolves, with the rules it owns and the skills it inherits.
  *
  * @param {{ cwd?: string }} [options]
- * @returns {Promise<Map<string, { name: string, layer: string, dir: string, inherits: string[], guardrails: object[] }>>}
+ * @returns {Promise<Map<string, { name: string, layer: string, dir: string, inherits: string[], paths: string[], guardrails: object[] }>>}
  */
 export async function loadLayerGuardrails(options = {}) {
   const resolved = resolveSkillDirs(options);
@@ -129,10 +130,11 @@ export async function loadLayerGuardrails(options = {}) {
   loaded.problems = problems;
 
   for (const entry of resolved.values()) {
-    const guardrails = await loadFolder(entry, problems);
+    const guardrails = withSeverity(entry, await loadFolder(entry, problems), problems);
+    const { inherits = [], paths = [] } = entry.meta;
 
     reportDrift(entry, guardrails, problems);
-    loaded.set(entry.name, { name: entry.name, layer: entry.layer, dir: entry.dir, inherits: entry.meta.inherits ?? [], guardrails });
+    loaded.set(entry.name, { name: entry.name, layer: entry.layer, dir: entry.dir, inherits, paths, guardrails });
   }
 
   return loaded;
