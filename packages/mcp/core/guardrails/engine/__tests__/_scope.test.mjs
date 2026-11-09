@@ -103,6 +103,7 @@ test("paths route a file to the skills whose globs match it", () => {
       ["house-migrations", { paths: ["supabase/migrations/**"] }],
       ["house-ts", { paths: ["src/**/*.ts", "scripts/*.ts"] }],
       ["house-none", { paths: [] }],
+      ["house-dotted", { paths: ["./docs/**", ".github/**"] }],
     ]),
   );
 
@@ -110,6 +111,9 @@ test("paths route a file to the skills whose globs match it", () => {
   assert.deepEqual(skillsForGlobs("src/lib/a.ts"), ["house-ts"]);
   assert.deepEqual(skillsForGlobs("README.md"), [], "a skill with no paths is routed by name only");
   assert.deepEqual(skillsForGlobs("./src/lib/a.ts"), ["house-ts"], "a leading ./ is the same path");
+  assert.deepEqual(skillsForGlobs("docs/a.md"), ["house-dotted"], "a leading ./ in the glob is the same glob");
+  assert.deepEqual(skillsForGlobs(".github/workflows/ci.yml"), ["house-dotted"], "a glob that names a dot directory matches in it");
+  assert.deepEqual(skillsForGlobs("src/.env.ts"), [], "a wildcard does not match a name that starts with a dot");
 });
 
 /** A rule object that always fails. */

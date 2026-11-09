@@ -82,7 +82,7 @@ guardrails: [myco-no-drop]
 | `paths`    | A list of globs           | A check by path also sends a matching file to this skill |
 | `severity` | `block` (default), `warn` | The default severity of the rules of this skill          |
 
-The globs are relative to the project root. The extension of a file still selects one skill. A skill with `paths` is added to that skill. A check that names a skill runs the skill on any file.
+The globs are relative to the project root. A `*` or a `**` does not match a name that starts with a dot, so `**/*.yml` does not match `.github/workflows/ci.yml`. Write the dot name in the glob, for example `.github/**`. The extension of a file still selects one skill. A skill with `paths` is added to that skill. A check that names a skill runs the skill on any file.
 
 A rule object can also have `severity: "warn"` or `severity: "block"`. The value on the rule wins over the value of the skill. A failed `warn` rule goes in the `advisory` list of the result. It does not fail the check. A value that is not `block` or `warn` is reported, and the rule blocks.
 

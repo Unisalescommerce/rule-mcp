@@ -60,7 +60,8 @@ export function skillsForGlobs(file) {
   const names = [];
 
   for (const [name, { paths = [] }] of SKILL_PATHS) {
-    if (paths.some((glob) => matchesGlob(path, glob))) {
+    // A glob written as `./dir/**` names the same files as `dir/**`.
+    if (paths.some((glob) => matchesGlob(path, glob.replace(/^\.\//, "")))) {
       names.push(name);
     }
   }
