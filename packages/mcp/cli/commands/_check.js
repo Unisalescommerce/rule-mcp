@@ -27,7 +27,9 @@ const TAG = "rule-mcp check";
 
 /**
 Every finding for one file, across the skills it routes to. A rule two skills
-share reports once, under the first skill that ran it.
+share reports once, under the first skill that ran it - unless a later skill
+grades it `block` where the first graded it `warn`: the stricter answer wins,
+so a duplicate id can never turn a block finding into a warning.
 
 @param {string} file
 @param {string} code
@@ -35,23 +37,24 @@ share reports once, under the first skill that ran it.
 @returns {Array<{ skill: string, rule: string, severity: string, file: string, detail: string[], suggestion: string }>}
 */
 function findingsFor(file, code, root) {
-  const seen = new Set();
-  const findings = [];
+  const byRule = new Map();
 
   for (const skill of skillsForPath(file)) {
     const report = checkCode(skill, code, { fileName: file, filePath: join(root, file) });
 
     for (const rule of [...report.failed, ...(report.advisory ?? [])]) {
-      if (seen.has(rule.id)) {
+      const severity = rule.severity ?? "block";
+      const earlier = byRule.get(rule.id);
+
+      if (earlier && !(earlier.severity === "warn" && severity === "block")) {
         continue;
       }
 
-      seen.add(rule.id);
-      findings.push({ skill, rule: rule.id, severity: rule.severity ?? "block", file, detail: rule.detail ?? [], suggestion: rule.suggestion ?? "" });
+      byRule.set(rule.id, { skill, rule: rule.id, severity, file, detail: rule.detail ?? [], suggestion: rule.suggestion ?? "" });
     }
   }
 
-  return findings;
+  return [...byRule.values()];
 }
 
 /**

@@ -24,23 +24,15 @@ export function stagedFiles({ cwd } = {}) {
   }
 }
 
-/** @param {string} file @param {{ cwd?: string }} [options] @returns {string|null} the staged bytes, or null when git cannot show them */
-export function stagedBlob(file, { cwd } = {}) {
-  try {
-    return execFileSync("git", ["show", `:${file}`], { cwd, encoding: "utf8", timeout: 5000, killSignal: "SIGKILL", maxBuffer: 4 * 1024 * 1024 });
-  } catch {
-    return null;
-  }
-}
-
 /** @param {{ cwd?: string, check?: Function }} [options] @returns {Array<{ file: string, failures: string[] }>} */
 export function stagedFailures({ cwd, check = checkCode } = {}) {
   const results = [];
 
   for (const file of stagedFiles({ cwd })) {
-    const code = stagedBlob(file, { cwd });
-
-    if (code === null) {
+    let code;
+    try {
+      code = execFileSync("git", ["show", `:${file}`], { cwd, encoding: "utf8", timeout: 5000, killSignal: "SIGKILL", maxBuffer: 4 * 1024 * 1024 });
+    } catch {
       continue;
     }
 

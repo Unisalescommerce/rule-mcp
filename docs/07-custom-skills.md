@@ -122,7 +122,7 @@ rule-mcp check --changed --base origin/main --json
 | `--staged`           | The staged files, read from the index                                            |
 | `--files a.ts,b.sql` | The named files, relative to the project root                                    |
 
-Use exactly one of the three. The command reads `.rule-mcp/config.json` and the skills of the project. The extension and the `paths` globs select the skills for each file.
+Use exactly one of the three. The command reads `.rule-mcp/config.json` and the skills of the project. The extension and the `paths` globs select the skills for each file. With `--changed` and `--staged`, the paths are relative to the project root, and a project in a subdirectory of a repository checks only its own files. A renamed file is checked under its new name.
 
 | Exit | Meaning                                    |
 | ---- | ------------------------------------------ |
