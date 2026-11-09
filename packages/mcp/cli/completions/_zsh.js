@@ -24,6 +24,7 @@ _rule_mcp_commands() {
     'handoff:Generate LLM context handoff summary'
     'handon:Verify the last handoff against the repo'
     'fix:Validate and auto-fix project file tree'
+    'check:Run the guardrails on changed, staged or named files'
     'stats:Show telemetry statistics'
     'cache:Inspect the on-disk tool cache'
     'roles:Manage review persona roles'

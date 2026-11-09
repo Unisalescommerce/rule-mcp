@@ -37,6 +37,7 @@ import { registerCommitLintCommand } from "./_register-commit.js";
 import { registerSecretsCommand } from "./_register-secrets.js";
 import { registerInitCommand } from "./_register-init.js";
 import { registerHandoffCommand } from "./_register-handoff.js";
+import { registerCheckCommand } from "./_register-check.js";
 import { registerAdrCommand, registerSkillsCommand, registerFixCommand, registerHandonCommand } from "./_register-session.js";
 import {
   registerHelpCommand,
@@ -91,6 +92,7 @@ export function buildProgram() {
   registerHandoffCommand(program);
   registerSkillsCommand(program);
   registerFixCommand(program);
+  registerCheckCommand(program);
   registerCompletionsCommand(program);
   registerHandonCommand(program);
   registerStatsCommand(program);

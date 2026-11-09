@@ -106,4 +106,28 @@ A project can turn rules off in the file `.rule-mcp/config.json` at its root:
 
 With `minimal`, a check runs the rules of the skill that it names and the rules that this skill inherits. A check of a baseline skill still runs the rules of that skill.
 
-If the file is not there, all rules run. If a value in the file is not valid, the server ignores that value. A file that does not parse turns nothing off. An unknown rule id in `disable` has no effect.
+If the file is not there, all rules run. If a value in the file is not valid, the server ignores that value. A file that does not parse turns nothing off. `rule-mcp check` prints each problem in the file. An unknown rule id in `disable` has no effect.
+
+## Check files from a script
+
+`rule-mcp check` runs the same rules on a set of files. A merge script, a CI job, or a hook can call it from the project root:
+
+```bash
+rule-mcp check --changed --base origin/main --json
+```
+
+| Flag                 | Files                                                                            |
+| -------------------- | -------------------------------------------------------------------------------- |
+| `--changed`          | Changed since the merge base with `--base` (default `HEAD`), and untracked files |
+| `--staged`           | The staged files, read from the index                                            |
+| `--files a.ts,b.sql` | The named files, relative to the project root                                    |
+
+Use exactly one of the three. The command reads `.rule-mcp/config.json` and the skills of the project. The extension and the `paths` globs select the skills for each file.
+
+| Exit | Meaning                                    |
+| ---- | ------------------------------------------ |
+| `0`  | No `block` finding. Warnings can be there. |
+| `1`  | One or more `block` findings               |
+| `2`  | The check did not run                      |
+
+With `--json`, the output is an array. Each item has `skill`, `rule`, `severity`, `file`, `detail` (a list of strings), and `suggestion`.
